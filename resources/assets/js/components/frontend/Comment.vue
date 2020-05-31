@@ -1,0 +1,89 @@
+<template>
+<div class="blog-comments">
+                <h2>Declarations</h2>
+                <div class="blog-comments-count">
+                    <img src="/front/icons/commentsNew.png" alt="">
+                    <span class="comments-count">: {{commentCount}}</span>
+                </div>
+                <textarea id="body" name="body" cols="30" rows="10" placeholder="Write comments here" v-model="commentBox" @keyup.enter.prevent="postComment"></textarea>
+                <!-- <button class="btn btn-xs btn-primary" id="submit" @click.prevent="postComment">Add Comment</button> -->
+
+                <div class="blog-comments-thread">
+                    <!-- <div id="new_c"></div> -->
+                        <div class="blog-comment" v-for="(comment,index) in comments" :key="index">
+                            <div class="user-picture">
+                                <img :src="'/storage/profilepicture/'+comment.user.photo" alt="" class="user-photo">
+                                <div class="user-title"><div class="title">Mjr Thomasina</div> <div class="user-name" style="padding: 3% 5%;">{{comment.user.username}}</div></div>
+                                    <p class="comment-date">{{comment.created_at}}</p>
+                            </div>
+                            <div class="message">
+                                <p>{{ comment.body }}.</p>
+                                <img src="/front/icons/replyIcon.png" alt="">
+                            </div>
+                        </div> 
+                </div>
+            </div>
+</template>
+
+<script>
+import EventBus from '../../frontend/event-bus';
+      export default {
+        props:{
+            blog_id:Number,
+            user:Object
+            },
+        data:function() {
+            return{
+                comments: {},
+                commentBox: '',
+                commentcount:'',
+        }
+      },
+      mounted() {
+        this.getComments();
+        Echo.channel('blog'+this.blog_id)
+            .listen('NewComment',(comment) => {
+                //this.comments.push(event.comment);
+                console.log("listned");
+                this.comments.unshift(comment);
+            });
+      },
+      computed: {
+      commentCount () {
+        this.commentcount = this.comments && this.comments.length;
+         EventBus.$emit('commentcount', this.commentcount);
+         return this.commentcount;
+      }
+    },
+      methods: {
+        getComments() {
+          axios.get('/api/blogs/'+this.blog_id+'/comments')
+                .then((response) => {
+                    this.comments = response.data;
+                   
+                    })
+                .catch(function (error) {
+                  console.log(error);
+                });
+        },
+        postComment() {
+          axios.post('/api/blogs/'+this.blog_id+'/comment', {
+            user_id: this.user.id,
+            body: this.commentBox
+          })
+          .then((response) => {
+               this.getComments();
+            this.commentBox = '';
+            Echo.channel('blog'+this.blog_id)
+            .listen('NewComment',(event) => {
+                console.log("listned"); 
+            });
+           
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        },
+      }
+    }
+</script>
