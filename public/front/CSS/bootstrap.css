@@ -1,0 +1,4842 @@
+/*---------------------------------------------------------------------------------*/
+/*// Extra small devices (portrait phones, less than 576px)*/
+/*---------------------------------------------------------------------------------*/
+@media (max-width: 575.98px) {
+  .sub_container {
+   
+    height:150vh;
+    overflow-y: scroll;
+}
+  .container_child{
+    width: 142%;
+    margin-left: -3%;
+  }
+  .head_log{
+    font-size:2vw!important;
+    font-family:space age;
+    color:#0ee3ea !important;
+    z-index:1000;
+  }
+  .form-det
+  {
+    margin-top: -34%;
+    margin-left: 13%;
+  }
+
+  .font_fam{
+    font-size: 2vh;
+  }
+  .lbl_fgtpsw,.label_signup,.err_msgs{
+    font-family:space age;
+    font-size: 1.5vh;
+  }
+  .row{
+  height: 0% !important;
+    width: 100% !important;
+ }
+ .head_1 {
+  font-size:1.5rem;
+}
+.label_info{
+  font-size: 0.8rem;
+}
+.lbl_text{
+  font-size: 0.8rem;
+}
+
+.camera_alignment {
+  position: absolute;
+  top: 11.5% !important;
+  left: 61.5% !important;
+}
+video{
+  width: 128px  !important;
+  height: 160px  !important;;
+  border: 2px solid white;
+}
+.btn_snap_shot{
+    position: absolute;
+    top: 26%;
+    left: 67%;
+    width: 28%;
+    height: 2%;
+    padding: 1px;
+    font-size: small;
+}
+.btn_cam_reset{
+    position: absolute;
+    left: 76%;
+    top: 29%;
+    padding: 3px;
+    width: 13%;
+    font-size: small;
+}
+
+
+.lbl_occupation {
+  position: absolute;
+  top: 62%;
+  left: 59%;
+}
+.occupation{
+  width: 19%;
+  height: 4%;
+  position: absolute;
+  left: 80%;
+  top: 62%;
+}
+.txt_occup{
+  position: absolute;
+  top: 65%;
+  width: 10%;
+  height: 6%;
+  padding: 0;
+  left: 74%;
+  background:transparent;
+  border:0px ;
+}
+.txtarea_occup{
+  position: absolute;
+  display: block;
+  border: 0px solid white;
+  position: absolute;
+  left: 74%;
+  top: 71%;
+}
+.cloud_bg{
+    height: 12%;
+    width: 41%;
+    position: absolute;
+    top: 50%;
+    left: 60%;
+}
+.txt_occupation{ 
+  position: absolute;
+  left: 57.5%;
+  height: 13%;
+  width: 46%;
+  top: 50%;
+  z-index: 200;
+}
+/*----Agreement page --myprofile----------*/
+.div_container{
+  position: relative;
+  width:100%;
+  height:100vh;
+  border:0px solid white;
+  overflow: hidden;
+  margin:auto;
+}
+.img_sun{
+  position:absolute;
+  width:56%;
+  height:100vh;
+  overflow: hidden;
+  left:25%;
+  display: block;
+  box-sizing: border-box;
+}
+/*
+Animation for sun
+*/
+.ani-rollout_earth{
+ 
+	animation-name: rollOut_earth;
+	animation-duration: 5s;
+
+}
+@keyframes rollOut_earth {
+  from {
+   
+    top: 1%;
+    left: 80%;
+    height:0%;
+    width:0%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+  to {
+ 
+    top: 1%;
+    left: 25%;
+    height:99vh;
+    width:56%;
+	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+}	
+.text_part1{
+  height: 98vh;
+  position: absolute;
+  top: 0%;
+  left: -2%;
+  width: 100%;
+  z-index: 12;
+  display:none;
+ }
+ .next_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 54%;
+  top: 92%;
+  z-index: 12;
+   display:none;
+}
+
+
+.text_part2{
+  height: 97vh;
+  position: absolute;
+  top: 0%;
+  left: -2%;
+  width: 100%;
+  z-index: 12;
+   display:none;
+ }
+ .prev_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 52%;
+  top: 94%;
+  z-index: 12;
+   display:none;
+ 
+}
+
+
+.btn_agree{
+    color: rgb(230, 230, 230);
+    background-color: rgb(88, 22, 206);
+    border-color: rgb(103, 58, 183);
+    position: absolute;
+    z-index: 12;
+    width: 7%;
+    height: 5vh;
+    font-size: x-small;
+    left: 50%;
+    top: 89%;
+    display:none;
+}
+
+ /* Constellation  */
+}
+/*---------------------------------------------------------------------------------*/
+/*// Small devices (landscape phones, 576px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .txtarea_occup {
+  
+    left: 87% !important;
+    top: 114%!important;
+    font-size: 10px!important;
+}
+  .camera{
+    position: absolute;
+    top: 3% !important;
+    height: 51% !important;
+    width: 76% !important;
+    border: 2px solid white;
+  }
+   .sub_container {
+    height: 100vh;
+  
+    overflow-y: scroll;
+}
+  .container_child
+{
+  width: 112%;
+  margin-top: 2%;
+  margin-left: -3%;
+  }
+  .head_log{
+    font-size:1.5vw!important;
+    font-family:space age;
+    color:#0ee3ea !important;
+  }
+  .form-det
+  {
+    margin-top: -34%;
+  /*  margin-left: 5%;*/
+      margin-left:  5%;
+ 
+  }
+  .head_log{
+    font-size:1.5vw!important;
+    font-family:space age;
+    color:#0ee3ea !important;
+    z-index:1000;
+  }
+  .font_fam{
+    font-size: 2vh;
+  }
+  .lbl_fgtpsw,.label_signup,.err_msgs{
+    font-family:space age;
+    font-size: 1.5vh;
+  }
+  /*.row{
+    height: 23% !important;
+    
+   }*/
+ 
+   /* Registration Page */
+
+ 
+   video {
+    width: 139px !important;
+    height: 147px !important;
+
+    border: 2px solid white;
+}
+.btn_snap_shot{
+  position: absolute;
+  top: 71%;
+  left: 77%;
+  width: 14%;
+  height: 7%;
+  padding: 1px;
+  font-size: small;
+}
+.btn_cam_reset{
+  position: absolute;
+  left: 93%;
+  top: 71%;
+  padding: 3px;
+  width: 6%;
+  height: 7%;
+  font-size: small;
+}
+
+
+.lbl_occupation {
+  position: absolute;
+  top: 116%;
+  left: 75%;
+}
+.occupation{
+  width: 14%;
+    height: 19%;
+    position: absolute;
+    left: 85%;
+    top: 112%;
+}
+.txt_occup{
+  position: absolute;
+  top: 65%;
+  width: 10%;
+  height: 6%;
+  padding: 0;
+  left: 74%;
+  background:transparent;
+  border:0px ;
+}
+.txtarea_occup{
+  position: absolute;
+  display: block;
+  border: 0px solid white;
+  position: absolute;
+  left: 74%;
+  top: 71%;
+}
+.cloud_bg{
+  height: 38%;
+  width: 18%;
+  position: absolute;
+  top: 77%;
+  left: 80%;
+}
+.txt_occupation{ 
+  position: absolute;
+    left: 79.5%;
+    height: 38%;
+    width: 20%;
+    top: 78%;
+    z-index: 200;
+}
+
+.camera_alignment {
+  position: absolute;
+  top: 25%;
+  left: 77%;
+}
+.head_1 {
+  font-size:1.5rem;
+}
+.label_info{
+  font-size: 1rem;
+}
+.lbl_text{
+  font-size: 0.8rem;
+}
+.virgo {
+ 
+  top: 113% !important;
+  left: 1% !important;
+
+}
+.taurus {
+ 
+  top: 160%!important;
+  left: 4% !important;
+}
+.scorpio {
+ 
+  top: 156% !important;
+  left: 32% !important;
+}
+.gemini {
+  left: 74% !important;
+  top: 161% !important;
+  
+}
+.leo {
+ 
+  left: 63% !important;
+}
+.sagittarius {
+  
+  left: 82% !important;
+  top: 7% !important;
+ 
+}
+.cancer {
+  position: absolute;
+  left: 80% !important;
+  top: 144% !important;
+ 
+}
+/* Constellation animation */
+
+/*Capricorn*/
+.text_Capricorn{
+  display: none;
+    position: absolute;
+    top: 8% !important;
+    left: 44%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 16px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+.ani-rollouttext_Capricorn{
+	position: absolute;
+	animation-name: rollouttext_Capricorn;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Capricorn{
+  from {
+  position: absolute;
+  top: 6% !important;
+  left: 40%!important;
+  height: 0%;
+  width: 0%;
+  font-size: 8px !important;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 8% !important;
+  left: 44%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 16px !important;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+/* Aquarius */
+.text_Aquaris{
+  display: none;
+    position: absolute;
+    top: 2% !important;
+    left: -6%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 17px !important;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+ 
+
+.ani-rollouttext_Aquaris{
+	position: absolute;
+	animation-name: rollouttext_Aquaris;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aquaris {
+  from {
+    position: absolute;
+    top: 10%;
+    left: -3%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px !important;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+      position: absolute;
+      top: 2%;
+     left: -6%;
+      height: 2%;
+      width: 34%;
+      font-size: 17px!important;
+      transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+/*Pisces*/
+.text_Pisces{
+  display: none;
+  position: absolute;
+  top: 34%  !important;
+    left: -13%  !important;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Pisces{
+position: absolute;
+animation-name: rollouttext_Pisces;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Pisces{
+from {
+  position: absolute;
+  top: 45%  !important;
+  left: -10%  !important;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 34% !important;
+  left: -13%  !important;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+
+/*Aries*/
+.text_Aries{
+  display: none;
+    position: absolute;
+    top: 12%;
+    left: 25%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Aries{
+	position: absolute;
+	animation-name: rollouttext_Aries;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aries{
+  from {
+    position: absolute;
+    top: 9%;
+    left: 16%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 12%;
+    left: 25%;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+
+
+/*Taurus*/
+.text_Taurus{
+  display: none;
+    position: absolute;
+    top: 159%;
+    left: 1%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Taurus{
+	position: absolute;
+	animation-name: rollouttext_Taurus;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Taurus{
+  from {
+  position: absolute;
+  top: 148%;
+    left: 1%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 151%;
+    left: 1%;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Gemini*/
+.text_Gemini{
+  display: none;
+    position: absolute;
+    top: 156% !important;
+    left: 74% !important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Gemini{
+	position: absolute;
+	animation-name: rollouttext_Gemini;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Gemini{
+  from {
+  position: absolute;
+  top: 153% !important;
+  left: 74% !important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 156% !important;
+  left: 74% !important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Cancer*/
+.text_Cancer{
+  display: none;
+    position: absolute;
+    top: 141%!important;
+    left: 76%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+.text_Cancer_p{
+  display: none;
+  position: absolute;
+  top: 45%;
+  left: 80%;
+  height: 2%;
+  width: 21%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+.ani-rollouttext_Cancer{
+	position: absolute;
+	animation-name: rollouttext_Cancer;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Cancer{
+  from {
+  position: absolute;
+  top: 139%!important;
+  left: 76%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 141%!important;
+    left: 76%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+
+.text_Leo{
+  display: none;
+    position: absolute;
+    top: 7% !important;
+    left: 72%;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Leo{
+	position: absolute;
+	animation-name: rollouttext_Leo;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Leo{
+  from {
+  position: absolute;
+  top: 7% !important;
+    left: 72%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 8% !important;
+    left: 72%;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Virgo*/
+.text_Virgo{
+  display: none;
+  position: absolute;
+  top: 104% !important;
+  left: -6% !important;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Virgo{
+position: absolute;
+animation-name: rollouttext_Virgo;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Virgo{
+from {
+  position: absolute;
+  top: 100% !important;
+  left: -6% !important;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 104% !important;
+  left: -6% !important;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+/*Libra*/
+.text_Libra{
+  display: none;
+  position: absolute;
+  top: 77%;
+  left: -7%;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Libra{
+position: absolute;
+animation-name: rollouttext_Libra;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Libra{
+from {
+  position: absolute;
+  top:75%;
+  left: -7%;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 77%;
+  left: -7%;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+.scorpio {
+  position: absolute;
+  left: 57% !important;
+  width: 18%!important;
+  top: 87% !important;
+}
+
+
+/*Scorpio*/
+.text_Scorpio{
+    display: none;
+    position: absolute;
+    top: 169% !important;
+    left: 35% !important;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Scorpio{
+	position: absolute;
+	animation-name: rollouttext_Scorpio;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Scorpio{
+  from {
+    position: absolute;
+    top: 169% !important;
+    left: 35% !important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 163% !important;
+    left: 35% !important;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+/*Sagittarius*/
+.text_Sagittarius{
+    display: none;
+    position: absolute;
+    top: 1% !important;
+    left: 81%;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+.ani-rollouttext_Sagittarius{
+	position: absolute;
+	animation-name: rollouttext_Sagittarius;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Sagittarius{
+  from {
+    position: absolute;
+    top: 0% !important;
+    left: 80%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 1% !important;
+    left: 81%;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.scorpio {
+
+  left: 34% !important;
+  width: 22%!important;
+  top: 154% !important;
+}
+
+.div_for_astro{
+  position: absolute;
+  top: 0%;
+  left: 42%;
+  width: 68%;
+  height: 182%;
+  border: 0px solid white;
+  background-image: url(../images/astronut/skyboxbgfor_astro.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 10000 !important;
+}
+.astro_occupation{
+  position: absolute;
+  left: 44.5%;
+    top: 93%;
+    width: 55%;
+    height: 88%;
+    z-index: 10000 !important;
+}
+
+.img_astro{
+  position: absolute;
+	animation-name: rollout_astronut;
+	animation-duration: 4s;
+  
+  
+}
+
+
+@keyframes rollout_astronut{
+  from {
+    position: absolute;
+    left: 80%;
+    top: 178%;
+    width: 2%;
+    height: 2%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    left: 44.5%;
+    top: 93%;
+    width: 55%;
+    height: 88%;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.img_astro_down{
+  position: absolute;
+	animation-name: rollout_astronut_down;
+	animation-duration: 6s;
+  
+  
+}
+
+
+@keyframes rollout_astronut_down{
+  from {
+    position: absolute;
+    left: 44.5%;
+    top: 93%;
+    width: 55%;
+    height: 80%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    left: 75%;
+    top:168%;
+    width: 0%;
+    height: 0%;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.text_occup{
+  width: 79%;
+  height: 34%;
+  position: absolute;
+  /*top: 628%;*/
+  left: 8%;
+ 
+}
+.btn_occ_submit{
+  position: absolute;
+ /* top: 680%;*/
+  left: 32%;
+  width: 38%;
+  height: 40%;
+  font-size: 13px;
+}
+.occ_description{
+  height: 20%;
+    width: 25%;
+    overflow-y: auto;
+    position: absolute;
+    border: 0px solid black;
+    top: 124%;
+    left: 60%;
+    z-index: 10000;
+    font-family: georgia;
+    color: #121884;
+    font-size: 12px;
+    font-weight: bold;
+  
+}
+.div_clock{
+  height: 60%;
+  width: 57%;
+  position: absolute;
+  border: 1px solid grey;
+  top: 1%;
+  left: 43%;
+  z-index: 10000;
+}
+.cuckoo_image{
+  width: 40%;
+}
+.cuckoo_text{
+  width: 54%;
+  color: white;
+  position: absolute;
+  top: 4%;
+  left: 43%;
+  font-size: 14px;
+  text-align: justify;
+}
+
+#Div_for_wiki{
+  visibility: hidden;
+  position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 173%;
+border: 2px solid white;
+z-index:20000;       
+}
+#Div_for_wiki2{
+  visibility: hidden;
+  position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 173%;
+border: 2px solid white;
+z-index:20000;       
+}
+.div_helmet{
+  position: absolute;
+  top: 97%;
+  width: 25%;
+  height: 16%;
+  border: 0px solid white;
+  left: 59%;
+  z-index: 100000;
+  border-radius: 66%;
+}
+/*----Agreement page --myprofile----------*/
+.div_container{
+  position: relative;
+  width:100%;
+  height:100vh;
+  border:0px solid white;
+  overflow: hidden;
+  margin:auto;
+}
+.img_sun{
+  position:absolute;
+  width:56%;
+  height:100vh;
+  overflow: hidden;
+  left:25%;
+  display: block;
+  box-sizing: border-box;
+}
+/*
+Animation for sun
+*/
+.ani-rollout_earth{
+ 
+	animation-name: rollOut_earth;
+	animation-duration: 5s;
+
+}
+@keyframes rollOut_earth {
+  from {
+   
+    top: 1%;
+    left: 80%;
+    height:0%;
+    width:0%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+  to {
+ 
+    top: 1%;
+    left: 25%;
+    height:99vh;
+    width:56%;
+	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+}	
+.text_part1{
+  height: 98vh;
+  position: absolute;
+  top: 0%;
+  left: -2%;
+  width: 100%;
+  z-index: 12;
+  display:none;
+ }
+ .next_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 54%;
+  top: 92%;
+  z-index: 12;
+   display:none;
+}
+
+
+.text_part2{
+  height: 97vh;
+  position: absolute;
+  top: 0%;
+  left: -2%;
+  width: 100%;
+  z-index: 12;
+   display:none;
+ }
+ .prev_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 52%;
+  top: 94%;
+  z-index: 12;
+   display:none;
+ 
+}
+
+
+.btn_agree{
+    color: rgb(230, 230, 230);
+    background-color: rgb(88, 22, 206);
+    border-color: rgb(103, 58, 183);
+    position: absolute;
+    z-index: 12;
+    width: 7%;
+    height: 5vh;
+    font-size: x-small;
+    left: 50%;
+    top: 89%;
+    display:none;
+}
+
+/*-----------------*/
+}
+/*---------------------------------------------------------------------------------*/
+/*// Medium devices (tablets, 768px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 768px) and (max-width: 991.98px) { 
+  .txtarea_occup {
+   
+    left: 89% !important;
+    top: 118%!important;
+    font-size: 13px !important;
+}
+  .camera{
+    position: absolute;
+    top: 3% !important;
+    height: 51% !important;
+    width: 76% !important;
+    border: 2px solid white;
+  }
+   .sub_container {
+   
+    height:100vh;
+    overflow-y: scroll;
+}
+ 
+  .container_child
+  {
+  margin-left: -2%;
+  margin-top: -2%;
+ }
+ .head_log{
+  font-size:2vw!important;
+  font-family:space age;
+  color:#0ee3ea !important;
+}
+
+
+.form-det
+{
+  margin-top: -34.5%;
+  margin-left: 5.5%;
+}
+.head_log{
+  font-size:2.5vw!important;
+  font-family:space age;
+  color:#0ee3ea !important;
+  z-index:1000;
+}
+.font_fam{
+  font-size: 1.9vh;
+}
+.lbl_fgtpsw,.label_signup,.err_msgs{
+  font-family:space age;
+  font-size: 1.6vh;
+}
+
+
+   /* Registration Page */
+   .camera_alignment{
+
+    position: absolute;
+    top: 29% !important;
+    left: 76%;
+  }
+
+    video {
+      width: 141px !important;
+      height: 134px !important;
+      border: 5px solid white;
+  }
+
+  .btn_snap_shot{
+    position: absolute;
+    top: 73%;
+    left: 76%;
+    width: 11%;
+    height:8%;
+    padding: 1px;
+    font-size: small;
+  }
+  .btn_cam_reset{
+    position: absolute;
+    left: 88%;
+    top: 73%;
+    padding: 6px;
+    font-size: small;height: 8%;
+  }
+  .lbl_occupation {
+    position: absolute;
+    top: 122%;
+    left: 74%;
+  }
+  .occupation{
+    width: 14%;
+    height: 19%;
+    position: absolute;
+    left: 86%;
+    top: 118%;
+  }
+  .txt_occup{
+    position: absolute;
+    top: 65%;
+    width: 10%;
+    height: 6%;
+    padding: 0;
+    left: 74%;
+    background:transparent;
+    border:0px ;
+  }
+  .txtarea_occup{
+    position: absolute;
+    display: block;
+    border: 0px solid white;
+    position: absolute;
+    left: 74%;
+    top: 71%;
+  }
+  .cloud_bg{
+    height: 38%;
+    width: 18%;
+    position: absolute;
+    top: 83%;
+    left: 80%;
+  }
+  .txt_occupation{ 
+    position: absolute;
+    left: 79.5%;
+    height: 42%;
+    width: 20%;
+    top: 82%;
+    z-index: 200;
+  }
+  .head_1 {
+    font-size:1.5rem;
+  }
+  .label_info{
+    font-size:1rem;
+  }
+  .lbl_text{
+    font-size: 0.9rem;
+  }
+  .taurus{
+    left: -1% !important;
+    top: 134% !important;
+  }
+  .scorpio{
+    
+    left: 22% !important;
+    top: 138% !important;
+  }
+  .gemini{
+   
+    top: 140% !important;
+    left: 41% !important;
+  }
+  .cancer{
+  
+    left: 72%  !important;
+    top: 141%  !important;
+    
+  }
+
+  /* Constellation animation */
+
+/*Capricorn*/
+.text_Capricorn{
+  display: none;
+    position: absolute;
+    top: 8% !important;
+    left: 44%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+.ani-rollouttext_Capricorn{
+	position: absolute;
+	animation-name: rollouttext_Capricorn;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Capricorn{
+  from {
+    position: absolute;
+    top: 6% !important;
+    left: 40%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 8% !important;
+    left: 44%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 18px !important;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+/* Aquarius */
+.text_Aquaris{
+    display: none;
+    position: absolute;
+    top: 2% !important;
+    left: -6%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 17px !important;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+ 
+
+.ani-rollouttext_Aquaris{
+	position: absolute;
+	animation-name: rollouttext_Aquaris;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aquaris {
+  from {
+      position: absolute;
+      top: 10%;
+      left: -3%;
+      height: 0%;
+      width: 0%;
+      font-size: 12px !important;
+      transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+      position: absolute;
+      top: 2%;
+      left: -6%;
+      height: 2%;
+      width: 34%;
+      font-size: 17px!important;
+      transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+/*Pisces*/
+.text_Pisces{
+    display: none;
+    position: absolute;
+    top: 34%  !important;
+    left: -13%  !important;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Pisces{
+  position: absolute;
+  animation-name: rollouttext_Pisces;
+  animation-duration: 1s;
+
+}
+@keyframes rollouttext_Pisces{
+from {
+    position: absolute;
+    top: 45%  !important;
+    left: -10%  !important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+    position: absolute;
+    top: 34% !important;
+    left: -13%  !important;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+
+/*Aries*/
+.text_Aries{
+    display: none;
+    position: absolute;
+    top: 12%;
+    left: 25%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Aries{
+	position: absolute;
+	animation-name: rollouttext_Aries;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aries{
+  from {
+    position: absolute;
+    top: 9%;
+    left: 16%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 12%;
+    left: 25%;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+
+
+/*Taurus*/
+.text_Taurus{
+    display: none;
+    position: absolute;
+    top: 125% !important;
+    left: -13% !important;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Taurus{
+	position: absolute;
+	animation-name: rollouttext_Taurus;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Taurus{
+  from {
+    position: absolute;
+    top: 125%!important;
+    left: -13%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 125%!important;
+    left: -13%!important;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.cancer {
+  left: 83% !important;
+  top: 162% !important;
+}
+.scorpio {
+  left: 1% !important;
+  width: 19% !important;
+  top: 163% !important;
+}
+.gemini {
+  top: 161% !important;
+  left: 37% !important;
+}
+.leo {
+  top: 2% !important;
+  left: 59%!important;
+}
+.sagittarius {
+ 
+  left: 82%!important;
+  top: 8%!important;
+ 
+}
+
+/*Gemini*/
+.text_Gemini{
+    display: none;
+    position: absolute;
+    top: 162%!important;
+    left: 38%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Gemini{
+	position: absolute;
+	animation-name: rollouttext_Gemini;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Gemini{
+  from {
+    position: absolute;
+    top: 160%!important;
+    left: 38%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 162%!important;
+    left: 38%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Cancer*/
+.text_Cancer{
+    display: none;
+    position: absolute;
+    top: 153%!important;
+    left: 80%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+.ani-rollouttext_Cancer{
+	position: absolute;
+	animation-name: rollouttext_Cancer;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Cancer{
+  from {
+    position: absolute;
+    top: 150%!important;
+    left: 80%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 153%!important;
+    left: 80%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+  }
+}
+
+
+
+
+.text_Leo{
+    display: none;
+    position: absolute;
+    top: 7% !important;
+    left: 65% !important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Leo{
+	position: absolute;
+	animation-name: rollouttext_Leo;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Leo{
+  from {
+    position: absolute;
+    top: 7% !important;
+    left: 63% !important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 8% !important;
+    left: 65% !important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Virgo*/
+.text_Virgo{
+  display: none;
+  position: absolute;
+  top: 110% !important;
+  left: -14% !important;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Virgo{
+position: absolute;
+animation-name: rollouttext_Virgo;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Virgo{
+from {
+  position: absolute;
+  top: 108% !important;
+  left: -14% !important;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 110% !important;
+  left: -14% !important;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+
+
+/*Libra*/
+.text_Libra{
+  display: none;
+  position: absolute;
+  top: 88%!important;
+  left: -8%!important;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Libra{
+position: absolute;
+animation-name: rollouttext_Libra;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Libra{
+from {
+  position: absolute;
+  top: 86%!important;
+  left: -8%!important;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 88%!important;
+  left: -8%!important;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+/*Scorpio*/
+.text_Scorpio{
+    display: none;
+    position: absolute;
+    top: 161% !important;
+    left: -10% !important;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Scorpio{
+	position: absolute;
+	animation-name: rollouttext_Scorpio;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Scorpio{
+  from {
+    position: absolute;
+    top: 160% !important;
+    left: -10% !important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 161% !important;
+    left: -10% !important;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+/*Sagittarius*/
+.text_Sagittarius{
+    display: none;
+    position: absolute;
+    top: 5% !important;
+    left: 81%;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Sagittarius{
+	position: absolute;
+	animation-name: rollouttext_Sagittarius;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Sagittarius{
+  from {
+    position: absolute;
+    top: 4% !important;
+    left: 81%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 5% !important;
+    left: 81%;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.div_for_astro{
+  position: absolute;
+  top: 0%;
+  left: 42%;
+  width: 68%;
+  height: 182%;
+  border: 0px solid white;
+  background-image: url(../images/astronut/skyboxbgfor_astro.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 10000 !important;
+}
+.astro_occupation{
+  position: absolute;
+  left: 44.5%;
+    top: 93%;
+    width: 55%;
+    height: 88%;
+    z-index: 10000 !important;
+}
+
+.img_astro{
+  position: absolute;
+	animation-name: rollout_astronut;
+	animation-duration: 4s;
+  
+  
+}
+
+
+@keyframes rollout_astronut{
+  from {
+    position: absolute;
+    left: 80%;
+    top: 220%;
+    width: 2%;
+    height: 2%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    left: 44.5%;
+    top: 93%;
+    width: 55%;
+    height: 88%;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.img_astro_down{
+  position: absolute;
+	animation-name: rollout_astronut_down;
+	animation-duration: 6s;
+  
+  
+}
+
+
+@keyframes rollout_astronut_down{
+  from {
+    position: absolute;
+    left: 44.5%;
+    top: 93%;
+    width: 55%;
+    height: 80%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    left: 75%;
+    top:168%;
+    width: 0%;
+    height: 0%;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.text_occup{
+  width: 79%;
+  height: 34%;
+  position: absolute;
+  /*top: 628%;*/
+  left: 8%;
+ 
+}
+.btn_occ_submit{
+  position: absolute;
+ /* top: 680%;*/
+  left: 32%;
+  width: 38%;
+  height: 40%;
+  font-size: 13px;
+}
+.occ_description{
+  height: 20%;
+    width: 25%;
+    overflow-y: auto;
+    position: absolute;
+    border: 0px solid black;
+    top: 124%;
+    left: 60%;
+    z-index: 10000;
+    font-family: georgia;
+    color: #121884;
+    font-size: 12px;
+    font-weight: bold;
+  
+}
+.div_clock{
+  height: 59%;
+  width: 49%;
+  position: absolute;
+  border: 1px solid grey;
+  top: 1%;
+  left: 51%;
+  z-index: 10000;
+}
+.cuckoo_image{
+  width: 40%;
+}
+.cuckoo_text{
+  width: 54%;
+  color: white;
+  position: absolute;
+  top: 4%;
+  left: 43%;
+  font-size: 14px;
+  text-align: justify;
+}
+
+#Div_for_wiki{
+  visibility: hidden;
+  position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 173%;
+border: 2px solid white;
+z-index:20000;       
+}
+#Div_for_wiki2{
+  visibility: hidden;
+  position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 173%;
+border: 2px solid white;
+z-index:20000;       
+}
+.div_helmet{
+  position: absolute;
+  top: 97%;
+  width: 25%;
+  height: 16%;
+  border: 0px solid white;
+  left: 59%;
+  z-index: 100000;
+  border-radius: 66%;
+}
+/*----Agreement page --myprofile----------*/
+.div_container{
+  position: relative;
+  width:100%;
+  height:100vh;
+  border:0px solid white;
+  overflow: hidden;
+}
+.img_sun{
+ width:56%;
+  height:99vh;
+  overflow: hidden;
+  left: 23%;
+  display: block;
+  box-sizing: border-box;
+}
+/*
+Animation for sun
+*/
+.ani-rollout_earth{
+  position:relative;
+	animation-name: rollOut_earth;
+	animation-duration: 5s;
+
+}
+@keyframes rollOut_earth {
+  from {
+    
+    top: 1%;
+    left: 80%;
+    width:0%;
+    height:0%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+  to {
+
+    top: 1%;
+    left: 23%;
+    width:54%;
+    height:99vh;
+	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+}	
+.text_part1{
+  height: 98vh;
+  position: absolute;
+  top: 0%;
+  left: -4%;
+  width: 100%;
+  z-index: 12;
+  display:none;
+ }
+ .next_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 50%;
+  top: 92%;
+  z-index: 12;
+   display:none;
+}
+
+
+.text_part2{
+  height:97vh;
+  position: absolute;
+  top: 0%;
+  left: -3%;
+  width: 98%;
+  z-index: 12;
+   display:none;
+ }
+ .prev_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 50%;
+    top: 93%;
+  z-index: 12;
+   display:none;
+ 
+}
+
+
+.btn_agree{
+    color: rgb(230, 230, 230);
+    background-color: rgb(88, 22, 206);
+    border-color: rgb(103, 58, 183);
+    position: absolute;
+    z-index: 12;
+    width: 6%;
+    height: 6%;
+    font-size: x-small;
+    left: 48%;
+    top: 87%;
+    display:none;
+}
+
+/*-----------------*/
+}
+
+/*---------------------------------------------------------------------------------*/
+/*// Large devices (desktops, 992px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 992px) and (max-width: 1198px) {
+  .txtarea_occup {
+  
+    left: 84% !important;
+    top: 52% !important;
+    width: 9% !important;
+}
+  .camera{
+    position: absolute;
+    top: -4% !important;
+    height: 70% !important;
+    width: 76% !important;
+    border: 2px solid white;
+  }
+  .container_child
+  {
+    width: 133% !important;
+    margin-left: -2%;
+    margin-top: 2%;
+  }
+  .head_log{
+    font-size:2.5vw!important;
+    font-family:space age;
+    color:#0ee3ea !important;
+    z-index:1000;
+  }
+  
+.form-det
+{
+  margin-top: -33.5%;
+  margin-left: 9.5%;
+}
+
+.font_fam{
+  font-size: 1.5vh;
+}
+
+.lbl_fgtpsw,.label_signup,.err_msgs{
+  font-family:space age;
+  font-size: 1vh;
+}
+.row{
+  height: 10% !important;
+}
+.camera_alignment{
+
+  position: absolute;
+  top: 14% !important;
+  left: 76%;
+}
+
+
+    video {
+      width: 145px !important;
+      height: 159px !important;
+      border: 5px solid white;
+  }
+
+
+.aquarius {
+ 
+    top: 6% !important;
+    left: 0%!important;
+    width: 27%!important;
+}
+.pisces {
+  left: 0% !important;
+  top: 26% !important;
+  width: 19% !important;
+  height: 13% !important;
+}
+.libra{
+  left: 1% !important;
+  top: 42% !important;
+  width: 19% !important;
+  height: 15% !important
+}
+.aries{
+  top: 2% !important;
+  left: 23% !important;
+}
+.capricorn {
+ 
+  top: 0%  !important;
+  width: 22%  !important;
+  left: 43%  !important;
+}
+.leo {
+ 
+  top: 2% !important;
+  width: 21% !important;
+  left: 60% !important;
+}
+.virgo {
+ 
+  top: 67% !important;
+  left: 0% !important;
+  width: 14% !important;
+  height: 13% !important;
+}
+
+.taurus {
+  width: 21%!important;
+  left: 1%!important;
+  top: 91%!important;
+}
+.scorpio {
+  left: 23% !important;
+    width: 20%!important;
+    height: 12% !important;
+    top: 94% !important;
+}
+.gemini {
+
+  top: 91% !important;
+  width: 19% !important;
+  left: 57%!important;
+}
+.cancer {
+  left: 81% !important;
+  top: 88% !important;
+  width: 19% !important
+}.sagittarius {
+
+  left: 82%!important;
+  top: 4%!important;
+  width: 17%!important;
+}
+.btn_snap_shot {
+  position: absolute;
+  top: 40%;
+  left: 76%;
+  width: 11%;
+  height: 5%;
+  padding: 1px;
+  font-size: small;
+}
+.btn_cam_reset {
+  position: absolute;
+  left: 88%;
+  top: 40%;
+  padding: 5px;
+  height: 5%;
+  font-size: small;
+}
+.lbl_occupation {
+  position: absolute;
+  top: 72%;
+  left: 75%;
+}
+.occupation {
+  width: 15%;
+  height: 13%;
+  position: absolute;
+  left: 81%;
+  top: 73%;
+}
+.txt_occup{
+  position: absolute;
+  top: 65%;
+  width: 10%;
+  height: 6%;
+  padding: 0;
+  left: 74%;
+  background:transparent;
+  border:0px ;
+}
+.txtarea_occup{
+  position: absolute;
+  display: block;
+  border: 0px solid white;
+  left: 84% !important;
+  top: 74% !important;
+  width: 9% !important;
+}
+.cloud_bg {
+  height: 19%;
+  width: 15%;
+  position: absolute;
+  top: 56%;
+  left: 86%;
+}
+.txt_occupation {
+  position: absolute;
+  left: 85%;
+  height: 18%;
+  width: 18%;
+  top: 57%;
+  z-index: 200;
+}
+
+ /* Constellation animation */
+
+/*Capricorn*/
+.text_Capricorn{
+    display: none;
+    position: absolute;
+    top: 8% !important;
+    left: 44%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+.ani-rollouttext_Capricorn{
+	position: absolute;
+	animation-name: rollouttext_Capricorn;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Capricorn{
+  from {
+    position: absolute;
+    top: 6% !important;
+    left: 44%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 8% !important;
+    left: 44%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 18px !important;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+/* Aquarius */
+.text_Aquaris{
+    display: none;
+    position: absolute;
+    top: 2% !important;
+    left: -6%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 17px !important;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+ 
+
+.ani-rollouttext_Aquaris{
+	position: absolute;
+	animation-name: rollouttext_Aquaris;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aquaris {
+  from {
+    position: absolute;
+    top: 10%;
+    left: -3%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px !important;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+      position: absolute;
+      top: 2%;
+      left: -6%;
+      height: 2%;
+      width: 34%;
+      font-size: 17px!important;
+      transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+/*Pisces*/
+.text_Pisces{
+    display: none;
+    position: absolute;
+    top: 34%  !important;
+    left: -13%  !important;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Pisces{
+position: absolute;
+animation-name: rollouttext_Pisces;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Pisces{
+from {
+  position: absolute;
+  top: 45%  !important;
+  left: -10%  !important;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 34% !important;
+  left: -13%  !important;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+
+/*Aries*/
+.text_Aries{
+  display: none;
+    position: absolute;
+    top: 9%;
+    left: 20%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Aries{
+	position: absolute;
+	animation-name: rollouttext_Aries;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aries{
+  from {
+    position: absolute;
+    top: 12%;
+    left: 16%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 9%;
+    left: 20%;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+
+
+/*Taurus*/
+.text_Taurus{
+  display: none;
+    position: absolute;
+    top: 71% !important;
+    left: 15% !important;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Taurus{
+	position: absolute;
+	animation-name: rollouttext_Taurus;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Taurus{
+  from {
+  position: absolute;
+  top: 70% !important;
+    left: 15% !important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 71% !important;
+    left: 15% !important;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+/*Gemini*/
+.text_Gemini{
+  display: none;
+    position: absolute;
+    top: 65% !important;
+    left: 66% !important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Gemini{
+	position: absolute;
+	animation-name: rollouttext_Gemini;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Gemini{
+  from {
+  position: absolute;
+  top: 65% !important;
+  left: 66% !important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  ttop: 66% !important;
+  left: 66% !important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Cancer*/
+.text_Cancer{
+  display: none;
+    position: absolute;
+    top: 71%!important;
+    left: 76%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Cancer{
+	position: absolute;
+	animation-name: rollouttext_Cancer;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Cancer{
+  from {
+  position: absolute;
+  top: 72%!important;
+  left: 76%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 71%!important;
+    left: 76%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+
+.text_Leo{
+  display: none;
+    position: absolute;
+    top: 7% !important;
+    left: 61%;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Leo{
+	position: absolute;
+	animation-name: rollouttext_Leo;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Leo{
+  from {
+  position: absolute;
+  top: 7% !important;
+    left: 58%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 8% !important;
+    left: 61%;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Virgo*/
+.text_Virgo{
+  display: none;
+  position: absolute;
+  top: 65% !important;
+  left: -14% !important;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Virgo{
+position: absolute;
+animation-name: rollouttext_Virgo;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Virgo{
+from {
+  position: absolute;
+  top: 65% !important;
+  left: -14% !important;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 64% !important;
+  left: -14% !important;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+/*Libra*/
+.text_Libra{
+  display: none;
+  position: absolute;
+  top: 57% !important;
+  left: -7%;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Libra{
+position: absolute;
+animation-name: rollouttext_Libra;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Libra{
+from {
+  position: absolute;
+  top: 55% !important;
+  left: -7%;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 57% !important;
+  left: -7%;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+.scorpio {
+  left: 23% !important;
+  width: 18%!important;
+  height: 12% !important;
+  top: 95% !important;
+}
+
+
+/*Scorpio*/
+.text_Scorpio{
+    display: none;
+    position: absolute;
+    top: 71% !important;
+    left: 40% !important;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Scorpio{
+	position: absolute;
+	animation-name: rollouttext_Scorpio;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Scorpio{
+  from {
+  position: absolute;
+  top: 93% !important;
+    left: 23% !important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 95% !important;
+    left: 23% !important;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+/*Sagittarius*/
+.text_Sagittarius{
+  display: none;
+    position: absolute;
+    top: 1% !important;
+    left: 81%;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Sagittarius{
+	position: absolute;
+	animation-name: rollouttext_Sagittarius;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Sagittarius{
+  from {
+  position: absolute;
+  top: 0% !important;
+  left: 80%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 1% !important;
+  left: 81%;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.div_for_astro{
+  position: absolute;
+  top: 0%;
+  left: 42%;
+  width: 68%;
+  height: 117%;
+  border: 0px solid white;
+  background-image: url(../images/astronut/skyboxbgfor_astro.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 10000 !important;
+}
+.astro_occupation{
+  position: absolute;
+  left: 44.5%;
+  top: 29%;
+  width: 55%;
+  height: 80%;
+  z-index: 10000 !important;
+}
+
+.img_astro{
+  position: absolute;
+	animation-name: rollout_astronut;
+	animation-duration: 4s;
+  
+  
+}
+
+
+@keyframes rollout_astronut{
+  from {
+    position: absolute;
+    left: 80%;
+    top: 123%;
+    width: 2%;
+    height: 2%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    left: 44.5%;
+    top: 29%;
+    width: 55%;
+    height: 80%;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.img_astro_down{
+  position: absolute;
+	animation-name: rollout_astronut_down;
+	animation-duration: 6s;
+  
+  
+}
+
+
+@keyframes rollout_astronut_down{
+  from {
+    position: absolute;
+    left: 44.5%;
+    top: 35%;
+    width: 55%;
+    height: 80%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    left: 75%;
+    top:150%;
+    width: 0%;
+    height: 0%;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+.text_occup{
+  width: 55%;
+  position: absolute;
+  left: 19%;
+  
+}
+.btn_occ_submit{
+  position: absolute;
+
+  left: 35%;
+  width: 31%;
+  height: 27%;
+}
+.occ_description{
+  height: 20%;
+  width: 25%;
+  overflow-y: auto;
+  position: absolute;
+  border: 0px solid black;
+  top: 57%;
+  left: 60%;
+  z-index: 10000;
+  font-family: georgia;
+  color: #121884;
+  font-size: 19px;
+  font-weight: bold;
+
+}
+.div_clock{
+height: 28%;
+width: 53%;
+position: absolute;
+border: 1px solid grey;
+top: 1%;
+left: 48%;
+z-index: 10000;
+}
+.cuckoo_image{
+width: 28%;
+}
+.cuckoo_text{
+width: 54%;
+color: white;
+position: absolute;
+top: 4%;
+left: 43%;
+font-size: 16px;
+text-align: justify;
+}
+
+#Div_for_wiki{
+visibility: hidden;
+position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 100%;
+border: 2px solid white;
+z-index:20000;       
+}
+#Div_for_wiki2{
+visibility: hidden;
+position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 100%;
+border: 2px solid white;
+z-index:20000;       
+}
+.div_helmet{
+position: absolute;
+top: 29%;
+width: 25%;
+height: 16%;
+border: 0px solid white;
+left: 59%;
+z-index: 100000;
+border-radius: 66%;
+}
+/*----Agreement page --myprofile----------*/
+.div_container{
+  position: relative;
+  width:100%;
+  height:100vh;
+  border:0px solid white;
+  overflow: hidden;
+}
+.img_sun{
+ /*max-width:50%;*/
+  height:100%;
+  overflow: hidden;
+  left: 10%;
+  display: block;
+  box-sizing: border-box;
+}
+/*
+Animation for sun
+*/
+.ani-rollout_earth{
+  position:relative;
+	animation-name: rollOut_earth;
+	animation-duration: 5s;
+
+}
+@keyframes rollOut_earth {
+  from {
+    
+    top: 1%;
+    left: 80%;
+    width:0%;
+    height:0%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+  to {
+
+    top: 1%;
+    left: 10%;
+   
+    height:100%;
+	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+}	
+.text_part1{
+  height: 100%;
+    position: absolute;
+    top: 0%;
+    left: -5%;
+    width: 100%;
+    z-index: 12;
+  display:none;
+ }
+ .next_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 48%;
+  top: 92%;
+  z-index: 12;
+   display:none;
+}
+
+
+.text_part2{
+  height: 100%;
+  position: absolute;
+  top: 0%;
+  left: -4%;
+  width: 98%;
+  z-index: 12;
+   display:none;
+ }
+ .prev_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 48%;
+  top: 94%;
+  z-index: 12;
+   display:none;
+ 
+}
+
+
+.btn_agree{
+    color: rgb(230, 230, 230);
+    background-color: rgb(88, 22, 206);
+    border-color: rgb(103, 58, 183);
+    position: absolute;
+    z-index: 12;
+    width: 7%;
+    height: 4%;
+    font-size: x-small;
+    left: 46%;
+    top: 89%;
+    display:none;
+}
+
+/*-----------------*/
+}
+
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 1200px) {
+	.sub_container {
+    height:96vh !important;
+   
+}
+  .div_helmet{
+    position: absolute;
+    top: 29%;
+    width: 25%;
+    height: 16%;
+    border: 0px solid white;
+    left: 59%;
+    z-index: 100000;
+    border-radius: 66%;
+  }
+  .container_child
+{
+     width: 142%;
+     margin-left: -1%;
+     margin-top: 8%;
+}
+
+  .form-det
+  {
+    margin-top:-33.5%;
+    margin-left: 13.5%;
+  }
+  .head_log{
+    font-size:3vw!important;
+    font-family:space age;
+    color:#0ee3ea !important;
+    z-index:1000;
+  }
+  .font_fam{
+    font-size: 1.9vh;
+  }
+  .lbl_fgtpsw,.label_signup,.err_msgs{
+    font-family:space age;
+    font-size: 1.6vh;
+  }
+/* Registration Page */
+ .camera_alignment{
+
+    width: 207px;
+    height: 207px;
+    position: absolute;
+    top: 21%;
+    left: 68%;
+  }
+  .btn_snap_shot{
+    position: absolute;
+    top: 65%;
+    left: 68%;
+  }
+  .btn_cam_reset{
+    position: absolute;
+    left: 77%;
+    top: 65%;
+  }
+  .lbl_occupation {
+    position: absolute;
+    top: 81%;
+    left: 67%;
+  }
+  .occupation{
+    width: 12%;
+    height: 12%;
+    position: absolute;
+    left: 73%;
+    top: 79%;
+  }
+  .txt_occup{
+    position: absolute;
+    top: 65%;
+    width: 10%;
+    height: 6%;
+    padding: 0;
+    left: 74%;
+    background:transparent;
+    border:0px ;
+  }
+  .txtarea_occup{
+    position: absolute;
+    display: block;
+    border: 0px solid white;
+    position: absolute;
+    left: 74%;
+    top: 71%;
+  }
+  .cloud_bg{
+    height: 29%;
+    width: 16%;
+    position: absolute;
+    top: 54%;
+    left: 84%;
+  }
+  .txt_occupation{ 
+    position: absolute;
+    left: 82.5%;
+    width: 20%;
+    height: 29%;
+    top: 58%;
+    z-index: 200;
+  }
+ 
+ /* .txt_occupation{
+    position: absolute;
+    left: 73%;
+    top: 57%;
+    width: 21%;
+    height: 37%;
+  }*/
+ 
+  .head_1 {
+    font-size: 2.5rem;
+  }
+  .label_info{
+    font-size: 1rem;
+  }
+  .lbl_text{
+    font-size: 1rem;
+  }
+ video{
+
+   width: 226px !important;
+    height: 309px !important;
+    border: 5px solid white;
+  }
+
+/* Constellation animation */
+
+/*Capricorn*/
+.text_Capricorn{
+  display: none;
+    position: absolute;
+    top: 8% !important;
+    left: 44%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+.ani-rollouttext_Capricorn{
+	position: absolute;
+	animation-name: rollouttext_Capricorn;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Capricorn{
+  from {
+  position: absolute;
+  top: 6% !important;
+  left: 40%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 8% !important;
+  left: 44%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+/* Aquarius */
+.text_Aquaris{
+  display: none;
+    position: absolute;
+    top: 16%;
+    left: -6%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+ 
+
+.ani-rollouttext_Aquaris{
+	position: absolute;
+	animation-name: rollouttext_Aquaris;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aquaris {
+  from {
+    position: absolute;
+    top: 10%;
+    left: -3%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+      position: absolute;
+      top: 16%;
+     left: -6%;
+      height: 2%;
+      width: 34%;
+      font-size: 24px;
+      transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Pisces*/
+.text_Pisces{
+  display: none;
+  position: absolute;
+  top: 45%;
+    left: -10%;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Pisces{
+position: absolute;
+animation-name: rollouttext_Pisces;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Pisces{
+from {
+  position: absolute;
+  top: -14%;
+  left: -15%;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 45%;
+  left: -10%;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+/*Aries*/
+.text_Aries{
+  display: none;
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Aries{
+	position: absolute;
+	animation-name: rollouttext_Aries;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aries{
+  from {
+    position: absolute;
+    top: 9%;
+    left: 16%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+
+/*Taurus*/
+.text_Taurus{
+  display: none;
+    position: absolute;
+    top: 96%;
+    left: 26%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Taurus{
+	position: absolute;
+	animation-name: rollouttext_Taurus;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Taurus{
+  from {
+  position: absolute;
+  top: 93%;
+    left: 20%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 96%;
+    left: 26%;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.gemini{
+  position: absolute;
+  top: 89% !important;
+  width: 19%;
+  left: 80%;
+}
+/*Gemini*/
+.text_Gemini{
+  display: none;
+    position: absolute;
+    top: 97%;
+    left: 80%;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Gemini{
+	position: absolute;
+	animation-name: rollouttext_Gemini;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Gemini{
+  from {
+  position: absolute;
+  top: 100%;
+  left: 80%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 97%;
+    left: 80%;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Cancer*/
+.text_Cancer{
+  display: none;
+    position: absolute;
+    top: 50%!important;
+    left: 80%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+.text_Cancer_p{
+  display: none;
+  position: absolute;
+  top: 45%;
+  left: 80%;
+  height: 2%;
+  width: 21%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+.ani-rollouttext_Cancer{
+	position: absolute;
+	animation-name: rollouttext_Cancer;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Cancer{
+  from {
+  position: absolute;
+  top: 50%!important;
+  left: 80%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 45%!important;
+  left: 80%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+
+.text_Leo{
+  display: none;
+    position: absolute;
+    top: 7% !important;
+    left: 72%;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Leo{
+	position: absolute;
+	animation-name: rollouttext_Leo;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Leo{
+  from {
+  position: absolute;
+  top: 7% !important;
+    left: 72%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 8% !important;
+    left: 72%;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Virgo*/
+.text_Virgo{
+  display: none;
+  position: absolute;
+  top: 90%;
+  left: -6%;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Virgo{
+position: absolute;
+animation-name: rollouttext_Virgo;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Virgo{
+from {
+  position: absolute;
+  top: 90%;
+  left: -6%;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 88%;
+  left: -6%;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+.virgo {
+  position: absolute;
+  top: 86% !important;
+  left: 0%;
+  width: 19%;
+  height: 20%;
+}
+.libra {
+  position: absolute;
+  left: 1%;
+  top: 65%  !important;
+  width: 15%;
+  height: 23%;
+}
+
+
+
+/*Libra*/
+.text_Libra{
+  display: none;
+  position: absolute;
+  top: 71%;
+  left: -7%;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Libra{
+position: absolute;
+animation-name: rollouttext_Libra;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Libra{
+from {
+  position: absolute;
+  top:89%;
+  left: -7%;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 71%;
+  left: -7%;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+.scorpio {
+  position: absolute;
+  left: 57% !important;
+  width: 18%!important;
+  top: 87% !important;
+}
+
+
+/*Scorpio*/
+.text_Scorpio{
+  display: none;
+    position: absolute;
+    top: 96% !important;
+    left: 53% !important;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Scorpio{
+	position: absolute;
+	animation-name: rollouttext_Scorpio;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Scorpio{
+  from {
+  position: absolute;
+  top: 93% !important;
+  left: 53% !important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 96% !important;
+  left: 53% !important;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+
+/*Sagittarius*/
+.text_Sagittarius{
+  display: none;
+    position: absolute;
+    top: 36% !important;
+    left: 81%;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Sagittarius{
+	position: absolute;
+	animation-name: rollouttext_Sagittarius;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Sagittarius{
+  from {
+  position: absolute;
+  top: 33% !important;
+  left: 81%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 36% !important;
+  left: 81%;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+.camera{
+  position: absolute;
+  top: -6% !important;
+  height: 129% !important;
+  width: 115% !important;
+  border: 2px solid white;
+}
+.txtarea_occup {
+   
+  left:76%;
+  top: 80%;
+  width: 7%;
+}
+.div_for_astro{
+  position: absolute;
+  top: 0%;
+  left: 42%;
+  width: 68%;
+  height: 117%;
+  border: 0px solid white;
+  background-image: url(../images/astronut/skyboxbgfor_astro.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 10000 !important;
+}
+.astro_occupation{
+  position: absolute;
+  left: 44.5%;
+  top: 26%;
+  width: 55%;
+  height: 80%;
+  z-index: 10000 !important;
+}
+
+.img_astro{
+  position: absolute;
+	animation-name: rollout_astronut;
+	animation-duration: 4s;
+  
+  
+}
+
+
+@keyframes rollout_astronut{
+  from {
+    position: absolute;
+    left: 80%;
+    top: 123%;
+    width: 2%;
+    height: 2%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    left: 44.5%;
+    top: 26%;
+    width: 55%;
+    height: 80%;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.img_astro_down{
+  position: absolute;
+	animation-name: rollout_astronut_down;
+	animation-duration: 6s;
+  
+  
+}
+
+
+@keyframes rollout_astronut_down{
+  from {
+    position: absolute;
+    left: 44.5%;
+    top: 35%;
+    width: 55%;
+    height: 80%;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    left: 75%;
+    top:150%;
+    width: 0%;
+    height: 0%;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.text_occup{
+    width: 55%;
+    position: absolute;
+    left: 19%;
+   /* top: 327%;*/
+}
+.btn_occ_submit{
+    position: absolute;
+  /*  top: 352%;*/
+    left: 35%;
+    width: 23%;
+    height: 27%;
+}
+.occ_description{
+    height: 20%;
+    width: 25%;
+    overflow-y: auto;
+    position: absolute;
+    border: 0px solid black;
+    top: 57%;
+    left: 60%;
+    z-index: 10000;
+    font-family: georgia;
+    color: #121884;
+    font-size: 19px;
+    font-weight: bold;
+  
+}
+.div_clock{
+  height: 28%;
+  width: 41%;
+  position: absolute;
+  border: 1px solid grey;
+  top: 1%;
+  left: 51%;
+  z-index: 10000;
+}
+.cuckoo_image{
+  width: 28%;
+}
+.cuckoo_text{
+  width: 54%;
+  color: white;
+  position: absolute;
+  top: 4%;
+  left: 43%;
+  font-size: 18px;
+  text-align: justify;
+}
+
+#Div_for_wiki{
+  visibility: hidden;
+  position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 100%;
+border: 2px solid white;
+z-index:20000;       
+}
+#Div_for_wiki2{
+  visibility: hidden;
+  position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 100%;
+border: 2px solid white;
+z-index:20000;       
+}
+
+/*----Agreement page --myprofile----------*/
+.div_container{
+  position: relative;
+  width:100%;
+  height:100vh;
+  border:0px solid white;
+  overflow: hidden;
+}
+.img_sun{
+  width: 57%;
+  height: auto;
+  overflow: hidden;
+  left: 22%;
+  display: block;
+  box-sizing: border-box;
+}
+/*
+Animation for sun
+*/
+.ani-rollout_earth{
+  position:absolute;
+	animation-name: rollOut_earth;
+	animation-duration: 5s;
+
+}
+@keyframes rollOut_earth {
+  from {
+    
+    top: 1%;
+    left: 80%;
+    width:0%;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+  to {
+
+    top: 1%;
+    left: 23%;
+    width:58%;
+   
+	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+	
+  }
+
+}	
+.text_part1{
+  height: auto;
+    position: absolute;
+    top: -1%;
+    left: -13%;
+    width: 116%;
+  z-index: 12;
+display:none;
+ }
+ .next_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 50%;
+  top: 92%;
+  z-index: 12;
+   display:none;
+}
+
+
+.text_part2{
+  height: 97vh;
+  position: absolute;
+  top: -1%;
+  left: -5%;
+  width: 100%;
+  z-index: 12;
+   display:none;
+ }
+ .prev_button_ag{
+  width: 2.5%;
+  position: absolute;
+  font-family: auto;
+  left: 50%;
+  top: 92%;
+  z-index: 12;
+   display:none;
+ 
+}
+
+
+.btn_agree{
+    color: rgb(230, 230, 230);
+    background-color: rgb(88, 22, 206);
+    border-color: rgb(103, 58, 183);
+    position: absolute;
+    z-index: 12;
+    width: 5%;height: 4%;
+    left: 49%;
+    top: 88%;
+    display:none;
+}
+
+/*-----------------*/
+ 
+
+}
+
+/*---------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 1920px) {
+.sub_container {
+    height: 98vh;
+   
+}
+  .txtarea_occup {
+   
+    left: 76%;
+    top: 82%;
+    width: 7%;
+}
+  .camera_alignment{
+
+    width: 207px;
+    height: 207px;
+    position: absolute;
+    top: 18%;
+    left: 68%;
+  }
+
+  .btn_snap_shot {
+    position: absolute;
+    top: 55%;
+    left: 68%;
+    width: 8%;
+  }
+.btn_cam_reset {
+    position: absolute;
+    left: 77.5%;
+    top: 55%;
+    width: 5%;
+}.lbl_occupation {
+  position: absolute;
+  top: 69%;
+  left: 67%;
+}
+.occupation {
+  width: 12%;
+  height: 12%;
+  position: absolute;
+  left: 73%;
+  top: 70%;
+}
+.txtarea_occup {
+  left: 76%;
+  top: 73%;
+  width: 7%;
+}
+  .head_1 {
+    font-size:3rem;
+  }
+  .label_info{
+    font-size: 1.5rem;
+  }
+  .lbl_text{
+    font-size: 1.5rem;
+  }
+  video{
+    width: 282px !important;
+    height: 379px !important;
+    border: 5px solid white;
+  }
+
+  /* Constellation animation */
+
+/*Capricorn*/
+.text_Capricorn{
+  display: none;
+    position: absolute;
+    top: 8% !important;
+    left: 44%!important;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+.ani-rollouttext_Capricorn{
+	position: absolute;
+	animation-name: rollouttext_Capricorn;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Capricorn{
+  from {
+  position: absolute;
+  top: 6% !important;
+  left: 40%!important;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 8% !important;
+  left: 44%!important;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+/* Aquarius */
+.text_Aquaris{
+  display: none;
+    position: absolute;
+    top: 16%;
+    left: -6%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 26px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+ 
+
+.ani-rollouttext_Aquaris{
+	position: absolute;
+	animation-name: rollouttext_Aquaris;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aquaris {
+  from {
+    position: absolute;
+    top: 10%;
+    left: -3%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+      position: absolute;
+      top: 16%;
+     left: -6%;
+      height: 2%;
+      width: 34%;
+      font-size: 24px;
+      transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+/*Pisces*/
+.text_Pisces{
+  display: none;
+  position: absolute;
+  top: 45%;
+    left: -10%;
+  height: 2%;
+  width: 34%;
+  color: rgb(255, 255, 255);
+  font-family: Optima;
+  font-size: 21px;
+  text-align: center;
+  text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Pisces{
+position: absolute;
+animation-name: rollouttext_Pisces;
+animation-duration: 1s;
+
+}
+@keyframes rollouttext_Pisces{
+from {
+  position: absolute;
+  top: -14%;
+  left: -15%;
+  height: 0%;
+  width: 0%;
+  font-size: 12px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+
+to {
+  position: absolute;
+  top: 45%;
+  left: -10%;
+  height: 2%;
+  width: 34%;
+  font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+}
+}
+
+/*Aries*/
+.text_Aries{
+  display: none;
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Aries{
+	position: absolute;
+	animation-name: rollouttext_Aries;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Aries{
+  from {
+    position: absolute;
+    top: 9%;
+    left: 16%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+
+
+.taurus {
+  position: absolute;
+  width: 15% !important;
+  left: 35%!important;
+  top: 86% !important;
+}
+
+/*Taurus*/
+.text_Taurus{
+  display: none;
+    position: absolute;
+    top: 96%;
+    left: 26%;
+    height: 2%;
+    width: 34%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Taurus{
+	position: absolute;
+	animation-name: rollouttext_Taurus;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Taurus{
+  from {
+  position: absolute;
+  top: 93%;
+    left: 20%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 96%;
+    left: 26%;
+    height: 2%;
+    width: 34%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.gemini{
+  position: absolute;
+  top: 84% !important;
+  width: 19%  !important;
+  left: 82%  !important;
+}
+/*Gemini*/
+.text_Gemini{
+  display: none;
+    position: absolute;
+    top: 91%;
+    left: 80%;
+    height: 2%;
+    width: 21%;
+    color: rgb(255, 255, 255);
+    font-family: Optima;
+    font-size: 21px;
+    text-align: center;
+    text-shadow: 1px 1px 10px #f3ca05fa, 1px 1px 10px #e6a40f;
+}
+
+
+
+.ani-rollouttext_Gemini{
+	position: absolute;
+	animation-name: rollouttext_Gemini;
+	animation-duration: 1s;
+
+}
+@keyframes rollouttext_Gemini{
+  from {
+  position: absolute;
+  top: 91%;
+  left: 75%;
+    height: 0%;
+    width: 0%;
+    font-size: 12px;
+   
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+
+  to {
+  position: absolute;
+  top: 91%;
+  left: 80%;
+    height: 2%;
+    width: 21%;
+    font-size: 24px;
+  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+
+  }
+}
+.scorpio {
+  position: absolute;
+  left: 59% !important;
+  width: 15%!important;
+  top: 86% !important;
+}
+.virgo {
+  position: absolute;
+  top: 83% !important;
+  left: 0%;
+  width: 19%;
+  height: 20%;
+}
+
+
+.camera{
+  position: absolute;
+    top: -6% !important;
+    left: -7%;
+    height: 162% !important;
+    width: 154% !important;
+    border: 2px solid white;
+}
+.text_occup{
+  width: 55%;
+  position: absolute;
+  left: 19%;
+ 
+}
+.btn_occ_submit{
+  position: absolute;
+ 
+  left: 35%;
+  width: 23%;
+  height: 21%;
+}
+.occ_description{
+  height: 20%;
+  width: 25%;
+  overflow-y: auto;
+  position: absolute;
+  border: 0px solid black;
+  top: 57%;
+  left: 60%;
+  z-index: 10000;
+  font-family: georgia;
+  color: #121884;
+  font-size: 22px;
+  font-weight: bold;
+
+}
+.div_clock{
+height: 28%;
+width: 41%;
+position: absolute;
+border: 1px solid grey;
+top: 1%;
+left: 51%;
+z-index: 10000;
+}
+.cuckoo_image{
+width: 28%;
+}
+.cuckoo_text{
+width: 54%;
+color: white;
+position: absolute;
+top: 4%;
+left: 43%;
+font-size: 23px;
+text-align: justify;
+} #Div_for_wiki{
+  visibility: hidden;
+  position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 100%;
+border: 2px solid white;
+z-index:20000;       
+}
+#Div_for_wiki2{
+  visibility: hidden;
+  position: absolute;
+top: 1%;
+left: 0%;
+right: 0;
+width: 41%;
+height: 100%;
+border: 2px solid white;
+z-index:20000;       
+}
+
+}

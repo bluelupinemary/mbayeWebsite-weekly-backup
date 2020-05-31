@@ -1,0 +1,158 @@
+/*********************************/
+.slider_circle_10 {
+    position: relative;
+    width: 48vw;
+    height: 42vw;
+    user-select: none;
+}
+.slider_circle_10 > * {
+    transition: ease all 3s;
+}
+.slider_circle_10 > div,
+.slider_circle_10 .hidden {
+    opacity: 0;
+    position: absolute;
+    top: 5%;
+    left: 60%;
+    width: 1px;
+    height: 1px;
+    z-index: 0;
+    overflow: hidden;
+}
+.image1{
+	width: 100%;
+    height: 100%;
+	background: url(../images/earth-fencing.gif) no-repeat;
+	background-size: cover;
+}
+.image1:hover{
+	width: 100%;
+    height: 100%;
+	background: url(../images/collage/fencing-collage.png) no-repeat;
+	background-size: 92%;
+	margin-top: 3.7%;
+    margin-left: 4%;
+}
+.image2{
+	width: 100%;
+    height: 100%;
+	background: url(../images/moon-fencing1.gif) no-repeat;
+	background-size: cover;
+}
+.image2:hover{
+	width: 100%;
+    height: 100%;
+	background: url(../images/collage/gates-collage.png) no-repeat;
+	background-size: 92%;
+    margin-top: 3.7%;
+    margin-left: 4%;
+}
+.fencing-text{
+    position: absolute;
+    z-index: 9999;
+	color: #fff;
+	font-size: 30px;
+	font-family: Ondine-LT-Std;
+	background: red;
+}
+.slider_circle_10 .active:hover .vdo_shadow{	
+    position: absolute;
+    top: 3.9%;
+    left: 3.7%;
+    width: 92.3%;
+    height: 92.3%;
+    box-shadow: inset 34px -33px 25px #171716;
+    border-radius: 50%;
+    z-index: 10;
+}
+.slider_circle_10 .prev1:hover .vdo_shadow{
+    position: absolute;
+    top: 3.7%;
+    left: 2.8%;
+    width: 93%;
+    height: 93%;
+    z-index: 9;
+    box-shadow: inset 19px -11px 26px #000000;
+    border-radius: 50%;
+}
+@keyframes spin{
+	0% {
+		background-position: 0 0;
+		}
+	100%{
+		background-position: 100% 0;
+		}
+}
+
+.slider_circle_10 .active {	
+    opacity: 1;
+    position: absolute;
+    top: 9%; /* changed by vishnu on 9.7.19*/
+    left: -26%;
+    width: 95%;
+    height: 108%;
+    z-index: 10;
+	/*box-shadow:inset -18px -18px 30px rgba(0,0,0,0.8);
+	border-radius: 50%;*/
+}
+.slider_circle_10 .prev1 {	
+    opacity: 1;
+    position: absolute;
+    top: 5%;
+    left: 77%;
+    width: 24%;
+    height: 28%;
+    z-index: 9;
+}
+.next_button {
+    position: absolute;
+    left: 85% !important;
+    top: 100% !important;
+    margin: -15px 0 0 -25px !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+	background: url(../images/left-arrow.png) no-repeat !important;
+	background-size: 100px 48px;
+    opacity: 1 !important;
+    
+}
+.prev_button {
+    position: absolute;
+    left: 84% !important;
+    top: 107% !important;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+	background: url(../images/right-arrow.png) no-repeat !important;
+	background-size: 100px 48px;
+    
+}
+
+.prev_button:after {
+    border-left: 15px solid #000;
+    border-right: 15px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-top: 10px solid transparent;
+    margin-left: -5px;
+}
+
+.next_button:after {
+    border-right: 15px solid #000;
+    border-left: 15px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-top: 10px solid transparent;
+    margin-left: -25px;
+}
+
+
+div.slider > div:not(.nav_indicators):not(.next_button):not(.prev_button) {
+   /* box-shadow: 0px 1px 3px #000;
+    border: 1px solid #000;
+    background: #fff;*/
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 150px;
+}

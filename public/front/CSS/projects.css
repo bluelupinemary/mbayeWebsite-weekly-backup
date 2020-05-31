@@ -1,0 +1,281 @@
+@charset "utf-8";
+/* CSS Document */
+.mySlides {display:none}
+.w3-left, .w3-right, .w3-badge {cursor:pointer}
+.w3-badge {height:13px;width:13px;padding:0}
+.img_border
+{
+border :10px white;
+}
+.container { position:relative; }
+
+
+
+/* fade in effect for image */
+
+	/*.fade-in {
+
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  -moz-animation: fadeIn ease 1s;
+  -o-animation: fadeIn ease 1s;
+  -ms-animation: fadeIn ease 1s;
+}
+
+
+@keyframes fadeIn{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}*/
+/*----------------*/
+
+
+/* IMAGE ALIGNMENT */
+
+.img_next_click
+{
+    position: absolute;
+    top: 55.5%;
+    right: 38.5%;
+	outline: none !important;
+	z-index: 1;
+}
+.ani-rollout{
+	position: absolute;
+	animation-name: rollOut;
+	animation-duration: 5s;
+	z-index: 2 !important;
+}
+@keyframes rollOut {
+  from {
+    opacity: 1;
+    right: 38.5%;
+	transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+  }
+
+  to {
+    opacity: 0;
+	width: 17%;
+	height: 27%;
+    right: 18.5%;
+    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 0, 0deg);
+  }
+}	
+.img_A {
+position: absolute;
+    top: 55.5%;
+    right: 38.5%;
+	z-index:0;
+}
+.img_B {
+position: absolute;
+    top: 51%;
+    right: 59%;
+	z-index:0;
+}
+
+.img_C {
+position: absolute;
+    top: 39%;
+    right: 75%;
+	z-index:0;
+}
+.img_D {
+      position: absolute;
+    top: 26%;
+    right: 67%;
+	z-index:0;
+}	
+.img_E {
+  position: absolute;
+    top: 20%;
+    right: 60%;
+	z-index:0;
+}
+
+.img_F {
+   position: absolute;
+    top: 16%;
+    right: 53%;
+	z-index:0;
+}		
+.img_G{
+position: absolute;
+    top: 13%;
+    right: 47%;
+	z-index:0;
+   
+}	
+.img_H{
+position: absolute;
+    top: 11.5%;
+    right: 41%;
+	z-index:0;
+}		
+.img_I{
+ position: absolute;
+    top: 10%;
+    right: 35.5%;
+	z-index:0;
+}	
+.img_J{
+ position: absolute;
+    top: 9%;
+    right: 31.5%;
+	z-index:0;
+}	
+.img_K{
+ position: absolute;
+    top: 7.5%;
+    right: 28%;
+	z-index:0;
+}
+.img_L{
+ position: absolute;
+    top: 7%;
+    right: 25%;
+	z-index:0;
+}
+
+
+
+
+/*-------------*/
+
+
+/* image show_popup */
+
+.popup{
+    width: 900px;
+    margin: auto;
+    text-align: center
+}
+.popup img{
+    width: 200px;
+    height: 200px;
+    cursor: pointer
+}
+.show_popup{
+    z-index: 999;
+    display: none;
+}
+.show_popup .overlay{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.66);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.show_popup .img-show{
+       z-index: 2000;
+   /**/width: 606px;
+    height: 409px;
+    background: #FFF;
+    position: absolute;
+    top: 69%;
+    left: 44%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+}
+.img-show span{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 99;
+    cursor: pointer;
+	padding: 10px;
+}
+.img-show img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.text_effect {
+-webkit-animation-duration:10s;
+  animation-duration: 10s;
+  -webkit-animation-name: fadein;
+  animation-name: fadein;
+   animation-fill-mode: forwards;
+		}
+		ul li a:hover
+{
+	text-decoration:none;
+}
+
+
+.vdo{
+	width:400px;
+
+}
+.heading{
+	font-family: Century Gothic;
+    font-size: 21px;
+    color: white;
+    letter-spacing: 3px;
+    position: absolute;
+    margin-top: 5%;
+    left: 29%;
+}
+/*   ------------------   */
+
+/* Fading animation */
+/*.fade {
+  -webkit-animation-name: fade;
+-webkit-animation-duration: 1s;
+  animation-name: fade;
+ animation-duration: 1s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}*/
+

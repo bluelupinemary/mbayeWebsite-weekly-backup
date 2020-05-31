@@ -1,0 +1,383 @@
+/* Ipad Pro */
+@media (max-width: 1366px) 
+and (min-width: 1024px)
+{
+    .astronaut-img-div {
+        transform: scale(1.5);
+    }
+
+    #edit-photo {
+        /* transform: translate(-71%, -284%) rotate(-28deg); */
+    }
+
+    .navigator-div.zoomin {
+        top: 106% !important;
+        -webkit-transform: translate(-50%, -50%) scale(3.8);
+        -moz-transform: translate(-50%, -50%) scale(3.8);
+        -ms-transform: translate(-50%, -50%) scale(3.8);
+        transform: translate(-50%, -50%) scale(3.8);
+    }
+
+    @-webkit-keyframes navigatorAnimateZoomIn {
+        100% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    }
+    
+    @-moz-keyframes navigatorAnimateZoomIn {
+        100% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    }
+    
+    @keyframes navigatorAnimateZoomIn {
+        100% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    }
+
+    @-webkit-keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+    
+    @-moz-keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+    
+    @-o-keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+    
+    @keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .astronaut-img-div {
+        transform: scale(1.5);
+    }
+
+    #edit-photo {
+        /* transform: translate(-75%, -343%) rotate(-28deg); */
+    }
+
+    .navigator-div.zoomin {
+        top: 106% !important;
+        -webkit-transform: translate(-50%, -50%) scale(3.8);
+        -moz-transform: translate(-50%, -50%) scale(3.8);
+        -ms-transform: translate(-50%, -50%) scale(3.8);
+        transform: translate(-50%, -50%) scale(3.8);
+    }
+
+    @-webkit-keyframes navigatorAnimateZoomIn {
+        100% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    }
+    
+    @-moz-keyframes navigatorAnimateZoomIn {
+        100% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    }
+    
+    @keyframes navigatorAnimateZoomIn {
+        100% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    }
+
+    @-webkit-keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+    
+    @-moz-keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+    
+    @-o-keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+    
+    @keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 106%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 823px)
+and (min-width: 375px) {
+    .page-content {
+        overflow: hidden;
+    }
+
+    .img_bg {
+        left: 0;
+    }
+
+    .astronaut-img-div {
+        top: 40%;
+    }
+
+    .navigator-div.zoomin {
+        top: 112% !important;
+        -webkit-transform: translate(-50%, -50%) scale(3.8);
+        -moz-transform: translate(-50%, -50%) scale(3.8);
+        -ms-transform: translate(-50%, -50%) scale(3.8);
+        transform: translate(-50%, -50%) scale(3.8);
+    }
+
+    @-webkit-keyframes navigatorAnimateZoomIn {
+        100% {
+            left: 18%;
+            top: 112%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    }
+    
+    @-moz-keyframes navigatorAnimateZoomIn {
+        100% {
+            left: 18%;
+            top: 112%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    }
+    
+    @keyframes navigatorAnimateZoomIn {
+        100% {
+            left: 18%;
+            top: 112%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    }
+
+    @-webkit-keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 112%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+    
+    @-moz-keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 112%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+    
+    @-o-keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 112%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+    
+    @keyframes navigatorAnimateZoomOut {
+        0% {
+            left: 18%;
+            top: 112%;
+            -webkit-transform: translate(-50%, -50%) scale(3.8);
+            -moz-transform: translate(-50%, -50%) scale(3.8);
+            -ms-transform: translate(-50%, -50%) scale(3.8);
+            transform: translate(-50%, -50%) scale(3.8);
+        }
+    
+        100% {
+            -webkit-transform: scale(1.5);
+                -moz-transform: scale(1.5);
+                    transform: scale(1.5);
+        }
+    }
+
+    .notifications-list {
+        transform: translate(-50%, -68%);
+    }
+
+    .navigator-zoomout-btn.tooltips.zoom-in-out span {
+        font-size: 3px;
+    }
+
+    .zoomin .earth-holo.tooltips.top span {
+        font-size: 3px;
+        transform: translate(-49%, -313%);
+    }
+
+    .zoomin .notifications-list li {
+        font-size: 4px;
+    }
+}

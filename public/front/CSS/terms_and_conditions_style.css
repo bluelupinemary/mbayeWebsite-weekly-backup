@@ -1,0 +1,101 @@
+
+
+/* for footer*/
+
+#footer{max-width:600px;border-top:1px #156aae solid;margin:30px auto 0 auto;padding:5px 0;}
+#footer a{color:#ffffff;text-decoration:none;margin-right:15%;} /*m:30px;*/
+#footer a:last-child{margin-right:0;}
+.modal-dialog
+{
+  max-width: 70%;
+}
+.modal {
+  
+  top: 11% !important;
+  width: 100%;
+  height: 75% !important;
+}
+.col_white{
+  color:white;
+  text-align:justify;
+}
+ul li{
+  color:white;
+}
+ol li{
+  color:white;
+}
+#block_land{
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background: #212529;
+ 
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  color: #fff;
+  z-index: 200000;
+  font-size: 20px;
+}
+#block_land h1 {
+  text-transform: uppercase;
+}
+#block_land .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+}
+#block_land img {
+  width: 50%;
+}
+/*---------------------------------------------------------------------------------*/
+/*// Extra small devices (portrait phones, less than 576px)*/
+/*---------------------------------------------------------------------------------*/
+@media (max-width: 575.98px) {
+
+}
+
+
+/*---------------------------------------------------------------------------------*/
+/*// Small devices (landscape phones, 576px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+  
+}
+
+/*---------------------------------------------------------------------------------*/
+/*// Medium devices (tablets, 768px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 768px) and (max-width: 991.98px) { 
+
+
+
+}
+/*---------------------------------------------------------------------------------*/
+/*// Large devices (desktops, 992px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 992px) and (max-width: 1198px) {
+ 
+
+
+}
+
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 1200px) {
+ 
+}
+
+
+/*---------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 1920px) {
+  
+ 
+}

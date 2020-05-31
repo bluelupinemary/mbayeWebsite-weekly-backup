@@ -1,0 +1,2612 @@
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) and (max-width: 1440px) {
+    .user-img-div {
+        min-width: 401px;
+    }
+
+    #cropperbox {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .box-2 {
+        left: -2.5%;
+    }
+
+    .box-2.img-result {
+        left: -2.5%;
+    }
+
+    /* #planet_name_earth {
+        top: 75%;
+    }
+
+    #planet_name_venus {
+        top: -19%;
+    }
+
+    #planet_name_uranus {
+        top: -24%;
+    }
+
+    #planet_name_neptune {
+        top: -20%;
+    }
+
+    #planet_name_jupiter {
+        top: -30%;
+    }
+
+    #planet_name_pluto {
+        top: -15%;
+    }
+
+    #planet_name_sun {
+        top: -2%;
+    }
+
+    #planet_name_mercury {
+        top: -15%;
+    }
+
+    #planet_name_mars {
+        top: -28%;
+    } */
+}
+
+/* Landscape*/
+@media (min-width: 1024px) 
+and (max-width: 1366px) 
+/* and (-webkit-min-device-pixel-ratio: 2)   */
+and (orientation: landscape)  {
+	.nav-mar-right {
+		margin-right: 0px;
+		width: 120px;
+	}
+  	.pro-ser-width li:first-child{
+		width: 240px;
+	}
+	.pro-ser-width li:nth-child(5){
+		width: 199px;
+		margin-left: 20px;
+	}
+	.pro-ser-width li:last-child{
+		margin-left: 380px;
+	}
+	.burj-khalifa {
+		position: absolute;
+		left: 74.5%;
+		top: 44.3%;
+		z-index: 10;
+	}
+	.inox-logo img {
+		width: 47%;
+		display: block;
+		margin: 0 auto;
+	}
+	#container-audio1 {
+		position: absolute;
+		opacity: 0;
+		float: left;
+		width: 43px;
+		height: 154px;
+		z-index: 99;
+		margin-top: 21%;
+	}
+	#container-audio2 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 43px;
+    height: 120px;
+    z-index: 98;
+    left: 15%;
+    top: 40%;
+}
+	#container-audio3 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 51px;
+    height: 160px;
+    z-index: 97;
+    left: 31%;
+    top: 23%;
+}
+	#container-audio4 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 43px;
+    height: 91px;
+    z-index: 96;
+    left: 47%;
+    top: 57%;
+}
+	#container-audio5 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 49px;
+    height: 91px;
+    z-index: 95;
+    left: 61%;
+    top: 56%;
+}
+	#container-audio6 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 34px;
+    height: 104px;
+    z-index: 94;
+    left: 78%;
+    top: 52%;
+}
+	.music-box7 {
+		width: 35px;
+		height: 80px;
+		margin-left: 259px;
+		margin-top: 133px;
+	}
+	.dubai-city {
+		position: absolute;
+		top: 83.5%;
+	}
+	#container-audio {
+		opacity: 0;
+		position: absolute;
+		left: 6%;
+		top: 36%;
+		float: left;
+		width: 300px;
+		height: 94px;
+		z-index: 93;
+	}
+	.tunes {
+		width: 33%;
+		position: absolute;
+		color: white;
+		font-family: Century Gothic;
+		top: 82%;
+		left: 22%;
+	}
+	.burj-khalifa {
+		position: absolute;
+		left: 74.5%;
+		top: 46%;
+		z-index: 10;
+	}
+	.slider_circle_10 {
+    position: absolute !important;
+    width: 76vw !important;
+    height: 52.2vw !important;
+    user-select: none !important;
+    left: 14% !important;
+    top: 11% !important;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 396px !important;
+    left: 501px !important;
+    z-index: 99 !important;
+}
+.dubai-city-prod {
+    position: absolute;
+    top: 84%;
+    z-index: 45;
+}
+.pro-dubai-city {
+    position: absolute;
+    top: 84%;
+}
+.burj-khalifa-projects {
+    position: absolute;
+    left: 77%;
+    top: 51.5%;
+}
+.burj-khalifa-projects img{
+	width: 100%;
+}
+.slider_circle_10 .next1 {
+    opacity: 1;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    margin-left: 10%;
+    width: 50%;
+    height: 52%;
+    z-index: 9;
+}
+.slider_circle_10 .next2 {
+    opacity: 1;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    margin-left: 10%;
+    width: 22%;
+    height: 42%;
+    z-index: 8;
+}
+.slider_circle_10 .prev3 {
+    opacity: 1;
+    position: absolute;
+    top: 16%;
+    left: 33%;
+    width: 50%;
+    height: 52%;
+    z-index: 7;
+}
+.slider_circle_10 .active {
+    opacity: 1;
+    position: absolute;
+    top: 57%;
+    left: 29%;
+    width: 28%;
+    height: 39%;
+    z-index: 10;
+}
+.slider_circle_10 .prev1 {
+    opacity: 1;
+    position: absolute;
+    top: 60%;
+    left: 2%;
+    width: 20%;
+    height: 47%;
+    z-index: 9;
+}
+.slider_circle_10 .prev2 {
+    opacity: 1;
+    position: absolute;
+    top: 33%;
+    left: 2%;
+    width: 17%;
+    height: 48%;
+    z-index: 8;
+}
+.inox-logo-gallery {
+    position: absolute;
+    top: 294px;
+    left: 551px;
+}
+.inox-logo-gallery img{
+	width: 250px;
+}
+.pro-helio {
+    margin-top: 305px;
+}
+.pro-stones-only {
+    margin-top: -541px;
+    margin-left: 0px;
+}
+.pro-orbit-animation {
+    margin-left: 11%;
+    margin-top: 22%;
+}
+.next_button {
+    position: absolute;
+    left: 46% !important;
+    top: 100% !important;
+    margin: -15px 0 0 -25px !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/right-arrow.png) no-repeat !important;
+    background-size: 100px 48px;
+    opacity: 1 !important;
+}
+.pro-gallery-wraper .slider_circle_10 {
+    position: absolute !important;
+    width: 76vw !important;
+    height: 52.2vw !important;
+    user-select: none !important;
+    left: 16% !important;
+    top: 1% !important;
+}
+#cropperbox {
+    width: 100%;
+}
+.box-2 {
+    left: -3%;
+}
+.user-img-div {
+    min-width: 450px;
+}
+/* .back-to-homepage .planet_name {
+    top: 28%;
+}
+#planet_name_pluto {
+    top: -16%;
+}
+#planet_name_neptune {
+    top: -26%;
+}
+#planet_name_uranus {
+    top: -29%;
+}
+#planet_name_jupiter {
+    top: -40%;
+}
+#planet_name_earth {
+    top: 62%;
+}
+#planet_name_venus {
+    top: -27%;
+}
+#planet_name_mars {
+    top: -35%;
+}
+#planet_name_mercury {
+    top: -18%;
+}
+#planet_name_sun {
+    top: -10%;
+} */
+}
+
+/* 
+##Device = Laptops, Desktops
+##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .user-img-div {
+        min-width: 355px;
+    }   
+
+    .box-2 {
+        left: -2%;
+    }
+
+    #cropperbox {
+        width: 100%;
+    }
+
+    /* #planet_name_earth {
+        top: 75%;
+    }
+
+    #planet_name_venus {
+        top: -19%;
+    }
+
+    #planet_name_uranus {
+        top: -24%;
+    }
+
+    #planet_name_neptune {
+        top: -20%;
+    }
+
+    #planet_name_jupiter {
+        top: -30%;
+    }
+
+    #planet_name_pluto {
+        top: -15%;
+    }
+
+    #planet_name_sun {
+        top: -2%;
+    }
+
+    #planet_name_mercury {
+        top: -15%;
+    }
+
+    #planet_name_mars {
+        top: -28%;
+    } */
+}
+
+@media (max-width : 1024px) {
+	.pro-ser-width li:last-child {
+    	margin-left: 80px;
+	}
+	.dubai-city {
+		position: absolute;
+		top: 78.4%;
+	}
+	#container-audio1 {
+		position: absolute;
+		opacity: 0;
+		float: left;
+		width: 43px;
+		height: 154px;
+		z-index: 99;
+		margin-top: 2%;
+	}
+	#container-audio2 {
+		position: absolute;
+		opacity: 0;
+		float: left;
+		width: 43px;
+		height: 116px;
+		z-index: 98;
+		left: 15%;
+		top: 20%;
+	}
+	#container-audio3 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 51px;
+    height: 160px;
+    z-index: 97;
+    left: 31%;
+    top: 0%;
+}
+	#container-audio4 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 43px;
+    height: 91px;
+    z-index: 96;
+    left: 46%;
+    top: 49%;
+}
+	#container-audio5 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 49px;
+    height: 91px;
+    z-index: 95;
+    left: 61%;
+    top: 50%;
+}
+	#container-audio6 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 34px;
+    height: 104px;
+    z-index: 94;
+    left: 76%;
+    top: 41%;
+}
+	.music-box7 {
+    width: 35px;
+    height: 80px;
+    margin-left: 259px;
+    margin-top: 72px;
+}
+	.image-box-container {
+		position: absolute;
+		top: 76%;
+		left: 32.5%;
+		width: 44%;
+	}
+	.image-box {
+		float: left;
+		margin-right: 15px;
+		margin-bottom: 15px;
+	}
+	.image-box:nth-child(5) {
+    	margin-left: 45px;
+	}
+	.tunes {
+		width: 45%;
+		position: absolute;
+		color: white;
+		font-family: Century Gothic;
+		top: 71%;
+		left: 32%;
+	}
+	.feel-free {
+    	margin-left: 5%;
+	}
+	#container-audio {
+		opacity: 0;
+		position: absolute;
+		left: 6%;
+		top: 9%;
+		float: left;
+		width: 300px;
+		height: 94px;
+		z-index: 93;
+	}
+	.dubai-city-prod {
+    position: absolute;
+    top: 78.4%;
+    z-index: 45;
+}
+.slider_circle_10 {
+    position: absolute !important;
+    width: 75vw !important;
+    height: 59.2vw !important;
+    user-select: none !important;
+    left: 13% !important;
+    top: 9% !important;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 290px !important;
+    left: 359px !important;
+    z-index: 99 !important;
+}
+#cropperbox {
+    width: 87%;
+}
+.user-img-div {
+    min-width: 395px;
+}  
+.box-2 {
+    left: -3%;
+}
+}
+
+/* Portrait*/
+@media (min-width: 1024px) 
+and (max-width: 1366px) 
+/* and (-webkit-min-device-pixel-ratio: 2)   */
+and (orientation: portrait)  {
+	.nav-mar-right {
+		margin-right: 0px;
+		width: 120px;
+	}
+  	.pro-ser-width li:first-child{
+		width: 240px;
+	}
+	.pro-ser-width li:nth-child(5){
+		width: 199px;
+		margin-left: 20px;
+	}
+	.pro-ser-width li:last-child{
+		margin-left: 70px;
+	}
+	.burj-khalifa {
+		position: absolute;
+		left: 74.5%;
+		top: 69.6%;
+		z-index: 10;
+	}
+	.inox-logo img {
+		width: 47%;
+		display: block;
+		margin: 0 auto;
+	}
+	#container-audio {
+    opacity: 0;
+    position: absolute;
+    left: 6%;
+    top: 51%;
+    float: left;
+    width: 300px;
+    height: 94px;
+    z-index: 93;
+}
+	.image-box {
+		float: left;
+		margin-right: 15px;
+		margin-bottom: 15px;
+	}
+	.image-box:nth-child(5) {
+    	margin-left: 45px;
+	}
+	.image-box-container {
+		position: absolute;
+		top: 74%;
+		left: 29.5%;
+		width: 44%;
+	}
+	.feel-free {
+    	margin-left: 5%;
+	}
+	.tunes {
+		width: 46%;
+		position: absolute;
+		color: white;
+		font-family: Century Gothic;
+		top: 71%;
+		left: 29%;
+	}
+	#container-audio1 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 43px;
+    height: 154px;
+    z-index: 99;
+    top: 46%;
+}
+	#container-audio2 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 43px;
+    height: 116px;
+    z-index: 98;
+    left: 15%;
+    top: 61%;
+}
+#container-audio3 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 51px;
+    height: 160px;
+    z-index: 97;
+    left: 31%;
+    top: 45%;
+}
+#container-audio4 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 43px;
+    height: 91px;
+    z-index: 96;
+    left: 47%;
+    top: 70%;
+}
+#container-audio5 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 49px;
+    height: 91px;
+    z-index: 95;
+    left: 61%;
+    top: 70%;
+}
+#container-audio6 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 34px;
+    height: 104px;
+    z-index: 94;
+    left: 78%;
+    top: 65%;
+}
+.music-box7 {
+    width: 35px;
+    height: 80px;
+    margin-left: 259px;
+    margin-top: 204px;
+}
+	.dubai-city {
+		position: absolute;
+		top: 88%;
+	}
+	.slider_circle_10 {
+    position: absolute;
+    width: 80vw;
+    height: 56.2vw;
+    /* margin: 0 auto; */
+    user-select: none;
+    left: 19%;
+    top: 20%;
+}
+	.slider_circle_10 {
+    position: absolute !important;
+    width: 80vw !important;
+    height: 63.2vw !important;
+    user-select: none !important;
+    left: 19% !important;
+    top: 20% !important;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 515px !important;
+    left: 436px !important;
+    z-index: 99 !important;
+}
+.dubai-city-prod {
+    position: absolute;
+    top: 88%;
+    z-index: 45;
+}
+.pro-orbit-animation {
+    margin-left: 2%;
+    margin-top: 45%;
+}
+.pro-dubai-city {
+    position: absolute;
+    top: 88%;
+}
+.burj-khalifa-projects {
+    position: absolute;
+    left: 72%;
+    top: 66.5%;
+}
+.burj-khalifa-projects img{
+	width: 100%;
+}
+.inox-logo-gallery {
+    position: absolute;
+    top: 446px;
+    left: 392px;
+}
+.inox-logo-gallery img{
+	width:250px;
+}
+.pro-gallery-wraper .slider_circle_10 {
+    position: absolute !important;
+    width: 60vw !important;
+    height: 63.2vw !important;
+    user-select: none !important;
+    left: 19% !important;
+    top: 15% !important;
+}
+.pro-gallery-wraper .prev_button {
+    position: absolute;
+    left: 38% !important;
+    top: 108% !important;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/left-arrow.png) no-repeat !important;
+    background-size: 100px 48px;
+}
+.pro-gallery-wraper .next_button {
+    position: absolute;
+    left: 58% !important;
+    top: 108% !important;
+    margin: -15px 0 0 -25px !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/right-arrow.png) no-repeat !important;
+    background-size: 100px 48px;
+    opacity: 1 !important;
+}
+#cropperbox {
+    width: 100%;
+}
+.box-2 {
+    left: -3%;
+    width: 372px;
+}
+}
+
+/* ********* Iphone 6/7/8 Landscape ******** */
+@media (min-width : 375px) 
+and (max-width : 667px)
+/* and (-webkit-device-pixel-ratio : 2)  */
+and (orientation : landscape) 
+{ 
+    .ui-dialog {
+        height: 100% !important;
+        width: 50% !important;
+    }
+	.navbar-toggler {
+		padding: .1rem .4rem;
+		font-size: 1rem;
+		line-height: 1;
+		background-color: #c8def7;
+		border: 1px solid #c1d7e4;
+		border-radius: .25rem;
+	}
+	.inox-logo {
+    position: absolute;
+    top: 14%;
+}
+	.inox-logo img {
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+}
+	.image-box img{
+		width: 45px;
+	}
+	.tunes {
+		position: absolute;
+		color: white;
+		font-family: Century Gothic;
+		top: 65%;
+    	left: 32%;
+		width: 40%;
+		text-align: center;
+		font-size: 12px;
+	}
+	.image-box:nth-child(7) {
+    	margin-left: 0px;
+	}
+	.image-box {
+		margin-right: 8px;
+		margin-bottom: 6px;
+    	margin-top: 2px;
+	}
+	.image-box-container {
+		position: absolute;
+		top: 76%;
+		left: 36.5%;
+		width: 33%;
+	}
+	.image-box:nth-child(5) {
+    	margin-left: 30px;
+	}
+	.dubai-city {
+    position: absolute;
+    top: 68.5%;
+}
+	.dubai-city img {
+    	width: 220px;
+	}
+	.burj-khalifa {
+    position: absolute;
+    left: 83.5%;
+    top: 53.5%;
+    z-index: 10;
+}
+	.music-box7 {
+    width: 35px;
+    height: 64px;
+    margin-left: 193px;
+    margin-top: 14px;
+}
+#container-audio6 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 27px;
+    height: 72px;
+    z-index: 94;
+    left: 72%;
+    top: 5%;
+}
+#container-audio5 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 34px;
+    height: 64px;
+    z-index: 95;
+    left: 58%;
+    top: 18%;
+}
+#container-audio4 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 33px;
+    height: 78px;
+    z-index: 96;
+    left: 44%;
+    top: 0%;
+}
+#container-audio3 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 32px;
+    height: 115px;
+    z-index: 97;
+    left: 31%;
+    top: -52%;
+}
+#container-audio2 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 40px;
+    height: 100px;
+    z-index: 98;
+    left: 13%;
+    top: -28%;
+}
+#container-audio1 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 31px;
+    height: 124px;
+    z-index: 99;
+    top: -64%;
+}
+#container-audio {
+	display: none;
+}
+.slider_circle_10 {
+    position: absolute !important;
+    width: 70vw !important;
+    height: 48.2vw !important;
+    user-select: none !important;
+    left: 23% !important;
+    top: 4% !important;
+}
+.prev_button {
+    position: absolute;
+    left: 42% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/left-arrow-40.png) no-repeat !important;
+    background-size: 100px 48px;
+}
+.next_button {
+    position: absolute;
+    left: 52% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/right-arrow-40.png) no-repeat !important;
+    background-size: 100px 48px;
+    opacity: 1 !important;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 137px !important;
+    left: 292px !important;
+    z-index: 99 !important;
+}
+.inox-logo-progallery img {
+    width: 160px;
+    margin-top: 0%;
+    margin-left: 0;
+}
+.dubai-city-prod {
+    position: absolute;
+    top: 73.4%;
+    z-index: 45;
+}
+.dubai-city-prod img{
+	width: 180px;
+}
+/* .astronaut-img {
+    width: 56% !important;
+    height: 71% !important;
+    left: 2px !important;
+    top: -40px !important;
+} */
+.btn_logout {
+    top: 0 !important;
+}
+/* .planet-back-button {
+    bottom: -65px !important;
+    padding: 5px 15px !important;
+} */
+/* .preview {
+    width: 85%;
+}
+.saturn_preview {
+    width: 85% !important;
+    height: 146% !important;
+}
+.saturn-back {
+    bottom: -103px !important;
+} */
+/* Start Rocket */
+.rocket .rocket-body {
+    width: 44px !important;
+    height: 16px !important;
+}
+.rocket .rocket-body .fin-top:before, .rocket .rocket-body .fin-bottom:before {
+    width: 6px !important;
+}
+.rocket .rocket-body .fin-top, .rocket .rocket-body .fin-bottom {
+    height: 8px !important;
+}
+.rocket .rocket-body .fin-top {
+    top: -7px !important;
+}
+.rocket .rocket-body .fin-bottom {
+    bottom: -8px !important;
+}
+.rocket .rocket-body .faya {
+    left: -28px !important;
+    width: 26px !important;
+}
+.rocket .rocket-body:before {
+    right: -1px !important;
+}
+.rocket .rocket-body:before, .rocket .rocket-body:after {
+    width: 55% !important;
+}
+.rocket .rocket-body:before {
+    right: -1px !important;
+}
+.rocket .rocket-body:before, .rocket .rocket-body:after {
+    width: 55% !important;
+}
+.rocket h2 {
+    font-size: 0.5rem !important;
+}
+#cropperbox {
+    width: 80%;
+    height: 45%;
+}
+}
+@media (max-width: 568px) { 
+	.navbar-toggler {
+		padding: .1rem .3rem;
+		font-size: 1rem;
+		line-height: 1;
+		background-color: #c8def7;
+		border: 1px solid #c1d7e4;
+		border-radius: .25rem;
+	}
+	.dubai-city {
+    	
+	}
+	.image-box:nth-child(5) {
+    	margin-left: 26px;
+	}
+	.tunes {
+    position: absolute;
+    color: white;
+    font-family: Century Gothic;
+    top: 67%;
+    left: 34%;
+    width: 46%;
+    text-align: center;
+    font-size: 10px;
+    line-height: 12px;
+}
+	.dubai-city img {
+    	width: 180px;
+	}
+	#container-audio {
+		display: none;
+	}
+	.burj-khalifa {
+    top: 50.5%;
+    left: 82.5%;
+}
+	.image-box-container {
+    position: absolute;
+    top: 72%;
+    left: 39.5%;
+    width: 38%;
+}
+.music-box7 {
+    width: 21px;
+    height: 60px;
+    margin-left: 161px;
+    margin-top: 3px;
+}
+#container-audio6 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 27px;
+    height: 60px;
+    z-index: 94;
+    left: 72%;
+    top: 5%;
+}
+#container-audio5 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 34px;
+    height: 64px;
+    z-index: 95;
+    left: 58%;
+    top: -1%;
+}
+#container-audio4 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 33px;
+    height: 56px;
+    z-index: 96;
+    left: 44%;
+    top: 9%;
+}
+#container-audio3 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 32px;
+    height: 96px;
+    z-index: 97;
+    left: 31%;
+    top: -52%;
+}
+#container-audio2 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 29px;
+    height: 81px;
+    z-index: 98;
+    left: 13%;
+    top: -28%;
+}
+#container-audio1 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 31px;
+    height: 95px;
+    z-index: 99;
+    top: -52%;
+}
+.dubai-city-prod {
+    position: absolute;
+    top: 70.8%;
+    z-index: 45;
+}
+.dubai-city-prod img {
+    width: 170px;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 115px !important;
+    left: 247px !important;
+    z-index: 99 !important;
+}
+.inox-logo-progallery img {
+    width: 140px;
+    margin-top: 0%;
+    margin-left: 0;
+}
+.next_button {
+    position: absolute;
+    left: 55% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    width: 40px !important;
+    height: 19px !important;
+    z-index: 5000 !important;
+    background: url(../images/right-arrow-40.png) no-repeat !important;
+    background-size: 40px 19px !important;
+    opacity: 1 !important;
+}
+.prev_button {
+    position: absolute;
+    left: 42% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 40px !important;
+    height: 19px !important;
+    z-index: 5000 !important;
+    background: url(../images/left-arrow-40.png) no-repeat !important;
+    background-size: 40px 19px;
+}
+/* .astronaut-img {
+    width: 54% !important;
+    height: 66% !important;
+    left: 2px !important;
+    top: -40px !important;
+} */
+.btn_logout {
+    top: 0 !important;
+}
+/* .planet-back-button {
+    bottom: -65px !important;
+    padding: 5px 15px !important;
+} */
+/* .preview {
+    width: 85%;
+}
+.saturn_preview {
+    width: 85% !important;
+    height: 146% !important;
+}
+.saturn-back {
+    bottom: -103px !important;
+} */
+}
+@media (max-width: 320px) {
+	.navbar-toggler {
+		padding: .1rem .3rem;
+		font-size: 1rem;
+		line-height: 1;
+		background-color: #c8def7;
+		border: 1px solid #c1d7e4;
+		border-radius: .25rem;
+	}
+	.inox-logo {
+    position: absolute;
+    top: 13%;
+}
+	.inox-logo img {
+    	width: 68%;
+	}
+	.dubai-city {
+    position: absolute;
+    top: 82.5%;
+}
+	.dubai-city img {
+   		width: 180px;
+	}
+	.burj-khalifa {
+    top: 74%;
+    left: 71%;
+}
+	.image-box img{
+		width: 50px;
+	}
+	.image-box-container {
+    position: absolute;
+    top: 52%;
+    left: 33%;
+    width: 41%;
+}
+	.image-box:nth-child(7) {
+    	margin-left: 32px;
+	}
+	.tunes {
+    position: absolute;
+    color: white;
+    font-family: Century Gothic;
+    top: 47%;
+    left: 20%;
+    width: 61%;
+    text-align: center;
+    font-size: 11px;
+}
+	#container-audio {
+		display: none;
+	}
+	.image-box {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+	.image-box:nth-child(5) {
+    margin-left: 0px;
+}
+.music-box7 {
+    width: 26px;
+    height: 61px;
+    margin-left: 157px;
+    margin-top: 56px;
+}
+#container-audio6 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 24px;
+    height: 70px;
+    z-index: 94;
+    left: 73%;
+    top: 40%;
+}
+#container-audio5 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 30px;
+    height: 91px;
+    z-index: 95;
+    left: 59%;
+    top: 23%;
+}
+#container-audio4 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 30px;
+    height: 63px;
+    z-index: 96;
+    left: 46%;
+    top: 46%;
+}
+#container-audio3 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 30px;
+    height: 105px;
+    z-index: 97;
+    left: 31%;
+    top: 10%;
+}
+#container-audio2 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 30px;
+    height: 90px;
+    z-index: 98;
+    left: 13%;
+    top: 23%;
+}
+#container-audio1 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 26px;
+    height: 100px;
+    z-index: 99;
+    top: 15%;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 290px !important;
+    left: 70px !important;
+    z-index: 99 !important;
+}
+.prev_button {
+    position: absolute;
+    left: 47% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 20px !important;
+    height: 10px !important;
+    z-index: 5000 !important;
+    background: url(../images/left-arrow-20.png) no-repeat !important;
+    background-size: 20px 10px !important;
+}
+.next_button {
+    position: absolute;
+    left: 58% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    width: 20px !important;
+    height: 10px !important;
+    z-index: 5000 !important;
+    background: url(../images/right-arrow-20.png) no-repeat !important;
+    background-size: 20px 10px !important;
+    opacity: 1 !important;
+}
+.slider_circle_10 {
+    position: absolute !important;
+    width: 82vw !important;
+    height: 59.2vw !important;
+    user-select: none !important;
+    left: 18% !important;
+    top: 29% !important;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 236px !important;
+    left: 134px !important;
+    z-index: 99 !important;
+}
+.inox-logo-progallery img {
+    width: 90px;
+    margin-top: 0%;
+    margin-left: 0%;
+}
+.dubai-city-prod {
+    position: absolute;
+    top: 82.3%;
+    z-index: 45;
+}
+.dubai-city-prod img{
+	width: 180px;
+}
+/* #block_land h1 {
+    font-size: 25px;
+} */
+}
+
+@media (max-width: 411px) {
+    /* #block_land h1 {
+        font-size: 25px;
+    } */
+}
+
+/* ********* Pixel 2 XL Landscape ******** */
+@media (min-width : 411px) 
+and (max-width : 823px) 
+/* and (-webkit-device-pixel-ratio : 3) */
+and (orientation : landscape) { 
+    #cropperbox {
+        width: 100%;
+    }
+    .box-2 {
+        width: 185px;
+        left: -3%;
+    }
+    .box-2.img-result {
+        left: -1.5%;
+    }
+    /* .back-to-homepage .planet_name {
+        top: 30%;
+    }
+    #planet_name_pluto {
+        top: 5%;
+    }
+    #planet_name_jupiter {
+        top: -24%;
+    }
+    #planet_name_neptune {
+        top: -5%;
+    }
+    #planet_name_uranus {
+        top: -14%;
+    }
+    #planet_name_earth {
+        top: 87%;
+    }
+    #planet_name_venus {
+        top: -14%;
+    }
+    #planet_name_mars {
+        top: -21%;
+    }
+    #planet_name_sun {
+        top: 9%;
+    }
+    #planet_name_mercury {
+        top: -9%;
+    } */
+    /* .astronaut-img.male {
+        width: 56% !important;
+        height: 81% !important;
+    } */
+    /* .astronaut-img.female {
+        width: 56% !important;
+        height: 82% !important;
+    } */
+    /* #user-photo {
+        top: -10%;
+        left: 16.5%;
+        width: 38px;
+        height: 30px;
+    } */
+    /* #user-photo.male {
+        top: 17% !important;
+        left: 16% !important;
+        height: 28px !important;
+        width: 36px !important;
+    }
+    #user-photo.female {
+        top: 17.6%;
+        left: 14.5%;
+        width: 38px;
+        height: 28px;
+    } */
+}
+
+/* ********* Iphone X Landscape ******** */
+@media (min-width : 375px) 
+and (max-width : 812px) 
+/* and (-webkit-device-pixel-ratio : 3) */
+and (orientation : landscape) {
+    .ui-dialog {
+        height: 100% !important;
+        width: 50% !important;
+    }
+	.navbar-toggler {
+    padding: .1rem .3rem;
+    font-size: 1rem;
+    line-height: 1;
+    background-color: #c8def7;
+    border: 1px solid #c1d7e4;
+    border-radius: .2rem;
+}
+	.inox-logo img {
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+}
+	.dubai-city img {
+    	width: 220px;
+	}
+	.dubai-city {
+    position: absolute;
+    top: 67.4%;
+}
+	.image-box{
+		width: 50px;
+		margin-right: 8px;
+		margin-bottom: 3px;
+    	margin-top: 3px;
+	}
+	.image-box img{
+		width: 100%;
+	}
+	.image-box:nth-child(5) {
+    	margin-left: 0px;
+	}
+	.image-box-container {
+		position: absolute;
+		top: 86%;
+		left: 31%;
+		width: 50%;
+	}
+	.tunes{
+		font-size: 11px;
+		top: 81.5%;
+		left: 37.5%;
+	}
+	.burj-khalifa {
+    	top: 43%;
+		left: 83.5%;
+	}
+	#container-audio1 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 31px;
+    height: 95px;
+    z-index: 99;
+    top: 44%;
+}
+#container-audio2 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 29px;
+    height: 81px;
+    z-index: 98;
+    left: 14%;
+    top: 53%;
+}
+#container-audio3 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 35px;
+    height: 96px;
+    z-index: 97;
+    left: 32%;
+    top: 41%;
+}
+#container-audio4 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 30px;
+    height: 56px;
+    z-index: 96;
+    left: 47%;
+    top: 69%;
+}
+	#container-audio5 {
+		width: 35px;
+		height: 70px;
+		left: 45%;
+		top: -159%;
+	}
+	#container-audio6 {
+		width: 30px;
+		height: 78px;
+		left: 56%;
+		top: -183%;
+	}
+	.music-box7 {
+    width: 33px;
+    height: 61px;
+    margin-left: 190px;
+    margin-top: -45px;
+	}
+	.redirect_page{
+		top: 14%;
+	}
+	.container-audio .colum:nth-child(28){
+		display: none;
+	}
+	.container-audio .colum:nth-child(27){
+		display: none;
+	}
+	.container-audio .colum:nth-child(26){
+		display: none;
+	}
+	.container-audio .colum:nth-child(25){
+		display: none;
+	}
+	.container-audio .colum:nth-child(24){
+		display: none;
+	}
+	.container-audio .colum:nth-child(23){
+		display: none;
+	}
+	.container-audio .colum:nth-child(22){
+		display: none;
+	}
+	.container-audio .colum:nth-child(21){
+		display: none;
+	}
+	#container-audio {
+		width: 220px;
+	}
+	#container-audio {
+		display: none;
+	}
+.dubai-city-prod {
+    position: absolute;
+    top: 68%;
+    z-index: 45;
+}
+.dubai-city-prod img{
+	width: 220px;
+}
+.slider_circle_10 {
+    position: absolute !important;
+    width: 62vw !important;
+    height: 43.2vw !important;
+    user-select: none !important;
+    left: 23% !important;
+    top: 3% !important;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 146px !important;
+    left: 336px !important;
+    z-index: 99 !important;
+}
+.inox-logo-progallery img{
+	width: 170px;
+}
+.prev_button {
+    position: absolute;
+    left: 43% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/left-arrow-40.png) no-repeat !important;
+    background-size: 100px 48px;
+}
+.next_button {
+    position: absolute;
+    left: 54% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/right-arrow-40.png) no-repeat !important;
+    background-size: 100px 48px;
+    opacity: 1 !important;
+}
+/* .astronaut-img {
+    width: 56% !important;
+    height: 71% !important;
+    left: 2px !important;
+    top: -40px !important;
+} */
+.btn_logout {
+    top: 0 !important;
+}
+/* .planet-back-button {
+    bottom: -65px !important;
+    padding: 5px 15px !important;
+} */
+/* .preview {
+    width: 85%;
+}
+.saturn_preview {
+    width: 85% !important;
+    height: 146% !important;
+}
+.saturn-back {
+    bottom: -103px !important;
+} */
+/* Start Rocket */
+.rocket .rocket-body {
+    width: 44px !important;
+    height: 16px !important;
+}
+.rocket .rocket-body .fin-top:before, .rocket .rocket-body .fin-bottom:before {
+    width: 6px !important;
+}
+.rocket .rocket-body .fin-top, .rocket .rocket-body .fin-bottom {
+    height: 8px !important;
+}
+.rocket .rocket-body .fin-top {
+    top: -7px !important;
+}
+.rocket .rocket-body .fin-bottom {
+    bottom: -8px !important;
+}
+.rocket .rocket-body .faya {
+    left: -28px !important;
+    width: 26px !important;
+}
+.rocket .rocket-body:before {
+    right: -1px !important;
+}
+.rocket .rocket-body:before, .rocket .rocket-body:after {
+    width: 55% !important;
+}
+.rocket h2 {
+    font-size: 0.5rem !important;
+}
+#astroimg {
+    min-width: 529px;
+    height: 256px;
+    min-width: 521px;
+    height: 304px;
+}
+#cropperbox {
+    width: 100%;
+}
+.cropped {
+    width: 100%;
+}
+.box-2 {
+    width: 185px;
+    left: -4%;
+    height: 60%;
+}
+/* .astronaut-img.male {
+    width: 55% !important;
+    height: 83% !important;
+} */
+/* .astronaut-img.female {
+    width: 56% !important;
+    height: 82% !important;
+} */
+/* #user-photo {
+    top: -10%;
+    left: 16.5%;
+    width: 38px;
+    height: 30px;
+}
+#user-photo.male {
+    top: -9.6% !important;
+    left: 17.5% !important;
+    height: 28px !important;
+    width: 36px !important;
+}
+#user-photo.female {
+    top: -9.1%;
+    left: 16%;
+    width: 39px;
+    height: 28px;
+} */
+.user-img-div {
+    min-width: 380px;
+}
+.box-2.img-result {
+    left: -1.5%;
+}
+/* .back-to-homepage .planet_name {
+    top: 31%;
+}
+#planet_name_pluto {
+    top: 1%;
+}
+#planet_name_jupiter {
+    top: -14%;
+}
+#planet_name_neptune {
+    top: 1%;
+}
+#planet_name_uranus {
+    top: -8%;
+}
+#planet_name_earth {
+    top: 98%;
+}
+#planet_name_venus {
+    top: -6%;
+}
+#planet_name_mars {
+    top: -9%;
+}
+#planet_name_sun {
+    top: 21%;
+}
+#planet_name_mercury {
+    top: -9%;
+} */
+#edit-photo {
+    top: -20%;
+    left: -7%;
+}
+}
+
+/* ********* Iphone X Potrait ******** */
+@media (min-width : 375px) 
+and (max-width : 812px) 
+/* and (-webkit-device-pixel-ratio : 3) */
+and (orientation : portrait) { 
+	.navbar-toggler {
+		padding: .1rem .3rem;
+		font-size: 1rem;
+		line-height: 1;
+		background-color: #c8def7;
+		border: 1px solid #c1d7e4;
+		border-radius: .2rem;
+	}
+	.inox-logo {
+    position: absolute;
+    top: 20%;
+}
+	.inox-logo img {
+    width: 65%;
+}
+	.dubai-city {
+    position: absolute;
+    top: 86.3%;
+}
+	.burj-khalifa {
+    top: 76.5%;
+    left: 68%;
+}
+	.image-box-container {
+    position: absolute;
+    top: 53%;
+    left: 30%;
+    width: 50%;
+}
+	.image-box img{
+		width: 70px;
+	}
+	.dubai-city img {
+    	width: 200px;
+	}
+	.image-box:nth-child(7) {
+    	margin-left: 45px;
+	}
+	.tunes {
+    position: absolute;
+    color: white;
+    font-family: Century Gothic;
+    top: 48%;
+    left: 20%;
+    width: 60%;
+    text-align: center;
+    font-size: 12px;
+	line-height: 16px;
+}
+	#container-audio {
+		display: none;
+	}
+	.image-box:nth-child(5) {
+    margin-left: 0px;
+}
+.inox-logo-progallery img {
+    width: 110px;
+    margin-top: -113%;
+    margin-left: 37%;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 290px !important;
+    left: 111px !important;
+    z-index: 99 !important;
+}
+.prev_button {
+    position: absolute;
+    left: 35%;
+    top: 90%;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/left-arrow-40.png) no-repeat !important;
+    background-size: 100px 48px;
+}
+.next_button {
+    position: absolute;
+    left: 47%;
+    top: 90%;
+    margin: -15px 0 0 -25px !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/right-arrow-40.png) no-repeat !important;
+    background-size: 100px 48px;
+    opacity: 1 !important;
+}
+.dubai-city-prod {
+    position: absolute;
+    top: 86.4%;
+    z-index: 45;
+}
+.dubai-city-prod img{
+	width: 200px;
+}
+.slider_circle_10 {
+    position: absolute !important;
+    width: 82vw !important;
+    height: 59.2vw !important;
+    user-select: none !important;
+    left: 18% !important;
+    top: 29% !important;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 398px !important;
+    left: 118px !important;
+    z-index: 99 !important;
+}
+.prev_button {
+    position: absolute;
+    left: 45% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/left-arrow.png) no-repeat;
+    background-size: 100px 48px;
+}
+.next_button {
+    position: absolute;
+    left: 60% !important;
+    top: 90% !important;
+    margin: -15px 0 0 -25px !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/right-arrow.png) no-repeat;
+    background-size: 100px 48px;
+    opacity: 1 !important;
+}
+#container-audio1 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 31px;
+    height: 95px;
+    z-index: 99;
+    top: 44%;
+}
+#container-audio2 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 29px;
+    height: 81px;
+    z-index: 98;
+    left: 14%;
+    top: 53%;
+}
+#container-audio3 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 35px;
+    height: 96px;
+    z-index: 97;
+    left: 32%;
+    top: 41%;
+}
+#container-audio4 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 30px;
+    height: 56px;
+    z-index: 96;
+    left: 47%;
+    top: 69%;
+}
+#container-audio5 {
+    position: absolute;
+    opacity: 0;
+    float: left;
+    width: 34px;
+    height: 64px;
+    z-index: 95;
+    left: 65%;
+    top: 168%;
+}
+.music-box7 {
+    width: 21px;
+    height: 60px;
+    margin-left: 175px;
+    margin-top: 106px;
+}
+/* #block_land h1 {
+    font-size: 25px;
+} */
+#cropperbox {
+    width: 85%;
+}
+.astronaut-img-div {
+    background-size: cover !important;
+} 
+.box-2 {
+    left: -4%;
+}
+.box-2.img-result {
+    left: -4%;
+}
+}
+
+@media (max-width: 1024px) 
+and (min-width : 768px) 
+and (orientation: portrait) {
+	.burj-khalifa {
+    position: absolute;
+    left: 70.5%;
+    top: 64.8%;
+    z-index: 10;
+}
+	.image-box-container {
+    position: absolute;
+    top: 70%;
+    left: 23%;
+    width: 56%;
+}
+	.feel-free {
+    	margin-left: 5%;
+	}
+	.tunes {
+    width: 56%;
+    position: absolute;
+    color: white;
+    font-family: Century Gothic;
+    top: 67.5%;
+    left: 22.5%;
+}
+	.image-box {
+		float: left;
+		margin-right: 15px;
+		margin-bottom: 15px;
+	}
+	.image-box:nth-child(5) {
+    	margin-left: 57px;
+	}
+	.inox-logo img {
+		width: 47%;
+		display: block;
+		margin: 0 auto;
+	}
+	.inox-logo {
+		position: absolute;
+		top: 20%;
+	}
+	.dubai-city {
+    position: absolute;
+    top: 84%;
+}
+.slider_circle_10 {
+    position: absolute !important;
+    width: 82vw !important;
+    height: 59.2vw !important;
+    user-select: none !important;
+    left: 17% !important;
+    top: 16% !important;
+}
+.inox-logo-progallery img{
+width: 230px;
+    margin-top: 20%;
+    margin-left: -17%;
+}
+.dubai-city-prod {
+    position: absolute;
+    top: 84%;
+    z-index: 45;
+}
+#container-audio {
+    opacity: 0;
+    position: absolute;
+    left: 6%;
+    top: 49%;
+    float: left;
+    width: 300px;
+    height: 94px;
+    z-index: 93;
+}
+#cropperbox {
+    width: 100%;
+}
+.box-2 {
+    left: -4%;
+}
+.astronaut-img-div {
+    background-size: contain;
+}
+}
+
+
+/* ********* Iphone 6/7/8 Plus Landscap ******** */
+@media (min-width : 414px) 
+and (max-width : 736px) 
+/* and (-webkit-device-pixel-ratio : 3) */
+and (orientation : landscape) 
+{
+    .ui-dialog {
+        height: 100% !important;
+        width: 50% !important;
+    }
+	.navbar-toggler {
+		padding: .1rem .3rem;
+		font-size: 1rem;
+		line-height: 1;
+		background-color: #c8def7;
+		border: 1px solid #c1d7e4;
+		border-radius: .25rem;
+	}
+	.inox-logo img {
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+}
+	.inox-logo {
+    position: absolute;
+    top: 11%;
+}
+	.dubai-city {
+    position: absolute;
+    top: 70.4%;
+}
+	.burj-khalifa {
+    top: 29.5%;
+    left: 75%;
+}
+	.burj-khalifa img {
+    	width: 100%;
+	}
+	.image-box-container {
+		position: absolute;
+		top: 76%;
+		left: 38%;
+		width: 37%;
+	}
+	.image-box:nth-child(7) {
+    	margin-left: 0px;
+	}
+	.image-box:nth-child(5) {
+    	margin-left: 30px;
+	}
+	.image-box {
+		width: 48px;
+	}
+	.tunes {
+    font-size: 11px;
+    top: 71.5%;
+    left: 32.5%;
+}
+	#container-audio {
+		display: none;
+	}
+	#container-audio1 {
+    	top: -637%;
+	}
+	#container-audio2 {
+		left: 13%;
+		top: -536%;
+	}
+	#container-audio3 {
+		left: 29%;
+		top: -668%;
+	}
+	#container-audio4 {
+		left: 45%;
+		top: -322%;
+	}
+	#container-audio5 {
+		left: 58%;
+		top: -350%;
+	}
+	#container-audio6 {
+		left: 73%;
+		top: -384%;
+	}
+	.dubai-city-prod {
+    position: absolute;
+    top: 70.6%;
+    z-index: 45;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 100px !important;
+    left: 333px !important;
+    z-index: 99 !important;
+}
+.inox-logo-progallery img {
+    width: 160px;
+}
+/* .astronaut-img {
+    width: 56% !important;
+    height: 71% !important;
+    left: 2px !important;
+    top: -40px !important;
+} */
+.btn_logout {
+    top: 0 !important;
+}
+/* .planet-back-button {
+    bottom: -65px !important;
+    padding: 5px 15px !important;
+} */
+/* .preview {
+    width: 85%;
+} */
+/* .saturn_preview {
+    width: 85% !important;
+    height: 146% !important;
+} */
+/* .saturn-back {
+    bottom: -103px !important;
+} */
+/* Start Rocket */
+.rocket .rocket-body {
+    width: 44px !important;
+    height: 16px !important;
+}
+.rocket .rocket-body .fin-top:before, .rocket .rocket-body .fin-bottom:before {
+    width: 6px !important;
+}
+.rocket .rocket-body .fin-top, .rocket .rocket-body .fin-bottom {
+    height: 8px !important;
+}
+.rocket .rocket-body .fin-top {
+    top: -7px !important;
+}
+.rocket .rocket-body .fin-bottom {
+    bottom: -8px !important;
+}
+.rocket .rocket-body .faya {
+    left: -28px !important;
+    width: 26px !important;
+}
+.rocket .rocket-body:before {
+    right: -1px !important;
+}
+.rocket .rocket-body:before, .rocket .rocket-body:after {
+    width: 55% !important;
+}
+.rocket h2 {
+    font-size: 0.5rem !important;
+}
+/* End Rocket */
+.box-2 {
+    left: -4%;
+}
+/* .back-to-homepage .planet_name {
+    top: 30%;
+}
+#planet_name_pluto {
+    top: 5%;
+}
+#planet_name_jupiter {
+    top: -24%;
+}
+#planet_name_neptune {
+    top: -5%;
+}
+#planet_name_uranus {
+    top: -14%;
+}
+#planet_name_earth {
+    top: 82%;
+}
+#planet_name_venus {
+    top: -14%;
+}
+#planet_name_mars {
+    top: -21%;
+}
+#planet_name_sun {
+    top: 9%;
+}
+#planet_name_mercury {
+    top: -9%;
+} */
+}
+
+/* ********* Iphone 6/7/8 Plus Potrait ******** */
+@media (min-width : 414px) 
+and (max-width : 736px) 
+/* and (-webkit-device-pixel-ratio : 3) */
+and (orientation : portrait) { 
+	.navbar-toggler {
+		padding: .1rem .4rem;
+		font-size: 1rem;
+		line-height: 1;
+		background-color: #c8def7;
+		border: 1px solid #c1d7e4;
+		border-radius: .25rem;
+	}
+	.inox-logo img {
+    width: 65%;
+}
+	#container-audio {
+		display: none;
+	}
+	.dubai-city {
+    position: absolute;
+    top: 85%;
+}
+	.burj-khalifa {
+    top: 73.3%;
+    left: 70%;
+}
+	.image-box img {
+    	width: 60px;
+	}
+	.image-box-container {
+    position: absolute;
+    top: 58%;
+    left: 34%;
+    width: 48%;
+}
+	#container-audio1 {
+		width: 30px;
+		height: 123px;
+		top: -262%;
+	}
+	#container-audio2 {
+		width: 32px;
+		height: 97px;
+		left: 9%;
+		top: -190%;
+	}
+	#container-audio3 {
+		width: 34px;
+		height: 117px;
+		left: 20%;
+		top: -249%;
+	}
+	#container-audio4 {
+		width: 28px;
+		height: 74px;
+		left: 32%;
+		top: -122%;
+	}
+	#container-audio5 {
+		width: 30px;
+		height: 67px;
+		left: 41%;
+		top: -103%;
+	}
+	#container-audio6 {
+		width: 25px;
+		height: 73px;
+		left: 51%;
+		top: -119%;
+	}
+	.music-box7 {
+		width: 30px;
+		height: 70px;
+		margin-left: 172px;
+		margin-top: -40px;
+	}
+	.tunes {
+    position: absolute;
+    color: white;
+    font-family: Century Gothic;
+    top: 52%;
+    left: 20%;
+    width: 60%;
+    text-align: center;
+    font-size: 12px;
+}
+.dubai-city-prod {
+    position: absolute;
+    top: 85%;
+    z-index: 45;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 308px !important;
+    left: 175px !important;
+    z-index: 99 !important;
+}
+.inox-logo-progallery img {
+    width: 110px;
+    margin-top: 0%;
+    margin-left: 0%;
+}
+#cropperbox {
+    width: 85%;
+}
+.astronaut-img-div {
+    background-size: 131%;
+}
+}
+
+/* ********* Iphone 6/7/8 Potrait ******** */
+@media (min-width : 375px) 
+and (max-width : 667px) 
+/* and (-webkit-device-pixel-ratio : 2)  */
+and (orientation : portrait) {
+	.navbar-toggler {
+		padding: .1rem .3rem;
+		font-size: 1rem;
+		line-height: 1;
+		background-color: #c8def7;
+		border: 1px solid #c1d7e4;
+		border-radius: .25rem;
+	}
+	.burj-khalifa {
+    top: 73.6%;
+    left: 70.5%;
+}
+	.inox-logo {
+    position: absolute;
+    top: 16%;
+}
+	.inox-logo img {
+    width: 62%;
+    display: block;
+    margin: 0 auto;
+}
+	.dubai-city {
+    position: absolute;
+    top: 85%;
+}
+	.dubai-city img {
+    width: 180px;
+}
+	.image-box img{
+		width: 55px;
+	}
+	.tunes {
+    position: absolute;
+    color: white;
+    font-family: Century Gothic;
+    top: 45%;
+    left: 22%;
+    width: 57%;
+    text-align: center;
+    font-size: 12px;
+}
+	.image-box-container {
+		width: 38%;
+		top: 51%;
+		left: 34%;
+	}
+	#container-audio {
+		display: none;
+	}
+	.image-box:nth-child(7) {
+    	margin-left: 35px;
+	}
+	#container-audio1 {
+    width: 26px;
+    height: 102px;
+    top: 117%;
+}
+	#container-audio2 {
+    width: 30px;
+    height: 83px;
+    left: 11%;
+    top: 194%;
+}
+	#container-audio3 {
+    width: 33px;
+    height: 95px;
+    left: 23%;
+    top: 155%;
+}
+	#container-audio4 {
+    width: 22px;
+    height: 68px;
+    left: 38%;
+    top: 242%;
+}
+	#container-audio5 {
+		width: 35px;
+		height: 70px;
+		left: 45%;
+		top: -159%;
+	}
+	#container-audio6 {
+		position: absolute;
+		opacity: 0;
+		float: left;
+		width: 27px;
+		height: 65px;
+		z-index: 94;
+		left: 75%;
+		top: -126%;
+	}
+	.music-box7 {
+		width: 30px;
+		height: 60px;
+		margin-left: 191px;
+		margin-top: -31px;
+	}
+	.image-box:nth-child(5) {
+    margin-left: 0px;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 290px !important;
+    left: 105px !important;
+    z-index: 99 !important;
+}
+.dubai-city-prod {
+    position: absolute;
+    top: 85%;
+    z-index: 45;
+}
+.dubai-city-prod img{
+	width: 180px;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 190px !important;
+    left: 151px !important;
+    z-index: 99 !important;
+}
+.inox-logo-progallery img {
+    width: 110px;
+    margin-top: 0%;
+    margin-left: 0%;
+}
+.prev_button {
+    position: absolute;
+    left: 40% !important;
+    top: 90%;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/left-arrow-40.png) no-repeat !important;
+    background-size: 100px 48px;
+}
+.next_button {
+    position: absolute;
+    left: 56% !important;
+    top: 90%;
+    margin: -15px 0 0 -25px !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+    background: url(../images/right-arrow-40.png) no-repeat !important;
+    background-size: 100px 48px;
+    opacity: 1 !important;
+}
+.slider_circle_10 {
+    position: absolute !important;
+    width: 82vw !important;
+    height: 59.2vw !important;
+    user-select: none !important;
+    left: 18% !important;
+    top: 25% !important;
+}
+.inox-logo-progallery {
+    position: absolute !important;
+    top: 252px !important;
+    left: 157px !important;
+    z-index: 99 !important;
+}
+/* #block_land h1 {
+    font-size: 25px;
+} */
+#cropperbox {
+    width: 80% !important;
+}
+}
+
+@media (min-width : 360px) 
+and (max-width : 640px) 
+/* and (-webkit-device-pixel-ratio : 2)  */
+and (orientation : portrait) {
+    .astronaut-img-div {
+        background-size: cover;
+    }
+}
+
+@media (min-width : 320px) 
+and (max-width : 568px) 
+/* and (-webkit-device-pixel-ratio : 2)  */
+and (orientation : landscape) {
+    .user-img-div {
+        min-width: 300px;
+    }
+    #cropperbox {
+        width: 100%;
+    }
+    .astronaut-img-div {
+        background-position: center 30%;
+    }
+    .box-2 {
+        left: -5%;
+    }
+}
+
+@media (min-width : 320px) 
+and (max-width : 568px) 
+/* and (-webkit-device-pixel-ratio : 2)  */
+and (orientation : portrait) {
+    #cropperbox {
+        width: 85%;
+    }
+    .astronaut-img-div {
+        background-size: 142%;
+        background-position: center 35%;
+    }
+    .box-2 {
+        left: -4%;
+    }
+}

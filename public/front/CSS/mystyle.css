@@ -1,0 +1,36 @@
+﻿.err_msg {
+    color: white;
+    position: fixed;
+    top: 446px;
+    left: 407px;
+}
+
+.infoMessage_paswd {
+    color: white;
+    position: fixed;
+    top: 274px;
+    left: 809px;
+}
+
+.infoMessage_name {
+    color: white;
+    position: fixed;
+    top: 213px;
+    left: 809px;
+}
+
+.heading1 {
+    color: white;
+}
+
+.labels {
+    color: white;
+}
+
+.form-group.required .labels:after {
+    color: #d00;
+    content: "*";
+    position: absolute;
+    margin-left: 8px;
+    top: 7px;
+}

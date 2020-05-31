@@ -1,0 +1,558 @@
+/* common for all devices  */
+.communicator {
+  height: 100vh;
+}
+
+.main-screen {
+  /* border: 1px solid red; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.astronautarm-img {
+  background-image: url(../../front/images/login/reset_arm.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: left center;
+  height: 100%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  /* bottom: 0; */
+  /* border: 1px solid green; */
+  object-fit: cover;
+  z-index: -1;
+  display: flex;
+}
+
+.astronaut-arm {
+  max-width: 100%;
+  /* max-height: 100%; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  /* bottom: 0; */
+  display: none;
+  z-index: -1;
+}
+
+.form-group{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-127%, -70%);
+  width: 28.8vw;
+  height: 12vw;
+}
+.head-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-153%, -463%);
+    /* border: 1px solid red; */
+    width: 22.8vw;
+    height:2.5vw;
+    opacity:2;
+}
+
+.head-div p {
+  text-align: center;
+  font-family: 'Space Age';
+  color:#28e9e2 !important;/* #17a2b8;*/
+  font-size: 1.5vw;
+  vertical-align: middle;
+  line-height: 2.5vw;
+}
+.start-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-138%, -141%);
+  /* border: 1px solid red; */
+  width: 28.8vw;
+  height: 11.5vw;
+  opacity: 1;
+}
+
+.start-div p {
+  text-align: center;
+  font-family: 'Space Age';
+  color: #17a2b8;
+  font-size: 1.5vw;
+  vertical-align: middle;
+  line-height: 11.5vw;
+}
+
+.head-div p {
+  text-align: center;
+  font-family: 'Space Age';
+  color:#28e9e2 !important;/* #17a2b8;*/
+  font-size: 1.5vw;
+  vertical-align: middle;
+  line-height: 2.5vw;
+}
+
+.email-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-213%, -135%);
+   /* border: 1px solid red;*/
+    width: 5.8vw;
+    height: 2.5vw;
+    opacity: 2;
+}
+
+.email-div  p {
+  text-align: center;
+  font-family: 'Space Age';
+  color:#28e9e2 !important;/* #17a2b8;*/
+  font-size: 1.2vw;
+  vertical-align: middle;
+  line-height: 2.5vw;
+}
+
+
+.txt_email_div{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-31%, -135%);
+ /* border: 1px solid red;*/
+  width: 16.8vw;
+  height: 2.5vw;
+  opacity: 2;
+}
+
+.txt_email_div .txt_email{
+  text-align: center;
+  font-family: 'Space Age';
+  color: #17a2b8;
+  font-size: 1.2vw;
+  vertical-align: middle;
+  line-height: 2.5vw;
+}
+.button-div{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-47%, -2%);
+  /*border: 1px solid red;*/
+  width: 16.8vw;
+  height: 2.5vw;
+  opacity: 2;
+  /*border:2px solid red;*/
+}
+
+
+.button-div .btn_send_verification{
+  text-align: center;
+  font-family: 'Space Age';
+  color: #ffffff;
+  font-size: 0.9vw;
+  vertical-align: middle;
+  line-height: 1vw;
+  width: 16.8vw;
+ /* height: 2vw;*/
+  border:2px solid white;
+  border-radius: 3px;
+  padding: 2%;
+}
+.form-control
+{
+  border1:0px solid white;
+}
+
+.txt_email{
+  font-family:space age;
+
+}
+.form-control{
+  font-size: 1.2vw;
+}
+.main-screen .txt_email{
+  margin-bottom: 0.5em;
+  /*background: rgb(77,92,129);
+  background: linear-gradient(180deg, rgba(77,92,129,1) 0%, rgba(123,139,179,1) 50%, rgba(77,92,129,1) 100%);  */
+ /* color:#28e9e2 !important;*/
+  /* #17a2b8;*/
+
+  border: 0;
+  
+  font-size: 0.9vw;
+  /*text-shadow: 0px 0px 8px #343a40;*/
+  height: 2vw;
+  border-radius: 3px;
+  width: 100%;
+  padding: 2%;
+  /*font-family: 'Nasalization';*/
+}
+.btn-info {
+  background-color: #24bad2fa !important;
+    border-color: #17a2b8 !important;
+}
+
+
+.txt_password_div .txt_pass{
+  height: 2vw;
+  border-radius: 3px;
+  width: 100%;
+  padding: 2%;
+}
+.txt_conf_password_div .txt_conf_pass{
+  height: 2vw;
+  border-radius: 3px;
+  width: 100%;
+  padding: 2%;
+}
+.password-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-125%, -190%);
+   /* border: 1px solid red;*/
+    width: 11vw;
+    height: 2.5vw;
+    opacity: 2;
+}
+
+.password-div  p ,.conf_password-div  p{
+  /*text-align: center;*/
+  font-family: 'Space Age';
+  color: #28e9e2 !important;
+  font-size: 1vw;
+  vertical-align: middle;
+  line-height: 1vw;
+ /*border: 1px solid blue;*/
+}
+.txt_password_div{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-24%, -218%);
+ /*border: 1px solid red;*/
+  width: 16.8vw;
+  height: 2.5vw;
+  opacity: 2;
+  border-radius: 3px;
+  padding: 2%;
+}
+
+
+.conf_password-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-115%, -32%);
+   /* border: 1px solid red;*/
+    width: 11.8vw;
+    height: 2.5vw;
+    opacity: 2;
+}
+
+.txt_conf_password_div{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-24%, -67%);
+ /*border: 1px solid red;*/
+  width: 16.8vw;
+  height: 2.5vw;
+  opacity: 2;
+  border-radius: 3px;
+  padding: 2%;
+}
+.reset-button-div{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(-71%, 107%);
+  /* border: 1px solid red; */
+  width: 5vw;
+  height: 2vw;
+  opacity: 2;
+  /*border:2px solid red;*/
+}
+
+
+.reset-button-div .btn_reset{
+  text-align: center;
+  font-family: 'Space Age';
+  color: #ffffff;
+  font-size: 0.9vw;
+  vertical-align: middle;
+  line-height: 1vw;
+  width: 5vw;
+  height: 2vw;
+  border:2px solid white;
+  border-radius: 3px;
+  padding: 2%;
+}
+#block_land{
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background: #212529;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  color: #fff;
+  z-index: 200000;
+  font-size: 20px;
+}
+#block_land h1 {
+  text-transform: uppercase;
+}
+#block_land .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+}
+#block_land img {
+  width: 50%;
+}
+.home-div img {
+  width: 100%;
+  height: 3vw;
+}
+.home-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-709%, -524%);
+  -moz-transform: translate(-709%, -524%);
+  transform: translate(-678%, -411%);
+  /* border: 1px solid red; */
+  width: 6.5vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  pointer-events: none;
+}
+
+
+.home-div .communicator-button:active {
+  -webkit-transform: translate3d(-1px, 1px, 0px);
+  -moz-transform: translate3d(-1px, 1px, 0px);
+  transform: translate3d(-1px, 1px, 0px);
+}
+
+.swal2-popup {
+  box-shadow: 0px 0px 20px #17a2b8;
+  width: 27vw !important;
+  padding: 1vw !important;
+}
+
+.swal2-image {
+  width: 6vw !important;
+  height: 6vw !important;
+  margin: 1.25vh auto !important;
+}
+
+.swal2-title {
+  font-family: 'Nasalization';
+  font-size: 1.5vw !important;
+  color: #df1613 !important;
+}
+
+.swal2-content {
+  color: #17a2b8 !important;
+  font-size: 1.1vw !important;
+  font-family: 'Nasalization';
+}
+
+.swal2-title span.success {
+  color: #25d365 !important;
+}
+
+.swal2-styled {
+  font-size: 1.3vw !important;
+  padding: 0.5vw 2vw !important;
+}
+
+.swal2-actions {
+  margin: 1.25vw auto 0 !important;
+}
+
+.terms-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-135%, -97%);
+  -moz-transform: translate(-135%, -97%);
+  transform: translate(2338%, -364%);
+    /* border: 1px solid red; */
+    width: 1vw;
+    height:2.5vw;
+    opacity: 2;
+}
+
+.terms-div p {
+  text-align: center;
+  font-family: 'Space Age';
+  color:#28e9e2 !important;/* #17a2b8;*/
+  font-size: 0.8vw;
+  vertical-align: middle;
+ /* border: 1px solid white; */
+  line-height: 1vw;
+  writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+ .terms_form{
+   display:block;
+ }
+ .back-div img {
+  width: 100%;
+  height: 3vw;
+}
+.back-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-709%, -524%);
+  -moz-transform: translate(-709%, -524%);
+  transform: translate(-666%, -411%);
+  /* border: 1px solid red; */
+  width: 6.5vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  pointer-events: none;
+}
+
+
+.back-div .communicator-button:active {
+  -webkit-transform: translate3d(-1px, 1px, 0px);
+  -moz-transform: translate3d(-1px, 1px, 0px);
+  transform: translate3d(-1px, 1px, 0px);
+}
+
+
+
+.communicator-button:hover {
+  -webkit-filter: drop-shadow(0px 0px 3px #17a2b8);
+  filter: drop-shadow(0px 0px 3px #17a2b8);
+}
+
+.communicator-button:active {
+  -webkit-transform: translate3d(-1%, -1%, 0px);
+  -moz-transform: translate3d(-1%, -1%, 0px);
+  transform: translate3d(-1%, -1%, 0px);
+  -webkit-filter: drop-shadow(0px 0px 3px #17a2b8);
+  filter: drop-shadow(0px 0px 3px #17a2b8);
+}
+
+.communicator-buttons button:hover {
+  opacity: 1;
+  /* border: 1px solid red; */
+}
+
+
+
+
+.communicator-buttons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-187%, 122%);
+  -moz-transform: translate(-187%, 122%);
+  transform: translate(1151%, -229%);
+  width: 2vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+}
+.communicator-buttons .terms-button {
+  width: 51%;
+  margin-right: 2%;
+}
+
+
+/*---------------------------------------------------------------------------------*/
+/*// Extra small devices (portrait phones, less than 576px)*/
+/*---------------------------------------------------------------------------------*/
+@media (max-width: 575.98px) {
+     
+}
+
+
+
+/*---------------------------------------------------------------------------------*/
+/*// Small devices (landscape phones, 576px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+   
+}
+
+/*---------------------------------------------------------------------------------*/
+/*// Medium devices (tablets, 768px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 768px) and (max-width: 991.98px) { 
+
+}
+
+/*---------------------------------------------------------------------------------*/
+/*// Large devices (desktops, 992px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 992px) and (max-width: 1198px) {
+     
+}
+
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 1200px) {
+    
+}
+
+
+/*---------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 1920px) {
+     
+}
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 2500px) {
+    
+}

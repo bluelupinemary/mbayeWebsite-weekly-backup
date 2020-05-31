@@ -1,0 +1,204 @@
+@media (min-width: 1921px) {
+    /* .trix-editor trix-editor {
+        height: 23em;
+    } */
+
+    /* .blog-submenu {
+        font-size: 1em;
+    } */
+}
+
+@media (max-width: 1920px)
+and (min-width: 1441px) {
+    /* .trix-editor trix-editor {
+        height: 13em;
+    } */
+
+    /* .blog-submenu {
+        font-size: 0.6em;
+    } */
+}
+
+/* Laptop 1 */
+@media (max-width: 1440px) {
+    /* .menu-div {
+        transform: translate(-675%, -59%);
+    } */
+
+    /* .start-div {
+        transform: translate(-135%, -95%);
+        width: 29vw;
+    } */
+    
+}
+
+/* Laptop 2 */
+@media (min-width: 950px)
+and (max-width: 1280px) {
+    /* .menu-div {
+        transform: translate(-675%, -55%);
+    } */
+    
+}
+
+/* Ipad Pro */
+@media (min-width: 1024px) 
+and (max-width: 1366px)
+and (orientation: landscape)  {
+    
+}
+
+/* Laptop 3 */
+@media (min-width: 800px)
+and (max-width: 1280px) {
+    /* .menu-div {
+        transform: translate(-675%, -59%);
+    } */
+}
+
+/* Ipad */
+@media (max-width : 1024px) {
+    /* .start-div p {
+        font-size: 1em;
+    } */
+
+    /* .trix-editor trix-editor {
+        height: 7em;
+    } */
+    
+    /* .featured-image-text {
+        font-size: 0.5em;
+    } */
+
+    /* .custom-file-upload {
+        font-size: 0.4em;
+    } */
+
+    /* .blog-submenu {
+        width: 11vw;
+    } */
+
+    /* .video-form {
+        top: 22%;
+    } */
+}
+
+@media (min-width : 480px) 
+and (max-width : 853px)
+and (orientation : landscape) {
+    .trix-editor trix-toolbar {
+        display: none;
+    }
+
+    .trix-editor trix-editor {
+        height: 9vw;
+    }
+}
+
+@media (min-width : 411px) 
+and (max-width : 823px)
+and (orientation : landscape) {
+    /* .start-div p {
+        font-size: 0.8em;
+    } */
+
+    
+
+    /* .main-screen input {
+        font-size: 0.9vw;
+        height: 2vw;
+    } */
+
+    /* .main-form .add-video-btn {
+        font-size: 0.6vw;
+        height: 2vw;
+    } */
+
+    /* .blog-submenu {
+        width: 14vw;
+    } */
+
+    /* .video-form {
+        top: 30%;
+        width: 17vw;
+    } */
+}
+
+/* Iphone X */
+@media (min-width : 375px) 
+and (max-width : 812px)
+and (orientation : landscape) {
+    /* .menu-div {
+        transform: translate(-675%, -65%);
+    } */
+
+    /* .menu-div button {
+        padding: 22% 0;
+    } */
+    /* .trix-editor trix-editor {
+        height: 6em;
+    } */
+
+    
+}
+
+@media (min-width : 414px) 
+and (max-width : 736px)
+and (orientation : landscape) {
+    /* .blog-submenu {
+        width: 15vw;
+    } */
+}
+
+/* Iphone 6/7/8 */
+@media (min-width : 375px) 
+and (max-width : 667px)
+and (orientation : landscape) {
+    /* .trix-editor trix-editor {
+        height: 5em;
+    } */
+
+    /* .blog-submenu {
+        width: 16vw;
+    } */
+}
+
+/* Galaxy S5 */
+@media (min-width : 360px) 
+and (max-width : 640px)
+and (orientation : landscape) {
+    /* .start-div p {
+        font-size: 0.7em;
+    } */
+
+    /* .trix-editor trix-editor {
+        height: 4em;
+    } */
+
+    /* .blog-submenu {
+        width: 17vw;
+    } */
+}
+
+/* Iphone 5 */
+@media (min-width : 320px) 
+and (max-width : 568px) 
+/* and (-webkit-device-pixel-ratio : 2)  */
+and (orientation : landscape) {
+    /* .start-div p {
+        font-size: 0.6em;
+    } */
+
+    /* .trix-editor trix-editor {
+        height: 4em;
+    } */
+
+    /* .blog-submenu {
+        width: 19vw;
+    } */
+
+    /* .video-form {
+        top: 37%;
+        width: 20vw;
+    } */
+}

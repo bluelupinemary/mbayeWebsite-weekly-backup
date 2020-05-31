@@ -1,0 +1,644 @@
+
+body { 
+    /* The image used */
+    background-image: url(../images/body_bg.gif);
+    /* Full height */
+	width: 100%;
+    height: auto; 
+	font-size: 16px;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+.fencing-railing{
+	/* The image used */
+    background-image: url(../images/f&g-bg2.gif);
+    /* Full height */
+	width: 100%;
+    height: auto; 
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+* {cursor: url(../images/star.png) 25 25, auto;}
+@font-face {
+  font-family: Ondine-LT-Std;
+  src: url(../fonts/OndineD.ttf);
+}
+p{
+	margin: 0;
+	padding: 0;
+}
+header{
+    z-index: 30;
+    width: 100%;
+    position: absolute;
+    top: 0%;
+}
+  .bg-light {
+    background: none !important;
+}
+.home-item{
+	margin-left: 260px;
+}
+.home-input{
+	 background: none;
+	 outline: none;
+	 border: none;
+	 border-bottom: 1px solid #fff;
+	 color: #fff;
+}
+.navbar-light .navbar-brand {
+  color: #c1d7e4 !important;
+}
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+  color: #c87e26 !important;
+}
+.navbar-light .navbar-nav .nav-link {
+  	color: #c1d7e4 !important;
+	font-weight: bold;
+}
+.navbar-light .navbar-nav .nav-link:hover {
+  	color: #c87e26 !important;
+	font-weight: bold;
+}
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: .25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #c1d7e4;
+  text-align: inherit;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 10rem;
+  padding: 0;
+  margin: .125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background: none !important;
+  background-clip: padding-box;
+  border: none;
+  border-radius: .25rem;
+  margin-left: -70px;
+}
+
+.navbar-toggler {
+  padding: .25rem .75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid #c1d7e4;
+  border-radius: .25rem;
+}
+.navbar-light .navbar-toggler {
+  color: #c1d7e4;
+  border-color: #c1d7e4;
+}
+.nav-mar-right{
+  margin-right:100px;
+}
+.navbar {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+.float-right{
+  float: right;
+}
+.inox-logo{
+  	margin-top: 13%;
+    margin-left: 18%;
+}
+.inox-logo img{
+	width: 47%;
+}
+.burj-khalifa {
+	position: absolute;
+    left: 70.5%;
+    top: 5.3%;
+    z-index: 10;
+}
+.burj-khalifa img{
+	width: 100%;
+}
+.burj-khalifa-projects {
+	position: fixed;
+    left: 71%;
+    top: 6%;
+}
+.crown-burj-khalifa{
+	position: absolute;
+    left: 70.7%;
+    top: 5.2%;
+	z-index: 10;
+}
+.image-box-container{
+  	position: absolute;
+    top: 85%;
+    left: 21.5%;
+}
+.image-box{
+  float: left;
+  margin-right: 15px;
+}
+.dubai-city{
+  margin-top: 4.5%;
+}
+.dubai-city img{
+	
+}
+.dubai-city-prod{
+    position: absolute;
+    top: 78%;
+    z-index: 45;
+}
+.pro-dubai-city{
+  position: fixed;
+  top: 78%;
+}
+.crown-dubai-city{
+	position: absolute;
+    top: 73%;
+}
+.image_size{
+	margin-left: -23%;
+    margin-top: -11%;
+}
+.arabia{
+	width: 435px;
+	position: relative;
+    left: 355px;
+    top: -168px;
+}
+.orbit-animation{
+	margin-left: 9%;
+    margin-top: 8%;
+}
+.pro-orbit-animation{
+	margin-left: 8%;
+    margin-top: 18%;
+}
+.halo-animation{
+	width: 94%;
+    height: auto;
+    position: absolute;
+    z-index: -1;
+    top: 10%;
+    left: 6%;
+}
+.halo-bg{
+	position: absolute;
+	z-index: -20;
+	width: 1535px;
+	top: -6%;
+}
+.stones-only{
+	margin-top: -645px;
+}
+.pro-stones-only{
+	margin-top: -540px;
+}
+.helio{
+	margin-top: 120px;
+}
+.pro-helio{
+	margin-top: 158px;
+}
+.pro-gallery-wraper{
+	margin-top: -658px;
+    margin-left: 120px;
+}
+.inox-logo-gallery{
+ 	position: absolute;
+    top: 252px;
+    left: 443px;
+}
+.inox-logo-progallery{
+ 	position: absolute;
+    top: 325px;
+    left: 470px;
+    z-index: 99;
+}
+/* ********************** Mbaye ******************** */
+.halo-mbaye{
+    position: absolute;
+	margin-top: 12%;
+    z-index: 6;
+}
+.stones-only-animation{
+	position: absolute;
+    /*top: 30%;*/
+    top: 24%;
+    z-index: 7;
+}
+.web-cam{
+	width: 57%;
+    height: 46%;
+    position: absolute;
+    /*top: 37%;*/
+	top: 27%;
+    left: 23%;
+    transform: perspective(716px) scaleZ(2) rotateX(50deg) rotate(-1deg);
+    object-fit: cover;
+	overflow: hidden !important;
+	z-index: 7;
+}
+.web-cam video {
+    width: 851px;
+    height: 307px;
+    border-radius: 100%;
+    position: absolute;
+    z-index: 5;
+    object-fit: cover;
+}
+.planet-01{
+	position: fixed;
+    top: 20%;
+    left: 85%;
+	z-index: 10;
+}
+.planet-02{
+	position: fixed;
+    top: 9%;
+    left: 68%;
+	z-index: 10;
+}
+.planet-03{
+	position: fixed;
+    top: 1%;
+    left: 62%;
+	z-index: 10;
+}
+.flip-planet-04{
+    position: absolute;
+    top: 74%;
+	left: 2%;
+    z-index: 10;
+	background-color: transparent;
+    width: 160px;
+    height: auto;
+    perspective: 1000px;
+}
+/*
+.flip-planet-inner-04{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	transition: transform 2s;
+	transform-style: preserve-3d;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.flip-planet-04:hover .flip-planet-inner-04 {
+  transform: rotateY(180deg);
+  position: absolute;
+}
+
+.flip-planet-front-04, .flip-planet-back-04 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+.flip-planet-back-04 {
+background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+  position: absolute;
+  top: 74%;
+  left: 1%;
+}
+.planet-04-front{
+	position: absolute;
+    top: 74%;
+    left: 1%;
+  	backface-visibility: hidden;
+	z-index: 10;
+}
+*/
+.planet-05{
+	position: fixed;
+    top: 23%;
+    left: 14%;
+	z-index: 10;
+}
+.planet-06{
+	position: fixed;
+    top: 74%;
+    left: 88%;
+	z-index: 10;
+}
+.planet-07{
+	position: fixed;
+    top: 15%;
+    left: 8%;
+	z-index: 9;
+}
+.planet-07b{
+	position: fixed;
+    top: 28%;
+    left: 15%;
+    z-index: 10;
+}
+.planet-08{
+	position: fixed;
+    top: 76%;
+    left: 34%;
+	z-index: 10;
+}
+.planet-09{
+	position: fixed;
+    top: 20%;
+    left: 37%;
+    z-index: 10;
+}
+.planet-10{
+	position: fixed;
+    top: 10%;
+    left: 51%;
+}
+.telescope{
+	position: fixed;
+    top: 80%;
+    left: 5%;
+}
+.satellite{
+	position: fixed;
+    top: 86%;
+    left: 72%;
+	z-index: 10;
+}
+.participate{
+	position: absolute;
+    top: 27%;
+    left: -9%;
+}
+.diagne{
+	position: absolute;
+    top: 33%;
+    left: -13%;
+}
+.building{
+	position: absolute;
+    top: 35%;
+    left: -13%;
+}
+.contact{
+	position: absolute;
+    top: 35%;
+    left: -17%;
+}
+.visiting{
+	position: absolute;
+    top: 19%;
+    left: 15%;
+}
+.designs{
+	position: absolute;
+    top: 29%;
+    left: -10%;
+}
+.flowers{
+	position: absolute;
+    top: 29%;
+    left: -22%;
+}
+.special{
+	position: absolute;
+    top: 33%;
+    left: -23%;
+}
+.members{
+	position: absolute;
+    top: 33%;
+    left: -33%;
+}
+.stories{
+	position: absolute;
+    top: 18%;
+    left: 20%;
+}
+.search{
+	position: absolute;
+    top: 75%;
+    left: 14%;
+}
+.products-gallery{
+	
+}
+.ring{
+	position: absolute;
+    width: 750px;
+    height: 450px;
+    border: 5px solid #fff;
+    border-radius: 100%;
+    top: 19%;
+    left: 21%;
+}
+.free-form{
+	position: absolute;
+    left: 54.2%;
+    top: 13.5%;
+    z-index: 45;
+}
+.steel-caging{
+	position: absolute;
+    top: 16%;
+    left: 39.5%;
+    z-index: 45;
+}
+.sculpture{
+	position: absolute;
+    z-index: 45;
+    top: 28%;
+    left: 27.2%;
+}
+.steel-mesh{
+	position: absolute;
+    z-index: 45;
+    top: 69%;
+	left: -0.5%;
+}
+
+/* ****************** Fencing and Railing ******************* */
+
+.fr-dubai-city{
+	position: absolute;
+    top: 77.8%;
+	z-index: 11;
+}
+.fr-orbit-animation{
+	margin-top: 647px;
+    margin-left: 123px;
+}
+.burj-khalifa-dsp {
+    position: fixed;
+    left: 73%;
+    top: 12%;
+    z-index: 11;
+}
+.planet1{
+    position: absolute;
+    top: 42%;
+    left: 5%;
+}
+.planet1 img{
+	width: 126%;
+	height: 126%;
+}
+.planet2{
+	position: absolute;
+    top: 0px;
+    left: 60%;
+}
+.planet2 img{
+	width: 200%;
+    height: 200%;
+}
+.spaceman{
+}
+.spaceman-img{
+	position: absolute;
+	height: 25%;
+	top: 11%;
+	right: 10%;
+	z-index: 10;
+}
+.contact-details{
+	width: 50%;
+	height: auto;
+	margin-top: 10%;
+	margin-left:48%;
+	padding: 2%;
+	position: absolute;
+}
+.address{
+	position: relative;
+	width: 44%;
+	height: auto;
+	margin-top: 9%;
+    animation: showAddress 1s 3s forwards;
+    opacity: 0;
+}
+@keyframes showAddress {
+  to   { 
+  	opacity: 1; 
+	transition: ease-in-out;
+	}
+}
+.address p{
+	font-size: 16px;
+	color:white;
+	text-shadow:1px 2px 4px #000;
+	text-align: center;
+}
+.google-map{
+	width: 50%;
+	height: 50%;
+	animation: showMap 1s 4s forwards;
+  	opacity: 0;
+	position: absolute;
+	left: 47%;
+	top: 7%;
+}
+@keyframes showMap {
+  to   { 
+  	opacity: 1; 
+	transition: ease-in-out;
+	}
+}
+.map-shadow {
+    width: 97%;
+    height: 200%;
+    position: absolute;
+    z-index: 9;
+    border-radius: 50%;
+    box-shadow: inset -33px -12px 40px 18px rgba(0,0,0,.8);
+    top: 0%;
+}
+.map-google{
+	border-radius: 50%;
+}
+.email{
+	position: absolute;
+    top: 86%;
+    left: 44%;
+}
+.copy-right{
+	position: absolute;
+	color: white;
+    left: 60%;
+    width: 30%;
+	top: 95%;
+}
+.social-meadia{	
+	position: absolute;
+    color: white;
+    left: 68%;
+    width: 30%;
+    top: 85%;
+}
+.fb img{
+	width: 10%;
+	height: 10%;
+	margin-right:10px;
+	transition: transform .5s ease;
+	float:left;
+}
+.fb img:hover{
+  transform: scale(1.2);
+}
+.twiter img{
+	width: 10%;
+	height: 10%;
+	margin-right:10px;
+	transition: transform .5s ease;
+	float:left;
+}
+.twiter img:hover {
+  transform: scale(1.2);
+}
+.youtube img{
+	width: 10%;
+	height: 10%;
+	margin-right:10px;
+	transition: transform .5s ease;
+	float:left;
+}
+.youtube img:hover {
+  transform: scale(1.2);
+}
+.instagram img{
+	width: 10%;
+	height: 10%;
+	margin-right:10px;
+	transition: transform .5s ease;
+	float:left;
+}
+.instagram img:hover{
+  transform: scale(1.2);
+}

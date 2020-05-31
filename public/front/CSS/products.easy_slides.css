@@ -1,0 +1,1479 @@
+/*********************************/
+/*********************************/
+
+.slider_circle_10 {
+    position: absolute;
+    width: 70vw;
+    height: 46.2vw;
+    /* margin: 0 auto; */
+    user-select: none;
+    left: 10%;
+    top: 5%;
+}
+
+.slider_circle_10 > * {
+    transition: ease all 1s;
+}
+
+.slider_circle_10 > div,
+.slider_circle_10 .hidden {
+    opacity: 0;
+    position: absolute;
+    /*top: 20%;
+    left: 50%;
+    width: 1px;
+    height: 1px;*/
+    z-index: 0;
+    overflow: hidden;
+}
+.product1{
+	opacity: 1;
+	width: 100%;
+	height: 100%;
+	background: url(../images/mercury-animation-pro.gif) no-repeat;
+	background-size: 100%;
+}
+.product2{
+	width: 100%;
+	height: 100%;
+	background: url(../images/mars-planet-animation-pro.gif) no-repeat;
+	background-size: 100%;
+}
+.product3{
+	width: 100%;
+	height: 100%;
+	background: url(../images/Venus-planet-animation-pro.gif) no-repeat;
+	background-size: 100%;
+}
+.product4{
+	width: 100%;
+	height: 100%;
+	background: url(../images/Saturn_animation-pro.gif) no-repeat;
+	background-size: 100%;
+}
+.product5{
+	width: 100%;
+	height: 100%;
+	background: url(../images/pluto-planet-animation-pro2.gif) no-repeat;
+	background-size: 100%;
+}
+.product6{
+	width: 100%;
+	height: 100%;
+	background: url(../images/neptune-planet-animation-pro2.gif) no-repeat;
+	background-size: 100%;
+}
+.product7{
+	width: 100%;
+	height: 100%;
+	background: url(../images/uranus-planet-animation-pro.gif) no-repeat;
+	background-size: 100%;
+}
+.product8{
+	width: 100%;
+	height: 100%;
+	background: url(../images/earth-animation-pro.gif) no-repeat;
+	background-size: 100%;
+	position: absolute;
+    z-index: 37;
+}
+.product9{
+	width: 100%;
+	height: 100%;
+	background: url(../images/Moon_animation-pro.gif) no-repeat;
+	background-size: 100%;
+}
+.product10{
+	width: 100%;
+	height: 100%;
+	background: url(../images/jupiter-animation-pro.gif) no-repeat;
+	background-size: 100%;
+}
+.slider_circle_10 .active {
+    opacity: 1;
+    position: absolute;
+    top: 63%;
+    left: 46%;
+    margin-left: -25%;
+    width: 11%;
+    height: 16%;
+    z-index: 40;
+}
+
+.slider_circle_10 .prev1 {
+    opacity: 1;
+    position: absolute;
+    top: 61%;
+    left: 31%;
+    margin-left: -45%;
+    width: 19%;
+    height: 28%;
+    z-index: 39;
+}
+.slider_circle_10 .next1 {
+    opacity: 1;
+    position: absolute;
+    top: 68%;
+    left: 56%;
+    width: 15%;
+    height: 22%;
+    z-index: 39;
+    margin-left: 15%;
+}
+
+.slider_circle_10 .prev2 {
+    opacity: 1;
+    position: absolute;
+    top: 36%;
+    left: 55%;
+    margin-left: -50%;
+    width: 8%;
+    height: 12%;
+    z-index: 38;
+}
+.slider_circle_10 .next2 {
+    opacity: 1;
+    position: absolute;
+    top: 33%;
+    left: 48%;
+    margin-left: 27%;
+    width: 11%;
+    height: 16%;
+    z-index: 38;
+}
+
+.slider_circle_10 .prev3 {
+    opacity: 1;
+    position: absolute;
+    top: 21%;
+    left: 43%;
+    margin-left: -50%;
+    width: 17%;
+    height: 24%;
+    z-index: 37;
+}
+.slider_circle_10 .next3 {
+    opacity: 1;
+    position: absolute;
+    top: 10%;
+    left: 21%;
+    margin-left: 43%;
+    width: 11%;
+    height: 16%;
+    z-index: 37;
+}
+
+.slider_circle_10 .prev4 {
+    opacity: 1;
+    position: absolute;
+    top: 24%;
+    left: 63%;
+    margin-left: -40%;
+    width: 16%;
+    height: 24%;
+    z-index: 36;
+}
+.slider_circle_10 .next4 {
+    opacity: 1;
+    position: absolute;
+    top: 1%;
+    left: 16%;
+    margin-left: 37%;
+    width: 5%;
+    height: 8%;
+    z-index: 36;
+}
+
+.slider_circle_10 .prev5 {
+    opacity: 1;
+    position: absolute;
+    top: 11%;
+    left: 55%;
+    margin-left: -15%;
+    width: 7%;
+    height: 11%;
+    z-index: 35;
+}
+/*.slider_circle_10 .next5 {
+    opacity: 1;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin-left: 13%;
+    width: 2%;
+    height: 2%;
+    z-index: 5;
+	display: none;
+}
+*/
+.next_button {
+    position: absolute;
+    left: 47%;
+    top: 90%;
+    margin: -15px 0 0 -25px !important;
+    width: 100px !important;
+    height: 50px !important;
+    z-index: 5000 !important;
+	background: url(../images/right-arrow.png) no-repeat;
+	background-size: 100px 50px;
+    opacity: 1 !important;
+    
+}
+.prev_button {
+    position: absolute;
+    left: 35%;
+    top: 90%;
+    margin: -15px 0 0 -25px !important;
+    opacity: 1 !important;
+    width: 100px;
+    height: 50px;
+    z-index: 5000 !important;
+	background: url(../images/left-arrow.png) no-repeat;
+	background-size: 100px 50px;
+    
+}
+/*.next_button:hover,
+.prev_button:hover {
+    opacity: 1 !important;
+}
+.next_button:after,
+.prev_button:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1px;
+    height: 1px;
+    margin-top: -10px;
+}*/
+
+.next_button:after {
+    border-left: 15px solid #000;
+    border-right: 15px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-top: 10px solid transparent;
+    margin-left: -5px;
+}
+
+.prev_button:after {
+    border-right: 15px solid #000;
+    border-left: 15px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-top: 10px solid transparent;
+    margin-left: -25px;
+}
+
+
+/*div.slider > div:not(.nav_indicators):not(.next_button):not(.prev_button) {
+    box-shadow: 0px 1px 3px #000;
+    border: 1px solid #fff;
+    background: #dee2e6;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 150px;
+}*/
+
+/*  ******* Earth Hovering Effect ******** */
+.cube-wrapper-earth {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-earth {
+          transform: translateZ(-100px) scaleX(1.8);
+          transform-style: preserve-3d;
+        }
+        .cube-earth {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-earth {
+          position: absolute;
+          background-size: 84px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-earth {
+          transform: translateX(-41.4px) translateZ(100px);
+          background-position: 0 0;
+        }
+        #face2-earth {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          background-position: -82.8px 0;
+        }
+        #face3-earth {
+          transform: translateX(58.5px) rotateY(90deg);
+          background-position: -165.6px 0;
+        }
+        #face4-earth {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          background-position: -248.4px 0;
+        }
+        #face5-earth {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          background-position: -331.2px 0;
+        }
+        #face6-earth {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          background-position: -414px 0;
+        }
+        #face7-earth {
+          transform: translateX(-141.4px) rotateY(270deg);
+          background-position: -496.8px 0;
+        }
+        #face8-earth {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          background-position: -579.6px 0;
+        }
+
+        .circle-earth {
+            position: absolute;
+			width: 98%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-earth {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        .architectural > .earth {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.architectural > .earth:hover + .product8{
+			opacity:0;
+		} 
+		.architectural > .earth:hover{
+			opacity:1;
+		}
+        .earth .face-earth{
+          background-image:url(../images/products/architectural.jpg);
+        }
+        .earth .lighting-earth {
+          box-shadow: inset -30px -30px 40px rgba(0,0,0,.8);
+        }
+	
+/*  ******* Mercury Hovering Effect ******** */
+.cube-wrapper-mercury {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-mercury {
+          transform: translateZ(-100px) scaleX(1.8);
+          transform-style: preserve-3d;
+        }
+        .cube-mercury {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-mercury {
+          position: absolute;
+          background-size: 84px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-mercury {
+          transform: translateX(-41.4px) translateZ(100px);
+          /*background-position: 0;*/
+        }
+        #face2-mercury {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          /*background-position: -82.8px;*/
+        }
+        #face3-mercury {
+          transform: translateX(58.5px) rotateY(90deg);
+          /*background-position: -165.6px;*/
+        }
+        #face4-mercury {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          /*background-position: -248.4px;*/
+        }
+        #face5-mercury {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          /*background-position: -331.2px;*/
+        }
+        #face6-mercury {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          /*background-position: -414px;*/
+        }
+        #face7-mercury {
+          transform: translateX(-141.4px) rotateY(270deg);
+          /*background-position: -496.8px;*/
+        }
+        #face8-mercury {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          /*background-position: -579.6px;*/
+        }
+
+        .circle-mercury {
+            position: absolute;
+			width: 98%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-mercury {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        /*.mercury {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.mercury:hover{
+			opacity:1;
+			transition: all 300ms ease-in-out;
+		}
+		.mercury:hover + .product1{
+			opacity:1;
+		}*/
+        .mercury .face-mercury{
+          	background-image:url(../images/products/hotwire.jpg);
+        }
+		.hotwire-wraper > .mercury {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.hotwire-wraper > .mercury:hover + .product1{
+			opacity:0;
+		} 
+		.hotwire-wraper > .mercury:hover{
+			opacity:1;
+		}
+        .mercury .lighting-mercury {
+          box-shadow: inset -18px -18px 30px rgba(0,0,0,.8);
+        }
+
+/*  ******* Mars Hovering Effect ******** */
+.cube-wrapper-mars {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-mars {
+          transform: translateZ(-100px) scaleX(1.8);
+          transform-style: preserve-3d;
+        }
+        .cube-mars {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-mars {
+          position: absolute;
+          background-size: 84px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-mars {
+          transform: translateX(-41.4px) translateZ(100px);
+          /*background-position: 0 0;*/
+        }
+        #face2-mars {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          /*background-position: -82.8px 0;*/
+        }
+        #face3-mars {
+          transform: translateX(58.5px) rotateY(90deg);
+          /*background-position: -165.6px 0;*/
+        }
+        #face4-mars {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          /*background-position: -248.4px 0;*/
+        }
+        #face5-mars {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          /*background-position: -331.2px 0;*/
+        }
+        #face6-mars {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          /*background-position: -414px 0;*/
+        }
+        #face7-mars {
+          transform: translateX(-141.4px) rotateY(270deg);
+          /*background-position: -496.8px 0;*/
+        }
+        #face8-mars {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          /*background-position: -579.6px 0;*/
+        }
+
+        .circle-mars {
+            position: absolute;
+			width: 98%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-mars {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        /*.mars {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.mars:hover{
+			opacity:1;
+		}*/
+        .mars .face-mars{
+          background-image:url(../images/products/fencing&railing.jpg);
+		  background-size: cover;
+        }
+        .mars .lighting-mars {
+          box-shadow: inset -25px -25px 35px rgba(0,0,0,.8);
+        }
+		.fencing > .mars {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.fencing > .mars:hover + .product2{
+			opacity:0;
+		} 
+		.fencing > .mars:hover{
+			opacity:1;
+		}
+		
+/*  ******* Venus Hovering Effect ******** */
+.cube-wrapper-venus {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-venus {
+          transform: translateZ(-100px) scaleX(1.8);
+          transform-style: preserve-3d;
+        }
+        .cube-venus {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-venus {
+          position: absolute;
+          background-size: 200px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-venus {
+          transform: translateX(-41.4px) translateZ(100px);
+          background-position: 0 0;
+        }
+        #face2-venus {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          background-position: -82.8px 0;
+        }
+        #face3-venus {
+          transform: translateX(58.5px) rotateY(90deg);
+          background-position: -165.6px 0;
+        }
+        #face4-venus {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          background-position: -248.4px 0;
+        }
+        #face5-venus {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          background-position: -331.2px 0;
+        }
+        #face6-venus {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          background-position: -414px 0;
+        }
+        #face7-venus {
+          transform: translateX(-141.4px) rotateY(270deg);
+          background-position: -496.8px 0;
+        }
+        #face8-venus {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          background-position: -579.6px 0;
+        }
+
+        .circle-venus {
+            position: absolute;
+			width: 99%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-venus {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        /*.venus {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.venus:hover{
+			opacity:1;
+		}*/
+        .venus .face-venus{
+          background-image:url(../images/products/electro-polishing.png);
+        }
+        .venus .lighting-venus {
+          box-shadow: inset -18px -18px 30px rgba(0,0,0,.8);
+        }
+		.electro > .venus {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.electro > .venus:hover + .product3{
+			opacity:0;
+		} 
+		.electro > .venus:hover{
+			opacity:1;
+		}
+		
+/*  ******* Saturn Hovering Effect ******** */
+.cube-wrapper-saturn {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-saturn {
+          transform: translateZ(-100px) scaleX(1.8);
+          transform-style: preserve-3d;
+        }
+        .cube-saturn {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-saturn {
+          position: absolute;
+          background-size: 80px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-saturn {
+          transform: translateX(-41.4px) translateZ(100px);
+          /*background-position: 0 0;*/
+        }
+        #face2-saturn {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          /*background-position: -82.8px 0;*/
+        }
+        #face3-saturn {
+          transform: translateX(58.5px) rotateY(90deg);
+          /*background-position: -165.6px 0;*/
+        }
+        #face4-saturn {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          /*background-position: -248.4px 0;*/
+        }
+        #face5-saturn {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          /*background-position: -331.2px 0;*/
+        }
+        #face6-saturn {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          /*background-position: -414px 0;*/
+        }
+        #face7-saturn {
+          transform: translateX(-141.4px) rotateY(270deg);
+          /*background-position: -496.8px 0;*/
+        }
+        #face8-saturn {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          /*background-position: -579.6px 0;*/
+        }
+
+        .circle-saturn {
+            position: absolute;
+			width: 98%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-saturn {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        /*.saturn {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.saturn:hover{
+			opacity:1;
+		}*/
+        .saturn .face-saturn{
+          background-image:url(../images/products/mesh.jpg);
+        }
+        .saturn .lighting-saturn {
+          box-shadow: inset -17px -17px 28px rgba(0,0,0,.8);
+        }
+		.mesh > .saturn {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.mesh > .saturn:hover + .product4{
+			opacity:0;
+		} 
+		.mesh > .saturn:hover{
+			opacity:1;
+		}
+		
+/*  ******* Pluto Hovering Effect ******** */
+.cube-wrapper-pluto {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-pluto {
+          transform: translateZ(-100px) scaleX(1.8);
+          transform-style: preserve-3d;
+        }
+        .cube-pluto {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-pluto {
+          position: absolute;
+          background-size: 70px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-pluto {
+          transform: translateX(-41.4px) translateZ(100px);
+          /*background-position: 0 0;*/
+        }
+        #face2-pluto {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          /*background-position: -82.8px 0;*/
+        }
+        #face3-pluto {
+          transform: translateX(58.5px) rotateY(90deg);
+          /*background-position: -165.6px 0;*/
+        }
+        #face4-pluto {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          /*background-position: -248.4px 0;*/
+        }
+        #face5-pluto {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          /*background-position: -331.2px 0;*/
+        }
+        #face6-pluto {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          /*background-position: -414px 0;*/
+        }
+        #face7-pluto {
+          transform: translateX(-141.4px) rotateY(270deg);
+          /*background-position: -496.8px 0;*/
+        }
+        #face8-pluto {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          /*background-position: -579.6px 0;*/
+        }
+
+        .circle-pluto {
+            position: absolute;
+			width: 99%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-pluto {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        /*.pluto {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.pluto:hover{
+			opacity:1;
+		}*/
+        .pluto .face-pluto{
+          background-image:url(../images/products/lasser_cut.jpg);
+        }
+        .pluto .lighting-pluto {
+          box-shadow: inset -10px -10px 16px rgba(0,0,0,.8);
+        }
+		.laser > .pluto {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.laser > .pluto:hover + .product5{
+			opacity:0;
+		} 
+		.laser > .pluto:hover{
+			opacity:1;
+		}
+		
+/*  ******* Neptune Hovering Effect ******** */
+.cube-wrapper-neptune {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-neptune {
+          transform: translateZ(-100px) scaleX(1.8);
+          transform-style: preserve-3d;
+        }
+        .cube-neptune {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-neptune {
+          position: absolute;
+          background-size: 84px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-neptune {
+          transform: translateX(-41.4px) translateZ(100px);
+          /*background-position: 0 0;*/
+        }
+        #face2-neptune {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          /*background-position: -82.8px 0;*/
+        }
+        #face3-neptune {
+          transform: translateX(58.5px) rotateY(90deg);
+          /*background-position: -165.6px 0;*/
+        }
+        #face4-neptune {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          /*background-position: -248.4px 0;*/
+        }
+        #face5-neptune {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          /*background-position: -331.2px 0;*/
+        }
+        #face6-neptune {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          /*background-position: -414px 0;*/
+        }
+        #face7-neptune {
+          transform: translateX(-141.4px) rotateY(270deg);
+          /*background-position: -496.8px 0;*/
+        }
+        #face8-neptune {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          /*background-position: -579.6px 0;*/
+        }
+
+        .circle-neptune {
+            position: absolute;
+			width: 99%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-neptune {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        /*.neptune {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.neptune:hover{
+			opacity:1;
+		}*/
+        .neptune .face-neptune{
+          background-image:url(../images/products/caging.jpg);
+        }
+        .neptune .lighting-neptune {
+          box-shadow: inset -16px -16px 25px rgba(0,0,0,.8);
+        }
+		.caging > .neptune {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.caging > .neptune:hover + .product6{
+			opacity:0;
+		} 
+		.caging > .neptune:hover{
+			opacity:1;
+		}
+		
+/*  ******* Uranus Hovering Effect ******** */
+.cube-wrapper-uranus {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-uranus {
+          transform: translateZ(-100px) scaleX(1.6);
+          transform-style: preserve-3d;
+        }
+        .cube-uranus {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-uranus {
+          position: absolute;
+          background-size: 200px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-uranus {
+          transform: translateX(-41.4px) translateZ(100px);
+          background-position: 0 0;
+        }
+        #face2-uranus {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          background-position: -82.8px 0;
+        }
+        #face3-uranus {
+          transform: translateX(58.5px) rotateY(90deg);
+          background-position: -165.6px 0;
+        }
+        #face4-uranus {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          background-position: -248.4px 0;
+        }
+        #face5-uranus {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          background-position: -331.2px 0;
+        }
+        #face6-uranus {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          background-position: -414px 0;
+        }
+        #face7-uranus {
+          transform: translateX(-141.4px) rotateY(270deg);
+          background-position: -496.8px 0;
+        }
+        #face8-uranus {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          background-position: -579.6px 0;
+        }
+
+        .circle-uranus {
+            position: absolute;
+			width: 98%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-uranus {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        /*.uranus {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.uranus:hover{
+			opacity:1;
+		}*/
+        .uranus .face-uranus{
+          background-image:url(../images/products/lion-waterdrop.jpg);
+        }
+        .uranus .lighting-uranus {
+          box-shadow: inset -30px -30px 40px rgba(0,0,0,.8);
+        }	
+		.sculpture > .uranus {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.sculpture > .uranus:hover + .product7{
+			opacity:0;
+		} 
+		.sculpture > .uranus:hover{
+			opacity:1;
+		}
+
+/*  ******* Moon Hovering Effect ******** */
+.cube-wrapper-moon {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-moon {
+          transform: translateZ(-100px) scaleX(1.8);
+          transform-style: preserve-3d;
+        }
+        .cube-moon {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-moon {
+          position: absolute;
+          background-size: 84px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-moon {
+          transform: translateX(-41.4px) translateZ(100px);
+          /*background-position: 0 0;*/
+        }
+        #face2-moon {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          /*background-position: -82.8px 0;*/
+        }
+        #face3-moon {
+          transform: translateX(58.5px) rotateY(90deg);
+          /*background-position: -165.6px 0;*/
+        }
+        #face4-moon {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          /*background-position: -248.4px 0;*/
+        }
+        #face5-moon {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          /*background-position: -331.2px 0;*/
+        }
+        #face6-moon {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          /*background-position: -414px 0;*/
+        }
+        #face7-moon {
+          transform: translateX(-141.4px) rotateY(270deg);
+          /*background-position: -496.8px 0;*/
+        }
+        #face8-moon {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          /*background-position: -579.6px 0;*/
+        }
+
+        .circle-moon {
+            position: absolute;
+			width: 98%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-moon {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        /*.moon {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.moon:hover{
+			opacity:1;
+		}*/
+        .moon .face-moon{
+          background-image:url(../images/products/bespoke.jpg);
+        }
+        .moon .lighting-moon {
+          box-shadow: inset -16px -16px 25px rgba(0, 0, 0, 0.8);
+        }
+		.bespoke > .moon {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.bespoke > .moon:hover + .product9{
+			opacity:0;
+		} 
+		.bespoke > .moon:hover{
+			opacity:1;
+		}	
+		
+/*  ******* Jupiter Hovering Effect ******** */
+.cube-wrapper-jupiter {
+          width: 0;
+          height: 0;
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          perspective-origin: 0 0;
+          perspective: 80px;
+        }
+        .cube-2-jupiter {
+          transform: translateZ(-100px) scaleX(1.8);
+          transform-style: preserve-3d;
+        }
+        .cube-jupiter {
+          top: -100px;
+          position: relative;
+          transform-style: preserve-3d;
+          animation-name: rotate;
+          animation-duration: 30s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        @keyframes rotate {
+          0% {
+            transform: rotate3d(0 0, 0, 360deg);
+          }
+          100% {
+            transform: rotate3d(0, 1, 0, 360deg);
+            ;
+          }
+        }
+
+        .face-jupiter {
+          position: absolute;
+          background-size: 84px 200px;
+          width: 84px;
+          height: 200px;
+        }
+
+        #face1-jupiter {
+          transform: translateX(-41.4px) translateZ(100px);
+          background-position: 0 0;
+        }
+        #face2-jupiter {
+          transform: translateX(29.2px) translateZ(70.8px) rotateY(45deg);
+          background-position: -82.8px 0;
+        }
+        #face3-jupiter {
+          transform: translateX(58.5px) rotateY(90deg);
+          background-position: -165.6px 0;
+        }
+        #face4-jupiter {
+          transform: translateX(29.2px) translateZ(-70.8px) rotateY(135deg);
+          background-position: -248.4px 0;
+        }
+        #face5-jupiter {
+          transform: translateX(-41.4px) translateZ(-100px) rotateY(180deg);
+          background-position: -331.2px 0;
+        }
+        #face6-jupiter {
+          transform: translateX(-111.4px) translateZ(-70.8px) rotateY(225deg);
+          background-position: -414px 0;
+        }
+        #face7-jupiter {
+          transform: translateX(-141.4px) rotateY(270deg);
+          background-position: -496.8px 0;
+        }
+        #face8-jupiter {
+          transform: translateX(-111.4px) translateZ(70px) rotateY(315deg);
+          background-position: -579.6px 0;
+        }
+
+        .circle-jupiter {
+            position: absolute;
+			width: 98%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0%;
+			left: 0%;
+        }
+        .clip-circle-jupiter {
+			padding: 0;
+			/*top: -52%;
+			left: 2.2%;*/
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			clip-path: circle(48% at center);
+			margin-top: 0%;
+        }
+        /*.jupiter {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.jupiter:hover{
+			opacity:1;
+		}*/
+        .jupiter .face-jupiter{
+          background-image:url(../images/products/free-form-bending.jpg);
+        }
+        .jupiter .lighting-jupiter {
+          box-shadow: inset -30px -30px 40px rgba(0,0,0,.8);
+        }
+		.bending > .jupiter {
+			width: 100%;
+			height: 100%;
+          	position: absolute;
+			z-index: 38;
+			opacity: 0;
+        }
+		.bending > .jupiter:hover + .product10{
+			opacity:0;
+		} 
+		.bending > .jupiter:hover{
+			opacity:1;
+		}		
