@@ -40,7 +40,7 @@ class FrontendController extends Controller
             ->withpage($result);
     }
 
-    public function profile()
+    public function initial_agreement()
     {
         return view('frontend.pages.profile');
     }
@@ -63,6 +63,22 @@ class FrontendController extends Controller
     public function blogview(){
         $user = Auth::user();
         if($user)         return view('frontend.blog.index');
+        return view('frontend.auth.login');
+    }
+    public function blog_tagwise(Request $request){
+
+        // dd($request['tag']);
+        $tag = $request['tag'];
+        $user = Auth::user();
+        if($user)         return view('frontend.blog.blog_tagwise',compact('tag'));
+        return view('frontend.auth.login');
+    }
+    public function blog_of_friend_tagwise(Request $request){
+
+        $tag = $request['tag'];
+        $id = $request['id'];
+        $user = Auth::user();
+        if($user)         return view('frontend.blog.blog_of_friend_tagwise',compact('tag','id'));
         return view('frontend.auth.login');
     }
     public function blog(){
@@ -198,7 +214,5 @@ class FrontendController extends Controller
         if($user) return view('frontend.game.participate_mbaye');
         return view('frontend.pages.welcome_mbaye');
     }
-
-
-   
+    
 }

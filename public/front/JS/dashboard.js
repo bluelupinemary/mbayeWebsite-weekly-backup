@@ -91,21 +91,23 @@ $('.pluto-img').click(function() {
 	});
 });
 
-$(".img_pluto img").mouseenter(function() {
+$(".img_pluto").mouseenter(function() {
 	$('.pluto_preview').show();
-	$('.img_pluto img').css('opacity', '0');
+	$('.img_pluto img.planet').css('opacity', '0');
+	$(".img_pluto .planet-buttons").show();
 }).mouseleave(function() {
 	$('.pluto_preview').hide();
-	$('.img_pluto img').css('opacity', '1');
+	$('.img_pluto img.planet').css('opacity', '1');
+	$(".img_pluto .planet-buttons").hide();
 });
 
-$('.travel-back').click(function() {
+$('.img_pluto .planet-buttons button.back').click(function() {
 	hideZoomInPlanet()
 	$('.pluto_preview').remove();
 });
 
-$('.img_pluto').on('dblclick', function() {
-	window.open(url+'/home/travel', '_blank'); 
+$('.zoom-in-planet').on('dblclick', function() {
+	window.open(url+'/page_under_development', '_blank'); 
 	// alert('hello');
 });
 
@@ -125,15 +127,17 @@ $('.neptune-img').click(function() {
 	});
 });
 
-$(".img_neptune img").mouseenter(function() {
+$(".img_neptune").mouseenter(function() {
 	$('.neptune_preview').show();
-	$('.img_neptune img').css('opacity', '0');
+	$('.img_neptune img.planet').css('opacity', '0');
+	$(".img_neptune .planet-buttons").show();
 }).mouseleave(function() {
 	$('.neptune_preview').hide();
-	$('.img_neptune img').css('opacity', '1');
+	$('.img_neptune img.planet').css('opacity', '1');
+	$(".img_neptune .planet-buttons").hide();
 });
 
-$('.neptune-back').click(function() {
+$('.img_neptune .planet-buttons button.back').click(function() {
 	hideZoomInPlanet();
 	$('.neptune_preview').remove();
 });
@@ -156,6 +160,7 @@ $('.uranus-img').click(function() {
 $(".img_uranus").mouseenter(function(event) {
 	$('.uranus_preview').show();
 	$('.img_uranus img.planet-img').css('opacity', '0');
+	$(".img_uranus .planet-buttons").show();
 	// console.log(event.type);
 }).mouseleave(function(event) {
 	function str(el) {
@@ -167,6 +172,7 @@ $(".img_uranus").mouseenter(function(event) {
 	if(str(event.relatedTarget) == 'img_bg' || str(event.relatedTarget) == 'null') {
 		$('.uranus_preview').hide();
 		$('.img_uranus img.planet-img').css('opacity', '1');
+		$(".img_uranus .planet-buttons").hide();
 		// console.log(event.type);
 	}
 });
@@ -180,7 +186,7 @@ $('.uranus_preview .map a, .saturn_preview .map a').tooltip({
 	track: true
 });
 
-$('.uranus-back').click(function() {
+$('.img_uranus .planet-buttons button.back').click(function() {
 	hideZoomInPlanet();
 });
 
@@ -200,23 +206,25 @@ $('.jupiter-img').click(function() {
 	});
 });
 
-$(".img_jupiter img").mouseenter(function() {
+$(".img_jupiter").mouseenter(function() {
 	$('.jupiter_preview').show();
-	$('.img_jupiter img').css('opacity', '0');
+	$('.img_jupiter img.planet').css('opacity', '0');
+	$(".img_jupiter .planet-buttons").show();
 }).mouseleave(function() {
 	$('.jupiter_preview').hide();
-	$('.img_jupiter img').css('opacity', '1');
+	$('.img_jupiter img.planet').css('opacity', '1');
+	$(".img_jupiter .planet-buttons").hide();
 });
 
-$('.jupiter-back').click(function() {
+$('.img_jupiter .planet-buttons button.back').click(function() {
 	hideZoomInPlanet()
 	$('.jupiter_preview').remove();
 });
 
-$('.img_jupiter').on('dblclick', function() {
-	window.open(url+'/home/register', '_blank'); 
-	// alert('hello');
-});
+// $('.img_jupiter').on('dblclick', function() {
+// 	window.open(url+'/page_under_development', '_blank'); 
+// 	// alert('hello');
+// });
 
 // Moon
 $(".img_moon").removeClass("ani-rolloutMoon");
@@ -234,15 +242,17 @@ $('.moon-img').click(function() {
 	});
 });
 
-$(".img_moon img").mouseenter(function() {
+$(".img_moon").mouseenter(function() {
 	$('.moon_preview').show();
-	$('.img_moon img').css('opacity', '0');
+	$('.img_moon img.planet').css('opacity', '0');
+	$(".img_moon .planet-buttons").show();
 }).mouseleave(function() {
 	$('.moon_preview').hide();
-	$('.img_moon img').css('opacity', '1');
+	$('.img_moon img.planet').css('opacity', '1');
+	$(".img_moon .planet-buttons").hide();
 });
 
-$('.moon-back').click(function() {
+$('.img_moon .planet-buttons button.back').click(function() {
 	hideZoomInPlanet();
 	$('.moon_preview').remove();
 });
@@ -265,6 +275,7 @@ $('.saturn-img').click(function() {
 $(".img_saturn").mouseenter(function(event) {
 	$('.saturn_preview').show();
 	$('.img_saturn img.planet-img').css('opacity', '0');
+	$(".img_saturn .planet-buttons").show();
 	// console.log(event.type);
 }).mouseleave(function(event) {
 	function str(el) {
@@ -276,6 +287,7 @@ $(".img_saturn").mouseenter(function(event) {
 	if(str(event.relatedTarget) == 'img_bg' || str(event.relatedTarget) == 'null') {
 		$('.saturn_preview').hide();
 		$('.img_saturn img.planet-img').css('opacity', '1');
+		$(".img_saturn .planet-buttons").hide();
 		// console.log(event.type);
 	}
 });
@@ -287,7 +299,7 @@ function hidePreview()
 	$('.zoom-in-planet img').css('opacity', '1');
 }
 
-$('.saturn-back').click(function() {
+$('.img_saturn .planet-buttons button.back').click(function() {
 	hideZoomInPlanet();
 });
   
@@ -307,15 +319,17 @@ $('.mars-img').click(function() {
 	});
 });
 
-$(".img_mars img").mouseenter(function() {
+$(".img_mars").mouseenter(function() {
 	$('.mars_preview').show();
-	$('.img_mars img').css('opacity', '0');
+	$('.img_mars img.planet').css('opacity', '0');
+	$(".img_mars .planet-buttons").show();
 }).mouseleave(function() {
 	$('.mars_preview').hide();
-	$('.img_mars img').css('opacity', '1');
+	$('.img_mars img.planet').css('opacity', '1');
+	$(".img_mars .planet-buttons").hide();
 });
 
-$('.mars-back').click(function() {
+$('.img_mars .planet-buttons button.back').click(function() {
 	hideZoomInPlanet();
 	$('.mars_preview').remove();
 });
@@ -336,15 +350,17 @@ $('.venus-img').click(function() {
 	});
 });
 
-$(".img_venus img").mouseenter(function() {
+$(".img_venus").mouseenter(function() {
 	$('.venus_preview').show();
-	$('.img_venus img').css('opacity', '0');
+	$('.img_venus img.planet').css('opacity', '0');
+	$(".img_venus .planet-buttons").show();
 }).mouseleave(function() {
 	$('.venus_preview').hide();
-	$('.img_venus img').css('opacity', '1');
+	$('.img_venus img.planet').css('opacity', '1');
+	$(".img_venus .planet-buttons").hide();
 });
 
-$('.venus-back').click(function() {
+$('.img_venus .planet-buttons button.back').click(function() {
 	hideZoomInPlanet();
 	$('.venus_preview').remove();
 });
@@ -365,15 +381,17 @@ $('.mercury-img').click(function() {
 	});
 });
 
-$(".img_mercury img").mouseenter(function() {
+$(".img_mercury").mouseenter(function() {
 	$('.mercury_preview').show();
-	$('.img_mercury img').css('opacity', '0');
+	$('.img_mercury img.planet').css('opacity', '0');
+	$(".img_mercury .planet-buttons").show();
 }).mouseleave(function() {
 	$('.mercury_preview').hide();
-	$('.img_mercury img').css('opacity', '1');
+	$('.img_mercury img.planet').css('opacity', '1');
+	$(".img_mercury .planet-buttons").hide();
 });
 
-$('.mercury-back').click(function() {
+$('.img_mercury .planet-buttons button.back').click(function() {
 	hideZoomInPlanet();
 	$('.mercury_preview').remove();
 });
@@ -394,15 +412,17 @@ $('.sun-img').click(function() {
 	});
 });
 
-$(".img_sun img").mouseenter(function() {
+$(".img_sun").mouseenter(function() {
 	$('.sun_preview').show();
-	$('.img_sun img').css('opacity', '0');
+	$('.img_sun img.planet').css('opacity', '0');
+	$(".img_sun .planet-buttons").show();
 }).mouseleave(function() {
 	$('.sun_preview').hide();
-	$('.img_sun img').css('opacity', '1');
+	$('.img_sun img.planet').css('opacity', '1');
+	$(".img_sun .planet-buttons").hide();
 });
 
-$('.sun-back').click(function() {
+$('.img_sun .planet-buttons button.back').click(function() {
 	hideZoomInPlanet();
 	$('.sun_preview').remove();
 });

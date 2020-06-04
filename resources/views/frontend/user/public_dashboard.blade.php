@@ -1,11 +1,20 @@
 @extends('frontend.layouts.profile_layout')
-
+<meta name="url" content="{{ url('') }}">
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}">
+    <style>
+        .notifications-div {
+            display: none;
+        }
+
+        .navigator-buttons, .tos-div, .instructions-div, .communicator-div, .profilepicture {
+            pointer-events: none !important;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -34,10 +43,12 @@
     <!-- div of planets with shadow like 3d -->
     <div class="planets ">
         <!-- Pluto -->
-        <div class="pluto-img slide_9 main-planet">
-            {{-- <div class="pluto-shadow "></div> --}}
-            <h2 class="planet_name" id="planet_name_pluto">Pluto</h2>
-        </div>
+        <a href="{{URL('/blog_of_friend_tagwise?tag=' .'travel&id='.$user->id) }}">
+             <div class="pluto-img slide_9 main-planet">
+                {{-- <div class="pluto-shadow "></div> --}}
+                <h2 class="planet_name" id="planet_name_pluto">Pluto</h2>
+             </div>
+          </a>
         <div class="zoom-in-planet img_pluto">
             <div class="planet-buttons">
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
@@ -83,10 +94,12 @@
         </div>
 
         <!-- Moon -->
-        <div class="moon-img slide_5 main-planet">
+        <a href="{{URL('/blog_of_friend_tagwise?tag=' .'sports&id='.$user->id) }}">
+            <div class="moon-img slide_5 main-planet">
             {{-- <div class="moon-shadow "></div> --}}
             <h2 class="planet_name" id="planet_name_moon">Moon</h2>
-        </div>
+            </div>
+        </a>    
         <div class="zoom-in-planet img_moon">
             <div class="planet-buttons">
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
@@ -98,10 +111,12 @@
         </div>
 
         <!-- Mars -->
-        <div class="mars-img slide_4 main-planet">
+        <a href="{{URL('/blog_of_friend_tagwise?tag=' .'Mountains and Seas&id='.$user->id) }}">
+            <div class="mars-img slide_4 main-planet">
             {{-- <div class="mars-shadow "></div> --}}
             <h2 class="planet_name" id="planet_name_mars">Mars</h2>
-        </div>
+            </div>
+        </a>
         <div class="zoom-in-planet img_mars">
             <div class="planet-buttons">
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
@@ -113,10 +128,12 @@
         </div>
 
         <!-- Venus -->
-        <div class="venus-img slide_3 main-planet">
+        <a href="{{URL('/blog_of_friend_tagwise?tag=' .'films&id='.$user->id) }}">
+            <div class="venus-img slide_3 main-planet">
             {{-- <div class="venus-shadow "></div> --}}
             <h2 class="planet_name" id="planet_name_venus">Venus</h2>
-        </div>
+            </div>
+        </a>
         <div class="zoom-in-planet img_venus">
             <div class="planet-buttons">
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
@@ -128,10 +145,12 @@
         </div>
     
         <!-- Sun -->
-        <div class="sun-img slide_2 main-planet">
+        <a href="{{URL('/blog_of_friend_tagwise?tag=' .'Family and Friends&id='.$user->id) }}">
+            <div class="sun-img slide_2 main-planet">
             {{-- <div class="sun-shadow "></div> --}}
             <h2 class="planet_name" id="planet_name_sun">Sun</h2>
-        </div>
+            </div>
+        </a>
         <div class="zoom-in-planet img_sun">
             <div class="planet-buttons">
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
@@ -158,10 +177,12 @@
         </div>
 
         <!-- Uranus -->
-        <div class="uranus-img slide12 main-planet">
+        <a href="{{URL('/blog_of_friend_tagwise?tag=' .'politics&id='.$user->id) }}">
+            <div class="uranus-img slide12 main-planet">
             {{-- <div class="uranus-shadow "></div> --}}
             <h2 class="planet_name" id="planet_name_uranus">Uranus</h2>
-        </div>
+            </div>
+        </a>
         <div class="zoom-in-planet img_uranus">
             <div class="planet-buttons">
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
@@ -243,10 +264,12 @@
         </div>
 
         <!-- Saturn -->
-        <div class="saturn-img slide_13 main-planet">
+        <a href="{{URL('/blog_of_friend_tagwise?tag=' .'music&id='.$user->id) }}">
+            <div class="saturn-img slide_13 main-planet">
             {{-- <div class="saturn-shadow "></div> --}}
             <h2 class="planet_name" id="planet_name_saturn">Saturn</h2>
-        </div>
+            </div>
+        </a>
     
         <div class="zoom-in-planet img_saturn">
             <div class="planet-buttons">
@@ -411,13 +434,13 @@
         <h2 class="planet_name" id="edit-photo">Edit Photo</h2>
 
         @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
-            <img class="astronaut-img {{access()->user()->getGender()}}" src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
+            <img class="astronaut-img {{$user->getGender()}}" src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
             class="astronaut-body">
             <div class="tos-div thomasina">
                 <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
             </div>
         @else
-            <img class="astronaut-img {{access()->user()->getGender()}}" src="{{ asset('front/images/astronut/tom-navigator.png') }}" alt=""
+            <img class="astronaut-img {{$user->getGender()}}" src="{{ asset('front/images/astronut/tom-navigator.png') }}" alt=""
             class="astronaut-body">
             <div class="tos-div">
                 <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
@@ -425,7 +448,7 @@
         @endif
 
         <a href="{{url('profile/edit-photo')}}" class="profilepicture">
-            <img  id="user-photo" class="{{access()->user()->getGender()}}" src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+            <img  id="user-photo" class="{{$user->getGender()}}" src="{{asset('storage/profilepicture/'.$user->getProfilePicture())}}"/>
         </a> 
 
         <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
@@ -497,4 +520,10 @@
     
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="{{asset('front/JS/dashboard.js')}}"></script>
+    <script>
+        // $('button.navigator-zoomin').click( function() {
+        //     alert();
+        //     $('.navigator-buttons, .tos-div, .instructions-div, .navigator-zoomout-btn, .communicator-div').css('pointer-events', 'none !important');
+        // });
+    </script>
 @endsection

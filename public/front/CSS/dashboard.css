@@ -3066,3 +3066,67 @@ div.notifications-list::-webkit-scrollbar {
 	padding: 0.5%;
 	margin-top: 0;
 }
+
+.planet-buttons {
+	position: absolute;
+	/* top: 50%; */
+	left: 0;
+	right: 0;
+	/* transform: translate(-50%, -50%); */
+	/* border: 1px solid #c1d7e4; */
+	width: 30vw;
+	height: 100%;
+	margin: 0 auto;
+	display: none;
+}
+
+.planet-buttons button {
+	border: 0;
+	padding: 0;
+	/* border: 1px solid red; */
+	width: 4vw;
+	height: 4vw;
+	border-radius: 100px;
+	z-index: 9999999;
+	display: flex;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.planet-buttons button:focus {
+	outline: 0;
+}
+
+.planet-buttons button.view {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translate(0, -50%);
+	background: #00bff3;
+}
+
+.planet-buttons button.back {
+	position: absolute;
+	top: 50%;
+	left: 86%;
+	transform: translateY(-50%);
+	background: #ed1c24;
+}
+
+.planet-buttons button.extra {
+	position: absolute;
+	top: 2%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #3cb878;
+}
+
+.planet-buttons button img {
+	width: 90%;
+	align-self: center;
+	cursor: pointer;
+}
+
+.planet-buttons button.back img {
+	width: 70%;
+}

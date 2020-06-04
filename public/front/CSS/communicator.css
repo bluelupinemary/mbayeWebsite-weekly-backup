@@ -670,6 +670,11 @@ trix-toolbar .trix-button-group:not(:first-child) {
     border: 0 !important;
 }
 
+trix-toolbar .trix-button--icon-text-color::before {
+    background-image: url('../../front/icons/fill-drip-solid.svg');
+    /* background-size: 70%; */
+}
+
 .video-form {
     position: absolute;
     padding: 2%;
@@ -1552,4 +1557,42 @@ a:hover {
 .email-text {
     width: 20%;
     align-self: center;
+}
+
+.color-picker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-123%, -52%);
+    /* border: 1px solid red; */
+    width: 7vw;
+    /* height: 100px; */
+    display: flex;
+    flex-wrap: wrap;
+    background: #212529;
+    padding: 1%;
+    justify-content: space-around;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.color-picker div {
+    border: 1px solid #f8f9fa;
+    width: 1vw;
+    height: 1vw;
+    cursor: pointer;
+    border-radius: 100px;
+    margin: 1%;
+}
+
+.fullscreen-blog-color-picker, .fullscreen-email-color-picker {
+    top: 3.3em;
+    left: 11.6em;
+    transform: unset;
+    width: 14vw;
+}
+
+.fullscreen-blog-color-picker div, .fullscreen-email-color-picker div {
+    width: 2vw;
+    height: 2vw;
 }

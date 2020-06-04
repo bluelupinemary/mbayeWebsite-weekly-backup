@@ -138,7 +138,19 @@ html, body {
     right:1vw;
 }
 
-#skipVideo:hover{
+#hideOverlay{
+    position: absolute;  
+    font-family: 'Nasalization Rg';
+    font-weight: normal;
+    font-style: normal;
+    color:white;
+    font-size: 0.7vw;
+    /* text-align:center; */
+    top:2vw;
+    right:1vw;
+}
+
+#skipVideo:hover, #hideOverlay:hover{
     color: #0ee3ea;
 }
 

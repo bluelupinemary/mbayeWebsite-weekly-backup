@@ -334,7 +334,7 @@ function add_video_to_mesh(vidNo){
     if(vidNo == 2){
         videoTexture.video.pause();
         videoTexture.currentTime = 0;
-        if(!isVideoSkipped){
+        if(!isVideoSkipped && !isOverlayRemoved){
             document.getElementById('firstVideoOverlay').remove();
             document.getElementById('placeholderDiv').remove();
         }
@@ -355,6 +355,7 @@ function add_video_to_mesh(vidNo){
     
         videoTexture.uScale = -1.1;
         videoTexture.vScale = 1.26;
+        videoTexture2.uScale = -1;
         mat.diffuseTexture = videoTexture;
 
         videoHome_obj.material = mat;
@@ -372,7 +373,10 @@ function add_video_to_mesh(vidNo){
         agreeCameraUseDisc.material = agreeMatl;
     }
     
-    if(vidNo==2) videoTexture.video.play();
+    if(vidNo==2){ 
+        videoTexture.video.play();
+        
+    }
     
    
    
@@ -1081,13 +1085,18 @@ engine.runRenderLoop(function () {
 
     if(theScene){
         theScene.render();
-
+        
         if(startTime && !isIntroDone){
+            // if(videoTexture.video) console.log(videoTexture.video.currentTime);
             let currTime = new Date();
-            if((currTime - startTime) > TWO_MIN) {
-                add_video_to_mesh(2);
-                isIntroDone = true;
-             }
+            // if((currTime - startTime) > TWO_MIN) {
+            //     add_video_to_mesh(2);
+            //     isIntroDone = true;
+            //  }
+            if(videoTexture.video.currentTime > 136) {
+                    add_video_to_mesh(2);
+                    isIntroDone = true;
+                 }
         }
     }    
 }); 
@@ -1115,7 +1124,25 @@ canvas.height = window.innerHeight;
 
 let isFirstClick = false;
 let isVideoSkipped = false;
-$('#firstVideoOverlay').on('click', function(evt){
+// $('#firstVideoOverlay').on('click', function(evt){
+//     if(!isIntroDone){
+//         $(this).hide();
+//         if(!isFirstClick){
+//                 $(".overlayTxt").removeAttr("id");
+//                 $(".overlayTxt").removeClass( "overlayTxt" ).addClass("glowOverlayTxt");
+//                 isFirstClick = true;
+//         }
+//     }
+// });     
+
+// $('#placeholderDiv').on('click', function(evt){
+//     if(!isIntroDone){
+//         $('#firstVideoOverlay').show();
+//     }
+// });  
+
+
+$('#firstVideoOverlay').click(function() {
     if(!isIntroDone){
         $(this).hide();
         if(!isFirstClick){
@@ -1124,19 +1151,45 @@ $('#firstVideoOverlay').on('click', function(evt){
                 isFirstClick = true;
         }
     }
-});        
+}); 
 
-$('#placeholderDiv').on('click', function(evt){
+$( '#placeholderDiv').click(function() {
     if(!isIntroDone){
         $('#firstVideoOverlay').show();
     }
-});   
+  });
 
 $('#skipVideo').on('click', function(evt){
     add_video_to_mesh(2);
     isVideoSkipped = true;
-    // document.getElementById('firstVideoOverlay').remove();
-    // document.getElementById('placeholderDiv').remove();
+    document.getElementById('firstVideoOverlay').remove();
+    document.getElementById('placeholderDiv').remove();
 });   
 
+let isOverlayRemoved = false;
+$('#hideOverlay').on('click', function(evt){
+    document.getElementById('firstVideoOverlay').remove();
+    document.getElementById('placeholderDiv').remove();
+    isOverlayRemoved = true;
+}); 
+
+let isVideoPlaying = true;
+$(document).keydown(function(event) { 
+  
+    if(event.key===" "){
+        console.log('You pressed down space'); 
+        if(videoTexture.video){
+            if(isVideoPlaying){ 
+                videoTexture.video.pause();
+                isVideoPlaying = false;
+            }
+            else{
+                
+                videoTexture.video.play();
+                isVideoPlaying = true;
+            }
+        }
+        
+    }
+}); 
 

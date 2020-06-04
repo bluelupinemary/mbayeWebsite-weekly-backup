@@ -72,6 +72,23 @@
     <div class="user-photo {{access()->user()->getGender()}}">
         <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
     </div>
+    <div class="tag-title {{access()->user()->getGender()}}">
+        @if($tag =='films')
+          <img src="{{asset('front/images/planets/Venus.png')}}"/>
+        @elseif($tag=='sports')
+            <img src="{{asset('front/images/planets/Moon.png')}}"/>
+        @elseif($tag=='Mountains and Seas')
+            <img src="{{asset('front/images/planets/Mars.png')}}"/>
+        @elseif($tag=='music')
+            <img src="{{asset('front/images/planets/saturn.png')}}"/>    
+        @elseif($tag=='politics')
+            <img src="{{asset('front/images/planets/Uranus.png')}}"/>  
+        @elseif($tag=='Family and Friends')
+            <img src="{{asset('front/images/planets/sun.png')}}"/>  
+        @elseif($tag=='travel')
+            <img src="{{asset('front/images/planets/Pluto.png')}}"/>  
+         @endif  
+    </div>
     <div class="navigator-buttons">
         <div class="column column-1">
             <button class="music-btn tooltips left"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt="">
@@ -179,7 +196,8 @@
     var Total_count=0;
     var scroll_type='';
     var count=0;
- 
+ var tag    ="{{$tag}}";
+console.log(tag)
 $(document).ready(function() {
 
 
@@ -271,7 +289,8 @@ function contentDisplay() {
         /* Calling API for fetching images */
        page=1;
     //    var url="http://127.0.0.1:8000/api/v1/blogs";
-        var url_api=url+"/api/v1/blogs?page="+page
+   // http://127.0.0.1:8000/api/v1/blogbytag/Travel
+        var url_api=url+"/api/v1/blogbytag/"+tag+"?page="+page
         $.getJSON(url_api, function(data) 
         {
             
@@ -899,7 +918,7 @@ function contentDisplay() {
         var loading = true;
     /* Calling API for fetching images */
       
-        var url_api=url+"/api/v1/blogs?page="+page; 
+    var url_api=url+"/api/v1/blogbytag/"+tag+"?page="+page
         
       
         $.getJSON(url_api, function(data) 
@@ -1019,8 +1038,7 @@ function contentDisplay() {
                     page = page+1 ;
                     loading = true;
                    
-            
-                    var url_api=url+"/api/v1/blogs?page="+page
+                    var url_api=url+"/api/v1/blogbytag/"+tag+"?page="+page
                     $.getJSON(url_api, function(data) 
                     {
  
@@ -1133,7 +1151,7 @@ function contentDisplay() {
 function flickr(callback, page)
     { 
   
-                    var url_api=url+"/api/v1/blogs?page="+page
+        var url_api=url+"/api/v1/blogbytag/"+tag+"?page="+page
                     $.getJSON(url_api, function(data) 
                     {
  

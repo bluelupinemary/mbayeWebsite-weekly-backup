@@ -369,7 +369,7 @@ function add_visit_mouse_listener(){
                 console.log("THe mesh clicked: ", theInitMesh,theInitMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
                 // console.log("THE CAMERA:", visitCamera.position);
                 if(theInitMesh.name==="mercury"){
-                    window.open('http://localhost/MbayeTesting/MbayeHomepage.php','_self');
+                    window.open('/',"_self");
                 }
                 if(vrPartsNamesMap.has(theInitMesh.name)){
                     let sceneNum;

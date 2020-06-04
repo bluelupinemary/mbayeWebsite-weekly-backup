@@ -484,11 +484,11 @@ trait UserAttribute
 
     public function getProfilePicture()
     {
-        if(!is_null(access()->user()->photo)) {
-            if(strpos(access()->user()->photo, '-cropped') !== false) {
-                $filename = 'crop/'.access()->user()->photo;
+        if(!is_null($this->photo)) {
+            if(strpos($this->photo, '-cropped') !== false) {
+                $filename = 'crop/'.$this->photo;
             } else {
-                $filename = access()->user()->photo;
+                $filename = $this->photo;
             }
         } else {
             $filename = 'default.png';

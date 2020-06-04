@@ -16,7 +16,10 @@
       
     </div>
     <div id="firstVideoOverlay" >
-       <p id ="skipVideo" >Skip >> </p>
+       <p id ="skipVideo">Skip >> </p>
+       <br>
+       <p id ="hideOverlay">Use Camera >> </p>
+
         <div id="textOverlayDiv">
             <div class="firstVideoOverlayText">
                 <div class="overlayTxt" id="txt1">Dedicated to care, we named this monument after a UN peacekeeping soldier who gave his life caring for others</div>
@@ -34,11 +37,11 @@
                 <div class="overlayTxt" id="txt12">Kindly take a tour into mbaye.com and join us in this adventure at absolutely no cost.</div>
             </div>
         </div>
-        <div id="imageOverlayDiv">    
+        {{-- <div id="imageOverlayDiv">    
             <div id="tomHome" class="homeOverlayImage"></div>
             <div id="emptyDivFiller"></div>
             <div id="nuvolaHome" class="homeOverlayImage"></div>
-        </div>
+        </div> --}}
     </div>
     <div id="placeholderDiv" ></div>
 

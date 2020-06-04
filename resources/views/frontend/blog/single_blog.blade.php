@@ -90,7 +90,7 @@
                         class="blog-owner">{{ $blog->owner->first_name.' '.$blog->owner->last_name }}</span>
                     <hr>
                     <div class="blog-summary">
-                        <div class="content">{{ $blog->excerpt_content }}</div>
+                        <div class="content"></div>
                         <div class="blog-buttons blog-button-2">
                             <div class="left">
                                 <div class="button-div hotIcon">
@@ -188,6 +188,9 @@
                     <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
                 </div>
             @endif
+            <div class="user-photo {{access()->user()->getGender()}}">
+                <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+            </div>
             <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button>
             <div class="navigator-buttons">
                 <div class="column column-1">
@@ -233,10 +236,13 @@
         var urlLike = '{{ route('frontend.likepost') }}';
         var naff_fart_status = '{{$blog->naff_fart_status}}';
         var naff_fart_animation = true;
+        var blog = {!! json_encode($blog->toArray()) !!};
 
         $(document).ready(function() {
             scaleAstronaut();
             // init();
+            // console.log(blog);
+            $('.blog-summary .content').html(trimHtml(blog.content, { limit: 200 }).html);
         });
         
         $(window).on('load', function() {
@@ -252,6 +258,118 @@
                 }
             });
         });
+
+        function trimHtml(html, options) {
+            console.log(html);
+            options = options || {};
+
+            var limit = options.limit || 100,
+                preserveTags = (typeof options.preserveTags !== 'undefined') ? options.preserveTags : true,
+                wordBreak = (typeof options.wordBreak !== 'undefined') ? options.wordBreak : false,
+                suffix = options.suffix || '...',
+                moreLink = options.moreLink || '';
+
+            var arr = html.replace(/</g, "\n<")
+                .replace(/>/g, ">\n")
+                .replace(/\n\n/g, "\n")
+                .replace(/^\n/g, "")
+                .replace(/\n$/g, "")
+                .split("\n");
+
+            var sum = 0,
+                row, cut, add,
+                tagMatch,
+                tagName,
+                tagStack = [],
+                more = false;
+
+            for (var i = 0; i < arr.length; i++) {
+
+                row = arr[i];
+                // count multiple spaces as one character
+                rowCut = row.replace(/[ ]+/g, ' ');
+
+                if (!row.length) {
+                    continue;
+                }
+
+                if (row[0] !== "<") {
+
+                    if (sum >= limit) {
+                        row = "";
+                    } else if ((sum + rowCut.length) >= limit) {
+
+                        cut = limit - sum;
+
+                        if (row[cut - 1] === ' ') {
+                            while(cut){
+                                cut -= 1;
+                                if(row[cut - 1] !== ' '){
+                                    break;
+                                }
+                            }
+                        } else {
+
+                            add = row.substring(cut).split('').indexOf(' ');
+
+                            // break on halh of word
+                            if(!wordBreak) {
+                                if (add !== -1) {
+                                    cut += add;
+                                } else {
+                                    cut = row.length;
+                                }
+                            }
+                        }
+
+                        row = row.substring(0, cut) + suffix;
+
+                        if (moreLink) {
+                            row += '<a href="' + moreLink + '" style="display:inline">»</a>';
+                        }
+
+                        sum = limit;
+                        more = true;
+                    } else {
+                        sum += rowCut.length;
+                    }
+                } else if (!preserveTags) {
+                    row = '';
+                } else if (sum >= limit) {
+
+                    tagMatch = row.match(/[a-zA-Z]+/);
+                    tagName = tagMatch ? tagMatch[0] : '';
+
+                    if (tagName) {
+                        if (row.substring(0, 2) !== '</') {
+
+                            tagStack.push(tagName);
+                            row = '';
+                        } else {
+
+                            while (tagStack[tagStack.length - 1] !== tagName && tagStack.length) {
+                                tagStack.pop();
+                            }
+
+                            if (tagStack.length) {
+                                row = '';
+                            }
+
+                            tagStack.pop();
+                        }
+                    } else {
+                        row = '';
+                    }
+                }
+
+                arr[i] = row;
+            }
+
+            return {
+                html: arr.join("\n").replace(/\n/g, ""),
+                more: more
+            };
+        }
 
         var fart_audio = document.getElementById("fart-audio"); 
         function animateNaffFart()

@@ -42,7 +42,7 @@
                         <p>Reset Password</p>
                     </div>
                     <div class="communicator-buttons">
-                        <img src="{{asset('front/images/communicator-buttons/buttons/terms.png')}}" class="communicator-button terms-button p_terms" alt="">
+                        <img src="{{asset('front/images/communicator-buttons/buttons/termsBtn.png')}}" class="communicator-button terms-button p_terms" alt="">
                       </div>
                     {{ Form::open(['route' => 'frontend.auth.password.reset', 'class' => 'form-horizontal']) }}
                         <input type="hidden" name="token" value="{{ $token }}">

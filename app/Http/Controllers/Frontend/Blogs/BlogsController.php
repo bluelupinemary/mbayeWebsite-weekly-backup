@@ -156,8 +156,10 @@ class BlogsController extends Controller
     public function show($id)
     {
         $blog = Blog::find($id);
-        $excerpt_content = Str::limit(strip_tags(preg_replace('#(<span[^>]*>).*?(</span>)#', '$1$2', $blog->content)), 200);
-        $blog->excerpt_content = $excerpt_content;
+        // $excerpt_content = Str::limit(preg_replace('#(<figure[^>]*>).*?(</figure>)#', '$1$2', $blog->content), 200);
+        // dd($excerpt_content);
+        // $excerpt_content = Str::limit($blog->content, 200);
+        // $blog->excerpt_content = $excerpt_content;
         if($blog->featured_image == '') {
             $blog->featured_image = 'blog-default-featured-image.png';
         }

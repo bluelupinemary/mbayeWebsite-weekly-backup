@@ -30,12 +30,12 @@
 
                     <div class="back-div ">
                       <input type="hidden" id="myurl" url="{{url('/login')}}" />
-                      <img src="{{asset('front/images/communicator-buttons/buttons/backBtn.png')}}" class="communicator-button back-button" alt="">
+                      <img src="{{asset('front/images/communicator-buttons/buttons/homeBtn.png')}}" class="communicator-button back-button" alt="">
                     </div>
                    
              
                     <div class="communicator-buttons">
-                      <img src="{{asset('front/images/communicator-buttons/buttons/terms.png')}}" class="communicator-button terms-button" alt="">
+                      <img src="{{asset('front/images/communicator-buttons/buttons/termsBtn.png')}}" class="communicator-button terms-button" alt="">
                     </div>
 
 

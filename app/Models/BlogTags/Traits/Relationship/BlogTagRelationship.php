@@ -2,6 +2,7 @@
 
 namespace App\Models\BlogTags\Traits\Relationship;
 
+use App\Models\Blogs\Blog;
 use App\Models\Access\User\User;
 
 /**
@@ -16,4 +17,10 @@ trait BlogTagRelationship
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function blogs()
+    {
+        return $this->belongsToMany(Blog::class, 'blog_map_tags', 'tag_id', 'blog_id');
+    }
+    
 }

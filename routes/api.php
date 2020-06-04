@@ -10,6 +10,16 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//routes for social networking.
+Route::get('/listusers','Frontend\Friendship\FriendshipController@listusers')->name('users.list');
+Route::get('/requests','Frontend\Friendship\FriendshipController@requests')->name('users.requests');
+Route::get('/sendrequest/{user}','Frontend\Friendship\FriendshipController@sendrequest')->name('users.sendrequest');
+Route::get('/checkfriendship/{user}','Frontend\Friendship\FriendshipController@checkfriendship')->name('users.checkfriendship');
+Route::get('/acceptrequest/{user}','Frontend\Friendship\FriendshipController@acceptrequest')->name('users.acceptrequest');
+Route::get('/denyrequest/{user}','Frontend\Friendship\FriendshipController@denyrequest')->name('users.denyrequest');
+Route::any('/search', 'Frontend\Friendship\FriendshipController@searchuser')->name('user.search');
+
+//end routes for social networking
 Route::post('/readnotification','Frontend\Notify\NotifyController@readnotification');
 Route::get('/blogpost/{blog}', 'Frontend\Comment\CommentController@blogpost');
 Route::post('/notify','Frontend\Notify\NotifyController@getnotifications');
@@ -55,6 +65,9 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
         // Blogs
         Route::resource('blogs', 'BlogsController', ['except' => ['create', 'edit']]);
-    
+        Route::get('/blogbytag/{blogtag}','BlogsController@showbytag');
+        Route::get('blogbytagoffriend','BlogsController@showbytagforfriend');
+  
+      
 });
 

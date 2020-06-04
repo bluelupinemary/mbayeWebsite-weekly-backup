@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Resources\BlogsResource;
+use Validator;
 use App\Models\Blogs\Blog;
+use App\Models\BlogTags\BlogTag;
 use App\Repositories\Backend\Blogs\BlogsRepository;
 use Illuminate\Http\Request;
-use Validator;
+use App\Http\Resources\BlogsResource;
 
 class BlogsController extends APIController
 {
@@ -30,15 +31,37 @@ class BlogsController extends APIController
     public function index(Request $request)
     {
        // $limit = $request->get('paginate') ? $request->get('paginate') : 100;
-          $limit = $request->get('paginate') ? $request->get('paginate') : 21;
-        $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'ASC';
+        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
 
         return BlogsResource::collection(
             $this->repository->getForDataTable()->orderBy($sortBy, $orderBy)->paginate($limit)
         );
     }
-
+    public function showbytag(Request $request)
+    {
+        $btag = BlogTag::where('name',$request['blogtag'])->first();
+    //  dd($btag);
+        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
+        $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
+        return BlogsResource::collection(
+            $btag->blogs()->orderBy($sortBy, $orderBy)->paginate($limit)
+        );
+    }
+    public function showbytagforfriend(Request $request){
+ 
+            $btag = BlogTag::where('name',$request['tag'])->first();
+            // dd( $btag->name);
+            $id=$request['id'];
+            $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+            $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
+            $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
+            return BlogsResource::collection(
+                $btag->blogs()->where('created_by', $id)->orderBy($sortBy, $orderBy)->paginate($limit)
+            );
+    }
     /**
      * Return the specified resource.
      *
@@ -110,6 +133,7 @@ class BlogsController extends APIController
             'message' => trans('alerts.backend.blogs.deleted'),
         ]);
     }
+
 
     /**
      * validate Blog.

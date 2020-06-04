@@ -1637,6 +1637,10 @@ p.comment-date {
     justify-content: center;
 }
 
+.navigator-zoom i {
+    align-self: center;
+}
+
 .navigator-zoom:active, .navigator-zoom:focus {
     outline: 0;
 }
@@ -1716,7 +1720,6 @@ p.comment-date {
     -ms-transform: skew(23deg, 10deg);
     transform: skew(23deg, 10deg);
 }
-}
 
 .editprofile-div {
     position: absolute;
@@ -1736,6 +1739,7 @@ p.comment-date {
 
 .navigator-buttons button:focus {
     outline: 0;
+    outline: 0px auto -webkit-focus-ring-color;
 }
 
 .navigator-div .tooltips span {
@@ -1944,4 +1948,36 @@ img {
 
 .naff-fart-reaction img {
     width: 100%;
+}
+
+.user-photo {
+    width: 2.9vw;
+    height: 2.25vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-70%, -358%);
+    display: flex;
+    justify-content: center;
+}
+
+.user-photo.male {
+    width: 2.9vw;
+    height: 2.35vw;
+    transform: translate(-70%, -340%);
+}
+
+.user-photo img {
+    border-radius: 21% 21% 35% 35%;
+    align-self: stretch;
+    /* filter: opacity(0.6); */
+    width: 100%;
+}
+
+.user-photo.male img {
+    border-radius: 21% 21% 30% 30%;
+}
+
+h1 {
+    font-size: 2em !important;
 }

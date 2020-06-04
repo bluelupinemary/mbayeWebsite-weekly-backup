@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "Georgia Italic";
+	src: url("../../fonts/georgia italic.ttf");
+}
+
 .mbaye_body {
     width: 100% !important;
     position: unset !important;
@@ -240,7 +245,7 @@ padding: 0;
     text-align: center;
     font-family: Space age;
     color: #17a2b8;
-    margin-top: 5%;
+    margin-top: 15%;
     margin-bottom: 1%;
     /* display: none; */
 }
@@ -635,6 +640,7 @@ img.naff-reaction {
             -ms-transform: translate(0, -50%);
                 transform: translate(0, -50%);
     width: 14%;
+    z-index: 1;
     pointer-events: none;
     display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
     display: -ms-flexbox;  /* TWEENER - IE 10 */
@@ -992,6 +998,7 @@ img.naff-reaction {
     font-size: 0.5vw;
     color: #fff;
     justify-content: center;
+    align-items: center;
 }
 
 .navigator-zoom:active, .navigator-zoom:focus {
@@ -1222,4 +1229,182 @@ img.naff-reaction {
 
 .navigator-zoomout-btn:active, .navigator-zoomout-btn:focus {
     outline: 0;
+}
+
+.ally-dolphin {
+    position: absolute;
+    width: 21%;
+    /* border: 1px solid red; */
+    top: 0;
+    left: 0;
+    transform: translate(0, 137%) rotate(0deg);
+    display: none;
+}
+
+.ally-dolphin img {
+    width: 100%;
+}
+
+.ally-dolphin .dolphin {
+    /* display: none; */
+}
+
+.cloud-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(11%, -129%);
+    /* border: 1px solid red; */
+    width: 19vw;
+    height: 12vw;
+    display: flex;
+    display: none;
+    /* opacity: 0;
+    transition: opacity 1s; */
+}
+
+.cloud-message img {
+    position: absolute;
+    z-index: -1;
+    /* height: 100%; */
+    align-self: center;
+}
+
+.cloud-message .message {
+    /* border: 1px solid yellow; */
+    width: 90%;
+    text-align: center;
+    top: 0;
+    /* font-family: Georgia Italic; */
+    font-family: Georgia Italic, Times, "Times New Roman", serif;
+    font-style: italic;
+    margin: 0 auto;  
+    padding: 2% 0;
+    /* display: flex; */
+      /* justify-content: center; */
+    align-items: center;
+    flex-flow: column wrap; 
+    /* display: none; */
+}
+
+.cloud-message .message.message-1 {
+    justify-content: center;
+}
+
+.cloud-message .message p {
+    font-size: 1.9vw;
+    /* white-space: pre-line; */
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    line-height: 1.1em;
+    color: #1c2648;
+}
+
+.cloud-message .message.thomasina p {
+    font-size: 1.7vw;
+    line-height: 1.3em;
+}
+
+.cloud-message .message p.sub-title {
+    font-size: 1.4vw;
+    font-weight: 600;
+}
+
+.cloud-message span.user-name {
+    color: #1b3692;
+}
+
+.animate-ally-1 {
+    animation: dolphinJump 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
+    /* animation-iteration-count: 5; */
+    /* -moz-animation-duration: 2.5s; */
+}
+
+.animate-ally-2 {
+    animation: dolphinJump2 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
+}
+
+.swim-ally-1 {
+    animation: swimAlly 1s linear alternate;
+    animation-iteration-count: 2;
+}
+
+.swim-ally-2 {
+    animation: swimAlly 1s infinite linear alternate;
+}
+
+
+@keyframes dolphinJump {
+    0% {
+        transform: translate(-100%, 420%) rotate(-50deg);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+      }
+      50% {
+        transform: translate(-12%, -120%) rotate(-30deg);
+        /* animation-timing-function: cubic-bezier(0.02, 0.01, 0.3, 0.83); */
+      }
+      75% {
+        transform: translate(22%, 0%) rotate(20deg);
+        /* animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68); */
+      }
+      100% {
+        transform: translate(0, 0%) rotate(0deg);
+      }
+}
+
+@keyframes dolphinJump2 {
+    0% {
+        transform: translate(-100%, 420%) rotate(-80deg);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+      }
+      50% {
+        transform: translate(-10%, 0%) rotate(-8deg);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+      }
+      
+      75% {
+        transform: translate(0%, 5%) rotate(3deg);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+      }
+      100% {
+        transform: translate(0, 0%) rotate(0deg);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+      }
+}
+
+@keyframes swimAlly {
+    0% {
+        transform: translate(0, 0%);
+    }
+    100% {
+        transform: translate(0%, 5%) rotate(3deg);
+    }
+}
+
+.user-photo {
+    width: 4vw;
+    height: 3.2vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-70%, -348%);
+    display: flex;
+    justify-content: center;
+}
+
+.user-photo.male {
+    width: 4.1vw;
+    height: 3.3vw;
+    transform: translate(-70%, -336%);
+}
+
+.user-photo img {
+    border-radius: 21% 21% 35% 35%;
+    align-self: stretch;
+    /* filter: opacity(0.8); */
+}
+
+.user-photo.male img {
+    border-radius: 21% 21% 30% 30%;
 }

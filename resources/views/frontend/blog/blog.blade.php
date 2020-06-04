@@ -52,20 +52,23 @@
 </div>
 <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
     @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
-    <img src="{{ asset('front/images/astronut/Thomasina-front-half-v2.png') }}"  class="img_astro"  alt="">
+    <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}"  class="img_astro"  alt="">
     <div class="tos-div thomasina">
         <button class="tos-btn tooltips right">
             <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt="">
             <span class="tooltiptext">Terms of Services</span></button>
     </div>
     @else
-    <img src="{{ asset('front/images/astronut/Tom-front-half-v2.png') }}" alt=""class="img_astro" alt="">
+    <img src="{{ asset('front/images/astronut/Tom_blog.png') }}" alt=""class="img_astro" alt="">
     <div class="tos-div">
         <button class="tos-btn tooltips right">
             <img  class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt="">
             <span class="tooltiptext">Terms of Services</span></button>
     </div>
     @endif
+    <div class="user-photo {{access()->user()->getGender()}}">
+        <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+    </div>
    
     <div class="navigator-buttons">
         <div class="column column-1">

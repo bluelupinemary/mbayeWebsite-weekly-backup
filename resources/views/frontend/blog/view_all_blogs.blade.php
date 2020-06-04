@@ -11,10 +11,10 @@
 <div class="app">
     <div class="blog-search">
         <form action="{{url('/blogs')}}" method="GET">
-            <fieldset>
+            {{-- <fieldset>
                 <legend>Hi, Major {{(Auth::user()->gender == 'male' || Auth::user()->gender == null ? 'Tom' : 'Thomasina' )}} {{Auth::user()->first_name}}!</legend>
                 <legend class="sub-legend">These are your blogs:</legend>
-            </fieldset>
+            </fieldset> --}}
             <div class="search-form">
                 <div class="search-input-fields">
                     <input type="text" class="form-control" placeholder="Search" name="search" autocomplete="off">
@@ -114,6 +114,9 @@
                 <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
             </div>
         @endif
+        <div class="user-photo {{access()->user()->getGender()}}">
+            <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+        </div>
         <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button>
         <div class="navigator-buttons">
             <div class="column column-1">
@@ -140,6 +143,19 @@
         </button>
     </div>
 </div>
+    <div class="ally-dolphin">
+        <div class="cloud-message">
+            <img src="{{asset('front/images/cloudPNG.png')}}" alt="">
+            <div class="message message-1">
+                <p>Ooooooofa!</p>
+            </div>
+            <div class="message message-2 {{(Auth::user()->gender == 'female' ? 'thomasina' : '' )}}">
+                <p>Hi, <span>Major {{(Auth::user()->gender == 'male' || Auth::user()->gender == null ? 'Tom' : 'Thomasina' )}}</span> <span class="user-name">{{Auth::user()->first_name}}!</span></p>
+                <p class="sub-title">These are your blogs:</p>
+            </div>
+        </div>
+        <img src="{{asset('front/images/Ally2.png')}}" alt="" class="dolphin">
+    </div>
 </div>
 @endsection
 
@@ -151,6 +167,8 @@
     <script>
         var url = $('meta[name="url"]').attr('content');
         $(document).ready(function() {
+            animateDolphin();
+
             if($.urlParam('search') != '') {
                 $('input[name="search"]').val(decodeURIComponent($.urlParam('search')));
             }
@@ -163,6 +181,63 @@
                 $('select[name="status"]').val($.urlParam('status'));
             }
         });
+
+        function animateDolphin() {
+            $('.ally-dolphin .dolphin').on('load', function() {
+                console.log('loaded');
+                $('.cloud-message').hide();
+                $('.cloud-message .message').hide();
+                // $(".ally-dolphin .dolphin").on('load', function() {
+                // setTimeout(function() {
+                    // $('.ally-dolphin .dolphin').delay(1000).addClass('animate-ally-1');
+                    // $('.ally-dolphin').delay(1000).show();
+                    $('.ally-dolphin .dolphin').addClass('animate-ally-1');
+                    $('.ally-dolphin').show();
+                
+                // });
+                // var has_started = 0;
+                // $('.ally-dolphin').on("webkitAnimationStart animationstart", function(){
+                //     if(!has_started) {
+                //         $('.cloud-message .message-1').css("display", "flex");
+
+                //         setTimeout(function() {
+                //             $('.cloud-message').css("display", "flex");
+                //         }, 1000);
+                        
+                //         console.log('start');
+
+                //         has_started = 1;
+                //     }
+                // });
+
+                var has_added_swim_ally_1 = 0;
+                
+                $('.ally-dolphin .dolphin.animate-ally-1').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.ally-dolphin .dolphin').removeClass('animate-ally-1');
+                    $('.cloud-message .message-1').css("display", "flex");
+                    $('.cloud-message').css("display", "flex").hide().fadeIn(300);
+                    if(!has_added_swim_ally_1) {
+                        $('.ally-dolphin .dolphin').addClass('swim-ally-1');
+                        has_added_swim_ally_1 = 1;
+                    }
+                    
+                    $('.ally-dolphin .dolphin.swim-ally-1').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.ally-dolphin .dolphin').removeClass('swim-ally-1');
+                        $('.cloud-message .message-1').hide();
+                        $('.cloud-message').hide();
+                        
+                        $('.ally-dolphin .dolphin').addClass('animate-ally-2');
+
+                        $('.ally-dolphin .dolphin.animate-ally-2').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                            $('.ally-dolphin .dolphin').removeClass('animate-ally-2');
+                            $('.cloud-message .message-2').css("display", "flex");
+                            $('.cloud-message').css("display", "flex");
+                            $('.ally-dolphin .dolphin').addClass('swim-ally-2');
+                        });
+                    });
+                });
+            });
+        }
 
         $.urlParam = function(name){
             var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);

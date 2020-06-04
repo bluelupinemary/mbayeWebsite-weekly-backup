@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
          * User Dashboard Specific
          */
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('user_dashboard/{id}', 'DashboardController@viewUserDashboard');
 
         /*
          * User Account Specific
@@ -85,7 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
 * Show pages
 */
 Route::get('pages/{slug}', 'FrontendController@showPage')->name('pages.show');
-Route::get('/profile', 'FrontendController@profile')->name('profile');
+Route::get('/initial-agreement', 'FrontendController@initial_agreement')->name('initial_agreement');
 Route::get('/terms_and_agreement', 'FrontendController@terms_and_agreement')->name('terms_and_agreement');
 Route::get('/copyright_claims', 'FrontendController@copyright_claims')->name('copyright_claims');
 Route::get('/privacy_policy', 'FrontendController@privacy_policy')->name('privacy_policy');
@@ -103,3 +104,11 @@ Route::get('/captainMbaye', 'FrontendController@captain_mbaye')->name('captainMb
 Route::get('/flowersMbaye', 'FrontendController@flowers_mbaye')->name('flowersMbaye');
 Route::get('/visitingMbaye', 'FrontendController@visiting_mbaye')->name('visitingMbaye');
 Route::get('/participateMbaye', 'FrontendController@participate_mbaye')->name('participateMbaye');
+
+
+
+
+
+/* For blog tags */
+Route::get('/blog_tagwise/{tag}', 'FrontendController@blog_tagwise')->name('blog_tagwise');
+Route::get('/blog_of_friend_tagwise', 'FrontendController@blog_of_friend_tagwise')->name('blog_of_friend_tagwise');

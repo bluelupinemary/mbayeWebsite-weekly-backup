@@ -2,11 +2,196 @@ var text_editor = document.querySelector("trix-editor");
 var url = $('meta[name="url"]').attr('content');
 let window_url = window.location.href;
 var browser = Object.keys($.browser)[0];
+var color_hex;
+var colors = [
+    "#1abc9c"
+    , "#2ecc71"
+    , "#3498db"
+    , "#9b59b6"
+    , "#34495e"
+    , "#16a085"
+    , "#27ae60"
+    , "#2980b9"
+    , "#8e44ad"
+    , "#2c3e50"
+    , "#f1c40f"
+    , "#e67e22"
+    , "#e74c3c"
+    , "#ecf0f1"
+    , "#95a5a6"
+    , "#f39c12"
+    , "#d35400"
+    , "#c0392b"
+    , "#bdc3c7"
+    , "#7f8c8d"
+];
+
 $(document).ready(function() {
-    // var element = document.querySelector("trix-editor");
+    
     // element.editor.insertHTML("<div>Enter content here...</div>");
     $('input[type="checkbox"]').prop('checked', false);
+    trixTextColorButton('.trix-editor trix-editor');
     // $('#trix-toolbar-1 .trix-button-group--file-tools"').append('<button type="button" class="trix-button trix-button--icon trix-button--icon-attach" data-trix-action="x-log" title="Fullscreen" tabindex="-1"></button>');
+    
+    // Trix.config.textAttributes.bold = {
+    //     // style: { fontWeight: "700" },
+    //     inheritable: !0,
+    //     // // tagName: 'span',
+    //     // // className: ['.text-color'],
+    //     // // nestable: true,
+    //     // tagName: "strong",
+    //     parser: function(element) {
+    //         // console.log(element.style.fontWeight);
+    //         // if(element.style.color) {
+    //             return element.style.color;
+    //         // }
+    //     }
+    // }
+
+    // Trix.config.textAttributes.italic = {
+    //     // style: { fontWeight: "700" },
+    //     inheritable: !0,
+    //     // // tagName: 'span',
+    //     // // className: ['.text-color'],
+    //     // // nestable: true,
+    //     // tagName: "em",
+    //     parser: function(element) {
+    //         // console.log(element.style.fontWeight);
+    //         // if(element.style.color) {
+    //             return element.style.color;
+    //         // }
+    //     }
+    // }
+
+    Trix.config.textAttributes.foregroundColor = {
+        styleProperty: "color",
+        inheritable: true,
+        // tagName: 'span',
+        // className: ['.text-color'],
+        nestable: true,
+        parser: function(element) {
+            console.log(element);
+            // if(element.tagName.toLowerCase() == 'span') {
+            //     // alert();
+            //     // console.log(element);
+            //     // return element.style.color === color_hex;
+            //     var rgb = element.style.color;
+            //     var vals = getRGB(rgb);
+
+            //     if(vals) {
+            //         var hex = '#'+fullColorHex(vals.red, vals.green, vals.blue);
+
+            //         // console.log(hex, $.inArray( hex, colors ));
+            //         // return $.inArray( hex, colors ) > 0;
+            //         if($.inArray( hex, colors ) > 0) {
+                        return element.style.color;
+                    // }
+                // }
+            // }
+        },
+    }
+
+    // Trix.config.textAttributes.foregroundColor = {
+    //     inheritable: true,
+    //     styleProperty: "color",
+    //     parser: createColorParser()
+    // }
+  
+    // trixEditor.editor.activateAttribute("foregroundColor", col);
+
+    var main_pk = new Piklor(".color-picker", colors, {
+            open: ".trix-button--icon-text-color",
+            style: { display: 'flex'},
+            // autoclose: false,
+            closeOnBlur: true
+        });
+
+        main_pk.colorChosen(function (col) {
+            // wrapperEl.style.backgroundColor = col;
+            // header.style.backgroundColor = col;
+            // footer.style.backgroundColor = col;
+            // console.log(col);
+            // color_hex = col;
+            setForegroundColor(col, '.trix-editor trix-editor');
+            // trixEditor.activateAttribute("foregroundColor");
+        });
+});
+
+function setForegroundColor(col, editorClass) {
+    // Trix.config.textAttributes.foregroundColor = {
+    //     styleProperty: "color",
+    //     inheritable: true,
+    //     // tagName: 'span',
+    //     // className: ['.text-color'],
+    //     nestable: true,
+    //     parser: function(element) {
+    //         if(element.tagName.toLowerCase() == 'span') {
+    //             // alert();
+    //             // console.log(element);
+    //             // return element.style.color === color_hex;
+    //             var rgb = element.style.color;
+    //             var vals = getRGB(rgb);
+
+    //             if(vals) {
+    //                 var hex = '#'+fullColorHex(vals.red, vals.green, vals.blue);
+
+    //                 // console.log(hex, $.inArray( hex, colors ));
+    //                 // return $.inArray( hex, colors ) > 0;
+    //                 if($.inArray( hex, colors ) > 0) {
+    //                     return element.style.color;
+    //                 }
+    //             }
+    //         }
+    //     },
+    // }
+    var trixEditor = document.querySelector(editorClass);
+    trixEditor.editor.activateAttribute("foregroundColor", col);
+}
+
+function getRGB(str){
+    var match = str.match(/rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/);
+    return match ? {
+      red: match[1],
+      green: match[2],
+      blue: match[3]
+    } : {};
+}
+
+function rgbToHex(rgb) { 
+    var hex = Number(rgb).toString(16);
+    if (hex.length < 2) {
+         hex = "0" + hex;
+    }
+    return hex;
+}
+
+function fullColorHex(r,g,b) {   
+    var red = rgbToHex(r);
+    var green = rgbToHex(g);
+    var blue = rgbToHex(b);
+
+    return red+green+blue;
+}
+
+function trixTextColorButton(editorClass) {
+    // <button type="button" class="trix-button trix-button--icon trix-button--icon-text-color" data-trix-attribute="href" data-trix-action="link" data-trix-key="k" title="Link" tabindex="-1">Link</button>
+    var buttonHTML = '<button type="button" class="trix-button trix-button--icon trix-button--icon-text-color" data-trix-attribute="foregroundColor" data-trix-action="text-color" title="Text color" tabindex="-1">Text color</button>'
+    
+    // var element = event.target
+    // var editor = element.editor
+    var trixEditor = document.querySelector(editorClass);
+    // console.log(trixEditor);
+    var toolbarElement = trixEditor.toolbarElement;
+    var groupElement = toolbarElement.querySelector(".trix-button-group.trix-button-group--text-tools");
+      
+    // event.target.toolbarElement.
+    //     querySelector(".trix-button-group.trix-button-group--text-tools").
+    //       insertAdjacentHTML("beforeend", buttonHTML)
+    groupElement.insertAdjacentHTML("beforeend", buttonHTML)
+}
+
+$('.trix-button--icon-text-color').click(function() {
+    
 });
 
 // get URl parameter value
@@ -364,6 +549,21 @@ $('.video-links-list table').on('click', '.remove-link', function() {
 
 // show fullscreen trix editor
 $('.main-form .trix-editor .fullscreen span').click(function() {
+    if (document.querySelector('.text-editor-fullview.blog-content .trix-button--icon-text-color') == null) {
+        trixTextColorButton('.text-editor-fullview.blog-content trix-editor');
+    }
+
+    var fullscreen_blog_pk = new Piklor(".fullscreen-blog-color-picker", colors, {
+        open: ".text-editor-fullview.blog-content .trix-button--icon-text-color",
+        style: { display: 'flex'},
+        // autoclose: false,
+        closeOnBlur: true
+    });
+
+    fullscreen_blog_pk.colorChosen(function (col) {
+        setForegroundColor(col, '.text-editor-fullview.blog-content trix-editor');
+    });
+
     $('.text-editor-fullview.blog-content trix-editor').html($('.main-form .trix-editor trix-editor').html());
     $('.text-editor-fullview.blog-content').fadeIn();
 });
@@ -376,6 +576,20 @@ $('.exit-fullscreen').click(function() {
 
 // show fullscreen email trix editor
 $('.email-form .trix-editor .fullscreen span').click(function() {
+    if (document.querySelector('.text-editor-fullview.email-content .trix-button--icon-text-color') == null) {
+        trixTextColorButton('.text-editor-fullview.email-content trix-editor');
+    }
+
+    var fullscreen_email_pk = new Piklor(".fullscreen-email-color-picker", colors, {
+        open: ".text-editor-fullview.email-content .trix-button--icon-text-color",
+        style: { display: 'flex'},
+        // autoclose: false,
+        closeOnBlur: true
+    });
+
+    fullscreen_email_pk.colorChosen(function (col) {
+        setForegroundColor(col, '.text-editor-fullview.email-content trix-editor');
+    });
     $('.text-editor-fullview.email-content trix-editor').html($('.email-form .trix-editor trix-editor').html());
     $('.text-editor-fullview.email-content').fadeIn();
 });
@@ -1019,6 +1233,20 @@ $('.tos-button').click(function() {
     checkForm(url+'/terms');
 });
 
+// $(document).delegate("[data-trix-color]","click",function(){
+
+// 	var color_hex = $(this).css('background-color');
+
+// 	Trix.config.textAttributes.dynamicColor = {
+// 		style: { color: color_hex },
+// 	  parser: function(element) {
+// 			return element.style.color != null;
+// 	  }
+// 	}
+
+// 	trixEditor.activateAttribute("dynamicColor");
+// });
+
 // limit trix editor attachment to image only and limit file size to 5MB
 addEventListener("trix-file-accept", function(event) {
     var failed = false;
@@ -1095,6 +1323,20 @@ function hideEmailSection()
 // show email section
 function showEmailSection()
 {
+    if (document.querySelector('.trix-editor.trix-editor-email .trix-button--icon-text-color') == null) {
+        trixTextColorButton('.trix-editor.trix-editor-email trix-editor');
+    }
+    var email_pk = new Piklor(".email-color-picker", colors, {
+        open: ".trix-editor.trix-editor-email .trix-button--icon-text-color",
+        style: { display: 'flex'},
+        // autoclose: false,
+        closeOnBlur: true
+    });
+
+    email_pk.colorChosen(function (col) {
+        setForegroundColor(col, '.trix-editor.trix-editor-email trix-editor');
+    });
+
     $('.email-button').addClass('active');
     $('.email-buttons').css('display', 'flex');
     $('.email-buttons').css('pointer-events', 'auto');
@@ -1143,8 +1385,24 @@ function setBlogFormValue(blog)
         $('#main-form').find('input[name="user_id"]').val(blog.created_by);
         $('#main-form').find('input[name="name"]').val(blog.name);
         $('#main-form').append('<input type="hidden" name="_method" value="PUT">');
+        console.log(blog.content);
+        // $('.main-form .trix-editor trix-editor').html(blog.content);
+        // text_editor.editor.insertHTML("<div></div>");
+
         // $('.trix-editor trix-editor').html(blog.content);
-        text_editor.editor.insertHTML(blog.content);
+        // Serialize
+        // $('input#edit_content').val(blog.content);
+        // var myDocument = JSON.stringify(text_editor.editor)
+
+        // Load
+        // element.editor.loadJSON(JSON.parse(myDocument))
+        // console.log(JSON.stringify(blog.content));
+        // var element = blog.content;
+        // text_editor.editor.loadJSON(JSON.parse(myDocument));
+        // console.log(text_editor.inputElement.value);
+        // $('input#edit_content').val(blog.content);
+        // $('.main-form .trix-editor trix-editor').html(text_editor.inputElement.value);
+        // $(element).appendTo('.main-form .trix-editor trix-editor');
 
         $.each( blog.tags, function( key, value) {
             var checkbox = $('input[type="checkbox"][data-id="'+value.id+'"]');
@@ -1170,6 +1428,10 @@ function setBlogFormValue(blog)
         value_set = true;
     }
 }
+
+// addEventListener('trix-focus', function(event) {
+//     $('.main-form .trix-editor trix-editor').html(blog.content);
+// });
 
 // set button label - edit blog
 function setButtonLabel(blog)

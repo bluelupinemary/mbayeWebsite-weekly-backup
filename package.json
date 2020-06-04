@@ -24,13 +24,13 @@
     "webpack-rtl-plugin": "^2.0.0"
   },
   "dependencies": {
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.0",
     "bootstrap-datetimepicker-npm": "^4.17.37-npm",
-    "datatables.net": "^1.10.20",
+    "datatables.net": "^1.10.21",
     "datatables.net-buttons": "^1.6.1",
-    "laravel-echo": "^1.7.0",
+    "laravel-echo": "^1.8.0",
     "mo-js": "^0.288.2",
-    "moment": "^2.24.0",
+    "moment": "^2.25.3",
     "nestable2": "^1.5.0",
     "pluralize": "^8.0.0",
     "popper.js": "^1.14.3",

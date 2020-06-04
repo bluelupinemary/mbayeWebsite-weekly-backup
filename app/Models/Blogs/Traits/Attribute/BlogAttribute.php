@@ -71,6 +71,12 @@ trait BlogAttribute
         return $tags;
     }
 
+    public function btags()
+    {
+        $tags = $this->tags->pluck('name');
+        return $tags;
+    }
+
     public function remainingTagCount()
     {
         $tag_count = $this->tags->count();

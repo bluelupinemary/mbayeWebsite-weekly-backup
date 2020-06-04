@@ -27,7 +27,8 @@ class UpdateBlogsRequest extends Request
     public function rules()
     {
         return [
-            'name'              => 'required|max:191|unique:blogs,name,'.Request::get('blog_id'),
+            // 'name'              => 'required|max:191|unique:blogs,name,'.Request::get('blog_id'),
+            'name'              => 'required|max:191',
             'featured_image'    => 'image|mimes:jpeg,png,jpg|max:5242880',
             // 'publish_datetime'  => 'required|date',
             'content'           => 'required',

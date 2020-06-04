@@ -5,6 +5,7 @@ namespace App\Models\Access\User;
 use App\Models\Access\User\Traits\Attribute\UserAttribute;
 use App\Models\Access\User\Traits\Relationship\UserRelationship;
 use App\Models\Access\User\Traits\Scope\UserScope;
+use App\Models\Friendships\Traits\Friendable;
 use App\Models\Access\User\Traits\UserAccess;
 use App\Models\Access\User\Traits\UserSendPasswordReset;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,6 +25,7 @@ class User extends Authenticatable
         UserAttribute,
         UserRelationship,
         UserSendPasswordReset,
+        Friendable,
         HasApiTokens;
 
     /**

@@ -67,7 +67,10 @@
                         <input type="hidden" name="save_status" value="Draft">
                     </form>
                     <div class="trix-editor">
-                        @trix(\App\Blogs\Blog::class, 'content')
+                        <div class="color-picker">
+                        </div>
+                        {{-- <input type="hidden" name="edit_content" id="edit_content"> --}}
+                        @trix(\App\Blogs\Blog::class, 'content', ['id' => 'edit_content'])
                         <button type="button" class="fullscreen"><i class="fas fa-expand"></i> <span>Fullscreen</span></button>
                     </div>
                 </div>
@@ -83,7 +86,9 @@
                             <option value="Suggestions and Improvements - Pages">Suggestions and Improvements - Pages</option>
                             <option value="Suggestions and Improvements - Game">Suggestions and Improvements - Game</option>
                         </select>
-                        <div class="trix-editor">
+                        <div class="trix-editor trix-editor-email">
+                            <div class="color-picker email-color-picker">
+                            </div>
                             @trix(\App\Blogs\Blog::class, 'email_content')
                             <button type="button" class="fullscreen email_fullscreen"><i class="fas fa-expand"></i> <span>Fullscreen</span></button>
                         </div>
@@ -292,10 +297,14 @@
             <div class="trix-content">{!! nl2br($user->blogcontent) !!}</div>
         </div> --}}
         <div class="text-editor-fullview blog-content">
+            <div class="color-picker fullscreen-blog-color-picker">
+            </div>
             @trix(\App\Blogs\Blog::class, 'content')
             <button type="button" class="exit-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
         </div>
         <div class="text-editor-fullview email-content">
+            <div class="color-picker fullscreen-email-color-picker">
+            </div>
             @trix(\App\Blogs\Blog::class, 'email_content')
             <button type="button" class="exit-email-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
         </div>
@@ -313,10 +322,15 @@
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
     <script src="{{asset('front/slick/slick.min.js')}}"></script>
+    <script src="{{asset('front/JS/piklor.min.js')}}"></script>
     
     @if($blog != '')
     <script>
         var blog = {!! json_encode($blog->toArray()) !!};
+
+        document.addEventListener('DOMContentLoaded', ()=> {
+            $('.main-form .trix-editor trix-editor').html(blog.content);
+        });
     </script>
     @endif
 
