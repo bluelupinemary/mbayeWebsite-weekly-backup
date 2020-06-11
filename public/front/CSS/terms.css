@@ -17,7 +17,7 @@
 }
 
 .astronautarm-img {
-  background-image: url(../../front/images/login/Major-tom-login-arm-min.png);
+  background-image: url(../../front/images/login/LoginPageCommunicatorWOhome&back-TOM.png);
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: left center;
@@ -88,9 +88,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-135%, -97%);
-  -moz-transform: translate(-135%, -97%);
-  transform: translate(-138%, -666%);
+  -webkit-transform: translate(-153%, -452%);
+  -moz-transform:translate(-153%, -452%);
+  transform: translate(-153%, -452%);
   /* border: 1px solid red; */
   width: 24.8vw;
   height: 0.5vw;
@@ -358,23 +358,24 @@
 }
 .home-div img {
   width: 100%;
-  height: 3vw;
+  height: 2vw;
 }
 .home-div {
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-709%, -524%);
-  -moz-transform: translate(-709%, -524%);
-  transform: translate(-678%, -411%);
-  /* border: 1px solid red; */
-  width: 6.5vw;
+  -webkit-transform:translate(-685%, -605%) skew(-3deg, -1deg);
+  -moz-transform: translate(-685%, -605%) skew(-3deg, -1deg);
+  transform: translate(-685%, -605%) skew(-3deg, -1deg);
+    /* border: 2px solid red; */
+    width: 6.3vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
   pointer-events: none;
 }
+
 
 
 .home-div .communicator-button:active {
@@ -449,24 +450,23 @@
  }
  .back-div img {
   width: 100%;
-  height: 3vw;
+  height: 2vw;
 }
 .back-div {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-709%, -524%);
-  -moz-transform: translate(-709%, -524%);
-  transform: translate(-666%, -411%);
-  /* border: 1px solid red; */
-  width: 6.5vw;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-715%, -624%);
+    -moz-transform: translate(-715%, -624%);
+    transform: translate(-715%, -624%);
+   /*  border: 1px solid red;*/ 
+    width: 5vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
   pointer-events: none;
 }
-
 
 .back-div .communicator-button:active {
   -webkit-transform: translate3d(-1px, 1px, 0px);

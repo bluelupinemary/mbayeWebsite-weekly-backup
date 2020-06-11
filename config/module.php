@@ -24,4 +24,7 @@ return [
     'blog_videos' => [
         'table' => 'blog_videos',
     ],
+    'general_blogs' => [
+        'table' => 'general_blogs',
+    ],
 ];

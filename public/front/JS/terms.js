@@ -84,7 +84,7 @@ function next(){
 }
 
 $('.home-button').click(function() {
-  window.location.href = "{{URL::to('/dashboard')}}"
+  window.location.href = "{{URL::to('')}}"
 });
 
 $('.back-button').click(function() {

@@ -214,5 +214,23 @@ class FrontendController extends Controller
         if($user) return view('frontend.game.participate_mbaye');
         return view('frontend.pages.welcome_mbaye');
     }
-    
+
+    public function search_friends()
+    {
+        return view('frontend.pages.search_friends');
+    }
+    /* For general blogs ,displays all blogs */
+    public function blog_general(){
+        $user = Auth::user();
+        if($user)         return view('frontend.blog.blog_general');
+        return view('frontend.auth.login');
+    }
+   /* For general blogs userwise */
+    public function blog_general_userwise(Request $request){
+      
+        $id = $request['id'];
+        $user = Auth::user();
+        if($user)         return view('frontend.blog.blog_general_userwise',compact('id'));
+        return view('frontend.auth.login');
+    }
 }

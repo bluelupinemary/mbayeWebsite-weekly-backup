@@ -219,6 +219,20 @@ class UserTableSeeder extends Seeder
                 'updated_at'        => Carbon::now(),
                 'deleted_at'        => null,
             ],
+            [
+                'first_name'        => 'jany',
+                'last_name'         => 'jzf',
+                'username'         => 'jzf1',
+                'email'             => 'jzf@seffy.com',
+                'password'          => bcrypt('1234'),
+                'confirmation_code' => md5(uniqid(mt_rand(), true)),
+                'confirmed'         => true,
+                'created_by'        => 1,
+                'updated_by'        => null,
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+                'deleted_at'        => null,
+            ],
             
         ];
 

@@ -368,7 +368,7 @@ and (min-width: 375px) {
         transform: translate(-50%, -68%);
     }
 
-    .navigator-zoomout-btn.tooltips.zoom-in-out span {
+    .navigator-zoomout-btn.tooltips.zoom-in-out span, .navigator-div.zoomin .tooltips span {
         font-size: 3px;
     }
 

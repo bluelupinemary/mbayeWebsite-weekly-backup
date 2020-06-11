@@ -47,7 +47,9 @@ function create_earth_flower_camera(){
 
 //function to load the world of flowers
 function load_earth_with_flowers_mesh(){
+  
     Promise.all([
+        // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldFlowersHigher.babylon", earthFlowersScene,
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldFlowers040220.babylon", earthFlowersScene,
                 function (evt) {
                         // onProgress
@@ -61,8 +63,9 @@ function load_earth_with_flowers_mesh(){
                         document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+loadedPercent+" %";
                         worldLoadedPercent = loadedPercent;
                 }
+            
           ).then(function (result) {
-           
+            console.log(result.meshes.length);
             for(let i=0;i<result.meshes.length;i++){
                 if(result.meshes[i].name === "Earth") continue;
                 else{
@@ -117,11 +120,11 @@ function add_mouse_listener_earthflowers(){
         }
   
         var pickInfo = earthFlowersScene.pick(earthFlowersScene.pointerX, earthFlowersScene.pointerY);
-    
+        
         //check if the world of flowers mesh should be draggable/modified
         if (pickInfo.hit && evt.button === 0) {
             var theEarthFlowerMesh = pickInfo.pickedMesh;
-           
+            console.log("flower clicked: ", pickInfo.pickedMesh.  name);
             if(theEarthFlowerMesh.name == "Earth"){
                 isEarthFlowersHit = true;
                 isZoomPanelActive = false;

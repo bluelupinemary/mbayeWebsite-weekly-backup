@@ -23,6 +23,12 @@ Vue.component('naffcount-component', require('../components/frontend/NaffCount.v
 Vue.component('commentcount-component', require('../components/frontend/CommentCount.vue').default);
 Vue.component('multicount-component', require('../components/frontend/MultiCount.vue').default);
 Vue.component('commentnotification-component', require('../components/frontend/CommentNotifications.vue').default);
+Vue.component('searchfriends-component', require('../components/frontend/SearchFriends.vue').default);
+Vue.component('request-component', require('../components/frontend/FriendRequestComponent.vue').default);
+Vue.component('accept-component', require('../components/frontend/AcceptRequestComponent.vue').default);
+Vue.component('friend-component', require('../components/frontend/FriendComponent.vue').default);
+Vue.component('friendrequests-component', require('../components/frontend/FriendRequests.vue').default);
+Vue.component('photoeditor-component', require('../components/frontend/PhotoEditor.vue').default);
 
 const app = new Vue({
     el: '.app',

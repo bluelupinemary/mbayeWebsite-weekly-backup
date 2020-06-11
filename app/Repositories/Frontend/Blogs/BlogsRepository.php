@@ -80,7 +80,9 @@ class BlogsRepository extends BaseRepository
         $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
         $input['created_by'] = access()->user()->id;
 
-        if(array_key_exists('featured_image', $input)) {
+        if($input['edited_featured_image']) {
+            $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
+        } else if(array_key_exists('featured_image', $input)) {
             $input['featured_image'] = $this->uploadImage($input['featured_image']);
         }
         
@@ -135,10 +137,14 @@ class BlogsRepository extends BaseRepository
         $input['updated_by'] = access()->user()->id;
 
         // Uploading Image
-        if (array_key_exists('featured_image', $input)) {
+        if($input['edited_featured_image']) {
+            $this->deleteOldFile($blog);
+            $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
+        } else if (array_key_exists('featured_image', $input)) {
             $this->deleteOldFile($blog);
             $input['featured_image'] = $this->uploadImage($input['featured_image']);
         }
+        
 
         if ($blog->update($input)) {
 
@@ -240,6 +246,32 @@ class BlogsRepository extends BaseRepository
             $path= $this->compress($source,$dest, $quality);// compressing images
             return $fileName;
         }
+    }
+
+    /**
+     * Upload Image.
+     *
+     * @param array $input
+     *
+     * @return array $input
+     */
+    public function uploadEditedImage($featured_image)
+    {
+        $avatar = $featured_image;
+
+        $base64 = str_replace('data:image/png;base64,', '', $featured_image);
+        $base64 = str_replace(' ', '+', $base64);
+        $image = base64_decode($base64);
+
+        // $user_photo = explode('.', $user->photo);
+        $filename = Str::random().'.jpg';
+        while (Storage::exists('public/img/blog/'.$filename)) {
+            $filename = Str::random().'.jpg';
+        }
+
+        Storage::disk('local')->put('public/img/blog/'.$filename, $image);
+
+        return $filename;
     }
 
     /**

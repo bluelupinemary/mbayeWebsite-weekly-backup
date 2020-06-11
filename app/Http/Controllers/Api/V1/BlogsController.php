@@ -8,7 +8,7 @@ use App\Models\BlogTags\BlogTag;
 use App\Repositories\Backend\Blogs\BlogsRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\BlogsResource;
-
+use App\Http\Resources\GeneralBlogsResource;
 class BlogsController extends APIController
 {
     protected $repository;

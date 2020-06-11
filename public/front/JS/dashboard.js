@@ -656,3 +656,15 @@ $('.earth-holo').click( function() {
 
 	show_notifications = !show_notifications;
 });
+
+$('.planet-buttons .view').mouseenter(function() {
+	$('.planet-buttons span.view-pop-up').show();
+}).mouseleave(function() {
+	$('.planet-buttons span.view-pop-up').hide();
+});
+
+$('.planet-buttons .back').mouseenter(function() {
+	$('.planet-buttons span.back-pop-up').show();
+}).mouseleave(function() {
+	$('.planet-buttons span.back-pop-up').hide();
+});

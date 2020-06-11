@@ -507,13 +507,18 @@ var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, ste
 var theScene = createScene();
 var i=0;
 
-engine.runRenderLoop(function () {
 
-    if(theScene){
-        //render the scene
-        theScene.render();
+theScene.executeWhenReady(function () {   
+   
+        
+    engine.runRenderLoop(function () {
 
-    }    
+        if(theScene){
+            //render the scene
+            theScene.render();
+
+        }    
+    }); 
 }); 
 
 

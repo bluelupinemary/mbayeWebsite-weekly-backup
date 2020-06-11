@@ -4,6 +4,8 @@ public/front/images
 public/front/video
 /public/hot
 /storage/*.key
+/storage/logs/
+/storage/framework/
 /vendor
 .idea
 Homestead.json
@@ -59,3 +61,8 @@ public/js/frontend.js
 public/js/backend.js
 public/js/frontend.js
 public/js/backend.js
+storage/framework
+storage/app
+storage/debugbar
+storage/logs
+/bootstrap/cache/

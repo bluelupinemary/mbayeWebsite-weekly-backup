@@ -48,7 +48,7 @@ function createScene(){
     initSkybox = create_init_skybox();                                              //create earth scene's skybox
     load_home_meshes();
     create_home_planets();
-
+    // homeScene.debugLayer.show();
     create_home_halo();
     create_home_labels();
    
@@ -57,6 +57,7 @@ function createScene(){
     enable_webcamera();
 
     enable_init_webcamera();
+    
     return homeScene;
 } //end of create scene function
 
@@ -171,7 +172,6 @@ function create_vr_scene(){
 var mbayeInit_object;
 var mbayeInitTask;
 var initEarth_object;
-var videoHome_obj2;
 var theVideoParent;
 var agreeCameraUseDisc;
 let startTime;
@@ -222,14 +222,12 @@ function load_home_meshes(){
             initCamera.radius = 1400;
         },1000);
 
-        setTimeout(function(){
-            document.getElementById("loadingScreenPercent").style.visibility = "hidden";
-            document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
-            document.getElementById("loadingScreenDiv").remove();
-            isHomeCounterReady = true;
-            if(videoTexture) videoTexture.video.play();
-            startTime = new Date();
-        },5000);
+        // setTimeout(function(){
+        //     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
+        //     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
+        //     document.getElementById("loadingScreenDiv").remove();
+        
+        // },5000);
        
     });
 }//end of function load meshes
@@ -327,7 +325,7 @@ function init_planet_label(name,matlPath,h,w,x,y,z){
 
 let videoTexture;
 let videoTexture2;
-let videoHome_obj;
+let videoHome_obj, videoHome_obj2;
 let theVideoMatl;
 function add_video_to_mesh(vidNo){
     let mat = new BABYLON.StandardMaterial("videoMat", homeScene);
@@ -340,25 +338,27 @@ function add_video_to_mesh(vidNo){
         }
         videoTexture = videoTexture2;
         mat.diffuseTexture = videoTexture;
-        videoHome_obj.material = mat;
+        videoHome_obj.material = mat;            //top disc
+        videoHome_obj2.material = mat;           //bottom disc
     }
     if(!videoTexture){
-        videoTexture = new BABYLON.VideoTexture("video1", ["front/videos/homeIntro.webm","front/videos/homeIntro.mp4"], homeScene, false, false);
-        videoTexture2 = new BABYLON.VideoTexture("video2", ["front/videos/homeVideoTrim.webm","front/videos/homeVideoTrim.mp4"], homeScene, false, false);
+        videoTexture = new BABYLON.VideoTexture("discVideo1", ["front/videos/homeIntro.webm","front/videos/homeIntro.mp4"], homeScene, false, false);
+        videoTexture2 = new BABYLON.VideoTexture("discVideo2", ["front/videos/homeVideoTrim.webm","front/videos/homeVideoTrim.mp4"], homeScene, false, false);
         mat.backFaceCulling = false;
         
         videoTexture.invertX = true;
         
         videoTexture.uOffset = 0.04;
-        videoTexture.vOffset = 0.15;
+        videoTexture.vOffset = 0.16;
 
     
         videoTexture.uScale = -1.1;
-        videoTexture.vScale = 1.26;
+        videoTexture.vScale = 1.15;
         videoTexture2.uScale = -1;
         mat.diffuseTexture = videoTexture;
 
-        videoHome_obj.material = mat;
+        videoHome_obj.material = mat;           //the top disc
+        videoHome_obj2.material = mat;          //the bottom disc
         videoTexture2.video.pause();
         videoTexture.video.loop = true;
         videoTexture.video.pause();
@@ -861,8 +861,9 @@ function add_home_mouse_listener(){
           
            
             if(pickinfo.hit){
+              
                 let theInitMesh = pickinfo.pickedMesh;
-
+                console.log("clicked:", theInitMesh.name);
                 
                 if(theInitMesh.name === "a"){
                     agreeCameraUseDisc.isVisible = false;
@@ -895,6 +896,10 @@ function add_home_mouse_listener(){
                 else if(theInitMesh.name === "homeUranus"){
                     window.open('flowersMbaye',"_self");     
                 }
+                if(theInitMesh.name === "homeSun" || theInitMesh.name === "sun"){
+                    window.open('login',"_self");     
+                }
+
             
            }
            
@@ -1081,24 +1086,34 @@ let isInitCameraMoving = false;
 let isIntroDone = false;
 let TWO_MIN=2.3*60*1000;
 
-engine.runRenderLoop(function () {
+theScene.executeWhenReady(function () {   
+    document.getElementById("loadingScreenPercent").style.visibility = "hidden";
+    document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
+    document.getElementById("loadingScreenDiv").remove();
 
-    if(theScene){
-        theScene.render();
-        
-        if(startTime && !isIntroDone){
-            // if(videoTexture.video) console.log(videoTexture.video.currentTime);
-            let currTime = new Date();
-            // if((currTime - startTime) > TWO_MIN) {
-            //     add_video_to_mesh(2);
-            //     isIntroDone = true;
-            //  }
-            if(videoTexture.video.currentTime > 136) {
-                    add_video_to_mesh(2);
-                    isIntroDone = true;
-                 }
-        }
-    }    
+    isHomeCounterReady = true;
+    if(videoTexture) videoTexture.video.play();
+    startTime = new Date();
+
+    engine.runRenderLoop(function () {
+
+        if(theScene){
+            theScene.render();
+            
+            if(startTime && !isIntroDone){
+                // if(videoTexture.video) console.log(videoTexture.video.currentTime);
+                let currTime = new Date();
+                // if((currTime - startTime) > TWO_MIN) {
+                //     add_video_to_mesh(2);
+                //     isIntroDone = true;
+                //  }
+                if(videoTexture.video.currentTime > 136) {
+                        add_video_to_mesh(2);
+                        isIntroDone = true;
+                    }
+            }
+        }    
+    }); 
 }); 
 
 // window resize handler
@@ -1110,37 +1125,10 @@ window.addEventListener("resize", function () {
 let theCanvas = document.getElementById("canvas");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-// var homeCounter = setInterval(function () {
-//     if(isHomeCounterReady && theScene && videoTexture){
-//         if(i==6){
-//             videoTexture.video.pause();
-//             agreeCameraUseDisc.isVisible = true;
-//             initCamera.position = new BABYLON.Vector3(-1135,486,900);
-//             initCamera.radius = 1400;
-//         }
-//         i++;
-//     }
-// }, 1000);
+
 
 let isFirstClick = false;
 let isVideoSkipped = false;
-// $('#firstVideoOverlay').on('click', function(evt){
-//     if(!isIntroDone){
-//         $(this).hide();
-//         if(!isFirstClick){
-//                 $(".overlayTxt").removeAttr("id");
-//                 $(".overlayTxt").removeClass( "overlayTxt" ).addClass("glowOverlayTxt");
-//                 isFirstClick = true;
-//         }
-//     }
-// });     
-
-// $('#placeholderDiv').on('click', function(evt){
-//     if(!isIntroDone){
-//         $('#firstVideoOverlay').show();
-//     }
-// });  
-
 
 $('#firstVideoOverlay').click(function() {
     if(!isIntroDone){

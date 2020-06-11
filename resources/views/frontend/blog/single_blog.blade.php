@@ -1,6 +1,7 @@
 @extends('frontend.layouts.profile_layout')
 
 @section('before-styles')
+@trixassets
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.carousel.min.css') }}">
@@ -8,12 +9,10 @@
     href="{{ asset('front/owl-carousel/dist/assets/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog-responsive.css') }}">
-{{-- <link rel="stylesheet" href="{{ asset('trix/trix.css')}}">
-<script src="{{ asset('trix/trix.js')}}"></script> --}}
 @endsection
 
 @section('after-styles')
-@trixassets
+{{-- @trixassets --}}
 @endsection
 
 @section('content')
@@ -226,7 +225,7 @@
 
     @section('after-scripts')
     <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="{{asset('front/JS/popper.min.js')}}"></script>
     <script src="{{ asset('front/JS/bootstrap.min.js') }}"></script>
     <script src="{{ asset('front/owl-carousel/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('front/JS/mo.min.js') }}"></script>
@@ -239,10 +238,36 @@
         var blog = {!! json_encode($blog->toArray()) !!};
 
         $(document).ready(function() {
+            if (typeof Trix == 'undefined') {
+                $('head').prepend('<script src="'+url+'/trix/trix.js">');
+                $('head').prepend('<link rel="stylesheet" type="text/css" href="'+url+'/trix/trix.css">');
+            }
+
             scaleAstronaut();
             // init();
             // console.log(blog);
             $('.blog-summary .content').html(trimHtml(blog.content, { limit: 200 }).html);
+            $('.trix-content div').children().each( (index, element) => {
+                console.log(index);     // children's index
+                console.log(element);   // children's element
+
+                if(element.style.fontFamily) {
+                    // remove quotes on string
+                    var font = element.style.fontFamily.replace(/['"]+/g, '');
+                    // console.log(font);
+                    if(font != null || font != '') {
+                        // console.log(document.fonts.check('1em '+font));
+                        // check if font exist
+                        var check_font = document.fonts.check('1em '+font);
+                        if(!check_font) {
+                            // append link stylesheet
+                            $('head').append('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family='+font+'">');
+                        }
+
+                        // return element.style.fontFamily;
+                    }
+                }
+            });
         });
         
         $(window).on('load', function() {

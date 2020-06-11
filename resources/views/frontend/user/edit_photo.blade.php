@@ -1,460 +1,686 @@
 @extends('frontend.layouts.profile_layout')
 
 @section('before-styles')
-    <link href="{{asset('front/CSS/cropper.min.css')}}" rel="stylesheet">
-    <style>
-        body {
-            background-image: url('../../front/images/skybox_bg1.png');
-            height: 99vh;
-            width: 100vw;
-            overflow:hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-size: cover;
-            background-attachment: fixed;
-        }
+<link href="{{ asset('front/CSS/croppie.min.css') }}" rel="stylesheet">
+<link href="{{ asset('front/CSS/edit-photo.css') }}" rel="stylesheet">
 
-        .editing-div {
-            width:100%;
-            text-align: center;
-            opacity: 0;
-        }
 
-        /* Astronaut & Cropper div */
-        .astronaut-img-div {
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center bottom;
-            margin: auto;
-            display: block;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 100vh;
-        }
-        
-        /* Cropper div */
-        .user-img-div{
-            position: absolute;
-            left: 49%;
-            transform: translate(-49%, 0);
-            height: 145%;
-            display: block;
-            margin: auto;
-            min-width: 330px;
-            width: auto;
-        }
+@endsection
 
-        .box-2 {
-            position: relative;
-            top: 13.5%;
-            left: -1%;
-            width: 100%;
-            height: 60%;
-            display: block;
-            margin: auto;
-        }
-
-        .cropped {
-            height: 45%;
-            margin: 0 auto;
-        }
-    
-        .cropper-crop-box, .cropper-view-box, .cropper-container,.cropper-wrap-box, .cropper-drag-box, .cropped{
-            border-radius: 33% 33% 30% 30%;
-    
-        }
-
-        .cropper-crop-box {
-            width: auto !important;
-            height: auto !important;
-        }
-    
-        .cropper-view-box {
-            box-shadow: 0 0 0 1px #39f;
-            outline: 0;
-        }
-
-        .box-2.img-result {
-            left: -1%;
-        }
-    
-        #cropperbox {
-          max-width: 100%;
-            height: 45%;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        #userphotosrc {
-            position: absolute;
-            height:100%;
-        }
-    
-        /* Cropper buttons div */
-        .page {
-            margin: 0 auto;
-            max-width: 768px;
-            width: 100%;
-            height: 136px;
-            position: absolute;
-            bottom: 26px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-        }
-
-        /* Cropper buttons position */
-        .box .btn {
-            cursor: pointer;
-            margin-left: 5px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            font-size: 1em;
-            font-family: 'Space Age';
-            text-decoration: none;
-            color: #fff;
-            &: visited {
-            color: #5ea97d;
-            }
-            height: 65px;
-            line-height: 48px;
-            padding: 0 1.5rem;;
-            display: inline-block;
-            width: auto;
-            background: linear-gradient(0deg, rgba(45,124,20,1) 0%, rgba(0,0,0,1) 50%, rgba(45,124,20,1) 100%);
-            border-radius: 5px;
-            border: 0px;
-            -webkit-transition: all 0.06s ease-out;
-            transition: all 0.06s ease-out;
-            position: relative;
-        }
-        
-        .box .btn:disabled {
-            cursor: no-drop;
-            color: #7e7e7e;
-            background: linear-gradient(0deg, rgba(45,124,20,1) 0%, rgba(0,0,0,1) 50%, rgba(45,124,20,1) 100%);
-            opacity: 1;
-        }
-        
-        .box .btn:hover:not([disabled]) {
-            color: #5ea97d;
-        }
-        
-        .box .btn:active {
-            top: 6px;
-            text-shadow: 0 -2px 0 #7fbb98, 0 1px 1px #c2dece, 0 0 4px white;
-            color: white;
-            &:before {
-            top:0;
-            box-shadow: 0 3px 3px rgba(0,0,0,.7),0 3px 9px rgba(0,0,0,.2);
-        
-            }
-        }
-        
-        .box .btn:before {
-            display: inline-block;
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            z-index: -1;
-            top: 6px;
-            border-radius: 5px;
-            height: 49px;
-            background: linear-gradient(to top, #183b0d 0%, #183b0d 6px);
-            -webkit-transition: all 0.078s ease-out;
-            transition: all 0.078s ease-out;
-            box-shadow: 0 1px 0 2px rgba(0, 0, 0, 0.3), 0 5px 2.4px rgba(0, 0, 0, 0.5), 0 10.8px 9px rgba(0, 0, 0, 0.2);
-        }
-
-        /* .save_photo {
-            position: absolute;
-            top: 25%;
-            left: 22%;
-        }
-
-        .save {
-            position: absolute;
-            top: 25%;
-            right: 215px;
-        }
-
-        .download {
-            position: absolute;
-            top: 78%;
-            left: -66px;
-            transform: rotate3d(0, -1, 1, -73deg);
-        }
-
-        .editbtn {
-            position: absolute;
-            right: 0;
-            top: 78%;
-        } */
-    
-        .options label,
-        .options input {
-            width:4em;
-            padding:0.5em 1em;
-        }
-    
-        .hide {
-            display: none;
-        }
-    
-        img {
-            max-width: 100%;
-            height: 100%;
-        }
-        
-        #astroimg {
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%, 0);
-            width: auto;
-            min-width: 600px;
-        }
-    
-        /* Page Loader */
-        .no-js #loader { display: none;  }
-        .js #loader { display: block; position: absolute; left: 100px; top: 0; }
-        .se-pre-con {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            /* background: url('../../front/images/skybox_bg1-1.jpg') center no-repeat #fff; */
-            background: #fff0;
-        }
-
-        /* Modal */
-        .modal-backdrop {
-            background-color: #05050580 !important;
-        }
-    </style>
+@section('before-scripts')
+<script src="{{ asset('front/JS/jquery.min.js') }}"></script>
+<script src="{{ asset('front/JS/jquery.device.detector.js') }}"></script>
 @endsection
 
 @section('after-styles')
-    <style>
-        .lds-ellipsis div {
-            background: #f3ca05;
-        }
-    </style>
+<style>
+    .lds-ellipsis div {
+        background: #f3ca05;
+    }
+</style>
 @endsection
 
 @section('content')
-    <!-- Page Loader -->
-    <div class="se-pre-con hide">
-        <div class="page-loader">
-            <p>Loading</p>
-            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-        </div>
-    </div>
 
-    <!-- Auto Landscape -->
-    <div id="block_land">
-        <div class="content">
-            <h1 class="text-glow">Turn your device in landscape mode.</h1>
-            <img src="{{asset('front/images/rotate-screen.gif')}}" alt="">
-        </div>
-    </div>
 
-    <!-- Main Div -->
-    <div class="editing-div">
-        <!-- Cropper Buttons -->
-        <main class="page">
-            <!-- input file -->
-            <div class="box">
-                <input type="file" id="file-input" style="visibility: hidden">
+<div id="vanilla-demo" style="visibility: hidden"></div>
+
+
+<div id="imgDiv">
+    <img id="myImage" crossOrigin="Anonymous"
+        src="{{ asset('storage/profilepicture/'.access()->user()->getOriginalProfilePicture()) }}" />
+
+</div>
+
+
+
+<div id="austronut-bg">
+    <div>
+        <img src="../../front/images/astronut/{{ access()->user()->getAstronautHalf() }}" height="100%" width="100%" />
+        <div class="communicator-hover tooltips top" id="Communicator Page" style="">
+
+        </div>
+        <span class="communicator-span" style="
+   ">Communicator</span>
+    </div>
+</div>
+
+
+<div class="tooltips right cropper-tip">
+    <span class="">Use mouse wheel to crop image.</span>
+</div>
+
+
+
+
+
+
+
+<!-- Auto Landscape -->
+<div id="block_land">
+    <div class="content">
+        <h1 class="text-glow">Turn your device in landscape mode.</h1>
+        <img src="{{ asset('front/images/rotate-screen.gif') }}" alt="">
+    </div>
+</div>
+
+
+
+<!-- Crop Control Buttons -->
+<main>
+    <div class="box box-mobile">
+        <div class="d-flex flex-column align-items-center" style="width:100%;height:100%">
+            <div class="tooltips left tip-1 image-btn music-btn">
+                <img src="../../front/images/astronut/musicBtn.png" class="music-btn image-btn" />
+                <span class="">Music</span>
             </div>
-            
-            <div class="box">
-                <div class="options hide">  
-                    <label style="visibility: hidden"> Width</label>
-                    <input type="hidden" class="img-w" value="300" min="100" max="1200" />
-                </div>
+            <div class="tooltips right tip-1 image-btn free-btn">
+                <img src="../../front/images/astronut/freeBtn.png" class="image-btn free-btn" />
+                <span class="">Free Button</span>
+            </div>
+            <div class="tooltips left tip-1 image-btn home-btn" id="HomePage">
+                <img src="../../front/images/astronut/homeBtn.png" class="home-btn image-btn" id="Home Page" />
+                <span class="">Home</span>
+            </div>
+            <div class="tooltips right tip-1 image-btn profile-btn" id="ProfilePage"><img
+                    src="../../front/images/astronut/profileBtn.png" class="profile-btn image-btn" id="Profile Page" />
+                <span class="">User Profile</span>
+            </div>
+            <div id="button-div">
                 <!-- Save button -->
-                <button class="btn save_photo hide">Save & Exit</button>
+                <button class="btn-crop save-btn hide" type="button">Save</button>
                 <!-- Crop btn -->
-                <button class="btn save hide btn-primary">Crop</button>
+                <button class="btn-crop save hide crop-btn">Crop</button>
                 <!-- Download btn -->
-                <button class="btn download hide">Download</button>
+                <button class="btn-crop download download-btn hide">
+                    Download
+                </button>
                 <!-- Reset btn -->
-                <button class="btn editbtn hide" onClick="window.location.reload()">Reset</button>
-            </div>
-        </main>
-
-        <!-- Astronaut & Cropper div -->
-        <div class="astronaut-img-div" style="background-image: url('../../front/images/astronut/{{access()->user()->getAstronautHalf()}}')">
-            <div class="user-img-div">           
-                <!--box for the cropped image-->
-                <div class="box-2 img-result hide">
-                    <!-- result of crop -->
-                    <img class="cropped" src="" alt="cropped user img">
-                </div>
-                <!--box for the cropping box-->
-                <div class="box-2">
-                    <div id="cropperbox" class="result" >
-                        {{-- src img_photo --}}
-                        <img id="userphotosrc"  src="{{asset('storage/profilepicture/'.access()->user()->getOriginalProfilePicture())}}">
-                    </div>
-                </div>
-            </div> <!--end of user img div-->
-        </div> <!--end of astronaut img div-->
-    </div> <!--end of editing div-->
-    <div id="app">
-
-    </div>
-    {{-- Save and Exit Modal --}}
-    <div class="modal" id="saveAndExitModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Save Changes?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Save Changes?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
+                <button class="btn-crop editbtn reset-btn hide">Reset</button>
             </div>
         </div>
     </div>
+
+    <div class="tooltips right tip-1" id="instructions">
+        <img src="../../front/images/astronut/instructionsBtn.png" width="100%" style="pointer-events: all" />
+        <span class="">Instructions</span>
+    </div>
+</main>
+
+
+
+{{-- Instructions Overlay --}}
+<div class="instructions">
+    <img class="instruction-close-btn" src="{{ asset('front') }}/images/close-btn.png" />
+    <div class="instruction-1 instruction"></div>
+    <div class=" instruction-text-1">Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.</div>
+    <div class="instruction-2 instruction"></div>
+    <div class="instruction-text instruction-text-2">Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.</div>
+    <div class="instruction-3 instruction"></div>
+    <div class="instruction-text instruction-text-3">Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.</div>
+    <div class="instruction-4 instruction"></div>
+    <div class="instruction-text instruction-text-4">Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.</div>
+    <div class="instruction-5 instruction"></div>
+    <div class="instruction-text instruction-text-5">Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.</div>
+    <div class="instruction-6 instruction"></div>
+    <div class="instruction-text instruction-text-6">Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.</div>
+    <div class="instruction-7 instruction"></div>
+    <div class="instruction-text instruction-text-7">Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.</div>
+</div>
+
 @endsection
 
+
+
+
+
+
 @section('after-scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
-    <script src="{{asset('front/JS/Draggable.min.js')}}"></script>
-    <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
-    <script src="{{asset('front/JS/cropper.min.js')}}"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 
-    <script>
-        $( document ).ready(function() {
-            loadUserPhoto();
-        });
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.js"
+    integrity="sha256-u/CKfMqwJ0rXjD4EuR5J8VltmQMJ6X/UQYCFA4H9Wpk=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"
+    integrity="sha256-bQTfUf1lSu0N421HV2ITHiSjpZ6/5aS6mUNlojIGGWg=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="{{ asset('front/JS/bootstrap.min.js') }}"></script>
+<script src="{{ asset('front/JS/jquery-ui.js') }}"></script>
+<script src="{{ asset('front/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
 
-        // Delay astronaut div display
-        $(window).load(function() {
-            $(".editing-div").delay(1000).animate({opacity:1},1000);
-        });
 
-        // Force landscape orientation
+<script>
+    // Force Landscape orientation 
+    $('body').removeClass('mbaye_body');
+    $(window).load(function () {
+        $("#vanilla-demo,#austronut-bg").delay(1000).animate({
+            opacity: 1
+        }, 1000);
+    });
+
+    testOrientation();
+
+    window.addEventListener("orientationchange", function (event) {
         testOrientation();
-        window.addEventListener("orientationchange", function(event) {
-            // Generate a resize event if the device doesn't do it
-            // window.dispatchEvent(new Event("resize"));
-            testOrientation();
-        }, false);
-        
-        window.addEventListener("resize", function(event) {
-            // Generate a resize event if the device doesn't do it
-            // window.dispatchEvent(new Event("resize"));
-            testOrientation();
-        }, false);
-        
-        function testOrientation() {
-            var width = $(document).width();
-            var height = $(document).height();
-            document.getElementById('block_land').style.display = (width> 	height) ? 'none' : 'block';
+    }, false);
+
+
+    window.addEventListener("resize", function (event) {
+        testOrientation();
+    }, false);
+
+
+    function testOrientation() {
+        var width = $(document).width();
+        var height = $(document).height();
+        document.getElementById('block_land').style.display = (width > height) ? 'none' : 'block';
+    }
+
+</script>
+
+
+
+
+<script>
+    // Fullscreen Function 
+    var elem = document.documentElement;
+    function openFullscreen() {
+        if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+        contentDisplay();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+        contentDisplay();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+        contentDisplay();
+    }
+    else if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+        contentDisplay();
+    } 
+    else contentDisplay();
+    }
+
+
+    // Opening fullscreen only on mobile screens
+    function fullScreen(){
+        if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
+    || 
+    /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4)) ||
+    (navigator.maxTouchPoints &&
+    navigator.maxTouchPoints > 2 &&
+    /Macintosh/.test(navigator.userAgent) )
+    )
+    {
+        Swal.fire({
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        html: "<h5 id='f-screen' style='font:inherit; color:white !important'>Initializing fullscreen mode . . .</h5>",
+                        padding: '15px',
+                        confirmButtonColor:"red",
+                        background: 'rgba(8, 64, 147, 0.62)',
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.value) {
+                            this.openFullscreen();
+                        }
+                    });
+            }
+            else  contentDisplay();
+    }
+
+    fullScreen();
+    
+    
+    window.addEventListener('resize', ()=>{
+        if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
+    || 
+    /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4)) ||
+    (navigator.maxTouchPoints &&
+    navigator.maxTouchPoints > 2 &&
+    /Macintosh/.test(navigator.userAgent) )
+    ) { 
+               if(!document.webkitIsFullScreen || !document.isFullScreen){
+                fullScreen();
+               }
         }
-    </script>
+            }
+    )
 
-    <!-- Cropper JS -->
-    <script>
-        let result = document.querySelector('.result'),
-        img_result = document.querySelector('.img-result'),
-        img_w = document.querySelector('.img-w'),
-        img_h = document.querySelector('.img-h'),
-        options = document.querySelector('.options'),
-        save = document.querySelector('.save'),
-        cropped = document.querySelector('.cropped'),
-        dwn = document.querySelector('.download'),
-        editbtn = document.querySelector('.editbtn'),
-        upload = document.querySelector('#file-input'),
-        save_photo = document.querySelector('.save_photo'),
-        cropper = '';
+    
 
-        // disable save and download buttons when image is not yet cropped
-        $('.save_photo').attr('disabled', 'disabled');
-        $('.download').attr('disabled', 'disabled');
 
-        // Crop button
-        save.addEventListener('click',(e)=>{
-            e.preventDefault();
 
-            // get result to data uri
-            let imgSrc = cropper.getCroppedCanvas({
-                width: img_w.value // input value
-            }).toDataURL();
 
-            // remove hide class of img
-            cropped.classList.remove('hide');
-            img_result.classList.remove('hide');
-              
-            // show image cropped
-            cropped.src = imgSrc;
-            dwn.classList.remove('hide');
-            dwn.download = 'imagename.png';
-            dwn.setAttribute('href',imgSrc);
-            editbtn.classList.remove('hide');
-            save_photo.classList.remove('hide');
-            var box = document.getElementById("cropperbox");
-            box.style.visibility = "hidden";
-            $('.save_photo').attr('disabled', false);
-            $('.download').attr('disabled', false);
-        });
-          
-        // Save and Exit button
-        $('.save_photo').click(function() {
-            var str_cropped_img=  $('.cropped').attr('src');
-            var int_User_Id = "{{Auth::user()->id}}";
-            $.ajax({  
-                type: "POST",  
-                url: "{{url('/profile/save-cropped-photo')}}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: "str_cropped_img="+str_cropped_img+"&int_User_Id="+int_User_Id+"&csrf-token",
-                dataType: "json"
-            }).done(function(data) {
-                alert(data.message);
-                if(data.status == 'success') {
-                    location.href = "{{url('/dashboard')}}";
-                } else {
-                    location.reload(true);
+
+// Function called after page is in fullscreen on mobile and normally on pc screen  
+    function contentDisplay() {
+        $('#austronut-bg').css('display','flex');
+        $('.box').css('display','flex');
+        $('#instructions').css('display','flex');
+        $('#vanilla-demo').css('visibility','visible');
+        $('.cr-boundary').css('visibility','visible');
+        this.showOverlay();
+    }
+
+
+
+
+// Instructions button on click
+$('#instructions').click(()=>this.showOverlay())
+
+
+
+
+
+
+
+// Instruction overlay hover effects
+        function showOverlay() {
+            $('.instructions').fadeIn();
+            };
+
+        $(".instruction-close-btn").click(function(){
+            $('.instructions').fadeOut();
+        })
+
+        $('.instruction-1').hover(
+            function() {
+                $('.instruction-text-1').fadeIn();
+            },
+            function() {
+                $('.instruction-text-1').fadeOut();
+            }
+        );
+
+        $('.instruction-2').hover(
+            function() {
+                $('.instruction-text-2').fadeIn();
+            },
+            function() {
+                $('.instruction-text-2').fadeOut();
+            }
+        );
+        $('.instruction-2').hover(
+            function() {
+                $('.instruction-text-2').fadeIn();
+            },
+            function() {
+                $('.instruction-text-2').fadeOut();
+            }
+        );
+        $('.instruction-3').hover(
+            function() {
+                $('.instruction-text-3').fadeIn();
+            },
+            function() {
+                $('.instruction-text-3').fadeOut();
+            }
+        );
+        $('.instruction-4').hover(
+            function() {
+                $('.instruction-text-4').fadeIn();
+            },
+            function() {
+                $('.instruction-text-4').fadeOut();
+            }
+        );
+        $('.instruction-5').hover(
+            function() {
+                $('.instruction-text-5').fadeIn();
+            },
+            function() {
+                $('.instruction-text-5').fadeOut();
+            }
+        );
+
+        $('.instruction-6').hover(
+            function() {
+                $('.instruction-text-6').fadeIn();
+            },
+            function() {
+                $('.instruction-text-6').fadeOut();
+            }
+        );
+
+        $('.instruction-7').hover(
+            function() {
+                $('.instruction-text-7').fadeIn();
+            },
+            function() {
+                $('.instruction-text-7').fadeOut();
+            }
+        );
+
+
+
+
+
+
+// leave page Button Alert
+$('.home-btn,.profile-btn,.communicator-hover').click (() => {
+    let id = event.target.id;
+        Swal.fire({
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            html: `<h4 style="font:inherit; color:white !important">You will be redirected to ${id}.</h4><span style="font-size:0.9vw;color:white">[All unsaved changes will be lost]</span>`,
+            padding: '30px',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCancelButton: true,
+            showCancelButton: true,
+            confirmButtonColor: 'auto',
+            cancelButtonColor: 'red',
+            confirmButtonText: 'Yes, Redirect!'
+        }).then((result) => {
+            if (result.value) {
+                if(id==="Home Page"){
+                location.href = "{{ url('/') }}";
                 }
-            });
-        });  
-      
-        function loadUserPhoto() {
-            let img = document.getElementById("userphotosrc"); 
-            save.classList.remove('hide');
-            options.classList.remove('hide');
+                else if (id==="Profile Page") location.href = "{{ url('/dashboard') }}";
 
-            // init cropper
-            cropper = new Cropper(img, {
-                viewMode: 3,
-                dragMode: 'move',
-                autoCropArea: 1,
-                restore: false,
-                modal: false,
-                guides: true,
-                highlight: true,
-                cropBoxMovable: true,
-                cropBoxResizable: false,
-                toggleDragModeOnDblclick: false
+                else location.href = "{{ url('/communicator') }}";
+            }
+            })
+        });
+
+
+
+
+
+
+    // Crop Button Alert
+    $(".crop-btn").click(() => {
+        Swal.fire({
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            html: '<h4 style="font:inherit; color:white !important">Are you sure you want to crop the photo?</h4>',
+            padding: '30px',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCancelButton: true,
+            showCancelButton: true,
+            confirmButtonColor: 'auto',
+            cancelButtonColor: 'red',
+            confirmButtonText: 'Yes, crop it!'
+        }).then((result) => {
+            if (result.value) {
+                vanilla.result({
+                type: 'canvas',
+                size: "viewport"
+            })
+            .then(response => {
+                $('.save-btn').attr('disabled', false);
+                $('.save-btn').removeClass('disabled-btn');
+                $('.download-btn').attr('disabled', false);
+                $('.download-btn').removeClass('disabled-btn');
+                $('#imgDiv').css('display', 'flex');
+                $('#myImage').attr('src', response);
+                $('download-cropped').attr('href', response);
+                $('#vanilla-demo').css('visibility', 'hidden');
+                $('.crop-btn').attr('disabled', 'dsiabled');
+                $('.crop-btn').addClass('disabled-btn');
             });
-        }
-    </script>
+            }
+            else return
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+    // Crop Image Download Function
+$('.download-btn').click(()=>{
+    Swal.fire({
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            html: '<h4 style="font:inherit; color:white">Do you really want to download the photo?</h4>',
+            padding: '30px',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonColor: 'red',
+            confirmButtonText: 'Download Photo',
+        }).then(response=>{
+            if(response.value){
+                downloadCropped();
+            }
+        })
+});
+
+    downloadCropped = () => {
+        Swal.fire({
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            html: '<h4 style="font:inherit; color:white">Your File Has been downloaded successfully!</h4>',
+            padding: '30px',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCancelButton: false,
+            showConfirmButton: false,
+            position:'top-right',
+            timer:3000
+        });
+            var a = document.createElement("a"); //Create <a>
+                a.href = $('#myImage').attr('src'); //Image Base64 Goes here
+                a.download = "cropped.png"; //File name Here
+                a.click(); //Downloaded file
+    }
+
+
+
+
+
+
+
+    // Reset Button
+    $(".reset-btn").click(() => {
+        Swal.fire({
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            html: '<h4 style="font:inherit; color:white !important">Are you sure you want to reset your changes?</h4>',
+            padding: '30px',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCancelButton: true,
+            showCancelButton: true,
+            confirmButtonColor: 'auto',
+            cancelButtonColor: 'red',
+            confirmButtonText: 'Yes, reset!'
+        }).then((result) => {
+            if (result.value) {
+                $('.save-btn').attr('disabled', 'dsiabled');
+                $('.save-btn').addClass('disabled-btn');
+                $('.download-btn').attr('disabled', 'dsiabled');
+                $('.download-btn').addClass('disabled-btn');
+                $('#vanilla-demo').css('visibility', 'visible');
+                $('#imgDiv').css('display', 'none');
+                $('.crop-btn').attr('disabled', false);
+                $('.crop-btn').removeClass('disabled-btn');
+            }
+        });
+        $('.swal2-cancel').css('display', 'block');
+    });
+
+
+
+
+
+
+
+
+    // Save and Exit button
+    $(".save-btn").click(() => {
+        $('.save-btn').attr('disabled','disabled');
+        $('.save-btn').addClass('disabled-btn');
+        $('.download').addClass('disabled-btn');
+        Swal.fire({
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            html: '<h4 style="font:inherit; color:white">Are you sure you want to save the changes?</h4>',
+            padding: '30px',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCancelButton: true,
+            showCancelButton: true,
+            confirmButtonColor: 'auto',
+            cancelButtonColor: 'red',
+            confirmButtonText: 'Yes, save it!'
+        }).then((result) => {
+            if (result.value) {
+                this.save()
+            }
+        });
+    });
+
+
+
+
+
+    // Save Croped Image AJAX Request
+    save = () => {
+        let str_cropped_img = $('#myImage').attr('src');
+        let int_User_Id = "{{ Auth::user()->id }}";
+        let csrf = window.Laravel.csrfToken;
+        $.ajax({
+            type: "POST",
+            url: "{{ url('/profile/save-cropped-photo') }}",
+            headers: {
+                'X-CSRF-TOKEN': csrf
+            },
+            data: "str_cropped_img=" + str_cropped_img + "&int_User_Id=" + int_User_Id + "&csrf-token",
+            dataType: "json"
+        }).done(function (data) {
+            if (data.status == 'success') {
+                Swal.fire({
+                    imageUrl: '../../front/icons/alert-icon.png',
+                    imageWidth: 80,
+                    imageHeight: 80,
+                    imageAlt: 'Mbaye Logo',
+                    html: `<h4 style="font:inherit; color:white">${data.message}</h4>`,
+                    padding: '30px',
+                    background: 'rgba(8, 64, 147, 0.62)',
+                    showCancelButton: false,
+                    showConfirmButton: true,
+                    confirmButtonColor: "red",
+                    timer:3000
+                }).then((response)=>{
+                    if(response.value){
+                        location.href = "{{ url('/dashboard') }}"
+                    }
+                })
+            } else {
+                Swal.fire({
+                    imageUrl: '../../front/icons/alert-icon.png',
+                    imageWidth: 80,
+                    imageHeight: 80,
+                    imageAlt: 'Mbaye Logo',
+                    title: "<span id='error'>Error!</span>",
+                    html: "There was an Error While Processing your Request.",
+                    width: '30%',
+                    padding: '1rem',
+                    background: 'rgba(8, 64, 147, 0.62)'
+                });
+                setTimeout(() => location.reload(true), 1000);
+            }
+        });
+    }
+
+
+
+
+
+
+// Disable save and downlaod buttons at start
+    $('.save-btn').attr('disabled', 'dsiabled');
+    $('.save-btn').addClass('disabled-btn');
+    $('.download-btn').attr('disabled', 'dsiabled');
+    $('.download-btn').addClass('disabled-btn');
+    $('#vanilla-demo').css('visibility', 'visible');
+    $('#imgDiv').css('display', 'none');
+
+
+
+
+
+
+
+
+    // Cropper Initialization 
+    var src =
+        "{{ asset('storage/profilepicture/'.access()->user()->getOriginalProfilePicture()) }}";
+    var vanilla = new Croppie(document.getElementById('vanilla-demo'), {
+        viewport: {
+            width: "26.5vw",
+            height: "37.5vh",
+            type: 'square'
+        },
+        boundary: {
+            width: "50vw",
+            height: "72.2vh"
+        },
+        showZoom: true,
+        showZoomer: false
+    });
+
+    vanilla.bind({
+        url: src
+    })
+
+
+
+// cropper hover
+ $('.cr-boundary').mouseenter(()=>{
+     $('.cropper-tip span').css('display', 'inline');
+    //  $('.cropper-tip span').css('width', '11vw');
+     $('.cropper-tip span').css('padding', '10px');
+ });
+ $('.cr-boundary').mouseleave(()=>{
+    $('.cropper-tip span').css('display', 'none')
+ })
+
+
+
+
+
+// communicator hover
+ $('.communicator-hover,.thomasina').mouseenter(()=>{
+     $('.communicator-span').css('display', 'inline');
+ });
+
+
+$('.communicator-hover,.thomasina').mouseleave(()=>{
+    $('.communicator-span').css('display', 'none')
+ })
+
+
+
+// Thomasina Astronaut class switch
+ if($('#austronut-bg img').attr('src').includes('Thomasina')){
+
+     $('.communicator-hover.tooltips.top').addClass('thomasina');
+     $('.tooltips.top.thomasina').removeClass('communicator-hover');
+    
+     }
+</script>
 @endsection

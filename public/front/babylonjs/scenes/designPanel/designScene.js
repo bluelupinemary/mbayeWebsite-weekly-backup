@@ -22,6 +22,7 @@ let isCurrentPanelInLocation = false;                                         //
 
 let mbayeDesignInitPos = {x:-5.5129,y:0.7417,z:1.3953};                                     //let for holding the initial position of Mbaye (at the start of the scene)
 
+
 let bookFlowers_object;                                                       //let to hold the book of flowers gltf object
 let isReturnPanelBtnActive = true;                                            //let to check if the return panel button is active or not
 let isBookFlowersActive = false;                                              //let to check if book of flowers is active or on the screen
@@ -85,11 +86,13 @@ let panelFlowerBoxInitPos = {x:0,y:-0.2459,z:0,w:0.9690};
 let isMbayeModelReady = false;
 let isBookFlowerReady = false;
 let designOrigFlower;
-let panelPointerDragBehavior = new BABYLON.PointerDragBehavior({dragPlaneNormal: new BABYLON.Vector3(0,0,1)});
+let panelPointerDragBehavior = new BABYLON.PointerDragBehavior({dragPlaneNormal: new BABYLON.Vector3(1,1,1)});
+let charPointerDragBehavior = new BABYLON.PointerDragBehavior({dragPlaneNormal: new BABYLON.Vector3(1,1,1)});
 let isOpenBookFlowers = false;
 let isGizmoDragging = false;
 
 let isRuruClicked = false;
+let overHighlight;
 
 
 //main function to create the scene
@@ -119,6 +122,9 @@ function create_design_scene(){
     add_designScene_mouse_listener();
     //do not autoClear the scene
     designScene.autoClear = false;
+    overHighlight = new BABYLON.HighlightLayer("hoverHighlight", designScene);
+
+   
     return designScene;
 } //end of create scene function
 
@@ -207,7 +213,8 @@ async function create_design_focusCamera(){
 }//end of create camera function
 
 var mbayePanelsMeshes = [];
-//function to load the meshes of the scene
+let nuvolaSpeechCloud;
+ //function to load the meshes of the scene
 function load_design_meshes(){
     Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/mbaye/", "mbayebody2.babylon", designScene
@@ -257,6 +264,7 @@ function load_design_meshes(){
           nuvolaDesign_obj.scaling = new BABYLON.Vector3(0.07,0.07,0.07);
           nuvolaDesign_obj.position = new BABYLON.Vector3(12.50,-8.30,55.92);
           nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0570,-0.4064,0.0516,0.9102);
+          nuvolaDesign_obj.isPickable = true;
       }),
       
       BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/seaObjects/ruru/", "ruruAnimated.babylon", designScene).then(function (result) {   
@@ -345,23 +353,41 @@ function load_design_meshes(){
         result.meshes[0].setEnabled(false);
         ruruSpeech3 = result.meshes[0];
         ruruSpeech3.isPickable = false;
-        // enable_home_gizmo2(ruruSpeech3);
+        
       }),
   ]).then(() => {
+
+        ruruDesign_obj.actionManager = new BABYLON.ActionManager(designScene);
+        ruruDesign_obj.actionManager.registerAction(
+            new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
+            onOverChar)
+        );
+        ruruDesign_obj.actionManager .registerAction(
+            new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOutTrigger,
+                onOutChar)
+        );
+
+        nuvolaDesign_obj.actionManager = new BABYLON.ActionManager(designScene);
+        nuvolaDesign_obj.actionManager.registerAction(
+            new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
+            onOverChar)
+        );
+        nuvolaDesign_obj.actionManager .registerAction(
+            new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOutTrigger,
+                onOutChar)
+        );
+
         isBookFlowerReady = true;
         create_flower_label();
         enable_design_utility();
         listen_to_panel_rotation();
         listen_to_wheelscroll();
 
-        console.log(mbayePanelsMap);
+        // console.log(mbayePanelsMap);
+        // enable_home_gizmo2(nuvolaSpeechCloud);
 
     });
 }//end of load design meshes
-
-
-
-
 
 
 
@@ -837,6 +863,8 @@ function take_panel_screenshot(){
         BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, panelCamera, {width:800, height:400, precision:1});
     }else if(designScene.activeCamera === focusCamera){
         BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, focusCamera, {width:800, height:400, precision:1});
+    }else if(designScene.activeCamera === designCamera){
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, designCamera, {width:800, height:400, precision:1});
     }
 
     Swal.fire({
@@ -851,7 +879,8 @@ function take_panel_screenshot(){
         background: 'rgba(8, 64, 147, 0.6)',
     });
 }
- 
+
+
   
 
 
@@ -883,6 +912,7 @@ function returnPanelViaButton(){
         rotTool_btn.isVisible = false;
         scaleTool_btn.isVisible = false;
         offTool_btn.isVisible = false;
+        screenshot_btn.isVisible = true;
         // delTool_btn.isVisible = false;
 
 
@@ -929,28 +959,22 @@ function returnPanelViaButton(){
             designCamera.lowerRadiusLimit = 1;
             designCamera.upperRadiusLimit = 300;    
 
-            nuvolaDesign_obj.isVisible = false;
-            nuvolaDesign_obj.setEnabled(false);
+            
+            set_chars_position(1);
+            set_clouds_position(1);
 
-            ruruDesign_obj.isVisible = false;
-            ruruDesign_obj.setEnabled(false);
 
-            ruruSpeech.isVisible = false;
-            ruruSpeech.setEnabled(false);
+           
 
-            nuvolaSpeech.isVisible = false;
-            nuvolaSpeech.setEnabled(false);
+            // ruruSpeech2.isVisible = false;
+            // ruruSpeech2.setEnabled(false);
+            // nuvolaSpeech2.isVisible = false;
+            // nuvolaSpeech2.setEnabled(false);
 
-            ruruSpeech2.isVisible = false;
-            ruruSpeech2.setEnabled(false);
-            nuvolaSpeech2.isVisible = false;
-            nuvolaSpeech2.setEnabled(false);
+            nuvolaSpeech3.isVisible = false;
+            nuvolaSpeech3.setEnabled(false);
 
-            ruruSpeechCloud.isVisible = false;
-            ruruSpeechCloud.setEnabled(false);
-
-            nuvolaSpeechCloud.isVisible = false;
-            nuvolaSpeechCloud.setEnabled(false);
+            
             
             if(currentPanelInitZPos > 0){
                 designCamera.position = cameraPosForLeftPanelsPos; 
@@ -993,11 +1017,10 @@ function focus_on_panel(){
              }
 
 
-             nuvolaDesign_obj.position = new BABYLON.Vector3(562.69,52.97,6.62);
-             nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0304,-0.9951, -0.0841,0.0099);
+             set_chars_position(3);
+             set_clouds_position(3);
 
-             nuvolaSpeechCloud.position = new BABYLON.Vector3(519.04,50.53,73.52);
-             nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.1268,-0.1632,-0.0212,0.9780);
+           
 
              // focusPanel_btn.background = "red";
              focusCamera.target = currentPanel;
@@ -1031,11 +1054,8 @@ function focus_on_panel(){
            
             designLight.direction = new BABYLON.Vector3(0.5,5,-2);
 
-            nuvolaDesign_obj.position = new BABYLON.Vector3(354.72, -0.45, 163.23);
-            nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0585,-0.4413,0.0794,0.8910);
-
-            nuvolaSpeechCloud.position = new BABYLON.Vector3(386.64,17.46,156.72);
-            nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0403,0.6396, -0.0343,0.7667);
+            set_chars_position(2);
+            set_clouds_position(2);
             
             
 
@@ -1171,6 +1191,7 @@ function enable_design_utility(){
 
 //#################################################### FUNCTIONS FOR THE SCENE'S GUI #######################################################//
 //function that creates the GUI for the buttons
+let isTakePhotoStatus = false;
 let currBtn;
 function create_design_gui(){
     let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("DesignSceneUI");
@@ -1181,6 +1202,8 @@ function create_design_gui(){
     offTool_btn = BABYLON.GUI.Button.CreateSimpleButton("OffToolBtn", "Tool: Off");
     //delTool_btn = BABYLON.GUI.Button.CreateSimpleButton("DelToolBtn", "Tool: Delete");
     delTool_btn = BABYLON.GUI.Button.CreateSimpleButton("Temp Btn", "Save");
+
+    screenshot_btn = BABYLON.GUI.Button.CreateSimpleButton("ScreenshotBtn", "Take Photo");
 
     let btnWidth = canvas.width*0.04;
     let btnHeight = canvas.height*0.04;
@@ -1329,46 +1352,97 @@ function create_design_gui(){
             
     }); 
 
-    delTool_btn.height = btnHeight+"px";
-    delTool_btn.width = btnWidth+"px";
-    delTool_btn.color = "white";
-    delTool_btn.alpha = 0.6;
-    delTool_btn.fontSize = fontSz;
-    delTool_btn.background = "green";
-    delTool_btn.left = canvas.width/2 - 150;
-    delTool_btn.top = canvas.height/2 - 30;
-    // delTool_btn.isVisible = false;
+    // delTool_btn.height = btnHeight+"px";
+    // delTool_btn.width = btnWidth+"px";
+    // delTool_btn.color = "white";
+    // delTool_btn.alpha = 0.6;
+    // delTool_btn.fontSize = fontSz;
+    // delTool_btn.background = "green";
+    // delTool_btn.left = canvas.width/2 - 150;
+    // delTool_btn.top = canvas.height/2 - 30;
+    // // delTool_btn.isVisible = false;
+    
+
+    // //pos tool button functions
+    // delTool_btn.onPointerDownObservable.add(
+    // function(info) {
+        
+    //     // console.log("PANELS : ", flowersPanelsMap, "USER CURRENTLY LOGGED IN: ", userId);
+    //     saveDesignedPanels(userId+"_designedPanel");
+    // });
+    // delTool_btn.onPointerUpObservable.add(
+    //     function(info) {
+            
+    // });
+    // delTool_btn.onPointerEnterObservable.add(
+    //     function() {
+    // });
+    // delTool_btn.onPointerOutObservable.add(
+    //     function() {
+
+    // });    
+    // delTool_btn.onPointerMoveObservable.add(
+    //     function(coordinates) {
+            
+    // }); 
+
+    
+    screenshot_btn.height = btnHeight+"px";
+    screenshot_btn.width = btnWidth+"px";
+    screenshot_btn.color = "white";
+    screenshot_btn.alpha = 0.6;
+    screenshot_btn.fontSize = fontSz;
+    screenshot_btn.background = "green";
+    screenshot_btn.verticalAlignment = 0;
+    screenshot_btn.horizontalAlignment = 1;
+    // screenshot_btn.left = canvas.width/2 - 50;
+    // screenshot_btn.top = canvas.height/2 - 150;
+    // screenshot_btn.isVisible = false;
     
 
     //pos tool button functions
-    delTool_btn.onPointerDownObservable.add(
+    screenshot_btn.onPointerDownObservable.add(
     function(info) {
+        // console.log("take screenshot");
+        // 
+        if(!isTakePhotoStatus){
+            //change button color and text so the user will have the option to move the characters
+            screenshot_btn.background = "red";
+            screenshot_btn.textBlock.text = "Capture Now";
+            isTakePhotoStatus = true;
+            //set the characters to movable; tell the user that they can move RuRu and Nuvola
+            set_char_movable();
+        }else{
+            take_panel_screenshot();
+            screenshot_btn.background = "green";
+            screenshot_btn.textBlock.text = "Take Photo";
+            isTakePhotoStatus = false;
+        }
         
-        // console.log("PANELS : ", flowersPanelsMap, "USER CURRENTLY LOGGED IN: ", userId);
-        saveDesignedPanels(userId+"_designedPanel");
     });
-    delTool_btn.onPointerUpObservable.add(
+    screenshot_btn.onPointerUpObservable.add(
         function(info) {
             
     });
-    delTool_btn.onPointerEnterObservable.add(
+    screenshot_btn.onPointerEnterObservable.add(
         function() {
     });
-    delTool_btn.onPointerOutObservable.add(
+    screenshot_btn.onPointerOutObservable.add(
         function() {
 
     });    
-    delTool_btn.onPointerMoveObservable.add(
+    screenshot_btn.onPointerMoveObservable.add(
         function(coordinates) {
             
     }); 
 
 
     //add the buttons to the gui
-    // advancedTexture.addControl(posTool_btn);
-    // advancedTexture.addControl(rotTool_btn);
-    // advancedTexture.addControl(scaleTool_btn);
-    // advancedTexture.addControl(offTool_btn);
+    advancedTexture.addControl(posTool_btn);
+    advancedTexture.addControl(rotTool_btn);
+    advancedTexture.addControl(scaleTool_btn);
+    advancedTexture.addControl(offTool_btn);
+    advancedTexture.addControl(screenshot_btn);
     // advancedTexture.addControl(delTool_btn);
 }//end of create gui function
 
@@ -1414,7 +1488,9 @@ function design_handle_tool(theGizmo){
     }
 }//end of handle gizmo 
 
+
 //#################################################### FUNCTION TO HANDLE MOUSE EVENTS #######################################################//
+let isCharMovementEnabled;
 function add_designScene_mouse_listener(){
       //handle the dragging behavior of the panel selected
       designScene.onPointerObservable.add((pointerInfo) => {          
@@ -1438,6 +1514,19 @@ function add_designScene_mouse_listener(){
                                 returnPanel)
                           );
                   }//eof if
+
+                  if(pointerInfo.pickInfo.hit &&  (pointerInfo.pickInfo.pickedMesh === ruruDesign_obj || pointerInfo.pickInfo.pickedMesh === nuvolaDesign_obj) && designScene.activeCamera === designCamera && isCharMovementEnabled) {
+                    // If handling drag events manually is desired, set move attached to false
+                    charPointerDragBehavior.enabled = true;
+                    charPointerDragBehavior.moveAttached = true;
+
+                    // Use drag plane in world space
+                    charPointerDragBehavior.useObjectOrienationForDragging = false;
+                    charPointerDragBehavior.dragDeltaRatio = 0.2;
+                    charPointerDragBehavior.attach(pointerInfo.pickInfo.pickedMesh);
+
+
+                }//eof if
           break;
           }
       });
@@ -1587,6 +1676,7 @@ function add_designScene_mouse_listener(){
                         scaleTool_btn.isVisible = true;
                         offTool_btn.isVisible = true;
                         delTool_btn.isVisible = true;
+                        screenshot_btn.isVisible = false;
                         //get and set the current panel's initial rotation for when the panel is returned back to Mbaye
                         panelInitRot = currentPanel.rotationQuaternion;
 
@@ -1610,46 +1700,24 @@ function add_designScene_mouse_listener(){
                         earthFlowersCamera.position = new BABYLON.Vector3(-48,24,84);
                         earthFlowersCamera.radius = earthCameraDesignRadius;
 
-                        //set position of ruru
-                        ruruDesign_obj.position = new BABYLON.Vector3(401.08,38.04,114.31);
-                        ruruDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.6671,-0.3473,0.1862,0.6314);
-                        //set position of nuvola
-                        nuvolaDesign_obj.position = new BABYLON.Vector3(354.72, -0.45, 163.23);
-                        nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0585,-0.4413,0.0794,0.8910);
+                        set_chars_position(2);
+                        set_clouds_position(2);
+                       
 
-                        //set position and rotation of nuvola's speech cloud
-                        nuvolaSpeechCloud.position = new BABYLON.Vector3(386.64,17.46,156.72);
-                        nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0403,0.6396, -0.0343,0.7667);
+                        //make rurua nd nuvola visible as well as the speech clouds and texts
+                        // nuvolaDesign_obj.isVisible = true;
+                        // nuvolaDesign_obj.setEnabled(true);
 
-                        ruruSpeechCloud.position = new BABYLON.Vector3(394.43,49.3,115.14);
-                        ruruSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0606,0.5774,-0.0598,0.8119);
+                        // ruruDesign_obj.isVisible = true;
+                        // ruruDesign_obj.setEnabled(true);
 
-                        //make ruruand nuvola visible as well as the speech clouds and texts
-                        nuvolaDesign_obj.isVisible = true;
-                        nuvolaDesign_obj.setEnabled(true);
+                        // ruruSpeechCloud.isVisible = true;
+                        // ruruSpeechCloud.setEnabled(true);
 
-                        ruruDesign_obj.isVisible = true;
-                        ruruDesign_obj.setEnabled(true);
+                        // nuvolaSpeechCloud.isVisible = true;
+                        // nuvolaSpeechCloud.setEnabled(true);
 
-                        ruruSpeechCloud.isVisible = true;
-                        ruruSpeechCloud.setEnabled(true);
-
-                        nuvolaSpeechCloud.isVisible = true;
-                        nuvolaSpeechCloud.setEnabled(true);
-
-                        //hide the first speeches of ruru and nuvola
-                        ruruSpeech.isVisible = false;
-                        ruruSpeech.setEnabled(false);
-
-                        nuvolaSpeech.isVisible = false;
-                        nuvolaSpeech.setEnabled(false);
-
-                        //show the 2nd speeches of ruru and nuvola
-                        ruruSpeech2.isVisible = true;
-                        ruruSpeech2.setEnabled(true);
-
-                        nuvolaSpeech2.isVisible = true;
-                        nuvolaSpeech2.setEnabled(true);
+                       
 
                         //set to design scene now active and user can now design the panels
                         isDesignSceneActive = true;
@@ -1658,6 +1726,7 @@ function add_designScene_mouse_listener(){
                         //set panel flowers to pickable and setup the design a panel scene
                         set_flowers_to_pickable();
                         start_design_setup();
+                        // earthFlowersScene.debugLayer.show();
 
                           
                     }, 1000);
@@ -1726,6 +1795,7 @@ function start_design_setup(){
         isAnimatePanelOn = false;
         isPanelMovementDone = true;                         //let to indicate that panel is done moving away from Mbaye to the design location
         // panelCamera.attachControl(canvas,true);
+       
 }
 
 function listen_to_panel_rotation(){
@@ -1847,15 +1917,60 @@ function listen_to_wheelscroll(){
   }
 }//end of listen to wheel scroll function
 
+
+
+let charLabel;
+var onOverChar =(meshEvent)=>{
+    
+    if(designScene.activeCamera === designCamera && isCharMovementEnabled){ 
+        overHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.4,0.1));
+
+    }
+};
+
+//handles the on mouse out event
+var onOutChar =(meshEvent)=>{
+    // meshEvent.source.scaling = origScaling;
+    // venusInfoTxt.isVisible = false;
+    //part of the 3d text on hover on mesh
+    
+    if(designScene.activeCamera === designCamera && isCharMovementEnabled){
+        overHighlight.removeMesh(meshEvent.source);
+        
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ######################################################### END OF MOUSE EVENTS ####################################################################### */
+
 function animate_ruru_speech(){
     let i=0;
-    setInterval(function(){ 
-        if(i<8){
+    setInterval(function(){
+        if(i<8 && isStartRuruSpeech2){
             ruruSpeech2.setEnabled(true);
             ruruSpeech2.isVisible = true;
             ruruSpeech3.setEnabled(false);
             ruruSpeech3.isVisible = false;
-        }else if(i>=8 && i<15){
+        }else if(i>=8 && i<15 && isStartRuruSpeech2){
             ruruSpeech2.setEnabled(false);
             ruruSpeech2.isVisible = false;
             ruruSpeech3.setEnabled(true);
@@ -1866,12 +1981,125 @@ function animate_ruru_speech(){
 }
 
 
+function set_chars_position(viewNo){
+    if(viewNo === 1){   //if initial view
+        nuvolaDesign_obj.position = new BABYLON.Vector3(12.50,-8.30,55.92);
+        nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0570,-0.4064,0.0516,0.9102);
+        ruruDesign_obj.position = new BABYLON.Vector3(59,8.5,9);
+        ruruDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.6481,-0.3413,0.2794,0.6202);
+    }else if(viewNo === 2){
+        nuvolaDesign_obj.position = new BABYLON.Vector3(354.72, -0.45, 163.23);
+        nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0585,-0.4413,0.0794,0.8910);
+        ruruDesign_obj.position = new BABYLON.Vector3(401.08,38.04,114.31);
+        ruruDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.6671,-0.3473,0.1862,0.6314);
+    }else{
+        nuvolaDesign_obj.position = new BABYLON.Vector3(562.69,52.97,6.62);
+        nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0304,-0.9951, -0.0841,0.0099);
+        
+        
+    }
+}
 
-var objectUrl;
- 
+function set_clouds_position(viewNo){
+    if(viewNo === 1){   //if initial view
+        ruruSpeechCloud.position = new BABYLON.Vector3(48.50,19.5,12.15);
+        ruruSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.1210,0.6063,-0.08125,0.7816);
+
+        nuvolaSpeechCloud.position = new BABYLON.Vector3(18,8.5,60);
+        nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0331,0.6358,-0.0283,0.7705);
 
 
-function setPanelChildren(flowers){
+        ruruSpeech.isVisible = true;
+        ruruSpeech.setEnabled(true);
+
+        nuvolaSpeech.isVisible = true;
+        nuvolaSpeech.setEnabled(true);
+
+        ruruSpeech2.isVisible = false;
+        ruruSpeech2.setEnabled(false);
+
+        nuvolaSpeech2.isVisible = false;
+        nuvolaSpeech2.setEnabled(false);
+
+        ruruSpeech3.isVisible = false;
+        ruruSpeech3.setEnabled(false);
+
+        nuvolaSpeech3.isVisible = false;
+        nuvolaSpeech3.setEnabled(false);
+
+        isStartRuruSpeech2 = false;
+
+    }else if(viewNo === 2){
+         //set position and rotation of nuvola's speech cloud
+         nuvolaSpeechCloud.position = new BABYLON.Vector3(386.64,17.46,156.72);
+         nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0403,0.6396, -0.0343,0.7667);
+
+         ruruSpeechCloud.position = new BABYLON.Vector3(394.43,49.3,115.14);
+         ruruSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0606,0.5774,-0.0598,0.8119);
+
+          //hide the first speeches of ruru and nuvola
+          ruruSpeech.isVisible = false;
+          ruruSpeech.setEnabled(false);
+
+          nuvolaSpeech.isVisible = false;
+          nuvolaSpeech.setEnabled(false);
+
+          //show the 2nd speeches of ruru and nuvola
+          ruruSpeech2.isVisible = true;
+          ruruSpeech2.setEnabled(true);
+
+          nuvolaSpeech2.isVisible = true;
+          nuvolaSpeech2.setEnabled(true);
+    }else if(viewNo === 3){
+        nuvolaSpeechCloud.position = new BABYLON.Vector3(519.04,50.53,73.52);
+        nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.1268,-0.1632,-0.0212,0.9780);
+
+        nuvolaSpeech3.isVisible = true;
+        nuvolaSpeech3.setEnabled(true);
+        
+    }
+}
+
+
+
+//
+function set_char_movable(){
+    isCharMovementEnabled = true;
+
+    //hide the clouds of RuRu and Nuvola
+    ruruSpeechCloud.isVisible = false;
+    ruruSpeechCloud.setEnabled(false);
+
+    ruruSpeech.isVisible = false;
+    ruruSpeech.setEnabled(false);
+
+    nuvolaSpeechCloud.isVisible = false;
+    nuvolaSpeechCloud.setEnabled(false);
+    
+    nuvolaSpeech.isVisible = false;
+    nuvolaSpeech.setEnabled(false);
+
+
+    Swal.fire({
+        imageUrl: '../../front/images3D/designScene/trevorSaved.png',
+        imageWidth: '10vw',
+        imageHeight: 'auto',
+        position: 'top-end',
+        title: 'Hi! Take a good photo of your panel on Mbaye! You can reposition RuRu and Nuvola as you wish! Click the "Capture Now" to capture your current scene.',
+        showConfirmButton: false,
+        width: 100,
+        background: 'rgba(8, 64, 147, 0.6)',
+    });
+}
+
+
+
+
+
+//functiont o set panel's list of flowers
+let objectUrl;
+
+function set_panel_children(flowers){
     let children = new Map();
     // console.log("flowers imported: ", flowers);
     if(flowers){
@@ -1883,6 +2111,8 @@ function setPanelChildren(flowers){
 }
 
 
+
+
 function load_saved_game(){
     Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "storage/saveState/designPanel/", load_filename, designScene).then(function (result) {
@@ -1892,7 +2122,7 @@ function load_saved_game(){
                     result.meshes[i].setParent(mbayeDesign_object);
                     if(mbayePanelsMap.get(result.meshes[i].name) !== null)  mbayePanelsMap.get(result.meshes[i].name).dispose();
                     mbayePanelsMap.set(result.meshes[i].name, null);
-                    let children = setPanelChildren(result.meshes[i]._children);
+                    let children = set_panel_children(result.meshes[i]._children);
                     flowersPanelsMap.set(result.meshes[i], children);
                 }
             }
@@ -2043,19 +2273,19 @@ let panelCameraDesignFOV = 1.4;                                                 
 let focusCameraDesignFOV = 1.4;                                                 //the default fov of focus camear
 let focusCameraBookPosition = new BABYLON.Vector3(469.28,23.98,144.33);         //the book position for focuscameraFOV = 1.4s
 let isProgressLoaded = false;
-let isStartRuruSpeech = false;
+let isStartRuruSpeech2 = false;
 
 engine.runRenderLoop(function () {
 
     if(currentScene){
 
         if(has_load_game && !isProgressLoaded && isMbayeModelReady){
-            console.log("THERE IS SAVED PROGESS");
+            // console.log("THERE IS SAVED PROGESS");
             load_saved_game();
             isProgressLoaded = true;
         }
         
-        // if(bookFlowers_object) console.log("book Flowers pos: ",bookFlowers_object.position);
+        // if(nuvolaSpeechCloud) console.log("nuvola cloud : ",nuvolaSpeechCloud.position, nuvolaSpeechCloud.rotationQuaternion);
         if(designCamera && !isViewportCameraSet){
              //change camera's radius depending on the viewport size
              //for 1280 x 991 [ Tablet/iPad Breakpoint 991px ]
@@ -2249,10 +2479,9 @@ engine.runRenderLoop(function () {
         }//eof isOpenBook and currentpanel
 
         if(isStartOfDesignPanel && designScene.activeCamera === panelCamera){
-            if(ruruSpeech2 && ruruSpeech3 && !isStartRuruSpeech){
+            if(ruruSpeech2 && ruruSpeech3 && !isStartRuruSpeech2){
                 animate_ruru_speech();
-                isStartRuruSpeech = true;
-
+                isStartRuruSpeech2 = true;
             }
         }
  

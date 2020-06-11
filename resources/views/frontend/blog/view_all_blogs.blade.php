@@ -1,6 +1,7 @@
 @extends('frontend.layouts.profile_layout')
 
 @section('after-styles')
+    <link rel="preload" as="font" href="{{asset('fonts/georgia italic.ttf')}}" type="font/woff2" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('front/fontawesome/css/all.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/view-all-blogs.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/view-all-blogs-responsive.css')}}">
@@ -154,18 +155,20 @@
                 <p class="sub-title">These are your blogs:</p>
             </div>
         </div>
-        <img src="{{asset('front/images/Ally2.png')}}" alt="" class="dolphin">
+        <img src="" alt="" class="dolphin">
     </div>
 </div>
 @endsection
 
 @section('after-scripts')
     <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="{{asset('front/JS/popper.min.js')}}"></script>
     <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script>
         var url = $('meta[name="url"]').attr('content');
+        $('.ally-dolphin .dolphin').attr('src', "{{asset('front/images/Ally2.png')}}");
+        
         $(document).ready(function() {
             animateDolphin();
 
@@ -183,10 +186,11 @@
         });
 
         function animateDolphin() {
+            $('.cloud-message').hide();
+            $('.cloud-message .message').hide();
+
             $('.ally-dolphin .dolphin').on('load', function() {
                 console.log('loaded');
-                $('.cloud-message').hide();
-                $('.cloud-message .message').hide();
                 // $(".ally-dolphin .dolphin").on('load', function() {
                 // setTimeout(function() {
                     // $('.ally-dolphin .dolphin').delay(1000).addClass('animate-ally-1');

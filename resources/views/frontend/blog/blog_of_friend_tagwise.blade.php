@@ -70,8 +70,8 @@
     </div>
     @endif
    <div class="user-photo {{access()->user()->getGender()}}">
-        <img src="{{asset('storage/profilepicture/default.png')}}"/><!--default-->
-    </div>
+     <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+   </div>
     <div class="tag-title {{access()->user()->getGender()}}">
         @if($tag =='films')
           <img src="{{asset('front/images/planets/Venus.png')}}"/>

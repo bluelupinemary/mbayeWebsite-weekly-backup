@@ -519,4 +519,13 @@ trait UserAttribute
 
         return $filename;
     }
+
+    public function getCommunicator()
+    {
+        if(access()->user()->gender == 'female') {
+            return '../../front/images/astronut/communicator-thomasina.png';
+        } else {
+            return '../../front/images/astronut/communicator-tom.png';
+        }
+    }
 }

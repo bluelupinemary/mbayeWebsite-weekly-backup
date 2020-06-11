@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
         /*
          * User Profile Specific
          */
+        Route::get('profile/edit', 'ProfileController@editprofile')->name('profile.edit');
         Route::patch('profile/update', 'ProfileController@update')->name('profile.update');
 
         /*
@@ -68,7 +69,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/designPanel','GameController@storeDesignPanel')->name('storeDesignPanel');
         
     });
-
+//routes for friendship
+    Route::get('/checkfriendship/{user}','Friendship\FriendshipController@checkfriendship')->name('checkfriendship');
+    Route::get('/sendrequest/{user}','Friendship\FriendshipController@sendrequest')->name('users.sendrequest');
+    Route::get('/acceptrequest/{user}','Friendship\FriendshipController@acceptrequest')->name('users.acceptrequest');
+    Route::get('/denyrequest/{user}','Friendship\FriendshipController@denyrequest')->name('users.denyrequest');
+    
+//end routes
     Route::group(['namespace' => 'Blogs'], function () {
         Route::resource('blogs', 'BlogsController');
         Route::get('/single_blog/{id}', 'BlogsController@show');
@@ -107,8 +114,14 @@ Route::get('/participateMbaye', 'FrontendController@participate_mbaye')->name('p
 
 
 
+// Search Friend Route 
+Route::get('/search/friends', 'FrontendController@search_friends')->name('searchFriends');
 
+    
 
 /* For blog tags */
 Route::get('/blog_tagwise/{tag}', 'FrontendController@blog_tagwise')->name('blog_tagwise');
 Route::get('/blog_of_friend_tagwise', 'FrontendController@blog_of_friend_tagwise')->name('blog_of_friend_tagwise');
+Route::get('/blog_general', 'FrontendController@blog_general')->name('blog_general');
+Route::get('/blog_general_userwise', 'FrontendController@blog_general_userwise')->name('blog_general_userwise');
+Route::get('/single_general_blog/{id}', 'GeneralBlogs\GeneralBlogsController@show');

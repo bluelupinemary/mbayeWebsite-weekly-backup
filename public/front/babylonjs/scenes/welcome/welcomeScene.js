@@ -58,7 +58,8 @@ function createScene(){
 //function that creates the scene's cameras
 function create_init_camera(){
     var camera = new BABYLON.ArcRotateCamera("Initial Camera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-1135,486,1000),initScene);
-    
+    camera.fovMode = BABYLON.Camera.FOVMODE_HORIZONTAL_FIXED;
+    camera.fov = 1.4;
     //set zoom in and zoom out capability
     camera.upperRadiusLimit = UPPER_RADIUS_VAL;
     camera.wheelPrecision = 1;
@@ -259,14 +260,12 @@ function load_init_meshes(){
           // mermaidTail_object.isVisible = false;
           // mermaidTail_object.setEnabled(false);
           mermaidTail_object.isPickable = true;
-        setTimeout(function(){
+        // setTimeout(function(){
             initCamera.target = new BABYLON.Vector3(0,0,0);
             initCamera.radius = 1360;
             mbayeInit_object.isPickable = true;
-            document.getElementById("loadingScreenPercent").style.visibility = "hidden";
-            document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
-            document.getElementById("loadingScreenDiv").remove();
-        },1000);
+            
+        // },1000);
        
     });
 }//end of function load meshes
@@ -943,15 +942,20 @@ let whoaAudio = new Audio('front/audio/participateScene/whoaAudio.mp3');
             //create the scene
             var theScene = createScene();
 
-            engine.runRenderLoop(function () {
+            
+            theScene.executeWhenReady(function () {  
+                document.getElementById("loadingScreenPercent").style.visibility = "hidden";
+                document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
+                document.getElementById("loadingScreenDiv").remove();
+                engine.runRenderLoop(function () {
 
-                if(theScene){
-                    //render the scene
-                    theScene.render();
-                  
-                }    
+                    if(theScene){
+                        //render the scene
+                        theScene.render();
+                    
+                    }    
+                }); 
             }); 
-           
 
             // window resize handler
             window.addEventListener("resize", function () {

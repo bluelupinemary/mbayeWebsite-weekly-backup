@@ -13,12 +13,13 @@ class FriendshipController extends Controller
 {
   public function listusers(){
     $users = User::all();
-    return response()->json($users);
+    // return response()->json($users);
     // dd(compact('users'));
-    // return view('users', compact('users'));
+    return view('frontend.friendship.users', compact('users'));
 }
 
-public function requests(){
+public function requests(Request $request){
+  if(Auth::user()){
     $requests = Auth::user()->getFriendRequests();
     foreach ($requests as $request) {
         $users[] = User::find($request->sender_id);
@@ -26,6 +27,10 @@ public function requests(){
     // dd(compact('requests','users'));
     // return view('requests', compact('requests','users'));
     return response()->json($requests,$users);
+  }
+  else{
+    return response()->json("User is not logedin");
+  }
 }
 
 public function sendrequest(User $user){
@@ -71,9 +76,12 @@ public function denyrequest(User $user){
 
 public function searchuser(Request $request){
   $q = $request['q'];
-  $users = User::where('name','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->get();
-  if(count($users) > 0)
-  return view('users', compact('users'))->withQuery ( $q );
-  else return view ('users')->withMessage('No Details found. Try to search again !');
+  $users = User::where('username','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->get();
+  return  response()->json($users);
+//   if(count($users) > 0)
+//   return view('frontend.friendship.users', compact('users'))->withQuery ( $q );
+//   else return view ('frontend.friendship.users')->withMessage('No Details found. Try to search again !');
 }
+
+
 }

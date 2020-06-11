@@ -11,7 +11,6 @@ let captSkybox;
 //define constants for zoom in/out limits
 const LOWER_RADIUS_VAL = 1;                                         //zoom in limit                       
 const UPPER_RADIUS_VAL = 2000;                                      //zoom out limit
-let isHomeCounterReady = false;
 
 
 let earthTxt,mercuryTxt,venusTxt,marsTxt,jupiterTxt,saturnTxt,uranusTxt,neptuneTxt,plutoTxt,moonTxt,sunTxt,searchTxt;
@@ -160,14 +159,6 @@ function load_capt_meshes(){
             captCamera.target = new BABYLON.Vector3(0,0,0);
             captCamera.radius = 1360;
         },1000);
-
-        setTimeout(function(){
-            document.getElementById("loadingScreenPercent").style.visibility = "hidden";
-            document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
-            document.getElementById("loadingScreenDiv").remove();
-            isHomeCounterReady = true;
-        },3000);
-       
     });
 }//end of function load meshes
 
@@ -748,15 +739,21 @@ var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, ste
 var theScene = createScene();
 var i=0;
 
-engine.runRenderLoop(function () {
+    theScene.executeWhenReady(function () {   
+        document.getElementById("loadingScreenPercent").style.visibility = "hidden";
+        document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
+        document.getElementById("loadingScreenDiv").remove();
 
-    if(theScene){
+    engine.runRenderLoop(function () {
 
-    //render the scene
-        theScene.render();
+        if(theScene){
 
-    }    
-}); 
+        //render the scene
+            theScene.render();
+
+        }    
+    }); 
+});
 
 // window resize handler
 window.addEventListener("resize", function () {

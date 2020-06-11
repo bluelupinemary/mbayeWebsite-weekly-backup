@@ -17,7 +17,7 @@
 }
 
 .astronautarm-img {
-  background-image: url(../../front/images/login/Major-tom-login-arm-min.png);
+  background-image: url(../../front/images/login/LoginPageCommunicatorWOhome&back-TOM.png);
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: left center;
@@ -82,12 +82,12 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-135%, -97%);
-  -moz-transform: translate(-135%, -97%);
-  transform: translate(-138%, -141%);
-  /* border: 1px solid red; */
+  -webkit-transform: translate(-127%, -423%);
+  -moz-transform: translate(-127%, -423%);
+  transform: translate(-127%, -423%);
+ /* border: 1px solid red; */
   width: 28.8vw;
-  height: 11.5vw;
+  height: 2.5vw;
   opacity: 1;
 }
 
@@ -97,7 +97,7 @@
   color: #17a2b8;
   font-size: 1.5vw;
   vertical-align: middle;
-  line-height: 11.5vw;
+  line-height:2.5vw;
 }
 
 .head-div p {
@@ -351,17 +351,17 @@
 }
 .home-div img {
   width: 100%;
-  height: 3vw;
+  height: 2vw;
 }
 .home-div {
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-709%, -524%);
-  -moz-transform: translate(-709%, -524%);
-  transform: translate(-678%, -411%);
-  /* border: 1px solid red; */
-  width: 6.5vw;
+  -webkit-transform:translate(-685%, -605%) skew(-3deg, -1deg);
+  -moz-transform: translate(-685%, -605%) skew(-3deg, -1deg);
+  transform: translate(-685%, -605%) skew(-3deg, -1deg);
+    /* border: 2px solid red; */
+    width: 6.3vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -442,17 +442,17 @@
  }
  .back-div img {
   width: 100%;
-  height: 3vw;
+  height: 2vw;
 }
 .back-div {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-709%, -524%);
-  -moz-transform: translate(-709%, -524%);
-  transform: translate(-666%, -411%);
-  /* border: 1px solid red; */
-  width: 6.5vw;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-715%, -624%);
+    -moz-transform: translate(-715%, -624%);
+    transform: translate(-715%, -624%);
+   /*  border: 1px solid red;*/ 
+    width: 5vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -466,8 +466,6 @@
   -moz-transform: translate3d(-1px, 1px, 0px);
   transform: translate3d(-1px, 1px, 0px);
 }
-
-
 
 .communicator-button:hover {
   -webkit-filter: drop-shadow(0px 0px 3px #17a2b8);

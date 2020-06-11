@@ -11,7 +11,7 @@ class CreateFriendshipsGroupsTable extends Migration
 
     public function up() {
 
-        Schema::create(config('friendships.tables.fr_groups_pivot'), function (Blueprint $table) {
+        Schema::create('user_friendship_groups', function (Blueprint $table) {
 
             $table->integer('friendship_id')->unsigned();
             $table->morphs('friend');
@@ -19,7 +19,7 @@ class CreateFriendshipsGroupsTable extends Migration
 
             $table->foreign('friendship_id')
                 ->references('id')
-                ->on(config('friendships.tables.fr_pivot'))
+                ->on('friendships')
                 ->onDelete('cascade');
 
             $table->unique(['friendship_id', 'friend_id', 'friend_type', 'group_id'], 'unique');
@@ -29,7 +29,7 @@ class CreateFriendshipsGroupsTable extends Migration
     }
 
     public function down() {
-        Schema::dropIfExists(config('friendships.tables.fr_groups_pivot'));
+        Schema::dropIfExists('user_friendship_groups');
     }
 
 }

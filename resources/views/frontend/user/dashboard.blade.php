@@ -3,7 +3,8 @@
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/jquery.mobile-1.4.5.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}">
 @endsection
@@ -40,7 +41,11 @@
         </div>
         <div class="zoom-in-planet img_pluto">
             <div class="planet-buttons">
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
+                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'travel&id='.Auth::user()->id) }}">
+                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
             </div>
@@ -55,6 +60,8 @@
         </div>
         <div class="zoom-in-planet img_neptune">
             <div class="planet-buttons">
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
@@ -70,7 +77,11 @@
         </div>
         <div class="zoom-in-planet img_jupiter">
             <div class="planet-buttons">
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
+                <a href="{{URL('/blog_general_userwise?id='.Auth::user()->id) }}">
+                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
             </div>
@@ -89,7 +100,11 @@
         </div>
         <div class="zoom-in-planet img_moon">
             <div class="planet-buttons">
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
+                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'sports&id='.Auth::user()->id)}}">
+                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
             </div>
@@ -104,7 +119,11 @@
         </div>
         <div class="zoom-in-planet img_mars">
             <div class="planet-buttons">
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
+                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'Mountains and Seas&id='.Auth::user()->id) }}">
+                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
             </div>
@@ -119,7 +138,11 @@
         </div>
         <div class="zoom-in-planet img_venus">
             <div class="planet-buttons">
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
+                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'films&id='.Auth::user()->id) }}">
+                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
             </div>
@@ -134,7 +157,11 @@
         </div>
         <div class="zoom-in-planet img_sun">
             <div class="planet-buttons">
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
+                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'Family and Friends&id='.Auth::user()->id) }}">
+                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
             </div>
@@ -149,6 +176,8 @@
         </div>
         <div class="zoom-in-planet img_mercury">
             <div class="planet-buttons">
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
@@ -164,7 +193,11 @@
         </div>
         <div class="zoom-in-planet img_uranus">
             <div class="planet-buttons">
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
+                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'politics&id='.Auth::user()->id) }}">
+                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
             </div>
@@ -250,7 +283,11 @@
     
         <div class="zoom-in-planet img_saturn">
             <div class="planet-buttons">
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <span class="pop-up view-pop-up">View Blogs</span>
+                <span class="pop-up back-pop-up">Back</span>
+                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'music&id='.Auth::user()->id) }}">
+                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="extra"></button>
             </div>
@@ -482,19 +519,19 @@
 @endsection
 
 @section('before-scripts')
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="{{asset('front/JS/jquery-1.11.1.min.js')}}"></script>
 @endsection
 
 @section('after-scripts')
     <script src="{{asset('front/JS/jquery.mousewheel.min.js')}}"></script>
     <script src="{{asset('front/JS/TweenMax.min.js')}}"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
     <script src="{{asset('front/JS/jquery.ui.touch-punch.min.js')}}"></script>
     {{-- <script src="{{asset('front/JS/draggabilly.min.js')}}"></script> --}}
     <script src="{{asset('front/JS/cropper.min.js')}}"></script>
     <script src="{{asset('front/JS/circletype.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
     
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="{{asset('front/JS/jquery.mobile-1.4.5.min.js')}}"></script>
     <script src="{{asset('front/JS/dashboard.js')}}"></script>
 @endsection

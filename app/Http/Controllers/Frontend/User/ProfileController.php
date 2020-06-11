@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
-use App\Http\Controllers\Controller;
+use App\Models\Blogs\Blog;
 use Illuminate\Http\Request;
+use App\Models\Access\User\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Frontend\User\UpdateProfileRequest;
 use App\Repositories\Frontend\Access\User\UserRepository;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Access\User\User;
-use App\Models\Blogs\Blog;
 
 /**
  * Class ProfileController.
@@ -28,6 +29,11 @@ class ProfileController extends Controller
     public function __construct(UserRepository $user)
     {
         $this->user = $user;
+    }
+
+    public function editprofile(){
+        $user = Auth::user();
+        return view('frontend.auth.update',compact('user'));
     }
 
     /**
@@ -58,13 +64,12 @@ class ProfileController extends Controller
     {
         try {
             $user = User::find($request->int_User_Id);
-
             $base64 = str_replace('data:image/png;base64,', '', $request->str_cropped_img);
             $base64 = str_replace(' ', '+', $base64);
             $image = base64_decode($base64);
     
             $user_photo = explode('.', $user->photo);
-            $filename = str_replace('-cropped', '', $user_photo[0]).'-cropped.'.$user_photo[1];
+            $filename = $filename = str_replace('-cropped', '', $user_photo[0]).'-cropped.'.$user_photo[1];
             Storage::disk('local')->put('public/profilepicture/crop/'.$filename, $image);
     
             $user->photo = $filename;
@@ -72,7 +77,7 @@ class ProfileController extends Controller
 
             return array(
                 'status' => 'success',
-                'message' => 'Profile picture cropped!',
+                'message' => 'Profile picture Updated Successfully !',
                 'data' => json_encode($user)
             );
         } catch(Exception $e) {

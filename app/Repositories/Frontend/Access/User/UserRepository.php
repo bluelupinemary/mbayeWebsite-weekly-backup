@@ -267,34 +267,36 @@ class UserRepository extends BaseRepository
      */
     public function updateProfile($id, $input)
     {
+        dd($input);
         $user = $this->find($id);
         $user->first_name = $input['first_name'];
         $user->last_name = $input['last_name'];
+
         $user->updated_by = access()->user()->id;
 
-        if ($user->canChangeEmail()) {
-            //Address is not current address
-            if ($user->email != $input['email']) {
-                //Emails have to be unique
-                if ($this->findByEmail($input['email'])) {
-                    throw new GeneralException(trans('exceptions.frontend.auth.email_taken'));
-                }
+        // if ($user->canChangeEmail()) {
+        //     //Address is not current address
+        //     if ($user->email != $input['email']) {
+        //         //Emails have to be unique
+        //         if ($this->findByEmail($input['email'])) {
+        //             throw new GeneralException(trans('exceptions.frontend.auth.email_taken'));
+        //         }
 
-                // Force the user to re-verify his email address
-                $user->confirmation_code = md5(uniqid(mt_rand(), true));
-                $user->confirmed = 0;
-                $user->email = $input['email'];
-                $updated = $user->save();
+        //         // Force the user to re-verify his email address
+        //         $user->confirmation_code = md5(uniqid(mt_rand(), true));
+        //         $user->confirmed = 0;
+        //         $user->email = $input['email'];
+        //         $updated = $user->save();
 
-                // Send the new confirmation e-mail
-                $user->notify(new UserNeedsConfirmation($user->confirmation_code));
+        //         // Send the new confirmation e-mail
+        //         $user->notify(new UserNeedsConfirmation($user->confirmation_code));
 
-                return [
-                    'success'       => $updated,
-                    'email_changed' => true,
-                ];
-            }
-        }
+        //         return [
+        //             'success'       => $updated,
+        //             'email_changed' => true,
+        //         ];
+        //     }
+        // }
 
         return $user->save();
     }

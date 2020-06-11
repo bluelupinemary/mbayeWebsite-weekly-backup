@@ -27,41 +27,22 @@ var colors = [
 ];
 
 $(document).ready(function() {
-    
+    if (typeof Trix == 'undefined') {
+        $('head').append('<link rel="stylesheet" type="text/css" href="'+url+'/trix/trix.css">');
+        $('head').append('<script src="'+url+'/trix/trix.js">');
+    }
+
     // element.editor.insertHTML("<div>Enter content here...</div>");
     $('input[type="checkbox"]').prop('checked', false);
-    trixTextColorButton('.trix-editor trix-editor');
-    // $('#trix-toolbar-1 .trix-button-group--file-tools"').append('<button type="button" class="trix-button trix-button--icon trix-button--icon-attach" data-trix-action="x-log" title="Fullscreen" tabindex="-1"></button>');
-    
-    // Trix.config.textAttributes.bold = {
-    //     // style: { fontWeight: "700" },
-    //     inheritable: !0,
-    //     // // tagName: 'span',
-    //     // // className: ['.text-color'],
-    //     // // nestable: true,
-    //     // tagName: "strong",
-    //     parser: function(element) {
-    //         // console.log(element.style.fontWeight);
-    //         // if(element.style.color) {
-    //             return element.style.color;
-    //         // }
-    //     }
-    // }
+    trixTextColorButton('.trix-editor');
 
-    // Trix.config.textAttributes.italic = {
-    //     // style: { fontWeight: "700" },
-    //     inheritable: !0,
-    //     // // tagName: 'span',
-    //     // // className: ['.text-color'],
-    //     // // nestable: true,
-    //     // tagName: "em",
-    //     parser: function(element) {
-    //         // console.log(element.style.fontWeight);
-    //         // if(element.style.color) {
-    //             return element.style.color;
-    //         // }
-    //     }
-    // }
+    $('.main-form #font-picker').fontselect({
+        searchable: false,
+    })
+    .on('change', function() {
+        applyFont(this.value, '.trix-editor');
+        $('.main-form .font-picker').hide();
+    });
 
     Trix.config.textAttributes.foregroundColor = {
         styleProperty: "color",
@@ -70,34 +51,44 @@ $(document).ready(function() {
         // className: ['.text-color'],
         nestable: true,
         parser: function(element) {
-            console.log(element);
-            // if(element.tagName.toLowerCase() == 'span') {
-            //     // alert();
-            //     // console.log(element);
-            //     // return element.style.color === color_hex;
-            //     var rgb = element.style.color;
-            //     var vals = getRGB(rgb);
-
-            //     if(vals) {
-            //         var hex = '#'+fullColorHex(vals.red, vals.green, vals.blue);
-
-            //         // console.log(hex, $.inArray( hex, colors ));
-            //         // return $.inArray( hex, colors ) > 0;
-            //         if($.inArray( hex, colors ) > 0) {
-                        return element.style.color;
-                    // }
-                // }
-            // }
+            return element.style.color;
         },
     }
 
-    // Trix.config.textAttributes.foregroundColor = {
-    //     inheritable: true,
-    //     styleProperty: "color",
-    //     parser: createColorParser()
-    // }
-  
-    // trixEditor.editor.activateAttribute("foregroundColor", col);
+    Trix.config.textAttributes.fontFamily = {
+        styleProperty: "font-family",
+        inheritable: true,
+        nestable: true,
+        parser: function(element) {
+            if(element.style.fontFamily) {
+                // remove quotes on string
+                var font = element.style.fontFamily.replace(/['"]+/g, '');
+                // console.log(font);
+                if(font != null || font != '') {
+                    // console.log(document.fonts.check('1em '+font));
+                    // check if font exist
+                    var check_font = document.fonts.check('1em '+font);
+                    if(!check_font) {
+                        // append link stylesheet
+                        $('head').append('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family='+font+'">');
+                    }
+
+                    return element.style.fontFamily;
+                }
+            }
+        },
+    }
+
+    Trix.config.textAttributes.fontWeight = {
+        styleProperty: "font-weight",
+        inheritable: true,
+        // tagName: 'span',
+        // className: ['.text-color'],
+        nestable: true,
+        parser: function(element) {
+            return element.style.fontWeight;
+        },
+    }
 
     var main_pk = new Piklor(".color-picker", colors, {
             open: ".trix-button--icon-text-color",
@@ -107,45 +98,32 @@ $(document).ready(function() {
         });
 
         main_pk.colorChosen(function (col) {
-            // wrapperEl.style.backgroundColor = col;
-            // header.style.backgroundColor = col;
-            // footer.style.backgroundColor = col;
-            // console.log(col);
-            // color_hex = col;
-            setForegroundColor(col, '.trix-editor trix-editor');
-            // trixEditor.activateAttribute("foregroundColor");
+            setForegroundColor(col, '.trix-editor');
         });
 });
 
 function setForegroundColor(col, editorClass) {
-    // Trix.config.textAttributes.foregroundColor = {
-    //     styleProperty: "color",
-    //     inheritable: true,
-    //     // tagName: 'span',
-    //     // className: ['.text-color'],
-    //     nestable: true,
-    //     parser: function(element) {
-    //         if(element.tagName.toLowerCase() == 'span') {
-    //             // alert();
-    //             // console.log(element);
-    //             // return element.style.color === color_hex;
-    //             var rgb = element.style.color;
-    //             var vals = getRGB(rgb);
-
-    //             if(vals) {
-    //                 var hex = '#'+fullColorHex(vals.red, vals.green, vals.blue);
-
-    //                 // console.log(hex, $.inArray( hex, colors ));
-    //                 // return $.inArray( hex, colors ) > 0;
-    //                 if($.inArray( hex, colors ) > 0) {
-    //                     return element.style.color;
-    //                 }
-    //             }
-    //         }
-    //     },
-    // }
-    var trixEditor = document.querySelector(editorClass);
+    var trixEditor = document.querySelector(editorClass+' trix-editor');
     trixEditor.editor.activateAttribute("foregroundColor", col);
+}
+
+function applyFont(font, editorClass) {
+    console.log('You selected font: ' + font);
+  
+    // Replace + signs with spaces for css
+    font = font.replace(/\+/g, ' ');
+  
+    // Split font into family and weight
+    font = font.split(':');
+  
+    var fontFamily = font[0];
+    var fontWeight = font[1] || 400;
+  
+    // Set selected font on paragraphs
+    // $('p').css({fontFamily:"'"+fontFamily+"'", fontWeight:fontWeight});
+    var trixEditor = document.querySelector(editorClass+' trix-editor');
+    trixEditor.editor.activateAttribute("fontFamily", fontFamily);
+    trixEditor.editor.activateAttribute("fontWeight", fontWeight);
 }
 
 function getRGB(str){
@@ -174,25 +152,22 @@ function fullColorHex(r,g,b) {
 }
 
 function trixTextColorButton(editorClass) {
-    // <button type="button" class="trix-button trix-button--icon trix-button--icon-text-color" data-trix-attribute="href" data-trix-action="link" data-trix-key="k" title="Link" tabindex="-1">Link</button>
-    var buttonHTML = '<button type="button" class="trix-button trix-button--icon trix-button--icon-text-color" data-trix-attribute="foregroundColor" data-trix-action="text-color" title="Text color" tabindex="-1">Text color</button>'
+    var trixEditor_class = editorClass+' trix-editor';
+    var text_color = '<button type="button" class="trix-button trix-button--icon trix-button--icon-text-color" data-trix-attribute="foregroundColor" data-trix-action="text-color" title="Text color" tabindex="-1">Text color</button>'
+    var font = '<button type="button" class="trix-button trix-button--icon trix-button--icon-text-font" data-trix-attribute="fontFamily" data-trix-action="font-family" title="Text Font" tabindex="-1">Text Font</button>'
     
-    // var element = event.target
-    // var editor = element.editor
-    var trixEditor = document.querySelector(editorClass);
-    // console.log(trixEditor);
+    var trixEditor = document.querySelector(trixEditor_class);
+    console.log(trixEditor_class);
     var toolbarElement = trixEditor.toolbarElement;
     var groupElement = toolbarElement.querySelector(".trix-button-group.trix-button-group--text-tools");
       
-    // event.target.toolbarElement.
-    //     querySelector(".trix-button-group.trix-button-group--text-tools").
-    //       insertAdjacentHTML("beforeend", buttonHTML)
-    groupElement.insertAdjacentHTML("beforeend", buttonHTML)
-}
+    groupElement.insertAdjacentHTML("afterbegin", font);
+    groupElement.insertAdjacentHTML("beforeend", text_color);
 
-$('.trix-button--icon-text-color').click(function() {
-    
-});
+    $(editorClass+' button.trix-button--icon-text-font').click(function() {
+        $(editorClass+' .font-picker').toggle();
+    });
+}
 
 // get URl parameter value
 $.urlParam = function(name){
@@ -216,7 +191,7 @@ $(window).load(function() {
             showBlogSection();
         });
 
-        $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div').css('pointer-events', 'auto');
+        $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .top-buttons, .camera-div, .voice-recorder-div').css('pointer-events', 'auto');
     } else {
         $(".astronautarm-img").show();
         $(".astronautarm-img").addClass('animate-arm');
@@ -242,7 +217,7 @@ $('.start-div').click( function() {
         $(".astronautarm-img").removeClass('animate-zoomIn-arm');
         $(".astronautarm-img").addClass('zoomIn-arm');
         // $(".blog-btn").delay(1000).animate({opacity:1},100);
-        $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div').css('pointer-events', 'auto');
+        $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .top-buttons, .camera-div, .voice-recorder-div').css('pointer-events', 'auto');
         $('.blog-btn').addClass('active');
         showBlogSection();
     });
@@ -549,8 +524,9 @@ $('.video-links-list table').on('click', '.remove-link', function() {
 
 // show fullscreen trix editor
 $('.main-form .trix-editor .fullscreen span').click(function() {
+    var editor = '.text-editor-fullview.blog-content';
     if (document.querySelector('.text-editor-fullview.blog-content .trix-button--icon-text-color') == null) {
-        trixTextColorButton('.text-editor-fullview.blog-content trix-editor');
+        trixTextColorButton(editor);
     }
 
     var fullscreen_blog_pk = new Piklor(".fullscreen-blog-color-picker", colors, {
@@ -561,11 +537,21 @@ $('.main-form .trix-editor .fullscreen span').click(function() {
     });
 
     fullscreen_blog_pk.colorChosen(function (col) {
-        setForegroundColor(col, '.text-editor-fullview.blog-content trix-editor');
+        setForegroundColor(col, editor);
     });
 
-    $('.text-editor-fullview.blog-content trix-editor').html($('.main-form .trix-editor trix-editor').html());
-    $('.text-editor-fullview.blog-content').fadeIn();
+    if (document.querySelector(editor+' .font-select') == null) {
+        $(editor+' #font-picker').fontselect({
+            searchable: false,
+        })
+        .on('change', function() {
+            applyFont(this.value, editor);
+            $(editor+' .font-picker').hide();
+        });
+    }
+
+    $(editor+' trix-editor').html($('.main-form .trix-editor trix-editor').html());
+    $(editor).fadeIn();
 });
 
 // hide fullscreen trix editor
@@ -576,8 +562,9 @@ $('.exit-fullscreen').click(function() {
 
 // show fullscreen email trix editor
 $('.email-form .trix-editor .fullscreen span').click(function() {
+    var editor = '.text-editor-fullview.email-content';
     if (document.querySelector('.text-editor-fullview.email-content .trix-button--icon-text-color') == null) {
-        trixTextColorButton('.text-editor-fullview.email-content trix-editor');
+        trixTextColorButton(editor);
     }
 
     var fullscreen_email_pk = new Piklor(".fullscreen-email-color-picker", colors, {
@@ -588,10 +575,21 @@ $('.email-form .trix-editor .fullscreen span').click(function() {
     });
 
     fullscreen_email_pk.colorChosen(function (col) {
-        setForegroundColor(col, '.text-editor-fullview.email-content trix-editor');
+        setForegroundColor(col, editor);
     });
-    $('.text-editor-fullview.email-content trix-editor').html($('.email-form .trix-editor trix-editor').html());
-    $('.text-editor-fullview.email-content').fadeIn();
+
+    if (document.querySelector(editor+' .font-select') == null) {
+        $(editor+' #font-picker').fontselect({
+            searchable: false,
+        })
+        .on('change', function() {
+            applyFont(this.value, editor);
+            $(editor+' .font-picker').hide();
+        });
+    }
+
+    $(editor+' trix-editor').html($('.email-form .trix-editor trix-editor').html());
+    $(editor).fadeIn();
 });
 
 // hide fullscreen email trix editor
@@ -674,6 +672,7 @@ $(".featured-image-preview").hover(function(){
 $('.featured-image-remove').click(function() {
     $(this).hide();
     removeFeaturedImage();
+    $('.edit_image').prop('disabled', true);
 });
 
 $('.email-button').click( function() {
@@ -1233,6 +1232,10 @@ $('.tos-button').click(function() {
     checkForm(url+'/terms');
 });
 
+$('.back-button').click(function() {
+    window.history.back();
+});
+
 // $(document).delegate("[data-trix-color]","click",function(){
 
 // 	var color_hex = $(this).css('background-color');
@@ -1323,8 +1326,9 @@ function hideEmailSection()
 // show email section
 function showEmailSection()
 {
+    var editor = '.trix-editor.trix-editor-email';
     if (document.querySelector('.trix-editor.trix-editor-email .trix-button--icon-text-color') == null) {
-        trixTextColorButton('.trix-editor.trix-editor-email trix-editor');
+        trixTextColorButton(editor);
     }
     var email_pk = new Piklor(".email-color-picker", colors, {
         open: ".trix-editor.trix-editor-email .trix-button--icon-text-color",
@@ -1334,8 +1338,18 @@ function showEmailSection()
     });
 
     email_pk.colorChosen(function (col) {
-        setForegroundColor(col, '.trix-editor.trix-editor-email trix-editor');
+        setForegroundColor(col, editor);
     });
+
+    if (document.querySelector(editor+' .font-select') == null) {
+        $(editor+' #font-picker').fontselect({
+            searchable: false,
+        })
+        .on('change', function() {
+            applyFont(this.value, editor);
+            $(editor+' .font-picker').hide();
+        });
+    }
 
     $('.email-button').addClass('active');
     $('.email-buttons').css('display', 'flex');
@@ -1367,6 +1381,7 @@ function filePreview(input) {
             $('#featured-image-previewimg').attr('src', e.target.result);
         };
         reader.readAsDataURL(input.files[0]);
+        $('.edit_image').removeAttr('disabled');
     }
 }
 

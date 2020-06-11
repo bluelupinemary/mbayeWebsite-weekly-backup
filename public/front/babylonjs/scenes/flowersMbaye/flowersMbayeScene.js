@@ -32,6 +32,7 @@ function createScene(){
 
     load_orig_flowers();
     add_mouse_listener();
+    
    
     hl = new BABYLON.HighlightLayer("hl1", flowersScene);
 
@@ -207,12 +208,11 @@ function load_meshes(){
             flowersCamera.radius = 1360;
         },500);
 
-        setTimeout(function(){
-            document.getElementById("loadingScreenPercent").style.visibility = "hidden";
-            document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
-            document.getElementById("loadingScreenDiv").remove();
+      //  setTimeout(function(){
+            
+            setup_music_player();
             // enable_gizmo(mbaye_object);
-        },1000);
+        //},1000);
        
     });
 }//end of function load meshes
@@ -278,7 +278,7 @@ function init_flower(name,matlName,imgPath,size, x, y, z){
     plane.isVisible = true;
             
     plane.position = new BABYLON.Vector3(x,y,z);
-    plane.rotation.y = BABYLON.Tools.ToRadians(-70);
+    plane.rotation.y = BABYLON.Tools.ToRadians(-250);
     
     let planeMatl = new BABYLON.StandardMaterial(matlName, flowersScene);
     planeMatl.diffuseColor = BABYLON.Color3.Black();
@@ -321,10 +321,9 @@ function enable_gizmo(theFlower){
 
 
 //function that will show the wiki for the flower if the mesh clicked is a flower
-function get_flower_name(theFlower){
+function get_has_flower_name(theFlower){
     let val = flowersMbayeMap.get(theFlower);
     if(val){
-        showPage(val[3]);
         return true;
     }else return false;
     //the wiki page val[3]
@@ -345,13 +344,28 @@ function add_mouse_listener(){
                 // if(flowersMbayeMap.has(theInitMesh) && currScene == "flowersScene") enable_gizmo(pickinfo.pickedMesh);
                
                 if(flowersMbayeMap.has(theInitMesh) && currScene == "flowersScene"){
-                    let hasName = get_flower_name(theInitMesh);
+                    let hasName = get_has_flower_name(theInitMesh);
+                    
                     if(hasName){
-                        showSelectedFlowerScene = true;
-                        flowersCamera.detachControl(canvas);
-                        open_book_of_flowers(theInitMesh);
+                        let val = flowersMbayeMap.get(theInitMesh);
+                        let videoId = val[4].id;                            //4th value is the video id
+                        let startTime = val[4].start;
                         set_carpet_countries(theInitMesh);
+                        reset_selected_flower_camera();
+                        setTimeout(function(){
+                            flowersCamera.detachControl(canvas);
+                            open_book_of_flowers(theInitMesh);              //open book of flowers
+                            load_flower_music(videoId, startTime);          //load the music video
+                            showPage(val[3],videoId);                       //show wikipedia page
+                            showSelectedFlowerScene = true;
+                            
+                        },1500);
                         
+                        // if(theClick===0) play_flower_music();
+                        // else change_flower_music();
+                              
+                        
+                       
                     }
                 }
 
@@ -397,31 +411,41 @@ var i=0;
 let showSelectedFlowerScene = false;
 let isFlowerClicked = false;
 let currScene = "flowersScene";
-engine.runRenderLoop(function () {
 
-    if(theScene && selectedFlowerScene){
-    //    console.log(flowersCamera.position);
-        // if(nuvolaSpeech1) console.log(nuvolaSpeech1.position, nuvolaSpeech1.rotationQuaternion);
-        //render the scene
-        if(isShowFlowerScene) theScene.render();
-        if(showSelectedFlowerScene) selectedFlowerScene.render();
-        if(showSelectedFlowerScene && !isFlowerClicked){
-            flowersCamera.detachControl(canvas);
-            selectedFlowerCamera.attachControl(canvas,true);
-            currScene = "selectedFlowerScene";
-            isFlowerClicked = true;
-            isShowFlowerScene = false;
+theScene.executeWhenReady(function () {   
+    document.getElementById("loadingScreenPercent").style.visibility = "hidden";
+    document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
+    document.getElementById("loadingScreenDiv").remove();
+
+    engine.runRenderLoop(function () {
+
+        if(theScene && selectedFlowerScene){
+            // if(chosenFlower) console.log(chosenFlower.position, chosenFlower.rotationQuaternion);
+            // console.log(flowersCamera.position);
+            // if(nuvolaSpeech1) console.log(nuvolaSpeech1.position, nuvolaSpeech1.rotationQuaternion);
+            //render the scene
+            if(isShowFlowerScene) theScene.render();
+            if(showSelectedFlowerScene){ selectedFlowerScene.render();}
+           
+            if(showSelectedFlowerScene && !isFlowerClicked){
+                flowersCamera.detachControl(canvas);
+                selectedFlowerCamera.attachControl(canvas,true);
+                currScene = "selectedFlowerScene";
+                isFlowerClicked = true;
+                isShowFlowerScene = false;
+                
+            }
+
+            if(flowersScene && earth_object && mbaye_object){
+                earth_object.rotate(new BABYLON.Vector3(0,4,0), -0.01, BABYLON.Space.LOCAL);
+                // if(book_obj) console.log(book_obj.position, book_obj.rotationQuaternion);
+                // if(selectedFlowerCamera) console.log(selectedFlowerCamera.position, selectedFlowerCamera.alpha, selectedFlowerCamera.beta);
+            }
             
-        }
+        }    
+    }); 
 
-        if(flowersScene && earth_object && mbaye_object){
-            earth_object.rotate(new BABYLON.Vector3(0,4,0), -0.01, BABYLON.Space.LOCAL);
-            // if(book_obj) console.log(book_obj.position, book_obj.rotationQuaternion);
-            // if(selectedFlowerCamera) console.log(selectedFlowerCamera.position, selectedFlowerCamera.alpha, selectedFlowerCamera.beta);
-        }
-        
-    }    
-}); 
+});
 
 
 // window resize handler
@@ -438,7 +462,7 @@ $('#wikiPage').on('load',function(){
 
     let isScreenVisible = false;
     let isCharDivFullscreen = false;
-    function showPage(pageName) {
+    function showPage(pageName,videoId) {
         $('.iframe-loading').show();
         let loader = document.getElementById("iframe-loading");
         let x = document.getElementById("flowersWikipediaDiv");
@@ -449,6 +473,8 @@ $('#wikiPage').on('load',function(){
 
         page.src = pageName;
         document.getElementById("page-url").textContent = pageName+"";
+        document.getElementById("song-url").href = "https://www.youtube.com/watch?v="+videoId;
+        document.getElementById("song-url-span").textContent = "https://www.youtube.com/watch?v="+videoId;
         if(x.style.visibility != "visible"){
             x.style.visibility = "visible";  
             isScreenVisible = true;
@@ -502,3 +528,87 @@ $('#wikiPage').on('load',function(){
 
 
 
+
+    //the music player
+    // let video_player = document.getElementById('player');
+    let yt_player;
+    let isMusicChanged = false;
+    let theClick = 0;
+    function setup_music_player(){
+        console.log("setup music");
+        // stopAllVideos();
+        $('.player').empty();
+        let initVideo = "";
+        // video_player.empty();
+        // if(yt_player && isMusicChanged){
+            // yt_player = null;
+            // isMusicChanged = false;
+        // } 
+        // ctrlq.innerHTML = '<img id="youtube-icon" src=""/><div id="youtube-player"></div>';
+        // var video_id = $(this).data('videoid');
+        // var start = $(this).data('starttime');
+        var video_player = document.getElementById('player');
+        // $('.player').html('<div id="'+video_player+'"></div>')
+        // video_player.innerHTML = "<div id="+video_player+"></div>";
+        // player.pauseVideo();
+
+        console.log("video id: ", video_player)
+        
+        yt_player = new YT.Player(video_player, {
+        host: 'https://www.youtube.com',
+        height: '0',
+        width: '0',
+        videoId: initVideo,
+        playerVars: {
+            autoplay: 0,
+            loop: 0,
+            start: 0,
+            enablejsapi: 1,
+            origin : window.location.href,
+            widget_referrer: window.location.href
+        },
+        events: {
+            'onReady': onPlayerReady,
+        } 
+        });
+    }
+
+
+    function onPlayerReady(event) {
+        // player.setPlaybackQuality("small");
+        // event.target.pauseVideo(); 
+        
+        // event.target.playVideo();
+        // document.getElementById("youtube-audio").style.display = "block";
+        // togglePlayButton(player.getPlayerState() !== 5);
+        // console.log("ready",event);
+        // event.target.mute();
+        event.target.playVideo();
+    }
+
+    function load_flower_music(videoId,start) {
+        $('.player').empty();
+        console.log("load: ", videoId, start);
+        // yt_player.seekTo(51);
+        yt_player.loadVideoById(videoId,start);
+       yt_player.playVideo();
+    }
+
+
+    function stop_flower_music(){
+        yt_player.stopVideo(); 
+    }
+
+
+
+//     var canvas = document.getElementById("renderCanvas");
+//     var engine = new BABYLON.Engine(canvas, true);
+//     BABYLON.SceneLoader.Load("TestScene/", "test.babylon", engine, function (newScene) {    
+//         newScene.executeWhenReady(function () {        
+//             newScene.activeCamera.attachControl(canvas);        
+//             engine.runRenderLoop(function () {            
+//                 newScene.render();        
+//             });    
+//         });
+//     }, function (progress) {    // To do: give progress feedback to user
+// });

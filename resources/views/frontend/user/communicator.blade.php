@@ -7,9 +7,9 @@
 
 @section('after-styles')
     @trixassets
-    <link rel="stylesheet" type="text/css" href="{{asset('trix/trix.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('front/slick/slick.css')}}"/>
     <link rel="stylesheet" href="{{asset('front/fontawesome/css/all.css')}}">
+    <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
     <link rel="stylesheet" href="{{asset('front/CSS/communicator.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/communicator-responsive.css')}}">
 @endsection
@@ -19,7 +19,7 @@
     <div class="communicator">
         <div class="main-screen">
             {{-- <button type="button" class="start-btn">Click here to start</button> --}}
-            <div class="astronautarm-img">
+            <div class="astronautarm-img" style="background-image: url({{access()->user()->getCommunicator()}});">
                 <div class="menu-div">
                     {{-- <button class="blog-btn">BLOG</button>
                     <button class="groups-btn">GROUPS</button>
@@ -55,6 +55,7 @@
                             </div>
                         </div>
                         <input type="file" name="featured_image" accept="image/x-png,image/jpeg" id="featured_image">
+                        <input type="hidden" name="edited_featured_image">
                         <input type="checkbox" name="films_tag" id="films_tag" value="0" data-id="1">
                         <input type="checkbox" name="sports_tag" id="sports_tag" value="0" data-id="2">
                         <input type="checkbox" name="mountains_tag" id="mountains_tag" value="0" data-id="3">
@@ -67,6 +68,9 @@
                         <input type="hidden" name="save_status" value="Draft">
                     </form>
                     <div class="trix-editor">
+                        <div class="font-picker">
+                            <input id="font-picker" type="text">
+                        </div>
                         <div class="color-picker">
                         </div>
                         {{-- <input type="hidden" name="edit_content" id="edit_content"> --}}
@@ -87,6 +91,9 @@
                             <option value="Suggestions and Improvements - Game">Suggestions and Improvements - Game</option>
                         </select>
                         <div class="trix-editor trix-editor-email">
+                            <div class="font-picker">
+                                <input id="font-picker" type="text">
+                            </div>
                             <div class="color-picker email-color-picker">
                             </div>
                             @trix(\App\Blogs\Blog::class, 'email_content')
@@ -95,7 +102,7 @@
                     </form>
                 </div>
                 <div class="home-div">
-                    <img src="{{asset('front/images/communicator-buttons/buttons/homeBtn.png')}}" class="communicator-button home-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/home.png')}}" class="communicator-button home-button" alt="">
                 </div>
                 <div class="communicator-buttons">
                     {{-- <button type="submit" class="save-button" form="main-form"></button>
@@ -138,6 +145,9 @@
                     <label for="featured_image" class="custom-file-upload">
                         Upload
                     </label>
+                    <button class="edit_image" data-toggle="modal" data-target="#exampleModalCenter" disabled="">
+                        Edit
+                    </button>
                 </div>
                 <div class="show-instruction">
                     <a class="">Show Instructions</a>
@@ -266,6 +276,18 @@
                     <img src="{{asset('front/images/communicator-buttons/familyBtn.png')}}" alt="" class="tag-btn family-btn" data-tag="family">
                     <img src="{{asset('front/images/communicator-buttons/travelBtn.png')}}" alt="" class="tag-btn travel-btn" data-tag="travel">
                 </div>
+                <div class="top-buttons">
+                    <img src="{{asset('front/images/communicator-buttons/Back.png')}}" class="communicator-button back-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/ExtraButtonA.png')}}" class="communicator-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/ExtraButtonB.png')}}" class="communicator-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/General.png')}}" class="communicator-button general-button" alt="">
+                </div>
+                <div class="camera-div">
+                    <img src="{{asset('front/images/communicator-buttons/Camera.png')}}" class="communicator-button" alt="">
+                </div>
+                <div class="voice-recorder-div">
+                    <img src="{{asset('front/images/communicator-buttons/VoiceRecord.png')}}" class="communicator-button" alt="">
+                </div>
                 <div class="instructions">
                     <span class="instruction-close-btn"><i class="far fa-times-circle"></i></span>
                     <div class="instruction instruction-1" data-text-div="instruction-text-1"></div>
@@ -297,20 +319,39 @@
             <div class="trix-content">{!! nl2br($user->blogcontent) !!}</div>
         </div> --}}
         <div class="text-editor-fullview blog-content">
+            <div class="font-picker">
+                <input id="font-picker" type="text">
+            </div>
             <div class="color-picker fullscreen-blog-color-picker">
             </div>
             @trix(\App\Blogs\Blog::class, 'content')
             <button type="button" class="exit-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
         </div>
         <div class="text-editor-fullview email-content">
+            <div class="font-picker">
+                <input id="font-picker" type="text">
+            </div>
             <div class="color-picker fullscreen-email-color-picker">
             </div>
             @trix(\App\Blogs\Blog::class, 'email_content')
             <button type="button" class="exit-email-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
         </div>
+        <!-- Modal -->
+    
     </div>
     <div id="app"></div>
 </div>
+<div class="modal" id="exampleModalCenter" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <div class="app">
+                <photoeditor-component :edit_blog="{{($blog != '' ? 1 : 0)}}"></photoeditor-component>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('after-scripts')
@@ -318,12 +359,11 @@
     <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
     <script src="{{asset('front/JS/musicplay.js')}}" type="text/jscript"></script>
     <script src="{{asset('front/JS/music-wave.js')}}"></script>
-    {{-- <script src="{{asset('trix/trix.js')}}"></script> --}}
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
     <script src="{{asset('front/slick/slick.min.js')}}"></script>
     <script src="{{asset('front/JS/piklor.min.js')}}"></script>
-    
+    <script src="{{asset('front/system-google-font-picker/jquery.fontselect.js')}}"></script>
     @if($blog != '')
     <script>
         var blog = {!! json_encode($blog->toArray()) !!};

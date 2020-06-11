@@ -1237,6 +1237,8 @@ img.naff-reaction {
     /* border: 1px solid red; */
     top: 0;
     left: 0;
+    -webkit-transform: translate(0, 137%) rotate(0deg);
+    -moz-transform: translate(0, 137%) rotate(0deg);
     transform: translate(0, 137%) rotate(0deg);
     display: none;
 }
@@ -1253,10 +1255,15 @@ img.naff-reaction {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(11%, -129%);
+    -moz-transform: translate(11%, -129%);
     transform: translate(11%, -129%);
     /* border: 1px solid red; */
     width: 19vw;
     height: 12vw;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
     display: none;
     /* opacity: 0;
@@ -1294,6 +1301,9 @@ img.naff-reaction {
 .cloud-message .message p {
     font-size: 1.9vw;
     /* white-space: pre-line; */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     font-weight: 600;
@@ -1316,68 +1326,356 @@ img.naff-reaction {
 }
 
 .animate-ally-1 {
+    -webkit-animation: dolphinJump 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
+    -moz-animation: dolphinJump 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
+    -o-animation: dolphinJump 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
     animation: dolphinJump 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
     /* animation-iteration-count: 5; */
     /* -moz-animation-duration: 2.5s; */
 }
 
 .animate-ally-2 {
+    -webkit-animation: dolphinJump2 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
+    -moz-animation: dolphinJump2 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
+    -o-animation: dolphinJump2 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
     animation: dolphinJump2 2s cubic-bezier(0.02, 0.03, 0.63, 0.18);
 }
 
 .swim-ally-1 {
+    -webkit-animation: swimAlly 1s linear alternate;
+    -moz-animation: swimAlly 1s linear alternate;
+    -o-animation: swimAlly 1s linear alternate;
     animation: swimAlly 1s linear alternate;
     animation-iteration-count: 2;
 }
 
 .swim-ally-2 {
+    -webkit-animation: swimAlly 1s infinite linear alternate;
+    -moz-animation: swimAlly 1s infinite linear alternate;
+    -o-animation: swimAlly 1s infinite linear alternate;
     animation: swimAlly 1s infinite linear alternate;
 }
 
+@-webkit-keyframes dolphinJump {
+    0% {
+        -webkit-transform: translate(-100%, 420%) rotate(-50deg);
+        -moz-transform: translate(-100%, 420%) rotate(-50deg);
+        transform: translate(-100%, 420%) rotate(-50deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+    }
+    50% {
+        -webkit-transform: translate(-12%, -120%) rotate(-30deg);
+        -moz-transform: translate(-12%, -120%) rotate(-30deg);
+        transform: translate(-12%, -120%) rotate(-30deg);
+        /* animation-timing-function: cubic-bezier(0.02, 0.01, 0.3, 0.83); */
+    }
+    75% {
+        -webkit-transform: translate(22%, 0%) rotate(20deg);
+        -moz-transform: translate(22%, 0%) rotate(20deg);
+        transform: translate(22%, 0%) rotate(20deg);
+        /* animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68); */
+    }
+    100% {
+        -webkit-transform: translate(0, 0%) rotate(0deg);
+        -moz-transform: translate(0, 0%) rotate(0deg);
+        transform: translate(0, 0%) rotate(0deg);
+    }
+}
+
+@-moz-keyframes dolphinJump {
+    0% {
+        -webkit-transform: translate(-100%, 420%) rotate(-50deg);
+        -moz-transform: translate(-100%, 420%) rotate(-50deg);
+        transform: translate(-100%, 420%) rotate(-50deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+    }
+    50% {
+        -webkit-transform: translate(-12%, -120%) rotate(-30deg);
+        -moz-transform: translate(-12%, -120%) rotate(-30deg);
+        transform: translate(-12%, -120%) rotate(-30deg);
+        /* animation-timing-function: cubic-bezier(0.02, 0.01, 0.3, 0.83); */
+    }
+    75% {
+        -webkit-transform: translate(22%, 0%) rotate(20deg);
+        -moz-transform: translate(22%, 0%) rotate(20deg);
+        transform: translate(22%, 0%) rotate(20deg);
+        /* animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68); */
+    }
+    100% {
+        -webkit-transform: translate(0, 0%) rotate(0deg);
+        -moz-transform: translate(0, 0%) rotate(0deg);
+        transform: translate(0, 0%) rotate(0deg);
+    }
+}
+
+@-o-keyframes dolphinJump {
+    0% {
+        -webkit-transform: translate(-100%, 420%) rotate(-50deg);
+        -moz-transform: translate(-100%, 420%) rotate(-50deg);
+        transform: translate(-100%, 420%) rotate(-50deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+    }
+    50% {
+        -webkit-transform: translate(-12%, -120%) rotate(-30deg);
+        -moz-transform: translate(-12%, -120%) rotate(-30deg);
+        transform: translate(-12%, -120%) rotate(-30deg);
+        /* animation-timing-function: cubic-bezier(0.02, 0.01, 0.3, 0.83); */
+    }
+    75% {
+        -webkit-transform: translate(22%, 0%) rotate(20deg);
+        -moz-transform: translate(22%, 0%) rotate(20deg);
+        transform: translate(22%, 0%) rotate(20deg);
+        /* animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68); */
+    }
+    100% {
+        -webkit-transform: translate(0, 0%) rotate(0deg);
+        -moz-transform: translate(0, 0%) rotate(0deg);
+        transform: translate(0, 0%) rotate(0deg);
+    }
+}
 
 @keyframes dolphinJump {
     0% {
+        -webkit-transform: translate(-100%, 420%) rotate(-50deg);
+        -moz-transform: translate(-100%, 420%) rotate(-50deg);
         transform: translate(-100%, 420%) rotate(-50deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
         animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
-      }
-      50% {
+    }
+    50% {
+        -webkit-transform: translate(-12%, -120%) rotate(-30deg);
+        -moz-transform: translate(-12%, -120%) rotate(-30deg);
         transform: translate(-12%, -120%) rotate(-30deg);
         /* animation-timing-function: cubic-bezier(0.02, 0.01, 0.3, 0.83); */
-      }
-      75% {
+    }
+    75% {
+        -webkit-transform: translate(22%, 0%) rotate(20deg);
+        -moz-transform: translate(22%, 0%) rotate(20deg);
         transform: translate(22%, 0%) rotate(20deg);
         /* animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68); */
-      }
-      100% {
+    }
+    100% {
+        -webkit-transform: translate(0, 0%) rotate(0deg);
+        -moz-transform: translate(0, 0%) rotate(0deg);
         transform: translate(0, 0%) rotate(0deg);
-      }
+    }
+}
+
+@-webkit-keyframes dolphinJump2 {
+    0% {
+        -webkit-transform: translate(-100%, 420%) rotate(-80deg);
+        -moz-transform: translate(-100%, 420%) rotate(-80deg);
+        transform: translate(-100%, 420%) rotate(-80deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+    }
+    50% {
+        -webkit-transform: translate(-10%, 0%) rotate(-8deg);
+        -moz-transform: translate(-10%, 0%) rotate(-8deg);
+        transform: translate(-10%, 0%) rotate(-8deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+    }
+    75% {
+        -webkit-transform: translate(0%, 5%) rotate(3deg);
+        -moz-transform: translate(0%, 5%) rotate(3deg);
+        transform: translate(0%, 5%) rotate(3deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+    }
+    100% {
+        -webkit-transform: translate(0, 0%) rotate(0deg);
+        -moz-transform: translate(0, 0%) rotate(0deg);
+        transform: translate(0, 0%) rotate(0deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+    }
+}
+
+@-moz-keyframes dolphinJump2 {
+    0% {
+        -webkit-transform: translate(-100%, 420%) rotate(-80deg);
+        -moz-transform: translate(-100%, 420%) rotate(-80deg);
+        transform: translate(-100%, 420%) rotate(-80deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+    }
+    50% {
+        -webkit-transform: translate(-10%, 0%) rotate(-8deg);
+        -moz-transform: translate(-10%, 0%) rotate(-8deg);
+        transform: translate(-10%, 0%) rotate(-8deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+    }
+    75% {
+        -webkit-transform: translate(0%, 5%) rotate(3deg);
+        -moz-transform: translate(0%, 5%) rotate(3deg);
+        transform: translate(0%, 5%) rotate(3deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+    }
+    100% {
+        -webkit-transform: translate(0, 0%) rotate(0deg);
+        -moz-transform: translate(0, 0%) rotate(0deg);
+        transform: translate(0, 0%) rotate(0deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+    }
+}
+
+@-o-keyframes dolphinJump2 {
+    0% {
+        -webkit-transform: translate(-100%, 420%) rotate(-80deg);
+        -moz-transform: translate(-100%, 420%) rotate(-80deg);
+        transform: translate(-100%, 420%) rotate(-80deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+    }
+    50% {
+        -webkit-transform: translate(-10%, 0%) rotate(-8deg);
+        -moz-transform: translate(-10%, 0%) rotate(-8deg);
+        transform: translate(-10%, 0%) rotate(-8deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+    }
+    75% {
+        -webkit-transform: translate(0%, 5%) rotate(3deg);
+        -moz-transform: translate(0%, 5%) rotate(3deg);
+        transform: translate(0%, 5%) rotate(3deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+    }
+    100% {
+        -webkit-transform: translate(0, 0%) rotate(0deg);
+        -moz-transform: translate(0, 0%) rotate(0deg);
+        transform: translate(0, 0%) rotate(0deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+    }
 }
 
 @keyframes dolphinJump2 {
     0% {
+        -webkit-transform: translate(-100%, 420%) rotate(-80deg);
+        -moz-transform: translate(-100%, 420%) rotate(-80deg);
         transform: translate(-100%, 420%) rotate(-80deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
         animation-timing-function: cubic-bezier(0.02, 0.01, 0.45, 0.87);
-      }
-      50% {
+    }
+    50% {
+        -webkit-transform: translate(-10%, 0%) rotate(-8deg);
+        -moz-transform: translate(-10%, 0%) rotate(-8deg);
         transform: translate(-10%, 0%) rotate(-8deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
         animation-timing-function: cubic-bezier(0.02, 0.01, 0.07, 0.46);
-      }
-      
-      75% {
+    }
+    75% {
+        -webkit-transform: translate(0%, 5%) rotate(3deg);
+        -moz-transform: translate(0%, 5%) rotate(3deg);
         transform: translate(0%, 5%) rotate(3deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
         animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
-      }
-      100% {
+    }
+    100% {
+        -webkit-transform: translate(0, 0%) rotate(0deg);
+        -moz-transform: translate(0, 0%) rotate(0deg);
         transform: translate(0, 0%) rotate(0deg);
+        -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -moz-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
+        -o-animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
         animation-timing-function: cubic-bezier(0.02, 0.01, 1, 0.68);
-      }
+    }
+}
+
+@-webkit-keyframes swimAlly {
+    0% {
+        -webkit-transform: translate(0, 0%);
+        -moz-transform: translate(0, 0%);
+        transform: translate(0, 0%);
+    }
+    100% {
+        -webkit-transform: translate(0%, 5%) rotate(3deg);
+        -moz-transform: translate(0%, 5%) rotate(3deg);
+        transform: translate(0%, 5%) rotate(3deg);
+    }
+}
+
+@-moz-keyframes swimAlly {
+    0% {
+        -webkit-transform: translate(0, 0%);
+        -moz-transform: translate(0, 0%);
+        transform: translate(0, 0%);
+    }
+    100% {
+        -webkit-transform: translate(0%, 5%) rotate(3deg);
+        -moz-transform: translate(0%, 5%) rotate(3deg);
+        transform: translate(0%, 5%) rotate(3deg);
+    }
+}
+
+@-o-keyframes swimAlly {
+    0% {
+        -webkit-transform: translate(0, 0%);
+        -moz-transform: translate(0, 0%);
+        transform: translate(0, 0%);
+    }
+    100% {
+        -webkit-transform: translate(0%, 5%) rotate(3deg);
+        -moz-transform: translate(0%, 5%) rotate(3deg);
+        transform: translate(0%, 5%) rotate(3deg);
+    }
 }
 
 @keyframes swimAlly {
     0% {
+        -webkit-transform: translate(0, 0%);
+        -moz-transform: translate(0, 0%);
         transform: translate(0, 0%);
     }
     100% {
+        -webkit-transform: translate(0%, 5%) rotate(3deg);
+        -moz-transform: translate(0%, 5%) rotate(3deg);
         transform: translate(0%, 5%) rotate(3deg);
     }
 }
@@ -1388,7 +1686,12 @@ img.naff-reaction {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-70%, -348%);
+    -moz-transform: translate(-70%, -348%);
     transform: translate(-70%, -348%);
+    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
     display: flex;
     justify-content: center;
 }
@@ -1396,6 +1699,8 @@ img.naff-reaction {
 .user-photo.male {
     width: 4.1vw;
     height: 3.3vw;
+    -webkit-transform: translate(-70%, -336%);
+    -moz-transform: translate(-70%, -336%);
     transform: translate(-70%, -336%);
 }
 

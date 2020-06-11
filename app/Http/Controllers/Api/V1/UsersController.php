@@ -31,7 +31,7 @@ class UsersController extends APIController
      */
     public function index(Request $request)
     {
-        $limit = $request->get('paginate') ? $request->get('paginate') : 25;
+        $limit = $request->get('paginate') ? $request->get('paginate') : 15;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'ASC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
 

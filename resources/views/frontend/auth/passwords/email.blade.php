@@ -51,7 +51,10 @@
                     <!--<div class="terms-div">
                         <p class="p_terms">TERMS</p>
                     </div>-->
-                    
+                    <div class="back-div">
+                        <input type="hidden" id="myurl" url="{{url('/login')}}" />
+                        <img src="{{asset('front/images/communicator-buttons/buttons/backBtn.png')}}" class="communicator-button back-button" alt="">
+                    </div>
                     <div class="communicator-buttons">
                       <img src="{{asset('front/images/communicator-buttons/buttons/termsBtn.png')}}" class="communicator-button terms-button p_terms" alt="">
                     </div>
@@ -88,6 +91,7 @@
         var message;
         var err_message;
         var url = $('meta[name="url"]').attr('content');
+        console.log(url)
         // for showing message to turn to landscape 
           testOrientation();
         window.addEventListener("orientationchange", function(event) {
@@ -111,14 +115,17 @@
                 }
         }
           $(document).ready(function () {
-            $('.home-div').css('pointer-events', 'auto');
+            $('.home-div,.back-div').css('pointer-events', 'auto');
            
         });
        
         $('.home-button').click(function() {
-            window.location.href = "{{URL::to('/dashboard')}}"
+
+            window.location.href = "{{URL::to('')}}"
         });
-      
+        $('.back-button').click(function() {
+            window.location.href = "{{ URL::previous() }}"
+        });
               if(message)
                 {
                     Swal.fire({

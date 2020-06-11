@@ -2715,9 +2715,9 @@ a.judy_collins_2 {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	-webkit-transform: translate(-28%, -112%);
-    -moz-transform: translate(-28%, -112%);
-	transform: translate(-28%, -112%);
+	-webkit-transform: translate(-30%, -113%);
+	-moz-transform: translate(-30%, -113%);
+	transform: translate(-30%, -113%);
 	width: 19vw;
 	height: 23vw;
 	display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
@@ -2736,7 +2736,9 @@ a.judy_collins_2 {
 }
 
 .tom .notifications-div {
-	/* transform: translate(-52%, -99%); */
+	-webkit-transform: translate(-28%, -112%);
+    -moz-transform: translate(-28%, -112%);
+	transform: translate(-28%, -112%);
 }
 
 .notifications-div img.hologram {
@@ -2957,8 +2959,14 @@ div.notifications-list::-webkit-scrollbar {
 }
 
 .zoomin .notifications-div {
+	-webkit-transform: translate(-29.5%, -103%) scale(0.8);
+	-moz-transform: translate(-29.5%, -103%) scale(0.8);
+	transform: translate(-29.5%, -103%) scale(0.8);
+}
+
+.tom.zoomin .notifications-div {
 	-webkit-transform: translate(-28%, -103%) scale(0.8);
-    -moz-transform: translate(-28%, -103%) scale(0.8);
+	-moz-transform: translate(-28%, -103%) scale(0.8);
 	transform: translate(-28%, -103%) scale(0.8);
 }
 
@@ -3084,13 +3092,25 @@ div.notifications-list::-webkit-scrollbar {
 	border: 0;
 	padding: 0;
 	/* border: 1px solid red; */
-	width: 4vw;
-	height: 4vw;
+	width: 3vw;
+	height: 3vw;
 	border-radius: 100px;
 	z-index: 9999999;
 	display: flex;
 	justify-content: center;
 	cursor: pointer;
+	box-shadow: 0px 0px 10px 0px #000;
+	opacity: 0.8;
+}
+
+.planet-buttons button.view:hover {
+	-webkit-filter: drop-shadow(0px 0px 1px #03caea);
+	filter: drop-shadow(0px 0px 1px #03caea);
+}
+
+.planet-buttons button.back:hover {
+	-webkit-filter: drop-shadow(0px 0px 1px #ee2d34);
+	filter: drop-shadow(0px 0px 1px #ee2d34);
 }
 
 .planet-buttons button:focus {
@@ -3108,7 +3128,7 @@ div.notifications-list::-webkit-scrollbar {
 .planet-buttons button.back {
 	position: absolute;
 	top: 50%;
-	left: 86%;
+	left: 89.5%;
 	transform: translateY(-50%);
 	background: #ed1c24;
 }
@@ -3119,6 +3139,7 @@ div.notifications-list::-webkit-scrollbar {
 	left: 50%;
 	transform: translateX(-50%);
 	background: #3cb878;
+	pointer-events: none;
 }
 
 .planet-buttons button img {
@@ -3129,4 +3150,47 @@ div.notifications-list::-webkit-scrollbar {
 
 .planet-buttons button.back img {
 	width: 70%;
+}
+
+.planet-buttons span.pop-up {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    /* opacity: 0.8; */
+    -webkit-transform: translate(20%, -50%);
+        -moz-transform: translate(20%, -50%);
+            -ms-transform: translate(20%, -50%);
+                transform: translate(20%, -50%);
+	z-index: 999;
+	width: 7vw;
+	color: #FFFFFF;
+	text-shadow: 0px 0px 3px #000000;
+	font-family: 'Nasalization';
+	background: #0b91c3a3;
+	/* height: 72px; */
+	line-height: 1em;
+	text-align: center;
+	display: none;
+	border-radius: 1px;
+	-webkit-box-shadow: 0px 3px 4px #000000;
+	box-shadow: 0px 3px 4px #000000;
+	font-size: 0.8em;
+	word-wrap: break-word;
+	padding: 2%;
+	outline: 0;
+	border: 0;
+}
+
+.planet-buttons span.view-pop-up {
+	-webkit-transform: translate(-315%, -50%);
+	-moz-transform: translate(-315%, -50%);
+	-ms-transform: translate(-315%, -50%);
+	transform: translate(-315%, -50%);
+}
+
+.planet-buttons span.back-pop-up {
+	-webkit-transform: translate(214%, -50%);
+	-moz-transform: translate(214%, -50%);
+	-ms-transform: translate(214%, -50%);
+	transform: translate(214%, -50%)
 }
