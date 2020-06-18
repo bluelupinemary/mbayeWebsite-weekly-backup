@@ -115,6 +115,11 @@ class LoginController extends Controller
         $sendOption     =   array('Type' => 'Quote');
         $this->notification->_pushNotification($message, 'ios', $deviceToken);
         */
+        // $passportToken = $user->createToken('API Access Token');
+        // // Save generated token
+        // $passportToken->token->save();
+        // $token = $passportToken->accessToken;
+        // dd($token);
         return redirect()->intended($this->redirectPath());
     }
 

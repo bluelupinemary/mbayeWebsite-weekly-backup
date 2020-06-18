@@ -70,10 +70,18 @@ Route::group(['middleware' => 'auth'], function () {
         
     });
 //routes for friendship
+    Route::get('/listusers','Friendship\FriendshipController@listusers');
+    Route::get('/fetchrequests','Friendship\FriendshipController@fetchrequests');
+    Route::get('/fetchfriends','Friendship\FriendshipController@fetchfriends');
+    Route::get('/requests','Friendship\FriendshipController@requests');
+    Route::get('/getuser/{user}','Friendship\FriendshipController@getuser');
     Route::get('/checkfriendship/{user}','Friendship\FriendshipController@checkfriendship')->name('checkfriendship');
     Route::get('/sendrequest/{user}','Friendship\FriendshipController@sendrequest')->name('users.sendrequest');
     Route::get('/acceptrequest/{user}','Friendship\FriendshipController@acceptrequest')->name('users.acceptrequest');
     Route::get('/denyrequest/{user}','Friendship\FriendshipController@denyrequest')->name('users.denyrequest');
+    Route::get('/friends','Friendship\FriendshipController@listfriends')->name('users.index');
+    Route::get('/unfriend/{user}','Friendship\FriendshipController@unfriend')->name('users.unfriend');
+    Route::get('/block/{user}','Friendship\FriendshipController@block')->name('users.block');
     
 //end routes
     Route::group(['namespace' => 'Blogs'], function () {
@@ -111,6 +119,11 @@ Route::get('/captainMbaye', 'FrontendController@captain_mbaye')->name('captainMb
 Route::get('/flowersMbaye', 'FrontendController@flowers_mbaye')->name('flowersMbaye');
 Route::get('/visitingMbaye', 'FrontendController@visiting_mbaye')->name('visitingMbaye');
 Route::get('/participateMbaye', 'FrontendController@participate_mbaye')->name('participateMbaye');
+Route::get('/feetMbaye', 'FrontendController@feet_mbaye')->name('feetMbaye');
+
+//dummy page for testing
+Route::get('/dummy_page/{id}', 'FrontendController@dummy_page');
+
 
 
 
@@ -122,6 +135,8 @@ Route::get('/search/friends', 'FrontendController@search_friends')->name('search
 /* For blog tags */
 Route::get('/blog_tagwise/{tag}', 'FrontendController@blog_tagwise')->name('blog_tagwise');
 Route::get('/blog_of_friend_tagwise', 'FrontendController@blog_of_friend_tagwise')->name('blog_of_friend_tagwise');
+Route::get('/my_blogs', 'FrontendController@my_blogs')->name('my_blogs');
 Route::get('/blog_general', 'FrontendController@blog_general')->name('blog_general');
 Route::get('/blog_general_userwise', 'FrontendController@blog_general_userwise')->name('blog_general_userwise');
 Route::get('/single_general_blog/{id}', 'GeneralBlogs\GeneralBlogsController@show');
+Route::get('/all_blogs_tagwise', 'FrontendController@all_blogs_tagwise')->name('all_blogs_tagwise');

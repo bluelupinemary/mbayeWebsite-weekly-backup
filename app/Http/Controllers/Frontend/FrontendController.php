@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Settings\Setting;
-use App\Models\Access\User\User;
-use App\Repositories\Frontend\Pages\PagesRepository;
+use Auth;
 use Illuminate\Http\Request;
 use App\Mail\ContactAdminEmail;
+use App\Models\Access\User\User;
+use App\Models\Settings\Setting;
+use App\Http\Controllers\Controller;
+use App\Models\Game\UserDesignPanel;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Game\UserPanelFlowers;
 use Illuminate\Support\Facades\Storage;
-use Auth;
+use App\Repositories\Frontend\Pages\PagesRepository;
 
 
 /**
@@ -73,12 +75,39 @@ class FrontendController extends Controller
         if($user)         return view('frontend.blog.blog_tagwise',compact('tag'));
         return view('frontend.auth.login');
     }
+    /**
+     * Blogs of  friends tag wise
+     */
     public function blog_of_friend_tagwise(Request $request){
 
         $tag = $request['tag'];
         $id = $request['id'];
         $user = Auth::user();
         if($user)         return view('frontend.blog.blog_of_friend_tagwise',compact('tag','id'));
+        return view('frontend.auth.login');
+    }
+    
+    /**
+     * Blogs of logged user tag wise
+     */
+    public function my_blogs(Request $request){
+
+        $tag = $request['tag'];
+        $id = $request['id'];
+        $user = Auth::user();
+        if($user)         return view('frontend.blog.blog_of_friend_tagwise',compact('tag','id'));
+        return view('frontend.auth.login');
+    }
+
+    /**
+     * All blogs of all users  tag wise
+     */
+    public function all_blogs_tagwise(Request $request){
+
+        $tag = $request['tag'];
+        $id = $request['id'];
+        $user = Auth::user();
+        if($user)         return view('frontend.blog.all_blogs_tagwise',compact('tag','id'));
         return view('frontend.auth.login');
     }
     public function blog(){
@@ -196,6 +225,16 @@ class FrontendController extends Controller
     }
     
     /* 3d pages */
+    public function dummy_page($id){
+        $userId = $id;
+        // $design_id = UserDesignPanel::where('user_id', $userId)->first()->id;
+        $design_id = UserDesignPanel::where('user_id', $userId)->firstOrFail()->id;
+        
+        $panels_from_db = UserPanelFlowers::where('design_id', $design_id)->get(['panel_number','flowers_used'])->toArray();
+        
+        return view('frontend.game.dummy_page')->with('user_panels',json_encode($panels_from_db))->with('user_id',$userId);
+    }
+
     public function captain_mbaye(){
         return view('frontend.pages.captain_mbaye');
     }
@@ -214,6 +253,13 @@ class FrontendController extends Controller
         if($user) return view('frontend.game.participate_mbaye');
         return view('frontend.pages.welcome_mbaye');
     }
+
+    public function feet_mbaye(){
+        return view('frontend.game.feet_mbaye');
+    }
+
+
+
 
     public function search_friends()
     {

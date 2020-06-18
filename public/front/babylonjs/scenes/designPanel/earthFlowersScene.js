@@ -49,8 +49,9 @@ function create_earth_flower_camera(){
 function load_earth_with_flowers_mesh(){
   
     Promise.all([
-        // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldFlowersHigher.babylon", earthFlowersScene,
-        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldFlowers040220.babylon", earthFlowersScene,
+        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldLower.babylon", earthFlowersScene,
+        // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldHigherV2.babylon", earthFlowersScene,
+        // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldFlowers040220.babylon", earthFlowersScene,
                 function (evt) {
                         // onProgress
                         var loadedPercent = 0;
@@ -65,12 +66,11 @@ function load_earth_with_flowers_mesh(){
                 }
             
           ).then(function (result) {
-            console.log(result.meshes.length);
+            // console.log(result.meshes.length);
             for(let i=0;i<result.meshes.length;i++){
                 if(result.meshes[i].name === "Earth") continue;
                 else{
                     result.meshes[i].isPickable = true;
-
                     result.meshes[i].actionManager = new BABYLON.ActionManager(earthFlowersScene);
                     result.meshes[i].actionManager.registerAction(
                           new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
@@ -107,7 +107,61 @@ function load_earth_with_flowers_mesh(){
     });
 } //end of load world of flowers mesh function
 
- 
+
+
+function load_hd_world(){
+    earthFlowers_object.dispose();
+    document.getElementById("loadingScreenPercent").style.visibility = "visible";
+    // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldHigherV2.babylon", earthFlowersScene,
+        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldHigherV2.babylon", earthFlowersScene,
+        // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/worldFlowers/model/", "worldFlowers040220.babylon", earthFlowersScene,
+                function (evt) {
+                        // onProgress
+                        var loadedPercent = 0;
+                        if (evt.lengthComputable) {
+                            loadedPercent = (evt.loaded * 100 / evt.total).toFixed();
+                        } else {
+                            var dlCount = evt.loaded / (1024 * 1024);
+                            loadedPercent += Math.floor(dlCount * 100.0) / 100.0;
+                        }
+                       
+                        document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+loadedPercent+" %";
+                       
+                }
+            
+          ).then(function (result) {
+            // console.log(result.meshes.length);
+            for(let i=0;i<result.meshes.length;i++){
+                if(result.meshes[i].name === "Earth") continue;
+                else{
+                    result.meshes[i].isPickable = true;
+                    result.meshes[i].actionManager = new BABYLON.ActionManager(earthFlowersScene);
+                    result.meshes[i].actionManager.registerAction(
+                          new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
+                          onOverFlower)
+                    );
+                    result.meshes[i].actionManager .registerAction(
+                          new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
+                          onOutFlower)
+                    );
+                }
+
+              
+            }//eof for loop
+            result.meshes[0].scaling = new BABYLON.Vector3(0.2,0.2,0.2);
+           
+            // //hide the world of flowers
+            // result.meshes[0].setEnabled(false);
+            // result.meshes[0].isVisible = false;
+            result.meshes[0].isPickable = true;
+
+            earthFlowers_object = result.meshes[0];
+            document.getElementById("loadingScreenPercent").style.visibility = "hidden";
+            //set the world in this viewport
+           earthFlowersCamera.viewport = new BABYLON.Viewport(0.65,0,0.5,1);
+        })
+}
+
 
 
 

@@ -2,7 +2,12 @@
 @section('before-styles')
     <link href="{{asset('front')}}/CSS/game/DesignPanelStyle.css" rel="stylesheet"/>
   <style>
-       
+        .trevor-popup-class{
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background-size: auto 100% !important;
+            height:25vh !important;
+        }
   </style>
 @endsection
 
@@ -33,8 +38,9 @@
         var urlDesignPanel = '{{ route('frontend.user.storeDesignPanel') }}';
         var has_load_game = '{{ $has_load_game ?? '' }}';
         var load_filename = '{{$filename ?? ''}}';
+        var user_panels = '{{$user_panels ?? ''}}'
 
-       
+ 
     </script>
     
 @endsection

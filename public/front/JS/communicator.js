@@ -600,7 +600,13 @@ $('.exit-email-fullscreen').click(function() {
 
 // hide/show blog submenu
 $('.blog-btn').click(function() {
+    $('.submenu').not('.blog-submenu').hide();
     $('.blog-submenu').fadeToggle();
+});
+
+$('.groups-btn').click(function() {
+    $('.submenu').not('.groups-submenu').hide();
+    $('.groups-submenu').fadeToggle();
 });
 
 // hide/show fullscreen button
@@ -1220,7 +1226,7 @@ $('.instruction').hover(
 );
 
 // redirect buttons to under development page
-$('.groups-btn, .yourstars-btn, .connect-btn, .careers-btn, .chat-button').click(function() {
+$('.yourstars-btn, .connect-btn, .careers-btn, .chat-button').click(function() {
     checkForm(url+'/page_under_development');
 });
 

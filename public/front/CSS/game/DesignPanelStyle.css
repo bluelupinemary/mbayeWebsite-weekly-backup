@@ -132,7 +132,8 @@ html, body {
     }
     .swal2-title{
         color:#17a2b8 !important;
-        font-size: 1.2vw !important;
+        text-shadow: -1px 0px black;
+        font-size: 0.85vw !important;
         font-family: 'Nasalization Rg';
     }
     .swal2-content{

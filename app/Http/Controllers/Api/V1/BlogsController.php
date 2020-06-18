@@ -173,4 +173,19 @@ class BlogsController extends APIController
             'name.max'      => 'Blog Title may not be greater than 191 characters.',
         ];
     }
+    
+    /**
+     * Shows all blogs of all users tagwise
+     */
+    public function show_all_blogs_tagwise(Request $request){
+      
+        $btag = BlogTag::where('name',$request['tag'])->first();
+        $id=$request['id']; 
+        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
+        $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
+        return BlogsResource::collection(
+            $btag->blogs()->orderBy($sortBy, $orderBy)->paginate($limit)
+        );
+}
 }

@@ -191,6 +191,9 @@
 
 <script>
 export default {
+  props:{
+            users:Object
+          },
   data: function() {
     return {
       userList: [],
@@ -200,7 +203,8 @@ export default {
     };
   },
   mounted() {
-    this.fetchList();
+    // this.fetchList();
+    console.log(this.users);
   },
   updated(){
    this.userList = this.userList

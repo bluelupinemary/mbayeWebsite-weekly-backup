@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('frontend.layouts.app')
 @section('content')
 <div class="container">
   <div class="app">
-    <friendrequests-component></friendrequests-component>
+    <accept-component :auth="{{ Auth::user() }}" ></accept-component>
 </div>
     {{-- <h1>Friend Requests</h1>
     <div class="app">

@@ -65,7 +65,7 @@ export default {
 
         // cancel button functionality
         document.querySelector('.tui-image-editor-cancel-btn').addEventListener('click',function(event) {
-            $('#exampleModalCenter').modal('hide');
+            $('#photoEditorModal').modal('hide');
         });
 
         // save button functionality
@@ -73,7 +73,7 @@ export default {
             var image_src = $this.$refs.tuiImageEditor.invoke('toDataURL');
             $('input[name="edited_featured_image"]').val(image_src);
             $('#featured-image-previewimg').attr('src', image_src);
-            $('#exampleModalCenter').modal('hide').fadeOut();
+            $('#photoEditorModal').modal('hide').fadeOut();
         });
         
         // load image on change of featured image input file

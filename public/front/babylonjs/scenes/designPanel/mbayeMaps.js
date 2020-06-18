@@ -1672,7 +1672,7 @@ var flowersMap = new Map([
 		["35SpringGentian",['35A','35B']],
 		
 		["36Foxglove",['36A','36B']],
-		["37Snapdragon",['37A','37B']],
+		["37SnapDragon",['37A','37B']],
 		["38Anthurium",['38A','38B']],
 		["39Amaryllis",['39A','39B']],
 		["40BlueWaterLily",['40A','40B']],
@@ -1902,14 +1902,15 @@ var astronautPartsMap = new Map([
  ]);
 
 var bookFlowersMap = new Map([
-	["flowerLabel"],
-	["wood"],
-	["focusText"],
+	["wood"],				//flower label woods
+	["postBottom_primitive0"],
+	["postBottom_primitive1"],
+	["postTop_primitive0"],
+	["postTop_primitive1"],
 	["returnText"],
-	["postBottom"],
-	["postTop"],
-	["woodSS"],
-	["screenshotText"]
+	["wood001_primitive0"],			//screenshot text
+	["wood001_primitive1"],			//screenshot wood
+	["Object072"]			//flower label text
 ]);
 
 

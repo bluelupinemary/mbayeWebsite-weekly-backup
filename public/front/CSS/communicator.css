@@ -1009,7 +1009,7 @@ button.fullscreen:hover span {
     margin: 1.25vw auto 0 !important;
 }
 
-.blog-submenu {
+.submenu {
     /* border: 1px solid red; */
     position: absolute;
     top: 0%;
@@ -1023,13 +1023,17 @@ button.fullscreen:hover span {
     display: none;
 }
 
-.blog-submenu ul {
+.groups-submenu {
+    top: 22%;
+}
+
+.submenu ul {
     padding: 7%;
     background: rgba(8, 64, 147, 0.93);
     border-radius: 0.5em;
 }
 
-.blog-submenu ul li {
+.submenu ul li {
     list-style: none;
     padding: 3px;
     font-family: 'Nasalization';
@@ -1755,18 +1759,18 @@ a:hover {
     font-size: 1.2vw;
 }
 
-.modal {
+.modal#photoEditorModal {
     padding-right: 0 !important;
 }
 
-.modal-dialog {
+#photoEditorModal .modal-dialog {
     max-width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
 }
   
-.modal-content {
+#photoEditorModal .modal-content {
     height: 100%;
     border-radius: 0;
 }
@@ -1802,3 +1806,96 @@ a:hover {
     padding: 0 !important;
     margin: 8px;
 }
+
+.custom-privacy {
+    position: absolute;
+    /* border: 1px solid red; */
+    width: 8vw;
+    top: 50%;
+    /* left: 50%; */
+    transform: translate(0%, 626%);
+    right: 0;
+    /* bottom: 0; */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.custom-privacy button {
+    margin: 0;
+    border: 1px solid #25636d;
+    display: inline-block;
+    padding: 0% 2%;
+    font-size: 0.6vw;
+    color: #17a2b8;
+    background: #1c1f33;
+    font-family: 'Space Age';
+    border-radius: 5px;
+    box-shadow: -2px -1px #000000;
+}
+
+#customPrivacyModal {
+    font-family: 'Nasalization';
+}
+
+#customPrivacyModal .close {
+    color: #fff;
+}
+
+#customPrivacyModal .btn-secondary {
+    background-color: #3e3e3e;
+    border-color: #3e3e3e;
+}
+
+#customPrivacyModal .btn-primary {
+    background-color: #3085d6;
+    border-color: #fff;
+}
+
+#customPrivacyModal button:focus {
+    outline: 0;
+}
+
+#customPrivacyModal .modal-content {
+    border: 0;
+    background-color: transparent;
+    box-shadow: 0px 0px 20px #17a2b8;
+}
+
+#customPrivacyModal .modal-header {
+    background: rgba(2, 40, 96, 0.62);
+    border: 0;
+    color: #fff;
+}
+
+#customPrivacyModal .modal-body {
+    background: rgba(8, 64, 147, 0.62);
+}
+
+#customPrivacyModal .modal-footer {
+    border: 0;
+    background: rgba(8, 64, 147, 0.62);
+}
+
+.custom-privacy-body {
+    color: #fff;
+    font-size: 1em;
+}
+
+.search-box {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.custom-privacy-body fieldset {
+    border: 1px solid #fff;
+    margin-top: 3%;
+    border-radius: 10px;
+    padding: 4% 2% 4% 4%;
+}
+
+.custom-privacy-body .form-check {
+    display: inline-block;
+    padding-left: 1.50rem;
+    width: 32%;
+}
+

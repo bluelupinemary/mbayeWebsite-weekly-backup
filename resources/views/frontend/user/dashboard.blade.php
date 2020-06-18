@@ -43,7 +43,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'travel&id='.Auth::user()->id) }}">
+                <a href="{{URL('/my_blogs?tag=' .'travel&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
@@ -102,7 +102,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'sports&id='.Auth::user()->id)}}">
+                <a href="{{URL('/my_blogs?tag=' .'sports&id='.Auth::user()->id)}}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
@@ -121,7 +121,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'Mountains and Seas&id='.Auth::user()->id) }}">
+                <a href="{{URL('/my_blogs?tag=' .'Mountains and Seas&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
@@ -140,7 +140,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'films&id='.Auth::user()->id) }}">
+                <a href="{{URL('/my_blogs?tag=' .'films&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
@@ -159,7 +159,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'Family and Friends&id='.Auth::user()->id) }}">
+                <a href="{{URL('/my_blogs?tag=' .'Family and Friends&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
@@ -195,7 +195,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'politics&id='.Auth::user()->id) }}">
+                <a href="{{URL('/my_blogs?tag=' .'politics&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
@@ -285,7 +285,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'music&id='.Auth::user()->id) }}">
+                <a href="{{URL('/my_blogs?tag=' .'music&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>

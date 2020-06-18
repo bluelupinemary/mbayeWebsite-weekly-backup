@@ -10,7 +10,7 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/requests','Frontend\Friendship\FriendshipController@requests');
+
 Route::get('/search/{q}', 'Frontend\Friendship\FriendshipController@searchuser')->name('search');
 Route::post('/readnotification','Frontend\Notify\NotifyController@readnotification');
 Route::get('/blogpost/{blog}', 'Frontend\Comment\CommentController@blogpost');
@@ -61,6 +61,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('blogbytagoffriend','BlogsController@showbytagforfriend');
         Route::resource('bloggeneral', 'GeneralBlogsController', ['except' => ['create', 'edit']]);
         Route::get('bloggeneral_userwise','GeneralBlogsController@show_generalblog_userwise');
+        Route::get('showallblogs','BlogsController@show_all_blogs_tagwise');
   
 });
 

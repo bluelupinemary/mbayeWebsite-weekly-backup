@@ -31,10 +31,16 @@
                     <img src="{{asset('front/images/communicator-buttons/buttons/yourStarsBtn.png')}}" alt="" class="yourstars-btn">
                     <img src="{{asset('front/images/communicator-buttons/buttons/connectBtn.png')}}" alt="" class="connect-btn">
                     <img src="{{asset('front/images/communicator-buttons/buttons/careersBtn.png')}}" alt="" class="careers-btn">
-                    <div class="blog-submenu">
+                    <div class="submenu blog-submenu">
                         <ul>
                             <li><a href="" class="create-blog"><i class="fas fa-plus"></i> Create New Blog</a></li>
                             <li><a href="" class="view-all-blogs"><i class="fas fa-list"></i> View All Blogs</a></li>
+                        </ul>
+                    </div>
+                    <div class="submenu groups-submenu">
+                        <ul>
+                            <li><a href="" class="create-blog"><i class="fas fa-plus"></i> Create New Groups</a></li>
+                            <li><a href="" class="view-all-blogs"><i class="fas fa-list"></i> View All Groups</a></li>
                         </ul>
                     </div>
                 </div>
@@ -76,6 +82,9 @@
                         {{-- <input type="hidden" name="edit_content" id="edit_content"> --}}
                         @trix(\App\Blogs\Blog::class, 'content', ['id' => 'edit_content'])
                         <button type="button" class="fullscreen"><i class="fas fa-expand"></i> <span>Fullscreen</span></button>
+                    </div>
+                    <div class="custom-privacy" data-toggle="modal" data-target="#customPrivacyModal">
+                        <button>Set Privacy</button>
                     </div>
                 </div>
                 <div class="email-form">
@@ -145,7 +154,7 @@
                     <label for="featured_image" class="custom-file-upload">
                         Upload
                     </label>
-                    <button class="edit_image" data-toggle="modal" data-target="#exampleModalCenter" disabled="">
+                    <button class="edit_image" data-toggle="modal" data-target="#photoEditorModal" disabled="">
                         Edit
                     </button>
                 </div>
@@ -341,13 +350,99 @@
     </div>
     <div id="app"></div>
 </div>
-<div class="modal" id="exampleModalCenter" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal" id="photoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
+        <div class="modal-content">
         <div class="modal-body">
             <div class="app">
                 <photoeditor-component :edit_blog="{{($blog != '' ? 1 : 0)}}"></photoeditor-component>
             </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="customPrivacyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle">Set Blog Privacy</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="custom-privacy-body">
+                <div class="search-box">
+                    <input type="text" class="form-control search-groups" placeholder="Search group">
+                </div>
+
+                <fieldset>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Friends
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Family
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Group 1
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Group 2
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Group 3
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Group 4
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Group 5
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Group 6
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Group 7
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Group 8
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+          {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+          <button type="button" class="btn btn-primary">Done</button>
         </div>
       </div>
     </div>

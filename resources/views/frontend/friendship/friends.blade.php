@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('frontend.layouts.app')
 @section('content')
 <div class="container">
     <div class="app">
-        <searchfriends-component></searchfriends-component>
+        <friends-component :auth="{{ Auth::user() }}"></friends-component>
     </div>
     {{-- <h1>Users</h1>
     <form action="/search" method="POST" role="search">

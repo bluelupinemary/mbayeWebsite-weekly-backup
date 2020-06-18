@@ -24,6 +24,7 @@ function createScene(){
     
     flowersScene = new BABYLON.Scene(engine);                             //intantiate earth scene's scene
     flowersScene.enableSceneOffline = true;
+    flowersScene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
     // flowersScene.debugLayer.show();
     flowersCamera = create_flowers_camera();                                //create earth scene's camera
     create_flowers_light();                                  //create earth scene's light
@@ -113,7 +114,7 @@ function create_flowers_skybox(){
         "front/finalSkybox/ny.png",   
         "front/finalSkybox/nz.png",    
     ];
-
+    skybox.infiniteDistance = true;
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture.CreateFromImages(files, flowersScene);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.disableLighting = true;
@@ -351,14 +352,16 @@ function add_mouse_listener(){
                         let videoId = val[4].id;                            //4th value is the video id
                         let startTime = val[4].start;
                         set_carpet_countries(theInitMesh);
-                        reset_selected_flower_camera();
+                        
                         setTimeout(function(){
+                            reset_selected_flower_camera();
                             flowersCamera.detachControl(canvas);
+                            set_3D_flower(theInitMesh);
                             open_book_of_flowers(theInitMesh);              //open book of flowers
                             load_flower_music(videoId, startTime);          //load the music video
                             showPage(val[3],videoId);                       //show wikipedia page
                             showSelectedFlowerScene = true;
-                            
+                            // selectedFlowerScene.debugLayer.show();
                         },1500);
                         
                         // if(theClick===0) play_flower_music();
@@ -425,7 +428,9 @@ theScene.executeWhenReady(function () {
             // if(nuvolaSpeech1) console.log(nuvolaSpeech1.position, nuvolaSpeech1.rotationQuaternion);
             //render the scene
             if(isShowFlowerScene) theScene.render();
+            // selectedFlowerScene.render();
             if(showSelectedFlowerScene){ selectedFlowerScene.render();}
+            // console.log(selectedFlowerCamera.position, selectedFlowerCamera.rotationQuaternion, selectedFlowerCamera.radius, selectedFlowerCamera.alpha, selectedFlowerCamera.beta);}
            
             if(showSelectedFlowerScene && !isFlowerClicked){
                 flowersCamera.detachControl(canvas);
@@ -444,7 +449,6 @@ theScene.executeWhenReady(function () {
             
         }    
     }); 
-
 });
 
 
@@ -460,8 +464,13 @@ $('#wikiPage').on('load',function(){
     $('.iframe-loading').hide();
 });
 
+$('#carpetsWikiPage').on('load',function(){
+    $('.iframe-loading').hide();
+});
+
     let isScreenVisible = false;
     let isCharDivFullscreen = false;
+    let isCharDivFullscreen2 = false;
     function showPage(pageName,videoId) {
         $('.iframe-loading').show();
         let loader = document.getElementById("iframe-loading");
@@ -481,33 +490,115 @@ $('#wikiPage').on('load',function(){
         }else return;
     }
 
-    
-
-    function hidePage(){
+    function showPage2(pageName) {
+        $('.iframe-loading').show();
         let loader = document.getElementById("iframe-loading");
-        var x = document.getElementById("flowersWikipediaDiv");
-        var page = document.getElementById("wikiPage");
-        page.src = "";
+        let x = document.getElementById("carpetsWikipediaDiv");
+        let page = document.getElementById("carpetsWikiPage");
 
-        x.style.visibility = "hidden";
-        loader.style.visibility = "hidden";
-        isScreenVisible = false;
+        if(loader.style.visibility != "visible") loader.style.visibility = "visible";
+        
+
+        page.src = pageName;
+        document.getElementById("carpet-page-url").textContent = pageName+"";
+        if(x.style.visibility != "visible"){
+            x.style.visibility = "visible";  
+            isScreenVisible = true;
+        }else return;
     }
 
-    function fullscreenDescDiv(){
+    function hidePage(mode){
+
+        if(mode===1){
+            document.getElementById("flowersWikipediaDiv").style.visibility = "hidden";
+            document.getElementById("wikiPage").src = "";
+        }else if(mode===2){
+            document.getElementById("carpetsWikipediaDiv").style.visibility = "hidden";
+            document.getElementById("carpetsWikiPage").src = "";;
+        }else{
+            document.getElementById("flowersWikipediaDiv").style.visibility = "hidden";
+            document.getElementById("wikiPage").src = "";
+            document.getElementById("carpetsWikipediaDiv").style.visibility = "hidden";
+            document.getElementById("carpetsWikiPage").src = "";;
+        }
+        let loader = document.getElementById("iframe-loading");
+        
+      
+        loader.style.visibility = "hidden";
+        isScreenVisible = false;
+        document.getElementById("flowerModelDiv").style.visibility = "hidden";
+        // $('#flowerModelDiv').hide();
+    }
+
+  
+    //enable fullscreen, minimization and close options for the wiki section
+    $('#flowersWikipediaDiv #close-btn').on("click", function (e) {
+        $('#flowersWikipediaDiv').hide();
+    });
+
+    $('#carpetsWikipediaDiv #close-btn').on("click", function (e) {
+        $('#carpetssWikipediaDiv').hide();
+    });
+
+    $('#flowersWikipediaDiv #fullscreen-btn').on("click", function (e) {
         if(!isCharDivFullscreen){
-            document.getElementById("fullscreen-btn").src= "front/images3D/minimize-btn.png";
-            document.getElementById("fullscreen-btn").title= "Windowed";
-            document.getElementById("flowersWikipediaDiv").style.width = "100vw";
+            $('#flowersWikipediaDiv').css({ 
+                width :'100vw', 
+            });
+            $("#flowersWikipediaDiv #fullscreen-btn").attr("src", "front/images3D/minimize-btn.png")
             isCharDivFullscreen = true;
         }else{
-            document.getElementById("fullscreen-btn").title= "Fullscreen";
-            document.getElementById("fullscreen-btn").src= "front/images3D/fullscreen-btn.png";
-            document.getElementById("flowersWikipediaDiv").style.width = "25vw";
+            $('#flowersWikipediaDiv').css({ 
+                width :'25vw', 
+            });
+            $("#flowersWikipediaDiv #fullscreen-btn").attr("src", "front/images3D/fullscreen-btn.png")
             isCharDivFullscreen = false;
         }
-    }//end of fullscreenDescDiv
+    });
 
+    $('#carpetsWikipediaDiv #fullscreen-btn').on("click", function (e) {
+        if(!isCharDivFullscreen2){
+            $('#carpetsWikipediaDiv').css({ 
+                width :'100vw', 
+            });
+            $("#carpetsWikipediaDiv #fullscreen-btn").attr("src", "front/images3D/minimize-btn.png")
+            isCharDivFullscreen2 = true;
+        }else{
+            $('#carpetsWikipediaDiv').css({ 
+                width :'25vw', 
+            });
+            $("#carpetsWikipediaDiv #fullscreen-btn").attr("src", "front/images3D/fullscreen-btn.png")
+            isCharDivFullscreen2 = false;
+        }
+    });
+
+    //enable fullscreen, minimization and close options for the 3d viewer section
+    $('#flowerModelDiv #close-btn').on("click", function (e) {
+       // $('#flowerModelDiv').hide();
+       document.getElementById("flowerModelDiv").style.visibility = "hidden";
+    });
+
+    let isFlowerFullscreen = false;
+    $('#flowerModelDiv #fullscreen-btn').on("click", function (e) {
+        if(!isFlowerFullscreen){
+            $('#flowerModelDiv').css({ 
+                width :'100vw',
+                height: "100vh",
+                left: '0' 
+            });
+            $("#flowerModelDiv #fullscreen-btn").attr("src", "front/images3D/minimize-btn.png")
+            isFlowerFullscreen = true;
+        }else{
+            $('#flowerModelDiv').css({ 
+                width:'20vw',
+                height:'20vh',
+                bottom:'0vw',
+                left:'26vw'
+            });
+            $("#flowerModelDiv #fullscreen-btn").attr("src", "front/images3D/fullscreen-btn.png")
+            isFlowerFullscreen = false;
+        }
+    });
 
 
     document.onkeydown = (evt)=>{

@@ -1,3 +1,5 @@
+
+
 let designLight;                                                              //let to hold the design scene's light obj
 let designCamera;                                                             //let to hold the design scene's camera obj
 let panelCamera;                                                              //let to hold the panel Camera / camera for designing the panel
@@ -21,6 +23,8 @@ let isDesignSceneActive = false;                                              //
 let isCurrentPanelInLocation = false;                                         //let to check if the current panel selected is in the design location             
 
 let mbayeDesignInitPos = {x:-5.5129,y:0.7417,z:1.3953};                                     //let for holding the initial position of Mbaye (at the start of the scene)
+
+
 
 
 let bookFlowers_object;                                                       //let to hold the book of flowers gltf object
@@ -79,7 +83,6 @@ let bookFlowersInitPos = {x:461.19,y:24.22,z:150.54};
 
 let bookFlowersInitRot = {x:0.0987,y:0.8133,z:0.2029,w:-0.5354};
 let isLightsDisabled = false;
-let currentFlowerLabel;
 let bookTask;
 let panelFlowerBox;
 let panelFlowerBoxInitPos = {x:0,y:-0.2459,z:0,w:0.9690};
@@ -93,6 +96,8 @@ let isGizmoDragging = false;
 
 let isRuruClicked = false;
 let overHighlight;
+let modified_panels_list = new Map();
+let panels_from_db = new Map();
 
 
 //main function to create the scene
@@ -124,6 +129,11 @@ function create_design_scene(){
     designScene.autoClear = false;
     overHighlight = new BABYLON.HighlightLayer("hoverHighlight", designScene);
 
+
+    let panels = user_panels.split(",");
+    for(const panel of panels){   
+        panels_from_db.set(panel,null);
+    }
    
     return designScene;
 } //end of create scene function
@@ -143,7 +153,8 @@ function create_design_camera(){
     camera.upperRadiusLimit = 300;                                //set zoom out limit
     camera.wheelPrecision = 5;                                    //zoom in/out speed; speed - lower numer, faster zoom in/out
     // camera.fovMode = BABYLON.Camera.FOVMODE_HORIZONTAL_FIXED;
-
+    camera2 =  new BABYLON.ArcRotateCamera("Screenshot",BABYLON.Tools.ToRadians(25),BABYLON.Tools.ToRadians(85),105.0, new BABYLON.Vector3(0,0,0),designScene);
+    
     //the camera when arranging flowers to the panel
     panelCamera = new BABYLON.ArcRotateCamera("Panel Camera",BABYLON.Tools.ToRadians(25),BABYLON.Tools.ToRadians(85),110.0, new BABYLON.Vector3(0,0,0),designScene);
     // panelCamera.mode = BABYLON.Camera.ORTOGRAPHIC_CAMERA;
@@ -217,6 +228,7 @@ let nuvolaSpeechCloud;
  //function to load the meshes of the scene
 function load_design_meshes(){
     Promise.all([
+        // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/mbaye/", "mbaye061720.glb", designScene
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/mbaye/", "mbayebody2.babylon", designScene
         ).then(function (result) {
               result.meshes[0].position = new BABYLON.Vector3(-5.5129,0.7417,1.3953);
@@ -250,9 +262,6 @@ function load_design_meshes(){
                         mbayePanelsMap.set(result.meshes[i].name,result.meshes[i]);
                     }
                 }
-                // else if(result.meshes[i].name === "L_EYE" || result.meshes[i].name === "R_EYE") {
-                //     result.meshes[i].setParent(result.meshes[0]);        
-                // }
                 if(i===result.meshes.length-1) isMbayeModelReady = true;
 
               
@@ -265,6 +274,7 @@ function load_design_meshes(){
           nuvolaDesign_obj.position = new BABYLON.Vector3(12.50,-8.30,55.92);
           nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0570,-0.4064,0.0516,0.9102);
           nuvolaDesign_obj.isPickable = true;
+          add_action_mgr(result.meshes[0]);
       }),
       
       BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/seaObjects/ruru/", "ruruAnimated.babylon", designScene).then(function (result) {   
@@ -273,6 +283,7 @@ function load_design_meshes(){
           result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.6481,-0.3413,0.2794,0.6202);
           ruruDesign_obj = result.meshes[0];
           ruruDesign_obj.isPickable = true;
+          add_action_mgr(result.meshes[0]);
         }),
       BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", designScene).then(function (result) {
           mermaidSpeechCloud = result.meshes[0];
@@ -295,7 +306,11 @@ function load_design_meshes(){
           mermaidSpeechCloud.setEnabled(false);
       }),
       
-      BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/book/", "book2GLB.glb", designScene).then(function (result) {
+      BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/book/", "bookFlowersDesign.glb", designScene).then(function (result) {
+        // for(i=0;i<result.meshes.length;i++){
+        //     console.log(i,result.meshes[i].name);
+        // }
+
           result.animationGroups[0].loopAnimation = false;
           result.meshes[0].position =  new BABYLON.Vector3(461.19,24.22,150.54);
           result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0987,0.8133,0.2029,-0.5354);
@@ -305,11 +320,17 @@ function load_design_meshes(){
           bookFlowers_object.isPickable = false;
           bookFlowers_object.isVisible = false;
           bookFlowers_object.setEnabled(false);
-
+          bookLabel = result.meshes[20];                              //the plane for the book's label
           bookLeftPages = result.meshes[16];                          //bookLeftPages
-          bookRightPages = result.meshes[21];                         //bookRightPages
+          bookRightPages = result.meshes[22];                         //bookRightPages
           result.meshes[19].scaling = new BABYLON.Vector3(0.8,0.8, -0.8);   //book's log
           bookTask = result;
+          
+          add_action_mgr(result.meshes[17]);                            //book screenshot wood
+          add_action_mgr(result.meshes[37]);                            //book post top
+          add_action_mgr(result.meshes[39]);                            //book post bottom
+
+
       }),
       BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/nuvola/", "nuvolaDesign1.glb", designScene).then(function (result) {
           result.meshes[0].scaling = new BABYLON.Vector3(9.5,9.5,-9.5);
@@ -357,34 +378,14 @@ function load_design_meshes(){
       }),
   ]).then(() => {
 
-        ruruDesign_obj.actionManager = new BABYLON.ActionManager(designScene);
-        ruruDesign_obj.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
-            onOverChar)
-        );
-        ruruDesign_obj.actionManager .registerAction(
-            new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOutTrigger,
-                onOutChar)
-        );
-
-        nuvolaDesign_obj.actionManager = new BABYLON.ActionManager(designScene);
-        nuvolaDesign_obj.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
-            onOverChar)
-        );
-        nuvolaDesign_obj.actionManager .registerAction(
-            new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOutTrigger,
-                onOutChar)
-        );
-
         isBookFlowerReady = true;
-        create_flower_label();
+        // create_flower_label();
         enable_design_utility();
         listen_to_panel_rotation();
         listen_to_wheelscroll();
 
         // console.log(mbayePanelsMap);
-        // enable_home_gizmo2(nuvolaSpeechCloud);
+        enable_home_gizmo2();
 
     });
 }//end of load design meshes
@@ -394,22 +395,36 @@ function load_design_meshes(){
 
 
 //#################################################### FUNCTIONS FOR THE CHOSEN PANEL #######################################################//
-
-function enable_home_gizmo2(theFlower){
+let currCharSelected;
+function enable_home_gizmo2(){
     // Create gizmo
     designUtilLayer = new BABYLON.UtilityLayerRenderer(designScene);
     designUtilLayer.utilityLayerScene.autoClearDepthAndStencil = false;
     homeGizmo = new BABYLON.RotationGizmo(designUtilLayer);
     // homeGizmo = new BABYLON.RotationGizmo(designUtilLayer);
-    homeGizmo.attachedMesh = theFlower;
+    // homeGizmo.attachedMesh = theFlower;
     // homeGizmo.scaleRatio = 1.5;
 
     homeGizmo2 = new BABYLON.PositionGizmo(designUtilLayer);
     // homeGizmo = new BABYLON.RotationGizmo(designUtilLayer);
-    homeGizmo2.attachedMesh = theFlower;
+    // homeGizmo2.attachedMesh = theFlower;
     homeGizmo2.scaleRatio = 1.5;
 }
 
+
+function temp_gizmo(obj){
+    designUtilLayer = new BABYLON.UtilityLayerRenderer(designScene);
+    designUtilLayer.utilityLayerScene.autoClearDepthAndStencil = false;
+    gizmoR = new BABYLON.RotationGizmo(designUtilLayer);
+    gizmoR = new BABYLON.RotationGizmo(designUtilLayer);
+    gizmoR.attachedMesh = theFlower;
+    // homeGizmo.scaleRatio = 1.5;
+
+    gizmoP = new BABYLON.PositionGizmo(designUtilLayer);
+    // homeGizmo = new BABYLON.RotationGizmo(designUtilLayer);
+    gizmoP.attachedMesh = theFlower;
+    gizmoP.scaleRatio = 1.5;
+}
 
 //function to change the color of the panel to solid or transparent
 function set_current_panel_color(panel,mode){
@@ -517,7 +532,7 @@ function check_if_mesh_is_flower_variety(flower){
 //function to create copy of the flower clicked from the book of flowers
 function create_black_flower_copy(theFlower){
     //create a clone of the flower clicked
-    let theFlowerCopy = theFlower.clone(theFlower.name+"Copy");
+    let theFlowerCopy = theFlower.clone(theFlower.name);
     let flowerHasParent = false;
     
     //if the active camera is panel camera or focus camera
@@ -660,9 +675,7 @@ function remove_book_of_flowers(){
         if(designOrigFlower){
             designOrigFlower.material.dispose();
             //if there is a currenet material of the flower label, dispose the material and hide the label plane
-            currentFlowerLabel.material.dispose();
-            currentFlowerLabel.isVisible = false;
-            currentFlowerLabel.setEnabled(false);
+            bookLabel.material.dispose();
         }
         //hide the book of flowers and set that the book is not active
         bookFlowers_object.setEnabled(false);
@@ -765,33 +778,22 @@ function create_post_labels(){
     
 }//end of function
 
-function create_flower_label(){
-    let plane = BABYLON.MeshBuilder.CreatePlane("flowerLabel", {width:0.85, height:0.35}, designScene);
-    plane.position = new BABYLON.Vector3(469.42,20.52,153.93);
-    plane.rotationQuaternion = new BABYLON.Quaternion(0.0774, -0.8381, 0.1026, 0.5292);
-    plane.isVisible = false;
-    plane.setEnabled(false);
-    currentFlowerLabel  = plane;
-}
 
-function set_flower_label(theFlower){
+function set_flower_label(theFlowerName){
     
-    let planeMatl = new BABYLON.StandardMaterial(theFlower, designScene);
-    planeMatl.diffuseTexture = new BABYLON.Texture("front/images3D/flowers2D/label/"+theFlower+".png", designScene);
-    
+    //function to set flower label on the center wood
+    let planeMatl = new BABYLON.StandardMaterial("labelMatl", designScene);
+    planeMatl.diffuseTexture = new BABYLON.Texture("front/images3D/flowers2D/label/"+theFlowerName+".png", designScene);
+    // planeMatl.diffuseColor = BABYLON.Color3.Red();
     planeMatl.diffuseTexture.hasAlpha = true;
+    planeMatl.diffuseTexture.uScale = -3.4;
+    planeMatl.diffuseTexture.vScale = -8;
+    planeMatl.diffuseTexture.uOffset = -0.77;
+    planeMatl.diffuseTexture.vOffset = -1.08;
     planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
-    planeMatl.backFaceCulling = false;//llways show the front and the back of an element
+    planeMatl.backFaceCulling = false;
 
-    currentFlowerLabel.material = planeMatl;
-
-    if(designScene.activeCamera === focusCamera && !currentFlowerLabel.parent){
-      currentFlowerLabel.position = new BABYLON.Vector3( 469.43,20.54,153.94);
-      
-      currentFlowerLabel.rotationQuaternion = new BABYLON.Quaternion(-0.0107, -0.9996,-0.0041, -0.0070);
-    }
-    
-    currentFlowerLabel.setParent(bookFlowers_object);
+    bookLabel.material = planeMatl;
 }
 
 
@@ -858,26 +860,57 @@ function set_flowers_to_pickable(){
   }
 
 
+function hide_book_flowers(){
+    bookFlowers_object.isVisible = false;
+    bookFlowers_object.setEnabled(false);
+    if(flowerVarietyArr && flowerVarietyArr.length>0){
+        for(let i=0;i<flowerVarietyArr.length;i++){
+          flowerVarietyArr[i].isVisible = false;
+        }
+    }
+}
+
+function show_book_flowers(){
+    bookFlowers_object.isVisible = true;
+    bookFlowers_object.setEnabled(true);
+    if(flowerVarietyArr && flowerVarietyArr.length>0){
+        for(let i=0;i<flowerVarietyArr.length;i++){
+            flowerVarietyArr[i].isVisible = true;
+        }
+    }
+}
+
+
 function take_panel_screenshot(){
+    let panelName = "";
+    if(currentPanel) panelName = currentPanel.name;
     if(designScene.activeCamera === panelCamera){
-        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, panelCamera, {width:800, height:400, precision:1});
+        hide_book_flowers();
+        let d = new Date();
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera2, {width:1024, height:768, precision:1},null,null,null,false,"Mbaye_panel_"+currentPanel.name);
+        show_book_flowers();
     }else if(designScene.activeCamera === focusCamera){
-        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, focusCamera, {width:800, height:400, precision:1});
+        hide_book_flowers();
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, focusCamera, {width:1024, height:768, precision:1},null,null,null,false,"Mbaye_panel_"+currentPanel.name);
+        show_book_flowers();
     }else if(designScene.activeCamera === designCamera){
-        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, designCamera, {width:800, height:400, precision:1});
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, designCamera, {width:1600, height:800, precision:1},null,null,null,false,"Mbaye_screenshot");
     }
 
     Swal.fire({
-        imageUrl: '../../front/images3D/designScene/trevorSaved.png',
-        imageWidth: '10vw',
-        imageHeight: 'auto',
-        position: 'top-end',
-        title: 'Screenshot saved successfully!',
+        width: '10vw',
+        padding: '3em',
+        background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+        title: '\n\n\n\nScreenshot of panel '+panelName+' saved succesfully!',
         showConfirmButton: false,
-        timer: 3000,
+        position: 'top-end',
+        // timer: 3000,
         width: 100,
-        background: 'rgba(8, 64, 147, 0.6)',
-    });
+        customClass: {
+          popup: 'trevor-popup-class',
+        }
+      });
+
 }
 
 
@@ -913,6 +946,7 @@ function returnPanelViaButton(){
         scaleTool_btn.isVisible = false;
         offTool_btn.isVisible = false;
         screenshot_btn.isVisible = true;
+        if(load_hd_world_btn) load_hd_world_btn.isVisible = false;
         // delTool_btn.isVisible = false;
 
 
@@ -944,7 +978,16 @@ function returnPanelViaButton(){
     
 
         let count = theCurrentPanel.obj.getChildren().length;
-        if(count < 1) set_current_panel_color(panel,2);
+        if(count < 1){
+            set_current_panel_color(panel,2);
+            // if(panels_from_db.has(panel.name)) modified_panels_list.set(panel.name,null);
+            
+        }
+        else{
+            modified_panels_list.set(panel.name,null);
+        }
+      
+        if(panels_from_db.has(panel.name)) modified_panels_list.set(panel.name,null);
         let currentPanelInitZPos = theCurrentPanel.obj.position.z;
         theCurrentPanel.obj = null;
         theCurrentPanel.isActive = false;
@@ -962,14 +1005,7 @@ function returnPanelViaButton(){
             
             set_chars_position(1);
             set_clouds_position(1);
-
-
-           
-
-            // ruruSpeech2.isVisible = false;
-            // ruruSpeech2.setEnabled(false);
-            // nuvolaSpeech2.isVisible = false;
-            // nuvolaSpeech2.setEnabled(false);
+        
 
             nuvolaSpeech3.isVisible = false;
             nuvolaSpeech3.setEnabled(false);
@@ -1168,6 +1204,11 @@ function enable_design_utility(){
             designGizmoManager.boundingBoxGizmoEnabled = false;
             designGizmoManager.rotationGizmoEnabled = false;
             designGizmoManager.scaleGizmoEnabled = false;
+
+            if(isTakePhotoStatus && homeGizmo && homeGizmo2){
+                homeGizmo.attachedMesh = null;
+                homeGizmo2.attachedMesh = null;
+            }
             
         }
 
@@ -1202,8 +1243,9 @@ function create_design_gui(){
     offTool_btn = BABYLON.GUI.Button.CreateSimpleButton("OffToolBtn", "Tool: Off");
     //delTool_btn = BABYLON.GUI.Button.CreateSimpleButton("DelToolBtn", "Tool: Delete");
     delTool_btn = BABYLON.GUI.Button.CreateSimpleButton("Temp Btn", "Save");
-
+    load_hd_world_btn = BABYLON.GUI.Button.CreateSimpleButton("hdWorldBtn", "Load More Flowers");
     screenshot_btn = BABYLON.GUI.Button.CreateSimpleButton("ScreenshotBtn", "Take Photo");
+    reset_btn = BABYLON.GUI.Button.CreateSimpleButton("ResetPosBtn", "Reset");
 
     let btnWidth = canvas.width*0.04;
     let btnHeight = canvas.height*0.04;
@@ -1218,9 +1260,10 @@ function create_design_gui(){
     offTool_btn.alpha = 0.6;
     offTool_btn.fontSize = fontSz;
     offTool_btn.background = "green";
-    offTool_btn.left = canvas.width/2 - 50;
-    offTool_btn.top = canvas.height/2 - 30;
+    offTool_btn.verticalAlignment = 1;
+    offTool_btn.horizontalAlignment = 1;
     offTool_btn.isVisible = false;
+
     
 
     //return button functions
@@ -1233,13 +1276,15 @@ function create_design_gui(){
     });
     offTool_btn.onPointerUpObservable.add(
         function(info) {
-            
+            offTool_btn.background = "green";
     });
     offTool_btn.onPointerEnterObservable.add(
         function() {
+            offTool_btn.background = "red";
     });
     offTool_btn.onPointerOutObservable.add(
         function() {
+            offTool_btn.background = "green";
 
     });    
     offTool_btn.onPointerMoveObservable.add(
@@ -1253,7 +1298,7 @@ function create_design_gui(){
     scaleTool_btn.alpha = 0.6;
     scaleTool_btn.fontSize = fontSz;
     scaleTool_btn.background = "green";
-    scaleTool_btn.left = canvas.width/2 - 50;
+    scaleTool_btn.left = canvas.width/2 - 40;
     scaleTool_btn.top = canvas.height/2 - 70;
     scaleTool_btn.isVisible = false;
     
@@ -1288,7 +1333,7 @@ function create_design_gui(){
     rotTool_btn.alpha = 0.6;
     rotTool_btn.fontSize = fontSz;
     rotTool_btn.background = "green";
-    rotTool_btn.left = canvas.width/2 - 50;
+    rotTool_btn.left = canvas.width/2 - 40;
     rotTool_btn.top = canvas.height/2 - 110;
     rotTool_btn.isVisible = false;
     
@@ -1323,7 +1368,7 @@ function create_design_gui(){
     posTool_btn.alpha = 0.6;
     posTool_btn.fontSize = fontSz;
     posTool_btn.background = "red";
-    posTool_btn.left = canvas.width/2 - 50;
+    posTool_btn.left = canvas.width/2 - 40;
     posTool_btn.top = canvas.height/2 - 150;
     posTool_btn.isVisible = false;
     
@@ -1368,7 +1413,7 @@ function create_design_gui(){
     // function(info) {
         
     //     // console.log("PANELS : ", flowersPanelsMap, "USER CURRENTLY LOGGED IN: ", userId);
-    //     saveDesignedPanels(userId+"_designedPanel");
+    //     save_designed_panels(userId+"_designedPanel");
     // });
     // delTool_btn.onPointerUpObservable.add(
     //     function(info) {
@@ -1412,11 +1457,15 @@ function create_design_gui(){
             isTakePhotoStatus = true;
             //set the characters to movable; tell the user that they can move RuRu and Nuvola
             set_char_movable();
+            reset_btn.isVisible = true;
         }else{
             take_panel_screenshot();
             screenshot_btn.background = "green";
             screenshot_btn.textBlock.text = "Take Photo";
             isTakePhotoStatus = false;
+            reset_btn.isVisible = false;
+            offTool_btn.isVisible = false;
+           
         }
         
     });
@@ -1429,9 +1478,87 @@ function create_design_gui(){
     });
     screenshot_btn.onPointerOutObservable.add(
         function() {
-
     });    
     screenshot_btn.onPointerMoveObservable.add(
+        function(coordinates) {
+            
+    });
+
+
+    reset_btn.height = btnHeight+"px";
+    reset_btn.width = btnWidth+"px";
+    reset_btn.color = "white";
+    reset_btn.alpha = 0.6;
+    reset_btn.fontSize = fontSz;
+    reset_btn.background = "green";
+    reset_btn.verticalAlignment = 0;
+    reset_btn.horizontalAlignment = 1;
+    // screenshot_btn.left = canvas.width/2 - 50;
+    reset_btn.top = 50;
+    reset_btn.isVisible = false;
+    
+
+    //pos tool button functions
+    reset_btn.onPointerDownObservable.add(
+    function(info) {
+        reset_btn.background = "red";
+        console.log("reset the positions of the chars");
+        ruruDesign_obj.position = new BABYLON.Vector3(59,8.5,9);
+        ruruDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.6481,-0.3413,0.2794,0.6202);
+        nuvolaDesign_obj.position = new BABYLON.Vector3(12.50,-8.30,55.92);
+        nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0570,-0.4064,0.0516,0.9102);
+    });
+    reset_btn.onPointerUpObservable.add(
+        function(info) {
+            reset_btn.background = "green";
+    });
+    reset_btn.onPointerEnterObservable.add(
+        function() {
+            reset_btn.background = "red";
+    });
+    reset_btn.onPointerOutObservable.add(
+        function() {
+            reset_btn.background = "green";
+
+    });    
+    reset_btn.onPointerMoveObservable.add(
+        function(coordinates) {
+            
+    }); 
+
+
+    load_hd_world_btn.height = btnHeight+"px";
+    load_hd_world_btn.width = btnWidth+"px";
+    load_hd_world_btn.color = "white";
+    load_hd_world_btn.alpha = 0.6;
+    load_hd_world_btn.fontSize = fontSz;
+    load_hd_world_btn.background = "green";
+    load_hd_world_btn.verticalAlignment = 0;
+    load_hd_world_btn.horizontalAlignment = 1;
+    load_hd_world_btn.isVisible = false;
+
+    
+
+    //return button functions
+    load_hd_world_btn.onPointerDownObservable.add(
+    function(info) {
+        load_hd_world();
+        load_hd_world_btn.dispose();
+    });
+    load_hd_world_btn.onPointerUpObservable.add(
+        function(info) {
+            load_hd_world_btn.background = "green";
+    });
+    load_hd_world_btn.onPointerEnterObservable.add(
+        function() {
+            load_hd_world_btn.background = "red";
+    });
+    load_hd_world_btn.onPointerOutObservable.add(
+        function() {
+            load_hd_world_btn.background = "green";
+
+    });    
+    load_hd_world_btn.onPointerMoveObservable.add(
         function(coordinates) {
             
     }); 
@@ -1443,6 +1570,8 @@ function create_design_gui(){
     advancedTexture.addControl(scaleTool_btn);
     advancedTexture.addControl(offTool_btn);
     advancedTexture.addControl(screenshot_btn);
+    advancedTexture.addControl(reset_btn);
+    advancedTexture.addControl(load_hd_world_btn);
     // advancedTexture.addControl(delTool_btn);
 }//end of create gui function
 
@@ -1458,6 +1587,10 @@ function design_handle_tool(theGizmo){
                 theCurrentFlower.obj.showBoundingBox = false;
                 theCurrentFlower.obj = null;
                 theCurrentFlower.hasParent = false;
+            }
+            if(isTakePhotoStatus){
+                homeGizmo.attachedMesh = null;
+                homeGizmo2.attachedMesh = null;
             }
         }else if(theGizmo == 2){
             //2 - change gizmo to rotation
@@ -1482,7 +1615,6 @@ function design_handle_tool(theGizmo){
                 theCurrentFlower.obj.dispose();
                 theCurrentFlower.obj = null;
                 theCurrentFlower.hasParent = false;
-               
             }
        }
     }
@@ -1562,10 +1694,18 @@ function add_designScene_mouse_listener(){
                       earthFlowersCamera.detachControl(canvas);
                       //if the panel clicked is not the current panel, set the clicked panel as the current panel
                       if(currentPanel==null || theDesignMesh!=theCurrentPanel.obj)  set_current_panel(theDesignMesh);
-                      isPanelMeshClicked = true;       
+                      isPanelMeshClicked = true;
                 }//end of if a panel is clicked from Mbaye
 
-                if(designScene.activeCamera === panelCamera && theDesignMesh.name === "Turtle"){
+                if(designScene.activeCamera === designCamera && isTakePhotoStatus){
+                    if(theDesignMesh === ruruDesign_obj || theDesignMesh === nuvolaDesign_obj){
+                        homeGizmo.attachedMesh = theDesignMesh;
+                        homeGizmo2.attachedMesh = theDesignMesh;
+                        offTool_btn.isVisible = true;
+                    }
+                }
+
+                if(designScene.activeCamera === panelCamera && theDesignMesh === ruruDesign_obj){
                    // console.log("return the panel and then save the game");
                    
                     Swal.fire({
@@ -1594,10 +1734,10 @@ function add_designScene_mouse_listener(){
 
                 //if the user has clicked anything from the book of flowers
                 if(bookFlowersMap.has(theDesignMesh.name)){
-                    if(theDesignMesh.name === "wood" || theDesignMesh.name == "flowerLabel") remove_book_of_flowers();
-                    else if(theDesignMesh.name =="focusText" || theDesignMesh.name =="postTop") focus_on_panel();
-                    else if(theDesignMesh.name =="returnText"  || theDesignMesh.name =="postBottom") returnPanelViaButton();  
-                    else if(theDesignMesh.name =="woodSS"  || theDesignMesh.name =="screenshotText") take_panel_screenshot();
+                    if(theDesignMesh.name === "wood" || theDesignMesh.name == "Object072") remove_book_of_flowers();        //if the middle wood is clicked
+                    else if(theDesignMesh.name =="postTop_primitive0" || theDesignMesh.name =="postTop_primitive1") focus_on_panel();
+                    else if(theDesignMesh.name =="postBottom_primitive0"  || theDesignMesh.name =="postBottom_primitive1") returnPanelViaButton();  
+                    else if(theDesignMesh.name =="wood001_primitive0"  || theDesignMesh.name =="wood001_primitive1") take_panel_screenshot();
                 }//end of if book of flowers
                 
                 //for the movement of the flower / arrangement to the panel; if the clicked mesh is a flower
@@ -1677,6 +1817,7 @@ function add_designScene_mouse_listener(){
                         offTool_btn.isVisible = true;
                         delTool_btn.isVisible = true;
                         screenshot_btn.isVisible = false;
+                        load_hd_world_btn.isVisible = true;
                         //get and set the current panel's initial rotation for when the panel is returned back to Mbaye
                         panelInitRot = currentPanel.rotationQuaternion;
 
@@ -1790,12 +1931,15 @@ function start_design_setup(){
        
         currentPanel.position = currentPanelPos;
         // currentPanel.position = currentPanelDesignPos.get(0);
-        currentPanel.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(180),0);
-        console.log("current panel in rotation: ", currentPanel.rotation);
+        // currentPanel.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(180),0);
+        currentPanel.rotation = new BABYLON.Vector3(-0.9158, 1.8938,0);
         isAnimatePanelOn = false;
         isPanelMovementDone = true;                         //let to indicate that panel is done moving away from Mbaye to the design location
+
+        camera2.setTarget(currentPanel);
         // panelCamera.attachControl(canvas,true);
-       
+        
+        
 }
 
 function listen_to_panel_rotation(){
@@ -1918,13 +2062,53 @@ function listen_to_wheelscroll(){
 }//end of listen to wheel scroll function
 
 
+function add_action_mgr(theObj){
+    theObj.actionManager = new BABYLON.ActionManager(designScene);
+    theObj.actionManager.registerAction(
+            new BABYLON.ExecuteCodeAction(
+                BABYLON.ActionManager.OnPointerOverTrigger,
+                onOverChar
+        )
+    );
+    theObj.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPointerOutTrigger,
+            onOutChar
+        )
+    );
+}
 
 let charLabel;
 var onOverChar =(meshEvent)=>{
     
     if(designScene.activeCamera === designCamera && isCharMovementEnabled){ 
         overHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.4,0.1));
+    }
 
+    if(designScene.activeCamera === panelCamera && meshEvent.source === ruruDesign_obj){                                               //hover on ruru during design a panel part
+        let partTooltip = document.createElement("span");
+        partTooltip.setAttribute("id", "partTooltip");
+        var sty = partTooltip.style;
+        sty.position = "absolute";
+        sty.lineHeight = "1.2em";
+        sty.paddingLeft = "0.5%";
+        sty.paddingRight = "0.5%";
+        sty.color = "#ffffff";
+        sty.fontFamily = "Courgette-Regular";
+        sty.backgroundColor = "#0b91c3a3";
+        sty.opacity = "0.7";
+        sty.fontSize = "1vw";
+        sty.top = designScene.pointerY + "px";
+        sty.left = (designScene.pointerX+20) + "px";
+        sty.cursor = "pointer";
+
+        document.body.appendChild(partTooltip);
+        partTooltip.textContent = "Save Game";
+        overHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.4,0.1));
+    }
+
+    if(bookFlowersMap.has(meshEvent.source.name)){
+        overHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0,0.3,0));
     }
 };
 
@@ -1936,8 +2120,14 @@ var onOutChar =(meshEvent)=>{
     
     if(designScene.activeCamera === designCamera && isCharMovementEnabled){
         overHighlight.removeMesh(meshEvent.source);
-        
+    }else{
+        overHighlight.removeMesh(meshEvent.source);
     }
+
+    while (document.getElementById("partTooltip")) {
+        document.getElementById("partTooltip").parentNode.removeChild(document.getElementById("partTooltip"));
+    }
+
 };
 
 
@@ -2002,18 +2192,15 @@ function set_chars_position(viewNo){
 
 function set_clouds_position(viewNo){
     if(viewNo === 1){   //if initial view
-        ruruSpeechCloud.position = new BABYLON.Vector3(48.50,19.5,12.15);
-        ruruSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.1210,0.6063,-0.08125,0.7816);
+        // ruruSpeechCloud.position = new BABYLON.Vector3(48.50,19.5,12.15);
+        // ruruSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.1210,0.6063,-0.08125,0.7816);
 
-        nuvolaSpeechCloud.position = new BABYLON.Vector3(18,8.5,60);
-        nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0331,0.6358,-0.0283,0.7705);
-
-
-        ruruSpeech.isVisible = true;
-        ruruSpeech.setEnabled(true);
-
-        nuvolaSpeech.isVisible = true;
-        nuvolaSpeech.setEnabled(true);
+        // nuvolaSpeechCloud.position = new BABYLON.Vector3(18,8.5,60);
+        // nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0331,0.6358,-0.0283,0.7705);
+        ruruSpeechCloud.isVisible = false;
+        ruruSpeechCloud.setEnabled(false);
+        nuvolaSpeechCloud.isVisible = false;
+        nuvolaSpeechCloud.setEnabled(false);
 
         ruruSpeech2.isVisible = false;
         ruruSpeech2.setEnabled(false);
@@ -2031,25 +2218,31 @@ function set_clouds_position(viewNo){
 
     }else if(viewNo === 2){
          //set position and rotation of nuvola's speech cloud
-         nuvolaSpeechCloud.position = new BABYLON.Vector3(386.64,17.46,156.72);
-         nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0403,0.6396, -0.0343,0.7667);
+        nuvolaSpeechCloud.position = new BABYLON.Vector3(386.64,17.46,156.72);
+        nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0403,0.6396, -0.0343,0.7667);
 
-         ruruSpeechCloud.position = new BABYLON.Vector3(394.43,49.3,115.14);
-         ruruSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0606,0.5774,-0.0598,0.8119);
+        ruruSpeechCloud.position = new BABYLON.Vector3(394.43,49.3,115.14);
+        ruruSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0606,0.5774,-0.0598,0.8119);
 
-          //hide the first speeches of ruru and nuvola
-          ruruSpeech.isVisible = false;
-          ruruSpeech.setEnabled(false);
+        ruruSpeechCloud.isVisible = true;
+        ruruSpeechCloud.setEnabled(true);
+        nuvolaSpeechCloud.isVisible = true;
+        nuvolaSpeechCloud.setEnabled(true);
 
-          nuvolaSpeech.isVisible = false;
-          nuvolaSpeech.setEnabled(false);
 
-          //show the 2nd speeches of ruru and nuvola
-          ruruSpeech2.isVisible = true;
-          ruruSpeech2.setEnabled(true);
+        //hide the first speeches of ruru and nuvola
+        ruruSpeech.isVisible = false;
+        ruruSpeech.setEnabled(false);
 
-          nuvolaSpeech2.isVisible = true;
-          nuvolaSpeech2.setEnabled(true);
+        nuvolaSpeech.isVisible = false;
+        nuvolaSpeech.setEnabled(false);
+
+        //show the 2nd speeches of ruru and nuvola
+        ruruSpeech2.isVisible = true;
+        ruruSpeech2.setEnabled(true);
+
+        nuvolaSpeech2.isVisible = true;
+        nuvolaSpeech2.setEnabled(true);
     }else if(viewNo === 3){
         nuvolaSpeechCloud.position = new BABYLON.Vector3(519.04,50.53,73.52);
         nuvolaSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.1268,-0.1632,-0.0212,0.9780);
@@ -2059,7 +2252,6 @@ function set_clouds_position(viewNo){
         
     }
 }
-
 
 
 //
@@ -2079,17 +2271,18 @@ function set_char_movable(){
     nuvolaSpeech.isVisible = false;
     nuvolaSpeech.setEnabled(false);
 
-
     Swal.fire({
-        imageUrl: '../../front/images3D/designScene/trevorSaved.png',
-        imageWidth: '10vw',
-        imageHeight: 'auto',
-        position: 'top-end',
-        title: 'Hi! Take a good photo of your panel on Mbaye! You can reposition RuRu and Nuvola as you wish! Click the "Capture Now" to capture your current scene.',
+        width: '10vw',
+        padding: '3em',
+        background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+        title: '\n\n\n\nHi! Take a good photo of your panel on Mbaye! You can reposition RuRu and Nuvola as you wish! Click the "Capture Now" to capture your current scene.',
+        width:100,
         showConfirmButton: false,
-        width: 100,
-        background: 'rgba(8, 64, 147, 0.6)',
-    });
+        position: 'top-end',
+        customClass: {
+          popup: 'trevor-popup-class',
+        }
+      });
 }
 
 
@@ -2116,6 +2309,7 @@ function set_panel_children(flowers){
 function load_saved_game(){
     Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "storage/saveState/designPanel/", load_filename, designScene).then(function (result) {
+            console.log("user panels: ", user_panels);
             for(let i=0;i<result.meshes.length;i++){
                 if(mbayePanelsMap.has(result.meshes[i].name)){
                     console.log(result.meshes[i].name);
@@ -2134,9 +2328,11 @@ function load_saved_game(){
 }
 
 
-function saveDesignedPanels(filename) {
+
+function save_designed_panels(filename) {
     designCamera.detachControl(canvas);
     var serializedMesh;       
+    let savedFlowersList = {};
     var meshes_to_save = {                       
         "materials": [],                        
         "geometries":    {    
@@ -2152,26 +2348,43 @@ function saveDesignedPanels(filename) {
         "meshes": []            
     };  
 
-    console.log("save current progress",flowersPanelsMap);
+    // console.log("save current progress",flowersPanelsMap);
     if(objectUrl) {
         window.URL.revokeObjectURL(objectUrl);
     }
 
     
-    
     for (const [panel,val] of flowersPanelsMap.entries()) {
-        // console.log(panel,val.size);
-        // if(val.size>0) 
-        serializedMesh = BABYLON.SceneSerializer.SerializeMesh(panel,false,true);                    
-        for (let i=0;i<serializedMesh["meshes"].length;i++) { 
-            meshes_to_save["materials"].push(serializedMesh["materials"][i]);            
-            meshes_to_save["geometries"]["vertexData"].push(serializedMesh["geometries"]["vertexData"][i]);   
-            meshes_to_save["meshes"].push(serializedMesh["meshes"][i]);  
-        }      
-
+        // console.log("thepanel:", panel.name,val,val.size);
+        if(val.size>0){
+            serializedMesh = BABYLON.SceneSerializer.SerializeMesh(panel,false,true);    
+            for (let i=0;i<serializedMesh["meshes"].length;i++) { 
+                meshes_to_save["materials"].push(serializedMesh["materials"][i]);            
+                meshes_to_save["geometries"]["vertexData"].push(serializedMesh["geometries"]["vertexData"][i]);   
+                meshes_to_save["meshes"].push(serializedMesh["meshes"][i]);  
+            } 
+        }
     }
 
-    
+    for (const [panel,val] of flowersPanelsMap.entries()) {
+        console.log("PANEL NAME: ", panel.name);
+        if(modified_panels_list.has(panel.name)){
+            let temp = [];
+           
+                for(const a of val.values()){
+                    temp.push(a.name);
+                }
+          
+            if(temp.length == 0) temp = "0";
+            
+           savedFlowersList[panel.name] = temp;
+        }
+        // if(val.size<0) flowersPanelsMap.delete(panel);
+    }
+
+
+    console.log("modified flowers list: ", modified_panels_list);
+    console.log("saved flowers list: ", savedFlowersList);
     var strMesh = JSON.stringify(meshes_to_save);
     
    
@@ -2188,35 +2401,37 @@ function saveDesignedPanels(filename) {
                 uid: userId,
                 designPath:userId+"_designedPanel.babylon",
                 babylonFile:strMesh,
+                flowersList:savedFlowersList,
                 _token:token
             },
             success: function(result){
                 Swal.fire({
-                    imageUrl: '../../front/images3D/designScene/trevorSaved.png',
-                    imageWidth: '10vw',
-                    imageHeight: 'auto',
-                    position: 'top-end',
-                    title: 'Your progress has been saved',
+                    width: '10vw',
+                    padding: '3em',
+                    background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+                    title: '\n\n\n\nYour progress has been saved.',
                     showConfirmButton: false,
+                    position: 'top-end',
                     timer: 3000,
-                    width: 100,
-                    background: 'rgba(8, 64, 147, 0.6)',
-                });
+                    customClass: {
+                      popup: 'trevor-popup-class',
+                    }
+                  });
+            
                 designCamera.attachControl(canvas,true);
             },
             error: function(result){
                 Swal.fire({
-                    position: 'top-end',
-                    imageUrl: '../../front/images3D/designScene/trevorSaved.png',
-                    imageWidth: '10vw',
-                    imageHeight: 'auto',
-                    title: 'Oops...something went wrong. Your progress was not saved.',
+                    width: '10vw',
+                    padding: '3em',
+                    background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+                    title: '\n\n\n\nOops...something went wrong. Your progress was not saved.',
                     showConfirmButton: false,
+                    position: 'top-end',
                     timer: 3000,
-                    width: 100,
-                    background: 'rgba(8, 64, 147, 0.6)',
                     customClass: {
                         title: 'error-title-class',
+                        popup: 'trevor-popup-class',
                     },
                 });
             }
@@ -2366,7 +2581,7 @@ engine.runRenderLoop(function () {
                 isCurrentPanelInLocation = false;               //set to false because current panel is returned to mbaye
                 if(isRuruClicked){
                     setTimeout(function(){
-                        saveDesignedPanels(userId+"_designedPanel");
+                        save_designed_panels(userId+"_designedPanel");
                     },1000);
                 }
                 isRuruClicked = false;
@@ -2458,8 +2673,6 @@ engine.runRenderLoop(function () {
                     for(let i=0;i<flowerVarietyArr.length;i++){
                         flowerVarietyArr[i].isVisible = true;
                     }
-                    currentFlowerLabel.isVisible = true;
-                    currentFlowerLabel.setEnabled(true); 
                 }
                 isOpenBookFlowers = false;
             }else{              
@@ -2527,7 +2740,8 @@ let userId = document.getElementById('userId').value;
 $('#loadingScreenOverlay').on('click', function(evt){
     $(this).remove();
     $('#loadingScreenDiv').remove();
-    $('#loadingScreenPercent').remove();
+    document.getElementById("loadingScreenPercent").style.visibility = "hidden"; 
+    // $('#loadingScreenPercent').hide();
     if(has_load_game && isProgressLoaded){
         Swal.fire({
             imageUrl: '../../front/icons/alert-icon.png',
