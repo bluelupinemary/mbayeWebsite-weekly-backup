@@ -45,8 +45,8 @@
             </div>
             <img id="close-btn" src="{{asset('front')}}/images3D/close-btn.png"  data-toggle="tooltip" title="Close" align="right" onclick="hidePage(1)"/>
             <img id="fullscreen-btn" src="{{asset('front')}}/images3D/fullscreen-btn.png" data-toggle="tooltip" title="Fullscreen" align="right"/> 
-            Wikipedia: <span id="page-url" ></span><br>
-            Song Playing: <a id="song-url" href="" target="_blank"><span id="song-url-span"></span></a> 
+            <span class="spanLbl">Wikipedia:</span> <span id="page-url" ></span><br>
+            <span class="spanLbl">Song Playing:</span> <a id="song-url" href="" target="_blank"><span id="song-url-span"></span></a> 
             
             <iframe id="wikiPage" src="" frameBorder="0"></iframe>
     </div>
@@ -57,7 +57,7 @@
         </div>
         <img id="close-btn" src="{{asset('front')}}/images3D/close-btn.png"  data-toggle="tooltip" title="Close" align="right" onclick="hidePage(2)"/>
         <img id="fullscreen-btn" src="{{asset('front')}}/images3D/fullscreen-btn.png" data-toggle="tooltip" title="Fullscreen" align="right"/> 
-        Wikipedia: <span id="carpet-page-url" ></span><br>
+        <span class="spanLbl">Wikipedia:</span> <span id="carpet-page-url" ></span><br>
         
         <iframe id="carpetsWikiPage" src="" frameBorder="0"></iframe>
     </div>
@@ -93,6 +93,7 @@
     
     
     <script src="https://www.youtube.com/iframe_api"></script>   
+    
 
     
    

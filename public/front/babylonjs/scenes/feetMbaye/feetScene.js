@@ -1,9 +1,10 @@
 
+
 let canvas;
 let engine;
 let theAstroFace;
 let DISC_CAM_INIT_POS = {x:2.83, y:0.44,z:580.01};
-let insCamera;
+let footCamera;
 let cameraInitState = {position:null,a:null,b:null,r:null,upperA:null, lowerA:null, upperB:null, lowerB:null,upperR:null, lowerR:null,angularY:null};
 let astroInitState = {x:0,y:0,z:0};
 let hl,starColor;
@@ -18,10 +19,10 @@ let createContactScene = function(){
     hdrTexture.gammaSpace = false;
     scene.environmentTexture = hdrTexture;
   
-    // load_3D_mesh();
-  
+    load_3D_mesh();
+    load_orig_flowers();
     create_skybox();
-    insCamera = create_camera();
+    footCamera = create_camera();
     create_light();
     // create_contacts_gui();
     
@@ -36,30 +37,41 @@ let createContactScene = function(){
 //############################################# CREATE THE SCENE'S CAMERAS #############################################//
 //function to add the camera to the scene
 function create_camera(){
-    let camera = new BABYLON.ArcRotateCamera("Main Camera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-198.34,80.42,162.37),scene);
+    let camera = new BABYLON.ArcRotateCamera("Main Camera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-60.752,10,7.05),scene);
+
     //zoom in/out speed; speed - lower numer, faster zoom in/out
-    camera.attachControl(canvas,true);
+
+    camera.fovMode = BABYLON.Camera.FOVMODE_HORIZONTAL_FIXED;
+    camera.fov = 1.4;
+    
     camera.upperAlphaLimit = 1000;                  //up down tilt upper limit
-    camera.lowerRadiusLimit = 3;                    //zoom in limit
-    camera.upperRadiusLimit = 2000;                 //zoom out limit
-    camera.wheelPrecision = 1;                      //wheel scroll speed; lower number faster
+    camera.lowerRadiusLimit = 8;                    //zoom in limit
+    camera.upperRadiusLimit = 500;                 //zoom out limit
+    camera.wheelPrecision = 10;                      //wheel scroll speed; lower number faster
     camera.panningSensibility = 500;               //movment of camera when right mouse is clicked; lower number, faster
     camera.target = new BABYLON.Vector3(0,0,0);     //focus the camera on 0,0,0
     camera.panningDistanceLimit = 1500;             //maximum allowable movement via right mouse button
     camera.pinchPrecision = 1;
+    camera.radius = 100;
+   
+    camera.alpha =  2.9088;
+    camera.beta = 1.5066;
+    camera.attachControl(canvas,true);
+    scene.activeCamera = camera;
+    camera.checkCollisions = true;
     
-    //save the initial state of the camera
-    cameraInitState.position = new BABYLON.Vector3(-198.34,80.42,162.37);
-    cameraInitState.a = camera.alpha;
-    cameraInitState.b = camera.beta;
-    cameraInitState.r = camera.radius;
-    cameraInitState.upperA = camera.upperAlphaLimit;
-    cameraInitState.lowerA = camera.lowerAlphaLimit;
-    cameraInitState.upperB = camera.upperBetaLimit;
-    cameraInitState.lowerB = camera.lowerBetaLimit;
-    cameraInitState.upperR = camera.upperRadiusLimit;
-    cameraInitState.lowerR = camera.lowerRadiusLimit;
-    cameraInitState.angularY = camera.angularSensibilityY;
+    // //save the initial state of the camera
+    // cameraInitState.position = new BABYLON.Vector3(-198.34,80.42,162.37);
+    // cameraInitState.a = camera.alpha;
+    // cameraInitState.b = camera.beta;
+    // cameraInitState.r = camera.radius;
+    // cameraInitState.upperA = camera.upperAlphaLimit;
+    // cameraInitState.lowerA = camera.lowerAlphaLimit;
+    // cameraInitState.upperB = camera.upperBetaLimit;
+    // cameraInitState.lowerB = camera.lowerBetaLimit;
+    // cameraInitState.upperR = camera.upperRadiusLimit;
+    // cameraInitState.lowerR = camera.lowerRadiusLimit;
+    // cameraInitState.angularY = camera.angularSensibilityY;
 
     return camera;
 }//end of create camera function
@@ -86,6 +98,7 @@ function create_skybox(){
     skybox.isPickable = false;
     skybox.checkCollisions = true;
     skybox.infiniteDistance = true;
+    skybox.renderingGroupId = 0;
     let skyboxMaterial = new BABYLON.StandardMaterial("contactSkyboxMaterial", scene);
     skyboxMaterial.backFaceCulling = false;
 
@@ -112,23 +125,12 @@ function create_skybox(){
 
 //############################################# LOAD THE SCENE'S MODELS #############################################//
 //function to load the 3D meshes
-let astronaut,navigator_obj;
-let astronautParts = {savePnl:null, launchPnl:null};
+let rfoot_obj;
+let rfoot_meshes;
 function load_3D_mesh(){
-    user_gender = document.getElementById('userGender').value;
-    let objPath;
-    let model;
-    if(user_gender === 'female'){
-      objPath = 'front/objects/astronaut/thomasina/';
-      model = 'MajorThomasina3.babylon';
-    }
-    else{
-      objPath = 'front/objects/astronaut/tom/'
-      model = 'MajorTom2.babylon';
-    }
     var loadedPercent = 0;
     Promise.all([
-          BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/astronaut/thomasina/MajorThomasina3.babylon", model, scene,
+          BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/feetMbayeScene/", "FrontRFoot.babylon", scene,
               function (evt) {
                   // onProgress
                   
@@ -140,91 +142,120 @@ function load_3D_mesh(){
                   }
                   document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+loadedPercent+" %";
             }).then(function (result) {
-                
-                for(let i=0;i<result.meshes.length;i++){
-                  result.meshes[i].isPickable = true;
-                    if(result.meshes[i].name === "face"){
-                      theAstroFace = result.meshes[i];
-                    }else if(result.meshes[i].name === "helmetFace"){
-                      // console.log("THE HELMET: ", result.meshes[i]);
-                      result.meshes[i].visibility = 0.5;
-                    }else if(result.meshes[i].name === "helmet") result.meshes[i].material.backFaceCulling = false;
-                    else if(result.meshes[i].name === "Navigator") navigator_obj = result.meshes[i];
-                    else if(result.meshes[i].name === "body") astronaut = result.meshes[i];
-                    
-                   
-                    if(i===result.meshes.length-1) loadedPercent = 100;
-                }
-                astronaut.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(130),0);
-                if(user_gender === 'female') astronaut.rotation.x = BABYLON.Tools.ToRadians(20);
-                
+                result.meshes[0].scaling = new BABYLON.Vector3(12,12,12);
+                result.meshes[0].isPickable = true;
+                rfoot_obj = result.meshes[0];
+                rfoot_obj.checkCollisions = true;
+                rfoot_meshes = result.meshes;
+
+                // result.meshes.forEach(function(m) {
+                //  console.log(m.name +"\n");
+                // });
+
             }),
       
       ]).then(() => {
         add_mouse_listener();
-        setTimeout(function(){
-            if(loadedPercent >= 100){
-              document.getElementById("loadingScreenDiv").style.display = "none";
-              document.getElementById("loadingScreenPercent").style.display = "none";
-             
-            }
-        },1000);
+      
 
           
     });
 }//end of load design meshes
 
 
-
-let homeGizmo,homeGizmo2;
+let homeGizmo;
+let homeGizmo2;
+let isGizmoDragging = false;
 function enable_gizmo(themesh){
     // Create gizmo
-    let utilLayer = new BABYLON.UtilityLayerRenderer(scene)
-    utilLayer.utilityLayerScene.autoClearDepthAndStencil = false;
+    let utilLayer = new BABYLON.UtilityLayerRenderer(scene);
+
     homeGizmo = new BABYLON.PositionGizmo(utilLayer);
     homeGizmo2 = new BABYLON.RotationGizmo(utilLayer);
+    
+    
+    
+    utilLayer.utilityLayerScene.autoClearDepthAndStencil = false;
+    
     homeGizmo.attachedMesh = themesh;
     homeGizmo.scaleRatio = 2;
     homeGizmo2.attachedMesh = themesh;
-}
 
-
-
-//######################################## CREATE THE ASTRONAUT'S FACE ########################################//
-function create_face_texture(thePath){
   
-    let faceMatl = new BABYLON.StandardMaterial("facePhoto", scene);
-    faceMatl.diffuseColor = new BABYLON.Color3(0,0,0);
-    faceMatl.emissiveColor = new BABYLON.Color3(0.5,0.5,0.5);
-    faceMatl.diffuseTexture = new BABYLON.Texture(thePath, scene);
-    faceMatl.diffuseTexture.hasAlpha = true;
-    faceMatl.backFaceCulling = false;//Allways show the front and the back of an element
-    theAstroFace.material = faceMatl;
-    theAstroFace.material.canRescale = true;
-    theAstroFace.material.diffuseTexture.level = 2;
-    theAstroFace.material.diffuseTexture.uScale = 1;
-    theAstroFace.material.diffuseTexture.vScale =  1;
+    homeGizmo.onDragStartObservable.add(function () {
+        isGizmoDragging = true;
+    });
+    homeGizmo.onDragEndObservable.add(function () {
+        isGizmoDragging = false;
+        homeGizmo2.attachedMesh = null;
+        homeGizmo.attachedMesh = null;
+        
+    });
 }
 
 
 
 
 //############################################# HANDLE USER'S INTERACTION #############################################//
-function validateEmail(email) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
-
 let isPlane2Selected = false;
 let isLaunchEnabled = false;
-
+let currFlower;
 function add_mouse_listener(){
   var onPointerDownVisit = function (evt) {
       if(scene) var pickinfo = scene.pick(scene.pointerX, scene.pointerY);
       else return;
       if(pickinfo.hit){
           let theMesh = pickinfo.pickedMesh;
+          let mesh_arr = [];
+          // if(!isGizmoDragging ) {
+          //   enable_gizmo(theMesh);
+          
+          // }
           console.log("the mesh clicked: ", theMesh,theMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
+          console.log("camera: ", footCamera.position, footCamera.alpha, footCamera.beta);
+          
+          if(rFootFlowersMap.has(theMesh.name)){
+              let val = rFootFlowersMap.get()[1];
+              clearTimeout(focusTimer);
+
+              if(theMesh.name === "1Protea"){
+                mesh_arr.push("1AProtea");
+                mesh_arr.push("1BProtea");
+              }else if(theMesh.name === "12Buttercup"){
+                mesh_arr.push("12AButtercup");
+                mesh_arr.push("12BButtercup");
+              }else if(theMesh.name === "25PilosellaAurantiaca"){
+                mesh_arr.push("25APilosellaAurantiaca");
+              }else if(theMesh.name === "26ChileanBellflower"){
+                mesh_arr.push("26BChileanBellflower");
+              }else if(theMesh.name === "2Sunflower"){
+                mesh_arr.push("2ASunflower");
+                mesh_arr.push("2BSunflower");
+              }else if(theMesh.name === "3ArumLily"){
+                mesh_arr.push("3AArumLily");
+                mesh_arr.push("3BArumLily");
+              }else if(theMesh.name === "43ArabianJasmine"){
+                mesh_arr.push("43BArabianJasmine");
+              }else if(theMesh.name === "49BoatOrchid"){
+                mesh_arr.push("49BBoatOrchid");
+              }else if(theMesh.name === "4ColoradoBlueColumbine"){
+                mesh_arr.push("4AColoradoBlueColumbine");
+              }else if(theMesh.name === "54GardeniaThunbergia"){
+                mesh_arr.push("54AGardeniaThunbergia");
+                mesh_arr.push("54BGardeniaThunbergia");
+              }else if(theMesh.name === "5AlpineColumbine"){
+                mesh_arr.push("5AAlpineColumbine");
+              }else{
+                mesh_arr.push(theMesh.name);
+              }
+              
+              get_foot_mesh(mesh_arr,val);
+              
+          }
+         
+         
+
+         
 
     }//eof if
     
@@ -254,7 +285,197 @@ function add_mouse_listener(){
 
 }//end of listen to mouse function
 
+let litFlowersMap = new Map();
+function get_foot_mesh(meshArr,camAngle){
+  
+  console.log(camAngle);
+
+  //set to original color
+  if(litFlowersMap.size > 0){
+    for(const [key,val] of litFlowersMap.entries()){
+      key.material = val;
+    }
+    litFlowersMap.clear();
+  }
+ 
+  let ctr=0;
+  for(i=0;i<meshArr.length;i++){
+    console.log(meshArr);
+    rfoot_meshes.forEach(function(m) {
+      if (m.name === meshArr[i]) {
+          litFlowersMap.set(m,m.material);
+          if(ctr == 0){
+              set_camera_specs(m);
+            }
+          ctr++;
+         
+          let newMat= m.material.clone();
+          newMat.emissiveColor = new BABYLON. Color4(0.7,0.5,0,0.2);
+          m.material.isWorldMatrixFrozen = false;
+          m.material = newMat;
+
+      
+         
+      }
+      
+    });
+    
+  }//end of for
+  
+  
+}
+
+document.onkeydown = (evt)=>{
+     
+  //key press: p or P - enable position arrows
+  //key press: r or R - enable rotation arrows
+  //key press: s or S - enable bounding box for scaling / bounding box gizmo
+  // console.log(evt.key);
+  if(evt.key == 'o' || evt.key == 'O'){
+
+      homeGizmo.attachedMesh = null;
+      homeGizmo2.attachedMesh = null;
+  }
+
+}
+
+
 /*################################################### END OF MOUSE EVENT FUNCTION ############################################## */
+
+
+
+let focusTimer;
+//focus on the flower
+function set_camera_specs(theMesh){
+   
+    if(theMesh.name == "10Poppy"){
+        let val = cameraAngleMap.get("r");
+        footCamera.alpha = val[0].a;
+        footCamera.beta = val[0].b;
+    }
+
+    footCamera.zoomOn([theMesh], true);
+    footCamera.radius = 15;
+
+    focusTimer = setTimeout(function(){
+        footCamera.target = new BABYLON.Vector3(0,0,0);
+        footCamera.radius = 50;
+    },5000);
+    
+    
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*################################################### SETUP ORIG FLOWERS ############################################## */
+
+function set_scale(){
+  let size = getRandomInt(4,5)
+  return size;
+}
+
+//function that randomizes int
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+let nb = 100;
+var TWO_PI = Math.PI * 2;
+var angle =  TWO_PI/ nb;
+function load_orig_flowers(){
+  for (const [flowerName,val] of rFootFlowersMap.entries()) {
+      // let thePos = set_position();
+      let thePos;
+      if(val[0]!==null) thePos = val[0];
+      let theSize = set_scale();
+      let samp = init_flower(flowerName,flowerName+"Matl", "front/images3D/flowers2D/orig/"+flowerName+".png",theSize,thePos.x,thePos.y,thePos.z);
+  }
+}
+
+
+function init_flower(name,matlName,imgPath,size, x, y, z){
+  let plane = BABYLON.Mesh.CreatePlane(name, size, scene);
+  plane.isVisible = true;
+          
+  plane.position = new BABYLON.Vector3(x,y,z);
+  plane.rotation.y = BABYLON.Tools.ToRadians(-250);
+  
+  let planeMatl = new BABYLON.StandardMaterial(matlName, scene);
+  planeMatl.diffuseColor = BABYLON.Color3.Black();
+  planeMatl.diffuseTexture = new BABYLON.Texture(imgPath, scene);
+  
+  planeMatl.diffuseTexture.hasAlpha = true;
+  planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
+  planeMatl.emissiveColor = BABYLON.Color3.White();
+  planeMatl.backFaceCulling = false;//Allways show the front and the back of an element
+  planeMatl.freeze();
+  
+  plane.material = planeMatl;
+  // plane.freezeWorldMatrix();
+  add_action_mgr(plane);
+  return plane;
+}
+
+
+//function that enables the on mouse over and on mouse out events on a flower
+function add_action_mgr(theFlower){
+  theFlower.actionManager = new BABYLON.ActionManager(scene);
+  theFlower.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+              BABYLON.ActionManager.OnPointerOverTrigger,
+              onOverFlower
+      )
+  );
+  theFlower.actionManager.registerAction(
+      new BABYLON.ExecuteCodeAction(
+          BABYLON.ActionManager.OnPointerOutTrigger,
+          onOutFlower
+      )
+  );
+}
+
+//handles the on mouse over event
+let origScaling, origColor;
+var onOverFlower =(meshEvent)=>{
+  origScaling = meshEvent.source.scaling;
+  meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.4,origScaling.y*1.4,origScaling.z*1.4);
+  // hl.addMesh(meshEvent.source, new BABYLON.Color3(1,1,0.8));
+  let a = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
+  let b = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
+  let c = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
+  hl.addMesh(meshEvent.source, new BABYLON.Color3(a,b,c));
+};
+
+//handles the on mouse out event
+var onOutFlower =(meshEvent)=>{
+  meshEvent.source.scaling = origScaling;
+  hl.removeMesh(meshEvent.source);
+};
+
+
+/*################################################### END OF SETUP FLOWERS FUNCTION ############################################## */
+
+
+
+
+
+
+
+
 
 
 
@@ -262,18 +483,22 @@ function add_mouse_listener(){
 
   //function that will render the scene on loop
   var scene = createContactScene();
-  
-  engine.runRenderLoop(function(){
-    // if(isSceneLoaded){
-        scene.render();
-    //    console.log(insCamera.position, insCamera.alpha, insCamera.beta);
-    // }
     
- 
-  });//end of renderloop
+  scene.executeWhenReady(function () {    
+    document.getElementById("loadingScreenDiv").style.display = "none";
+    document.getElementById("loadingScreenPercent").style.display = "none";
+    engine.runRenderLoop(function(){
+      if(scene){
+          scene.render();
+      //    console.log(insCamera.position, insCamera.alpha, insCamera.beta);
+      }
+      
+  
+    });//end of renderloop
 
-  window.addEventListener("resize", function () {
-    engine.resize();
+    window.addEventListener("resize", function () {
+      engine.resize();
+    });
   });
 
 

@@ -14,7 +14,130 @@
         .navigator-buttons, .tos-div, .instructions-div, .communicator-div, .profilepicture {
             pointer-events: none !important;
         }
+
+        .planet-buttons button.collage {
+            display: non
+        }
     </style>
+
+    @php
+    $travel_preview = $user->getCollage('travel');
+    $designs_preview = $user->getCollage('designs');
+    $general_preview = $user->getCollage('general');
+    $politics_preview = $user->getCollage('politics');
+    $music_preview = $user->getCollage('music');
+    $sports_preview = $user->getCollage('sports');
+    $films_preview = $user->getCollage('films');
+    $mountains_and_seas_preview = $user->getCollage('mountains_and_seas');
+    $careers_preview = $user->getCollage('careers');
+    $family_and_friends_preview = $user->getCollage('family_and_friends');
+    @endphp
+
+    @if($travel_preview != '')
+    <style>
+    .pluto_preview {
+        background-image: url({{$travel_preview}});
+    }
+    </style>
+    @endif
+
+    @if($designs_preview != '')
+    <style>
+    .neptune_preview {
+        background-image: url({{$designs_preview}});
+    }
+    </style>
+    @endif
+
+    @if($general_preview != '')
+    <style>
+    .jupiter_preview {
+        background-image: url({{$general_preview}});
+    }
+    </style>
+    @endif
+
+    @if($politics_preview != '')
+    <style>
+    .uranus_preview .mover-1, .uranus_preview .map {
+        display: none;
+    }
+    .uranus_preview {
+        -webkit-transition: transform 200ms linear;
+        -moz-transition: transform 200ms linear;
+        -o-transition: transform 200ms linear;
+        transition: transform 200ms linear;
+        background-size: cover;
+        background-image: url({{$politics_preview}});
+        transform-style: preserve-3d;
+        -webkit-animation: spin 4s linear infinite alternate; /* Safari 4+ */
+        -moz-animation: spin 4s linear infinite alternate; /* Fx 5+ */
+        -o-animation: spin 4s linear infinite alternate; /* Opera 12+ */
+        animation: spin 4s linear infinite alternate;
+    }
+    </style>
+    @endif
+
+    @if($music_preview != '')
+    <style>
+    .saturn_preview .mover-1, .saturn_preview .map {
+        display: none;
+    }
+    .saturn_preview {
+        -webkit-transition: transform 200ms linear;
+        -moz-transition: transform 200ms linear;
+        -o-transition: transform 200ms linear;
+        transition: transform 200ms linear;
+        background-size: cover;
+        background-image: url({{$music_preview}});
+        transform-style: preserve-3d;
+        -webkit-animation: spin 4s linear infinite alternate; /* Safari 4+ */
+        -moz-animation: spin 4s linear infinite alternate; /* Fx 5+ */
+        -o-animation: spin 4s linear infinite alternate; /* Opera 12+ */
+        animation: spin 4s linear infinite alternate;
+    }
+    </style>
+    @endif
+
+    @if($sports_preview != '')
+    <style>
+    .moon_preview {
+        background-image: url({{$sports_preview}});
+    }
+    </style>
+    @endif
+
+    @if($films_preview != '')
+    <style>
+    .venus_preview {
+        background-image: url({{$films_preview}});
+    }
+    </style>
+    @endif
+
+    @if($mountains_and_seas_preview != '')
+    <style>
+    .mars_preview {
+        background-image: url({{$mountains_and_seas_preview}});
+    }
+    </style>
+    @endif
+
+    @if($careers_preview != '')
+    <style>
+    .mercury_preview {
+        background-image: url({{$careers_preview}});
+    }
+    </style>
+    @endif
+
+    @if($family_and_friends_preview != '')
+    <style>
+    .sun_preview {
+        background-image: url({{$family_and_friends_preview}});
+    }
+    </style>
+    @endif
 @endsection
 
 @section('content')
@@ -22,7 +145,7 @@
     <div id="container" onmouseover="hidePreview()">
         <img class='img_bg' src="{{asset('front/images/skybox_bg.png')}}" />
     </div>
-    <input class='userphotosrc' id='userphotosrc' type='hidden' value='{{Auth::user()->photo}}' />
+    <input class='userphotosrc' id='userphotosrc' type='hidden' value='{{$user->photo}}' />
     <div class="dialog">
         <div class="dialog-header">
             <p class="dialog-title"></p>
@@ -55,7 +178,7 @@
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img class="planet" src="{{asset('front/images/planets/Pluto.png')}}">
             {{-- <button class="planet-back-button travel-back btn">Back</button> --}}
@@ -72,7 +195,7 @@
                 <span class="pop-up back-pop-up">Back</span>
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img class="planet" src="{{asset('front/images/planets/neptune.png')}}">
             {{-- <button class="planet-back-button neptune-back btn">Back</button> --}}
@@ -91,7 +214,7 @@
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img class="planet" src="{{asset('front/images/planets/jupiter.png')}}">
             {{-- <button class="planet-back-button jupiter-back btn">Back</button> --}}
@@ -114,7 +237,7 @@
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img class="planet" src="{{asset('front/images/planets/moon-w.png')}}">
             {{-- <button class="planet-back-button moon-back btn">Back</button> --}}
@@ -133,7 +256,7 @@
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img class="planet" src="{{asset('front/images/planets/mars.png')}}">
             {{-- <button class="planet-back-button mars-back btn">Back</button> --}}
@@ -152,7 +275,7 @@
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img class="planet" src="{{asset('front/images/planets/venus.png')}}">
             {{-- <button class="planet-back-button venus-back btn">Back</button> --}}
@@ -171,7 +294,7 @@
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img class="planet" src="{{asset('front/images/planets/sun.png')}}">
             {{-- <button class="planet-back-button sun-back btn">Back</button> --}}
@@ -188,7 +311,7 @@
                 <span class="pop-up back-pop-up">Back</span>
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img class="planet" src="{{asset('front/images/planets/Mercury.png')}}">
             {{-- <button class="planet-back-button mercury-back btn">Back</button> --}}
@@ -207,7 +330,7 @@
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img src="{{asset('front/images/planets/uranus.png')}}" class="planet-img">
             {{-- <button class="planet-back-button uranus-back btn">Back</button> --}}
@@ -297,7 +420,7 @@
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                
             </div>
             <img src="{{asset('front/images/planets/saturn.png')}}" class="planet-img">
             {{-- <button class="planet-back-button saturn-back btn">Back</button> --}}
@@ -452,10 +575,10 @@
     </div>
 
     <!--astronaut img div-->
-    <div  class="astronaut-img-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif" id="draggable" class="ui-widget-content slide_10"> 
+    <div  class="astronaut-img-div navigator-div @if($user->gender == null || $user->gender == 'male') tom @endif" id="draggable" class="ui-widget-content slide_10"> 
         <h2 class="planet_name" id="edit-photo">Edit Photo</h2>
 
-        @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+        @if($user->gender != null && $user->gender == 'female')
             <img class="astronaut-img {{$user->getGender()}}" src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
             class="astronaut-body">
             <div class="tos-div thomasina">
@@ -520,7 +643,7 @@
         </button>
     </div>
     <div class="app" style="display: none;">
-        <commentnotification-component :user="{{ Auth::user() }}"></commentnotification-component>
+        <commentnotification-component :user="{{ $user }}"></commentnotification-component>
     </div>
     <!--end of astronaut img div-->
 </div>

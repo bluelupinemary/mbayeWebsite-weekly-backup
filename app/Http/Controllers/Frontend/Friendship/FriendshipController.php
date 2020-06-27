@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Friendship;
 use Illuminate\Http\Request;
 use App\Events\FriendRequest;
 use App\Models\Access\User\User;
+use App\Models\Friendships\Group;
 use App\Models\Friendships\Status;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -113,7 +114,10 @@ public function denyrequest(User $user){
 
 public function searchuser(Request $request){
   $q = $request['q'];
-  $users = User::where('username','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->get();
+  $users = User::where('username','LIKE','%'.$q.'%')
+  ->orWhere('email','LIKE','%'.$q.'%')
+  ->orWhere('first_name','LIKE','%'.$q.'%')
+  ->orWhere('last_name','LIKE','%'.$q.'%')->get();
   return  response()->json($users);
 //   if(count($users) > 0)
 //   return view('frontend.friendship.users', compact('users'))->withQuery ( $q );
@@ -157,7 +161,14 @@ public function block(User $user){
     $me = Auth::user();
     $me->blockFriend($user);
     return response()->json("User Blocked");
+}
 
+public function groupfriends(Request $request){
+    $group = Group::where('name',$request['name'])->first();
+    $friend = User::where('id',$request['id'])->first();
+    // dd($group_name,$friend);
+    $group = Auth::user()->groupFriend($friend, $group->id);
+    return response()->json("Added to group successfully");
 }
 
 }

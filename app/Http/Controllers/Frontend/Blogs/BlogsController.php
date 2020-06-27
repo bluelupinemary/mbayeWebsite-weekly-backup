@@ -18,6 +18,7 @@ use App\Repositories\Frontend\Blogs\BlogsRepository;
 use App\Http\Requests\Backend\Blogs\StoreBlogsRequest;
 use App\Http\Requests\Backend\Blogs\ManageBlogsRequest;
 use App\Http\Requests\Backend\Blogs\UpdateBlogsRequest;
+use App\Http\Requests\Backend\GeneralBlogs\StoreGeneralBlogsRequest;
 
 /**
  * Class BlogsController.
@@ -221,6 +222,19 @@ class BlogsController extends Controller
                     Storage::delete('public/trix-attachments/'.$attachments[$i]);
                 }
             }
+        }
+    }
+
+    public function saveGeneralBlog(StoreGeneralBlogsRequest $request)
+    {
+        $saved_blog = $this->blog->createGeneralBlog($request->except('_token'));
+        
+        $user = User::find($request->user_id);
+
+        if($user->roles[0]->name == 'User') {
+            return array('status' => 'success', 'message' => 'Blog published successfully!', 'data' => $saved_blog);
+        } else {
+            return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
         }
     }
 }

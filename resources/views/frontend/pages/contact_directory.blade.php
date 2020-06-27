@@ -13,6 +13,10 @@
 @endsection
 
 @section('content')
+{{-- @foreach ($contact_list as $contact)
+    <p>This is user {{ $contact->planet }}</p>
+@endforeach --}}
+
     <input type="hidden" id="userGender" value="{{$gender}}"/>
     <input type="hidden" id="userId" value="{{$userId}}"/>
     <canvas id="canvas"></canvas>
@@ -28,8 +32,12 @@
   <script>
     var token = '{{ Session::token() }}';
     var urlStoreContacts = '{{ route('frontend.user.storeContacts') }}';
-    var has_load_game = '{{ $has_load_game ?? '' }}';
+    var has_contacts = '{{ $has_contacts ?? '' }}';
     var load_filename = '{{$filename ?? ''}}';
+    var contact_list = '{{$contact_list ?? ''}}';
+    
+    if(contact_list !=  "") contact_list = JSON.parse(contact_list.replace(/&quot;/g,'"'));
+    
 
    
 </script>

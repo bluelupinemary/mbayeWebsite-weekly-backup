@@ -150,6 +150,11 @@ html, body {
          
     }
 
+    .spanLbl{
+        font-size:1vw;
+        max-width: 100%;
+    }
+
     #page-url, #song-url{
         color:gray;
         font-size: 0.8em;
@@ -157,7 +162,7 @@ html, body {
     }
 
     #close-btn{
-        width:2vh;
+        width:1vw;
         max-width:100%;
         height:auto; 
         z-index: 1; 
@@ -165,7 +170,7 @@ html, body {
     }
 
     #fullscreen-btn, #minimize-btn{
-        width:2vh;
+        width:1vw;
         max-width:100%;
         height:auto; 
         z-index: 1; 

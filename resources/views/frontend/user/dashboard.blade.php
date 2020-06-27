@@ -7,6 +7,125 @@
     <link rel="stylesheet" href="{{asset('front/CSS/jquery.mobile-1.4.5.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}">
+   
+    @php
+        $travel_preview = Auth::user()->getCollage('travel');
+        $designs_preview = Auth::user()->getCollage('designs');
+        $general_preview = Auth::user()->getCollage('general');
+        $politics_preview = Auth::user()->getCollage('politics');
+        $music_preview = Auth::user()->getCollage('music');
+        $sports_preview = Auth::user()->getCollage('sports');
+        $films_preview = Auth::user()->getCollage('films');
+        $mountains_and_seas_preview = Auth::user()->getCollage('mountains_and_seas');
+        $careers_preview = Auth::user()->getCollage('careers');
+        $family_and_friends_preview = Auth::user()->getCollage('family_and_friends');
+    @endphp
+
+    @if($travel_preview != '')
+    <style>
+        .pluto_preview {
+            background-image: url({{$travel_preview}});
+        }
+    </style>
+    @endif
+
+    @if($designs_preview != '')
+    <style>
+        .neptune_preview {
+            background-image: url({{$designs_preview}});
+        }
+    </style>
+    @endif
+
+    @if($general_preview != '')
+    <style>
+        .jupiter_preview {
+            background-image: url({{$general_preview}});
+        }
+    </style>
+    @endif
+
+    @if($politics_preview != '')
+    <style>
+        .uranus_preview .mover-1, .uranus_preview .map {
+            display: none;
+        }
+        .uranus_preview {
+            -webkit-transition: transform 200ms linear;
+            -moz-transition: transform 200ms linear;
+            -o-transition: transform 200ms linear;
+            transition: transform 200ms linear;
+            background-size: cover;
+            background-image: url({{$politics_preview}});
+            transform-style: preserve-3d;
+            -webkit-animation: spin 4s linear infinite alternate; /* Safari 4+ */
+            -moz-animation: spin 4s linear infinite alternate; /* Fx 5+ */
+            -o-animation: spin 4s linear infinite alternate; /* Opera 12+ */
+            animation: spin 4s linear infinite alternate;
+        }
+    </style>
+    @endif
+
+    @if($music_preview != '')
+    <style>
+        .saturn_preview .mover-1, .saturn_preview .map {
+            display: none;
+        }
+        .saturn_preview {
+            -webkit-transition: transform 200ms linear;
+            -moz-transition: transform 200ms linear;
+            -o-transition: transform 200ms linear;
+            transition: transform 200ms linear;
+            background-size: cover;
+            background-image: url({{$music_preview}});
+            transform-style: preserve-3d;
+            -webkit-animation: spin 4s linear infinite alternate; /* Safari 4+ */
+            -moz-animation: spin 4s linear infinite alternate; /* Fx 5+ */
+            -o-animation: spin 4s linear infinite alternate; /* Opera 12+ */
+            animation: spin 4s linear infinite alternate;
+        }
+    </style>
+    @endif
+
+    @if($sports_preview != '')
+    <style>
+        .moon_preview {
+            background-image: url({{$sports_preview}});
+        }
+    </style>
+    @endif
+
+    @if($films_preview != '')
+    <style>
+        .venus_preview {
+            background-image: url({{$films_preview}});
+        }
+    </style>
+    @endif
+
+    @if($mountains_and_seas_preview != '')
+    <style>
+        .mars_preview {
+            background-image: url({{$mountains_and_seas_preview}});
+        }
+    </style>
+    @endif
+
+    @if($careers_preview != '')
+    <style>
+        .mercury_preview {
+            background-image: url({{$careers_preview}});
+        }
+    </style>
+    @endif
+
+    @if($family_and_friends_preview != '')
+    <style>
+        .sun_preview {
+            background-image: url({{$family_and_friends_preview}});
+        }
+    </style>
+    @endif
 @endsection
 
 @section('content')
@@ -43,11 +162,12 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/my_blogs?tag=' .'travel&id='.Auth::user()->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
+                {{-- <a href="{{URL('/my_blogs?tag=' .'travel&id='.Auth::user()->id) }}"> --}}
+                    <button class="view" onclick="view_blog('travel',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                {{-- </a> --}}
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="travel"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img class="planet" src="{{asset('front/images/planets/Pluto.png')}}">
             {{-- <button class="planet-back-button travel-back btn">Back</button> --}}
@@ -62,9 +182,10 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="designs"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img class="planet" src="{{asset('front/images/planets/neptune.png')}}">
             {{-- <button class="planet-back-button neptune-back btn">Back</button> --}}
@@ -79,11 +200,12 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_general_userwise?id='.Auth::user()->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
+                {{-- <a href="{{URL('/blog_general_userwise?id='.Auth::user()->id) }}"> --}}
+                    <button id="viewBlogs" class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                {{-- </a> --}}
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="general"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img class="planet" src="{{asset('front/images/planets/jupiter.png')}}">
             {{-- <button class="planet-back-button jupiter-back btn">Back</button> --}}
@@ -102,11 +224,12 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
                 <a href="{{URL('/my_blogs?tag=' .'sports&id='.Auth::user()->id)}}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="sports"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img class="planet" src="{{asset('front/images/planets/moon-w.png')}}">
             {{-- <button class="planet-back-button moon-back btn">Back</button> --}}
@@ -121,11 +244,12 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
                 <a href="{{URL('/my_blogs?tag=' .'Mountains and Seas&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="mountains_and_seas"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img class="planet" src="{{asset('front/images/planets/mars.png')}}">
             {{-- <button class="planet-back-button mars-back btn">Back</button> --}}
@@ -140,11 +264,12 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
                 <a href="{{URL('/my_blogs?tag=' .'films&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="films"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img class="planet" src="{{asset('front/images/planets/venus.png')}}">
             {{-- <button class="planet-back-button venus-back btn">Back</button> --}}
@@ -159,11 +284,12 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
                 <a href="{{URL('/my_blogs?tag=' .'Family and Friends&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="family_and_friends"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img class="planet" src="{{asset('front/images/planets/sun.png')}}">
             {{-- <button class="planet-back-button sun-back btn">Back</button> --}}
@@ -178,9 +304,10 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
                 <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="careers"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img class="planet" src="{{asset('front/images/planets/Mercury.png')}}">
             {{-- <button class="planet-back-button mercury-back btn">Back</button> --}}
@@ -195,11 +322,12 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
                 <a href="{{URL('/my_blogs?tag=' .'politics&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="politics"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img src="{{asset('front/images/planets/uranus.png')}}" class="planet-img">
             {{-- <button class="planet-back-button uranus-back btn">Back</button> --}}
@@ -285,11 +413,12 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
+                <span class="pop-up collage-pop-up">Modify Collage</span>
                 <a href="{{URL('/my_blogs?tag=' .'music&id='.Auth::user()->id) }}">
                     <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 </a>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
-                <button class="extra"></button>
+                <button class="collage" data-tag="music"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
             <img src="{{asset('front/images/planets/saturn.png')}}" class="planet-img">
             {{-- <button class="planet-back-button saturn-back btn">Back</button> --}}
@@ -520,6 +649,13 @@
 
 @section('before-scripts')
     <script src="{{asset('front/JS/jquery-1.11.1.min.js')}}"></script>
+    <script>
+        var token = '{{ Session::token() }}';
+        var url_view_blog = '{{ route('frontend.blog_general_my') }}';
+    
+
+ 
+    </script>
 @endsection
 
 @section('after-scripts')

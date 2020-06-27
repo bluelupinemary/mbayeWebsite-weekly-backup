@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 @section('content')
-<div class="container">
+<div>
     <div class="app">
         <searchfriends-component></searchfriends-component>
     </div>

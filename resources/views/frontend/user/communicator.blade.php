@@ -110,6 +110,42 @@
                         </div>
                     </form>
                 </div>
+                <div class="general-blog-form">
+                    <form method="POST" action="{{url('publish_general_blog')}}" id="general-blog-form" enctype="multipart/form-data">
+                        @csrf
+                        <input type="text" name="name" class="form-control" placeholder="TITLE" autocomplete="off">
+                        <button class="add-video-btn">Insert Video</button>
+                        <div class="video-form">
+                            <label>Attach Link</label>
+                            <div class="video-input">
+                                <input type="text" name="video_link">
+                                <button class="video-insert-btn">Insert</button>
+                            </div>
+                            <div class="video-links-list">
+                                <table>
+                                </table>
+                            </div>
+                        </div>
+                        <input type="file" name="featured_image" accept="image/x-png,image/jpeg" id="general_blog_featured_image">
+                        <input type="hidden" name="edited_featured_image">
+                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                        <input type="hidden" name="blog_id">
+                        {{-- <input type="hidden" name="save_status" value="Draft"> --}}
+                    </form>
+                    <div class="trix-editor trix-editor-general-blog">
+                        <div class="font-picker">
+                            <input id="font-picker" type="text">
+                        </div>
+                        <div class="color-picker general-blogs-color-picker">
+                        </div>
+                        {{-- <input type="hidden" name="edit_content" id="edit_content"> --}}
+                        @trix(\App\Blogs\Blog::class, 'general_blog_content')
+                        <button type="button" class="fullscreen"><i class="fas fa-expand"></i> <span>Fullscreen</span></button>
+                    </div>
+                    {{-- <div class="custom-privacy" data-toggle="modal" data-target="#customPrivacyModal">
+                        <button>Set Privacy</button>
+                    </div> --}}
+                </div>
                 <div class="home-div">
                     <img src="{{asset('front/images/communicator-buttons/home.png')}}" class="communicator-button home-button" alt="">
                 </div>
@@ -134,6 +170,10 @@
                     <img src="{{asset('front/images/communicator-buttons/buttons/email-button-1.png')}}" class="communicator-button email-send" alt="">
                     <img src="{{asset('front/images/communicator-buttons/buttons/email-button-2.png')}}" class="email-text" alt="">
                 </div>
+                <div class="general-blog-buttons">
+                    <img src="{{asset('front/images/communicator-buttons/buttons/launchBtn.png')}}" class="communicator-button publish-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/buttons/launchTxt.png')}}" class="publish-text" alt="">
+                </div>
                 <div class="email-div">
                     <img src="{{asset('front/images/communicator-buttons/buttons/emailBtn.png')}}" class="communicator-button email-button" alt="">
                 </div>
@@ -145,16 +185,29 @@
                     <img src="{{asset('front/images/communicator-buttons/buttons/yourProfileBtn.png')}}" class="communicator-button chat-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/buttons/designsBtn.png')}}" class="communicator-button chat-button" alt="">
                 </div>
-                <div class="featured-image-div">
+                <div class="featured-image-div all-blog">
                     <div class="featured-image-preview">
                         <p class="featured-image-text">Upload your featured image here</p>
                         <p class="featured-image-remove">Remove Image</p>
-                        <img src="" id="featured-image-previewimg">
+                        <img src="" id="featured-image-previewimg" class="preview-image">
                     </div>
                     <label for="featured_image" class="custom-file-upload">
                         Upload
                     </label>
                     <button class="edit_image" data-toggle="modal" data-target="#photoEditorModal" disabled="">
+                        Edit
+                    </button>
+                </div>
+                <div class="featured-image-div general-blog">
+                    <div class="featured-image-preview">
+                        <p class="featured-image-text">Upload your featured image here</p>
+                        <p class="featured-image-remove">Remove Image</p>
+                        <img src="" id="featured-image-previewimg" class="preview-image">
+                    </div>
+                    <label for="general_blog_featured_image" class="custom-file-upload">
+                        Upload
+                    </label>
+                    <button class="edit_image" data-toggle="modal" data-target="#generalBlogPhotoEditorModal" disabled="">
                         Edit
                     </button>
                 </div>
@@ -336,6 +389,15 @@
             @trix(\App\Blogs\Blog::class, 'content')
             <button type="button" class="exit-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
         </div>
+        <div class="text-editor-fullview general-blog-content">
+            <div class="font-picker">
+                <input id="font-picker" type="text">
+            </div>
+            <div class="color-picker fullscreen-genblog-color-picker">
+            </div>
+            @trix(\App\Blogs\Blog::class, 'general_blog_content')
+            <button type="button" class="exit-general-blog-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
+        </div>
         <div class="text-editor-fullview email-content">
             <div class="font-picker">
                 <input id="font-picker" type="text">
@@ -350,16 +412,25 @@
     </div>
     <div id="app"></div>
 </div>
+<div class="app">
 <div class="modal" id="photoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-body">
-            <div class="app">
-                <photoeditor-component :edit_blog="{{($blog != '' ? 1 : 0)}}"></photoeditor-component>
-            </div>
+            <photoeditor-component :edit_blog="{{($blog != '' ? 1 : 0)}}"></photoeditor-component>
         </div>
         </div>
     </div>
+</div>
+<div class="modal" id="generalBlogPhotoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-body">
+            <general-photoeditor-component></photoeditor-component>
+        </div>
+        </div>
+    </div>
+</div>
 </div>
 <div class="modal" id="customPrivacyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

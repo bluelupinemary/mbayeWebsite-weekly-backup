@@ -2,6 +2,12 @@
 var mbayeNotPanelsMap = new Map([
 	["F_RFOOT", null],["F_LFOOT", null], ["B_LFOOT", null],["B_RFOOT", null]
 ]);
+
+
+
+
+
+
 var mbayePanelsMap = new Map([
 	["P1",null],
 ["P2",null],
@@ -439,7 +445,7 @@ var mbayePanelsMap = new Map([
 ["P434",null],
 ["P435",null],
 ["P436",null],
-["p437",null],
+["P437",null],
 ["P438",null],
 ["P439",null],
 ["P440",null],
@@ -457,7 +463,7 @@ var mbayePanelsMap = new Map([
 ["P452",null],
 ["P453",null],
 ["P454",null],
-["p455",null],
+["P455",null],
 ["P456",null],
 ["P457",null],
 ["P458",null],
@@ -485,7 +491,7 @@ var mbayePanelsMap = new Map([
 ["P480",null],
 ["P481",null],
 ["P482",null],
-["P483 ",null],
+["P483",null],
 ["P484",null],
 ["P485",null],
 ["P486",null],
@@ -599,6 +605,8 @@ var mbayePanelsMap = new Map([
 ["P594",null],
 
 ]);
+
+
 var mbayePipesMap = new Map([                                                            //var to keep track of the variety of flowers
     ["HEAD",null],["EYE1",null],["EYE2",null],["EAR",null],
     ["F_LFOOT",null],["F_RFOOT",null],

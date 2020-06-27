@@ -1,4 +1,5 @@
 
+
 let canvas;
 let engine;
 let theAstroFace;
@@ -7,6 +8,7 @@ let contactsCamera;
 let cameraInitState = {position:null,a:null,b:null,r:null,upperA:null, lowerA:null, upperB:null, lowerB:null,upperR:null, lowerR:null,angularY:null};
 let astroInitState = {x:0,y:0,z:0};
 let hl,starColor;
+
 let createContactScene = function(){
     canvas = document.getElementById('canvas');
     engine = new BABYLON.Engine(canvas, true,{ preserveDrawingBuffer: true, stencil: true });
@@ -40,13 +42,16 @@ let createContactScene = function(){
 function create_camera(){
     let camera = new BABYLON.ArcRotateCamera("Main Camera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-301.761,123.02,246.54),scene);
     //zoom in/out speed; speed - lower numer, faster zoom in/out
+    camera.fovMode = BABYLON.Camera.FOVMODE_HORIZONTAL_FIXED;
+    camera.fov = 1.4;
+
     camera.attachControl(canvas,true);
     camera.pinchPrecision = 1;
     camera.upperAlphaLimit = 1000;
     camera.wheelPrecision = 3;
     camera.lowerRadiusLimit = 3;
     camera.upperRadiusLimit = 2000;
-    camera.wheelPrecision = 1;
+
     camera.allowUpsideDown = true;
     camera.panningSensibility = 1000;
     camera.target = new BABYLON.Vector3(0,0,0);
@@ -67,18 +72,6 @@ function create_camera(){
 
     return camera;
 }//end of create camera function
-
-function create_contact_disc_camera(){
-    let camera = new BABYLON.ArcRotateCamera("Disc Camera",BABYLON.Tools.ToRadians(-50),BABYLON.Tools.ToRadians(88),30.0, new BABYLON.Vector3(0,0,300),scene);
-    camera.position = DISC_CAM_INIT_POS;
-    camera.lowerRadiusLimit = 1;
-    camera.upperRadiusLimit = 2000;
-    camera.wheelPrecision = 5;
-    scene.activeCamera = camera;
-
-   
-    
-}
 
 
 //############################################# CREATE THE SCENE'S LIGHTS #############################################//
@@ -102,6 +95,8 @@ function create_skybox(){
     skybox.rotation.y = BABYLON.Tools.ToRadians(-60);
     skybox.isPickable = false;
     skybox.checkCollisions = true;
+    skybox.infiniteDistance = true;
+    skybox.renderingGroupId = 0;
     let skyboxMaterial = new BABYLON.StandardMaterial("contactSkyboxMaterial", scene);
     skyboxMaterial.backFaceCulling = false;
 
@@ -174,24 +169,69 @@ function load_3D_mesh(){
                     if(i===result.meshes.length-1) loadedPercent = 100;
                 }
                 astronaut.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(130),0);
-                if(user_gender === 'female') astronaut.rotation.x = BABYLON.Tools.ToRadians(20);
+                if(user_gender === 'female'){
+                  astronaut.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(20),BABYLON.Tools.ToRadians(131),0); 
+                  
+                  }
                 
             }),
       
       ]).then(() => {
         add_mouse_listener();
-        setTimeout(function(){
-            if(loadedPercent >= 100){
-              document.getElementById("loadingScreenDiv").style.display = "none";
-              document.getElementById("loadingScreenPercent").style.display = "none";
-              // enable_gizmo(astronaut);
-              // create_plane_background();
-            }
-        },1000);
+        // setTimeout(function(){
+        //     if(loadedPercent >= 100){
+              
+        //       // enable_gizmo(astronaut);
+        //       // create_plane_background();
+        //     }
+        // },1000);
 
           
     });
 }//end of load design meshes
+
+
+//load the saved contacts
+
+function load_saved_contacts(){
+  let a = 0;        //counter for planet color
+  Promise.all([
+      BABYLON.SceneLoader.ImportMeshAsync(null, "storage/saveState/userContacts/", load_filename, scene).then(function (result) {
+          console.log(result.meshes);
+          for(let i=0;i<result.meshes.length;i++){
+            // console.log("the mesh: ", result.meshes[i].name)
+              // if(mbayePanelsMap.has(result.meshes[i].name)){
+              //     console.log(result.meshes[i].name, result.meshes[i]);
+              //     result.meshes[i].setParent(mbayeDesign_object);
+              //     if(mbayePanelsMap.get(result.meshes[i].name) !== null)  mbayePanelsMap.get(result.meshes[i].name).dispose();
+              //     result.meshes[i].isPickable = true;
+              if(i%2 === 0){
+                  userContactsMap.set(result.meshes[i].name, result.meshes[i]);
+                  contactCnt++;
+                  console.log(contact_list[a].planet);
+                  set_loaded_contact_color(result.meshes[i],contact_list[a].planet);
+                  a++;
+              }
+                 
+                 
+              //     let children = set_panel_children(result.meshes[i]._children);
+              //     flowersPanelsMap.set(result.meshes[i], children);
+
+              //     console.log("mbayePanelsMap: ",mbayePanelsMap);
+                  console.log("userContactsMap: ",userContactsMap);
+              // }
+          }
+      }),
+      
+  ]).then(() => {
+     
+  });
+}
+
+function set_loaded_contact_color(mesh, planet){
+    starColor.addMesh(mesh, starColorMap.get(planet));
+    mesh.material.emissiveColor = BABYLON.Color3.White();
+}
 
 
 
@@ -251,20 +291,27 @@ function validateEmail(email) {
 let isPlane2Selected = false;
 let isLaunchEnabled = false;
 let userContactsMap = new Map();
+let currDisc = "";
+let isDiscFocused = false;
+let discSelected;
 function add_mouse_listener(){
-  var onPointerDownVisit = function (evt) {
+  var onPointerDown = function (evt) {
       if(scene) var pickinfo = scene.pick(scene.pointerX, scene.pointerY);
       else return;
       if(pickinfo.hit){
           let theMesh = pickinfo.pickedMesh;
           console.log("the mesh clicked: ", theMesh,theMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
-          // console.log("THE CAMERA:", scene.activeCamera.position);
+          console.log("THE CAMERA:", scene.activeCamera.position, contactsCamera.target);
+          
+         
           let validateArr = [];
           let userInfo = [];
           if(theMesh.name === "save_pnl" && isFocusNavigator && !isPlane2Selected){      //if the mesh is clicked
             let isValidEmail = validateEmail(emailInput.text);
             if(!isValidEmail || emailInput.text === "") validateArr.push("Please enter a valid email address.");
             if(nameInput.text === "") validateArr.push("<br>Please provide your friend\'s Name.");
+            if(mobileInput.text === "") validateArr.push("<br>Please provide your friend\'s Mobile num.");
+            if(aliasInput.text === "") validateArr.push("<br>Please provide your friend\'s Alias.");
            
             if(validateArr.length >0){ 
               Swal.fire({
@@ -289,10 +336,7 @@ function add_mouse_listener(){
                         popup: 'trevor-popup-class',
                       }
                     });
-                    discmatl2.diffuseTexture =  new BABYLON.Texture("storage/contactDirectory/MajorTomDefault.png", scene);
-                    discmatl2.diffuseTexture.uScale = -1;
-                    discmatl2.alpha = 1;
-                    imageDisc.material = discmatl2;
+                    set_image_disc_matl(1);
                 }
                 userInfo.push(nameInput.text);
                 userInfo.push(emailInput.text);
@@ -324,14 +368,40 @@ function add_mouse_listener(){
                     title: 'Oops...',
                     text: 'Please choose a planet from the selection.'
                   });
+                 
               }else{
-                unfocus_on_navigator();
+                  unfocus_on_navigator();
               }
               
           }
 
+          if(isFocusNavigator && theMesh.name === "back_pnl"){
+              unfocus_on_navigator();
+          }
+
+          //bug when the back button of communicator is clicked
+          if(userContactsMap.has(theMesh.name)){
+            if(currDisc!==theMesh.name){
+                contactsCamera.focusOn([theMesh], true);
+                contactsCamera.radius = 90;
+                currDisc = theMesh.name;
+                // enable_gizmo(theMesh);
+            }else{
+                edit_disc_details(theMesh.name);
+                discSelected = theMesh;
+                currDisc = "";
+            }
+            
+          }
+          if(theMesh.name === "body"){
+            contactsCamera.focusOn([theMesh], true);
+          }
+
+         
+            
+
           //if the obj clicked is a star created
-          // if(contactDetailsMap.has(theMesh.name)){
+          // if(contactDetailsList.has(theMesh.name)){
           //     //zoom in on the star
           //     // contactsCamera.setTarget = theMesh;
           //     // contactsCamera.radius = 100;
@@ -342,28 +412,28 @@ function add_mouse_listener(){
     
   }//end of on pointer down function
 
-  var onPointerUpVisit = function () {
+  var onPointerUp = function () {
       // if(isPlane2Selected){
       //   isPlane2Selected = false;
       //   contactsCamera.attachControl(canvas,true);
       // }
   }//end of on pointer up function
 
-  var onPointerMoveVisit = function (evt) {
+  var onPointerMove = function (evt) {
     // if(isPlane2Selected) contactsCamera.detachControl(true);
   }//end of on pointer move function
 
-  canvas.addEventListener("pointerdown", onPointerDownVisit, false);
-  canvas.addEventListener("pointerup", onPointerUpVisit, false);
-  canvas.addEventListener("pointermove", onPointerMoveVisit, false);
+  canvas.addEventListener("pointerdown", onPointerDown, false);
+  canvas.addEventListener("pointerup", onPointerUp, false);
+  canvas.addEventListener("pointermove", onPointerMove, false);
 
 
   //remove the text span on dispose
   scene.onDispose = function() {
       //related to the drag and drop
-      canvas.removeEventListener("pointerdown", onPointerDownVisit);
-      canvas.removeEventListener("pointerup", onPointerUpVisit);
-      canvas.removeEventListener("pointermove", onPointerMoveVisit);
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      canvas.removeEventListener("pointerup", onPointerUp);
+      canvas.removeEventListener("pointermove", onPointerMove);
 
   };
 
@@ -400,13 +470,14 @@ function get_random_pos(){
 }
 
 
-let contactDetailsMap = {};
+let contactDetailsList = {};
 
 function set_star_position(starDisc){
   //the init position of the star disc
   starDisc.scaling = new BABYLON.Vector3(30,30,30);
   starDisc.position = new BABYLON.Vector3(-55.47,56.75,-36.32);
-  starDisc.rotationQuaternion = new BABYLON.Quaternion(0.9246,-0.0071, 0.3791,0.0015);
+  // starDisc.rotationQuaternion = new BABYLON.Quaternion(0.9246,-0.0071, 0.3791,0.0015);
+  starDisc.rotationQuaternion = new BABYLON.Quaternion(0.9246,0.0066, 0.3790,0.0071);
   starColor.addMesh(starDisc, starColorMap.get(chosenPlanet));
   starDisc.material.emissiveColor = starColorMap.get(chosenPlanet);
 
@@ -418,7 +489,7 @@ function set_star_position(starDisc){
   contactDetails.push(aliasInput.text);
   contactDetails.push(chosenPlanet);
 
-  contactDetailsMap[starDisc.name] = contactDetails;
+  contactDetailsList[starDisc.name] = contactDetails;
  
   //add animation to the star
   setTimeout(function(){
@@ -430,7 +501,7 @@ function set_star_position(starDisc){
       let pos = get_random_pos();
       
       var nextPos = starDisc.position.add(new BABYLON.Vector3(pos.x,pos.y,pos.z));
-      
+     
       // Animation keys
       var keys = [];
       keys.push({ frame: 0, value: starDisc.position });
@@ -474,6 +545,17 @@ function set_star_position(starDisc){
   
 }
 
+function set_image_disc_matl(num){
+  //if no image is linked, set default material
+  let matl;
+  if(num === 1){
+      matl = "front/images3D/contactsScene/MajorTomDefault.png";
+  }
+  discmatl2.diffuseTexture =  new BABYLON.Texture(matl, scene);
+  discmatl2.diffuseTexture.uScale = -1;
+  discmatl2.alpha = 1;
+  imageDisc.material = discmatl2;
+}
 /*################################################### END OF SET POSITION OF STARS FUNCTION ############################################## */
 
 
@@ -627,7 +709,7 @@ function create_contacts_gui(){
 
 
 /**############################################### FUNCTION TO FOCUS AND UNFOCUS ON NAVIGATOR #################################################### */
-function focus_on_navigator(){
+function focus_on_navigator(starName){
   contactsCamera.setTarget(navigator_obj);
   navigator_obj.isPickable = false;
   set_camera_specs(1);
@@ -644,10 +726,10 @@ function focus_on_navigator(){
   }
   else{
     astronaut.rotation.x = BABYLON.Tools.ToRadians(20);
-  // astronaut.rotation.x = BABYLON.Tools.ToRadians(20);
-  astronaut.rotation.z = BABYLON.Tools.ToRadians(3);
+    // astronaut.rotation.x = BABYLON.Tools.ToRadians(20);
+    astronaut.rotation.z = BABYLON.Tools.ToRadians(3);
   }
-  create_contact_plane();
+  create_contact_plane(starName);
 }
 
 let contactCnt = 0;
@@ -662,15 +744,41 @@ function unfocus_on_navigator(){
   astronaut.rotation.z = astroInitState.z;
 
   isFocusNavigator = false;
-  isPlane2Selected = false;
-  if(imageDisc){
-    contactCnt++;
-    let theStar = imageDisc.clone("Star"+contactCnt);
-    set_star_position(theStar);
+   
+ 
+  
+  if(imageDisc && isPlane2Selected ){
+    let theStar = imageDisc.clone(contactCnt);
+    if(isEditingDisc){
+      theStar.name = discSelected.name;
+      console.log("is editing disc? ", isEditingDisc, "disc selected: ", discSelected.name, "star name; ", theStar.name);
+      remove_disc();
+      isEditingDisc = false;
+    }else contactCnt++;
+    // if(isEditingDisc) {
+    //   console.log("im editing the disc");
+    //   theStar.name = discSelected.name;
+    //   remove_disc(discSelected);
+    //   isEditingDisc = false;
+    // }else 
+    
+    set_star_position(theStar); 
+    isPlane2Selected = false;
   }
   
-  
+}//end of unfocus
+
+function remove_disc(){
+    console.log("remove the disc from the map and its instance");
+    discSelected.dispose();
+    // let flowersMap = flowersPanelsMap.get(currentPanel);                    //get the flowers list on the current panel
+    // if(theCurrentFlower.obj.parent) flowerSelectionCount++;
+    // flowersMap.delete(id,theCurrentFlower.obj);     
+    // flowersPanelsMap.set(currentPanel, flowersMap);   
+    
 }
+
+
 
 let isFocusNavigator = false;
 function set_camera_specs(mode){
@@ -690,7 +798,8 @@ function set_camera_specs(mode){
       contactsCamera.angularSensibilityY = 5000;
 
   }else if(mode==2){  //full view mode
-      contactsCamera.position = cameraInitState.position;
+      contactsCamera.target = new BABYLON.Vector3(0,0,0);
+      // contactsCamera.position = cameraInitState.position;
       contactsCamera.alpha = cameraInitState.a;
       contactsCamera.beta = cameraInitState.b;
       contactsCamera.radius = cameraInitState.r;
@@ -702,6 +811,18 @@ function set_camera_specs(mode){
       contactsCamera.upperRadiusLimit = cameraInitState.upperR;
       contactsCamera.lowerRadiusLimit = cameraInitState.lowerR;
       contactsCamera.angularSensibilityY = cameraInitState.angularY;
+
+      //  // camera.attachControl(canvas,true);
+      //  contactsCamera.pinchPrecision = 1;
+      //  contactsCamera.upperAlphaLimit = 1000;
+      //  contactsCamera.wheelPrecision = 3;
+      //  contactsCamera.lowerRadiusLimit = 3;
+      //  contactsCamera.upperRadiusLimit = 2000;
+      //  contactsCamera.wheelPrecision = 1;
+      //  contactsCamera.allowUpsideDown = true;
+      //  contactsCamera.panningSensibility = 1000;
+      //  contactsCamera.target = new BABYLON.Vector3(0,0,0);
+      //  contactsCamera.panningDistanceLimit = 1500;
 
    
   }
@@ -726,14 +847,18 @@ function add_star_details(info){
     
     //#############################################==//
     let addLabel = function(text, parent) {
-    
+      
       let tempLbl = new BABYLON.GUI.TextBlock();
-      tempLbl.height = "200px";
+      console.log("text length: ",text.length);
+      if(text.length < 23) tempLbl.height = "150px";
+      else tempLbl.height = "350px";
+      
+      tempLbl.textWrapping = true;
+      // if(text.length > 44) tempLbl.textWrapping = false;
       tempLbl.width = 1;
       tempLbl.fontSize = 100;
-      
-      tempLbl.fontWeight = "600";
-      tempLbl.textWrapping = true;
+   
+      tempLbl.fontFamily = "Nasalization Rg";
       tempLbl.lineSpacing = "50px";
       tempLbl.text = text;
       tempLbl.textHorizontalAlignment = 2;
@@ -756,10 +881,10 @@ function add_star_details(info){
 /*##################################### START OF COMMUNICATOR FORMS ###################################### */
 let plane, plane2, imageDisc,discMatl2,planeForDetails;
 let chosenPlanet;
-function create_contact_plane(){
+function create_contact_plane(starName){
     if(plane) plane.dispose();
     if(plane2) plane2.dispose();
-    
+    // console.log("star name: ", starName);
    
     plane = BABYLON.MeshBuilder.CreatePlane("First Plane", {width:8.5, height: 4.5}, scene);
    
@@ -781,7 +906,8 @@ function create_contact_plane(){
     discmatl2.alpha = 0.001;
     imageDisc.material = discmatl2;
 
-    planeForDetails = BABYLON.MeshBuilder.CreatePlane("Details Plane", {width:1.8, height:1}, scene);
+    planeForDetails = BABYLON.MeshBuilder.CreatePlane("", {width:1.8, height:1}, scene);
+    planeForDetails.isPickable = false;
     // planeForDetails.isPickable = false;
     let planeDeetsMatl = new BABYLON.StandardMaterial("discMatl", scene);
     planeDeetsMatl.diffuseColor = new BABYLON.Color3(1,1,1);
@@ -792,12 +918,21 @@ function create_contact_plane(){
     // add_star_details();
 
     if(user_gender === 'female'){
-      plane.position = new BABYLON.Vector3(-49.03,33.88,-26.63);
-      plane.rotationQuaternion = new BABYLON.Quaternion(0.2337,-0.5777,0.7654,0.1573);
-      imageDisc.position = new BABYLON.Vector3(-56.58,33.53,-22.37);
-      imageDisc.rotationQuaternion = new BABYLON.Quaternion(0.5959,0.2375,-0.1701, 0.7472);
-      planeForDetails.position = new BABYLON.Vector3( -56.35,33.66,-22.04);
-      planeForDetails.rotationQuaternion = new BABYLON.Quaternion(0.2309, -0.6166,0.7319,0.1706);
+      plane.position = new BABYLON.Vector3(-49.19,33.87,-26.25);
+      
+      plane.rotationQuaternion = new BABYLON.Quaternion(0.2411,-0.5756,0.7631,0.1636);
+      
+      // imageDisc.position = new BABYLON.Vector3(-56.58,33.53,-22.37);
+      // imageDisc.rotationQuaternion = new BABYLON.Quaternion(0.5959,0.2375,-0.1701, 0.7472);
+      imageDisc.position = new BABYLON.Vector3(-56.93,33.49,-21.58);
+      imageDisc.rotationQuaternion = new BABYLON.Quaternion(0.5631,0.2446,-0.1597,0.7721);
+     
+      // planeForDetails.position = new BABYLON.Vector3(-56.72,33.62,-21.31);
+      planeForDetails.position = new BABYLON.Vector3( -56.89,33.54,-21.47);
+      planeForDetails.rotationQuaternion = new BABYLON.Quaternion(0.2413, -0.5682,0.7700,0.1554);
+      // planeForDetails.rotationQuaternion = new BABYLON.Quaternion(0.2466,-0.5659,0.7685,0.1626);
+
+      //  enable_gizmo(planeForDetails);
     }else{
       plane.position = new BABYLON.Vector3(-28.28,29.00,-26.40);
       plane.rotationQuaternion = new BABYLON.Quaternion(0.2386,-0.5554,0.7804,0.1572);
@@ -811,7 +946,7 @@ function create_contact_plane(){
 
 
 
-    // enable_gizmo(plane);
+    
     // enable_gizmo(planeForDetails);
 
 
@@ -968,18 +1103,25 @@ function create_contact_plane(){
     
     
         
-    let addInputField = function(text, parent) {
+    let addInputField = function(val, parent) {
     
         let tempInput = new BABYLON.GUI.InputText();
+       
         tempInput.width = 0.95;
         tempInput.height = "100px";
         tempInput.fontSize = 30;
-        // tempInput.background = "#00003f";
         tempInput.paddingTop = "20px";
         tempInput.color = "white";
         // tempInput.background = "#3b59a9";
         tempInput.background = "rgba(0, 0, 0, 0.2)";
         tempInput.fontFamily = "Nasalization Rg";
+        if(starName != null){
+            if(val == "name") tempInput.text = contact_list[starName].name;
+            if(val == "email") tempInput.text = contact_list[starName].email;
+            if(val == "mobile_number") tempInput.text = contact_list[starName].mobile_number;
+            if(val == "alias") tempInput.text = contact_list[starName].alias;
+        }
+
     
         tempInput.onPointerDownObservable.add(function() {
     
@@ -992,10 +1134,10 @@ function create_contact_plane(){
   
     fieldStack.addControl(imgInput); 
     fieldStack.addControl(addImgBtn);
-    nameInput = addInputField("Name : ", fieldStack);
-    emailInput = addInputField("Email Address : ", fieldStack);
-    mobileInput = addInputField("Mobile Number : ", fieldStack);
-    aliasInput = addInputField("Mbaye Name : ", fieldStack);
+    nameInput = addInputField("name", fieldStack);
+    emailInput = addInputField("email", fieldStack);
+    mobileInput = addInputField("mobile_number", fieldStack);
+    aliasInput = addInputField("alias", fieldStack);
     // fieldStack.addControl(saveBtn);
   // let nameInput = addInputField("Jupiter", fieldStack);  
   
@@ -1027,10 +1169,15 @@ function create_contact_plane(){
     //  plane.parent = sphere4;
 
     if(user_gender === 'female'){
-      plane2.position = new BABYLON.Vector3(-49.12,33.79,-26.91);
-      plane2.rotationQuaternion = new BABYLON.Quaternion(0.2349,-0.5720,0.7696,0.1555);
-      plane2BG.position = new BABYLON.Vector3(-49.20,33.75,-26.90);
-      plane2BG.rotationQuaternion = new BABYLON.Quaternion( 0.2350,-0.5739, 0.7681,0.1557);
+      plane2.position = new BABYLON.Vector3(-49.300,33.800,-26.53);
+      plane2.rotationQuaternion = new BABYLON.Quaternion(0.2390,-0.5702,0.7684,0.1610);
+
+      // plane2BG.position = new BABYLON.Vector3(-49.20,33.75,-26.90);
+      // plane2BG.rotationQuaternion = new BABYLON.Quaternion( 0.2350,-0.5739, 0.7681,0.1557);
+      plane2BG.position = new BABYLON.Vector3(-49.300,33.78,-26.53);
+      plane2BG.rotationQuaternion = new BABYLON.Quaternion(0.2390,-0.5702,0.7684,0.1610);
+
+
       // imageDisc.position = new BABYLON.Vector3(-37,28.08,-21.44);
       // imageDisc.rotationQuaternion = new BABYLON.Quaternion(0.6135,0.2248,-0.1825,0.7339);
     }else{
@@ -1218,6 +1365,27 @@ function create_contact_plane(){
 
 } // end of gui function
 
+
+
+//error when trying to edit a disc that's recently created
+
+let isEditingDisc = false;
+function edit_disc_details(starName){
+  // let starName = theDisc.name;
+  isEditingDisc = true;
+  console.log("edit details of this disc");
+
+  let userInfo = [];
+  userInfo.push(contact_list[starName].name);
+  userInfo.push(contact_list[starName].email);
+  userInfo.push(contact_list[starName].mobile_number);
+  userInfo.push(contact_list[starName].alias);
+  
+  // add_star_details(userInfo);
+  focus_on_navigator(starName);
+  add_star_details(userInfo);
+  set_image_disc_matl(1);       //1 - default material, 2 - user-defined material
+}
 /*##################################### END OF COMMUNICATOR FORMS ###################################### */
 
 
@@ -1296,6 +1464,8 @@ function create_init_planets(){
             initVenus.rotate(planetAxis, redAngle, BABYLON.Space.LOCAL);
             initEarth.rotation.y = Math.PI / 2;
             initEarth.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
+            initMoon.rotation.y = Math.PI / 2;
+            initMoon.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
             initMars.rotation.y = Math.PI / 2;
             initMars.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
             initJupiter.rotation.y = Math.PI / 2;
@@ -1314,7 +1484,7 @@ function create_init_planets(){
 
 //function that instantiates a planet
 function init_planet(name,material_name,texture_path,normal_texture_path,x_pos,y_pos,z_pos,radius){
-    var temp = BABYLON.Mesh.CreateSphere(name, 10, radius, scene);
+    var temp = BABYLON.Mesh.CreateSphere(name, 0, radius, scene);
     temp.position = new BABYLON.Vector3(x_pos,y_pos,z_pos);
     var temp_material = new BABYLON.StandardMaterial(material_name,scene);
     temp_material.diffuseTexture = new BABYLON.Texture(texture_path, scene);
@@ -1424,26 +1594,28 @@ var meshes_to_save = {
 
   
 
-  // console.log("save current progress",userContactsMap);
+  console.log("save current progress",userContactsMap);
   
   
   //problem with saving the meshes; babylon file cannot be rendered
   for (const [disc,val] of userContactsMap.entries()) {
       console.log("SAVE : ", disc,val);
       // if(val.size>0) 
-      serializedMesh = BABYLON.SceneSerializer.SerializeMesh(val,false,true);                    
+      serializedMesh = BABYLON.SceneSerializer.SerializeMesh(val,false,true);  
+      console.log("serial mesh: ", serializedMesh);                  
       for (let i=0;i<serializedMesh["meshes"].length;i++) { 
           meshes_to_save["materials"].push(serializedMesh["materials"][i]);            
           meshes_to_save["geometries"]["vertexData"].push(serializedMesh["geometries"]["vertexData"][i]);   
           meshes_to_save["meshes"].push(serializedMesh["meshes"][i]);  
       }      
-
   }
+
+  
  
   console.log("meshes: ", meshes_to_save);
  
   var strMesh = JSON.stringify(meshes_to_save);
-  var contactDetails = JSON.stringify(contactDetailsMap);
+  var contactDetails = JSON.stringify(contactDetailsList);
   console.log("contact details after: ", contactDetails);
   // console.log("str mesh:", strMesh);
  
@@ -1475,6 +1647,8 @@ var meshes_to_save = {
                   width: 100,
                   background: 'rgba(8, 64, 147, 0.6)',
               });
+              //clear the map so what is saved wont be saved again
+              contactDetailsList = {};
           },
           error: function(result){
               Swal.fire({
@@ -1494,6 +1668,9 @@ var meshes_to_save = {
           }
       });
   }//end of blob
+
+
+
 
 /*
    if(objectUrl) {
@@ -1534,6 +1711,7 @@ let img_path;
 let user_gender;
 let isSceneLoaded = false;
 let userId = document.getElementById('userId').value;
+let isProgressLoaded = false;
 
 $(window).on('load',function(){
     isImgPathSet = true;
@@ -1543,16 +1721,33 @@ $(window).on('load',function(){
   //function that will render the scene on loop
   var scene = createContactScene();
   
-  engine.runRenderLoop(function(){
-    if(isSceneLoaded){
-        scene.render();
-      //  console.log(contactsCamera.position, contactsCamera.alpha, contactsCamera.beta);
-    }
-    
-    if(isImgPathSet && theAstroFace){
-        isImgPathSet = false;
-        create_face_texture(img_path);
-    }
+  scene.executeWhenReady(function () { 
+    document.getElementById("loadingScreenDiv").style.display = "none";
+    document.getElementById("loadingScreenPercent").style.display = "none";  
+    engine.runRenderLoop(function(){
+      
+        if(isSceneLoaded){
+            scene.render();
+
+            if(isImgPathSet && theAstroFace){
+              isImgPathSet = false;
+              create_face_texture(img_path);
+            }
+
+            if(has_contacts && !isProgressLoaded){
+              
+              console.log("THERE IS SAVED PROGESS");
+              console.log("contact list: ", contact_list);
+              console.log(has_contacts, load_filename);
+              load_saved_contacts();
+              isProgressLoaded = true;
+            }
+           
+          //  console.log(contactsCamera.position, contactsCamera.alpha, contactsCamera.beta);
+        }
+        
+        
+    });
   });//end of renderloop
 
   window.addEventListener("resize", function () {

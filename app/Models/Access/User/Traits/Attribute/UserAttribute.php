@@ -2,6 +2,8 @@
 
 namespace App\Models\Access\User\Traits\Attribute;
 
+use App\Models\UserCollage\UserCollage;
+
 /**
  * Class UserAttribute.
  */
@@ -527,5 +529,24 @@ trait UserAttribute
         } else {
             return '../../front/images/astronut/communicator-tom.png';
         }
+    }
+
+    public function checkCollage($tag) {
+        $check_user_collage = UserCollage::where('user_id', $this->id)
+                ->where('tag', $tag)
+                ->first();
+
+        return $check_user_collage;
+    }
+
+    public function getCollage($tag)
+    {
+        $filename = '';
+        $check_user_collage = $this->checkCollage($tag);
+        if($check_user_collage) {
+            $filename = '../../storage/dashboard_collage/'.$check_user_collage->filename;
+        }
+
+        return $filename;
     }
 }

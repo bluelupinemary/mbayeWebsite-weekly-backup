@@ -213,7 +213,7 @@
     display: none;
 }
 
-#main-form {
+#main-form, #general-blog-form {
     display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
     display: -ms-flexbox;  /* TWEENER - IE 10 */
     display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
@@ -259,7 +259,7 @@
     outline: 0;
 }
 
-.main-form .add-video-btn {
+.main-form .add-video-btn, .general-blog-form .add-video-btn {
     font-size: 0.5vw;
     height: 1.5vw;
     border: 1px solid rgb(130, 148, 193);
@@ -564,7 +564,7 @@
     margin: 0;
 }
 
-#featured_image {
+#featured_image, #general_blog_featured_image {
     display: none;
 }
 
@@ -765,7 +765,7 @@ trix-toolbar .trix-button--icon-text-font::before {
     word-break: break-all;
 }
 
-.video-links-list i {
+.video-links-list .remove-btn {
     color: red;
     font-size: 1.5em;
 }
@@ -841,7 +841,7 @@ button.fullscreen:hover span {
     border-left: 1px solid #495057;
 }
 
-.text-editor-fullview .exit-fullscreen, .text-editor-fullview .exit-email-fullscreen {
+.text-editor-fullview .exit-fullscreen, .text-editor-fullview .exit-email-fullscreen, .text-editor-fullview .exit-general-blog-fullscreen {
     float: right;
     background: #ffffff7d;
     border: 0;
@@ -1539,7 +1539,7 @@ a:hover {
     width: 100%;
 }
 
-.email-form {
+.email-form, .general-blog-form {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1582,6 +1582,32 @@ a:hover {
     align-self: center;
 }
 
+.general-blog-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-187%, 122%);
+    -moz-transform: translate(-187%, 122%);
+    transform: translate(-187%, 122%);
+    /* border: 1px solid green; */
+    width: 21vw;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    /* justify-content: space-between; */
+    pointer-events: none;
+    display: none;
+}
+
+.general-blog-buttons .publish-button {
+    width: 10%;
+}
+
+.general-blog-buttons .publish-text {
+    width: 41%;
+}
+
 .trix-editor .color-picker, .text-editor-fullview .color-picker {
     position: absolute;
     top: 50%;
@@ -1608,16 +1634,16 @@ a:hover {
     margin: 1%;
 }
 
-.fullscreen-blog-color-picker, .fullscreen-email-color-picker {
-    top: 3.3em;
-    left: 14.3em;
-    transform: unset;
-    width: 14vw;
+.fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker {
+    top: 3.3em !important;
+    left: 14.3em !important;
+    transform: unset !important;
+    width: 14vw !important;
 }
 
-.fullscreen-blog-color-picker div, .fullscreen-email-color-picker div {
-    width: 2vw;
-    height: 2vw;
+.fullscreen-blog-color-picker div, .fullscreen-email-color-picker div, .fullscreen-genblog-color-picker div {
+    width: 2vw !important;
+    height: 2vw !important;
 }
 
 .top-buttons {
@@ -1759,18 +1785,18 @@ a:hover {
     font-size: 1.2vw;
 }
 
-.modal#photoEditorModal {
+.modal#photoEditorModal, .modal#generalBlogPhotoEditorModal{
     padding-right: 0 !important;
 }
 
-#photoEditorModal .modal-dialog {
+#photoEditorModal .modal-dialog, #generalBlogPhotoEditorModal .modal-dialog {
     max-width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
 }
   
-#photoEditorModal .modal-content {
+#photoEditorModal .modal-content, #generalBlogPhotoEditorModal .modal-content {
     height: 100%;
     border-radius: 0;
 }

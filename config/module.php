@@ -27,4 +27,7 @@ return [
     'general_blogs' => [
         'table' => 'general_blogs',
     ],
+    'blog_panel_design' => [
+        'table' => 'blog_panel_design',
+    ],
 ];

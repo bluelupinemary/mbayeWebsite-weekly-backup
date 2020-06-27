@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 /**
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -58,6 +58,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('communicator', 'ProfileController@communicatorPage')->name('communicator');
 
 
+        /*
+         * Collage editor page
+         */
+        Route::get('editor_collage', 'DashboardController@collageEditor');
 
         /*
          * 3D Pages requiring authentication
@@ -70,24 +74,31 @@ Route::group(['middleware' => 'auth'], function () {
         
     });
 //routes for friendship
-    Route::get('/listusers','Friendship\FriendshipController@listusers');
-    Route::get('/fetchrequests','Friendship\FriendshipController@fetchrequests');
-    Route::get('/fetchfriends','Friendship\FriendshipController@fetchfriends');
-    Route::get('/requests','Friendship\FriendshipController@requests');
-    Route::get('/getuser/{user}','Friendship\FriendshipController@getuser');
-    Route::get('/checkfriendship/{user}','Friendship\FriendshipController@checkfriendship')->name('checkfriendship');
-    Route::get('/sendrequest/{user}','Friendship\FriendshipController@sendrequest')->name('users.sendrequest');
-    Route::get('/acceptrequest/{user}','Friendship\FriendshipController@acceptrequest')->name('users.acceptrequest');
-    Route::get('/denyrequest/{user}','Friendship\FriendshipController@denyrequest')->name('users.denyrequest');
-    Route::get('/friends','Friendship\FriendshipController@listfriends')->name('users.index');
-    Route::get('/unfriend/{user}','Friendship\FriendshipController@unfriend')->name('users.unfriend');
-    Route::get('/block/{user}','Friendship\FriendshipController@block')->name('users.block');
+Route::group(['namespace' => 'Friendship'], function () {
+    Route::resource('groups', 'GroupController');
+    Route::get('/listusers','FriendshipController@listusers');
+    Route::get('/fetchrequests','FriendshipController@fetchrequests');
+    Route::get('/fetchfriends','FriendshipController@fetchfriends');
+    Route::get('/requests','FriendshipController@requests');
+    Route::get('/getuser/{user}','FriendshipController@getuser');
+    Route::get('/checkfriendship/{user}','FriendshipController@checkfriendship')->name('checkfriendship');
+    Route::get('/sendrequest/{user}','FriendshipController@sendrequest')->name('users.sendrequest');
+    Route::get('/acceptrequest/{user}','FriendshipController@acceptrequest')->name('users.acceptrequest');
+    Route::get('/denyrequest/{user}','FriendshipController@denyrequest')->name('users.denyrequest');
+    Route::get('/friends','FriendshipController@listfriends')->name('users.index');
+    Route::get('/unfriend/{user}','FriendshipController@unfriend')->name('users.unfriend');
+    Route::get('/block/{user}','FriendshipController@block')->name('users.block');
+    Route::get('/block/{user}','FriendshipController@block')->name('users.block');
+    Route::post('/groupfriend','FriendshipController@groupfriends')->name('friends.group');
+});
+
     
-//end routes
+//end friendshiproutes
     Route::group(['namespace' => 'Blogs'], function () {
         Route::resource('blogs', 'BlogsController');
         Route::get('/single_blog/{id}', 'BlogsController@show');
         Route::post('publish_blog', 'BlogsController@publishBlog');
+        Route::post('publish_general_blog', 'BlogsController@saveGeneralBlog');
     });
 
     Route::group(['namespace' => 'Like'], function () {
@@ -133,10 +144,35 @@ Route::get('/search/friends', 'FrontendController@search_friends')->name('search
     
 
 /* For blog tags */
-Route::get('/blog_tagwise/{tag}', 'FrontendController@blog_tagwise')->name('blog_tagwise');
-Route::get('/blog_of_friend_tagwise', 'FrontendController@blog_of_friend_tagwise')->name('blog_of_friend_tagwise');
-Route::get('/my_blogs', 'FrontendController@my_blogs')->name('my_blogs');
-Route::get('/blog_general', 'FrontendController@blog_general')->name('blog_general');
-Route::get('/blog_general_userwise', 'FrontendController@blog_general_userwise')->name('blog_general_userwise');
+//Route::get('/blog_tagwise/{tag}', 'FrontendController@blog_tagwise')->name('blog_tagwise');
+//Route::get('/blog_of_friend_tagwise', 'FrontendController@blog_of_friend_tagwise')->name('blog_of_friend_tagwise');
+//Route::get('/my_blogs', 'FrontendController@my_blogs')->name('my_blogs');
+//Route::get('/blog_general', 'FrontendController@blog_general')->name('blog_general');
+//Route::get('/blog_general_userwise', 'FrontendController@blog_general_userwise')->name('blog_general_userwise');
+
+
+/* blogs tagwise */
+Route::get('/blogview/tagwise/all', 'FrontendController@blog_tagwise_all')->name('blog_tagwise_all');
+Route::get('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my')->name('blog_tagwise_my');
+Route::get('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend')->name('blog_tagwise_friend');
 Route::get('/single_general_blog/{id}', 'GeneralBlogs\GeneralBlogsController@show');
 Route::get('/all_blogs_tagwise', 'FrontendController@all_blogs_tagwise')->name('all_blogs_tagwise');
+
+/* blogs for the general blogs */
+Route::get('/blogview/general/all', 'FrontendController@blog_general_all')->name('blog_general');
+Route::get('/blogview/general/my', 'FrontendController@blog_general_my');
+Route::post('/blogview/general/my', 'FrontendController@blog_general_my_post')->name('blog_general_my');
+
+Route::get('/blogview/general/friend', 'FrontendController@blog_general_friend')->name('blog_general_friend');
+Route::get('/single_general_blog/{id}', 'GeneralBlogs\GeneralBlogsController@show');
+
+
+/* blogs for the designed panels */
+Route::get('/blogview/designed-panel/all', 'FrontendController@designed_panels_all')->name('designed_panels_all');
+Route::post('/blogview/designed-panel/my', 'FrontendController@designed_panels_my')->name('designed_panels_my');
+Route::get('/blogview/designed-panel/friend', 'FrontendController@designed_panels_friend')->name('blog_general_friend');
+Route::get('/blogview/designed-panel/home', 'FrontendController@designed_panels_home')->name('blog_general_home');
+Route::get('/single_panel_design/{id}', 'BlogPanelDesign\BlogPanelDesignController@show');
+
+//testing routes for career profile
+Route::get('/career/setup-profile','CareerProfile\CareerProfilesController@index');

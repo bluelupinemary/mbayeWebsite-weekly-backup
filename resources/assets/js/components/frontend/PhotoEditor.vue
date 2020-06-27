@@ -64,15 +64,16 @@ export default {
         replaceWith(cancel_button);
 
         // cancel button functionality
-        document.querySelector('.tui-image-editor-cancel-btn').addEventListener('click',function(event) {
+        $('.tui-image-editor-cancel-btn').click(function() {
             $('#photoEditorModal').modal('hide');
         });
 
         // save button functionality
-        document.querySelector('.tui-image-editor-save-btn').addEventListener('click',function(event) {
+        $('.tui-image-editor-save-btn').click(function() {
             var image_src = $this.$refs.tuiImageEditor.invoke('toDataURL');
-            $('input[name="edited_featured_image"]').val(image_src);
-            $('#featured-image-previewimg').attr('src', image_src);
+
+            $('.main-form input[name="edited_featured_image"]').val(image_src);
+            $('.all-blog #featured-image-previewimg').attr('src', image_src);
             $('#photoEditorModal').modal('hide').fadeOut();
         });
         

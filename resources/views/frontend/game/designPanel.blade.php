@@ -13,7 +13,6 @@
 
 @section('content')
     <input type="hidden" id="userId" value="{{$userId}}"></input>
-
     <canvas id="canvas"></canvas>
     
     <div id="loadingScreenDiv" style="">

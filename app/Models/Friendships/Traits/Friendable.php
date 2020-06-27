@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\Friendships\Traits;
 use Exception;
+use App\Models\Friendships\Group;
 use App\Models\Friendships\Status;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
@@ -115,13 +116,13 @@ trait Friendable
     public function groupFriend(Model $friend, $groupSlug)
     {
         $friendship       = $this->findFriendship($friend)->whereStatus(Status::ACCEPTED)->first();
-        $groupsAvailable = config('friendships.groups', []);
-        if (!isset($groupsAvailable[$groupSlug]) || empty($friendship)) {
+        $groupsAvailable = Group::where('id',$groupSlug)->first();
+        if (!isset($groupsAvailable) || empty($friendship)) {
             return false;
         }
         $group = $friendship->groups()->firstOrCreate([
             'friendship_id' => $friendship->id,
-            'group_id'      => $groupsAvailable[$groupSlug],
+            'group_id'      => $groupsAvailable->id,
             'friend_id'     => $friend->getKey(),
             'friend_type'   => $friend->getMorphClass(),
         ]);
@@ -136,7 +137,7 @@ trait Friendable
     public function ungroupFriend(Model $friend, $groupSlug = '')
     {
         $friendship       = $this->findFriendship($friend)->first();
-        $groupsAvailable = config('friendships.groups', []);
+        $groupsAvailable = Group::where('slug',$groupSlug)->first();
         if (empty($friendship)) {
             return false;
         }
@@ -145,8 +146,8 @@ trait Friendable
             'friend_id'     => $friend->getKey(),
             'friend_type'   => $friend->getMorphClass(),
         ];
-        if ('' !== $groupSlug && isset($groupsAvailable[$groupSlug])) {
-            $where['group_id'] = $groupsAvailable[$groupSlug];
+        if ('' !== $groupSlug && isset($groupsAvailable)) {
+            $where['group_id'] = $groupsAvailable->id;
         }
         $result = $friendship->groups()->where($where)->delete();
         return $result;

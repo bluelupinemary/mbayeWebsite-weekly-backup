@@ -21,6 +21,7 @@ Route::post('/userreaction','Frontend\Like\LikeController@getUserReaction');
 Route::post('/blogs/{blog}/emotions','Frontend\Like\LikeController@setemotion');
 Route::get('/blogs/{blog}/comments', 'Frontend\Comment\CommentController@index');
 Route::post('/blogs/{blog}/comment', 'Frontend\Comment\CommentController@store');
+Route::post('/save_collage', 'Frontend\User\DashboardController@saveCollage');
 
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], function () {
     Route::group(['prefix' => 'auth', 'middleware' => ['guest']], function () {
@@ -62,6 +63,9 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::resource('bloggeneral', 'GeneralBlogsController', ['except' => ['create', 'edit']]);
         Route::get('bloggeneral_userwise','GeneralBlogsController@show_generalblog_userwise');
         Route::get('showallblogs','BlogsController@show_all_blogs_tagwise');
-  
+
+        Route::resource('all_designed_panels', 'BlogPanelDesignController', ['except' => ['create', 'edit']]);
+        Route::get('userwise_designed_panels','BlogPanelDesignController@show_userwise_designed_panels');
+        
 });
 

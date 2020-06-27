@@ -2,9 +2,12 @@
 
 namespace App\Models\Access\User\Traits\Relationship;
 
-use App\Models\Access\User\SocialLogin;
-use App\Models\Comment\Comment;
 use App\Models\System\Session;
+use App\Models\Comment\Comment;
+use App\Models\Friendships\Group;
+use App\Models\Access\User\SocialLogin;
+use App\Models\CareerProfile\CareerProfile;
+
 
 /**
  * Class UserRelationship.
@@ -40,6 +43,8 @@ trait UserRelationship
         return $this->hasMany(SocialLogin::class);
     }
 
+   
+
     /**
      * @return mixed
      */
@@ -48,8 +53,18 @@ trait UserRelationship
         return $this->hasMany(Session::class);
     }
 
-   public function comments()
+    public function comments()
       {
           return $this->hasMany(Comment::class)->whereNull('parent_id');
+      }
+
+    public function groups()
+      {
+          return $this->hasMany(Group::class);
+      }
+
+    public function careerprofile()
+      {
+          return $this->hasOne(CareerProfile::class,'user_id');
       }
 }

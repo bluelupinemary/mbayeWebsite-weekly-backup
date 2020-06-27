@@ -38,6 +38,8 @@ let createContactScene = function(){
 function create_camera(){
     let camera = new BABYLON.ArcRotateCamera("Main Camera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-198.34,80.42,162.37),scene);
     //zoom in/out speed; speed - lower numer, faster zoom in/out
+    camera.fovMode = BABYLON.Camera.FOVMODE_HORIZONTAL_FIXED;
+    camera.fov = 1.4;
     camera.attachControl(canvas,true);
     camera.upperAlphaLimit = 1000;                  //up down tilt upper limit
     camera.lowerRadiusLimit = 3;                    //zoom in limit

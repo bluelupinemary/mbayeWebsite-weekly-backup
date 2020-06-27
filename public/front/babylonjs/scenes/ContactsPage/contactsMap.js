@@ -91,15 +91,16 @@ var communicatorMap = new Map([
     ["save_pnl",null],
     ["chat_pnl",null],
     ["home_pnl",null],
+    ["back_pnl",null],
 ]);
 
 
 let starColorMap = new Map([
     ["Mercury",BABYLON.Color3.Gray()],
-    ["Venus",BABYLON.Color3.Yellow()],
+    ["Venus",BABYLON.Color3.Magenta()],
     ["Earth",BABYLON.Color3.Green()],
     ["Mars",BABYLON.Color3.Red()],
-    ["Jupiter",BABYLON.Color3.Magenta()],
+    ["Jupiter",BABYLON.Color3.Gray()],
     ["Saturn",BABYLON.Color3.Yellow()],
     ["Uranus",BABYLON.Color3.Teal()],
     ["Neptune",BABYLON.Color3.Blue()],

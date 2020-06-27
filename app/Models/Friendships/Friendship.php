@@ -2,6 +2,7 @@
 
 namespace App\Models\Friendships;
 
+use App\FriendFriendshipGroups;
 use App\Models\Friendships\Status;
 use Illuminate\Database\Eloquent\Model;
 
@@ -95,11 +96,11 @@ class Friendship extends Model
 
         $groupsPivotTable   = config('friendships.tables.fr_groups_pivot');
         $friendsPivotTable  = config('friendships.tables.fr_pivot');
-        $groupsAvailable = config('friendships.groups', []);
+        $groupsAvailable = Group::where('id',$groupSlug)->first();
 
-        if ('' !== $groupSlug && isset($groupsAvailable[$groupSlug])) {
+        if ($groupSlug !== '') {
 
-            $groupId = $groupsAvailable[$groupSlug];
+            $groupId = $groupsAvailable->id;
 
             $query->join($groupsPivotTable, function ($join) use ($groupsPivotTable, $friendsPivotTable, $groupId, $model) {
                 $join->on($groupsPivotTable . '.friendship_id', '=', $friendsPivotTable . '.id')

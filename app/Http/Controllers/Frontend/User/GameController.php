@@ -100,10 +100,7 @@ class GameController extends Controller
                     }else{ //update the list of flowers in db
                         UserPanelFlowers::where('design_id', $design_id)->where('panel_number',  $panel)->update(['flowers_used'=>implode(",",$flowers)]);
                     }
-                    //else update the flowers list of this panel
-                    // $sz = count($flowers);
-                    // if($sz === 0 ) $flowers = "";
-                    // else $flowers = implode(",",$flowers);
+                
                     
                 }
             }//end of foreach

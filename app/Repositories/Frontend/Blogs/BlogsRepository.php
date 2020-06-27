@@ -11,6 +11,9 @@ use App\Models\Blogs\Blog;
 use App\Models\BlogTags\BlogTag;
 use App\Models\BlogVideos\BlogVideo;
 use App\Models\BlogImages\BlogImage;
+use App\Models\GeneralBlogs\GeneralBlog;
+use App\Models\GeneralBlogVideos\GeneralBlogVideo;
+use App\Models\GeneralBlogImages\GeneralBlogImage;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
 use DB;
@@ -78,7 +81,7 @@ class BlogsRepository extends BaseRepository
         $input['content'] = $this->replaceContentFileLocation($input['content']);
         $input['slug'] = Str::slug($input['name']);
         $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
-        $input['created_by'] = access()->user()->id;
+        $input['created_by'] = $input['user_id'];
 
         if($input['edited_featured_image']) {
             $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
@@ -176,6 +179,44 @@ class BlogsRepository extends BaseRepository
         throw new GeneralException(
             trans('exceptions.backend.blogs.update_error')
         );
+    }
+
+    public function createGeneralBlog(array $input)
+    {
+        DB::beginTransaction();
+        $input['content'] = $this->replaceContentFileLocation($input['content']);
+        $input['slug'] = Str::slug($input['name']);
+        $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
+        $input['created_by'] = access()->user()->id;
+
+        if($input['edited_featured_image']) {
+            $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
+        } else if(array_key_exists('featured_image', $input)) {
+            $input['featured_image'] = $this->uploadImage($input['featured_image']);
+        }
+        
+        if ($blog = GeneralBlog::create($input)) {
+            // Inserting videos
+            if(array_key_exists('videos', $input)) {
+                $this->addGeneralBlogVideos($blog->id, $input['videos']);
+            }
+
+            if($input['attachments'] != '[]') {
+                $formatted_attachments = str_replace( array( '\'', '"', ';', '[', ']' ), '', $input['attachments']);
+                $formatted_attachments = explode(',', $formatted_attachments);
+                $this->backupGeneralBlogAttachments($formatted_attachments, $blog->id);
+
+                if($blog->status == 'Published') {
+                    $this->deleteTrixAttachments($formatted_attachments);
+                }
+            }
+
+            // event(new BlogCreated($blog));
+            DB::commit();
+            return $blog;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.blogs.create_error'));
     }
 
     /**
@@ -324,6 +365,44 @@ class BlogsRepository extends BaseRepository
         BlogImage::where('blog_id', $blog_id)->delete();
     }
 
+    public function backupGeneralBlogAttachments($attachments, $blog_id)
+    {
+        $this->deleteGeneralBlogAttachment($blog_id);
+        $quality = 10;//0-9
+        for($i = 0; $i < count($attachments); $i++) {
+            if (!Storage::exists('public/img/blog-attachments/'.$attachments[$i])) {
+                Storage::copy('public/trix-attachments/'.$attachments[$i], 'public/img/blog-attachments/'.$attachments[$i]);
+                
+                $source= 'storage/img/blog-attachments/'.$attachments[$i];
+                // dd(getimagesize(asset('storage/img/blog-attachments/'.$attachments[$i])));
+                $dest="storage/img/blog-attachments/".$attachments[$i];
+                $path= $this->compress($source,$dest, $quality);// compressing images
+                $this->addGeneralBlogImage($attachments[$i], $blog_id);
+            }
+        }
+    }
+
+    public function addGeneralBlogImage($filename, $blog_id)
+    {
+        $blog_image = new GeneralBlogImage();
+        $blog_image->blog_id = $blog_id;
+        $blog_image->imageurl = $filename;
+        $blog_image->save();
+    }
+
+    public function deleteGeneralBlogAttachment($blog_id)
+    {
+        $blog_attachments = GeneralBlogImage::where('blog_id', $blog_id)->get();
+
+        foreach($blog_attachments as $blog_attachment) {
+            if (Storage::exists('public/img/blog-attachments/'.$blog_attachment->imageurl)) {
+                Storage::delete('public/img/blog-attachments/'.$blog_attachment->imageurl);
+            }
+        }
+        
+        GeneralBlogImage::where('blog_id', $blog_id)->delete();
+    }
+
     public function deleteTrixAttachments($attachments)
     {
         for($i = 0; $i < count($attachments); $i++) {
@@ -339,6 +418,18 @@ class BlogsRepository extends BaseRepository
 
         for($i = 0; $i < count($videos); $i++) {
             $blog_video = new BlogVideo();
+            $blog_video->blog_id = $blog_id;
+            $blog_video->videourl = $videos[$i];
+            $blog_video->save();
+        }
+    }
+
+    public function addGeneralBlogVideos($blog_id, $videos)
+    {
+        GeneralBlogVideo::where('blog_id', $blog_id)->delete();
+
+        for($i = 0; $i < count($videos); $i++) {
+            $blog_video = new GeneralBlogVideo();
             $blog_video->blog_id = $blog_id;
             $blog_video->videourl = $videos[$i];
             $blog_video->save();

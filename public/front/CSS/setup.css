@@ -1,0 +1,283 @@
+.box {
+    width: 20vw;
+    height: 25vh;
+    padding: 5vh;
+    border-radius: 5px;
+    color: white;
+    overflow-y:auto;
+  }
+  
+  .about{
+    -webkit-box-shadow: -1px 1px 5px 9px rgba(26,48,80,0.5);
+    -moz-box-shadow: -1px 1px 5px 9px rgba(26,48,80,0.5);
+    box-shadow: -1px 1px 5px 9px rgba(26,48,80,0.5);
+    background: rgba(26,48,80,0.5);
+    position: fixed;
+    left: 5vw;
+    margin-top: 6.25vh;
+    margin-bottom: 3.125vh;
+    font-family: Candara;
+  }
+  
+  .educ{
+    -webkit-box-shadow: -1px 1px 5px 9px rgba(26,48,80,0.5);
+    -moz-box-shadow: -1px 1px 5px 9px rgba(26,48,80,0.5);
+    box-shadow: -1px 1px 5px 9px rgba(26,48,80,0.5);
+    background-color: rgba(26,48,80,0.5);
+    position: fixed;
+    top: 37.5vh;
+    left: 5vw;
+    margin-bottom: 3.125vh;
+    font-family: Candara;
+  }
+  
+  .contact_num{
+    -webkit-box-shadow: -1px 1px 5px 9px rgba(26,48,80,0.5);
+    -moz-box-shadow: -1px 1px 5px 9px rgba(26,48,80,0.5);
+    box-shadow: -1px 1px 5px 9px rgba(26,48,80,0.5);
+    background-color: rgba(26,48,80,0.5);
+    position: fixed;
+    top: 68.75vh;
+    left: 5vw;
+    margin-bottom: 6.25vh;
+    font-family: Candara;
+  }
+  
+  .featpic{
+    -webkit-box-shadow: -1px 1px 5px 9px rgba(22,64,77,0.5);
+    -moz-box-shadow: -1px 1px 5px 9px rgba(22,64,77,0.5);
+    box-shadow: -1px 1px 5px 9px rgba(22,64,77,0.5);
+    background-color: rgba(22,64,77,0.5);
+    width: 40vw;
+    height: 35vh;
+    padding: 5vh;
+    border-radius: 5px;
+    color: white;
+    overflow-y:auto;
+    position: fixed;
+    top: 30vh;
+    left: 30vw;
+    overflow-y:auto;
+  }
+  
+  .work{
+    -webkit-box-shadow: -1px 1px 5px 9px rgba(22,64,77,0.5);
+    -moz-box-shadow: -1px 1px 5px 9px rgba(22,64,77,0.5);
+    box-shadow: -1px 1px 5px 9px rgba(22,64,77,0.5);
+    background-color: rgba(22,64,77,0.5);
+    width: 20vw;
+    height: 55vh;
+    padding: 5vh;
+    border-radius: 5px;
+    color: white;
+    font-family: Candara;
+    overflow-y:auto;
+    position: fixed;
+    left: 75vw;
+    margin-top: 6.25vh;
+    overflow-y:auto;
+    font-family: Candara;
+  }
+  
+  .char_ref{
+    -webkit-box-shadow: -1px 1px 5px 9px rgba(22,64,77,0.5);
+    -moz-box-shadow: -1px 1px 5px 9px rgba(22,64,77,0.5);
+    box-shadow: -1px 1px 5px 9px rgba(22,64,77,0.5);
+    background-color: rgba(22,64,77,0.5);
+    position: fixed;
+    top: 68.75vh;
+    left: 75vw;
+    margin-bottom: 6.25vh;
+    font-family: Candara;
+  }
+  
+  .panel{
+    background-color: rgba(5,50,88,0.8);
+    width: 50vw;
+    height: 65vh;
+    padding-top: 1vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 5vh;
+    border-radius: 5px;
+    color: white;
+    font-family: Candara;
+    overflow-y: auto;
+    position: fixed;
+    top: 17.5vh;
+    left: 25vw;
+    overflow-y:auto;
+    font-family: Candara;
+  } 
+
+  .contact_panel{
+    background-color: rgba(5,50,88,0.8);
+    width: 50vw;
+    height: 65vh;
+    padding-top: 1vh;
+    padding-left: 1vh;
+    padding-right: 3vh;
+    border-radius: 5px;
+    color: white;
+    font-family: Candara;
+    overflow-y: auto;
+    position: fixed;
+    top: 17.5vh;
+    left: 25vw;
+    overflow-y:auto;
+    font-family: Candara;
+  } 
+  
+  .about_panel {
+    margin: auto;
+  }
+  
+  .header{
+    font-size: 2em;
+  }
+  
+  .form{
+    padding-bottom:0.2em;
+    vertical-align: text-top;
+  }
+  
+  .all_forms{
+  
+  }
+  
+  .lbl_text{
+    margin-left: 12em;
+  }
+
+  .contactlbl_text{
+    margin-left: 9em;
+  }
+  
+  input[type=text] {
+    border: 1.5px solid white;
+    border-radius: 4px;
+    background-color: transparent;
+    color:white;
+    width: 25vw;
+  }
+  
+  input[type=submit] {
+    margin-top: 1em;
+    margin-left: 25em;
+  }
+  
+  .long_forms{
+    border: 1.5px solid white;
+    border-radius: 4px;
+    background-color: transparent;
+    color:white;
+    width: 25vw;
+    resize: none;
+  }
+  
+  .txtfield * {
+    vertical-align: top;
+  }
+  
+  .studyfield{
+    margin-left: 0.5em;
+  }
+  
+  .schoolname{
+    margin-left: 0.6em;
+  }
+
+  .dob{
+    margin-left: 0.8em;
+  }
+  
+  .designation{
+    margin-left: 1em;
+  }
+  
+  .name{
+    margin-left: 1.2em;
+  }
+  
+  .email_form{
+    margin-left: 1.6em;
+  }
+
+  .objective {
+    margin-left: 1.9em;
+  }
+  
+  .workcontact {
+    margin-left: 2em;
+  }
+  
+  .skills {
+    margin-left: 2.1em;
+  }
+  
+  .work_start_form{
+    margin-left: 2.3em;
+  }
+  
+  .educ_start_form{
+    margin-left: 2.6em;
+  }
+  
+  .work_end_form{
+    margin-left: 2.7em;
+  }
+  
+  .educ_end_form{
+    margin-left: 3em;
+  }
+
+  .contactnum_form{
+    margin-left: 3.4em;
+  }
+  
+  .charref_name{
+    margin-left: 3.5em;
+  }
+  
+  .charref_email{
+    margin-left: 3.7em;
+  }
+  
+  .workrole{
+    margin-left: 4.5em;
+  }
+  
+  .initial_title{
+    font-size: 1.5em;
+    font-family: Space Age;
+    text-align: center;
+    padding: 5vh;
+  }
+  
+  .about_info{
+    display: none;
+  }
+  
+  .educ_info{
+    display: none;
+  }
+  
+  .contactnum_info{
+    display: none;
+  }
+  
+  .featpic_info{
+    display: none;
+  }
+  
+  .work_info{
+    display: none;
+  }
+  
+  .charref_info{
+    display: none;
+  }
+
+  .add_btn{
+    text-align: center;
+  } 

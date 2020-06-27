@@ -24,6 +24,7 @@ class CreateUsersContactsDetailsTable extends Migration
             $table->string('mobile_number', 50)->nullable();
             $table->text('alias')->nullable();
             $table->text('planet')->nullable();
+            $table->text('image_path')->nullable();
             $table->timestamps();
         });
     }

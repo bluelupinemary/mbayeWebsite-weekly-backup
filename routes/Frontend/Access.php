@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 /**
  * Frontend Access Controllers
  * All route names are prefixed with 'frontend.auth'.

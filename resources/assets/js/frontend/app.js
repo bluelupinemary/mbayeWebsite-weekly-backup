@@ -9,12 +9,15 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
+// import VueMaterial from 'vue-material'
+// import 'vue-material/dist/vue-material.min.css'
 
 dom.watch();
 
 library.add(fas);
 require('../bootstrap');
 window.Vue = require('vue');
+// Vue.use(VueMaterial);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -35,6 +38,7 @@ Vue.component('searchfriends-component', require('../components/frontend/SearchF
 Vue.component('accept-component', require('../components/frontend/AcceptRequestComponent.vue').default);
 Vue.component('friends-component', require('../components/frontend/FriendComponent.vue').default);
 Vue.component('photoeditor-component', require('../components/frontend/PhotoEditor.vue').default);
+Vue.component('general-photoeditor-component', require('../components/frontend/GeneralBlogPhotoEditor.vue').default);
 
 const app = new Vue({
     el: '.app',

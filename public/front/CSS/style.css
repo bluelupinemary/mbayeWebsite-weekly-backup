@@ -1247,8 +1247,8 @@ header{
    
         position: absolute;
         top: -9px;
-        left: -27px;
-        height: 103vh;
+        /* left: -27px; */
+        height: 103vh !important;
         width: 103vw;
       }
 

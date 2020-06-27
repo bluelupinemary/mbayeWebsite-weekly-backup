@@ -3133,7 +3133,7 @@ div.notifications-list::-webkit-scrollbar {
 	background: #ed1c24;
 }
 
-.planet-buttons button.extra {
+.planet-buttons button.collage {
 	position: absolute;
 	top: 2%;
 	left: 50%;
@@ -3150,6 +3150,10 @@ div.notifications-list::-webkit-scrollbar {
 
 .planet-buttons button.back img {
 	width: 70%;
+}
+
+.planet-buttons button.collage img {
+	width: 75%;
 }
 
 .planet-buttons span.pop-up {
@@ -3193,4 +3197,14 @@ div.notifications-list::-webkit-scrollbar {
 	-moz-transform: translate(214%, -50%);
 	-ms-transform: translate(214%, -50%);
 	transform: translate(214%, -50%)
+}
+
+.planet-buttons span.collage-pop-up {
+	top: -5%;
+	width: auto;
+	white-space: nowrap;
+	-webkit-transform: translate(-50%, 0%);
+	-moz-transform: translate(-50%, 0%);
+	-ms-transform: translate(-50%, 0%);
+	transform: translate(-50%, 0%);
 }

@@ -63,6 +63,7 @@ function create_flowers_camera(){
     camera.wheelPrecision = 1;
     camera.angularSensibilityX = 4000;     //rotation speed of camera; lower number, faster rotation
     camera.angularSensibilityY = 4000;
+    camera.pinchDeltaPercentage = 800; 
     //for the right mouse button panning function; ;0 -no panning, 1 - fastest panning
     camera.panningSensibility = 10; 
     camera.upperBetaLimit = 10;
@@ -419,6 +420,7 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
     document.getElementById("loadingScreenDiv").remove();
+    set_to_fullscreen();
 
     engine.runRenderLoop(function () {
 
@@ -692,14 +694,41 @@ $('#carpetsWikiPage').on('load',function(){
 
 
 
-//     var canvas = document.getElementById("renderCanvas");
-//     var engine = new BABYLON.Engine(canvas, true);
-//     BABYLON.SceneLoader.Load("TestScene/", "test.babylon", engine, function (newScene) {    
-//         newScene.executeWhenReady(function () {        
-//             newScene.activeCamera.attachControl(canvas);        
-//             engine.runRenderLoop(function () {            
-//                 newScene.render();        
-//             });    
-//         });
-//     }, function (progress) {    // To do: give progress feedback to user
-// });
+
+function set_to_fullscreen(){
+    //function to lock the screen. in this case the screen will be locked in portrait-primary mode.
+    var elem = document.documentElement;
+    function openFullscreen() {
+        if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+        
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            elem.webkitRequestFullscreen();
+           
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem.msRequestFullscreen();
+         
+        }
+        else if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+           
+        } 
+    }
+
+    if(window.innerWidth <= 991 ){
+            Swal.fire({
+                imageUrl: '../../front/icons/alert-icon.png',
+                imageWidth: 80,
+                imageHeight: 80,
+                html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+                padding: '15px',
+                background: 'rgba(8, 64, 147, 0.62)',
+                allowOutsideClick: false
+            }).then((result) => {
+                // if (result.value) {
+                    openFullscreen()
+                // }
+            });
+
+    }//end of if small screen size
+}
