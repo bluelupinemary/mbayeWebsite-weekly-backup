@@ -210,11 +210,10 @@ function load_meshes(){
             flowersCamera.radius = 1360;
         },500);
 
-      //  setTimeout(function(){
+     
             
-            setup_music_player();
-            // enable_gizmo(mbaye_object);
-        //},1000);
+        setup_music_player();
+         
        
     });
 }//end of function load meshes
@@ -605,10 +604,6 @@ $('#carpetsWikiPage').on('load',function(){
 
     document.onkeydown = (evt)=>{
      
-        //key press: p or P - enable position arrows
-        //key press: r or R - enable rotation arrows
-        //key press: s or S - enable bounding box for scaling / bounding box gizmo
-        // console.log(evt.key);
         if(evt.key == 'o' || evt.key == 'O'){
             currFlower = null;
             homeGizmo.attachedMesh = null;
@@ -616,36 +611,22 @@ $('#carpetsWikiPage').on('load',function(){
         }
      
     }
-    // Start by only enabling position control
-    // document.onkeydown({key: 'p'})
-
+    
 
 
 
     //the music player
-    // let video_player = document.getElementById('player');
+    
     let yt_player;
     let isMusicChanged = false;
     let theClick = 0;
     function setup_music_player(){
         console.log("setup music");
-        // stopAllVideos();
+       
         $('.player').empty();
         let initVideo = "";
-        // video_player.empty();
-        // if(yt_player && isMusicChanged){
-            // yt_player = null;
-            // isMusicChanged = false;
-        // } 
-        // ctrlq.innerHTML = '<img id="youtube-icon" src=""/><div id="youtube-player"></div>';
-        // var video_id = $(this).data('videoid');
-        // var start = $(this).data('starttime');
         var video_player = document.getElementById('player');
-        // $('.player').html('<div id="'+video_player+'"></div>')
-        // video_player.innerHTML = "<div id="+video_player+"></div>";
-        // player.pauseVideo();
 
-        console.log("video id: ", video_player)
         
         yt_player = new YT.Player(video_player, {
         host: 'https://www.youtube.com',
@@ -668,23 +649,13 @@ $('#carpetsWikiPage').on('load',function(){
 
 
     function onPlayerReady(event) {
-        // player.setPlaybackQuality("small");
-        // event.target.pauseVideo(); 
-        
-        // event.target.playVideo();
-        // document.getElementById("youtube-audio").style.display = "block";
-        // togglePlayButton(player.getPlayerState() !== 5);
-        // console.log("ready",event);
-        // event.target.mute();
         event.target.playVideo();
     }
 
     function load_flower_music(videoId,start) {
         $('.player').empty();
-        console.log("load: ", videoId, start);
-        // yt_player.seekTo(51);
         yt_player.loadVideoById(videoId,start);
-       yt_player.playVideo();
+        yt_player.playVideo();
     }
 
 
@@ -695,40 +666,40 @@ $('#carpetsWikiPage').on('load',function(){
 
 
 
-function set_to_fullscreen(){
-    //function to lock the screen. in this case the screen will be locked in portrait-primary mode.
-    var elem = document.documentElement;
-    function openFullscreen() {
-        if (elem.mozRequestFullScreen) { /* Firefox */
-        elem.mozRequestFullScreen();
-        
-        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-            elem.webkitRequestFullscreen();
-           
-        } else if (elem.msRequestFullscreen) { /* IE/Edge */
-            elem.msRequestFullscreen();
-         
+    function set_to_fullscreen(){
+        //function to lock the screen. in this case the screen will be locked in portrait-primary mode.
+        var elem = document.documentElement;
+        function openFullscreen() {
+            if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+            
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                elem.webkitRequestFullscreen();
+            
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+            
+            }
+            else if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            
+            } 
         }
-        else if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-           
-        } 
+
+        if(window.innerWidth <= 991 ){
+                Swal.fire({
+                    imageUrl: '../../front/icons/alert-icon.png',
+                    imageWidth: 80,
+                    imageHeight: 80,
+                    html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+                    padding: '15px',
+                    background: 'rgba(8, 64, 147, 0.62)',
+                    allowOutsideClick: false
+                }).then((result) => {
+                    // if (result.value) {
+                        openFullscreen()
+                    // }
+                });
+
+        }//end of if small screen size
     }
-
-    if(window.innerWidth <= 991 ){
-            Swal.fire({
-                imageUrl: '../../front/icons/alert-icon.png',
-                imageWidth: 80,
-                imageHeight: 80,
-                html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
-                padding: '15px',
-                background: 'rgba(8, 64, 147, 0.62)',
-                allowOutsideClick: false
-            }).then((result) => {
-                // if (result.value) {
-                    openFullscreen()
-                // }
-            });
-
-    }//end of if small screen size
-}

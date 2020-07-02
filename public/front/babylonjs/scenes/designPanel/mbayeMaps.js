@@ -1675,7 +1675,7 @@ var flowersMap = new Map([
 		
 		["31Willowherb",['31A','31B','31C']],
 		["32GeraldtonWax",['32A','32B','32C']],
-		["33YulanMagnolia",['32A','32B']],
+		["33YulanMagnolia",['33A','33B']],
 		["34Tormentil",['34A','34B']],
 		["35SpringGentian",['35A','35B']],
 		

@@ -2,6 +2,14 @@
 
 @section('before-styles')
 @trixassets
+<meta property="og:image" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+<meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 20, '...') }}">
+<meta property="og:url" content="{{ url('') }}">
+<meta property="og:title" content="{{ $blog->name }}">
+<meta name="twitter:card" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+<meta property="og:type" content="website" /> <meta property="og:image:width" content="720" />
+<meta property="og:image:height" content="720" />
+
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.carousel.min.css') }}">
@@ -214,6 +222,25 @@
             <button class="navigator-zoomout-btn">
                 <i class="fas fa-undo-alt"></i>
             </button>
+            <div class="share-div">
+                @php
+                    $share_links = Share::currentPage(null, [], '', '')
+                        ->facebook()
+                        ->twitter()
+                        ->linkedin('Extra linkedin summary can be passed here')
+                        ->whatsapp();
+                @endphp
+                
+                <div class="menu-button">
+                    <i class="fas fa-share-alt"></i>
+                    {{-- <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                    <a href="#"><i class="zmdi zmdi-google-plus"></i></a>
+                    <a href="#"><i class="zmdi zmdi-codepen"></i>   </a>
+                    <a href="#"><i class="zmdi zmdi-codepen"></i>   </a> --}}
+                    {!! $share_links !!}
+                    <a href="#"><img src="{{asset('front/icons/alert-icon.png')}}" alt=""></a>
+                </div>
+            </div>
         </div>
         <div class="naff-fart-reaction">
             <audio id="fart-audio" src="{{asset('front/sound-effects/fart.mp3')}}" preload="auto"></audio>
@@ -229,6 +256,7 @@
     <script src="{{ asset('front/JS/bootstrap.min.js') }}"></script>
     <script src="{{ asset('front/owl-carousel/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('front/JS/mo.min.js') }}"></script>
+    <script src="{{ asset('js/share.js') }}"></script>
     <script>
         var url = $('meta[name="url"]').attr('content');
         var token = '{{ Session::token() }}';

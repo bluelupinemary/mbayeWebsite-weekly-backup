@@ -675,32 +675,71 @@ $('.planet-buttons .collage').mouseenter(function() {
 	$('.planet-buttons span.collage-pop-up').hide();
 });
 
-$('.planet-buttons .view').on('click',function() {
-	view_blog("general",1);
-});
+// $('.planet-buttons .view').on('click',function() {
+// 	view_blog("general",1);
+// });
 
 $('button.collage').click(function() {
 	var tag = $(this).data('tag');
 	window.location.href = url+'/editor_collage?tag='+tag;
 });
 
+/**
+ * Function to redirect to general blogs
+ * @param {tag} tag 
+ * @param {id} id 
+ */
 function view_blog(tag,id){
 
+	$.ajax({
+		type: "POST",
+		url:url_view_tag_wise_blog,
+		data:{id:id,
+			 tag:tag,
+			 _token:token
+			},
+		success: function(result){
+				window.location.href=url_view_tag_wise_blog+"?id="+id+'&tag='+tag;
+		}});
+	
+}
+/**
+ * Function to redirect to general blogs
+ * @param {tag} tag 
+ * @param {id} id 
+ */
+function view_general_blogs (tag,id){
 
 	$.ajax({
-
 		type: "POST",
-	//	url:'/blogview/general/my',
-		type: "post",
-		url:url_view_blog,
-
-			data:{id:id,
-			tag:tag,
-			_token:token},
+		url:url_view_general_blog,
+		data:{id:id,
+			 tag:tag,
+			 _token:token
+			},
 		success: function(result){
-			console.log(result);
-				// window.location.href = url+"/blogview/general/my?id="+id+'&tag='+tag;
-				window.open(url_view_blog, "_self");
+				window.location.href=url_view_general_blog+"?id="+id+'&tag='+tag;
+		}});
+	
+}
+
+
+/**
+ * Function to redirect to tagwise blogs
+ * @param {tag} tag 
+ * @param {id} id 
+ */
+function view_my_blogs_tagwise(tag,id){
+
+	$.ajax({
+		type: "POST",
+		url:url_view_tag_wise_blog,
+		data:{id:id,
+			 tag:tag,
+			 _token:token
+			},
+		success: function(result){
+				window.location.href=url_view_tag_wise_blog+"?id="+id+'&tag='+tag;
 		}});
 	
 }

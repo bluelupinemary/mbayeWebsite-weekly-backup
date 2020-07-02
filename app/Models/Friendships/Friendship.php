@@ -2,9 +2,10 @@
 
 namespace App\Models\Friendships;
 
-use App\FriendFriendshipGroups;
+use App\Models\Friendships\FriendFriendshipGroups;
 use App\Models\Friendships\Status;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Friendships\Traits\Friendable;
 
 /**
  * Class Friendship
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Friendship extends Model
 {
+    use Friendable;
 
     /**
      * @var array

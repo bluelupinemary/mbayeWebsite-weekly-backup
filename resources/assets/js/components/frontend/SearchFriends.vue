@@ -268,12 +268,41 @@
   color: aqua;
   opacity: 1; /* Firefox */
 }
+
+.hideModal{
+  display: none;
+}
+
+.showModal{
+  display: block;
+  opacity: 1 !important;
+}
 </style>
 
 <template>
   <section class="container-fluid">
     <!-- View 2 starts from here  -->
     <div v-if="searched">
+        <!-- Modal -->
+        <div  id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" v-bind:class="[activeClass, 'modal', 'fade']" style="background-color:rgba(0, 0, 0, 0.6)">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            
+              <div class="modal-body" style="display:flex;justify-content:center;align-item:center">
+                <img
+                    :src="'/storage/profilepicture/'+selectedUser.photo"
+                    style="height:400px;width:400px;z-index:1;border-radius:50%; pointer-events:all; box-shadow: 0 0 12px 0px green, 0 0 0px 0px yellow;"
+                  />
+                  <a @click="viewProfile()" style="position: absolute;top: 46%;left: 12%;padding: 5px;pointer-events: all;color: blue;cursor: pointer;z-index: 2;height: auto;">
+                    <i class="fa fa-eye req-icon1"></i>
+                  </a>
+                  <a
+                  @click.prevent="sendrequest(selectedUser.id)" style="position: absolute;top: 46%;right: 12%;padding: 5px;pointer-events: all;color: blue;cursor: pointer;z-index: 2;height: auto;">
+                    <i class="fa fa-plus req-icon2"></i>
+                  </a>
+
+            </div>
+          </div>
+        </div>
       <!-- material dialog -->
       <!-- <md-dialog :md-active.sync="showDialog">
         <md-avatar class="md-avatar-icon md-large" style="width:400px;height:400px;">
@@ -359,14 +388,15 @@
 
       <!-- 5 main images -->
       <div v-for="(user,index) in users">
+        
         <div :id="'round-image-large' + index" class="ani-rolloutUse" @click="handleImgClick(user)">
-          <img :src="'/storage/profilepicture/' + user.photo" :key="user.id" id="user-img" />
+          <img :src="'/storage/profilepicture/' + user.photo" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter"/>
           <!-- <a @click.prevent="sendrequest(user.id)" href>
             <i class="fas fa-user-plus req-icon"></i>
           </a>
           <a href>
             <i class="fa fa-ban req-icon"></i>
-          </a>-->
+          </a> -->
         </div>
       </div>
       <div style="display:flex" id="search-friends">
@@ -420,7 +450,8 @@ export default {
       cursor: "pointer",
       next: false,
       showDialog: false,
-      selectedUser: {}
+      selectedUser: {},
+      activeClass:"hide"
     };
   },
   mounted() {
@@ -434,7 +465,7 @@ export default {
   methods: {
     handleImgClick(user) {
       this.selectedUser = user;
-      this.showDialog = true;
+      this.activeClass = "show"
     },
     backSearched() {
       this.searched = false;

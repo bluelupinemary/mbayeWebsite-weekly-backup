@@ -30,6 +30,7 @@
         height:100%;
     }
 </style>
+<script src="https://www.youtube.com/iframe_api"></script>   
 @endsection
 
 @section('content')
@@ -66,13 +67,10 @@
     <div class="player" id="player" data-player="youtube-player-1" style="visibility:hidden;width:20vw;height: 20vh;left: 26vw;top:0.5vw;position: absolute;"></div>
    
 
-    {{-- <div id="flowerModelDiv" style="border:2px solid gray; position:absolute;width:20vw;bottom:0;left:26vw;height:20vh;bottom:0vw;"></div> --}}
     <div id="flowerModelDiv">
         <img id="close-btn"  src="{{asset('front')}}/images3D/close-btn.png" data-toggle="tooltip" title="Close" align="right"/>
         <img id="fullscreen-btn" src="{{asset('front')}}/images3D/fullscreen-btn.png" data-toggle="tooltip" title="Fullscreen" align="right" /> 
         <model-viewer id="flowerViewer"  preload poster="{{asset('front')}}/images3D/Flower3DBG.png"  camera-target="0m 0m 0m" max-field-of-view="300%" src="" alt="A 3D model here" skybox-image="{{asset('front')}}/images3D/Flower3DBG.png" environment-image="{{asset('front')}}/images3D/lightroom.hdr" min-field-of-view ="1deg" exposure="0.8" camera-controls interaction-prompt="none"></model-viewer>
-        <!-- <model-viewer id="gameSeaMinDiv" src="" alt="The desc goes here" skybox-image="images/gameObjectDivBG.png" environment-image="images/lightroom.hdr" camera-controls></model-viewer> -->
-      <!--    <model-viewer id="charViewerDiv" style="overflow:auto;width:100%;height: 100%;"></model-viewer> -->
     </div>
    
     <div id="loadingScreenOverlay" >
@@ -89,10 +87,8 @@
         </div>
     </div>
 
-    {{-- <div class="player" id="player" data-player="youtube-player-1" ></div> --}}
     
-    
-    <script src="https://www.youtube.com/iframe_api"></script>   
+  
     
 
     

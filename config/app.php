@@ -201,6 +201,7 @@ return [
         Bvipul\Generator\Provider\CrudGeneratorServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Krgupta\Active\Providers\ActiveServiceProvider::class,
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
     ],
 
     /*
@@ -261,5 +262,6 @@ return [
         'Datatables' => Yajra\DataTables\Facades\DataTables::class,
         'Active'      => Krgupta\Active\Facades\Active::class,
         'ImageResize' => Intervention\Image\Facades\Image::class,
+        'Share' => Jorenvh\Share\ShareFacade::class,
     ],
 ];

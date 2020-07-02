@@ -1,14 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models\Friendships;
 
 use App\Status;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class FriendFriendshipGroups
- * @package Hootlex\Friendships\Models
- */
+
 class FriendFriendshipGroups extends Model
 {
 

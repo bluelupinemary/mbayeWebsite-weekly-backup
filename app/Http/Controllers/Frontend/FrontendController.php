@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Auth;
 use Illuminate\Http\Request;
 use App\Mail\ContactAdminEmail;
 use App\Models\Access\User\User;
 use App\Models\Settings\Setting;
 use App\Http\Controllers\Controller;
 use App\Models\Game\UserDesignPanel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Game\UserPanelFlowers;
 use Illuminate\Support\Facades\Storage;
@@ -86,7 +86,16 @@ class FrontendController extends Controller
         if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id'));
         return view('frontend.auth.login');
     }
+    public function blog_tagwise_friend_post(Request $request){
+     
+        $id = $request['id'];
+        $user = Auth::user();
     
+        if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
+        return view('frontend.auth.login');
+       
+      
+    }
     /**
      * Blogs of logged user tag wise
      */
@@ -98,7 +107,16 @@ class FrontendController extends Controller
         if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id'));
         return view('frontend.auth.login');
     }
-
+    public function blog_tagwise_my_post(Request $request){
+     
+        $id = $request['id'];
+        $user = Auth::user();
+    
+        if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
+        return view('frontend.auth.login');
+       
+      
+    }
     /**
      * All blogs of all users  tag wise
      */
@@ -274,10 +292,10 @@ class FrontendController extends Controller
    /* For general blogs userwise */
 
     public function blog_general_my_post(Request $request){
-        // dd($request);
+     
         $id = $request['id'];
         $user = Auth::user();
-        if($user)         return;
+    
         if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
         return view('frontend.auth.login');
        
@@ -303,7 +321,15 @@ class FrontendController extends Controller
     if($user)         return view('frontend.blog.blogview.general.blog_general_userwise',compact('id'));
     return view('frontend.auth.login');
 }
+public function blog_general_friend_post(Request $request){
+    $id = $request['id'];
+    $user = Auth::user();
 
+    if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
+    return view('frontend.auth.login');
+   
+  
+}
      /* For all designed panel blogs */
      public function designed_panels_all(){ 
         $user = Auth::user();
@@ -320,8 +346,18 @@ class FrontendController extends Controller
         $id = $request['id'];
         $tag=$request['tag'];
         $user = Auth::user();
-        if($user && $id && $tag)         return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id','tag'));
+        if($user )         return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id','tag'));
         return view('frontend.auth.login');
+    }
+
+    public function designed_panels_my_post(Request $request){
+        $id = $request['id'];
+        $user = Auth::user();
+    
+        if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
+        return view('frontend.auth.login');
+       
+      
     }
    /**
      * All designed panel blogs of friends
@@ -343,4 +379,14 @@ class FrontendController extends Controller
             return view('frontend.blog.blogview.designed-panel.designed_panels',compact('id'));
        
     }
+
+     /* For all users jobseeker */
+     public function jobseeker_profiles(Request $request){ 
+        $search = $request->search;
+        $type = $request->type;
+        $user = Auth::user();
+        if($user)         return view('frontend.blog.blogview.jobseekers.profiles',compact('search','type'));
+        return view('frontend.auth.login');
+    }
+
 }

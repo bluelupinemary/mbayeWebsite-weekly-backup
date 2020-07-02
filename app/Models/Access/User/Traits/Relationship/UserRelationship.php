@@ -6,7 +6,7 @@ use App\Models\System\Session;
 use App\Models\Comment\Comment;
 use App\Models\Friendships\Group;
 use App\Models\Access\User\SocialLogin;
-use App\Models\CareerProfile\CareerProfile;
+use App\Models\JobSeekerProfile\JobSeekerProfile;
 
 
 /**
@@ -63,8 +63,8 @@ trait UserRelationship
           return $this->hasMany(Group::class);
       }
 
-    public function careerprofile()
+    public function JobSeekerprofile()
       {
-          return $this->hasOne(CareerProfile::class,'user_id');
+          return $this->hasOne(JobSeekerProfile::class,'user_id');
       }
 }

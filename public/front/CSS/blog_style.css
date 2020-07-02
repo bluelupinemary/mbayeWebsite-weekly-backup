@@ -1648,7 +1648,8 @@ width:50%;
 }
 .div_title
 {
-    padding: 4%;
+    padding: 6%;
+    padding-left: 23%;
 }
 
 .button-number{
@@ -1961,7 +1962,7 @@ div.reflection.selected .mover
     left: 50%;
     transform: translate(-47%, -23%);
     border:0px solid white;
-
+    width: 25%;
 }
 
 .button-div-l{

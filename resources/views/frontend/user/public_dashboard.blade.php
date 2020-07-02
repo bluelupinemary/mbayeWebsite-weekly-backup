@@ -31,6 +31,7 @@
     $mountains_and_seas_preview = $user->getCollage('mountains_and_seas');
     $careers_preview = $user->getCollage('careers');
     $family_and_friends_preview = $user->getCollage('family_and_friends');
+    $userId=$user->id;
     @endphp
 
     @if($travel_preview != '')
@@ -174,9 +175,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'travel&id='.$user->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                    <button class="view" onclick="view_my_blogs_tagwise('travel',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -210,9 +209,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_general_userwise?id='.$user->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <button class="view" onclick="view_general_blogs('general',{{$userId}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -233,9 +230,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'sports&id='.$user->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <button class="view" onclick="view_my_blogs_tagwise('sports',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -252,9 +247,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'Mountains and Seas&id='.$user->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <button class="view" onclick="view_my_blogs_tagwise('Mountains and Seas',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -271,9 +264,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'films&id='.$user->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <button class="view" onclick="view_my_blogs_tagwise('films',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -290,9 +281,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'Family and Friends&id='.$user->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <button class="view" onclick="view_my_blogs_tagwise('Family and Friends',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -326,9 +315,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'politics&id='.$user->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <button class="view" onclick="view_my_blogs_tagwise('politics',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -416,9 +403,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <a href="{{URL('/blog_of_friend_tagwise?tag=' .'music&id='.$user->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <button class="view" onclick="view_my_blogs_tagwise('music',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -651,6 +636,11 @@
 
 @section('before-scripts')
     <script src="{{asset('front/JS/jquery-1.11.1.min.js')}}"></script>
+    <script>
+        var token = '{{ Session::token() }}';
+        var url_view_general_blog = '{{ route('frontend.blog_general_friend') }}';
+        var url_view_tag_wise_blog = '{{ route('frontend.blog_tagwise_friend') }}';
+    </script>
 @endsection
 
 @section('after-scripts')
@@ -670,5 +660,45 @@
         //     alert();
         //     $('.navigator-buttons, .tos-div, .instructions-div, .navigator-zoomout-btn, .communicator-div').css('pointer-events', 'none !important');
         // });
+
+        /**
+ * Function to redirect to general blogs
+ * @param {tag} tag 
+ * @param {id} id 
+ */
+function view_general_blogs(tag,id){
+$.ajax({
+    type: "POST",
+    url:url_view_general_blog,
+    data:{id:id,
+         tag:tag,
+         _token:token
+        },
+    success: function(result){
+            window.location.href=url_view_general_blog+"?id="+id+'&tag='+tag;
+    }});
+
+}
+
+
+/**
+* Function to redirect to tagwise blogs
+* @param {tag} tag 
+* @param {id} id 
+*/
+function view_my_blogs_tagwise(tag,id){
+
+$.ajax({
+    type: "POST",
+    url:url_view_tag_wise_blog,
+    data:{id:id,
+         tag:tag,
+         _token:token
+        },
+    success: function(result){
+            window.location.href=url_view_tag_wise_blog+"?id="+id+'&tag='+tag;
+    }});
+
+}
     </script>
 @endsection

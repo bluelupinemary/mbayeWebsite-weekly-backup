@@ -30,4 +30,10 @@ return [
     'blog_panel_design' => [
         'table' => 'blog_panel_design',
     ],
+    'job_seeker_profiles' => [
+        'table' => 'job_seeker_profiles',
+    ],
+    'professions' => [
+        'table' => 'professions',
+    ],
 ];

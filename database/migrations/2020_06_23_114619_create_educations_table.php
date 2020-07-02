@@ -20,8 +20,8 @@ class CreateEducationsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->text('description', 65535)->nullable();
-            $table->bigInteger('user_profile_id')->unsigned()->index('education_user_profile_id_foreign');
-            $table->foreign('user_profile_id')->references('id')->on('user_career_profiles')->onDelete('CASCADE');
+            $table->bigInteger('jobseeker_profile_id')->unsigned()->index('education_jobseeker_profile_id_foreign');
+            $table->foreign('jobseeker_profile_id')->references('id')->on('job_seeker_profiles')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

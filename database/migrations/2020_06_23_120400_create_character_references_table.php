@@ -19,8 +19,8 @@ class CreateCharacterReferencesTable extends Migration
             $table->string('email', 191)->nullable();
             $table->string('company_name', 191)->nullable();
             $table->string('designation', 191)->nullable();
-            $table->bigInteger('user_profile_id')->unsigned()->index('char_ref_user_profile_id_foreign');
-            $table->foreign('user_profile_id')->references('id')->on('user_career_profiles')->onDelete('CASCADE');
+            $table->bigInteger('jobseeker_profile_id')->unsigned()->index('education_jobseeker_profile_id_foreign');
+            $table->foreign('jobseeker_profile_id')->references('id')->on('job_seeker_profiles')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

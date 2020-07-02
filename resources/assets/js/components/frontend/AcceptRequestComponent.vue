@@ -35,6 +35,7 @@ export default {
             .listen('FriendRequest',(friendship) => {
                 //this.comments.push(event.comment);
                 console.log(friendship);
+                this.fetchrequests();
                 // this.comments.unshift(comment);
                 
             });

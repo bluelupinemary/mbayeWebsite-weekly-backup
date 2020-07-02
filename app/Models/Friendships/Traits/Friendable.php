@@ -13,17 +13,10 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Repositories\Frontend\Paginate\PaginateRepository;
 
-/**
- * Class Friendable
- * @package Demency\Friendships\Traits
- */
+
 trait Friendable
 {
-    /**
-     * @param Model $recipient
-     *
-     * @return \Demency\Friendships\Models\Friendship|false
-     */
+    
     public function befriend(Model $recipient)
     {
         if (!$this->canBefriend($recipient)) {
@@ -113,16 +106,16 @@ trait Friendable
      * @param $groupSlug
      * @return bool
      */
-    public function groupFriend(Model $friend, $groupSlug)
+    public function groupFriend(Model $friend, $groupid)
     {
         $friendship       = $this->findFriendship($friend)->whereStatus(Status::ACCEPTED)->first();
-        $groupsAvailable = Group::where('id',$groupSlug)->first();
-        if (!isset($groupsAvailable) || empty($friendship)) {
+        // $groupsAvailable = $groupid;
+        if (!isset($groupid) || empty($friendship)) {
             return false;
         }
         $group = $friendship->groups()->firstOrCreate([
             'friendship_id' => $friendship->id,
-            'group_id'      => $groupsAvailable->id,
+            'group_id'      => $groupid,
             'friend_id'     => $friend->getKey(),
             'friend_type'   => $friend->getMorphClass(),
         ]);
@@ -134,31 +127,24 @@ trait Friendable
      * @param $groupSlug
      * @return bool
      */
-    public function ungroupFriend(Model $friend, $groupSlug = '')
+    public function ungroupFriend(Model $friend, $groupid)
     {
-        $friendship       = $this->findFriendship($friend)->first();
-        $groupsAvailable = Group::where('slug',$groupSlug)->first();
-        if (empty($friendship)) {
+        $friendship       = $this->findFriendship($friend)->whereStatus(Status::ACCEPTED)->first();
+        // $groupsAvailable = Group::where('slug',$groupSlug)->first();
+        if (empty($friendship) || $groupid == '') {
             return false;
         }
-        $where = [
+        $match = [
             'friendship_id' => $friendship->id,
             'friend_id'     => $friend->getKey(),
             'friend_type'   => $friend->getMorphClass(),
+            'group_id'      => $groupid,
         ];
-        if ('' !== $groupSlug && isset($groupsAvailable)) {
-            $where['group_id'] = $groupsAvailable->id;
-        }
-        $result = $friendship->groups()->where($where)->delete();
+        $result = $friendship->groups()->where($match)->delete();
         return $result;
-
     }
 
-    /**
-     * @param Model $recipient
-     *
-     * @return \Demency\Friendships\Models\Friendship
-     */
+   
     public function blockFriend(Model $recipient)
     {
         // if there is a friendship between the two users and the sender is not blocked
@@ -289,6 +275,11 @@ trait Friendable
         return $this->getOrPaginate($this->getFriendsQueryBuilder($groupSlug), $perPage);
     }
 
+    public function getFriendsSearch($perPage = 0, $search = '') 
+    {
+        return $this->getOrPaginate($this->getFriendsSearchQueryBuilder($search), $perPage);
+    }
+
     public function getReq($perPage = 0, $groupSlug = '')
     {
         return $this->getOrPaginate($this->getReqQueryBuilder($groupSlug), $perPage);
@@ -411,6 +402,24 @@ trait Friendable
         $recipients  = $friendships->pluck('recipient_id')->all();
         $senders     = $friendships->pluck('sender_id')->all();
         return $this->where('id', '!=', $this->getKey())->whereIn('id', array_merge($recipients, $senders));
+    }
+
+    private function getFriendsSearchQueryBuilder($search = '')
+    {
+
+        $friendships = $this->findFriendships(Status::ACCEPTED)->get(['sender_id', 'recipient_id']);
+        $recipients  = $friendships->pluck('recipient_id')->all();
+        $senders     = $friendships->pluck('sender_id')->all();
+
+        return $this->where('id', '!=', $this->getKey())
+            ->whereIn('id', array_merge($recipients, $senders))
+            ->where(function ($query) use ($search) {
+                $query->where('username','LIKE','%'.$search.'%')
+                ->orWhere('email','LIKE','%'.$search.'%')
+                ->orWhere('first_name','LIKE','%'.$search.'%')
+                ->orWhere('last_name','LIKE','%'.$search.'%');
+            });
+            
     }
 
     private function getReqQueryBuilder($groupSlug = '')

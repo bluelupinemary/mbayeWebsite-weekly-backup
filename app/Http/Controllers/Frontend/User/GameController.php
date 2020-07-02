@@ -114,5 +114,28 @@ class GameController extends Controller
         }
     }
 
+
+
+    public function showBuildMbayeScene(){
+        $userId = Auth::user()->id;
+        /*
+        $user_design_data = UserDesignPanel::where('user_id', $userId)->first();
+
+        $design_id = UserDesignPanel::where('user_id', $userId)->first();
+        if($design_id) $design_id = $design_id->id;
+        $panels_from_db = UserPanelFlowers::where('design_id', $design_id)->pluck('panel_number')->toArray();
+      
+
+        $load_game = false;
+        $filename = null;
+        if(!$user_design_data|| $user_design_data === null){
+            $filename = null;
+        }else{
+            $filename = $user_design_data->saved_panel_url;
+            $load_game = $this->game->loadState($filename);
+        }*/
+        return view('frontend.game.build_mbaye',["userId"=>$userId]);
+    }
+
     
 }

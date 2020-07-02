@@ -20,6 +20,7 @@
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
+        "jorenvanhocht/laravel-share": "^3.2",
         "krgupta/active": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/passport": "^8.4",
@@ -30,7 +31,9 @@
         "spatie/laravel-cors": "^1.6",
         "te7a-houdini/laravel-trix": "^2.0",
         "unisharp/laravel-filemanager": "~1.8",
+        "nicmart/tree": "~0.2",
         "yajra/laravel-datatables-oracle": "~9.0"
+
     },
     "require-dev": {
         "bvipul/generator": "^v6",

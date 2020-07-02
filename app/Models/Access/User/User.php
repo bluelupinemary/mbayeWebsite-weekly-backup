@@ -2,16 +2,16 @@
 
 namespace App\Models\Access\User;
 
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use App\Models\Access\User\Traits\UserAccess;
+use App\Models\Friendships\Traits\Friendable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Access\User\Traits\Scope\UserScope;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Access\User\Traits\UserSendPasswordReset;
 use App\Models\Access\User\Traits\Attribute\UserAttribute;
 use App\Models\Access\User\Traits\Relationship\UserRelationship;
-use App\Models\Access\User\Traits\Scope\UserScope;
-use App\Models\Friendships\Traits\Friendable;
-use App\Models\Access\User\Traits\UserAccess;
-use App\Models\Access\User\Traits\UserSendPasswordReset;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
 
 /**
  * Class User.

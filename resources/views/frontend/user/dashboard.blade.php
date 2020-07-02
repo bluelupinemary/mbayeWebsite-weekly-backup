@@ -163,9 +163,7 @@
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
                 <span class="pop-up collage-pop-up">Modify Collage</span>
-                {{-- <a href="{{URL('/my_blogs?tag=' .'travel&id='.Auth::user()->id) }}"> --}}
-                    <button class="view" onclick="view_blog('travel',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                {{-- </a> --}}
+                    <button class="view" onclick="view_my_blogs_tagwise('travel',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="collage" data-tag="travel"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
@@ -201,9 +199,7 @@
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
                 <span class="pop-up collage-pop-up">Modify Collage</span>
-                {{-- <a href="{{URL('/blog_general_userwise?id='.Auth::user()->id) }}"> --}}
-                    <button id="viewBlogs" class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                {{-- </a> --}}
+                    <button id="viewBlogs" class="view" onclick="view_general_blogs('general',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="collage" data-tag="general"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
@@ -225,9 +221,7 @@
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
                 <span class="pop-up collage-pop-up">Modify Collage</span>
-                <a href="{{URL('/my_blogs?tag=' .'sports&id='.Auth::user()->id)}}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                <button class="view" onclick="view_my_blogs_tagwise('sports',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="collage" data-tag="sports"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
@@ -245,9 +239,7 @@
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
                 <span class="pop-up collage-pop-up">Modify Collage</span>
-                <a href="{{URL('/my_blogs?tag=' .'Mountains and Seas&id='.Auth::user()->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                    <button class="view" onclick="view_my_blogs_tagwise('Mountains and Seas',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="collage" data-tag="mountains_and_seas"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
@@ -265,9 +257,7 @@
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
                 <span class="pop-up collage-pop-up">Modify Collage</span>
-                <a href="{{URL('/my_blogs?tag=' .'films&id='.Auth::user()->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                    <button class="view" onclick="view_my_blogs_tagwise('films',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="collage" data-tag="films"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
@@ -285,9 +275,7 @@
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
                 <span class="pop-up collage-pop-up">Modify Collage</span>
-                <a href="{{URL('/my_blogs?tag=' .'Family and Friends&id='.Auth::user()->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                    <button class="view" onclick="view_my_blogs_tagwise('Family and Friends',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="collage" data-tag="family_and_friends"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
@@ -323,9 +311,7 @@
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
                 <span class="pop-up collage-pop-up">Modify Collage</span>
-                <a href="{{URL('/my_blogs?tag=' .'politics&id='.Auth::user()->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                    <button class="view" onclick="view_my_blogs_tagwise('politics',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="collage" data-tag="politics"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
@@ -414,9 +400,7 @@
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
                 <span class="pop-up collage-pop-up">Modify Collage</span>
-                <a href="{{URL('/my_blogs?tag=' .'music&id='.Auth::user()->id) }}">
-                    <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                </a>
+                    <button class="view" onclick="view_my_blogs_tagwise('music',{{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="collage" data-tag="music"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
@@ -651,10 +635,8 @@
     <script src="{{asset('front/JS/jquery-1.11.1.min.js')}}"></script>
     <script>
         var token = '{{ Session::token() }}';
-        var url_view_blog = '{{ route('frontend.blog_general_my') }}';
-    
-
- 
+        var url_view_general_blog = '{{ route('frontend.blog_general_my') }}';
+        var url_view_tag_wise_blog = '{{ route('frontend.blog_tagwise_my') }}';
     </script>
 @endsection
 

@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Frontend\Friendship;
 
 use Illuminate\Http\Request;
 use App\Events\FriendRequest;
+use App\Events\RequestAccepted;
 use App\Models\Access\User\User;
 use App\Models\Friendships\Group;
 use App\Models\Friendships\Status;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Friendships\Friendship;
+use App\Models\Friendships\Traits\Friendable;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Frontend\AcceptRequestNotification;
 use App\Notifications\Frontend\FriendRequestNotification;
 
 class FriendshipController extends Controller
 {
+  use Friendable;
+
   public function listusers(){
     $users = User::all();
     // return response()->json($users);
@@ -25,15 +29,8 @@ class FriendshipController extends Controller
 
 public function requests(Request $request){
   if(Auth::user()){
-    $requests = Auth::user()->getReq($perPage = 2);
-    // dd($requests);
-    // foreach ($requests as $request) {
-    //     $users[] = User::find($request->sender_id);
-    // }
-    // $userslist = collect($users);
-    // // dd(compact('requests','userslist'));
-    return view('frontend.friendship.requests');
-    // return response()->json($requests,$users);
+    $requests = Auth::user()->getReq($perPage = 15);
+    return view('frontend.friendship.requests');  
   }
   else{
     return response()->json("User is not logedin");
@@ -43,12 +40,6 @@ public function requests(Request $request){
 public function fetchrequests(){
     if(Auth::user()){
       $requests = Auth::user()->getReq($perPage = 15);
-    //   foreach ($requests as $request) {
-    //       $users[] = User::find($request->sender_id);
-    //   }
-    //   $userslist = collect($users);
-      // dd(compact('requests','userslist'));
-    //   return view('frontend.friendship.requests', compact('requests','userslist'));
       return response()->json($requests);
     }
     else{
@@ -68,6 +59,7 @@ public function sendrequest(User $user){
         return response()->json("Request Deleted successfully");
     }else{
         $friendship = $sender->befriend($user);
+        // dd($friendship);
         $recipient = User::find($friendship->recipient_id);
         broadcast(new FriendRequest($friendship))->toOthers();
         Notification::send($recipient, new FriendRequestNotification($friendship));
@@ -95,6 +87,7 @@ public function acceptrequest(User $user){
     $recipient = Auth::user();
     $recipient->acceptFriendRequest($user);
     $friendship = Friendship::where('sender_id',$user->id)->where('recipient_id',$recipient->id)->first();
+    broadcast(new RequestAccepted($friendship))->toOthers();
     Notification::send($user, new AcceptRequestNotification($friendship));
     // echo $friendship;
     
@@ -141,9 +134,16 @@ public function listfriends(){
         }
 }
 
-public function fetchfriends(){
+public function fetchfriends(Request $request){
     $u = Auth::user();
-    $friendships = $u->getFriends($perPage = 15);;
+	$search = $request->search;
+	
+    if($search != '') {
+		$friendships = $u->getFriendsSearch($perPage = 15, $search);
+    } else {
+		$friendships = $u->getFriends($perPage = 15);
+	}
+
     // dd($friendships);
     if(count($friendships)>0){
         // foreach ($friendships as $friendship) {
@@ -169,6 +169,14 @@ public function groupfriends(Request $request){
     // dd($group_name,$friend);
     $group = Auth::user()->groupFriend($friend, $group->id);
     return response()->json("Added to group successfully");
+}
+
+public function ungroupfriends(Request $request){
+  $group = Group::where('name',$request['name'])->first();
+  $friend = User::where('id',$request['id'])->first();
+  // dd($group_name,$friend);
+  $group = Auth::user()->ungroupFriend($friend, $group->id);
+  return response()->json("Deleted from group successfully");
 }
 
 }
