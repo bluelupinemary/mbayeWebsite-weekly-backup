@@ -33,6 +33,13 @@
                 font-weight: normal;
                 font-style: normal;
             }
+            @font-face {
+                font-family: 'GiddyupStd';
+                src: url('fonts/GiddyupStd.woff2') format('woff2'),
+                    url('fonts/GiddyupStd.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
         </style>
         
         @yield('meta')
@@ -79,7 +86,7 @@
         <script src="{{asset('front')}}/babylonjs/babylon.gui.min.js"></script> 
         <script src="{{asset('front')}}/babylonjs/jquery.min.js"></script>
         <script src="{{asset('front')}}/babylonjs/scenes/generalJS.js"></script>
-
+        <script src="https://www.youtube.com/iframe_api"></script>
         
       
 

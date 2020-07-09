@@ -19,6 +19,7 @@ class CreateGameDesignedPanelsTable extends Migration
             $table->bigInteger('design_id')->unsigned()->default(0);
             $table->foreign('design_id')->references('id')->on('game_user_design')->onDelete('cascade');
             $table->text('panel_number');
+            $table->text('screenshot');
             $table->longText('flowers_used');
             $table->timestamps();
         });

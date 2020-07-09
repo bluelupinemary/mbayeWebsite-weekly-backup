@@ -203,6 +203,31 @@
             </div>
         </div>
     </div>
+    <div class="instruction-div">
+        <div class="instruction options">
+            <div class="element"></div>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+        <div class="instruction search-pagination">
+            <div class="element"></div>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+        <div class="drag-and-drop">
+            <img src="{{asset('front/images/drag-and-drop-friends-3.gif')}}" alt="">
+            <p>Drag and drop friends to add to a Group</p>
+        </div>
+        <div class="instruction groups">
+            <div class="element"></div>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+        <div class="instruction earthlings">
+            <div class="element"></div>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+        <button class="help-button">
+            <i class="far fa-question-circle"></i>
+        </button>
+    </div>
 </div>
 </div>
 @endsection
@@ -961,6 +986,10 @@
                 $('#edit-group-form input[name="group_name"]').val(group_name);
                 $('#editGroupModal').modal('show');
             }
+        });
+
+        $('.help-button').click(function() {
+            $('.instruction-div').fadeToggle();
         });
     </script>
 @endsection

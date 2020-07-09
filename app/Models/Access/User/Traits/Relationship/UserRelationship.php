@@ -60,11 +60,16 @@ trait UserRelationship
 
     public function groups()
       {
-          return $this->hasMany(Group::class);
+          return $this->hasMany(Group::class, 'created_by');
       }
 
     public function JobSeekerprofile()
       {
           return $this->hasOne(JobSeekerProfile::class,'user_id');
       }
+
+    public function designs()
+    {
+        return $this->hasMany('App\Models\Game\UserDesignPanel', 'user_id');
+    }
 }

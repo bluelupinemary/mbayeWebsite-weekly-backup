@@ -512,6 +512,7 @@ ul.group-list li.disabled {
     padding: 0;
     font-size: 2vw;
     display: flex;
+    cursor: pointer;
 }
 
 .search-form {
@@ -820,4 +821,108 @@ button:focus {
 
 .swal2-actions {
     margin: 1.25vw auto 0 !important;
+}
+
+/* Instructions overlay */
+.instruction-div {
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    height: 100%;
+    background: #000000a3;
+    z-index: 1;
+    display: none;
+    font-family: Nasalization;
+}
+
+.drag-and-drop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-44%, -50%);
+    color: #fff;
+    text-align: center;
+    background: #00000096;
+}
+
+.drag-and-drop img {
+    width: 100%;
+}
+
+.instruction {
+    border: 2px solid red;
+    position: absolute;
+}
+
+.instruction p {
+    display: none;
+    position: absolute;
+    white-space: nowrap;
+    color: #fff;
+    font-size: 1vw;
+}
+
+.instruction:hover {
+    border: 2px solid green;
+}
+
+.instruction:hover p {
+    display: block;
+}
+
+.instruction.options {
+    top: 1%;
+    left: 0%;
+}
+
+.instruction.options .element {
+    width: 11vw;
+    height: 3vw;
+}
+
+.instruction.options p {
+    margin-top: 5%;
+}
+
+.instruction.search-pagination {
+    bottom: 0%;
+    left: 0%;
+}
+
+.instruction.search-pagination .element {
+    width: 50vw;
+    height: 4vw;
+}
+
+.instruction.search-pagination p {
+    top: -68%;
+}
+
+.instruction.groups {
+    top: 0%;
+    right: 17%;
+}
+
+.instruction.groups .element {
+    width: 32vw;
+    height: 3.5vw;
+}
+
+.instruction.groups p {
+    margin-top: 2%;
+}
+
+.instruction.earthlings {
+    top: 0%;
+    right: 0;
+}
+
+.instruction.earthlings .element {
+    width: 15vw;
+    height: 3.5vw;
+}
+
+.instruction.earthlings p {
+    margin-top: 2%;
+    white-space: pre-wrap;
 }

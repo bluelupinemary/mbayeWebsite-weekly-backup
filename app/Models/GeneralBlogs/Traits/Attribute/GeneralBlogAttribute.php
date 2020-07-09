@@ -4,6 +4,8 @@ namespace App\Models\GeneralBlogs\Traits\Attribute;
 
 use Illuminate\Support\Str;
 use Auth;
+use Carbon\Carbon;
+
 /**
  * Class GeneralBlogAttribute.
  */
@@ -111,5 +113,18 @@ trait GeneralBlogAttribute
         } else {
             return false;
         }        
+    }
+
+    public function isNearlyExpired()
+    {
+        // dd(Carbon::now()->subDay());
+        $_24hrs_ago = strtotime( Carbon::now()->subDay() );
+        $blog_publish_date = strtotime( $this->publish_datetime );
+        $diff = $blog_publish_date - $_24hrs_ago;
+        $hours = $diff / ( 60 * 60 );
+        // dd($this->publish_datetime, Carbon::now()->subDay(), $hours);
+        if($hours <= 1) {
+            return true;
+        }
     }
 }

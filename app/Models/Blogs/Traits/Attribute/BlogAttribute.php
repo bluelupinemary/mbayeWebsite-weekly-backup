@@ -20,6 +20,17 @@ trait BlogAttribute
                 '</div>';
     }
 
+    public function isDesignsBlog()
+    {
+        $panel_design = $this->blog_panel_design;
+
+        if($panel_design) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function getContentSummary()
     {
         $excerpt_content = Str::limit(strip_tags(preg_replace('#(<span[^>]*>).*?(</span>)#', '$1$2', $this->content)), 200);

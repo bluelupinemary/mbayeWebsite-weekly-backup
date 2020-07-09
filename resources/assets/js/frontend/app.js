@@ -37,8 +37,11 @@ Vue.component('commentnotification-component', require('../components/frontend/C
 Vue.component('searchfriends-component', require('../components/frontend/SearchFriends.vue').default);
 Vue.component('accept-component', require('../components/frontend/AcceptRequestComponent.vue').default);
 Vue.component('friends-component', require('../components/frontend/FriendComponent.vue').default);
+Vue.component('generalblog-component', require('../components/frontend/GeneralBlog.vue').default);
+Vue.component('newblog-component', require('../components/frontend/BlogComponent.vue').default);
 Vue.component('photoeditor-component', require('../components/frontend/PhotoEditor.vue').default);
 Vue.component('general-photoeditor-component', require('../components/frontend/GeneralBlogPhotoEditor.vue').default);
+Vue.component('designsphotoeditor-component', require('../components/frontend/DesignsBlogPhotoEditor.vue').default);
 
 const app = new Vue({
     el: '.app',

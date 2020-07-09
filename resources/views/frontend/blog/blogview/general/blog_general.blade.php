@@ -20,6 +20,7 @@
     </style>
 
 @section('content')
+<div class="app">
 <div id="block_land">
     <div class="content">
         <h1 class="text-glow">Turn your device in landscape mode.</h1>
@@ -95,26 +96,9 @@
         </div>-->
     </div>
     </div>
-<div class="page view ">
 
-    <div class="origin view">
-        <div id="camera" class="view">
-            <div id="dolly" class="view">
-                <div id="stack" class="view">
-                </div>
-                <div id="mirror" class="view">
-                    <div id="rstack" class="view">
-                    </div>
-                    <div id="rstack2" class="view">
-                    </div>
-                </div>
-            </div>
-        </div>
-       
-    </div>
-    
- 
-</div>
+<generalblog-component></generalblog-component>
+
 <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
     @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
     <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}"  class="img_astro"  alt="">
@@ -212,11 +196,7 @@
     <audio id="fart" src="{{ asset('front') }}/audio/fart/fart.mp3" ></audio>
 </div>      
          <!--   <button class="zoom-btn zoom-out"><i class="fas fa-search-minus"></i></button>-->
-  
-
-
-    
-    
+  </div>   
 @endsection
 
 @section('after-scripts') 
@@ -750,24 +730,6 @@ new CircleType(document.getElementById('blog_name_h3'))
                     document.getElementById('block_land').style.display =  'block';
                 }
         }
-
-        /* Calling API for fetching images */
-       page=1;
-    //    var url="http://127.0.0.1:8000/api/v1/blogs";
-        var url_api=url+"/api/v1/bloggeneral?page="+page
-        $.getJSON(url_api, function(data) 
-        {
-            
-           
-           images=data['data'];
-           page=data['meta']['current_page'];
-           last_page=data['meta']['last_page'];
-           Total_pages=(data['meta']['total']/25);
-           Total_pages=parseInt(Total_pages);
-           Total_count=data['meta']['total'];
-        
-   
-        });
 
         // You might need this, usually it's autoloaded   
             jQuery.noConflict();
@@ -1383,264 +1345,47 @@ $('.main-naff').mouseover(function() {
         jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
         jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
     }
-    
 
-    jQuery(window).load(function ()
-    {  
-       
-        var page = 1;
-        var loading = true;
-    /* Calling API for fetching images */
-      
-    var url_api=url+"/api/v1/bloggeneral?page="+page
-        
-      
-        $.getJSON(url_api, function(data) 
-        {
-           images=data['data'];
-           
-          snowstack_init();
-          jQuery.each(images, snowstack_addimage);
-          updateStack(1);
-         loading = false;
-       
-        });
-    
-        
-        var keys = { left: false, right: false, up: false, down: false };
-    
-        var keymap = { 37: "left", 38: "up", 39: "right", 40: "down" };
-        
-        var keytimer = null;
-        var scrolltimer = null;
-        
-        function updatekeys()
-        { 
-            
-            var newcell = currentCell;
-            if (keys.left)
-            {
-                /* Left Arrow */
-                if (newcell >= 1)
-                {
-                    newcell -= 1;
+        /*   Hammer.js  */
+
+                    
+                var myBlock = document.getElementById('stack');
+                var mc = new Hammer(myBlock);
+                mc.get('pan').set({direction: Hammer.DIRECTION_HORIZONTAL});
+                mc.on("panleft panright", handleDrag);
+                mc.on('panend', finished);
+
+                var lastPosX = 0;
+                var isDragging = false;
+
+                function handleDrag(ev) {
+                    
+                var elem = ev.target;
+                if (!isDragging) {
+                    isDragging = true;
+                    lastPosX = elem.offsetLeft;
                 }
-            }
-    
-    
-            if (keys.right)
-            {
-                /* Right Arrow */
-                if ((newcell + 1) < cells.length)
-                {
-                    newcell += 1;
+                setBlockText(ev.type + " event");
+                var posX = ev.deltaX + lastPosX;
+               // elem.style.left = posX + "px";
                 }
-                else if (!loading)
-                {
-                    /* We hit the right wall, add some more */
-                    page = page + 1;
-                    loading = true;
-                    flickr(function (images)
-                    {
-                        jQuery.each(images, snowstack_addimage);
-                        loading = false;
-                    }, page);
+
+                function finished() {
+                isDragging = false;
+                setBlockText("panned");
                 }
-            }
-            if (keys.up)
-            {
-                /* Up Arrow */
-                newcell -= 1;
-            }
-            if (keys.down)
-            {
-                /* Down Arrow */
-                newcell += 1;
-            }
-    
-            updateStack(newcell, magnifyMode);
-        }
 
-        /* update scroll */
-
-
-        function updatescroll(scroll)
-        { 
-            
-            var newcell = currentCell;
-            if (scroll=='up')
-            {
-            
-                /* scroll up */
-                if (newcell >= 3)
-                {
-                    newcell -= 3;
-                    $(".most-naffed").css({'visibility':'visible'});
+                function setBlockText(msg) { 
+                    if(msg=='panleft event')
+                        var scroll_type='up';
+                    else if(msg=='panright event')
+                        var scroll_type='down';
+                    //else
+                    // scroll_type=msg;
+                    scrollcheck(scroll_type);
+                //  alert(scroll_type);
+                //myBlock.textContent = msg;
                 }
-            }
-    
-  
-
-
-   if (scroll=='down')
-            { 
-                if(  cells.length>(newcell+3))
-                    {
-                        loading = false;
-     
-                        }   
-                        $(".most-naffed").css({'visibility':'hidden'});
-               
-                /* scroll down */
-            
-           if(page==last_page) {
-               if(newcell+4==cells.length)
-            {     
-                updateStack(newcell+4, magnifyMode);
-            }
-            loading = false;
-              // return false;
-           }
-          if ((newcell+3) < (cells.length))
-       
-                {
-                    newcell += 3;
-                }
-                else if (!loading)
-                { 
-                    /* We hit the right wall, add some more */
-                 
-                    page = page+1 ;
-                    loading = true;
-                   
-            
-                    var url_api=url+"/api/v1/bloggeneral?page="+page
-                    $.getJSON(url_api, function(data) 
-                    {
- 
-                    images=data['data'];
-                  
-               
-                  if((newcell + 3) != images.length)
-                          jQuery.each(images, snowstack_addimage);
-                 
-              
-                    });
-                
-     
-               
-            }
-            }
-           
-            //if((newcell + 3)!=images.length)
-              updateStack(newcell, magnifyMode);
-        }
-        
-        var delay = 330;
-    
-       
-/*
- 	------SCROLLL EVENT FUNCTIONS ON MOUSE WHEEL ------
-*/
-        window.addEventListener('wheel', function(event)
-        {
-
-            if (event.deltaY < 0)
-            {
-                scroll_type='up';
-
-            }
-            else if (event.deltaY > 0)
-            {
-                scroll_type='down'; 
-                
-            } 
-            scrollcheck(scroll_type);
-        });
-        
-    /* scroll check */
-   
-        function scrollcheck(scroll)
-        {  //alert(scroll)
-            if (scroll=='up' || scroll=='down')
-            {
-                if (scrolltimer === null)
-                 {
-                    delay = 330;
-                    var doTimer = function ()
-                    {
-                        updatescroll(scroll);
-                    //scrolltimer = setTimeout(doTimer, delay);
-                        delay = 60;
-                    };
-                    doTimer();
-                }
-            }
-            else
-            {
-                clearTimeout(scrolltimer);
-                scrolltimer = null;
-            }
-        }
-       /*   Hammer.js  */
-
-                
-            var myBlock = document.getElementById('stack');
-            var mc = new Hammer(myBlock);
-            mc.get('pan').set({direction: Hammer.DIRECTION_HORIZONTAL});
-            mc.on("panleft panright", handleDrag);
-            mc.on('panend', finished);
-
-            var lastPosX = 0;
-            var isDragging = false;
-
-            function handleDrag(ev) {
-                
-            var elem = ev.target;
-            if (!isDragging) {
-                isDragging = true;
-                lastPosX = elem.offsetLeft;
-            }
-            setBlockText(ev.type + " event");
-            var posX = ev.deltaX + lastPosX;
-           // elem.style.left = posX + "px";
-            }
-
-            function finished() {
-            isDragging = false;
-            setBlockText("panned");
-            }
-
-            function setBlockText(msg) { 
-                if(msg=='panleft event')
-                    var scroll_type='up';
-                else if(msg=='panright event')
-                    var scroll_type='down';
-                //else
-                // scroll_type=msg;
-                scrollcheck(scroll_type);
-            //  alert(scroll_type);
-            //myBlock.textContent = msg;
-            }
-                });
-            
-function flickr(callback, page)
-    { 
-  
-        var url_api=url+"/api/v1/bloggeneral?page="+page
-                    $.getJSON(url_api, function(data) 
-                    {
- 
-                    images=data['data'];
-                  // page=data['meta']['current_page'];
-                  /* if(page>1)
-                    images_new=data['data'];*/
-                    });
-                   callback(images);
-                       
-       // });
-             
-    }
 
    
 

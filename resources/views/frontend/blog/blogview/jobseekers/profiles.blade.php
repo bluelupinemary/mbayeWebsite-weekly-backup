@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/profile.css') }}">
+<link rel="stylesheet" href="{{ asset('front/CSS/easy-autocomplete.min.css') }}">
 @section('before-styles')
 @endsection
 <style>
@@ -35,21 +36,27 @@
 
 <div class="page view ">
     <div class="blog-search ">
-        <form action="{{url('/blogview/jobseekers/profiles')}}" method="GET">
-          
+        <form action="" id="search_form">
+            @csrf
             <div class="search-form">
                 <div class="input-group-prepend status-div">
-                    <select class="custom-select" id="inputGroupSelect02" name="type">
-                        <option selected value="">Career Profile</option>
+                    <select class="custom-select" id="type" name="type">
+                        <option selected value="">Profile</option>
+                        <option  value="Career Profile">Career Profile</option>
                         <option value="Companies">Companies</option>
                         <option value="Jobs">Jobs</option>
                     </select>
                 </div>
                 <div class="search-input-fields">
-                    <input type="text" class="form-control" placeholder="Search" name="search" autocomplete="off">
+                    <input type="text" class="form-control" placeholder="Search" id="term" name="search" autocomplete="off">
                 </div>
-                <button type="submit" class="btn search-btn">Search</button>
+                <button type="submit" class="btn search-btn" id="searchbtn" form="search_form">Search</button>
             </div>
+            <div class="search-form ">
+            <div class="input-group-prepend country-div">
+                <input type="text"  id="countries"  class="form-control" placeholder="Country" name="country" autocomplete="off">
+            </div>
+        </div>
         </form>
     </div>
     <div class="origin view">
@@ -113,16 +120,19 @@
          <!--   <button class="zoom-btn zoom-out"><i class="fas fa-search-minus"></i></button>-->
   
 
-
-    
-    
 @endsection
 
+
 @section('after-scripts') 
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-  <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
-  <script src="{{asset('front/JS/hammer.min.js')}}"></script>
-  <script type="text/javascript">
+<script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('front/JS/hammer.min.js')}}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+
+{{-- <script src="{{asset('front/JS/jquery.easy-autocomplete.min.js')}}"></script> --}}
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
+
+<script type="text/javascript">
 
     var CWIDTH;
     var CHEIGHT;
@@ -141,9 +151,286 @@
     var scroll_type='';
     var count=0;
     var search    ="{{$search ?? '' }}";
-    var type    ="{{$search ?? '' }}";
-$(document).ready(function() {
+    var type      ="{{$type ?? '' }}";
+    var country   ="{{$country ?? '' }}";
 
+let countries =[ 
+  {"name": "Afghanistan", "code": "AF"}, 
+  {"name": "Albania", "code": "AL"}, 
+  {"name": "Algeria", "code": "DZ"}, 
+  {"name": "American Samoa", "code": "AS"}, 
+  {"name": "AndorrA", "code": "AD"}, 
+  {"name": "Angola", "code": "AO"}, 
+  {"name": "Anguilla", "code": "AI"}, 
+  {"name": "Antigua and Barbuda", "code": "AG"}, 
+  {"name": "Argentina", "code": "AR"}, 
+  {"name": "Armenia", "code": "AM"}, 
+  {"name": "Aruba", "code": "AW"}, 
+  {"name": "Australia", "code": "AU"}, 
+  {"name": "Austria", "code": "AT"}, 
+  {"name": "Azerbaijan", "code": "AZ"}, 
+  {"name": "Bahamas", "code": "BS"}, 
+  {"name": "Bahrain", "code": "BH"}, 
+  {"name": "Bangladesh", "code": "BD"}, 
+  {"name": "Barbados", "code": "BB"}, 
+  {"name": "Belarus", "code": "BY"}, 
+  {"name": "Belgium", "code": "BE"}, 
+  {"name": "Belize", "code": "BZ"}, 
+  {"name": "Benin", "code": "BJ"}, 
+  {"name": "Bermuda", "code": "BM"}, 
+  {"name": "Bhutan", "code": "BT"}, 
+  {"name": "Bolivia", "code": "BO"}, 
+  {"name": "Bosnia and Herzegovina", "code": "BA"}, 
+  {"name": "Botswana", "code": "BW"}, 
+  {"name": "Bouvet Island", "code": "BV"}, 
+  {"name": "Brazil", "code": "BR"}, 
+  {"name": "Brunei Darussalam", "code": "BN"}, 
+  {"name": "Bulgaria", "code": "BG"}, 
+  {"name": "Burkina Faso", "code": "BF"}, 
+  {"name": "Burundi", "code": "BI"}, 
+  {"name": "Cambodia", "code": "KH"}, 
+  {"name": "Cameroon", "code": "CM"}, 
+  {"name": "Canada", "code": "CA"}, 
+  {"name": "Cape Verde", "code": "CV"}, 
+  {"name": "Cayman Islands", "code": "KY"}, 
+  {"name": "Central African Republic", "code": "CF"}, 
+  {"name": "Chad", "code": "TD"}, 
+  {"name": "Chile", "code": "CL"}, 
+  {"name": "China", "code": "CN"}, 
+  {"name": "Christmas Island", "code": "CX"}, 
+  {"name": "Cocos (Keeling) Islands", "code": "CC"}, 
+  {"name": "Colombia", "code": "CO"}, 
+  {"name": "Comoros", "code": "KM"}, 
+  {"name": "Congo", "code": "CG"}, 
+  {"name": "Congo, The Democratic Republic of the", "code": "CD"}, 
+  {"name": "Cook Islands", "code": "CK"}, 
+  {"name": "Costa Rica", "code": "CR"}, 
+  {"name": "Cote D\"Ivoire", "code": "CI"}, 
+  {"name": "Croatia", "code": "HR"}, 
+  {"name": "Cuba", "code": "CU"}, 
+  {"name": "Cyprus", "code": "CY"}, 
+  {"name": "Czech Republic", "code": "CZ"}, 
+  {"name": "Denmark", "code": "DK"}, 
+  {"name": "Djibouti", "code": "DJ"}, 
+  {"name": "Dominica", "code": "DM"}, 
+  {"name": "Dominican Republic", "code": "DO"}, 
+  {"name": "Ecuador", "code": "EC"}, 
+  {"name": "Egypt", "code": "EG"}, 
+  {"name": "El Salvador", "code": "SV"}, 
+  {"name": "Equatorial Guinea", "code": "GQ"}, 
+  {"name": "Eritrea", "code": "ER"}, 
+  {"name": "Estonia", "code": "EE"}, 
+  {"name": "Ethiopia", "code": "ET"}, 
+  {"name": "Falkland Islands (Malvinas)", "code": "FK"}, 
+  {"name": "Faroe Islands", "code": "FO"}, 
+  {"name": "Fiji", "code": "FJ"}, 
+  {"name": "Finland", "code": "FI"}, 
+  {"name": "France", "code": "FR"}, 
+  {"name": "French Guiana", "code": "GF"}, 
+  {"name": "French Polynesia", "code": "PF"}, 
+  {"name": "French Southern Territories", "code": "TF"}, 
+  {"name": "Gabon", "code": "GA"}, 
+  {"name": "Gambia", "code": "GM"}, 
+  {"name": "Georgia", "code": "GE"}, 
+  {"name": "Germany", "code": "DE"}, 
+  {"name": "Ghana", "code": "GH"}, 
+  {"name": "Gibraltar", "code": "GI"}, 
+  {"name": "Greece", "code": "GR"}, 
+  {"name": "Greenland", "code": "GL"}, 
+  {"name": "Grenada", "code": "GD"}, 
+  {"name": "Guadeloupe", "code": "GP"}, 
+  {"name": "Guam", "code": "GU"}, 
+  {"name": "Guatemala", "code": "GT"}, 
+  {"name": "Guernsey", "code": "GG"}, 
+  {"name": "Guinea", "code": "GN"}, 
+  {"name": "Guinea-Bissau", "code": "GW"}, 
+  {"name": "Guyana", "code": "GY"}, 
+  {"name": "Haiti", "code": "HT"}, 
+  {"name": "Heard Island and Mcdonald Islands", "code": "HM"}, 
+  {"name": "Holy See (Vatican City State)", "code": "VA"}, 
+  {"name": "Honduras", "code": "HN"}, 
+  {"name": "Hong Kong", "code": "HK"}, 
+  {"name": "Hungary", "code": "HU"}, 
+  {"name": "Iceland", "code": "IS"}, 
+  {"name": "India", "code": "IN"}, 
+  {"name": "Indonesia", "code": "ID"}, 
+  {"name": "Iran, Islamic Republic Of", "code": "IR"}, 
+  {"name": "Iraq", "code": "IQ"}, 
+  {"name": "Ireland", "code": "IE"}, 
+  {"name": "Isle of Man", "code": "IM"}, 
+  {"name": "Israel", "code": "IL"}, 
+  {"name": "Italy", "code": "IT"}, 
+  {"name": "Jamaica", "code": "JM"}, 
+  {"name": "Japan", "code": "JP"}, 
+  {"name": "Jersey", "code": "JE"}, 
+  {"name": "Jordan", "code": "JO"}, 
+  {"name": "Kazakhstan", "code": "KZ"}, 
+  {"name": "Kenya", "code": "KE"}, 
+  {"name": "Kiribati", "code": "KI"}, 
+  {"name": "Korea, Democratic People\"S Republic of", "code": "KP"}, 
+  {"name": "Korea, Republic of", "code": "KR"}, 
+  {"name": "Kuwait", "code": "KW"}, 
+  {"name": "Kyrgyzstan", "code": "KG"}, 
+  {"name": "Lao People\"S Democratic Republic", "code": "LA"}, 
+  {"name": "Latvia", "code": "LV"}, 
+  {"name": "Lebanon", "code": "LB"}, 
+  {"name": "Lesotho", "code": "LS"}, 
+  {"name": "Liberia", "code": "LR"}, 
+  {"name": "Libyan Arab Jamahiriya", "code": "LY"}, 
+  {"name": "Liechtenstein", "code": "LI"}, 
+  {"name": "Lithuania", "code": "LT"}, 
+  {"name": "Luxembourg", "code": "LU"}, 
+  {"name": "Macao", "code": "MO"}, 
+  {"name": "Macedonia, The Former Yugoslav Republic of", "code": "MK"}, 
+  {"name": "Madagascar", "code": "MG"}, 
+  {"name": "Malawi", "code": "MW"}, 
+  {"name": "Malaysia", "code": "MY"}, 
+  {"name": "Maldives", "code": "MV"}, 
+  {"name": "Mali", "code": "ML"}, 
+  {"name": "Malta", "code": "MT"}, 
+  {"name": "Marshall Islands", "code": "MH"}, 
+  {"name": "Martinique", "code": "MQ"}, 
+  {"name": "Mauritania", "code": "MR"}, 
+  {"name": "Mauritius", "code": "MU"}, 
+  {"name": "Mayotte", "code": "YT"}, 
+  {"name": "Mexico", "code": "MX"}, 
+  {"name": "Micronesia, Federated States of", "code": "FM"}, 
+  {"name": "Moldova, Republic of", "code": "MD"}, 
+  {"name": "Monaco", "code": "MC"}, 
+  {"name": "Mongolia", "code": "MN"}, 
+  {"name": "Montserrat", "code": "MS"}, 
+  {"name": "Morocco", "code": "MA"}, 
+  {"name": "Mozambique", "code": "MZ"}, 
+  {"name": "Myanmar", "code": "MM"}, 
+  {"name": "Namibia", "code": "NA"}, 
+  {"name": "Nauru", "code": "NR"}, 
+  {"name": "Nepal", "code": "NP"}, 
+  {"name": "Netherlands", "code": "NL"}, 
+  {"name": "Netherlands Antilles", "code": "AN"}, 
+  {"name": "New Caledonia", "code": "NC"}, 
+  {"name": "New Zealand", "code": "NZ"}, 
+  {"name": "Nicaragua", "code": "NI"}, 
+  {"name": "Niger", "code": "NE"}, 
+  {"name": "Nigeria", "code": "NG"}, 
+  {"name": "Niue", "code": "NU"}, 
+  {"name": "Norfolk Island", "code": "NF"}, 
+  {"name": "Northern Mariana Islands", "code": "MP"}, 
+  {"name": "Norway", "code": "NO"}, 
+  {"name": "Oman", "code": "OM"}, 
+  {"name": "Pakistan", "code": "PK"}, 
+  {"name": "Palau", "code": "PW"}, 
+  {"name": "Palestinian Territory, Occupied", "code": "PS"}, 
+  {"name": "Panama", "code": "PA"}, 
+  {"name": "Papua New Guinea", "code": "PG"}, 
+  {"name": "Paraguay", "code": "PY"}, 
+  {"name": "Peru", "code": "PE"}, 
+  {"name": "Philippines", "code": "PH"}, 
+  {"name": "Pitcairn", "code": "PN"}, 
+  {"name": "Poland", "code": "PL"}, 
+  {"name": "Portugal", "code": "PT"}, 
+  {"name": "Puerto Rico", "code": "PR"}, 
+  {"name": "Qatar", "code": "QA"}, 
+  {"name": "Reunion", "code": "RE"}, 
+  {"name": "Romania", "code": "RO"}, 
+  {"name": "Russian Federation", "code": "RU"}, 
+  {"name": "RWANDA", "code": "RW"}, 
+  {"name": "Saint Helena", "code": "SH"}, 
+  {"name": "Saint Kitts and Nevis", "code": "KN"}, 
+  {"name": "Saint Lucia", "code": "LC"}, 
+  {"name": "Saint Pierre and Miquelon", "code": "PM"}, 
+  {"name": "Saint Vincent and the Grenadines", "code": "VC"}, 
+  {"name": "Samoa", "code": "WS"}, 
+  {"name": "San Marino", "code": "SM"}, 
+  {"name": "Sao Tome and Principe", "code": "ST"}, 
+  {"name": "Saudi Arabia", "code": "SA"}, 
+  {"name": "Senegal", "code": "SN"}, 
+  {"name": "Serbia and Montenegro", "code": "CS"}, 
+  {"name": "Seychelles", "code": "SC"}, 
+  {"name": "Sierra Leone", "code": "SL"}, 
+  {"name": "Singapore", "code": "SG"}, 
+  {"name": "Slovakia", "code": "SK"}, 
+  {"name": "Slovenia", "code": "SI"}, 
+  {"name": "Solomon Islands", "code": "SB"}, 
+  {"name": "Somalia", "code": "SO"}, 
+  {"name": "South Africa", "code": "ZA"}, 
+  {"name": "South Georgia and the South Sandwich Islands", "code": "GS"}, 
+  {"name": "Spain", "code": "ES"}, 
+  {"name": "Sri Lanka", "code": "LK"}, 
+  {"name": "Sudan", "code": "SD"}, 
+  {"name": "Suri", "code": "SR"}, 
+  {"name": "Svalbard and Jan Mayen", "code": "SJ"}, 
+  {"name": "Swaziland", "code": "SZ"}, 
+  {"name": "Sweden", "code": "SE"}, 
+  {"name": "Switzerland", "code": "CH"}, 
+  {"name": "Syrian Arab Republic", "code": "SY"}, 
+  {"name": "Taiwan, Province of China", "code": "TW"}, 
+  {"name": "Tajikistan", "code": "TJ"}, 
+  {"name": "Tanzania, United Republic of", "code": "TZ"}, 
+  {"name": "Thailand", "code": "TH"}, 
+  {"name": "Timor-Leste", "code": "TL"}, 
+  {"name": "Togo", "code": "TG"}, 
+  {"name": "Tokelau", "code": "TK"}, 
+  {"name": "Tonga", "code": "TO"}, 
+  {"name": "Trinidad and Tobago", "code": "TT"}, 
+  {"name": "Tunisia", "code": "TN"}, 
+  {"name": "Turkey", "code": "TR"}, 
+  {"name": "Turkmenistan", "code": "TM"}, 
+  {"name": "Turks and Caicos Islands", "code": "TC"}, 
+  {"name": "Tuvalu", "code": "TV"}, 
+  {"name": "Uganda", "code": "UG"}, 
+  {"name": "Ukraine", "code": "UA"}, 
+  {"name": "United Arab Emirates", "code": "AE"}, 
+  {"name": "United Kingdom", "code": "GB"}, 
+  {"name": "United States", "code": "US"}, 
+  {"name": "United States Minor Outlying Islands", "code": "UM"}, 
+  {"name": "Uruguay", "code": "UY"}, 
+  {"name": "Uzbekistan", "code": "UZ"}, 
+  {"name": "Vanuatu", "code": "VU"}, 
+  {"name": "Venezuela", "code": "VE"}, 
+  {"name": "Viet Nam", "code": "VN"}, 
+  {"name": "Virgin Islands, British", "code": "VG"}, 
+  {"name": "Virgin Islands, U.S.", "code": "VI"}, 
+  {"name": "Wallis and Futuna", "code": "WF"}, 
+  {"name": "Western Sahara", "code": "EH"}, 
+  {"name": "Yemen", "code": "YE"}, 
+  {"name": "Zambia", "code": "ZM"}, 
+  {"name": "Zimbabwe", "code": "ZW"} 
+]
+
+$(document).ready(function() {
+    $.urlParam = function(name){
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if(results) {
+                return results[1] || 0;
+            } else {
+                return '';
+            }
+        }
+
+    if($.urlParam('search') != '') {
+                $('input[name="search"]').val(decodeURIComponent($.urlParam('search')));
+            }
+            
+            if($.urlParam('type') != '') {
+                $('select[name="type"]').val($.urlParam('type'));
+            }
+
+            if($.urlParam('country') != '') {
+                $('input[name="country"]').val($.urlParam('country'));
+            }
+
+
+        
+    var options = {
+                    data: countries,
+                    getValue: "name",
+                    list: {
+                        match: {
+                                enabled: true
+                              }
+                          }
+                    };
+ $("#countries").easyAutocomplete(options);
 
     var elem = document.documentElement;
 function openFullscreen() {
@@ -204,6 +491,53 @@ function contentDisplay() {
 );
     }
 });
+
+$('#searchbtn').click(function(e) {
+            e.preventDefault();
+
+            
+            var $form = $('form#search_form');
+            // var group_id = $form.find('input[name="group_id"]').val();
+
+            var type = $form.find("input[name='type']").val();
+            var country = $form.find("input[name='country']").val();
+            var search = $form.find("input[name='search']").val();
+            // var slug = name.replace(/\s+/g, '-').toLowerCase();
+
+            var form_url = url+'/api/v1/jobseeker/search';
+
+            var post_data = new FormData($form[0]);
+            // post_data.append('group_name_slug', slug);
+
+            $.ajax({
+                url: form_url,
+                method: 'post',
+                data: post_data,
+                // dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
+                    images=data['company'];
+                    console.log(images);
+
+                },
+                error: function (request, status, error) {
+                    $('#editGroupModal').modal('hide');
+                    var response = JSON.parse(request.responseText);
+                    var errorString = '';
+                    var title = 'Error!';
+
+                    if(response.errors) {
+                        title = 'Error in processing request...';
+                        $.each( response.errors, function( key, value) {
+                            errorString += '<p>' + value + '</p>';
+                        });
+                    }
+                }
+            });
+        });
     (function () {
     
         $(".img-nouvela").removeClass("ani-rollout_naff");
@@ -232,8 +566,7 @@ function contentDisplay() {
 
         /* Calling API for fetching images */
        page=1;
-    //    var url="http://127.0.0.1:8000/api/v1/blogs";
-    var url_api=url+"/api/v1/jobseekers?search="+search+"&type="+type+"&page="+page
+        var url_api=url+"/api/v1/jobseekers?search="+search+"&type="+type+"&country="+country+"&page="+page
         $.getJSON(url_api, function(data) 
         {
             
@@ -702,6 +1035,11 @@ function contentDisplay() {
             name=info.first_name+' '+info.last_name;
             profession=info.profession_name;
             location=info.country;
+           if (type=='Companies')
+           {
+            name=info.company_name
+            profession=info.company_phone_number;
+           }
             var width;
             var height;
             var height_for_count;
@@ -717,8 +1055,11 @@ function contentDisplay() {
            
        
            cell.div.append(jQuery('<a class="mover viewflat blog_img" href="#""  onclick="play_note('+reln+')"></a>').append(img));
-           cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">Name : '+name+' </p></br><p class="p_title">Profession : '+profession+'</p></br><p class="p_title">Location : '+location+'</p></div>'));
-           //cell.div.append(jQuery('<div class="'+cls_overlay+' div_overlay '+reln+'" style="z-index:1000000;display:none;opacity: 100%; background-color:rgba(23, 80, 213, 0.57)"> <div class="blog-buttons_overlay "> <div class="button-div"><button><img class="i_hot" src="{{asset('front/icons/hot.png')}}"  /></button><div class="button-details"><p class="button-number hot-number">'+nHot_Count+'</p></div></div><div class="button-div"><button><img class="i_cool" src="{{asset('front/icons/cool.png')}}" /></button><div class="button-details"> <p class="button-number cool-number">'+nCool_Count+'</p></div></div> <div class="button-div"> <button><img class="i_naff" src="{{asset('front/icons/naff.png')}}" /></button><div class="button-details"><p class="button-number naff-number">'+nNaff_Count+'</p></div></div><div class="button-div"><button><img  class="i_comment" src="{{asset('front/icons/comment.png')}}" alt=""></button> <div class="button-details"><p class="button-number comment-number">'+nComment_Count+'</p></div> </div> </div><button class="button btn_view_blog" onclick="viewBlog('+id+')"><p class="p_button">View Blog</p></button></div>'));
+           if(type=='Companies')
+                cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">Comapny Name : '+name+' </p></br><p class="p_title">Company Number : '+profession+'</p></br><p class="p_title">Location : '+location+'</p></div>'));
+           else
+                cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">Name : '+name+' </p></br><p class="p_title">Profession : '+profession+'</p></br><p class="p_title">Location : '+location+'</p></div>'));
+        
            cell.div.append(jQuery('<div class="'+cls_overlay+' div_overlay '+reln+'" style="z-index:1000000;display:none;opacity: 100%; background-color:rgba(23, 80, 213, 0.57)"> <div class="blog-buttons_overlay "> <div class="button-div"></button><div class="button-details"><p class="button-number hot-number"></p></div></div><div class="button-div"><button></button><div class="button-details"> <p class="button-number cool-number"></p></div></div> <div class="button-div"> <button></button><div class="button-details"><p class="button-number naff-number"></p></div></div><div class="button-div"><button></button> <div class="button-details"><p class="button-number comment-number"></p></div> </div> </div><button class="button btn_view_blog" onclick="viewBlog('+id+')"><p class="p_button">View Profile</p></button></div>'));
           
             var div_height=$(".div_img").css("height");
@@ -866,9 +1207,7 @@ function contentDisplay() {
         var loading = true;
     /* Calling API for fetching images */
       
-    var url_api=url+"/api/v1/jobseekers?search="+search+"&type="+type+"&page="+page
-        
-      
+        var url_api=url+"/api/v1/jobseekers?search="+search+"&type="+type+"&country="+country+"&page="+page
         $.getJSON(url_api, function(data) 
         {
            images=data['data'];
@@ -987,7 +1326,7 @@ function contentDisplay() {
                     loading = true;
                    
             
-                    var url_api=url+"/api/v1/jobseekers?search="+search+"&type="+type+"&page="+page
+                    var url_api=url+"/api/v1/jobseekers?search="+search+"&type="+type+"&country="+country+"&page="+page
                     $.getJSON(url_api, function(data) 
                     {
  
@@ -1100,7 +1439,7 @@ function contentDisplay() {
 function flickr(callback, page)
     { 
   
-        var url_api=url+"/api/v1/jobseekers?search="+search+"&type="+type+"&page="+page
+        var url_api=url+"/api/v1/jobseekers?search="+search+"&type="+type+"&country="+country+"&page="+page
                     $.getJSON(url_api, function(data) 
                     {
  

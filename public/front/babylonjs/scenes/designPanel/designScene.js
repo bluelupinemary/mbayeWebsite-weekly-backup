@@ -98,6 +98,7 @@ let isRuruClicked = false;
 let overHighlight;
 let modified_panels_list = new Map();
 let panels_from_db = new Map();
+let is_design_saved = null;
 
 
 //main function to create the scene
@@ -133,6 +134,7 @@ function create_design_scene(){
     let panels = user_panels.split(",");
     for(const panel of panels){   
         panels_from_db.set(panel,null);
+        
     }
    
     return designScene;
@@ -141,7 +143,7 @@ function create_design_scene(){
 function create_design_camera(){
     //the design camera; camera focused on the Mbaye model when picking a panel
     let camera = new BABYLON.ArcRotateCamera("Design Camera",BABYLON.Tools.ToRadians(25),BABYLON.Tools.ToRadians(85),110.0, new BABYLON.Vector3(0,0,0),designScene);
-    camera.attachControl(canvas,true);
+    
     camera.checkCollisions = true;
     camera.target = new BABYLON.Vector3(-30,5 ,10);
     camera.angularSensibilityX = 2000;     //rotation speed of camera; lower number, faster rotation
@@ -272,12 +274,13 @@ function load_design_meshes(){
       }),
    
       BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/seaObjects/nuvola/", "nuvolaSwimming.babylon", designScene).then(function (result) {
+          
           nuvolaDesign_obj = result.meshes[0];
           nuvolaDesign_obj.scaling = new BABYLON.Vector3(0.07,0.07,0.07);
           nuvolaDesign_obj.position = new BABYLON.Vector3(12.50,-8.30,55.92);
           nuvolaDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.0570,-0.4064,0.0516,0.9102);
           nuvolaDesign_obj.isPickable = true;
-          add_action_mgr(result.meshes[0]);
+        //   add_action_mgr(result.meshes[0]);
       }),
       
       
@@ -287,7 +290,7 @@ function load_design_meshes(){
           result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.6481,-0.3413,0.2794,0.6202);
           ruruDesign_obj = result.meshes[0];
           ruruDesign_obj.isPickable = true;
-          add_action_mgr(result.meshes[0]);
+        //   add_action_mgr(result.meshes[0]);
         }),
       BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", designScene).then(function (result) {
           mermaidSpeechCloud = result.meshes[0];
@@ -382,7 +385,7 @@ function load_design_meshes(){
       }),
   ]).then(() => {  
 
-        console.log(JSON.stringify(mbayePanelsMap));
+        // console.log(JSON.stringify(mbayePanelsMap));
          
 
         isBookFlowerReady = true;
@@ -872,56 +875,124 @@ function set_flowers_to_pickable(){
   }
 
 
-function hide_book_flowers(){
-    bookFlowers_object.isVisible = false;
-    bookFlowers_object.setEnabled(false);
-    if(flowerVarietyArr && flowerVarietyArr.length>0){
-        for(let i=0;i<flowerVarietyArr.length;i++){
-          flowerVarietyArr[i].isVisible = false;
-        }
-    }
-}
 
-function show_book_flowers(){
-    bookFlowers_object.isVisible = true;
-    bookFlowers_object.setEnabled(true);
+function show_book_flowers(val){
+    bookFlowers_object.isVisible = val;
+    bookFlowers_object.setEnabled(val);
     if(flowerVarietyArr && flowerVarietyArr.length>0){
         for(let i=0;i<flowerVarietyArr.length;i++){
-            flowerVarietyArr[i].isVisible = true;
+            flowerVarietyArr[i].isVisible = val;
         }
     }
+    
+    
 }
 
 
-function take_panel_screenshot(){
-    let panelName = "";
-    if(currentPanel) panelName = currentPanel.name;
+function show_nuvola(val){
+    //show nuvola
     if(designScene.activeCamera === panelCamera){
-        hide_book_flowers();
-        let d = new Date();
-        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera2, {width:1024, height:768, precision:1},null,null,null,false,"Mbaye_panel_"+currentPanel.name);
-        show_book_flowers();
-    }else if(designScene.activeCamera === focusCamera){
-        hide_book_flowers();
-        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, focusCamera, {width:1024, height:768, precision:1},null,null,null,false,"Mbaye_panel_"+currentPanel.name);
-        show_book_flowers();
-    }else if(designScene.activeCamera === designCamera){
-        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, designCamera, {width:1600, height:800, precision:1},null,null,null,false,"Mbaye_screenshot");
+        if(val) nuvolaDesign_obj.position.z -= 100;
+        else nuvolaDesign_obj.position.z += 100;
+    }else{
+        nuvolaSpeech3.isVisible = val;
+        nuvolaSpeech3.setEnabled(val);
     }
 
-    Swal.fire({
-        width: '10vw',
-        padding: '3em',
-        background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
-        title: '\n\n\n\nScreenshot of panel '+panelName+' saved succesfully!',
-        showConfirmButton: false,
-        position: 'top-end',
-        // timer: 3000,
-        width: 100,
-        customClass: {
-          popup: 'trevor-popup-class',
-        }
-      });
+    nuvolaSpeechCloud.isVisible = val;
+    nuvolaSpeechCloud.setEnabled(val);
+    nuvolaSpeech2.isVisible =val;
+    nuvolaSpeech2.setEnabled(val);
+}
+
+function show_ruru(val){
+    ruruDesign_obj.isVisible = val;
+    ruruSpeechCloud.isVisible = val;
+    ruruSpeechCloud.setEnabled(val);
+    ruruSpeech2.isVisible=val;
+    ruruSpeech2.setEnabled(val);
+    ruruSpeech3.isVisible=val;
+    ruruSpeech3.setEnabled(val);
+}
+
+
+
+let screenshotData;
+function take_panel_screenshot(){
+
+    
+
+    let panelName = "";
+   
+    if(currentPanel) panelName = currentPanel.name;
+    if(designScene.activeCamera === panelCamera || designScene.activeCamera === focusCamera){
+        let cam;
+        if(designScene.activeCamera === panelCamera) cam = camera2;
+        else cam = focusCamera;
+        show_book_flowers(false);
+        show_ruru(false);
+        show_nuvola(false);
+       
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, cam, {width:1024, height:768, precision:1},function(img){
+            // screenshotImg = img;
+            if (modified_panels_list.has(panelName) || panels_from_db.has(panelName)) {
+                // $('#modalScreenshot').attr('src', img);
+                $('#modalScreenshot').css({'background-image':'url('+img+')'});
+                $("#showScreenshotModal").modal('show');            //show screenshot modal
+                screenshotData = img;
+              
+            }//end of if
+            else{
+                Swal.fire({
+                    width: '10vw',
+                    padding: '3em',
+                    background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+                    title: '<br/><br/><br/><span style="color:red; padding-top:20%;">Please save/design your panel first! Click Ruru to save your progress.</span>',
+                    showConfirmButton: false,
+                    position: 'top-end',
+                    // timer: 3000,
+                    width: 100,
+                    customClass: {
+                        popup: 'trevor-popup-class',
+                    }
+                });
+            }//end of else
+        });
+        
+        show_book_flowers(true);
+        show_ruru(true);
+        show_nuvola(true);
+    }
+    // else if(designScene.activeCamera === focusCamera){
+    //     hide_book_flowers();
+    //     BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, focusCamera, {width:1024, height:768, precision:1},null,null,null,false,"Mbaye_panel_"+currentPanel.name);
+    //     show_book_flowers(false);
+    // }
+    else if(designScene.activeCamera === designCamera){
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, designCamera, {width:1600, height:800, precision:1},function(img){
+            $('#modalScreenshot').css({'background-image':'url('+img+')'});
+            $("#showScreenshotModal").modal('show');            //show screenshot modal
+           screenshotData = img;
+        });
+    }
+    // console.log(screenshotImg);
+    // Swal.fire({
+    //     width: '10vw',
+    //     padding: '3em',
+    //     background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+    //     title: '\n\n\n\nScreenshot of panel '+panelName+' saved succesfully!',
+    //     showConfirmButton: false,
+    //     position: 'top-end',
+    //     // timer: 3000,
+    //     width: 100,
+    //     customClass: {
+    //       popup: 'trevor-popup-class',
+    //     }
+    //   });
+    // var screenshotURL = 
+
+      
+    
 
 }
 
@@ -984,6 +1055,8 @@ function returnPanelViaButton(){
         isDesignSceneActive = false;  
         isStartOfDesignPanel = false;
         isPanelRotationActive = false;
+        
+        
 
         //detach the design gizmo manger 
         designGizmoManager.attachToMesh(null);
@@ -1001,6 +1074,7 @@ function returnPanelViaButton(){
         }
         else{
             modified_panels_list.set(panel.name,null);
+           
         }
       
         if(panels_from_db.has(panel.name)) modified_panels_list.set(panel.name,null);
@@ -1262,6 +1336,7 @@ function create_design_gui(){
     load_hd_world_btn = BABYLON.GUI.Button.CreateSimpleButton("hdWorldBtn", "Load More Flowers");
     screenshot_btn = BABYLON.GUI.Button.CreateSimpleButton("ScreenshotBtn", "Take Photo");
     reset_btn = BABYLON.GUI.Button.CreateSimpleButton("ResetPosBtn", "Reset");
+    cancel_btn = BABYLON.GUI.Button.CreateSimpleButton("ExitSSBtn", "Cancel");
 
     let btnWidth = canvas.width*0.04;
     let btnHeight = canvas.height*0.04;
@@ -1276,8 +1351,10 @@ function create_design_gui(){
     offTool_btn.alpha = 0.6;
     offTool_btn.fontSize = fontSz;
     offTool_btn.background = "green";
-    offTool_btn.verticalAlignment = 1;
-    offTool_btn.horizontalAlignment = 1;
+    // offTool_btn.verticalAlignment = 1;
+    // offTool_btn.horizontalAlignment = 1;
+    offTool_btn.left = canvas.width/2 - 40;
+    offTool_btn.top = canvas.height/2 - 70;
     offTool_btn.isVisible = false;
 
     
@@ -1315,7 +1392,7 @@ function create_design_gui(){
     scaleTool_btn.fontSize = fontSz;
     scaleTool_btn.background = "green";
     scaleTool_btn.left = canvas.width/2 - 40;
-    scaleTool_btn.top = canvas.height/2 - 70;
+    scaleTool_btn.top = canvas.height/2 - 30;
     scaleTool_btn.isVisible = false;
     
 
@@ -1474,6 +1551,7 @@ function create_design_gui(){
             //set the characters to movable; tell the user that they can move RuRu and Nuvola
             set_char_movable();
             reset_btn.isVisible = true;
+            cancel_btn.isVisible = true;
         }else{
             take_panel_screenshot();
             screenshot_btn.background = "green";
@@ -1481,7 +1559,10 @@ function create_design_gui(){
             isTakePhotoStatus = false;
             reset_btn.isVisible = false;
             offTool_btn.isVisible = false;
-           
+            cancel_btn.isVisible = false;
+            nuvolaDesign_obj.actionManager = null;
+            ruruDesign_obj.actionManager = null;
+           //return nuvola and ruru to their original position?
         }
         
     });
@@ -1518,7 +1599,7 @@ function create_design_gui(){
     reset_btn.onPointerDownObservable.add(
     function(info) {
         reset_btn.background = "red";
-        console.log("reset the positions of the chars");
+        // console.log("reset the positions of the chars");
         ruruDesign_obj.position = new BABYLON.Vector3(59,8.5,9);
         ruruDesign_obj.rotationQuaternion = new BABYLON.Quaternion(0.6481,-0.3413,0.2794,0.6202);
         nuvolaDesign_obj.position = new BABYLON.Vector3(12.50,-8.30,55.92);
@@ -1538,6 +1619,51 @@ function create_design_gui(){
 
     });    
     reset_btn.onPointerMoveObservable.add(
+        function(coordinates) {
+            
+    }); 
+
+    
+    cancel_btn.height = btnHeight+"px";
+    cancel_btn.width = btnWidth+"px";
+    cancel_btn.color = "white";
+    cancel_btn.alpha = 0.6;
+    cancel_btn.fontSize = fontSz;
+    cancel_btn.background = "green";
+    cancel_btn.verticalAlignment = 0;
+    cancel_btn.horizontalAlignment = 1;
+    // screenshot_btn.left = canvas.width/2 - 50;
+    cancel_btn.top = 100;
+    cancel_btn.isVisible = false;
+    
+
+    //pos tool button functions
+    cancel_btn.onPointerDownObservable.add(
+    function(info) {
+        cancel_btn.background = "red";
+        screenshot_btn.background = "green";
+        screenshot_btn.textBlock.text = "Take Photo";
+        isTakePhotoStatus = false;
+        reset_btn.isVisible = false;
+        offTool_btn.isVisible = false;
+        cancel_btn.isVisible = false;
+        nuvolaDesign_obj.actionManager = null;
+        ruruDesign_obj.actionManager = null;
+    });
+    cancel_btn.onPointerUpObservable.add(
+        function(info) {
+            cancel_btn.background = "green";
+    });
+    cancel_btn.onPointerEnterObservable.add(
+        function() {
+            cancel_btn.background = "red";
+    });
+    cancel_btn.onPointerOutObservable.add(
+        function() {
+            cancel_btn.background = "green";
+
+    });    
+    cancel_btn.onPointerMoveObservable.add(
         function(coordinates) {
             
     }); 
@@ -1583,6 +1709,7 @@ function create_design_gui(){
     //add the buttons to the gui
     advancedTexture.addControl(posTool_btn);
     advancedTexture.addControl(rotTool_btn);
+    advancedTexture.addControl(cancel_btn);
     advancedTexture.addControl(scaleTool_btn);
     advancedTexture.addControl(offTool_btn);
     advancedTexture.addControl(screenshot_btn);
@@ -1743,7 +1870,7 @@ function add_designScene_mouse_listener(){
                             returnPanelViaButton();
                             isRuruClicked = true;
                         }
-                      });
+                    });
                     //removed the 2 lines below for testing
                    
                 }
@@ -1802,6 +1929,9 @@ function add_designScene_mouse_listener(){
                 //detach control of design and earth flower camera
                 designCamera.detachControl(canvas);
                 earthFlowersCamera.detachControl(canvas);
+
+                //if ruru doesnt have pointer event hander yet, assign 
+                if(!ruruDesign_obj.actionManager) add_action_mgr(ruruDesign_obj);
                 
                 isAnimatePanelOn = true;
 
@@ -1958,7 +2088,16 @@ function start_design_setup(){
         isAnimatePanelOn = false;
         isPanelMovementDone = true;                         //let to indicate that panel is done moving away from Mbaye to the design location
 
+        if(camera2){
+            camera2.dispose();
+            camera2 =  new BABYLON.ArcRotateCamera("Screenshot",BABYLON.Tools.ToRadians(25),BABYLON.Tools.ToRadians(85),105.0, new BABYLON.Vector3(0,0,0),designScene);
+        }
+        let pos = panelCamera.position;
+        camera2.position = new BABYLON.Vector3(pos.x+15,pos.y,pos.z+10);
         camera2.setTarget(currentPanel);
+        camera2.radius = 20;
+        
+       
         // panelCamera.attachControl(canvas,true);
         
         
@@ -2117,13 +2256,13 @@ var onOverChar =(meshEvent)=>{
         sty.paddingRight = "0.5%";
         sty.color = "#ffffff";
         sty.fontFamily = "Courgette-Regular";
-        sty.backgroundColor = "#0b91c3a3";
-        sty.opacity = "0.7";
+        // sty.backgroundColor = "#0b91c3a3";
+        // sty.opacity = "0.7";
         sty.fontSize = "1vw";
         sty.top = designScene.pointerY + "px";
         sty.left = (designScene.pointerX+20) + "px";
         sty.cursor = "pointer";
-
+        // sty.borderRadius = "30px";
         document.body.appendChild(partTooltip);
         partTooltip.textContent = "Save Game";
         overHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.4,0.1));
@@ -2278,6 +2417,9 @@ function set_clouds_position(viewNo){
 
 //
 function set_char_movable(){
+    add_action_mgr(nuvolaDesign_obj);
+    add_action_mgr(ruruDesign_obj);
+  
     isCharMovementEnabled = true;
 
     //hide the clouds of RuRu and Nuvola
@@ -2331,10 +2473,10 @@ function set_panel_children(flowers){
 function load_saved_game(){
     Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "storage/saveState/designPanel/", load_filename, designScene).then(function (result) {
-            console.log("user panels: ", user_panels);
+            // console.log("user panels: ", user_panels);
             for(let i=0;i<result.meshes.length;i++){
                 if(mbayePanelsMap.has(result.meshes[i].name)){
-                    console.log(result.meshes[i].name, result.meshes[i]);
+                    // console.log(result.meshes[i].name, result.meshes[i]);
                     result.meshes[i].setParent(mbayeDesign_object);
                     if(mbayePanelsMap.get(result.meshes[i].name) !== null)  mbayePanelsMap.get(result.meshes[i].name).dispose();
                     result.meshes[i].isPickable = true;
@@ -2344,8 +2486,8 @@ function load_saved_game(){
                     let children = set_panel_children(result.meshes[i]._children);
                     flowersPanelsMap.set(result.meshes[i], children);
 
-                    console.log("mbayePanelsMap: ",mbayePanelsMap);
-                    console.log("flowersPanelsMap: ",flowersPanelsMap);
+                    // console.log("mbayePanelsMap: ",mbayePanelsMap);
+                    // console.log("flowersPanelsMap: ",flowersPanelsMap);
                 }
             }
         }),
@@ -2395,7 +2537,7 @@ function save_designed_panels(filename) {
     }
 
     for (const [panel,val] of flowersPanelsMap.entries()) {
-        console.log("PANEL NAME: ", panel.name);
+        // console.log("PANEL NAME: ", panel.name);
         if(modified_panels_list.has(panel.name)){
             let temp = [];
            
@@ -2411,8 +2553,8 @@ function save_designed_panels(filename) {
     }
 
 
-    console.log("modified flowers list: ", modified_panels_list);
-    console.log("saved flowers list: ", savedFlowersList);
+    // console.log("modified flowers list: ", modified_panels_list);
+    // console.log("saved flowers list: ", savedFlowersList);
     var strMesh = JSON.stringify(meshes_to_save);
     
    
@@ -2448,6 +2590,7 @@ function save_designed_panels(filename) {
             
                 designCamera.attachControl(canvas,true);
                 savedFlowersList = {};
+                is_design_saved = true;
             },
             error: function(result){
                 Swal.fire({
@@ -2788,6 +2931,7 @@ $('#loadingScreenOverlay').on('click', function(evt){
             background: 'rgba(8, 64, 147, 0.6)',
         });
     }
+    designCamera.attachControl(canvas,true);
 });
 
 
@@ -2797,3 +2941,155 @@ setInterval(function(){
     i++;
 }, 700);
 
+// $("#sampbtn").on('click',function(){
+//     console.log("show");
+    
+
+$("#saveScreenshotBtn").on('click',function(){
+    if(designScene.activeCamera === designCamera){
+        var link = window.document.createElement('a');
+        link.href = screenshotData;
+        link.download = "Mbaye_screenshot";
+        var click = document.createEvent("MouseEvents");
+        click.initEvent("click", true, false);
+        link.dispatchEvent(click);  
+    }else{
+            let panelName = currentPanel.name;
+            $.ajax({
+                type: "POST",
+                url:urlDesignScreenshot,
+                data:{
+                    uid: userId,
+                    img:screenshotData,
+                    panel_no:panelName,
+                    _token:token
+                },
+                success: function(result){
+                    Swal.fire({
+                        width: '10vw',
+                        padding: '3em',
+                        background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+                        title: '\n\n\n\nScreenshot of panel '+panelName+' saved succesfully!',
+                        showConfirmButton: false,
+                        position: 'top-end',
+                        // timer: 3000,
+                        width: 100,
+                        customClass: {
+                            popup: 'trevor-popup-class',
+                        }
+                    });
+
+                    // turn blob into an object URL; saved as a member, so can be cleaned out later
+                
+                    
+                    var link = window.document.createElement('a');
+                    link.href = screenshotData;
+                    link.download = "screenshot";
+                    var click = document.createEvent("MouseEvents");
+                    click.initEvent("click", true, false);
+                    link.dispatchEvent(click);   
+                    // BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera2, {width:1024, height:768, precision:1},null,null,null,false,"Mbaye_panel_"+currentPanel.name);
+                },
+                error: function(result){
+                    Swal.fire({
+                        width: '10vw',
+                        padding: '3em',
+                        background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+                        title: '\n\n\n\nOops...something went wrong. Your screenshot was not saved.',
+                        showConfirmButton: false,
+                        position: 'top-end',
+                        timer: 3000,
+                        customClass: {
+                            title: 'error-title-class',
+                            popup: 'trevor-popup-class',
+                        },
+                    });
+                }
+            });
+    }//end of if-else
+    $("#showScreenshotModal").modal('hide');
+    
+});
+
+  
+                /*
+                $.ajax({
+                    type: "POST",
+                    url:urlDesignScreenshot,
+                    data:{
+                        uid: userId,
+                        img:img,
+                        panel_no:panelName,
+                        _token:token
+                    },
+                    success: function(result){
+                        Swal.fire({
+                            width: '10vw',
+                            padding: '3em',
+                            background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+                            title: '\n\n\n\nScreenshot of panel '+panelName+' saved succesfully!',
+                            showConfirmButton: false,
+                            position: 'top-end',
+                            // timer: 3000,
+                            width: 100,
+                            customClass: {
+                            popup: 'trevor-popup-class',
+                        }
+                    });
+                    },
+                    error: function(result){
+                        Swal.fire({
+                            width: '10vw',
+                            padding: '3em',
+                            background: 'rgba(8, 64, 147, 0.6) url(front/images3D/designScene/trevorSaved.png) ',
+                            title: '\n\n\n\nOops...something went wrong. Your screenshot was not saved.',
+                            showConfirmButton: false,
+                            position: 'top-end',
+                            timer: 3000,
+                            customClass: {
+                                title: 'error-title-class',
+                                popup: 'trevor-popup-class',
+                            },
+                        });
+                    }
+                });*/
+                // BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera2, {width:1024, height:768, precision:1},null,null,null,false,"Mbaye_panel_"+currentPanel.name);
+            
+                
+                // var showAxis = function(size) {
+                //     var makeTextPlane = function(text, color, size) {
+                //     var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, designScene, true);
+                //     dynamicTexture.hasAlpha = true;
+                //     dynamicTexture.drawText(text, 5, 40, "bold 36px Arial", color , "transparent", true);
+                //     var plane = new BABYLON.Mesh.CreatePlane("TextPlane", size, designScene, true);
+                //     plane.material = new BABYLON.StandardMaterial("TextPlaneMaterial", designScene);
+                //     plane.material.backFaceCulling = false;
+                //     plane.material.specularColor = new BABYLON.Color3(0, 0, 0);
+                //     plane.material.diffuseTexture = dynamicTexture;
+                //     return plane;
+                //      };
+                  
+                //     var axisX = BABYLON.Mesh.CreateLines("axisX", [ 
+                //       new BABYLON.Vector3.Zero(), new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, 0.05 * size, 0), 
+                //       new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, -0.05 * size, 0)
+                //       ], designScene);
+                //     axisX.color = new BABYLON.Color3(1, 0, 0);
+                //     var xChar = makeTextPlane("X", "red", size / 10);
+                //     xChar.position = new BABYLON.Vector3(0.9 * size, -0.05 * size, 0);
+                //     var axisY = BABYLON.Mesh.CreateLines("axisY", [
+                //         new BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, size, 0), new BABYLON.Vector3( -0.05 * size, size * 0.95, 0), 
+                //         new BABYLON.Vector3(0, size, 0), new BABYLON.Vector3( 0.05 * size, size * 0.95, 0)
+                //         ], designScene);
+                //     axisY.color = new BABYLON.Color3(0, 1, 0);
+                //     var yChar = makeTextPlane("Y", "green", size / 10);
+                //     yChar.position = new BABYLON.Vector3(0, 0.9 * size, -0.05 * size);
+                //     var axisZ = BABYLON.Mesh.CreateLines("axisZ", [
+                //         new BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, 0, size), new BABYLON.Vector3( 0 , -0.05 * size, size * 0.95),
+                //         new BABYLON.Vector3(0, 0, size), new BABYLON.Vector3( 0, 0.05 * size, size * 0.95)
+                //         ], designScene);
+                //     axisZ.color = new BABYLON.Color3(0, 0, 1);
+                //     var zChar = makeTextPlane("Z", "blue", size / 10);
+                //     zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
+                //   };
+                
+                //   showAxis(5);

@@ -14,6 +14,8 @@ use App\Models\BlogImages\BlogImage;
 use App\Models\GeneralBlogs\GeneralBlog;
 use App\Models\GeneralBlogVideos\GeneralBlogVideo;
 use App\Models\GeneralBlogImages\GeneralBlogImage;
+use App\Models\BlogDesignPanels\BlogDesignPanel;
+use App\Models\BlogPrivacy\BlogPrivacy;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
 use DB;
@@ -100,6 +102,10 @@ class BlogsRepository extends BaseRepository
                 $this->addVideos($blog->id, $input['videos']);
             }
 
+            // Save privacy settings
+            $groups = explode(',', $input['privacy']);
+            $this->setPrivacy($blog->id, 'regular', $groups);
+
             if($input['attachments'] != '[]') {
                 $formatted_attachments = str_replace( array( '\'', '"', ';', '[', ']' ), '', $input['attachments']);
                 $formatted_attachments = explode(',', $formatted_attachments);
@@ -161,6 +167,10 @@ class BlogsRepository extends BaseRepository
                 $this->addVideos($blog->id, $input['videos']);
             }
 
+            // Save privacy settings
+            $groups = explode(',', $input['privacy']);
+            $this->setPrivacy($blog->id, 'regular', $groups);
+
             if($input['attachments'] != '[]') {
                 $formatted_attachments = str_replace( array( '\'', '"', ';', '[', ']' ), '', $input['attachments']);
                 $formatted_attachments = explode(',', $formatted_attachments);
@@ -172,6 +182,58 @@ class BlogsRepository extends BaseRepository
             }
 
             event(new BlogUpdated($blog));
+            DB::commit();
+            return $blog;
+        }
+
+        throw new GeneralException(
+            trans('exceptions.backend.blogs.update_error')
+        );
+    }
+
+    public function updateGeneralBlog(GeneralBlog $blog, array $input)
+    {
+        DB::beginTransaction();
+        $input['content'] = $this->replaceContentFileLocation($input['content']);
+        $input['slug'] = Str::slug($input['name']);
+
+        if($input['status'] != 'Unpublished') {
+            $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
+        }
+        
+        $input['updated_by'] = access()->user()->id;
+
+        // Uploading Image
+        if($input['edited_featured_image']) {
+            $this->deleteOldFile($blog);
+            $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
+        } else if (array_key_exists('featured_image', $input)) {
+            $this->deleteOldFile($blog);
+            $input['featured_image'] = $this->uploadImage($input['featured_image']);
+        }
+        
+
+        if ($blog->update($input)) {
+            // Inserting videos
+            if(array_key_exists('videos', $input)) {
+                $this->addVideos($blog->id, $input['videos']);
+            }
+
+            // Save privacy settings
+            $groups = explode(',', $input['privacy']);
+            $this->setPrivacy($blog->id, 'general', $groups);
+
+            if($input['attachments'] != '[]') {
+                $formatted_attachments = str_replace( array( '\'', '"', ';', '[', ']' ), '', $input['attachments']);
+                $formatted_attachments = explode(',', $formatted_attachments);
+                $this->backupBlogAttachments($formatted_attachments, $blog->id);
+
+                if($blog->status == 'Published') {
+                    $this->deleteTrixAttachments($formatted_attachments);
+                }
+            }
+
+            // event(new BlogUpdated($blog));
             DB::commit();
             return $blog;
         }
@@ -200,6 +262,10 @@ class BlogsRepository extends BaseRepository
             if(array_key_exists('videos', $input)) {
                 $this->addGeneralBlogVideos($blog->id, $input['videos']);
             }
+
+            // Save privacy settings
+            $groups = explode(',', $input['privacy']);
+            $this->setPrivacy($blog->id, 'general', $groups);
 
             if($input['attachments'] != '[]') {
                 $formatted_attachments = str_replace( array( '\'', '"', ';', '[', ']' ), '', $input['attachments']);
@@ -311,6 +377,12 @@ class BlogsRepository extends BaseRepository
         }
 
         Storage::disk('local')->put('public/img/blog/'.$filename, $image);
+        
+        // compressing image
+        // $source= 'storage/img/blog/'.$filename;
+        // $quality=100;
+        // $dest="storage/img/blog/".$filename;
+        // $path= $this->compress($source,$dest, $quality);// compressing images
 
         return $filename;
     }
@@ -505,5 +577,171 @@ class BlogsRepository extends BaseRepository
             })->save($destination);*/
 
         return $destination;
+    }
+
+    /**
+     * @param array $input
+     *
+     * @throws \App\Exceptions\GeneralException
+     *
+     * @return bool
+     */
+    public function createDesignBlog(array $input)
+    {
+        $tagsArray = $this->createTags($input['tags']);
+        unset($input['tags']);
+
+        DB::beginTransaction();
+        $input['content'] = $this->replaceContentFileLocation($input['content']);
+        $input['slug'] = Str::slug($input['name']);
+        $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
+        $input['created_by'] = $input['user_id'];
+
+        if($input['edited_featured_image']) {
+            $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
+        } else if(array_key_exists('featured_image', $input)) {
+            $input['featured_image'] = $this->duplicateImage($input['featured_image']);
+        }
+        // $input['featured_image'] = 'ss-1.png';
+        
+        if ($blog = Blog::create($input)) {
+            // Inserting associated tag's id in mapper table
+            if (count($tagsArray)) {
+                $blog->tags()->sync($tagsArray);
+            }
+
+            $groups = explode(',', $input['privacy']);
+            $this->setPrivacy($blog->id, 'regular', $groups);
+
+            $blog_panel_design = new BlogDesignPanel();
+            $blog_panel_design->blog_id = $blog->id;
+            $blog_panel_design->panel_id = $input['panel_id'];
+            $blog_panel_design->user_id = $input['user_id'];
+            $blog_panel_design->save();
+
+            if($input['attachments'] != '[]') {
+                $formatted_attachments = str_replace( array( '\'', '"', ';', '[', ']' ), '', $input['attachments']);
+                $formatted_attachments = explode(',', $formatted_attachments);
+                $this->backupBlogAttachments($formatted_attachments, $blog->id);
+
+                if($blog->status == 'Published') {
+                    $this->deleteTrixAttachments($formatted_attachments);
+                }
+            }
+
+            event(new BlogCreated($blog));
+            DB::commit();
+            return $blog;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.blogs.create_error'));
+    }
+
+    /**
+     * Update Blog.
+     *
+     * @param \App\Models\Blogs\Blog $blog
+     * @param array                  $input
+     */
+    public function updateDesignBlog(Blog $blog, array $input)
+    {
+        $tagsArray = $this->createTags($input['tags']);
+        unset($input['tags']);
+
+        DB::beginTransaction();
+        $input['content'] = $this->replaceContentFileLocation($input['content']);
+        $input['slug'] = Str::slug($input['name']);
+
+        if($input['status'] != 'Unpublished') {
+            $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
+        }
+        
+        $input['updated_by'] = access()->user()->id;
+
+        // Uploading Image
+        if($input['edited_featured_image']) {
+            $this->deleteOldFile($blog);
+            $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
+        } else if (array_key_exists('featured_image', $input)) {
+            $this->deleteOldFile($blog);
+            if($input['featured_image'] != '') {
+                $input['featured_image'] = $this->duplicateImage($input['featured_image']);
+            } else {
+                $input['featured_image'] = $input['featured_image'];
+            }
+        }
+        
+
+        if ($blog->update($input)) {
+
+            // Updating associated tag's id in mapper table
+            if (count($tagsArray)) {
+                $blog->tags()->sync($tagsArray);
+            }
+
+            $groups = explode(',', $input['privacy']);
+            $this->setPrivacy($blog->id, 'regular', $groups);
+
+            $blog_panel_design = BlogDesignPanel::where('blog_id', $blog->id)->first();
+            $blog_panel_design->panel_id = $input['panel_id'];
+            $blog_panel_design->user_id = $input['user_id'];
+            $blog_panel_design->save();
+
+            if($input['attachments'] != '[]') {
+                $formatted_attachments = str_replace( array( '\'', '"', ';', '[', ']' ), '', $input['attachments']);
+                $formatted_attachments = explode(',', $formatted_attachments);
+                $this->backupBlogAttachments($formatted_attachments, $blog->id);
+
+                if($blog->status == 'Published') {
+                    $this->deleteTrixAttachments($formatted_attachments);
+                }
+            }
+
+            event(new BlogUpdated($blog));
+            DB::commit();
+            return $blog;
+        }
+
+        throw new GeneralException(
+            trans('exceptions.backend.blogs.update_error')
+        );
+    }
+
+    public function duplicateImage($featured_image)
+    {
+        $extension = explode('.', $featured_image);
+        $filename = Str::random().'.'.$extension[1];
+        while (Storage::exists('public/img/blog/'.$filename)) {
+            $filename = Str::random().'.'.$extension[1];
+        }
+
+        if (Storage::exists('public/designPanel/screenshots/'.$featured_image)) {
+            Storage::copy('public/designPanel/screenshots/'.$featured_image, 'public/img/blog/'.$filename);
+
+            // compressing image
+            $source= 'storage/img/blog/'.$filename;
+            $quality=100;
+            $dest="storage/img/blog/".$filename;
+            $path= $this->compress($source,$dest, $quality);// compressing images
+        }
+
+        return $filename;
+    }
+
+    public function setPrivacy($blog_id, $blog_type, $groups)
+    {
+        $privacy = BlogPrivacy::where('blog_id', $blog_id)->delete();
+        
+        if($groups) {
+            for($i = 0; $i < count($groups); $i++) {
+                if($groups[$i] > 0) {
+                    $new_privacy = new BlogPrivacy();
+                    $new_privacy->blog_id = $blog_id;
+                    $new_privacy->blog_type = $blog_type;
+                    $new_privacy->group_id = $groups[$i];
+                    $new_privacy->save();
+                }
+            }
+        }
     }
 }

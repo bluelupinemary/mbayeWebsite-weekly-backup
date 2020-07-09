@@ -743,3 +743,21 @@ function view_my_blogs_tagwise(tag,id){
 		}});
 	
 }
+
+/**
+ *  Function to redirect to my career posts
+ * @param {id} id 
+ */
+function view_my_career_posts(id){
+
+	$.ajax({
+		type: "POST",
+		url:url_view_my_career_blog,
+		data:{id:id,
+			 _token:token
+			},
+		success: function(result){
+				window.location.href=url_view_my_career_blog+"?id="+id;
+		}});
+	
+}

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use Backend;
-//use App\Models\Blogs\Blog;
+use App\Models\Blogs\Blog;
 use Validator;
 use Illuminate\Http\Request;
 use App\Models\BlogTags\BlogTag;
@@ -35,7 +35,7 @@ class GeneralBlogsController extends APIController
     public function index(Request $request)
     {
    
-        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $limit = $request->get('paginate') ? $request->get('paginate') : 14;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
 
@@ -48,7 +48,7 @@ class GeneralBlogsController extends APIController
       
         // dd( $btag->name);
         $id=$request['id']; 
-        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $limit = $request->get('paginate') ? $request->get('paginate') : 14;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
         return GeneralBlogsResource::collection(

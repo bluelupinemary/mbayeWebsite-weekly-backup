@@ -56,7 +56,7 @@ class JobSeekerProfilesRepository extends BaseRepository
                 config('module.job_seeker_profiles.table').'.updated_at',
                 config('access.users_table').'.first_name as user_name',
                 config('access.users_table').'.last_name as last_name',
-                config('access.users_table').'.address as address',
+                config('access.users_table').'.country as country',
                 config('access.profession').'.profession_name as profession',
                 
 

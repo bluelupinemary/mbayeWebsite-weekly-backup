@@ -4,6 +4,8 @@ namespace App\Models\BlogDesignPanels\Traits\Attribute;
 
 use Illuminate\Support\Str;
 use Auth;
+use App\Models\Flowers\Flower;
+
 /**
  * Class BlogDesignPanelAttribute.
  */
@@ -111,5 +113,24 @@ trait BlogDesignPanelAttribute
         } else {
             return false;
         }        
+    }
+
+    public function getFlowers()
+    {
+        $flower_used = $this->panel->flowers_used;
+        $flower_used = array_unique(explode(',', $flower_used));
+        rsort($flower_used);
+        $flowers = [];
+        
+        for($i = 0; $i < count($flower_used); $i++) {
+            $flower_id = preg_replace('/[^0-9,.]+/i', '', $flower_used[$i]);
+
+            $flower = Flower::find($flower_id);
+            $flower->flower_code = $flower_used[$i];
+            
+            $flowers[] = $flower;
+        }
+
+        return $flowers;
     }
 }

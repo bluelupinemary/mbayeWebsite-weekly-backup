@@ -29,8 +29,9 @@ class JobSeekerProfileResource extends Resource
             'thumb'                     => ($this->featured_image=='') ? '/storage/img/JobSeekerProfile/default.png' : '/storage/img/JobSeekerProfile/'.$this->featured_image,
             'first_name'                => $this->user_name,
             'last_name'                 => $this->last_name,
-            'profession_name'                => $this->profession,
+            'profession_name'           => $this->profession,
             'address'                   => $this->address,
+            'country'                   => $this->country,
 
         ];
     }

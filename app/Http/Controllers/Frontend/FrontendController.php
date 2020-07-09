@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Mail\ContactAdminEmail;
 use App\Models\Access\User\User;
+use App\Models\BlogTags\BlogTag;
 use App\Models\Settings\Setting;
 use App\Http\Controllers\Controller;
 use App\Models\Game\UserDesignPanel;
@@ -70,9 +71,10 @@ class FrontendController extends Controller
     public function blog_tagwise_all(Request $request){
 
         // dd($request['tag']);
+        $tagdetails = BlogTag::where('name',$request['tag'])->first();
         $tag = $request['tag'];
-        $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.tagwise.blog_tagwise',compact('tag'));
+        // dd($tag);
+        if(Auth::user())         return view('frontend.blog.blogview.tagwise.blog_tagwise',compact('tag','tagdetails'));
         return view('frontend.auth.login');
     }
     /**
@@ -137,11 +139,7 @@ class FrontendController extends Controller
     public function page_under_development(){
         return view('frontend.pages.page_under_dev');
     }
-    public function view_blogs(){
-        return view('frontend.blog.view_blogs');
-       
-      
-    }
+
     public function terms(){
         return view('frontend.pages.terms');
     }
@@ -276,6 +274,12 @@ class FrontendController extends Controller
         return view('frontend.game.feet_mbaye');
     }
 
+    public function story_mbaye(){
+        return view('frontend.game.story_mbaye');
+    }
+
+
+
 
 
 
@@ -384,9 +388,27 @@ public function blog_general_friend_post(Request $request){
      public function jobseeker_profiles(Request $request){ 
         $search = $request->search;
         $type = $request->type;
+        $country = $request->country;
         $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.jobseekers.profiles',compact('search','type'));
+        if($user)         return view('frontend.blog.blogview.jobseekers.profiles',compact('search','type','country'));
         return view('frontend.auth.login');
     }
+  /* For career blogs my */
+  public function blog_career_my_post(Request $request){
+    $id = $request['id'];
+    $user = Auth::user();
+    if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
+    return view('frontend.auth.login');
+}
+
+public function blog_career_my(Request $request){ 
+    $id = $request['id'];
+    $user = Auth::user();
+ 
+    if($user) return  view('frontend.blog.blogview.career.my_career_blogs',compact('id'));
+    return view('frontend.auth.login');
+   
+  
+}
 
 }

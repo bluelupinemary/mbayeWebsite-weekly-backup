@@ -250,7 +250,8 @@ padding: 0;
  display: block;
  left: 50%;
  top: 50%;
- transform: translate(-25%,197%);}
+ transform: translate(-27%,55%);
+}
 
 .s013 {
     min-height: 0;
@@ -496,7 +497,13 @@ padding: 0;
 .status-div, .sort-div {
     flex: 60%;
 }
-
+.country-div{
+    /* flex: 60%; */
+    left: 50%;
+    top: 50%;
+    transform: translate(-97%, 10%);
+    width: 34%;
+}
 .blog-search .status-div {
     border-right: 1px solid #6c757d;
 }
@@ -1714,4 +1721,13 @@ img.naff-reaction {
 
 .user-photo.male img {
     border-radius: 21% 21% 30% 30%;
+}
+
+
+.easy-autocomplete input{
+   border-width:0px !important;
+   color: #17a2b887  !important;
+}
+.easy-autocomplete-container ul {
+    background: rgba(12, 44, 90, 0.73) !important;
 }

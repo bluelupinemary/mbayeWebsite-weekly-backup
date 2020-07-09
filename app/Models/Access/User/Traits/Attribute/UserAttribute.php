@@ -3,6 +3,8 @@
 namespace App\Models\Access\User\Traits\Attribute;
 
 use App\Models\UserCollage\UserCollage;
+use App\Models\Game\UserDesignPanel;
+use App\Models\Game\UserPanelFlowers;
 
 /**
  * Class UserAttribute.
@@ -548,5 +550,20 @@ trait UserAttribute
         }
 
         return $filename;
+    }
+
+    public function getPanels()
+    {
+        $designs = $this->designs()->pluck('id');
+        $panels = UserPanelFlowers::whereIn('design_id', $designs)->get();
+        
+        return $panels;
+    }
+
+    public function getGroups()
+    {
+        $groups = $this->groups()->get();
+
+        return $groups;
     }
 }

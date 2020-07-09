@@ -87,7 +87,7 @@
                                 </button> --}}
                                 <a href="{{url('/single_blog/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/view-btn.png')}}" alt="" class="view-btn"></a>
                                 <a class="delete" data-url="{{url('/blogs/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/delete-btn.png')}}" alt="" class="delete-btn"></a>
-                                <a href="{{url('/communicator?action=edit_blog&blog_id='.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a>
+                                <a href="{{($blog->isDesignsBlog() ? url('/communicator?action=edit_design_blog&blog_id='.$blog->id.'&section=designs_blog') : url('/communicator?action=edit_blog&blog_id='.$blog->id.'&section=blog')) }}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a>
                             </div>
                         </div>
                     </div>

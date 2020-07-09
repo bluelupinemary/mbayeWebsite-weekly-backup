@@ -30,6 +30,7 @@ class GameRepository extends BaseRepository
     public function __construct()
     {
         $this->upload_path = 'saveState'.DIRECTORY_SEPARATOR.'designPanel'.DIRECTORY_SEPARATOR;
+        $this->upload_path_screenshot = 'saveState'.DIRECTORY_SEPARATOR.'designPanel'.DIRECTORY_SEPARATOR.'screenshots'.DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('public');
     }
 
@@ -56,6 +57,24 @@ class GameRepository extends BaseRepository
 
         if (isset($babylonFile) && !empty($babylonFile)) {
             $this->storage->put($this->upload_path.$filename, $babylonFile);
+            return true;
+        }else{
+            return false;
+        }
+    
+    }
+
+    public function saveScreenshot($filename, $imgData)
+    {
+        $base64 = str_replace('data:image/png;base64,', '', $imgData);
+        $base64 = str_replace(' ', '+', $base64);
+        $image = base64_decode($base64);
+
+      
+        $filename = $filename.'.jpg';
+     
+        if (isset($image) && !empty($image)) {
+            $this->storage->put($this->upload_path_screenshot.$filename, $image);
             return true;
         }else{
             return false;

@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('instructions', 'GameController@showInstructions');
         Route::get('designPanel', 'GameController@showDesignPanelScene');
         Route::post('/designPanel','GameController@storeDesignPanel')->name('storeDesignPanel');
+        Route::post('/designPanel-screenshot','GameController@storeDesignPanelScreenshot')->name('storeDesignPanelScreenshot');
         Route::get('buildMbaye', 'GameController@showBuildMbayeScene')->name('buildMbaye');
         
     });
@@ -100,10 +101,12 @@ Route::group(['namespace' => 'Friendship'], function () {
 //end friendshiproutes
     Route::group(['namespace' => 'Blogs'], function () {
         Route::resource('blogs', 'BlogsController');
+        Route::get('stories', 'BlogsController@stories');
         Route::get('/single_blog/{id}', 'BlogsController@show');
         Route::post('publish_blog', 'BlogsController@publishBlog');
         Route::post('publish_general_blog', 'BlogsController@saveGeneralBlog');
-
+        Route::post('publish_design_blog', 'BlogsController@publishDesignBlog');
+        Route::post('share_blog', 'BlogsController@shareBlog');
     });
 
     Route::group(['namespace' => 'Like'], function () {
@@ -125,7 +128,6 @@ Route::get('/special_rightholders_accounts', 'FrontendController@special_rightho
 Route::get('/sra_terms_and_conditions', 'FrontendController@sra_terms_and_conditions')->name('sra_terms_and_conditions');
 Route::get('/blogview', 'FrontendController@blogview')->name('blogview');
 Route::get('/blog', 'FrontendController@blog')->name('blog');
-Route::get('/view_blogs', 'FrontendController@view_blogs')->name('view_blogs');
 Route::get('/page_under_development', 'FrontendController@page_under_development')->name('page_under_development');
 Route::get('/terms', 'FrontendController@terms')->name('terms');
 
@@ -136,6 +138,7 @@ Route::get('/flowersMbaye', 'FrontendController@flowers_mbaye')->name('flowersMb
 Route::get('/visitingMbaye', 'FrontendController@visiting_mbaye')->name('visitingMbaye');
 Route::get('/participateMbaye', 'FrontendController@participate_mbaye')->name('participateMbaye');
 Route::get('/feetMbaye', 'FrontendController@feet_mbaye')->name('feetMbaye');
+Route::get('/storyMbaye', 'FrontendController@story_mbaye')->name('storyMbaye');
 
 //dummy page for testing
 Route::get('/dummy_page/{id}', 'FrontendController@dummy_page');
@@ -153,7 +156,6 @@ Route::get('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my');
 Route::post('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my_post')->name('blog_tagwise_my');
 Route::get('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend');
 Route::post('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend_post')->name('blog_tagwise_friend');
-Route::get('/single_general_blog/{id}', 'GeneralBlogs\GeneralBlogsController@show');
 
 
 /* blogs for the general blogs */
@@ -163,7 +165,7 @@ Route::post('/blogview/general/my', 'FrontendController@blog_general_my_post')->
 Route::get('/blogview/general/friend', 'FrontendController@blog_general_friend');
 Route::post('/blogview/general/friend', 'FrontendController@blog_general_friend_post')->name('blog_general_friend');
 Route::get('/single_general_blog/{id}', 'GeneralBlogs\GeneralBlogsController@show');
-
+Route::resource('general_blogs', 'GeneralBlogs\GeneralBlogsController');
 
 /* blogs for the designed panels */
 Route::get('/blogview/designed-panel/all', 'FrontendController@designed_panels_all')->name('designed_panels_all');
@@ -176,6 +178,11 @@ Route::get('/single_panel_design/{id}', 'BlogPanelDesign\BlogPanelDesignControll
 
 /* blogs for the Jobseekers */
 Route::get('/blogview/jobseekers/profiles', 'FrontendController@jobseeker_profiles')->name('jobseeker_profiles');
+
+/* blogs for the career post */
+
+Route::get('/blogview/career/my', 'FrontendController@blog_career_my');
+Route::post('/blogview/career/my', 'FrontendController@blog_career_my_post')->name('blog_career_my');
 
 
 //testing routes for Jobseekers profile

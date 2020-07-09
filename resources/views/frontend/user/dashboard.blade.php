@@ -293,7 +293,7 @@
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
                 <span class="pop-up collage-pop-up">Modify Collage</span>
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <button class="view" onclick="view_my_career_posts({{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 <button class="collage" data-tag="careers"><img src="{{asset('front/icons/collage-icon-2.png')}}" alt=""></button>
             </div>
@@ -637,6 +637,7 @@
         var token = '{{ Session::token() }}';
         var url_view_general_blog = '{{ route('frontend.blog_general_my') }}';
         var url_view_tag_wise_blog = '{{ route('frontend.blog_tagwise_my') }}';
+        var url_view_my_career_blog = '{{ route('frontend.blog_career_my') }}';
     </script>
 @endsection
 

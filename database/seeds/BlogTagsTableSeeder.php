@@ -51,7 +51,12 @@ class BlogTagsTableSeeder extends Seeder
                 'created_at'            => Carbon::now(),
             ],
             [
-                'name'                  => 'General',
+                'name'                  => 'Designs',
+                'created_by'            => 1,
+                'created_at'            => Carbon::now(),
+            ],
+            [
+                'name'                  => 'Careers',
                 'created_by'            => 1,
                 'created_at'            => Carbon::now(),
             ]

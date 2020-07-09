@@ -110,7 +110,7 @@ export default {
             }
         });
 
-        document.querySelector('.edit_image').addEventListener('click',function(event) {
+        document.querySelector('.general-blog .edit_image').addEventListener('click',function(event) {
             var featured_image = document.querySelector(".general-blog #featured-image-previewimg").getAttribute("src");
             
             $this.$refs.tuiImageEditor.invoke('loadImageFromURL', featured_image, "SampleImage");

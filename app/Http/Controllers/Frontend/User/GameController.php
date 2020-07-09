@@ -108,34 +108,73 @@ class GameController extends Controller
 
 
         if($data->user_id == $req->uid && $saved_game) {
+            
             return array('status' => 'success', 'message' => 'Game progress saved successfully!', 'data' => "");
         }else{
             return array('status' => 'failed', 'message' => 'Error in saving the game progress!', 'data' => "");
         }
-    }
+    }//end of function
 
+    
+    public function storeDesignPanelScreenshot(Request $req){
+
+        //store the 3d designed meshes to storage and to database
+       
+
+        
+        //check if designed panels of the user is in the db
+        $design_id = UserDesignPanel::where('user_id', $req->uid)->first();
+        if($design_id){ 
+            $design_id = $design_id->id;
+        }
+        else $design_id = null;
+
+        //the flowers list from the page
+        $screenshot = $req->img;
+        $panel_no = $req->panel_no;
+        $saved_screenshot = false;
+    
+        //if there's a list from the page
+        if( $design_id != null ){
+            //for each panel designed
+            // foreach ($panels_from_page as $panel=>$flowers){
+                
+                //check first if the panel is already in the db
+                $panel_from_db = UserPanelFlowers::where('design_id', $design_id)->where('panel_number',  $panel_no)->first();
+                //add as new entry if not yet in the db
+                if((!$panel_from_db || $panel_from_db === null)){
+                    $panel_data = new UserPanelFlowers();
+                    $panel_data->screenshot = $screenshot;
+                    $panel_data->save();
+                }else{
+                    //if the panel dont have any flowers on it, delete it from db
+                    $filename = strval($req->uid)."_".$panel_no."_".strval($design_id)."_img";
+                    $saved_img = $this->game->saveScreenshot($filename,$screenshot);
+                    UserPanelFlowers::where('design_id', $design_id)->where('panel_number',  $panel_no)->update(['screenshot'=>$filename]);
+
+                }
+                $saved_screenshot = true;
+            // }//end of foreach
+        }
+
+
+        if($req->uid && $saved_screenshot) {
+            return array('status' => 'success', 'message' => 'Screenshot saved successfully!', 'data' => "");
+        }else{
+            return array('status' => 'failed', 'message' => 'Error in saving the screenshot.', 'data' => "");
+        }
+   }//end of function
 
 
     public function showBuildMbayeScene(){
-        $userId = Auth::user()->id;
-        /*
-        $user_design_data = UserDesignPanel::where('user_id', $userId)->first();
-
-        $design_id = UserDesignPanel::where('user_id', $userId)->first();
-        if($design_id) $design_id = $design_id->id;
-        $panels_from_db = UserPanelFlowers::where('design_id', $design_id)->pluck('panel_number')->toArray();
       
-
-        $load_game = false;
-        $filename = null;
-        if(!$user_design_data|| $user_design_data === null){
-            $filename = null;
-        }else{
-            $filename = $user_design_data->saved_panel_url;
-            $load_game = $this->game->loadState($filename);
-        }*/
-        return view('frontend.game.build_mbaye',["userId"=>$userId]);
+       
+        return view('frontend.game.build_mbaye');
     }
+
+
+   
+
 
     
 }

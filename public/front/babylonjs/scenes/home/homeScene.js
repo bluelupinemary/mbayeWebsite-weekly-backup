@@ -240,7 +240,7 @@ function create_home_halo(){
     plane.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(75),BABYLON.Tools.ToRadians(128),0);
   
     var planeMatl = new BABYLON.StandardMaterial("plane1", homeScene);
-     planeMatl.diffuseTexture = new BABYLON.Texture("front/textures/home/haloThin2.png", homeScene);
+    planeMatl.diffuseTexture = new BABYLON.Texture("front/textures/home/haloThin2.png", homeScene);
     planeMatl.opacityTexture = new BABYLON.Texture("front/textures/home/haloThin2.png", homeScene);
     planeMatl.alpha = 0.9;
     

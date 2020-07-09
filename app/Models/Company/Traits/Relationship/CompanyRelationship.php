@@ -11,13 +11,11 @@ use App\Models\CompanyProfile\Industry;
  */
 trait CompanyRelationship
 {
-    /**
-     * Blogs belongsTo with User.
-     */
     public function user()
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
 
     public function industry()
     {

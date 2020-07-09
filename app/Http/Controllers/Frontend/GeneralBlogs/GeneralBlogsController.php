@@ -54,7 +54,8 @@ class GeneralBlogsController extends Controller
         // $excerpt_content = Str::limit(preg_replace('#(<figure[^>]*>).*?(</figure>)#', '$1$2', $blog->content), 200);
         // dd($excerpt_content);
         // $excerpt_content = Str::limit($blog->content, 200);
-        // $blog->excerpt_content = $excerpt_content;
+        $blog->summary = preg_replace('#(<figure[^>]*>).*?(</figure>)#', '$1$2', $blog->content);
+        
         if($blog->featured_image == '') {
             $blog->featured_image = 'blog-default-featured-image.png';
         }
@@ -73,5 +74,16 @@ class GeneralBlogsController extends Controller
         return view('frontend.blog.single_general_blog', compact('blog'));
     }
 
-    
+    /**
+     * @param \App\Models\Blogs\Blog                              $blog
+     * @param \App\Http\Requests\Backend\Blogs\ManageBlogsRequest $request
+     *
+     * @return \App\Http\Responses\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $blog = GeneralBlog::find($id)->delete();
+
+        return array('status' => 'success', 'message' => 'Blog deleted successfully!');
+    }
 }

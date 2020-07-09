@@ -7,6 +7,8 @@ use App\Models\Comment\Comment;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
 use App\Models\BlogVideos\BlogVideo;
+use App\Models\BlogDesignPanels\BlogDesignPanel;
+use App\Models\BlogPrivacy\BlogPrivacy;
 
 /**
  * Class BlogRelationship.
@@ -49,5 +51,15 @@ trait BlogRelationship
 
     public function likes() {
         return $this->hasMany(Like::class, 'blog_id');
+    }
+
+    public function blog_panel_design()
+    {
+        return $this->hasOne(BlogDesignPanel::class, 'blog_id');
+    }
+
+    public function privacy()
+    {
+        return $this->hasMany(BlogPrivacy::class, 'blog_id')->where('blog_type', 'regular');
     }
 }

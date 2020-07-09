@@ -207,42 +207,36 @@ function load_init_meshes(){
                 
                 result.meshes[9].scaling = new BABYLON.Vector3(0.6,0.6,0.6);
                
-                for(let i=0;i<result.meshes.length-1;i++){
-                    // earthLight2.includedOnlyMeshes.push(result.meshes[i]);
-                    // result.meshes[i].scaling = new BABYLON.Vector3(0.6,0.6,0.6);
-                    result.meshes[i].isPickable = true;
-                    if(result.meshes[i].name === "Sea"){
-                        water = new BABYLON.WaterMaterial("water", initScene, new BABYLON.Vector2(2048, 2048));
-                        water.backFaceCulling = true;
-                        water.bumpTexture = new BABYLON.Texture("front/textures/participate/waterbump.png", initScene);
-                        water.windForce = 10;
-                        water.windDirection = new BABYLON.Vector2(-1,0);
-                        water.waveHeight = 0.2;
-                        water.bumpHeight = 0.3;
-                        water.waveLength = 0.1;
-                        water.colorBlendFactor = 0.25714;
-                        water.waterColor = new BABYLON.Color3(0.31428,0.2,0.80357);
+                
+                water = new BABYLON.WaterMaterial("water", initScene, new BABYLON.Vector2(2048, 2048));
+                water.backFaceCulling = true;
+                water.bumpTexture = new BABYLON.Texture("front/textures/participate/waterbump.png", initScene);
+                water.windForce = 10;
+                water.windDirection = new BABYLON.Vector2(-1,0);
+                water.waveHeight = 0.2;
+                water.bumpHeight = 0.3;
+                water.waveLength = 0.1;
+                water.colorBlendFactor = 0.25714;
+                water.waterColor = new BABYLON.Color3(0.31428,0.2,0.80357);
 
-                        water.addToRenderList(initSkybox);
-                       result.meshes[i].material = water;
-                    }
-                }
-
-                for(var i=1;i<result.meshes.length;i++){
-                    result.meshes[i].actionManager = new BABYLON.ActionManager(initScene);
-                    result.meshes[i].actionManager.registerAction(
+                water.addToRenderList(initSkybox);
+                result.meshes[7].material = water;
+            
+                result.meshes.forEach(function(e){
+                    e.actionManager = new BABYLON.ActionManager(initScene);
+                    e.actionManager.registerAction(
                         new BABYLON.ExecuteCodeAction(
                             BABYLON.ActionManager.OnPointerOverTrigger,
                             onOverPlanetInit
                         )
                     );
-                    result.meshes[i].actionManager.registerAction(
+                    e.actionManager.registerAction(
                         new BABYLON.ExecuteCodeAction(
                             BABYLON.ActionManager.OnPointerOutTrigger,
                             onOutPlanetInit
                         )
                     );
-                }//end of for loop
+                });//end of for loop
 
                 initEarth_object = result.meshes[9];      
           }),
@@ -694,13 +688,14 @@ var onOverPlanetOrbitInit =(meshEvent)=>{
     sty.lineHeight = "1.2em";
     sty.padding = "0.5%";
     sty.color = "#ffffff";
-    sty.fontFamily = "Nasalization Rg";
+    sty.fontFamily = "Courgette-Regular";
     sty.backgroundColor = "#0b91c3a3";
     sty.opacity = "0.7";
     sty.fontSize = "1vw";
     sty.top = initScene.pointerY + "px";
     sty.left = initScene.pointerX + "px";
     sty.cursor = "pointer";
+    sty.borderRadius = "10px";
     
     
     if(meshEvent.meshUnderPointer.name == "Earth") wikiBtn.setAttribute("onclick", "showPage('Earth')");

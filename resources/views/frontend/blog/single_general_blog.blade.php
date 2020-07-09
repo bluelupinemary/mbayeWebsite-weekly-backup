@@ -236,7 +236,7 @@
             scaleAstronaut();
             // init();
             // console.log(blog);
-            $('.blog-summary .content').html(trimHtml(blog.content, { limit: 200 }).html);
+            $('.blog-summary .content').html(trimHtml(blog.summary, { limit: 200 }).html);
             $('.trix-content div').children().each( (index, element) => {
                 console.log(index);     // children's index
                 console.log(element);   // children's element

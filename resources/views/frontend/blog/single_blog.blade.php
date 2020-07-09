@@ -15,6 +15,7 @@
     href="{{ asset('front/owl-carousel/dist/assets/owl.carousel.min.css') }}">
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.theme.default.min.css') }}">
+<link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog-responsive.css') }}">
 @endsection
@@ -149,26 +150,43 @@
                     <div class="trix-content">
                         {!! nl2br($blog->content) !!}
                     </div>
-                    @if(count($blog->videos))
-                        <div class="blog-videos">
-                            <h5>Videos</h5>
-                            @if(count($blog->valid_videos))
-                            <div class="owl-carousel owl-theme">
-                                @for($i = 0; $i < count($blog->valid_videos); $i++)
-                                    <div class="item-video" data-merge="2"><a class="owl-video"
-                                            href="{{ $blog->valid_videos[$i] }}"></a></div>
+                    @if(!$blog->isDesignsBlog())
+                        @if(count($blog->videos))
+                            <div class="blog-videos">
+                                <h5>Videos</h5>
+                                @if(count($blog->valid_videos))
+                                <div class="owl-carousel owl-theme">
+                                    @for($i = 0; $i < count($blog->valid_videos); $i++)
+                                        <div class="item-video" data-merge="2"><a class="owl-video"
+                                                href="{{ $blog->valid_videos[$i] }}"></a></div>
+                                    @endfor
+                                </div>
+                                @endif
+
+                                @if(count($blog->invalid_videos))
+                                @if(count($blog->valid_videos))<h6>Other Videos</h6>@endif  
+                                <ul>
+                                    @for($i = 0; $i < count($blog->invalid_videos); $i++)
+                                        <li><a href="{{ $blog->invalid_videos[$i] }}">{{ $blog->invalid_videos[$i] }}</a></li>
+                                    @endfor
+                                </ul>
+                                @endif
+                            </div>
+                        @endif
+                    @else
+                        <div class="blog-panel">
+                            <h5>Panel Number: {{$blog->blog_panel_design->panel->panel_number}}</h5>
+                            <div class="flower-list-div">
+                                @php
+                                    $flowers = $blog->blog_panel_design->getFlowers();
+                                @endphp
+                                @for($i = 0; $i < count($flowers); $i++)
+                                    <div class="flower">
+                                        <img src="{{asset('front/images3D/flowers2D/'.$flowers[$i]->flower_code.'.png')}}" alt="">
+                                        <p class="flower-name">{{$flowers[$i]->flower_name}}</p>
+                                    </div>
                                 @endfor
                             </div>
-                            @endif
-
-                            @if(count($blog->invalid_videos))
-                            @if(count($blog->valid_videos))<h6>Other Videos</h6>@endif  
-                            <ul>
-                                @for($i = 0; $i < count($blog->invalid_videos); $i++)
-                                    <li><a href="{{ $blog->invalid_videos[$i] }}">{{ $blog->invalid_videos[$i] }}</a></li>
-                                @endfor
-                            </ul>
-                            @endif
                         </div>
                     @endif
                 </div>
@@ -222,29 +240,68 @@
             <button class="navigator-zoomout-btn">
                 <i class="fas fa-undo-alt"></i>
             </button>
-            <div class="share-div">
-                @php
-                    $share_links = Share::currentPage(null, [], '', '')
-                        ->facebook()
-                        ->twitter()
-                        ->linkedin('Extra linkedin summary can be passed here')
-                        ->whatsapp();
-                @endphp
-                
-                <div class="menu-button">
-                    <i class="fas fa-share-alt"></i>
-                    {{-- <a href="#"><i class="zmdi zmdi-twitter"></i></a>
-                    <a href="#"><i class="zmdi zmdi-google-plus"></i></a>
-                    <a href="#"><i class="zmdi zmdi-codepen"></i>   </a>
-                    <a href="#"><i class="zmdi zmdi-codepen"></i>   </a> --}}
-                    {!! $share_links !!}
-                    <a href="#"><img src="{{asset('front/icons/alert-icon.png')}}" alt=""></a>
-                </div>
+            @php
+                $share_links = Share::currentPage(null, [], '', '')
+                    ->facebook()
+                    ->twitter()
+                    ->linkedin('Extra linkedin summary can be passed here')
+                    ->whatsapp();
+            @endphp
+            
+            <div class="menu-button">
+                <img src="{{asset('front/icons/share.png')}}" alt="">
+                {{-- <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                <a href="#"><i class="zmdi zmdi-google-plus"></i></a>
+                <a href="#"><i class="zmdi zmdi-codepen"></i>   </a>
+                <a href="#"><i class="zmdi zmdi-codepen"></i>   </a> --}}
+                {!! $share_links !!}
+                <a href="#" class="internal-share tooltips top" data-toggle="modal" data-target="#shareBlogModal"><span class="">Repost this blog</span><img src="{{asset('front/icons/alert-icon.png')}}" alt=""></a>
             </div>
         </div>
         <div class="naff-fart-reaction">
             <audio id="fart-audio" src="{{asset('front/sound-effects/fart.mp3')}}" preload="auto"></audio>
             <img src="{{asset('front/images/naff555Votes.png')}}" alt="">
+        </div>
+    </div>
+
+    <div class="modal" id="shareBlogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title" id="exampleModalLongTitle">Share Blog</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="share-blog-form">
+                    @csrf
+                    <textarea name="share_caption" id="" cols="30" rows="3" placeholder="Enter caption here..."></textarea>
+                    <input type="hidden" name="blog_id" value="{{$blog->id}}">
+                    <div class="blog-share-preview">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="owner-profile-picture">
+                                    <img src="{{asset('storage/profilepicture/'.$blog->owner->getProfilePicture())}}" alt="">
+                                </div>
+                                <div class="owner-name">{{$blog->owner->first_name.' '.$blog->owner->last_name}}</div>
+                            </div>
+                             {{-- <img class="card-img-top" src="" alt="Card image cap"> --}}
+                            <div class="card-body" style="background-image: url({{ asset('storage/img/blog/'.$blog->featured_image) }});">
+                            </div>
+                            <div class="card-footer">
+                                <div class="blog-share-title">{{$blog->name}}</div>
+                                <div class="blog-description"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="share-blog-btn" form="share-blog-form">Share Now</button>
+            </div>
+          </div>
         </div>
     </div>
 </div>
@@ -257,6 +314,9 @@
     <script src="{{ asset('front/owl-carousel/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('front/JS/mo.min.js') }}"></script>
     <script src="{{ asset('js/share.js') }}"></script>
+    <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
+    <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
+    
     <script>
         var url = $('meta[name="url"]').attr('content');
         var token = '{{ Session::token() }}';
@@ -274,7 +334,7 @@
             scaleAstronaut();
             // init();
             // console.log(blog);
-            $('.blog-summary .content').html(trimHtml(blog.content, { limit: 200 }).html);
+            $('.blog-summary .content').html(trimHtml(blog.summary, { limit: 200 }).html);
             $('.trix-content div').children().each( (index, element) => {
                 console.log(index);     // children's index
                 console.log(element);   // children's element
@@ -296,6 +356,10 @@
                     }
                 }
             });
+
+            // $('.internal-share').tooltip({
+            //     track: true
+            // });
         });
         
         $(window).on('load', function() {
@@ -310,6 +374,10 @@
                     });
                 }
             });
+        });
+
+        $('.internal-share').click(function() {
+            $('.blog-share-preview .blog-description').html(trimHtml(blog.summary, { limit: 130 }).html);
         });
 
         function trimHtml(html, options) {
@@ -997,5 +1065,66 @@
             }
         });
         /* Icon 3 */
+
+        $('#share-blog-btn').click(function(e) {
+            e.preventDefault();
+
+            var form_url = url+'/share_blog';
+            var $form = $('form#share-blog-form');
+
+            var post_data = new FormData($form[0]);
+
+            $.ajax({
+                url: form_url,
+                method: 'post',
+                data: post_data,
+                // dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
+                    $('#shareBlogModal').modal('hide');
+                    Swal.fire({
+                        title: '<span class="success">Success!</span>',
+                        text: data.message,
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    });
+                },
+                error: function (request, status, error) {
+                    $('#shareBlogModal').modal('hide');
+                    var response = JSON.parse(request.responseText);
+                    var errorString = '';
+                    var title = 'Error!';
+
+                    if(response.errors) {
+                        title = 'Error in processing request...';
+                        $.each( response.errors, function( key, value) {
+                            errorString += '<p>' + value + '</p>';
+                        });
+                    }
+                    
+                    Swal.fire({
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        title: title,
+                        html: errorString,
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    }).then((res) => {
+                        $('#shareBlogModal').modal('hide');
+                    });
+                }
+            });
+        });
     </script>
     @endsection

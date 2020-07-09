@@ -203,13 +203,10 @@ function removeURLParameter(parameter) {
 }
 
 $(window).load(function() {
-    // if url has parameters and if action is edit_blog
-    removeURLParameter('section')
-
     if(window_url.includes('?') && $.urlParam('action') == 'edit_blog') {
         setButtonLabel(blog);
         $(".astronautarm-img").show();
-
+        $(".start-div").hide();
         $(".astronautarm-img").addClass('animate-zoomIn-arm');
 
         $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
@@ -221,7 +218,42 @@ $(window).load(function() {
         });
 
         $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .top-buttons, .camera-div, .voice-recorder-div').css('pointer-events', 'auto');
+    } else if (window_url.includes('?') && $.urlParam('action') == 'edit_design_blog') {
+        $(".astronautarm-img").show();
+        $(".start-div").hide();
+        $(".astronautarm-img").addClass('animate-zoomIn-arm');
+
+        $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+            $(".astronautarm-img").removeClass('animate-zoomIn-arm');
+            $(".astronautarm-img").addClass('zoomIn-arm');
+            // $('.blog-btn').addClass('active');
+            hideBlogSection();
+            setDesignBlogFormValue(blog);
+            showDesignsBlogSection();
+            setButtonLabel(blog);
+        });
+
+        $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .top-buttons, .camera-div, .voice-recorder-div').css('pointer-events', 'auto');
+    } else if (window_url.includes('?') && $.urlParam('action') == 'edit_general_blog') {
+        $(".astronautarm-img").show();
+        $(".start-div").hide();
+        $(".astronautarm-img").addClass('animate-zoomIn-arm');
+
+        $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+            $(".astronautarm-img").removeClass('animate-zoomIn-arm');
+            $(".astronautarm-img").addClass('zoomIn-arm');
+            // $('.blog-btn').addClass('active');
+            hideBlogSection();
+            setGeneralBlogFormValue(blog);
+            showGeneralBlogSection();
+            setButtonLabel(blog);
+        });
+
+        $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .top-buttons, .camera-div, .voice-recorder-div').css('pointer-events', 'auto');
     } else {
+        // if url has parameters and if action is edit_blog
+        removeURLParameter('section')
+
         $(".astronautarm-img").show();
         $(".astronautarm-img").addClass('animate-arm');
 
@@ -253,7 +285,7 @@ $('.start-div').click( function() {
 });
 
 // save blog as DRAFT
-$('.save-button').click(function (e) {
+$('.communicator-buttons .save-button').click(function (e) {
     e.preventDefault();
 
     $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a').css('pointer-events', 'none');
@@ -266,6 +298,9 @@ $('.save-button').click(function (e) {
     var blog_id = $form.find("input[name='blog_id']").val();
     var attachments = $('input[name="attachment-blog-trixFields[content]"]').val();
     var save_status = $form.find("input[name='save_status']").val();
+    var privacy = $('form#custom-privacy-form input:checkbox:checked').map(function(){
+        return this.value;
+    }).toArray();
 
     // prepare post data
     var post_data = new FormData($form[0]);
@@ -274,6 +309,7 @@ $('.save-button').click(function (e) {
     post_data.append('tags', tags);
     post_data.append('status', save_status);
     post_data.append('attachments', attachments);
+    post_data.append('privacy', privacy);
 
     // update blog if blog_id is not null
     if(blog_id != '') {
@@ -411,6 +447,9 @@ $('.communicator-buttons .publish-button').click(function (e) {
     var form_url = url+'/publish_blog';
     var blog_id = $form.find("input[name='blog_id']").val();
     var attachments = $('.main-form input[name="attachment-blog-trixFields[content]"]').val();
+    var privacy = $('form#custom-privacy-form input:checkbox:checked').map(function(){
+        return this.value;
+    }).toArray();
 
     // prepare post data
     var post_data = new FormData($form[0]);
@@ -421,6 +460,7 @@ $('.communicator-buttons .publish-button').click(function (e) {
     post_data.append('status', 'Published');
     post_data.append('blog_id', blog_id);
     post_data.append('attachments', attachments);
+    post_data.append('privacy', privacy);
 
     // update blog if blog_id is not null
     $.ajax({
@@ -482,6 +522,9 @@ $('.general-blog-buttons .publish-button').click(function (e) {
     var content = $(".general-blog-form input[name='blog-trixFields[general_blog_content]']").val();
     var form_url = url+'/publish_general_blog';
     var attachments = $('.general-blog-form input[name="attachment-blog-trixFields[general_blog_content]"]').val();
+    var privacy = $('form#custom-privacy-form input:checkbox:checked').map(function(){
+        return this.value;
+    }).toArray();
 
     // prepare post data
     var post_data = new FormData($form[0]);
@@ -490,7 +533,7 @@ $('.general-blog-buttons .publish-button').click(function (e) {
     post_data.append('content', content);
     post_data.append('status', 'Published');
     post_data.append('attachments', attachments);
-
+    post_data.append('privacy', privacy);
 
     // update blog if blog_id is not null
     $.ajax({
@@ -514,8 +557,232 @@ $('.general-blog-buttons .publish-button').click(function (e) {
                 background: 'rgba(8, 64, 147, 0.62)'
             }).then((res) => {
                 // window.open(url+'/single_blog/'+data.data.id);
-                // window.location.href = url+'/single_blog/'+data.data.id;
-                resetGeneralBlogForm();
+                window.location.href = url+'/single_general_blog/'+data.data.id;
+                // resetGeneralBlogForm();
+            });
+        },
+        error: function (request, status, error) {
+            var response = JSON.parse(request.responseText);
+            var errorString = '';
+            var title = 'Error!';
+
+            if(response.errors) {
+                title = 'Error in processing request...';
+                $.each( response.errors, function( key, value) {
+                    errorString += '<p>' + value + '</p>';
+                });
+            }
+            
+            Swal.fire({
+                imageUrl: '../../front/icons/alert-icon.png',
+                imageWidth: 80,
+                imageHeight: 80,
+                imageAlt: 'Mbaye Logo',
+                title: title,
+                html: errorString,
+                width: '30%',
+                padding: '1rem',
+                background: 'rgba(8, 64, 147, 0.62)'
+            });
+        }
+    });
+});
+
+$('.designs-blog-buttons .save-button').click(function (e) {
+    e.preventDefault();
+
+    // $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a').css('pointer-events', 'none');
+
+    // initialize form and other input fields
+    var $form = $('form#designs-blog-form');
+    var content = $(".designs-blog-form input[name='blog-trixFields[designs_blog_content]']").val();
+    var form_url = url+'/publish_design_blog';
+    var blog_id = $form.find("input[name='blog_id']").val();
+    var attachments = $('.designs-blog-form input[name="attachment-blog-trixFields[designs_blog_content]"]').val();
+    var save_status = $form.find("input[name='save_status']").val();
+    var tags = ["8"];
+    var privacy = $('form#custom-privacy-form input:checkbox:checked').map(function(){
+        return this.value;
+    }).toArray();
+
+    // prepare post data
+    var post_data = new FormData($form[0]);
+    post_data.append('content', content);
+    post_data.append('status', save_status);
+    post_data.append('attachments', attachments);
+    post_data.append('tags', tags);
+    post_data.append('privacy', privacy);
+
+    // update blog if blog_id is not null
+    if(blog_id != '') {
+        Swal.fire({
+            text: "Are you sure you want to save the changes made to the entry?",
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, save it!'
+        }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                url: form_url,
+                method: 'post',
+                data: post_data,
+                // dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
+
+                    Swal.fire({
+                        title: '<span class="success">Success!</span>',
+                        text: data.message,
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    });
+                },
+                error: function (request, status, error) {
+                    var response = JSON.parse(request.responseText);
+                    var errorString = '';
+                    var title = 'Error!';
+
+                    if(response.errors) {
+                        title = 'Error in processing request...';
+                        $.each( response.errors, function( key, value) {
+                            errorString += '<p>' + value + '</p>';
+                        });
+                    }
+                    
+                    Swal.fire({
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        title: title,
+                        html: errorString,
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    });
+                }
+            });
+        }
+        })
+        
+    } else {  // create new blog
+        $.ajax({
+            url: form_url,
+            method: 'post',
+            data: post_data ,
+            // dataType: 'JSON',
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                // $form.append('<input type="hidden" name="_method" value="PUT">');
+                $('input[name="blog_id"]').val(data.data.id);
+
+                Swal.fire({
+                    title: '<span class="success">Success!</span>',
+                    text: data.message,
+                    imageUrl: '../../front/icons/alert-icon.png',
+                    imageWidth: 80,
+                    imageHeight: 80,
+                    imageAlt: 'Mbaye Logo',
+                    width: '30%',
+                    padding: '1rem',
+                    background: 'rgba(8, 64, 147, 0.62)'
+                });
+            },
+            error: function (request, status, error) {
+                var response = JSON.parse(request.responseText);
+                var errorString = '';
+                var title = 'Error!';
+
+                if(response.errors) {
+                    title = 'Error in processing request...';
+                    $.each( response.errors, function( key, value) {
+                        errorString += '<p>' + value + '</p>';
+                    });
+                }
+                
+                Swal.fire({
+                    imageUrl: '../../front/icons/alert-icon.png',
+                    imageWidth: 80,
+                    imageHeight: 80,
+                    imageAlt: 'Mbaye Logo',
+                    title: title,
+                    html: errorString,
+                    width: '30%',
+                    padding: '1rem',
+                    background: 'rgba(8, 64, 147, 0.62)'
+                });
+            }
+        });
+    }
+
+    // $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div').css('pointer-events', 'auto');
+});
+
+$('.designs-blog-buttons .publish-button').click(function (e) {
+    e.preventDefault();
+
+    // initialize form and other input fields
+    var $form = $('form#designs-blog-form');
+    var content = $(".designs-blog-form input[name='blog-trixFields[designs_blog_content]']").val();
+    var form_url = url+'/publish_design_blog';
+    var blog_id = $form.find("input[name='blog_id']").val();
+    var attachments = $('.designs-blog-form input[name="attachment-blog-trixFields[designs_blog_content]"]').val();
+    var tags = ["8"];
+    var privacy = $('form#custom-privacy-form input:checkbox:checked').map(function(){
+        return this.value;
+    }).toArray();
+
+    // prepare post data
+    var post_data = new FormData($form[0]);
+    post_data.delete('_method');
+    post_data.append('content', content);
+    post_data.append('status', 'Published');
+    post_data.append('blog_id', blog_id);
+    post_data.append('attachments', attachments);
+    post_data.append('tags', tags);
+    post_data.append('privacy', privacy);
+
+    // update blog if blog_id is not null
+    $.ajax({
+        url: form_url,
+        method: 'post',
+        data: post_data ,
+        // dataType: 'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(data) {
+            Swal.fire({
+                title: '<span class="success">Success!</span>',
+                text: data.message,
+                imageUrl: '../../front/icons/alert-icon.png',
+                imageWidth: 80,
+                imageHeight: 80,
+                imageAlt: 'Mbaye Logo',
+                width: '30%',
+                padding: '1rem',
+                background: 'rgba(8, 64, 147, 0.62)'
+            }).then((res) => {
+                // window.open(url+'/single_blog/'+data.data.id);
+                window.location.href = url+'/single_blog/'+data.data.id;
             });
         },
         error: function (request, status, error) {
@@ -768,6 +1035,11 @@ $('.groups-btn').click(function() {
     $('.groups-submenu').fadeToggle();
 });
 
+$('.general-button').click(function() {
+    $('.submenu').not('.general-submenu').hide();
+    $('.general-submenu').fadeToggle();
+});
+
 // hide/show fullscreen button
 $('button.fullscreen').toggle(
     function() {
@@ -827,6 +1099,12 @@ $('.view-all-blogs').click(function(e) {
     e.preventDefault();
 
     checkForm(url+'/blogs');
+});
+
+$('.view-all-general-blogs').click(function(e) {
+    e.preventDefault();
+
+    checkForm(url+'/stories?type=stories');
 });
 
 // hide/show remove featured image button
@@ -950,7 +1228,10 @@ $('.email-send').click(function (e) {
     });
 });
 
-$('.general-button').click( function() {
+$('.create-general-blog').click( function(e) {
+    e.preventDefault();
+    $('.general-submenu').fadeToggle();
+
     if(checkCurrentForm()) {
         hideCurrentSection();
         setSectionParam('general_blog');
@@ -980,6 +1261,42 @@ $('.general-button').click( function() {
                 hideCurrentSection();
                 setSectionParam('general_blog');
                 showGeneralBlogSection();
+            }
+        });
+    }
+    
+});
+
+$('.designs-button').click( function() {
+    if(checkCurrentForm()) {
+        hideCurrentSection();
+        setSectionParam('designs_blog');
+        showDesignsBlogSection();
+    } else {
+        Swal.fire({
+            title: 'Discard Changes',
+            text: 'You have unsaved changes',
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText:
+                'Discard Changes',
+            cancelButtonText:
+                'Cancel',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+        }).then((res) => {
+            if (res.value) {
+                hideCurrentSection();
+                setSectionParam('designs_blog');
+                showDesignsBlogSection();
             }
         });
     }
@@ -1616,6 +1933,111 @@ function showGeneralBlogSection()
     // $('.email-send-button').show();
 }
 
+// hide email section
+function hideDesignsBlogSection()
+{
+    resetDesignsBlogForm();
+    $('.designs-button').removeClass('active');
+    $('.designs-blog-buttons').hide();
+    $('.designs-blog-form').hide()
+    $('.featured-image-div.designs-blog').hide();
+}
+
+// show email section
+function showDesignsBlogSection()
+{
+    var editor = '.trix-editor.trix-editor-designs-blog';
+    if (document.querySelector(editor+' .trix-button--icon-text-color') == null) {
+        trixTextColorButton(editor);
+    }
+    var email_pk = new Piklor(".designs-blogs-color-picker", colors, {
+        open: editor+" .trix-button--icon-text-color",
+        style: { display: 'flex'},
+        // autoclose: false,
+        closeOnBlur: true
+    });
+
+    email_pk.colorChosen(function (col) {
+        setForegroundColor(col, editor);
+    });
+
+    if (document.querySelector(editor+' .font-select') == null) {
+        $(editor+' #font-picker').fontselect({
+            searchable: false,
+        })
+        .on('change', function() {
+            applyFont(this.value, editor);
+            $(editor+' .font-picker').hide();
+        });
+    }
+
+    $('.designs-button').addClass('active');
+    $('.designs-blog-buttons').css('display', 'flex');
+    $('.designs-blog-buttons').css('pointer-events', 'auto');
+    $('.designs-blog-form').show();
+    $('.featured-image-div.designs-blog').show();
+    // $('.email-send-button').show();
+}
+
+$('#panel_list').on('change', function (e) {
+    var optionSelected = $(this).find("option:selected");
+    var flowers = optionSelected.data('flowers');
+    var screenshot = optionSelected.data('screenshot');
+
+    listFlowers(flowers);
+    $('.designs-blog-form .flower-list button').prop('disabled', false);
+    $('.designs-blog .edit_image').removeAttr('disabled');
+    $('.designs-blog-form #designs_blog_featured_image').val(screenshot);
+    $('.designs-blog .featured-image-text').css('opacity', '0');
+    $('.featured-image-div.designs-blog #featured-image-previewimg').attr('src', url+'/storage/designPanel/screenshots/'+screenshot);
+});
+
+var flower_list = {
+    '1' : {
+        name: 'Protea',
+        image: ''
+    },
+    '55' : {
+        name: 'BlueEyedGrass',
+        image: ''
+    },
+    '64' : {
+        name: 'Laelia',
+        image: ''
+    },
+    '121' : {
+        name: 'SolanumIncanum',
+        image: ''
+    },
+    '133' : {
+        name: 'Rafflesia',
+        image: ''
+    },
+    '177' : {
+        name: 'Bougainvillea',
+        image: ''
+    },
+};
+
+function listFlowers(flowers)
+{
+    flowers = flowers.split(',');
+    $('.flower-list-div').empty();
+    $.each(flowers, function(index, value) {
+        var flower_no = parseInt(value.replace(/[a-z]/ig, ""));
+
+        $('.flower-list-div').append(`
+            <div class="flower">
+                <img src="`+url+`/front/images3D/flowers2D/`+value+`.png" alt="">
+                <p class="flower-name">`+flower_list[flower_no].name+`</p>
+            </div>
+        `);
+    });
+}
+
+$('.custom-privacy-done').click(function() {
+    $('#customPrivacyModal').modal('hide');
+});
 
 // get selected blog tag IDs
 function getTagIDs() {
@@ -1707,9 +2129,77 @@ function setBlogFormValue(blog)
             console.log(value.videourl);
         });
 
+        $.each( blog.privacy, function( key, value) {
+            var checkbox = $('#custom-privacy-form input[type="checkbox"][value="'+value.group_id+'"]').prop("checked", true);
+            // checkbox.val('1');
+        });
+
         if(blog.featured_image) {
             $('.featured-image-text').css('opacity', '0');
             $('#featured-image-previewimg').attr('src', url+'/storage/img/blog/'+blog.featured_image);
+            $('.edit_image').prop('disabled', false);
+        }
+
+        value_set = true;
+    }
+}
+
+//set general blog form value 
+function setGeneralBlogFormValue(blog)
+{
+    if(!value_set) {
+        $('#general-blog-form').find('input[name="blog_id"]').val(blog.id);
+        $('#general-blog-form').find('input[name="user_id"]').val(blog.created_by);
+        $('#general-blog-form').find('input[name="name"]').val(blog.name);
+        // $('#general-blog-form').append('<input type="hidden" name="_method" value="PUT">');
+        
+        $.each( blog.videos, function( key, value) {
+            $('#general-blog-form .video-links-list table').append(`
+            <tr>
+                <td>`+value.videourl+` <input type="hidden" name="videos[]" value="`+value.videourl+`"></td>
+                <td class="remove-btn"><i class="fas fa-times-circle remove-link"></td>
+            </tr>`);
+            console.log(value.videourl);
+        });
+
+        $.each( blog.privacy, function( key, value) {
+            var checkbox = $('#custom-privacy-form input[type="checkbox"][value="'+value.group_id+'"]').prop("checked", true);
+            // checkbox.val('1');
+        });
+
+        if(blog.featured_image) {
+            $('.general-blog .featured-image-text').css('opacity', '0');
+            $('.general-blog #featured-image-previewimg').attr('src', url+'/storage/img/blog/'+blog.featured_image);
+            $('.general-blog .edit_image').prop('disabled', false);
+        }
+
+        value_set = true;
+    }
+}
+
+// set design blog form value
+function setDesignBlogFormValue(blog)
+{
+    if(!value_set) {
+        $('#designs-blog-form').find('input[name="blog_id"]').val(blog.id);
+        $('#designs-blog-form').find('input[name="user_id"]').val(blog.created_by);
+        $('#designs-blog-form').find('input[name="name"]').val(blog.name);
+        $('#designs-blog-form').find('select[name="panel_id"]').val(blog.blog_panel_design.panel_id);
+        var optionSelected = $('#designs-blog-form').find('select[name="panel_id"] option:selected');
+        var flowers = optionSelected.data('flowers');
+        listFlowers(flowers);
+        $('.designs-blog-form .flower-list button').prop('disabled', false);
+        // $('#custom-privacy-form').find('input[value=""]')
+
+        $.each( blog.privacy, function( key, value) {
+            var checkbox = $('#custom-privacy-form input[type="checkbox"][value="'+value.group_id+'"]').prop("checked", true);
+            // checkbox.val('1');
+        });
+
+        if(blog.featured_image) {
+            $('.designs-blog .featured-image-text').css('opacity', '0');
+            $('.designs-blog #featured-image-previewimg').attr('src', url+'/storage/img/blog/'+blog.featured_image);
+            $('.designs-blog .edit_image').prop('disabled', false);
         }
 
         value_set = true;
@@ -1743,7 +2233,7 @@ function checkBlogForm()
     var content = $(".main-form input[name='blog-trixFields[content]']").val();
     var featured_image = $("form#main-form input[name='featured_image']").val();
     var videos = $('input[name="videos[]"]').serialize();
-    var tags = $('input[type="checkbox"]').serialize();
+    var tags = $('.main-form input[type="checkbox"]').serialize();
     // console.log(title, content, featured_image, videos);
     if(title || content || featured_image || videos || tags) {
         return false;
@@ -1779,6 +2269,20 @@ function checkGeneralBlogForm()
     }
 }
 
+function checkDesignsBlogForm()
+{
+    var title = $("form#designs-blog-form input[name='name']").val();
+    var content = $(".designs-blog-form input[name='blog-trixFields[designs_blog_content]']").val();
+    var featured_image = $("form#designs-blog-form input[name='featured_image']").val();
+
+    // console.log(title, content, featured_image, videos);
+    if(title || content || featured_image) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function checkForm(action = null)
 {
     var section = $.urlParam('section');
@@ -1792,6 +2296,11 @@ function checkForm(action = null)
         }
     } else if (section == 'general_blog') {
         if(!checkGeneralBlogForm()) {
+            alert_status = true;
+            message = 'You have unsaved changes';
+        }
+    } else if (section == 'designs_blog') {
+        if(!checkDesignsBlogForm()) {
             alert_status = true;
             message = 'You have unsaved changes';
         }
@@ -1854,6 +2363,10 @@ function checkCurrentForm()
         if(!checkGeneralBlogForm()) {
             status = false;
         }
+    } else if (section == 'designs_blog') {
+        if(!checkDesignsBlogForm()) {
+            status = false;
+        }
     } else if (section == 'email') {
         if(!checkEmailForm()) {
             status = false;
@@ -1880,8 +2393,9 @@ function resetBlogForm()
     $(".main-form .trix-editor trix-editor").empty();
     removeFeaturedImage();
     $('.tag-btn').removeClass('shadow');
-    $('input[type="checkbox"]').val('0');
+    $('.main-form input[type="checkbox"]').val('0');
     $('.main-form .video-links-list table').empty();
+    resetPrivacyForm();
 }
 
 function resetEmailForm()
@@ -1896,6 +2410,20 @@ function resetGeneralBlogForm()
     $(".general-blog-form .trix-editor trix-editor").empty();
     $('.general-blog-form .video-links-list table').empty();
     removeFeaturedImage();
+    resetPrivacyForm();
+}
+
+function resetDesignsBlogForm()
+{
+    $('form#designs-blog-form')[0].reset();
+    $(".designs-blog-form .trix-editor trix-editor").empty();
+    removeFeaturedImage();
+    resetPrivacyForm();
+}
+
+function resetPrivacyForm()
+{
+    $('form#custom-privacy-form')[0].reset();
 }
 
 function hideCurrentSection()
@@ -1906,6 +2434,8 @@ function hideCurrentSection()
         hideBlogSection();
     } else if(section == 'general_blog') {
         hideGeneralBlogSection();
+    } else if(section == 'designs_blog') {
+        hideDesignsBlogSection();
     } else if(section == 'email') {
         hideEmailSection();
     } else {

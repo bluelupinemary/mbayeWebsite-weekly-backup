@@ -213,7 +213,7 @@
     display: none;
 }
 
-#main-form, #general-blog-form {
+#main-form, #general-blog-form, #designs-blog-form {
     display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
     display: -ms-flexbox;  /* TWEENER - IE 10 */
     display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
@@ -221,7 +221,7 @@
     justify-content: space-between;
 }
 
-.main-screen input, .text-editor-fullview input, .email-form select {
+.main-screen input, .text-editor-fullview input, .email-form select, .designs-blog-form select {
     margin-bottom: 0.5em;
     background: rgb(77,92,129);
     background: linear-gradient(180deg, rgba(77,92,129,1) 0%, rgba(123,139,179,1) 50%, rgba(77,92,129,1) 100%);
@@ -236,15 +236,23 @@
     font-family: 'Nasalization';
 }
 
-.email-form select {
+.designs-blog-form input[name="name"] {
+    flex: 60%;
+}
+
+.designs-blog-form select[name="panel_id"] {
+    flex: 40%;
+}
+
+.email-form select, .designs-blog-form select {
     padding: 1%;
 }
 
-.email-form select option {
+.email-form select option, .designs-blog-form select option {
     font-size: 0.9vw;
 }
 
-.email-form select option:disabled {
+.email-form select option:disabled, .designs-blog-form select option:disabled {
     background: #aaa;
     color: #6c757d;
 }
@@ -276,7 +284,7 @@
     text-shadow: 0px 0px 8px #343a40;
 }
 
-.communicator-buttons {
+.communicator-buttons, .designs-blog-buttons {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -293,26 +301,26 @@
     pointer-events: none;
 }
 
-.communicator-buttons img {
+.communicator-buttons img, .designs-blog-buttons img {
     /* border: 1px solid red; */
     align-self: center;
     outline: 0;
 }
 
-.communicator-buttons .save-button {
+.communicator-buttons .save-button, .designs-blog-buttons .save-button {
     width: 11%;
 }
 
-.communicator-buttons .save-text {
+.communicator-buttons .save-text, .designs-blog-buttons .save-text {
     width: 21%;
     margin-right: 2%;
 }
 
-.communicator-buttons .publish-button {
+.communicator-buttons .publish-button, .designs-blog-buttons .publish-button {
     width: 10%;
 }
 
-.communicator-buttons .publish-text {
+.communicator-buttons .publish-text, .designs-blog-buttons .publish-text {
     width: 41%;
 }
 
@@ -564,7 +572,7 @@
     margin: 0;
 }
 
-#featured_image, #general_blog_featured_image {
+#featured_image, #general_blog_featured_image, #designs_blog_featured_image {
     display: none;
 }
 
@@ -1025,6 +1033,11 @@ button.fullscreen:hover span {
 
 .groups-submenu {
     top: 22%;
+}
+
+.general-submenu {
+    top: 103%;
+    left: 74%;
 }
 
 .submenu ul {
@@ -1539,7 +1552,7 @@ a:hover {
     width: 100%;
 }
 
-.email-form, .general-blog-form {
+.email-form, .general-blog-form, .designs-blog-form {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1582,7 +1595,7 @@ a:hover {
     align-self: center;
 }
 
-.general-blog-buttons {
+.general-blog-buttons, .designs-blog-buttons {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1785,18 +1798,18 @@ a:hover {
     font-size: 1.2vw;
 }
 
-.modal#photoEditorModal, .modal#generalBlogPhotoEditorModal{
+.modal.photo-editor-modal {
     padding-right: 0 !important;
 }
 
-#photoEditorModal .modal-dialog, #generalBlogPhotoEditorModal .modal-dialog {
+.modal.photo-editor-modal .modal-dialog {
     max-width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
 }
   
-#photoEditorModal .modal-content, #generalBlogPhotoEditorModal .modal-content {
+.modal.photo-editor-modal .modal-content {
     height: 100%;
     border-radius: 0;
 }
@@ -1846,6 +1859,10 @@ a:hover {
     justify-content: flex-end;
 }
 
+.custom-privacy.flower-list {
+    transform: translate(-276%, 626%);
+}
+
 .custom-privacy button {
     margin: 0;
     border: 1px solid #25636d;
@@ -1859,47 +1876,56 @@ a:hover {
     box-shadow: -2px -1px #000000;
 }
 
-#customPrivacyModal {
+.custom-privacy.flower-list button {
+    background: #430808;
+    color: #7f8788;
+}
+
+.modal {
     font-family: 'Nasalization';
 }
 
-#customPrivacyModal .close {
+.modal .close {
     color: #fff;
 }
 
-#customPrivacyModal .btn-secondary {
+.modal .btn-secondary {
     background-color: #3e3e3e;
     border-color: #3e3e3e;
 }
 
-#customPrivacyModal .btn-primary {
+.modal .btn-primary {
     background-color: #3085d6;
     border-color: #fff;
 }
 
-#customPrivacyModal button:focus {
+.modal button:focus {
     outline: 0;
 }
 
-#customPrivacyModal .modal-content {
+.modal .modal-content {
     border: 0;
     background-color: transparent;
     box-shadow: 0px 0px 20px #17a2b8;
 }
 
-#customPrivacyModal .modal-header {
+.modal .modal-header {
     background: rgba(2, 40, 96, 0.62);
     border: 0;
     color: #fff;
 }
 
-#customPrivacyModal .modal-body {
+.modal .modal-body {
     background: rgba(8, 64, 147, 0.62);
 }
 
-#customPrivacyModal .modal-footer {
+.modal .modal-footer {
     border: 0;
     background: rgba(8, 64, 147, 0.62);
+}
+
+.flower-list {
+    color: #fff;
 }
 
 .custom-privacy-body {
@@ -1923,5 +1949,35 @@ a:hover {
     display: inline-block;
     padding-left: 1.50rem;
     width: 32%;
+}
+
+.flower-list-div {
+    /* display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap; */
+    display: -webkit-box;
+    overflow-x: auto;
+}
+
+.flower {
+    padding: 1%;
+    width: 30%;
+    flex: 30%;
+    text-align: center;
+    border: 1px solid #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flower-list-div img {
+    width: 40%;
+    filter: brightness(0.1);
+}
+
+.flower-name {
+    color: #fff;
+    font-size: 0.9vw;
 }
 

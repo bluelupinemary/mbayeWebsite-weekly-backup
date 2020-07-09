@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Frontend\User\UpdateProfileRequest;
 use App\Repositories\Frontend\Access\User\UserRepository;
+use App\Models\GeneralBlogs\GeneralBlog;
 
 /**
  * Class ProfileController.
@@ -92,12 +93,16 @@ class ProfileController extends Controller
     public function communicatorPage(Request $request)
     {
         $blog = '';
-        if($request->has('action') && $request->action == 'edit_blog') {
+        if($request->has('action') && ($request->action == 'edit_blog' || $request->action == 'edit_design_blog')) {
             $blog = Blog::where('id', $request->blog_id)
-                ->with(['tags', 'videos'])
+                ->with(['tags', 'videos', 'blog_panel_design', 'privacy'])
                 ->first();
 
-            // dd($blog->tags);
+            // dd($blog->privacy);
+        } else if ($request->has('action') && $request->action == 'edit_general_blog') {
+            $blog = GeneralBlog::where('id', $request->blog_id)
+                ->with(['videos', 'privacy'])
+                ->first();
         }
         
         return view('frontend.user.communicator', compact('blog'));

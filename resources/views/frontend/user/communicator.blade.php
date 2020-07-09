@@ -114,6 +114,7 @@
                     <form method="POST" action="{{url('publish_general_blog')}}" id="general-blog-form" enctype="multipart/form-data">
                         @csrf
                         <input type="text" name="name" class="form-control" placeholder="TITLE" autocomplete="off">
+                        <input type="hidden" name="blog_id">
                         <button class="add-video-btn">Insert Video</button>
                         <div class="video-form">
                             <label>Attach Link</label>
@@ -142,9 +143,43 @@
                         @trix(\App\Blogs\Blog::class, 'general_blog_content')
                         <button type="button" class="fullscreen"><i class="fas fa-expand"></i> <span>Fullscreen</span></button>
                     </div>
-                    {{-- <div class="custom-privacy" data-toggle="modal" data-target="#customPrivacyModal">
+                    <div class="custom-privacy" data-toggle="modal" data-target="#customPrivacyModal">
                         <button>Set Privacy</button>
-                    </div> --}}
+                    </div>
+                </div>
+                <div class="designs-blog-form">
+                    <form method="POST" action="{{url('publish_designs_blog')}}" id="designs-blog-form" enctype="multipart/form-data">
+                        @csrf
+                        <input type="text" name="name" class="form-control" placeholder="TITLE" autocomplete="off">
+                        <select name="panel_id" class="form-control" id="panel_list">
+                            <option value="" disabled selected>Panel Number</option>
+                            @foreach (Auth::user()->getPanels() as $panel)
+                                <option value="{{$panel->id}}" data-flowers="{{$panel->flowers_used}}" data-screenshot="{{$panel->screenshot}}">{{$panel->panel_number}}</option>
+                            @endforeach
+                        </select>
+                        {{-- <input type="file" name="featured_image" accept="image/x-png,image/jpeg" id="designs_blog_featured_image"> --}}
+                        <input type="hidden" name="featured_image" id="designs_blog_featured_image">
+                        <input type="hidden" name="edited_featured_image">
+                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                        <input type="hidden" name="blog_id">
+                        <input type="hidden" name="save_status" value="Draft">
+                    </form>
+                    <div class="trix-editor trix-editor-designs-blog">
+                        <div class="font-picker">
+                            <input id="font-picker" type="text">
+                        </div>
+                        <div class="color-picker designs-blogs-color-picker">
+                        </div>
+                        {{-- <input type="hidden" name="edit_content" id="edit_content"> --}}
+                        @trix(\App\Blogs\Blog::class, 'designs_blog_content')
+                        <button type="button" class="fullscreen"><i class="fas fa-expand"></i> <span>Fullscreen</span></button>
+                    </div>
+                    <div class="custom-privacy" data-toggle="modal" data-target="#customPrivacyModal">
+                        <button>Set Privacy</button>
+                    </div>
+                    <div class="custom-privacy flower-list" data-toggle="modal" data-target="#flowerListModal">
+                        <button disabled>List Flowers</button>
+                    </div>
                 </div>
                 <div class="home-div">
                     <img src="{{asset('front/images/communicator-buttons/home.png')}}" class="communicator-button home-button" alt="">
@@ -174,6 +209,12 @@
                     <img src="{{asset('front/images/communicator-buttons/buttons/launchBtn.png')}}" class="communicator-button publish-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/buttons/launchTxt.png')}}" class="publish-text" alt="">
                 </div>
+                <div class="designs-blog-buttons">
+                    <img src="{{asset('front/images/communicator-buttons/buttons/saveBtn.png')}}" class="communicator-button save-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/buttons/saveTxt.png')}}" class="save-text" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/buttons/launchBtn.png')}}" class="communicator-button publish-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/buttons/launchTxt.png')}}" class="publish-text" alt="">
+                </div>
                 <div class="email-div">
                     <img src="{{asset('front/images/communicator-buttons/buttons/emailBtn.png')}}" class="communicator-button email-button" alt="">
                 </div>
@@ -183,7 +224,7 @@
                 <div class="menu-div-2">
                     <img src="{{asset('front/images/communicator-buttons/buttons/storyCareBtn.png')}}" class="communicator-button chat-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/buttons/yourProfileBtn.png')}}" class="communicator-button chat-button" alt="">
-                    <img src="{{asset('front/images/communicator-buttons/buttons/designsBtn.png')}}" class="communicator-button chat-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/buttons/designsBtn.png')}}" class="communicator-button designs-button" alt="">
                 </div>
                 <div class="featured-image-div all-blog">
                     <div class="featured-image-preview">
@@ -208,6 +249,19 @@
                         Upload
                     </label>
                     <button class="edit_image" data-toggle="modal" data-target="#generalBlogPhotoEditorModal" disabled="">
+                        Edit
+                    </button>
+                </div>
+                <div class="featured-image-div designs-blog">
+                    <div class="featured-image-preview">
+                        <p class="featured-image-text">Featured Image</p>
+                        {{-- <p class="featured-image-remove">Remove Image</p> --}}
+                        <img src="" id="featured-image-previewimg" class="preview-image">
+                    </div>
+                    {{-- <label for="designs_blog_featured_image" class="custom-file-upload">
+                        Upload
+                    </label> --}}
+                    <button class="edit_image" data-toggle="modal" data-target="#designsBlogPhotoEditorModal" disabled="">
                         Edit
                     </button>
                 </div>
@@ -343,6 +397,12 @@
                     <img src="{{asset('front/images/communicator-buttons/ExtraButtonA.png')}}" class="communicator-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/ExtraButtonB.png')}}" class="communicator-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/General.png')}}" class="communicator-button general-button" alt="">
+                    <div class="submenu general-submenu">
+                        <ul>
+                            <li><a href="" class="create-general-blog"><i class="fas fa-plus"></i> Create New Story</a></li>
+                            <li><a href="" class="view-all-general-blogs"><i class="fas fa-list"></i> View All Stories of the day</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="camera-div">
                     <img src="{{asset('front/images/communicator-buttons/Camera.png')}}" class="communicator-button" alt="">
@@ -413,7 +473,7 @@
     <div id="app"></div>
 </div>
 <div class="app">
-<div class="modal" id="photoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal photo-editor-modal" id="photoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-body">
@@ -422,11 +482,20 @@
         </div>
     </div>
 </div>
-<div class="modal" id="generalBlogPhotoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal photo-editor-modal" id="generalBlogPhotoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-body">
-            <general-photoeditor-component></photoeditor-component>
+            <general-photoeditor-component></general-photoeditor-component>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="modal photo-editor-modal" id="designsBlogPhotoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-body">
+            <designsphotoeditor-component></designsphotoeditor-component>
         </div>
         </div>
     </div>
@@ -448,72 +517,50 @@
                 </div>
 
                 <fieldset>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Friends
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Family
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Group 1
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Group 2
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Group 3
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Group 4
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Group 5
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Group 6
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Group 7
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Group 8
-                        </label>
-                    </div>
+                    <form action="" id="custom-privacy-form">
+                        @foreach (Auth::user()->getGroups() as $group)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{$group->id}}" name="group_ids[]">
+                                <label class="form-check-label" for="defaultCheck1">
+                                {{$group->name}}
+                                </label>
+                            </div>
+                        @endforeach
+                    </form>
                 </fieldset>
             </div>
         </div>
         <div class="modal-footer">
           {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-          <button type="button" class="btn btn-primary">Done</button>
+          <button type="button" class="btn btn-primary custom-privacy-done">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="flowerListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle">List of Flowers</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="flower-list-div">
+                <div class="flower">
+                    <img src="{{asset('front/images3D/flowers2D/1A.png')}}" alt="">
+                    <p class="flower-name">Protea</p>
+                </div>
+                <div class="flower">
+                    <img src="{{asset('front/images3D/flowers2D/1A.png')}}" alt="">
+                    <p class="flower-name">Protea</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          {{-- <button type="button" class="btn btn-primary">Done</button> --}}
         </div>
       </div>
     </div>
@@ -535,7 +582,13 @@
         var blog = {!! json_encode($blog->toArray()) !!};
 
         document.addEventListener('DOMContentLoaded', ()=> {
-            $('.main-form .trix-editor trix-editor').html(blog.content);
+            if(window_url.includes('?') && $.urlParam('action') == 'edit_blog') {
+                $('.main-form .trix-editor trix-editor').html(blog.content);
+            } else if (window_url.includes('?') && $.urlParam('action') == 'edit_design_blog') {
+                $('.designs-blog-form .trix-editor trix-editor').html(blog.content);
+            } else if (window_url.includes('?') && $.urlParam('action') == 'edit_general_blog') {
+                $('.general-blog-form .trix-editor trix-editor').html(blog.content);
+            }
         });
     </script>
     @endif

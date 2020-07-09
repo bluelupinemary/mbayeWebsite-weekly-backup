@@ -288,23 +288,6 @@ function contentDisplay() {
                 }
         }
 
-        /* Calling API for fetching images */
-       page=1;
-    
-       var url_api=url+"/api/v1/blogbytagoffriend?tag="+tag+"&id="+id+"&page="+page
-        $.getJSON(url_api, function(data) 
-        {
-          
-           
-           images=data['data'];
-           page=data['meta']['current_page'];
-           last_page=data['meta']['last_page'];
-           Total_pages=(data['meta']['total']/25);
-           Total_pages=parseInt(Total_pages);
-           Total_count=data['meta']['total'];
-        
-   
-        });
 
         // You might need this, usually it's autoloaded   
             jQuery.noConflict();
@@ -917,19 +900,18 @@ function contentDisplay() {
        
         var page = 1;
         var loading = true;
-    /* Calling API for fetching images */
-      
-    var url_api=url+"/api/v1/blogbytagoffriend?tag="+tag+"&id="+id+"&page="+page
-        
-      
+        /* Calling API for fetching images */
+        var url_api=url+"/api/v1/blogbytagoffriend?tag="+tag+"&id="+id+"&page="+page
         $.getJSON(url_api, function(data) 
         {
-           images=data['data'];
-           
-          snowstack_init();
-          jQuery.each(images, snowstack_addimage);
-          updateStack(1);
-         loading = false;
+            images=data['data'];
+            page=data['meta']['current_page'];
+            last_page=data['meta']['last_page'];
+            Total_count=data['meta']['total'];
+            snowstack_init();
+            jQuery.each(images, snowstack_addimage);
+            updateStack(1);
+            loading = false;
        
         });
     
@@ -1042,18 +1024,11 @@ function contentDisplay() {
                     var url_api=url+"/api/v1/blogbytagoffriend?tag="+tag+"&id="+id+"&page="+page
                     $.getJSON(url_api, function(data) 
                     {
- 
-                    images=data['data'];
-                  
-               
-                  if((newcell + 3) != images.length)
-                          jQuery.each(images, snowstack_addimage);
+                        images=data['data'];
+                         if((newcell + 3) != images.length)
+                            jQuery.each(images, snowstack_addimage);
                  
-              
                     });
-                
-     
-               
             }
             }
            
@@ -1148,27 +1123,7 @@ function contentDisplay() {
             //myBlock.textContent = msg;
             }
                 });
-            
-function flickr(callback, page)
-    { 
-  
-        var url_api=url+"/api/v1/blogbytagoffriend?tag="+tag+"&id="+id+"&page="+page
-                    $.getJSON(url_api, function(data) 
-                    {
  
-                    images=data['data'];
-                  // page=data['meta']['current_page'];
-                  /* if(page>1)
-                    images_new=data['data'];*/
-                    });
-                   callback(images);
-                       
-       // });
-             
-    }
-
-   
-
 /* Function to redirect to view Blog */
 
 function viewBlog(id){  

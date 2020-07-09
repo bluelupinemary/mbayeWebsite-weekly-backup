@@ -18,6 +18,8 @@ class CompanyProfile extends BaseModel
         'id',
         'company_name',
         'company_email',
+        'address',
+        'country',
         'company_phone_number',
         'featured_image',
         'industry_id',

@@ -7,6 +7,7 @@ use App\Models\Comment\Comment;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
 use App\Models\BlogVideos\BlogVideo;
+use App\Models\BlogPrivacy\BlogPrivacy;
 
 /**
  * Class GeneralBlogRelationship.
@@ -49,5 +50,10 @@ trait GeneralBlogRelationship
 
     public function likes() {
         return $this->hasMany(Like::class, 'blog_id');
+    }
+
+    public function privacy()
+    {
+        return $this->hasMany(BlogPrivacy::class, 'blog_id')->where('blog_type', 'general');
     }
 }
