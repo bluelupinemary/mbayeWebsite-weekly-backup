@@ -14,15 +14,6 @@ use App\Models\BlogPrivacy\BlogPrivacy;
  */
 trait GeneralBlogRelationship
 {
-
-    /**
-     * Blogs has many relationship with tags.
-     */
-   /* public function tags()
-    {
-        return $this->belongsToMany(BlogTag::class, 'blog_map_tags', 'blog_id', 'tag_id');
-    }*/
-
     /**
      * Blogs belongsTo with User.
      */

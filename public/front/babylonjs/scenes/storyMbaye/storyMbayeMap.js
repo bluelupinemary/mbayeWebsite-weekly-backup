@@ -67,3 +67,54 @@ let marblePhotos = new Map(
     
     
 ]);
+
+
+
+
+let chaptersMap = new Map(
+    [
+        [ 1,{
+            "scripts":[1,21],
+            "objects":[],
+            }
+        ],
+        [ 2,{
+            "scripts":[22,35],
+            "objects":[],
+            }
+        ],
+        [ 3,{
+            "scripts":[47,53],
+            "objects":[],
+            }
+        ],
+        [ 4,{
+            "scripts":[54,55],
+            "objects":[],
+           }
+        ],
+    
+    ]
+);
+
+
+let stageMap = new Map(
+    [
+        [ 1,{
+            "objectsUsed":[1,21],
+            "imagesUsed":['collage-1-2.png','burj.png'],
+            }
+        ],
+        [ 3,{   
+            "objectsUsed":[1,21],
+            "collage":'collage-3-1.png',
+            "imagesUsed":['collage-3-1.png'],
+            "texts":["Years after arriving","and building his business,","he was requested to build something","which he would decide should last",
+                    "as long as the pyramids of Egypt or","the Collosal Monuments in Rome","and the Aztec Cities of the","Americas."
+                    ],
+            }
+        ],
+    
+    ]
+);
+

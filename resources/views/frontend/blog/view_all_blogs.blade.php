@@ -45,54 +45,73 @@
         <div class="blog-cols">
             @if(count($blogs))
             @foreach ($blogs as $blog)
-            <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
-                <div class="container">
-                    <div class="front" style="background-image: url({{asset('storage/img/blog/'.$blog->getFeaturedImage())}})">
-                        <div class="inner">
-                            <p class="blog-name">{{$blog->name}}</p>
-                            <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
-                            <span class="blog-status {{($blog->status == 'Published' ? 'published' : 'draft')}}">{{$blog->status}}</span>
-                            <span>
-                                <ul class="tags">
-                                    @foreach($blog->getFirstTwoTags() as $tag)
-                                        <li class="tag"><i class="fas fa-tag"></i> {{$tag->name}}</li>
-                                    @endforeach
-                                    @if(count($blog->tags) > 2)
-                                        <li class="tag"><i class="fas fa-plus"></i> {{$blog->remainingTagCount()}}</li>
-                                    @endif
-                                </ul>
-                            </span>
-                            <multicount-component :blog_id="{!! json_encode($blog->id) !!}"></multicount-component>
-                        </div>
-                        {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
-                    </div>
-                    <div class="back">
-                        <div class="inner">
-                            <div class="blog-action-buttons">
-                                {{-- <a href="{{url('/single_blog/'.$blog->id)}}">
-                                    <button class="view" alt="View Blog">
-                                        <i class="far fa-eye"></i>
-                                        <p>View</p>
-                                    </button>
-                                </a>
-                                <a href="{{url('/communicator?action=edit_blog&blog_id='.$blog->id)}}">
-                                    <button class="edit" alt="Edit Blog">
-                                        <i class="far fa-edit"></i>
-                                        <p>Edit</p>
-                                    </button>
-                                </a>
-                                <button class="delete" alt="Delete Blog" data-url="{{url('/blogs/'.$blog->id)}}">
-                                    <i class="far fa-trash-alt"></i>
-                                    <p>Delete</p>
-                                </button> --}}
-                                <a href="{{url('/single_blog/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/view-btn.png')}}" alt="" class="view-btn"></a>
-                                <a class="delete" data-url="{{url('/blogs/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/delete-btn.png')}}" alt="" class="delete-btn"></a>
-                                <a href="{{($blog->isDesignsBlog() ? url('/communicator?action=edit_design_blog&blog_id='.$blog->id.'&section=designs_blog') : url('/communicator?action=edit_blog&blog_id='.$blog->id.'&section=blog')) }}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a>
+                @if($blog->getTable() == 'blogs') 
+                    <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
+                        <div class="container">
+                            <div class="front" style="background-image: url({{asset('storage/img/blog/'.$blog->getFeaturedImage())}})">
+                                <div class="inner">
+                                    <p class="blog-name">{{$blog->name}}</p>
+                                    <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
+                                    <span class="blog-status {{($blog->status == 'Published' ? 'published' : 'draft')}}">{{$blog->status}}</span>
+                                    <span>
+                                        <ul class="tags">
+                                            @foreach($blog->getFirstTwoTags() as $tag)
+                                                <li class="tag"><i class="fas fa-tag"></i> {{$tag->name}}</li>
+                                            @endforeach
+                                            @if(count($blog->tags) > 2)
+                                                <li class="tag"><i class="fas fa-plus"></i> {{$blog->remainingTagCount()}}</li>
+                                            @endif
+                                        </ul>
+                                    </span>
+                                    <multicount-component :blog_id="{!! json_encode($blog->id) !!}"></multicount-component>
+                                </div>
+                                {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
+                            </div>
+                            <div class="back">
+                                <div class="inner">
+                                    <div class="blog-action-buttons">
+                                        <a href="{{url('/single_blog/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/view-btn.png')}}" alt="" class="view-btn"></a>
+                                        <a class="delete" data-url="{{url('/blogs/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/delete-btn.png')}}" alt="" class="delete-btn"></a>
+                                    <a href="{{$blog->getEditURL()}}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                @elseif($blog->getTable() == 'blog_shares')
+                    <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
+                        <div class="container">
+                            <div class="front shared-blog" style="background-image: url({{asset('storage/img/blog/'.$blog->blog->getFeaturedImage())}})">
+                                <div class="inner">
+                                    <p class="blog-name">{{$blog->blog->name}}</p>
+                                    <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
+                                    <span class="blog-status shared">Shared</span>
+                                    <span>
+                                        <ul class="tags">
+                                            @foreach($blog->getFirstTwoTags() as $tag)
+                                                <li class="tag"><i class="fas fa-tag"></i> {{$tag->name}}</li>
+                                            @endforeach
+                                            @if(count($blog->tags) > 2)
+                                                <li class="tag"><i class="fas fa-plus"></i> {{$blog->remainingTagCount()}}</li>
+                                            @endif
+                                        </ul>
+                                    </span>
+                                    <multicount-component :blog_id="{!! json_encode($blog->blog->id) !!}"></multicount-component>
+                                </div>
+                                {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
+                            </div>
+                            <div class="back shared-blog">
+                                <div class="inner">
+                                    <div class="blog-action-buttons">
+                                        <a href="{{url('/shared_blog/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/view-btn.png')}}" alt="" class="view-btn"></a>
+                                        <a class="delete" data-url="{{url('/blogs/'.$blog->blog->id.'?type=shared&share_id='.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/delete-btn.png')}}" alt="" class="delete-btn"></a>
+                                        {{-- <a href="{{$blog->blog->getEditURL()}}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             @endforeach
             @else
             <h2 class="no-result">No results found.</h2>

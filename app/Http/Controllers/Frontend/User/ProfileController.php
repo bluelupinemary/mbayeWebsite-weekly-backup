@@ -93,7 +93,7 @@ class ProfileController extends Controller
     public function communicatorPage(Request $request)
     {
         $blog = '';
-        if($request->has('action') && ($request->action == 'edit_blog' || $request->action == 'edit_design_blog')) {
+        if($request->has('action') && ($request->action == 'edit_blog' || $request->action == 'edit_design_blog') || $request->action == 'edit_career_blog') {
             $blog = Blog::where('id', $request->blog_id)
                 ->with(['tags', 'videos', 'blog_panel_design', 'privacy'])
                 ->first();

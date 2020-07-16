@@ -212,6 +212,15 @@ padding: 0;
     font-weight: 550;
 }
 
+.front .inner .blog-status.shared {
+    font-size: 0.8em;
+    padding: 0 3%;
+    border-radius: 100px;
+    font-weight: 550;
+    background: #0f9d58;
+    color: #fff;
+}
+
 .front .inner .blog-status.draft {
     color: #f8f9fa;
     font-size: 0.8em;
@@ -1712,4 +1721,8 @@ img.naff-reaction {
 
 .user-photo.male img {
     border-radius: 21% 21% 30% 30%;
+}
+
+.shared-blog {
+    box-shadow: 0px 0px 8px #28a745;
 }

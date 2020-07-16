@@ -298,7 +298,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <button class="view" onclick="view_my_career_posts({{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -640,6 +640,7 @@
         var token = '{{ Session::token() }}';
         var url_view_general_blog = '{{ route('frontend.blog_general_friend') }}';
         var url_view_tag_wise_blog = '{{ route('frontend.blog_tagwise_friend') }}';
+        var url_view_my_career_blog = '{{ route('frontend.blog_career_friend') }}';
     </script>
 @endsection
 
@@ -697,6 +698,25 @@ $.ajax({
         },
     success: function(result){
             window.location.href=url_view_tag_wise_blog+"?id="+id+'&tag='+tag;
+    }});
+
+}
+
+
+/**
+ *  Function to redirect to my career posts
+ * @param {id} id 
+ */
+ function view_my_career_posts(id){
+
+$.ajax({
+    type: "POST",
+    url:url_view_my_career_blog,
+    data:{id:id,
+         _token:token
+        },
+    success: function(result){
+            window.location.href=url_view_my_career_blog+"?id="+id;
     }});
 
 }

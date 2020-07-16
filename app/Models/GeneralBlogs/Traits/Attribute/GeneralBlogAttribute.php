@@ -67,11 +67,11 @@ trait GeneralBlogAttribute
         return $reaction;
     }
 
-    public function getFirstTwoTags()
-    {
-        $tags = $this->tags->take(2);
-        return $tags;
-    }
+    // public function getFirstTwoTags()
+    // {
+    //     $tags = $this->tags->take(2);
+    //     return $tags;
+    // }
 
     public function btags()
     {

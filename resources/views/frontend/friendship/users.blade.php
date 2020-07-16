@@ -1,6 +1,11 @@
 @extends('frontend.layouts.app')
+
+@section('after-styles')
+    <link rel="stylesheet" href="{{asset('front/CSS/search-friends.css')}}">
+@endsection
+
 @section('content')
-<div>
+<div id="page-content">
     <div class="app">
         <searchfriends-component></searchfriends-component>
     </div>

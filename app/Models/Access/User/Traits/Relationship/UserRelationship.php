@@ -2,6 +2,7 @@
 
 namespace App\Models\Access\User\Traits\Relationship;
 
+use App\Models\Access\User\FeaturedUser;
 use App\Models\System\Session;
 use App\Models\Comment\Comment;
 use App\Models\Friendships\Group;
@@ -72,4 +73,9 @@ trait UserRelationship
     {
         return $this->hasMany('App\Models\Game\UserDesignPanel', 'user_id');
     }
+
+    public function featureduser()
+      {
+          return $this->hasOne(FeaturedUser::class,'user_id');
+      }
 }

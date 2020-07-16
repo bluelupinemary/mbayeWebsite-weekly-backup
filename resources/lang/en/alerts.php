@@ -32,6 +32,8 @@ return [
             'deleted'             => 'The user was successfully deleted.',
             'deleted_permanently' => 'The user was deleted permanently.',
             'restored'            => 'The user was successfully restored.',
+            'featured'            => 'The user was successfully added to Featured Users.',
+            'featuredexist'       => 'The user was Already exist in Featured Users.',
             'session_cleared'     => "The user's session was successfully cleared.",
             'updated'             => 'The user was successfully updated.',
             'updated_password'    => "The user's password was successfully updated.",

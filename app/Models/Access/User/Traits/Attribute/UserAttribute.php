@@ -2,9 +2,11 @@
 
 namespace App\Models\Access\User\Traits\Attribute;
 
-use App\Models\UserCollage\UserCollage;
+use App\Models\Access\User\FeaturedUser;
+use Illuminate\Support\Carbon;
 use App\Models\Game\UserDesignPanel;
 use App\Models\Game\UserPanelFlowers;
+use App\Models\UserCollage\UserCollage;
 
 /**
  * Class UserAttribute.
@@ -140,6 +142,16 @@ trait UserAttribute
                         </i>
                     </a>';
         }
+    }
+
+    public function getFeaturedButtonAttribute($class)
+    {
+        if ($this->id != access()->id() && access()->allow('delete-user')) {
+            $name = $class == '' ? 'Featured' : '';
+            return '<a class="'.$class.'" href="'.route('admin.access.user.featured', $this).'"><i class="fa fa-graduation-cap" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.activate').'"></i>'.$name.'</a>';
+        }
+
+        return '';
     }
 
     /**
@@ -278,6 +290,7 @@ trait UserAttribute
                         <li>'.$this->getClearSessionButtonAttribute('').'</li>
                         <li>'.$this->getDeleteButtonAttribute('').'</li>
                         <li>'.$this->getLoginAsButtonAttribute('').'</li>
+                        <li>'.$this->getFeaturedButtonAttribute('').'</li>
                         </ul>
                     </div>';
         }
@@ -291,7 +304,7 @@ trait UserAttribute
     public function getUserPermission()
     {
         $userPermission = [];
-        $attributePermission = ['8', '10', '11', '12', '13', '14', '15'];
+        $attributePermission = ['8', '10', '11', '12', '13', '14', '15','37'];
         foreach (access()->user()->permissions as $permission) {
             if (in_array($permission->id, $attributePermission)) {
                 $userPermission[] = $permission->name;
@@ -340,6 +353,7 @@ trait UserAttribute
                 }
 
                 break;
+
             case 'deactivate-user':
                 if (\Route::currentRouteName() == 'admin.access.user.get') {
                     $button = ($counter <= 3) ? $this->getStatusButtonAttribute($class) : '<li>'
@@ -350,6 +364,8 @@ trait UserAttribute
                 }
 
                 break;
+
+                
             case 'delete-user':
                 if (access()->user()->id != $this->id) {
                     $button = ($counter <= 3) ? $this->getDeleteButtonAttribute($class) : '<li>'
@@ -360,6 +376,18 @@ trait UserAttribute
                 }
 
                 break;
+
+            case 'featured-user':
+                    if (access()->user()->id != $this->id) {
+                        $button = ($counter <= 3) ? $this->getFeaturedButtonAttribute($class) : '<li>'
+                            .$this->getFeaturedButtonAttribute($class).
+                            '</li>';
+                    } else {
+                        $button = '';
+                    }
+    
+                    break;
+
             case 'login-as-user':
                 if (access()->user()->id != $this->id) {
                     $button = ($counter <= 3) ? $this->getLoginAsButtonAttribute($class) : '<li>'

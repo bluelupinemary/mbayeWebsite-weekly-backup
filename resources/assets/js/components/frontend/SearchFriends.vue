@@ -1,284 +1,3 @@
-<style>
-.round-image-large {
-  border-radius: 50%;
-  width: 150px;
-  height: 150px;
-  position: absolute;
-  box-shadow: 0 0 23px 0px orange, 0 0 0px 0px gold;
-}
-#round-image-large0 {
-  top: 41%;
-  left: 39%;
-  border-radius: 50%;
-  width: 13vw;
-  height: 25vh;
-  position: absolute;
-  box-shadow: 0 0 23px 0px orange, 0 0 0px 0px gold;
-}
-#round-image-large1 {
-  top: 3%;
-  left: 56%;
-  border-radius: 50%;
-  width: 13vw;
-  height: 25vh;
-  position: absolute;
-  box-shadow: 0 0 23px 0px orange, 0 0 0px 0px gold;
-}
-
-#round-image-large2 {
-  bottom: 5%;
-  right: 17%;
-  border-radius: 50%;
-  width: 13vw;
-  height: 25vh;
-  position: absolute;
-  box-shadow: 0 0 23px 0px orange, 0 0 0px 0px gold;
-}
-
-#round-image-large3 {
-  width: 13vw;
-  height: 25vh;
-  top: 8%;
-  left: 2%;
-  border-radius: 50%;
-  position: absolute;
-  box-shadow: 0 0 23px 0px orange, 0 0 0px 0px gold;
-}
-
-#round-image-large4 {
-  bottom: 5%;
-  left: 21%;
-  border-radius: 50%;
-  width: 13vw;
-  height: 25vh;
-  position: absolute;
-  box-shadow: 0 0 23px 0px orange, 0 0 0px 0px gold;
-}
-
-#round-image-large5 {
-  border-radius: 50%;
-  width: 11vw;
-  height: 20vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px yellow, 0 0 0px 0px blue;
-  top: 4%;
-  right: 2%;
-}
-
-[id^="round-image-large"] #user-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border-radius: 50%;
-  position: absolute;
-  box-shadow: 0 0 12px 0px blue, 0 0 0px 0px red;
-}
-[id^="round-image-large"] a {
-  border-radius: 50%;
-}
-
-.round-image-small {
-  border-radius: 50%;
-  width: 90px;
-  height: 90px;
-  position: absolute;
-
-  border-radius: 50%;
-  width: 150px;
-  height: 150px;
-  position: absolute;
-  box-shadow: 0 0 23px 0px orange, 0 0 0px 0px gold;
-}
-
-#round-image-large6 {
-  right: 2%;
-  border-radius: 50%;
-  width: 11vw;
-  height: 20vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px yellow, 0 0 0px 0px blue;
-  top: 38%;
-}
-
-#round-image-large7 {
-  right: 32%;
-  top: 50%;
-  border-radius: 50%;
-  width: 8vw;
-  height: 15vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px green, 0 0 0px 0px grey;
-}
-
-#round-image-large8 {
-  right: 20%;
-  top: 35%;
-  border-radius: 50%;
-  width: 7vw;
-  height: 13vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px orange, 0 0 0px 0px green;
-}
-
-#round-image-large9 {
-  left: 3%;
-  bottom: 5%;
-  border-radius: 50%;
-  width: 7vw;
-  height: 13vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px orange, 0 0 0px 0px green;
-}
-
-#round-image-large10 {
-  left: 23%;
-  top: 1%;
-  border-radius: 50%;
-  width: 7vw;
-  height: 13vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px orange, 0 0 0px 0px yellow;
-}
-
-#round-image-large11 {
-  right: 2%;
-  bottom: 5%;
-  border-radius: 50%;
-  width: 5vw;
-  height: 10vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px orange, 0 0 0px 0px yellow;
-}
-
-#round-image-large12 {
-  left: 23%;
-  top: 38%;
-  border-radius: 50%;
-  width: 7vw;
-  height: 13vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px orange, 0 0 0px 0px yellow;
-}
-
-#round-image-large13 {
-  left: 42%;
-  top: 26%;
-  border-radius: 50%;
-  width: 5vw;
-  height: 10vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px green, 0 0 0px 0px yellow;
-}
-
-#round-image-large14 {
-  left: 1%;
-  top: 46%;
-  border-radius: 50%;
-  width: 4vw;
-  height: 8vh;
-  position: absolute;
-  box-shadow: 0 0 12px 0px green, 0 0 0px 0px yellow;
-}
-
-#search-friends {
-  display: inline-block;
-  position: absolute;
-  left: 40%;
-  bottom: 3%;
-}
-.req-icon1 {
-  width: 40px !important;
-  position: relative;
-  height: 40px !important;
-  top: calc(50% - 10px) !important;
-  border-radius: 50%;
-  padding: 2px;
-  color: white;
-  background-color: rgb(43, 169, 199);
-}
-.req-icon2 {
-  width: 40px !important;
-  position: relative;
-  height: 40px !important;
-  top: calc(50% - 10px) !important;
-  border-radius: 50%;
-  padding: 2px;
-  color: white;
-  background-color: rgb(35, 208, 127);
-}
-
-.arrow-left {
-  position: absolute;
-  top: calc(50% - 30px);
-  left: 1%;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: white;
-}
-.arrow-right {
-  position: absolute;
-  top: calc(50% - 30px);
-  right: 1%;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: white;
-}
-#search-friends-view2 {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  left: 40%;
-  bottom: 3%;
-}
-#search-friends-view1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-#search-friends-view1-heading {
-  color: aqua;
-}
-
-.search-input {
-  background-color: teal;
-  color: aqua;
-  border: none;
-  width: 250px;
-  padding: 5px;
-  padding-left: 10px;
-  border-radius: 5px 0 0 5px;
-}
-
-.search-button {
-  background-color: transparent;
-  color: aqua;
-  border: none;
-  border: none;
-  width: 60px;
-  border: 1px solid gray;
-  padding: 5px;
-  border-radius: 0px 5px 5px 0px;
-}
-::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: aqua;
-  opacity: 1; /* Firefox */
-}
-
-.hideModal{
-  display: none;
-}
-
-.showModal{
-  display: block;
-  opacity: 1 !important;
-}
-</style>
-
 <template>
   <section class="container-fluid">
     <!-- View 2 starts from here  -->
@@ -289,17 +8,24 @@
             
               <div class="modal-body" style="display:flex;justify-content:center;align-item:center">
                 <img
-                    :src="'/storage/profilepicture/'+selectedUser.photo"
-                    style="height:400px;width:400px;z-index:1;border-radius:50%; pointer-events:all; box-shadow: 0 0 12px 0px green, 0 0 0px 0px yellow;"
-                  />
-                  <a @click="viewProfile()" style="position: absolute;top: 46%;left: 12%;padding: 5px;pointer-events: all;color: blue;cursor: pointer;z-index: 2;height: auto;">
-                    <i class="fa fa-eye req-icon1"></i>
-                  </a>
-                  <a
-                  @click.prevent="sendrequest(selectedUser.id)" style="position: absolute;top: 46%;right: 12%;padding: 5px;pointer-events: all;color: blue;cursor: pointer;z-index: 2;height: auto;">
-                    <i class="fa fa-plus req-icon2"></i>
-                  </a>
-
+				v-if="selectedUser.photo && selectedUser.photo.includes('cropped')" :src="'/storage/profilepicture/crop/'+selectedUser.photo"
+				style="height:400px;width:400px;z-index:1;border-radius:50%; pointer-events:all; box-shadow: 0 0 12px 0px green, 0 0 0px 0px yellow;"
+				/>
+				<img
+				v-else-if="selectedUser.photo == null" :src="'/storage/profilepicture//default.png'"
+				style="height:400px;width:400px;z-index:1;border-radius:50%; pointer-events:all; box-shadow: 0 0 12px 0px green, 0 0 0px 0px yellow;"
+				/>
+				<img
+				v-else :src="'/storage/profilepicture/'+selectedUser.photo"
+				style="height:400px;width:400px;z-index:1;border-radius:50%; pointer-events:all; box-shadow: 0 0 12px 0px green, 0 0 0px 0px yellow;"
+				/>
+				<a @click="viewProfile()" style="position: absolute;top: 46%;left: 12%;padding: 5px;pointer-events: all;color: blue;cursor: pointer;z-index: 2;height: auto;">
+				<i class="fa fa-eye req-icon1"></i>
+				</a>
+				<a
+				@click.prevent="sendrequest(selectedUser.id)" style="position: absolute;top: 46%;right: 12%;padding: 5px;pointer-events: all;color: blue;cursor: pointer;z-index: 2;height: auto;">
+				<i class="fa fa-plus req-icon2"></i>
+				</a>
             </div>
           </div>
         </div>
@@ -377,11 +103,11 @@
         {{" "}}Go Back
       </a>
       <!-- Next and Previous buttons -->
-      <div class="arrow-left" @click="prevPage(page)" v-if="page > 1">
-        <img src="front/images/arrow-left.png" />
+      <div class="arrow-left" @click="previousPage(page)" v-if="page > 1 && page <= last_page">
+        <i class="fas fa-chevron-circle-left"></i>
       </div>
-      <div class="arrow-right" @click="nextPage(page)" v-if="next">
-        <img src="front/images/arrow-right.png" />
+      <div class="arrow-right" @click="nextPage(page)" v-if="page < last_page">
+        <i class="fas fa-chevron-circle-right"></i>
       </div>
 
       <!-- Next and Previous buttons -->
@@ -389,8 +115,10 @@
       <!-- 5 main images -->
       <div v-for="(user,index) in users">
         
-        <div :id="'round-image-large' + index" class="ani-rolloutUse" @click="handleImgClick(user)">
-          <img :src="'/storage/profilepicture/' + user.photo" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter"/>
+        <div :id="'round-image-large' + index" :style="randomBoxShadow()" class="friends ani-rolloutUse" @click="handleImgClick(user)">
+			<img v-if="user.photo && user.photo.includes('cropped')" :src="'/storage/profilepicture/crop/' + user.photo" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter"/>
+			<img v-else-if="user.photo == null" :src="'/storage/profilepicture/default.png'" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter"/>
+          	<img v-else :src="'/storage/profilepicture/' + user.photo" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter"/>
           <!-- <a @click.prevent="sendrequest(user.id)" href>
             <i class="fas fa-user-plus req-icon"></i>
           </a>
@@ -399,21 +127,16 @@
           </a> -->
         </div>
       </div>
-      <div style="display:flex" id="search-friends">
+      <div id="search-friends">
         <div id="search-friends-view2">
-          <h1 id="search-friends-view1-heading" style="text-align:center">
-            Search
-            <br />Earthlings
-          </h1>
-          <div style="display:flex">
-            <input
-              class="search-input"
-              type="text"
-              placeholder="Enter Name to search"
-              v-model="query"
-            />
-            <button class="search-button" @click.prevent="search">Search</button>
-          </div>
+			<h1 id="search-friends-view2-heading" style="text-align:center">
+				Find
+				<br />Earthlings
+			</h1>
+			<div class="search-form">
+				<input type="text" class="form-control" name="search" autocomplete="off" placeholder="Enter Name to search" v-model="query">
+				<button type="submit" class="btn search-btn" @click.prevent="search">Search</button>
+			</div>
         </div>
       </div>
     </div>
@@ -422,16 +145,11 @@
     <!-- View 1 starts from here  -->
     <div v-if="!searched">
       <div id="search-friends-view1">
-        <h1 id="search-friends-view1-heading">Search Earthlings</h1>
-        <div style="display:flex">
-          <input
-            class="search-input"
-            type="text"
-            placeholder="Enter Name to search"
-            v-model="query"
-          />
-          <button class="search-button" @click.prevent="search">Search</button>
-        </div>
+        <h1 id="search-friends-view1-heading">Find Earthlings</h1>
+		<div class="search-form">
+			<input type="text" class="form-control" name="search" autocomplete="off" placeholder="Enter Name to search" v-model="query">
+			<button type="submit" class="btn search-btn" @click.prevent="search">Search</button>
+		</div>
       </div>
     </div>
     <!-- View 2 ends here  -->
@@ -449,13 +167,15 @@ export default {
       searched: false,
       cursor: "pointer",
       next: false,
+      last_page: '',
       showDialog: false,
       selectedUser: {},
       activeClass:"hide"
     };
   },
   mounted() {
-    // this.fetchList();
+	// var url = $('meta[name="url"]').attr('content');
+	// this.fetchList();
   },
   computed: {
     users: function() {
@@ -463,6 +183,17 @@ export default {
     }
   },
   methods: {
+    randomBoxShadow() {
+        var color = Math.floor(Math.random()*16777215).toString(16);
+        // console.log({
+        //     'color': '#'+color,
+        //     'box-shadow': '0 0 12px 0 #'+color
+        // });
+        return {
+            'color': '#'+color,
+            'box-shadow': '0 0 12px 0 #'+color
+        };
+    },
     handleImgClick(user) {
       this.selectedUser = user;
       this.activeClass = "show"
@@ -472,7 +203,7 @@ export default {
       this.userList = [];
     },
     fetchList() {
-      const API = `http://127.0.0.1:8000/api/v1/users?page=${this.page}`;
+      const API = `/api/v1/users?page=${this.page}`;
       fetch(API)
         .then(response => {
           if (response.ok) {
@@ -483,7 +214,8 @@ export default {
           if (responseJson.links.last !== responseJson.links.first) {
             this.next = true;
           }
-          this.userList = responseJson.data;
+		  this.userList = responseJson.data;
+		//   console.log(this.userList);
         })
         .catch(err => alert(err));
     },
@@ -502,7 +234,8 @@ export default {
 
     search() {
       this.renderComponent = false;
-      const API = `http://127.0.0.1:8000/api/search/${this.query}?page=${this.page}`;
+      this.page = 1;
+      const API = `/api/search/?q=${this.query}&page=${this.page}`;
       fetch(API)
         .then(response => {
           if (response.ok) {
@@ -511,7 +244,9 @@ export default {
         })
         .then(responseJson => {
           this.userList = [];
-          this.userList = responseJson;
+          this.userList = responseJson.data;
+          this.page = responseJson.current_page;
+          this.last_page = responseJson.last_page;
           this.searched = true;
           if (
             responseJson.links &&
@@ -524,7 +259,7 @@ export default {
     },
 
     nextPage(page) {
-      const API = `http://127.0.0.1:8000/api/v1/users?page=${page + 1}`;
+      const API = `/api/search?q=${this.query}&page=${page + 1}`;
       fetch(API)
         .then(response => {
           if (response.ok) {
@@ -533,17 +268,17 @@ export default {
         })
         .then(responseJson => {
           this.page = page + 1;
-          if (responseJson.links.last !== responseJson.links.first) {
-            this.next = true;
-          }
-          debugger;
-          this.users = responseJson.data;
+        //   if (responseJson.links.last !== responseJson.links.first) {
+        //     this.next = true;
+        //   }
+        //   debugger;
+          this.userList = responseJson.data;
         })
         .catch(err => alert(err));
     },
 
     previousPage(page) {
-      const API = `http://127.0.0.1:8000/api/v1/users?page=${page - 1}`;
+      const API = `/api/search?q=${this.query}&page=${page - 1}`;
       fetch(API)
         .then(response => {
           if (response.ok) {
@@ -552,10 +287,10 @@ export default {
         })
         .then(responseJson => {
           this.page = this.page - 1;
-          if (responseJson.links.last !== responseJson.links.first) {
-            this.next = true;
-          }
-          this.users = responseJson.data;
+        //   if (responseJson.links.last !== responseJson.links.first) {
+        //     this.next = true;
+        //   }
+          this.userList = responseJson.data;
         })
         .catch(err => alert(err));
     }

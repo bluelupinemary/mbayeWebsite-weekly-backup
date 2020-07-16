@@ -106,12 +106,17 @@ public function denyrequest(User $user){
 }
 
 public function searchuser(Request $request){
-  $q = $request['q'];
-  $users = User::where('username','LIKE','%'.$q.'%')
-  ->orWhere('email','LIKE','%'.$q.'%')
-  ->orWhere('first_name','LIKE','%'.$q.'%')
-  ->orWhere('last_name','LIKE','%'.$q.'%')->get();
-  return  response()->json($users);
+    $q = $request['q'];
+    if($q != '') {
+        $users = User::where('username','LIKE','%'.$q.'%')
+        ->orWhere('email','LIKE','%'.$q.'%')
+        ->orWhere('first_name','LIKE','%'.$q.'%')
+        ->orWhere('last_name','LIKE','%'.$q.'%')->paginate(15);
+    } else {
+        $users = User::paginate(15);
+    }
+  
+    return  response()->json($users);
 //   if(count($users) > 0)
 //   return view('frontend.friendship.users', compact('users'))->withQuery ( $q );
 //   else return view ('frontend.friendship.users')->withMessage('No Details found. Try to search again !');

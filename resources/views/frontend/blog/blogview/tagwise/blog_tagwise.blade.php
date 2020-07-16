@@ -164,9 +164,8 @@
     var CYSPACING;
     var scrtype = '';
     var scrollcount = 1;
-    var images=[];
+    // var images=[];
     var images_new=[];
-    var Total_pages;
     var load_count=0;
     var url = $('meta[name="url"]').attr('content');
     var last_page='';
@@ -175,11 +174,12 @@
     var count=0;
     var tag    ="{{$tag}}";
 
+
 $(document).ready(function() {
 
-
+    // alert("here");
     var elem = document.documentElement;
-function openFullscreen() {
+function openFullscreen() { 
     if (elem.mozRequestFullScreen) {  /* Firefox */
     elem.mozRequestFullScreen(); 
     contentDisplay();
@@ -200,8 +200,9 @@ function openFullscreen() {
   }
 
 }
-if(window.innerWidth < 991 ){
-$(document).ready(()=>{
+if(window.innerWidth < 991 ){ 
+$(document).ready(()=>{  
+    // alert("fullscreen");
     Swal.fire({
             imageUrl: '../../front/icons/alert-icon.png',
             imageWidth: 80,
@@ -220,6 +221,7 @@ $(document).ready(()=>{
 else  contentDisplay();
 
 function contentDisplay() { 
+    // alert("here");
       setTimeout(function(){
         $(".astro-div").css({'display':'flex'}); 
         $(".page").css({'visibility':'visible'});
@@ -262,6 +264,7 @@ function contentDisplay() {
                     document.getElementById('block_land').style.display =  'block';
                 }
         }
+
 
         // You might need this, usually it's autoloaded   
             jQuery.noConflict();
@@ -351,62 +354,7 @@ function contentDisplay() {
     {
         return "translate3d(" + x + "px, " + y + "px, " + z + "px)";
     }
-    
-    function cameraTransformForCell(n)
-    {
-  //adjusting translation animation
-       if(n==1)
-            count=0.5;
-        else
-            count+=0.5;
 
-        var x = Math.floor(n / 3);
-        var y = n - x * 3;
-      
-       if(n==1)
-       {
-                    var cx = (x +0.5) * CXSPACING;
-       }
-       else{
-                    if(scroll_type=='up') //adjusting translation animation
-                    {  
-                            if(n==Total_count)
-                                count=0.5;
-                            else
-                                count-=1;
-
-                        var cx = (x +count) * CXSPACING; 
-                        }
-                    else{
-                        var cx = (x +count) * CXSPACING; 
-                        }
-            }
-      
-
-        var cy = (y + 0.5) * CYSPACING;
-      
-       //scroll_type
-     
-        if (magnifyMode)
-        {
-            return translate3d(-cx, -cy, 180);
-        }
-        else
-        {
-            return translate3d(-cx, -cy, 0);
-        }	
-    }
-    
-    var currentCell = -1;
-    
-    var cells = [];
-    
-    var currentTimer = null;
-    
-    var dolly = jQuery("#dolly")[0];
-    var camera = jQuery("#camera")[0];
-    
-    var magnifyMode = false;
     
     var zoomTimer = null;
     
@@ -476,162 +424,6 @@ function contentDisplay() {
                                                 
     }
     
-    function updateStack(newIndex, newmagnifymode)
-    {  
-        $(".div_overlay").css({'display':'none'});//for hiding overlay
-        $(".div_title").css({'display':'none'});
-        $(".div_count_text").css({'display':'block'});
-        $(".div_btn").css({'display':'none'});
-        $(".div_count_bg").css({'display':'flex'});
-  
-        if (currentCell == newIndex && magnifyMode == newmagnifymode)
-        {
-            return;
-        }
-    
-        var oldIndex = currentCell;
-        newIndex = Math.min(Math.max(newIndex, 0), cells.length - 1);
-        currentCell = newIndex;
-      
-        if (oldIndex != -1)
-        {
-            var oldCell = cells[oldIndex];
-            oldCell.div.attr("class", "cell fader view original div_img");	
-            if (oldCell.reflection)
-            {
-                oldCell.reflection.attr("class", "cell fader view reflection");
-            }
-        }
-   
-        var cell = cells[newIndex];
-        cell.div.addClass("selected");
-        if (cell.reflection)
-        {
-          //  cell.reflection.addClass("selected");
-        }
-    
-        magnifyMode = newmagnifymode;
-        
-        if (magnifyMode)
-        {
-            cell.div.addClass("magnify");
-            refreshImage(cell.div.find("img")[0], cell);
-        }
-    
-        if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
-            {//alert("here1");
-                dolly.style.OTransform = cameraTransformForCell(newIndex);
-                var currentMatrix = new OCSSMatrix(document.defaultView.getComputedStyle(dolly, null).OTransform);
-                var targetMatrix = new OCSSMatrix(dolly.style.OTransform);
-                var dx = currentMatrix.e - targetMatrix.e;
-                var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
-                camera.style.OTransform = "rotateY(" + angle + "deg)";
-                camera.style.OTransitionDuration = "330ms";
-
-            }
-    else if(navigator.userAgent.indexOf("Chrome") != -1 )
-        { //alert("here2");
-            dolly.style.webkitTransform = cameraTransformForCell(newIndex);
-            var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
-            var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
-            var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
-            camera.style.webkitTransform = "rotateY(" + angle + "deg)";
-            camera.style.webkitTransitionDuration = "330ms";
-
-        }
-    
-    else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
-    { 
-        
-        dolly.style.MozTransform = cameraTransformForCell(newIndex);
-        var currentMatrix = new DOMMatrix(document.defaultView.getComputedStyle(dolly, null).MozTransform);
-        var targetMatrix = new DOMMatrix(dolly.style.MozTransform);
-        var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
-        camera.style.MozTransform = "rotateY(" + angle + "deg)";
-        camera.style.MozTransitionDuration = "330ms";
-
-
-    }
-    else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
-    {
-        dolly.style.msTransform = cameraTransformForCell(newIndex);
-        var currentMatrix = new MSCSSMatrix(document.defaultView.getComputedStyle(dolly, null).msTransform);
-        var targetMatrix = new MSCSSMatrix(dolly.style.msTransform);
-        var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
-        camera.style.msTransform = "rotateY(" + angle + "deg)";
-        camera.style.msTransitionDuration = "330ms";
-
-
-    }  
-    else if(navigator.userAgent.indexOf("iPhone") != -1 )
-      {
-            dolly.style.webkitTransform = cameraTransformForCell(newIndex);
-            var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
-            var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
-            var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
-            camera.style.webkitTransform = "rotateY(" + angle + "deg)";
-            camera.style.webkitTransitionDuration = "330ms";
-
-        }
-        else if(navigator.userAgent.toLowerCase().indexOf('safari/') > -1)
-      {
-            dolly.style.webkitTransform = cameraTransformForCell(newIndex);
-            var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
-            var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
-            var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
-            angle=angle-7.5;
-            camera.style.webkitTransform = "rotateY(" + angle + "deg)";
-            camera.style.webkitTransitionDuration = "330ms";
-
-        }
-        
-    else{
-       
-    }      
-    
-        if (currentTimer)
-        {
-            clearTimeout(currentTimer);
-        }
-        
-        currentTimer = setTimeout(function ()
-        {
-            if(navigator.userAgent.indexOf("Chrome") != -1 )
-             {
-                camera.style.webkitTransform = "rotateY(0)";
-                camera.style.webkitTransitionDuration = "2s";
-             }
-             else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
-             {
-                camera.style.MozTransform = "rotateY(0)";
-                camera.style.MozTransitionDuration = "2s";
-             }
-
-             else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
-            {
-
-            camera.style.msTransform = "rotateY(0)";
-            camera.style.msTransitionDuration = "2s";
-             }
-            
-             else if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
-            {
-            camera.style.OTransform = "rotateY(0)";
-            camera.style.OTransitionDuration = "2s";
-            }
-            else if(navigator.userAgent.indexOf("iPhone") != -1 ){
-                camera.style.webkitTransform = "rotateY(0)";
-                camera.style.webkitTransitionDuration = "2s";
-            }
-        }, 330);
-    }
-    
-    
 
     function snowstack_init()
     {
@@ -645,50 +437,6 @@ function contentDisplay() {
         jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
         jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
     }
-    
-            /*   Hammer.js  */
-
-                
-            var myBlock = document.getElementById('stack');
-            var mc = new Hammer(myBlock);
-            mc.get('pan').set({direction: Hammer.DIRECTION_HORIZONTAL});
-            mc.on("panleft panright", handleDrag);
-            mc.on('panend', finished);
-
-            var lastPosX = 0;
-            var isDragging = false;
-
-            function handleDrag(ev) {
-                
-            var elem = ev.target;
-            if (!isDragging) {
-                isDragging = true;
-                lastPosX = elem.offsetLeft;
-            }
-            setBlockText(ev.type + " event");
-            var posX = ev.deltaX + lastPosX;
-           // elem.style.left = posX + "px";
-            }
-
-            function finished() {
-            isDragging = false;
-            setBlockText("panned");
-            }
-
-            function setBlockText(msg) { 
-                if(msg=='panleft event')
-                    var scroll_type='up';
-                else if(msg=='panright event')
-                    var scroll_type='down';
-                //else
-                // scroll_type=msg;
-                scrollcheck(scroll_type);
-            //  alert(scroll_type);
-            //myBlock.textContent = msg;
-            }
-
-   
-
 /* Function to redirect to view Blog */
 
 function viewBlog(id){  
@@ -827,6 +575,7 @@ function largest(hot_count,cool_count,naff_count,i)
         $('.communicator-span').css('display', 'none');
     }
 });
+
                 
     </script>
     

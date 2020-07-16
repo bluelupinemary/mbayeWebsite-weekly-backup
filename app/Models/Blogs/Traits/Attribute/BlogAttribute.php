@@ -17,6 +17,7 @@ trait BlogAttribute
         return '<div class="btn-group action-btn">'.
                 $this->getEditButtonAttribute('edit-blog', 'admin.blogs.edit').
                 $this->getDeleteButtonAttribute('delete-blog', 'admin.blogs.destroy').
+                $this->getShowButtonAttribute('delete-blog', 'admin.blogs.destroy').
                 '</div>';
     }
 
@@ -25,6 +26,17 @@ trait BlogAttribute
         $panel_design = $this->blog_panel_design;
 
         if($panel_design) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isCareerBlog()
+    {
+        $career_tag = $this->tags->where('id', 9)->count();
+        
+        if($career_tag) {
             return true;
         } else {
             return false;
@@ -122,5 +134,18 @@ trait BlogAttribute
         } else {
             return false;
         }        
+    }
+
+    public function getEditURL()
+    {
+        if($this->isDesignsBlog()) {
+            $url = url('/communicator?action=edit_design_blog&blog_id='.$this->id.'&section=designs_blog');
+        } else if ($this->isCareerBlog()) {
+            $url = url('/communicator?action=edit_career_blog&blog_id='.$this->id.'&section=career_blog');
+        } else {
+            $url = url('/communicator?action=edit_blog&blog_id='.$this->id.'&section=blog');
+        }
+
+        return $url;
     }
 }

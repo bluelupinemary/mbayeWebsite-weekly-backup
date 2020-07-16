@@ -9,6 +9,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
+import Vue2TouchEvents from 'vue2-touch-events'
+ 
+
 // import VueMaterial from 'vue-material'
 // import 'vue-material/dist/vue-material.min.css'
 
@@ -17,7 +20,9 @@ dom.watch();
 library.add(fas);
 require('../bootstrap');
 window.Vue = require('vue');
+window.axios.defaults.baseURL = document.head.querySelector('meta[name="url"]').content;
 // Vue.use(VueMaterial);
+Vue.use(Vue2TouchEvents)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -38,11 +43,11 @@ Vue.component('searchfriends-component', require('../components/frontend/SearchF
 Vue.component('accept-component', require('../components/frontend/AcceptRequestComponent.vue').default);
 Vue.component('friends-component', require('../components/frontend/FriendComponent.vue').default);
 Vue.component('generalblog-component', require('../components/frontend/GeneralBlog.vue').default);
-Vue.component('newblog-component', require('../components/frontend/BlogComponent.vue').default);
+Vue.component('newblog-component', require('../components/frontend/blog.vue').default);
 Vue.component('photoeditor-component', require('../components/frontend/PhotoEditor.vue').default);
 Vue.component('general-photoeditor-component', require('../components/frontend/GeneralBlogPhotoEditor.vue').default);
 Vue.component('designsphotoeditor-component', require('../components/frontend/DesignsBlogPhotoEditor.vue').default);
-
+Vue.component('blogview-component', require('../components/frontend/BlogViewComponent.vue').default);
 const app = new Vue({
     el: '.app',
 });

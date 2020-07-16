@@ -15,7 +15,7 @@
     "cross-env": "^6.0",
     "font-awesome": "^4.7.0",
     "laravel-mix": "^5.0.4",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "resolve-url-loader": "3.1.0",
     "sass-loader": "^7.3.1",
     "vue": "^2.6.11",
@@ -23,10 +23,10 @@
     "webpack-rtl-plugin": "^2.0.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.28",
-    "@fortawesome/free-brands-svg-icons": "^5.13.0",
-    "@fortawesome/free-solid-svg-icons": "^5.13.0",
-    "@fortawesome/vue-fontawesome": "^0.1.9",
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-brands-svg-icons": "^5.13.1",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/vue-fontawesome": "^0.1.10",
     "@toast-ui/vue-image-editor": "^1.2.0",
     "bootstrap": "^4.5.0",
     "bootstrap-datetimepicker-npm": "^4.17.37-npm",
@@ -34,14 +34,15 @@
     "datatables.net-buttons": "^1.6.1",
     "laravel-echo": "^1.8.0",
     "mo-js": "^0.288.2",
-    "moment": "^2.26.0",
+    "moment": "^2.27.0",
     "nestable2": "^1.5.0",
     "pluralize": "^8.0.0",
-    "popper.js": "^1.14.3",
+    "popper.js": "^1.16.1",
     "pusher-js": "^5.1.1",
-    "sass": "^1.26.8",
+    "sass": "^1.26.10",
     "select2": "^4.0.13",
-    "tinymce": "^5.3.2",
-    "vue-material": "^1.0.0-beta-14"
+    "tinymce": "^5.4.1",
+    "vue-material": "^1.0.0-beta-14",
+    "vue2-touch-events": "^2.2.1"
   }
 }

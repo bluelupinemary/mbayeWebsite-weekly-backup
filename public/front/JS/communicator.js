@@ -218,6 +218,21 @@ $(window).load(function() {
         });
 
         $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .top-buttons, .camera-div, .voice-recorder-div').css('pointer-events', 'auto');
+    } else if(window_url.includes('?') && $.urlParam('action') == 'edit_career_blog') {
+        setButtonLabel(blog);
+        $(".astronautarm-img").show();
+        $(".start-div").hide();
+        $(".astronautarm-img").addClass('animate-zoomIn-arm');
+
+        $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+            $(".astronautarm-img").removeClass('animate-zoomIn-arm');
+            $(".astronautarm-img").addClass('zoomIn-arm');
+            $('.blog-btn').addClass('active');
+            setBlogFormValue(blog);
+            showCareerBlogSection();
+        });
+
+        $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .top-buttons, .camera-div, .voice-recorder-div').css('pointer-events', 'auto');
     } else if (window_url.includes('?') && $.urlParam('action') == 'edit_design_blog') {
         $(".astronautarm-img").show();
         $(".start-div").hide();
@@ -1024,6 +1039,44 @@ $('.exit-general-blog-fullscreen').click(function() {
     $('.text-editor-fullview.general-blog-content').fadeOut();
 });
 
+// show fullscreen designs blog trix editor
+$('.designs-blog-form .trix-editor .fullscreen span').click(function() {
+    var editor = '.text-editor-fullview.designs-blog-content';
+    if (document.querySelector(editor+' .trix-button--icon-text-color') == null) {
+        trixTextColorButton(editor);
+    }
+
+    var fullscreen_designsblog_pk = new Piklor(".fullscreen-designs-blog-color-picker", colors, {
+        open: editor+" .trix-button--icon-text-color",
+        style: { display: 'flex'},
+        // autoclose: false,
+        closeOnBlur: true
+    });
+
+    fullscreen_designsblog_pk.colorChosen(function (col) {
+        setForegroundColor(col, editor);
+    });
+
+    if (document.querySelector(editor+' .font-select') == null) {
+        $(editor+' #font-picker').fontselect({
+            searchable: false,
+        })
+        .on('change', function() {
+            applyFont(this.value, editor);
+            $(editor+' .font-picker').hide();
+        });
+    }
+
+    $(editor+' trix-editor').html($('.designs-blog-form .trix-editor trix-editor').html());
+    $(editor).fadeIn();
+});
+
+// hide fullscreen designs blog trix editor
+$('.exit-designs-blog-fullscreen').click(function() {
+    $('.designs-blog-form .trix-editor trix-editor').html($('.text-editor-fullview.designs-blog-content trix-editor').html());
+    $('.text-editor-fullview.designs-blog-content').fadeOut();
+});
+
 // hide/show blog submenu
 $('.blog-btn').click(function() {
     $('.submenu').not('.blog-submenu').hide();
@@ -1031,13 +1084,17 @@ $('.blog-btn').click(function() {
 });
 
 $('.groups-btn').click(function() {
-    $('.submenu').not('.groups-submenu').hide();
-    $('.groups-submenu').fadeToggle();
+    checkForm(url+'/my-groups');
 });
 
 $('.general-button').click(function() {
     $('.submenu').not('.general-submenu').hide();
     $('.general-submenu').fadeToggle();
+});
+
+$('.careers-btn').click(function() {
+    $('.submenu').not('.career-submenu').hide();
+    $('.career-submenu').fadeToggle();
 });
 
 // hide/show fullscreen button
@@ -1105,6 +1162,44 @@ $('.view-all-general-blogs').click(function(e) {
     e.preventDefault();
 
     checkForm(url+'/stories?type=stories');
+});
+
+$('.create-career-blog').click(function(e) {
+    e.preventDefault();
+    $('.career-submenu').fadeToggle();
+
+    if(checkCurrentForm()) {
+        hideCurrentSection();
+        setSectionParam('career_blog');
+        showCareerBlogSection();
+    } else {
+        Swal.fire({
+            title: 'Discard Changes',
+            text: 'You have unsaved changes',
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText:
+                'Discard Changes',
+            cancelButtonText:
+                'Cancel',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+        }).then((res) => {
+            if (res.value) {
+                hideCurrentSection();
+                setSectionParam('career_blog');
+                showCareerBlogSection();
+            }
+        });
+    }
 });
 
 // hide/show remove featured image button
@@ -1748,7 +1843,7 @@ $('.instruction').hover(
 );
 
 // redirect buttons to under development page
-$('.yourstars-btn, .connect-btn, .careers-btn, .chat-button').click(function() {
+$('.yourstars-btn, .connect-btn, .chat-button').click(function() {
     checkForm(url+'/page_under_development');
 });
 
@@ -1979,6 +2074,17 @@ function showDesignsBlogSection()
     // $('.email-send-button').show();
 }
 
+// show blog section and forms
+function showCareerBlogSection()
+{
+    $('.main-form').show();
+    $('.featured-image-div.all-blog').show();
+    $('.communicator-buttons').css('display', 'flex');
+    $('.communicator-buttons').css('pointer-events', 'auto');
+    $('.blog-tags img').css('pointer-events', 'none');
+    $('#main-form input[name="career_tag"]').val(1);
+}
+
 $('#panel_list').on('change', function (e) {
     var optionSelected = $(this).find("option:selected");
     var flowers = optionSelected.data('flowers');
@@ -2037,6 +2143,25 @@ function listFlowers(flowers)
 
 $('.custom-privacy-done').click(function() {
     $('#customPrivacyModal').modal('hide');
+});
+
+// privacy settings filter
+$('.search-groups').on('keyup', function() {
+    var query = this.value;
+
+    $('#custom-privacy-form input[type="checkbox"]').each(function(i, elem) {
+        if (elem.id.indexOf(query.toLowerCase()) != -1) {
+            $(this).closest('.form-check').show();
+        } else{
+            $(this).closest('.form-check').hide();
+        }
+
+        if($(".form-check:visible").length == 0) {
+            $('#custom-privacy-form p').show();
+        } else {
+            $('#custom-privacy-form p').hide();
+        }
+    });
 });
 
 // get selected blog tag IDs
@@ -2430,7 +2555,7 @@ function hideCurrentSection()
 {
     var section = $.urlParam('section');
 
-    if(section == 'blog') {
+    if(section == 'blog' || section == 'career_blog') {
         hideBlogSection();
     } else if(section == 'general_blog') {
         hideGeneralBlogSection();

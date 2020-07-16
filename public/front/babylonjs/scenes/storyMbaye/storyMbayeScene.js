@@ -1,41 +1,4 @@
 
-let canvas;
-let engine;
-let theAstroFace;
-let DISC_CAM_INIT_POS = {x:2.83, y:0.44,z:580.01};
-let storyCamera;
-let cameraInitState = {position:null,a:null,b:null,r:null,upperA:null, lowerA:null, upperB:null, lowerB:null,upperR:null, lowerR:null,angularY:null};
-let astroInitState = {x:0,y:0,z:0};
-let hl,starColor;
-let skybox;
-let createStoryScene = function(){
-    
-    canvas = document.getElementById('canvas');
-    engine = new BABYLON.Engine(canvas, true,{ preserveDrawingBuffer: true, stencil: true });
-    engine.enableOfflineSupport = true;
-    scene = new BABYLON.Scene(engine);
-   
-    BABYLON.Database.IDBStorageEnabled = true;
-
-    let hdrTexture = new BABYLON.CubeTexture.CreateFromPrefilteredData("front/textures/environment.dds", scene);
-    hdrTexture.gammaSpace = false;
-    scene.environmentTexture = hdrTexture;
-    
-    load_3D_mesh();
-    // load_orig_flowers();
-    skybox = create_skybox();
-    storyCamera = create_camera();
-    create_light();
-    // create_contacts_gui();
-    
-    // scene.debugLayer.show();
-    hl = new BABYLON.HighlightLayer("hl1", scene);
-    starColor = new BABYLON.HighlightLayer("starColor", scene);
-    
-
-    return scene;
-}
-
 //############################################# CREATE THE SCENE'S CAMERAS #############################################//
 //function to add the camera to the scene
 function create_camera(){
@@ -50,13 +13,13 @@ function create_camera(){
     
     camera.upperAlphaLimit = 1000;                  //up down tilt upper limit
     camera.lowerRadiusLimit = 30;                    //zoom in limit
-    camera.upperRadiusLimit = 2000;                 //zoom out limit
+    camera.upperRadiusLimit = 1500;                 //zoom out limit
     camera.wheelPrecision = 2;                      //wheel scroll speed; lower number faster
     camera.panningSensibility = 100;               //movment of camera when right mouse is clicked; lower number, faster
     camera.target = new BABYLON.Vector3(0,0,0);     //focus the camera on 0,0,0
     camera.panningDistanceLimit = 1500;             //maximum allowable movement via right mouse button
     camera.pinchPrecision = 1;
-    camera.radius = 420;
+    camera.radius = 1500;
    
     camera.alpha = BABYLON.Tools.ToRadians(90);
     camera.beta = BABYLON.Tools.ToRadians(90);
@@ -101,7 +64,7 @@ function create_light(){
 //############################################# CREATE THE SCENE'S SKYBOX #############################################//
 //function to create the scene's skybox
 function create_skybox(){ 
-    let skybox = BABYLON.MeshBuilder.CreateBox("contactSkybox", {size:8500.0}, scene);
+    let skybox = BABYLON.MeshBuilder.CreateBox("contactSkybox", {size:9000.0}, scene);
     skybox.position.y = 100;
     skybox.position.z = 1000;
     skybox.rotation.y = BABYLON.Tools.ToRadians(-60);
@@ -133,67 +96,6 @@ function create_skybox(){
 }//end of create skybox function
 
 
-//############################################# LOAD THE SCENE'S MODELS #############################################//
-//function to load the 3D meshes
-let earth_obj;
-let collage_wall;
-function load_3D_mesh(){
-    var loadedPercent = 0;
-    Promise.all([
-          BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/earth/", "earth122319.babylon", scene,
-              function (evt) {
-                  // onProgress
-                  
-                  if (evt.lengthComputable) {
-                      loadedPercent = (evt.loaded * 100 / evt.total).toFixed();
-                  } else {
-                      var dlCount = evt.loaded / (1024 * 1024);
-                      loadedPercent += Math.floor(dlCount * 100.0) / 100.0;
-                  }
-                  document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+loadedPercent+" %";
-            }).then(function (result) {
-                
-                
-                result.meshes[9].scaling = new BABYLON.Vector3(0.2,0.2,0.2);
-                let water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(2048, 2048));
-                water.backFaceCulling = true;
-                water.bumpTexture = new BABYLON.Texture("front/textures/participate/waterbump.png", scene);
-                water.windForce = 10;
-                water.windDirection = new BABYLON.Vector2(-1,0);
-                water.waveHeight = 0.2;
-                water.bumpHeight = 0.3;
-                water.waveLength = 0.1;
-                water.colorBlendFactor = 0.25714;
-                water.waterColor = new BABYLON.Color3(0.31428,0.2,0.80357);
-
-                water.addToRenderList(skybox);
-                result.meshes[7].material = water;
-
-                earth_obj = result.meshes[9];
-                
-            }),
-            BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/storyMbayeScene/", "collageWall2.glb", scene).then(function (result) {
-                console.log(result.meshes[1].material);
-                result.meshes[0].scaling = new BABYLON.Vector3(0.7,0.4,-0.5);
-                // result.meshes[0].isPickable = true;
-                collage_wall = result.meshes[1];
-                
-                result.meshes[0].position = new BABYLON.Vector3(-9.12,0,-1508);
-                // enable_gizmo(result.meshes[0]);
-            ;
-
-            }),
-      ]).then(() => {
-        
-        // setup_music_player();
-        add_mouse_listener();
-        setup_collage(1);
-        // smallHeathLbl = init_plane("small heath","smallHeathMatl","front/images3D/storyMbayeScene/1-smallHeath.png",6,3, {x:-40.71,y:73.33,z:44.93},{x:0.0409,y:-0.9421,z:-0.1034,w:-0.3158});
-        // carpenterImg = init_plane("carpenter","carpenterMatl","front/images3D/storyMbayeScene/carpenter.png",3,6, {x:-39.93,y:75,z:44.69},{x:0.0409,y:-0.9421,z:-0.1034,w:-0.3158});
-        // enable_gizmo(carpenterImg);
-       
-    });
-}//end of load design meshes
 
 
 let homeGizmo; 
@@ -313,8 +215,8 @@ document.onkeydown = (evt)=>{
 
 
 /*################################################### START CREATE COLLAGES FUNCTION ############################################## */
-function setup_collage(num){
-    if(num == 1){
+function setup_collage(scriptNo){
+    if(scriptNo == 1){
         let wallMatl = new BABYLON.StandardMaterial(name, scene);
         wallMatl.diffuseColor = BABYLON.Color3.Black();
         // wallMatl.diffuseTexture = new BABYLON.Texture("front/images3D/feetScene/gallery/"+name+".png", scene);
@@ -330,11 +232,36 @@ function setup_collage(num){
         wallMatl.backFaceCulling = false;//Allways show the front and the back of an element
 
         collage_wall.material = wallMatl;
-        add_delay(collage_wall,4000,5000);
-        let temp = init_photo("burj2",{w:400,h:800},{x: 0, y: 55, z: -889.87});
-        add_delay(temp,5000,2000);
+        add_delay(collage_wall,4000,5000);   
+        
     }
 }
+
+function change_collage_photo(stageNo){
+    if(collage_wall.material) collage_wall.material.dispose();
+    // let matlName = stageMap.get(stageNo).collage;
+    let wallMatl = new BABYLON.StandardMaterial(name, scene);
+        wallMatl.diffuseColor = BABYLON.Color3.Black();
+        // wallMatl.diffuseTexture = new BABYLON.Texture("front/images3D/feetScene/gallery/"+name+".png", scene);
+        wallMatl.diffuseTexture = new BABYLON.Texture("front/textures/storyMbaye/collage-3-1.png", scene);
+        wallMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/collage-3-1.png", scene);
+
+        wallMatl.diffuseTexture.uScale = 1;
+        wallMatl.diffuseTexture.vScale = -1;
+        // wallMatl.alpha = 0.7;
+        // wallMatl.alpha = 0.3;
+        wallMatl.diffuseTexture.hasAlpha = true;
+        wallMatl.specularColor = new BABYLON.Color3(0, 0, 0);
+        wallMatl.emissiveColor = BABYLON.Color3.White();
+        wallMatl.backFaceCulling = false;//Allways show the front and the back of an element
+
+        collage_wall.material = wallMatl;
+}
+
+
+
+
+
 
 function init_photo(name,size,pos){
     let plane = BABYLON.MeshBuilder.CreatePlane(name, {width:size.w,height:size.h}, scene);
@@ -344,12 +271,15 @@ function init_photo(name,size,pos){
     
     
     let planeMatl = new BABYLON.StandardMaterial(name, scene);
-    // planeMatl.diffuseColor = BABYLON.Color3.Black();
     planeMatl.diffuseTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
+    // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
+    planeMatl.diffuseTexture.hasAlpha = true;
+   
+    // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
     planeMatl.diffuseTexture.uScale = -1;
    
-    planeMatl.diffuseTexture.hasAlpha = true;
-    planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
+    
+    // planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
     planeMatl.emissiveColor = BABYLON.Color3.White();
     planeMatl.backFaceCulling = false;                          //Allways show the front and the back of an element
     
@@ -403,8 +333,6 @@ function add_delay(theMesh,delaytime,fadetime){
     delayManager.fadeIn(true);
     delayManager.delay = delaytime;
     delayManager.fadeInTime = fadetime;
-
-    console.log(scene);
 }
 
 
@@ -565,6 +493,31 @@ var animateCameraToPosition = function(cam, speed, frameCount, newPos) {
     BABYLON.Animation.CreateAndStartAnimation('at4', cam, 'position', speed, frameCount, cam.position, newPos, 0, ease,itEnded);
 }
 
+var animateCameraToRadius = function(cam, speed, frameCount, newRad) {
+    var ease = new BABYLON.CubicEase();
+    ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+    BABYLON.Animation.CreateAndStartAnimation('at4', cam, 'radius', speed, frameCount, cam.radius, newRad, 0, ease);
+}
+
+var animateObjectScaling = function(obj, speed, frameCount, newScale) {
+    console.log("scale this: ", obj.name);
+    var ease = new BABYLON.CubicEase();
+    ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+    BABYLON.Animation.CreateAndStartAnimation('at4', obj, 'scaling', speed, frameCount, obj.scaling, newScale, 0, ease);
+}
+
+
+
+var itEnded = function(test) {
+    console.log("end of animation");
+    // document.getElementById("streetViewDiv").style.visibility = "visible";
+    document.getElementById("continueBtnDiv").style.visibility = "visible";
+    // smallHeathLbl.isVisible = true;
+    // carpenterImg.isVisible = true;
+    
+//    storyCamera.targetScreenOffset = new BABYLON.Vector2(0,-50);
+}
+
 
 // var setCamDefault = function() {
 //     animateCameraTargetToPosition(camera, speed, frameCount, new BABYLON.Vector3(0, 0, 0));
@@ -610,37 +563,118 @@ function create_animation(theObjName){
 }
 
 let isRotateSkybox = true;
-function start_story(){
+function rotate_sky(){
     let isStartStory = true;
+    
     
     engine.runRenderLoop(function(){
         if(isStartStory){
-           
-            // if(earth_obj && earth_obj.rotationQuaternion.y > -0.9086 && earth_obj.rotationQuaternion.w > 0.4175){
             earth_obj.rotate(new BABYLON.Vector3(0,4,0), -0.005, BABYLON.Space.LOCAL);
-            // }else{
-            //     isStartStory = false;
-            //     next_stage(1);
-              
-            // }
         }
-        // if(skybox && isRotateSkybox){
-        //     skybox.rotate(new BABYLON.Vector3(0,4,0), -0.001, BABYLON.Space.LOCAL);
-        // }
+        if(skybox && isRotateSkybox){
+            skybox.rotate(new BABYLON.Vector3(0,4,0), 0.001, BABYLON.Space.LOCAL);
+        }
+        
     });
 }
 
-var itEnded = function(test) {
-    console.log("end of animation");
-    // document.getElementById("streetViewDiv").style.visibility = "visible";
-    document.getElementById("continueBtnDiv").style.visibility = "visible";
-    // smallHeathLbl.isVisible = true;
-    // carpenterImg.isVisible = true;
-    
-//    storyCamera.targetScreenOffset = new BABYLON.Vector2(0,-50);
+function remove_stage_objects(){
+    for(const [key,val] of stageObjMap.entries()){
+        console.log("remove obj: ", key,val);
+        val.dispose();
+    }
+    stageObjMap.clear();
+    console.log(stageObjMap);
+}
+
+function remove_text_class(){
+    $('.firstVideoOverlayText div').each(function() {
+        $(this).removeClass('overlayTxt');
+    });
+
+}
+
+function start_text_animation(stageNo){
+    let i=0;
+    let textArr = stageMap.get(stageNo).texts;
+    $('.firstVideoOverlayText div').each(function() {
+       
+        $(this).attr('class','overlayTxt');
+        $(this).text(textArr[i]);
+        i++;
+        // console.log('counter: ',a);
+    });
+    // console.log("restarted animation");
 }
 
 
+let stageObjMap = new Map();
+function setup_stage(stageNo){
+    if(stageNo === 1){
+        
+        $('.firstVideoOverlayText div').each(function() {
+            $(this).attr('class', 'overlayTxt');
+        });
+
+        setup_collage(1);
+        currentStage =3;
+        let burj = init_photo("burj",{w:40,h:80},{x: 0, y: 55, z: -889.87});
+        burj.setEnabled(false);
+        
+        stageObjMap.set(burj.name, burj)                                                //add the object to a map
+
+        setTimeout(function(){
+            burj.setEnabled(true);
+            animateObjectScaling(burj, 20, frameCount, new BABYLON.Vector3(10,10,10));
+            animateCameraToRadius(storyCamera, 20, frameCount, 500);
+        },10000);
+        
+
+    }else if(stageNo === 3){
+        collage_wall.isVisible = false;
+        remove_text_class();
+        remove_stage_objects();
+        setTimeout(function(){
+            start_text_animation(stageNo);
+        },100);
+        change_collage_photo(stageNo);
+        collage_wall.isVisible = true;
+        add_delay(collage_wall,5000,5000); 
+        
+    }
+
+    
+    // console.log("the scene: ", scene.meshes);
+    // scene.meshes.forEach(function(mesh){console.log(mesh.name);});
+}
+
+
+function showContinueButton(){
+    $('#continueBtnDiv').css('visibility','visible');
+}
+
+
+
+let lastScriptTxt = document.getElementById("txt7");
+
+function whichAnimationEvent(){
+
+    var animations = {
+      "animation"      : "animationend",
+      "OAnimation"     : "oAnimationEnd",
+      "MozAnimation"   : "animationend",
+      "WebkitAnimation": "webkitAnimationEnd"
+    }
+  
+    for (t in animations){
+      if (lastScriptTxt.style[t] !== undefined){
+        return animations[t];
+      }
+    }
+  }
+  
+  var animationEvent = whichAnimationEvent();
+  lastScriptTxt.addEventListener(animationEvent, showContinueButton);
 
 
 
@@ -697,39 +731,3 @@ function stop_flower_music(){
 
 
 /*################################################### END OF SETUP YOUTUBE PLAYER FUNCTION ############################################## */
-
-
-  //function that will render the scene on loop
-  var scene = createStoryScene();
-  
-    
-  scene.executeWhenReady(function () {    
-    document.getElementById("loadingScreenDiv").style.display = "none";
-    document.getElementById("loadingScreenPercent").style.display = "none";
-    
-    start_story();
-    // $("firstVideoOverlayText").attr("id","animateText");
-    // load_music("1tXOLqnjSg8",0);
-    engine.runRenderLoop(function(){
-      if(scene){
-          scene.render();
-        //  console.log(storyCamera.position, storyCamera.alpha, storyCamera.beta);
-       
-        
-      }
-      
-  
-    });//end of renderloop
-
-    window.addEventListener("resize", function () {
-      engine.resize();
-    });
-  });
-
-
-
-
-
-
-
-

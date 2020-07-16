@@ -26,6 +26,7 @@ Route::group([
              */
             Route::get('user/deactivated', 'UserStatusController@getDeactivated')->name('user.deactivated');
             Route::get('user/deleted', 'UserStatusController@getDeleted')->name('user.deleted');
+            Route::get('user/featured', 'UserStatusController@getfeatured')->name('user.getfeatured');
 
             /*
              * User CRUD
@@ -41,6 +42,8 @@ Route::group([
 
                 // Status
                 Route::get('mark/{status}', 'UserStatusController@mark')->name('user.mark')->where(['status' => '[0,1]']);
+                Route::get('featured', 'UserStatusController@featured')->name('user.featured');
+
 
                 // Password
                 Route::get('password/change', 'UserPasswordController@edit')->name('user.change-password');

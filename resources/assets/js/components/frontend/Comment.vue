@@ -1,3 +1,20 @@
+<style>
+#submit {
+    font-family: Nasalization;
+    margin-top: 1%;
+    background: #17a2b8;
+}
+
+#submit:hover {
+    background: #17a2b8;
+    border-color: #17a2b8;
+}
+
+#submit:focus {
+    outline: 0;
+    box-shadow: none;
+}
+</style>
 <template>
 <div class="blog-comments">
                 <h2>Declarations</h2>
@@ -5,8 +22,9 @@
                     <img src="/front/icons/commentsNew.png" alt="">
                     <span class="comments-count">: {{commentCount}}</span>
                 </div>
-                <textarea id="body" name="body" cols="30" rows="10" placeholder="Write comments here" v-model="commentBox" @keyup.enter.prevent="postComment"></textarea>
-                <!-- <button class="btn btn-xs btn-primary" id="submit" @click.prevent="postComment">Add Comment</button> -->
+                <!-- <textarea id="body" name="body" cols="30" rows="10" placeholder="Write comments here" v-model="commentBox" @keyup.enter.prevent="postComment"></textarea> -->
+                <textarea id="body" name="body" cols="30" rows="10" placeholder="Write comments here" v-model="commentBox"></textarea>
+                <button class="btn btn-xs btn-primary" id="submit" @click.prevent="postComment">Declare</button>
 
                 <div class="blog-comments-thread">
                     <!-- <div id="new_c"></div> -->
@@ -17,7 +35,7 @@
                                     <p class="comment-date">{{comment.created_at}}</p>
                             </div>
                             <div class="message">
-                                <p>{{ comment.body }}.</p>
+                                <p>{{ comment.body }}</p>
                                 <img src="/front/icons/replyIcon.png" alt="">
                             </div>
                         </div> 

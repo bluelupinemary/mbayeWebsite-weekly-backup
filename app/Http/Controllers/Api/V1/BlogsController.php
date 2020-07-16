@@ -203,4 +203,22 @@ public function show_my_career_blogs(Request $request){
                 $btag->blogs()->where('created_by', $id)->orderBy($sortBy, $orderBy)->paginate($limit)
             );
 }
+
+
+/**
+ * Shows all blogs of my  friends career posts
+ */
+public function show_my_friends_career_blogs(Request $request){
+    $btag = BlogTag::where('name','Careers')->first();
+    $id=$request['id'];
+ 
+    $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+    $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
+    $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
+    return BlogsResource::collection(
+        $btag->blogs()->where('created_by', $id)->orderBy($sortBy, $orderBy)->paginate($limit)
+    );
+}
+
+
 }

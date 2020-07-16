@@ -3,7 +3,7 @@
 @section('before-styles')
 @trixassets
 <meta property="og:image" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
-<meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 20, '...') }}">
+<meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($blog->summary), 20, '...') }}">
 <meta property="og:url" content="{{ url('') }}">
 <meta property="og:title" content="{{ $blog->name }}">
 <meta name="twitter:card" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
@@ -43,6 +43,9 @@
                             </p>
                             <p class="month">
                                 {{ Carbon\Carbon::parse($blog->publish_datetime)->format('F').', '.Carbon\Carbon::parse($blog->publish_datetime)->format('Y') }}
+                            </p>
+                            <p>
+                                {{ Carbon\Carbon::parse($blog->publish_datetime)->format('h:i A') }}
                             </p>
                         </div>
                         <div class="blog-buttons blog-button-1">
@@ -1121,7 +1124,7 @@
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
-                        $('#shareBlogModal').modal('hide');
+                        $('#shareBlogModal').modal('show');
                     });
                 }
             });

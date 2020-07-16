@@ -599,7 +599,7 @@
 .edit_image {
     right: 6%;
     left: unset;
-    padding: 0% 3%;
+    /* padding: 0% 3%; */
 }
 
 #featured-image-previewimg {
@@ -849,7 +849,7 @@ button.fullscreen:hover span {
     border-left: 1px solid #495057;
 }
 
-.text-editor-fullview .exit-fullscreen, .text-editor-fullview .exit-email-fullscreen, .text-editor-fullview .exit-general-blog-fullscreen {
+.text-editor-fullview .exit-fullscreen, .text-editor-fullview .exit-email-fullscreen, .text-editor-fullview .exit-general-blog-fullscreen, .exit-designs-blog-fullscreen{
     float: right;
     background: #ffffff7d;
     border: 0;
@@ -1038,6 +1038,10 @@ button.fullscreen:hover span {
 .general-submenu {
     top: 103%;
     left: 74%;
+}
+
+.career-submenu {
+    top: 81%;
 }
 
 .submenu ul {
@@ -1931,6 +1935,11 @@ a:hover {
 .custom-privacy-body {
     color: #fff;
     font-size: 1em;
+}
+
+#custom-privacy-form p {
+    display: none;
+    text-align: center;
 }
 
 .search-box {

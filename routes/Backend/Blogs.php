@@ -4,7 +4,7 @@
  * Blogs Management
  */
 Route::group(['namespace' => 'Blogs'], function () {
-    Route::resource('blogs', 'BlogsController', ['except' => ['show']]);
+    Route::resource('blogs', 'BlogsController');
 
     //For DataTables
     Route::post('blogs/get', 'BlogsTableController')

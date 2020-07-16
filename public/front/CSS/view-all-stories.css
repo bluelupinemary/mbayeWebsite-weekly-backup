@@ -18,3 +18,16 @@
     box-shadow: 0px 0px 12px #17a2b8;
     color: #f74545;
 }
+
+.front .inner .blog-status.shared {
+    font-size: 0.8em;
+    padding: 0 3%;
+    border-radius: 100px;
+    font-weight: 550;
+    background: #0f9d58;
+    color: #fff;
+}
+
+.front .inner .blog-date, .front .inner .blog-status {
+    top: -55%;
+}

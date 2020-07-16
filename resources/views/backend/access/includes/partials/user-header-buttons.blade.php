@@ -19,5 +19,8 @@
     @permission('view-deleted-user')
     <li><a href="{{route('admin.access.user.deleted')}}"><i class="fa fa-trash"></i> @lang('menus.backend.access.users.deleted-users')</a></li>
     @endauth
+    @permission('featured-user')
+    <li><a href="{{route('admin.access.user.getfeatured')}}"><i class="fa fa-graduation-cap"></i>Fetured User</a></li>
+    @endauth
   </ul>
 </div>

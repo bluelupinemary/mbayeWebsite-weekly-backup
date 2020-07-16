@@ -47,54 +47,55 @@
         <div class="blog-cols">
             @if(count($blogs))
             @foreach ($blogs as $blog)
-            <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
-                <div class="container">
-                    <div class="front @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/blog/'.$blog->getFeaturedImage())}})">
-                        <div class="inner">
-                            <p class="blog-name">{{$blog->name}}</p>
-                            <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
-                            <span class="blog-status {{($blog->status == 'Published' ? 'published' : 'draft')}}">{{$blog->status}}</span>
-                            {{-- <span>
-                                <ul class="tags">
-                                    @foreach($blog->getFirstTwoTags() as $tag)
-                                        <li class="tag"><i class="fas fa-tag"></i> {{$tag->name}}</li>
-                                    @endforeach
-                                    @if(count($blog->tags) > 2)
-                                        <li class="tag"><i class="fas fa-plus"></i> {{$blog->remainingTagCount()}}</li>
-                                    @endif
-                                </ul>
-                            </span> --}}
-                            <multicount-component :blog_id="{!! json_encode($blog->id) !!}"></multicount-component>
+                @if($blog->getTable() == 'general_blogs')
+                <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/blog/'.$blog->getFeaturedImage())}})">
+                            <div class="inner">
+                                <p class="blog-name">{{$blog->name}}</p>
+                                <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
+                                <span class="blog-status {{($blog->status == 'Published' ? 'published' : 'draft')}}">{{$blog->status}}</span>
+                                
+                                <multicount-component :blog_id="{!! json_encode($blog->id) !!}"></multicount-component>
+                            </div>
+                            {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
                         </div>
-                        {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
-                    </div>
-                    <div class="back @if($blog->isNearlyExpired()) nearly-expired @endif">
-                        <div class="inner">
-                            <div class="blog-action-buttons">
-                                {{-- <a href="{{url('/single_blog/'.$blog->id)}}">
-                                    <button class="view" alt="View Blog">
-                                        <i class="far fa-eye"></i>
-                                        <p>View</p>
-                                    </button>
-                                </a>
-                                <a href="{{url('/communicator?action=edit_blog&blog_id='.$blog->id)}}">
-                                    <button class="edit" alt="Edit Blog">
-                                        <i class="far fa-edit"></i>
-                                        <p>Edit</p>
-                                    </button>
-                                </a>
-                                <button class="delete" alt="Delete Blog" data-url="{{url('/blogs/'.$blog->id)}}">
-                                    <i class="far fa-trash-alt"></i>
-                                    <p>Delete</p>
-                                </button> --}}
-                                <a href="{{url('/single_general_blog/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/view-btn.png')}}" alt="" class="view-btn"></a>
-                                <a class="delete" data-url="{{url('/general_blogs/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/delete-btn.png')}}" alt="" class="delete-btn"></a>
-                                <a href="{{url('/communicator?action=edit_general_blog&blog_id='.$blog->id.'&section=general_blog') }}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a>
+                        <div class="back @if($blog->isNearlyExpired()) nearly-expired @endif">
+                            <div class="inner">
+                                <div class="blog-action-buttons">
+                                    <a href="{{url('/single_general_blog/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/view-btn.png')}}" alt="" class="view-btn"></a>
+                                    <a class="delete" data-url="{{url('/general_blogs/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/delete-btn.png')}}" alt="" class="delete-btn"></a>
+                                    <a href="{{url('/communicator?action=edit_general_blog&blog_id='.$blog->id.'&section=general_blog') }}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                @elseif($blog->getTable() == 'general_blog_shares')
+                <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front shared-blog @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/blog/'.$blog->blog->getFeaturedImage())}})">
+                            <div class="inner">
+                                <p class="blog-name">{{$blog->blog->name}}</p>
+                                <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
+                                <span class="blog-status shared">Shared</span>
+                                
+                                <multicount-component :blog_id="{!! json_encode($blog->blog->id) !!}"></multicount-component>
+                            </div>
+                            {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
+                        </div>
+                        <div class="back shared-blog @if($blog->isNearlyExpired()) nearly-expired @endif">
+                            <div class="inner">
+                                <div class="blog-action-buttons">
+                                    <a href="{{url('/shared_story/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/view-btn.png')}}" alt="" class="view-btn"></a>
+                                    <a class="delete" data-url="{{url('/general_blogs/'.$blog->blog->id.'?type=shared&share_id='.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/delete-btn.png')}}" alt="" class="delete-btn"></a>
+                                    {{-- <a href="{{url('/communicator?action=edit_general_blog&blog_id='.$blog->blog->id.'&section=general_blog') }}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
             @endforeach
             @else
             <h2 class="no-result">No stories to show.</h2>

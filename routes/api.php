@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/search/{q}', 'Frontend\Friendship\FriendshipController@searchuser')->name('search');
+Route::get('/search', 'Frontend\Friendship\FriendshipController@searchuser')->name('search');
 Route::post('/readnotification','Frontend\Notify\NotifyController@readnotification');
 Route::get('/blogpost/{blog}', 'Frontend\Comment\CommentController@blogpost');
 Route::post('/notify','Frontend\Notify\NotifyController@getnotifications');
@@ -68,6 +68,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::resource('all_designed_panels', 'BlogPanelDesignController', ['except' => ['create', 'edit']]);
         Route::get('userwise_designed_panels','BlogPanelDesignController@show_userwise_designed_panels');
         Route::get('my_career_blogs','BlogsController@show_my_career_blogs');
+        Route::get('friend_career_blogs','BlogsController@show_my_friends_career_blogs');
         
 });
 

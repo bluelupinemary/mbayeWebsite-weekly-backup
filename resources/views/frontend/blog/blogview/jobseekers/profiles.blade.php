@@ -3,7 +3,6 @@
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('front/CSS/easy-autocomplete.min.css') }}">
 @section('before-styles')
 @endsection
 <style>
@@ -36,21 +35,20 @@
 
 <div class="page view ">
     <div class="blog-search ">
-        <form action="" id="search_form">
-            @csrf
+        <form action="{{url('/blogview/jobseekers/profiles')}}" method="GET">
+          
             <div class="search-form">
                 <div class="input-group-prepend status-div">
-                    <select class="custom-select" id="type" name="type">
-                        <option selected value="">Profile</option>
-                        <option  value="Career Profile">Career Profile</option>
+                    <select class="custom-select" id="inputGroupSelect02" name="type">
+                        <option  selected value="Career Profile">Career Profile</option>
                         <option value="Companies">Companies</option>
                         <option value="Jobs">Jobs</option>
                     </select>
                 </div>
                 <div class="search-input-fields">
-                    <input type="text" class="form-control" placeholder="Search" id="term" name="search" autocomplete="off">
+                    <input type="text" class="form-control" placeholder="Search" name="search" autocomplete="off">
                 </div>
-                <button type="submit" class="btn search-btn" id="searchbtn" form="search_form">Search</button>
+                <button type="submit" class="btn search-btn">Search</button>
             </div>
             <div class="search-form ">
             <div class="input-group-prepend country-div">
@@ -120,17 +118,22 @@
          <!--   <button class="zoom-btn zoom-out"><i class="fas fa-search-minus"></i></button>-->
   
 
+
+    
+    
 @endsection
 
+@section('before-scripts')
 
+ {{-- {{-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script> --}}
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> --}}
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script> --}} --}}
+@endsection
 @section('after-scripts') 
 <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
 <script src="{{asset('front/JS/hammer.min.js')}}"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
-
-{{-- <script src="{{asset('front/JS/jquery.easy-autocomplete.min.js')}}"></script> --}}
 <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
+
 
 <script type="text/javascript">
 
@@ -154,7 +157,7 @@
     var type      ="{{$type ?? '' }}";
     var country   ="{{$country ?? '' }}";
 
-let countries =[ 
+      let countries =[ 
   {"name": "Afghanistan", "code": "AF"}, 
   {"name": "Albania", "code": "AL"}, 
   {"name": "Algeria", "code": "DZ"}, 
@@ -184,6 +187,7 @@ let countries =[
   {"name": "Botswana", "code": "BW"}, 
   {"name": "Bouvet Island", "code": "BV"}, 
   {"name": "Brazil", "code": "BR"}, 
+  {"name": "British Indian Ocean Territory", "code": "IO"}, 
   {"name": "Brunei Darussalam", "code": "BN"}, 
   {"name": "Bulgaria", "code": "BG"}, 
   {"name": "Burkina Faso", "code": "BF"}, 
@@ -416,7 +420,7 @@ $(document).ready(function() {
             }
 
             if($.urlParam('country') != '') {
-                $('input[name="country"]').val($.urlParam('country'));
+                $('select[name="country"]').val($.urlParam('country'));
             }
 
 
@@ -430,7 +434,7 @@ $(document).ready(function() {
                               }
                           }
                     };
- $("#countries").easyAutocomplete(options);
+// $("#countries").easyAutocomplete(options);
 
     var elem = document.documentElement;
 function openFullscreen() {
@@ -491,53 +495,6 @@ function contentDisplay() {
 );
     }
 });
-
-$('#searchbtn').click(function(e) {
-            e.preventDefault();
-
-            
-            var $form = $('form#search_form');
-            // var group_id = $form.find('input[name="group_id"]').val();
-
-            var type = $form.find("input[name='type']").val();
-            var country = $form.find("input[name='country']").val();
-            var search = $form.find("input[name='search']").val();
-            // var slug = name.replace(/\s+/g, '-').toLowerCase();
-
-            var form_url = url+'/api/v1/jobseeker/search';
-
-            var post_data = new FormData($form[0]);
-            // post_data.append('group_name_slug', slug);
-
-            $.ajax({
-                url: form_url,
-                method: 'post',
-                data: post_data,
-                // dataType: 'JSON',
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(data) {
-                    console.log(data);
-                    images=data['company'];
-                    console.log(images);
-
-                },
-                error: function (request, status, error) {
-                    $('#editGroupModal').modal('hide');
-                    var response = JSON.parse(request.responseText);
-                    var errorString = '';
-                    var title = 'Error!';
-
-                    if(response.errors) {
-                        title = 'Error in processing request...';
-                        $.each( response.errors, function( key, value) {
-                            errorString += '<p>' + value + '</p>';
-                        });
-                    }
-                }
-            });
-        });
     (function () {
     
         $(".img-nouvela").removeClass("ani-rollout_naff");
@@ -1035,11 +992,6 @@ $('#searchbtn').click(function(e) {
             name=info.first_name+' '+info.last_name;
             profession=info.profession_name;
             location=info.country;
-           if (type=='Companies')
-           {
-            name=info.company_name
-            profession=info.company_phone_number;
-           }
             var width;
             var height;
             var height_for_count;
@@ -1055,11 +1007,8 @@ $('#searchbtn').click(function(e) {
            
        
            cell.div.append(jQuery('<a class="mover viewflat blog_img" href="#""  onclick="play_note('+reln+')"></a>').append(img));
-           if(type=='Companies')
-                cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">Comapny Name : '+name+' </p></br><p class="p_title">Company Number : '+profession+'</p></br><p class="p_title">Location : '+location+'</p></div>'));
-           else
-                cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">Name : '+name+' </p></br><p class="p_title">Profession : '+profession+'</p></br><p class="p_title">Location : '+location+'</p></div>'));
-        
+           cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">Name : '+name+' </p></br><p class="p_title">Profession : '+profession+'</p></br><p class="p_title">Location : '+location+'</p></div>'));
+           //cell.div.append(jQuery('<div class="'+cls_overlay+' div_overlay '+reln+'" style="z-index:1000000;display:none;opacity: 100%; background-color:rgba(23, 80, 213, 0.57)"> <div class="blog-buttons_overlay "> <div class="button-div"><button><img class="i_hot" src="{{asset('front/icons/hot.png')}}"  /></button><div class="button-details"><p class="button-number hot-number">'+nHot_Count+'</p></div></div><div class="button-div"><button><img class="i_cool" src="{{asset('front/icons/cool.png')}}" /></button><div class="button-details"> <p class="button-number cool-number">'+nCool_Count+'</p></div></div> <div class="button-div"> <button><img class="i_naff" src="{{asset('front/icons/naff.png')}}" /></button><div class="button-details"><p class="button-number naff-number">'+nNaff_Count+'</p></div></div><div class="button-div"><button><img  class="i_comment" src="{{asset('front/icons/comment.png')}}" alt=""></button> <div class="button-details"><p class="button-number comment-number">'+nComment_Count+'</p></div> </div> </div><button class="button btn_view_blog" onclick="viewBlog('+id+')"><p class="p_button">View Blog</p></button></div>'));
            cell.div.append(jQuery('<div class="'+cls_overlay+' div_overlay '+reln+'" style="z-index:1000000;display:none;opacity: 100%; background-color:rgba(23, 80, 213, 0.57)"> <div class="blog-buttons_overlay "> <div class="button-div"></button><div class="button-details"><p class="button-number hot-number"></p></div></div><div class="button-div"><button></button><div class="button-details"> <p class="button-number cool-number"></p></div></div> <div class="button-div"> <button></button><div class="button-details"><p class="button-number naff-number"></p></div></div><div class="button-div"><button></button> <div class="button-details"><p class="button-number comment-number"></p></div> </div> </div><button class="button btn_view_blog" onclick="viewBlog('+id+')"><p class="p_button">View Profile</p></button></div>'));
           
             var div_height=$(".div_img").css("height");

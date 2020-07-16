@@ -37,6 +37,9 @@ class BlogsTableController extends Controller
             ->addColumn('publish_datetime', function ($blogs) {
                 return $blogs->publish_datetime->format('d/m/Y h:i A');
             })
+            ->addColumn('tags', function ($blogs) {
+                return $blogs->tags;
+            })
             ->addColumn('created_by', function ($blogs) {
                 return $blogs->user_name;
             })

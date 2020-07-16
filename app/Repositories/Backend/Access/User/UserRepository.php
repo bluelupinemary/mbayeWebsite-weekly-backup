@@ -53,7 +53,7 @@ class UserRepository extends BaseRepository
      *
      * @return mixed
      */
-    public function getForDataTable($status = 1, $trashed = false)
+    public function getForDataTable($status = 1, $trashed = false, $featured = false)
     {
         /**
          * Note: You must return deleted_at or the User getActionButtonsAttribute won't
@@ -80,6 +80,10 @@ class UserRepository extends BaseRepository
 
         if ($trashed == 'true') {
             return $dataTableQuery->onlyTrashed();
+        }
+
+        if ($featured == 'true') {
+            return $dataTableQuery->featured();
         }
 
         // active() is a scope on the UserScope trait

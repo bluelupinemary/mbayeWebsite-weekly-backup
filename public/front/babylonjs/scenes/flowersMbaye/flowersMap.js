@@ -109,15 +109,15 @@ var flowersMbayeMap = new Map([
     ["89Baobab",[{x: -115.88536779502653, y: 436.86468517509223, z: 310.13280487247573} ,null,"name","https://en.wikipedia.org/wiki/Adansonia_digitata",{id:"wqCpjFMvz-k",start:4} ]],
     ["90Cornflower",[{x: -340.21872681604606, y: -236.86188839778026, z: 1000.7086345318387},null,"name","https://en.wikipedia.org/wiki/Centaurea_cyanus",{id:"zOvsyamoEDg",start:7} ]],
     
-    ["91AloePolyphylla",[{x: -551.4812051761061, y: 622.3224001476274, z: -187.38150766164},null,"name","https://en.wikipedia.org/wiki/Aloe_polyphylla",{id:"nVnqwLbltfo",start:0} ]],
-    ["92CalophyllumInophyllum",[ {x: -995.9046597549283, y: 9.726561674036486, z: 173.3622306601685},null,"name","https://en.wikipedia.org/wiki/Calophyllum_inophyllum",{id:"nVnqwLbltfo",start:0} ]],
-    ["93Dahlias",[{x: -387.37264991373803, y: 45.22800762287048, z: 1091.4634077815153} ,null,"name","https://en.wikipedia.org/wiki/Dahlia",{id:"nVnqwLbltfo",start:0} ]],
-    ["94IberisGibraltarica",[{x: -817.7551119196929, y: 591.6840577325191, z: -219.61493967382805},null,"name","https://en.wikipedia.org/wiki/Iberis_gibraltarica",{id:"nVnqwLbltfo",start:0} ]],
-    ["95Dendrobium",[ {x: 789, y: 495, z: -615} ,null,"name","https://en.wikipedia.org/wiki/Dendrobium",{id:"nVnqwLbltfo",start:0} ]],
+    ["91AloePolyphylla",[{x: -551.4812051761061, y: 622.3224001476274, z: -187.38150766164},null,"name","https://en.wikipedia.org/wiki/Aloe_polyphylla",{id:"YiiysoWTZ8o",start:0} ]],
+    ["92CalophyllumInophyllum",[ {x: -995.9046597549283, y: 9.726561674036486, z: 173.3622306601685},null,"name","https://en.wikipedia.org/wiki/Calophyllum_inophyllum",{id:"ayq0R3SexTQ",start:0} ]],
+    ["93Dahlias",[{x: -387.37264991373803, y: 45.22800762287048, z: 1091.4634077815153} ,null,"name","https://en.wikipedia.org/wiki/Dahlia",{id:"k5dkwQY-_tk",start:0} ]],
+    ["94IberisGibraltarica",[{x: -817.7551119196929, y: 591.6840577325191, z: -219.61493967382805},null,"name","https://en.wikipedia.org/wiki/Iberis_gibraltarica",{id:"JS27Mrb4a1E",start:0} ]],
+    ["95Dendrobium",[ {x: 789, y: 495, z: -615} ,null,"name","https://en.wikipedia.org/wiki/Dendrobium",{id:"UpPoz2gy0Cc",start:0} ]],
     
     ["96Poinciana",[{x: -17.21043166357328, y: 228.97170573045298, z: 1019.1338805387242},null,"name","https://en.wikipedia.org/wiki/Delonix_regia",{id:"8FfEhTBrlWc",start:1} ]],
     ["97EasterLily",[{x: 333.483495581226, y: 182.30443931994677, z: 336.28828207195494} ,null,"name","https://en.wikipedia.org/wiki/Lilium_longiflorum",{id:"vo8JYCqHozI",start:26} ]],
-    ["98FlameLily",[{x: 684, y: 331, z: -364}  ,null,"name","https://en.wikipedia.org/wiki/Gloriosa_(plant)",{id:"nVnqwLbltfo",start:0} ]],
+    ["98FlameLily",[{x: 684, y: 331, z: -364}  ,null,"name","https://en.wikipedia.org/wiki/Gloriosa_(plant)",{id:"WL_EM4wSbqc",start:0} ]],
     ["99Agave",[{x: -258.73470755783626, y: 181.97741977711595, z: -1292.111443775402} ,null,"name","https://en.wikipedia.org/wiki/Agave",{id:"5C6lEyuibhM",start:2} ]],
     ["100CockspurCoral",[{x: 1027.4671192835258, y: -120, z: 675.7050173072206} ,null,"name","https://en.wikipedia.org/wiki/Erythrina_crista-galli",{id:"AIR5XPWK3Vk",start:0} ]],
     
@@ -219,7 +219,7 @@ var flowersMbayeMap = new Map([
    
     ["181VictoriaAmazonica",[{x: 853, y: 481, z: 627}  ,null,"name","https://en.wikipedia.org/wiki/Victoria_amazonica",{id:"d0v2jgCDA1g",start:2} ]],
     ["182Commelina",[{x: 64, y: -340, z: -538}  ,null,"name","https://en.wikipedia.org/wiki/Commelina",{id:"6XP-f7wPM0A",start:0} ]],
-    ["183Hyacinth",[ {x: -86, y: -229.41, z: -634} ,null,"name","https://en.wikipedia.org/wiki/Hyacinth_(plant)",{id:"nVnqwLbltfo",start:0} ]],
+    ["183Hyacinth",[ {x: -86, y: -229.41, z: -634} ,null,"name","https://en.wikipedia.org/wiki/Hyacinth_(plant)",{id:"mOiOG-Ss17Y",start:0} ]],
     ["184ColchicumCupanii",[{x: -1150.3620642027329, y: -10.535053505429119, z: -248.70697526944917},null,"name","https://en.wikipedia.org/wiki/Colchicum_cupanii",{id:"_HsBjJ58RWA",start:0} ]],
     ["185BrimeuraAmethystina",[{x: 428.30, y: -45.58, z: 444.45},null,"name","https://en.wikipedia.org/wiki/Brimeura_amethystina",{id:"L9NCvSakgR8",start:1} ]],
    

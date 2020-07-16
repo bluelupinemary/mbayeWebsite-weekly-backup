@@ -44,22 +44,7 @@
     animation: pulse 2s linear infinite;
 }
 
-    @keyframes pulse {
-    0% {
-        opacity: 0;
-        transform: scale(1);
-    }
 
-    50% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(1.2);
-    }
-}
 
 #firstVideoOverlay {
     position: fixed;
@@ -126,20 +111,38 @@
     font-style: normal;
     text-align:center;
     /* text-shadow: -2px 1px 10px #cea22a; */
-    text-shadow: -2px 1px 10px #096cb8;
+    text-shadow: -2px 1px 10px #000000;
     
     font-size: 4.2vw;
     /* color: #f8f9b0; */
-    color: white;
+    color: #efad0c;
     line-height: 13vh;
+    display:none;
 }
 
 .overlayTxt{
     width:100vw;
     opacity: 0;
-    animation-name: leftFadeIn;
-    animation-duration: 8s;
+    /* animation-name: leftFadeIn;
+    animation-duration: 2s; */
+    animation-name: slide-up;
+    animation-duration: 2s;
     animation-fill-mode: forwards;
+
+    -webkit-animation-name: slide-up;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-fill-mode: forwards;
+    
+    -moz-animation-name: slide-up;
+    -moz-animation-duration: 2s;
+    -moz-animation-fill-mode: forwards;
+    
+    -o-animation-name: slide-up;
+    -o-animation-duration: 2s;
+    -o-animation-fill-mode: forwards;
+    /* animation: slide-up 3s; */
+    
+    
 }
 
 .glowOverlayTxt{
@@ -147,31 +150,54 @@
 }
 .firstVideoOverlayText > #txt1 {
     animation-delay: 3s;
+    -webkit-animation-delay: 3s;
+    -moz-animation-delay: 3s;
+    -o-animation-delay: 3s;
 }
 
 
 .firstVideoOverlayText > #txt2 {
     animation-delay: 6s;
+    -webkit-animation-delay: 6s;
+    -moz-animation-delay: 6s;
+    -o-animation-delay: 6s;
 }
 
 .firstVideoOverlayText > #txt3 {
     animation-delay: 9s;
+    -webkit-animation-delay: 9s;
+    -moz-animation-delay: 9s;
+    -o-animation-delay: 9s;
 }
 .firstVideoOverlayText > #txt4 {
     animation-delay: 12s;
+    -webkit-animation-delay: 12s;
+    -moz-animation-delay: 12s;
+    -o-animation-delay: 12s;
 }
 
 .firstVideoOverlayText > #txt5 {
     animation-delay: 15s;
+    -webkit-animation-delay: 15s;
+    -moz-animation-delay: 15s;
+    -o-animation-delay: 15s;
 }
 
 .firstVideoOverlayText > #txt6 {
     animation-delay: 18s;
+    -webkit-animation-delay: 18s;
+    -moz-animation-delay: 18s;
+    -o-animation-delay: 18s;
 }
 
 .firstVideoOverlayText > #txt7 {
     animation-delay: 21s;
+    -webkit-animation-delay: 21s;
+    -moz-animation-delay: 21s;
+    -o-animation-delay: 21s;
 }
+
+
 .firstVideoOverlayText > #txt8 {
     animation-delay: 21s;
 }
@@ -190,6 +216,8 @@
 .firstVideoOverlayText > #txt12 {
     animation-delay: 55s;
 }
+
+
 
 
 @keyframes leftFadeIn {
@@ -212,3 +240,128 @@
         text-shadow: -2px 1px 25px #096cb8;
     }
   }
+
+
+@keyframes slide-up {
+    0% {
+        
+        opacity: .25;
+        line-height: 100vw;
+    }
+    100% {
+        
+        opacity: 1;
+        line-height: 13vh;
+    }
+}
+
+@-webkit-keyframes slide-up {
+    0% {
+        
+        opacity: .25;
+        line-height: 100vw;
+    }
+    100% {
+        
+        opacity: 1;
+        line-height: 13vh;
+    }
+  }
+  
+  @-moz-keyframes slide-up {
+    0% {
+        
+        opacity: .25;
+        line-height: 100vw;
+    }
+    100% {
+        
+        opacity: 1;
+        line-height: 13vh;
+    }
+  }
+  @-o-keyframes slide-up {
+    0% {
+        
+        opacity: .25;
+        line-height: 100vw;
+    }
+    100% {
+        
+        opacity: 1;
+        line-height: 13vh;
+    }
+  }
+
+  /*pulse for the continue button animation*/
+
+@keyframes pulse {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+  }
+  
+  @-moz-keyframes pulse{
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+  }
+  @-o-keyframes pulse{
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+  }
+/* 
+.slide-up {
+    animation: slide-up 2s;
+} */

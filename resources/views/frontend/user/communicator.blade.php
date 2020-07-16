@@ -37,10 +37,15 @@
                             <li><a href="" class="view-all-blogs"><i class="fas fa-list"></i> View All Blogs</a></li>
                         </ul>
                     </div>
-                    <div class="submenu groups-submenu">
+                    {{-- <div class="submenu groups-submenu">
                         <ul>
                             <li><a href="" class="create-blog"><i class="fas fa-plus"></i> Create New Groups</a></li>
                             <li><a href="" class="view-all-blogs"><i class="fas fa-list"></i> View All Groups</a></li>
+                        </ul>
+                    </div> --}}
+                    <div class="submenu career-submenu">
+                        <ul>
+                            <li><a href="" class="create-career-blog"><i class="fas fa-plus"></i> Create Blog</a></li>
                         </ul>
                     </div>
                 </div>
@@ -69,6 +74,7 @@
                         <input type="checkbox" name="politics_tag" id="politics_tag" value="0" data-id="5">
                         <input type="checkbox" name="family_tag" id="family_tag" value="0" data-id="6">
                         <input type="checkbox" name="travel_tag" id="travel_tag" value="0" data-id="7">
+                        <input type="checkbox" name="career_tag" id="career_tag" value="0" data-id="9">
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <input type="hidden" name="blog_id">
                         <input type="hidden" name="save_status" value="Draft">
@@ -458,6 +464,15 @@
             @trix(\App\Blogs\Blog::class, 'general_blog_content')
             <button type="button" class="exit-general-blog-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
         </div>
+        <div class="text-editor-fullview designs-blog-content">
+            <div class="font-picker">
+                <input id="font-picker" type="text">
+            </div>
+            <div class="color-picker fullscreen-designs-blog-color-picker">
+            </div>
+            @trix(\App\Blogs\Blog::class, 'designs_blog_content')
+            <button type="button" class="exit-designs-blog-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
+        </div>
         <div class="text-editor-fullview email-content">
             <div class="font-picker">
                 <input id="font-picker" type="text">
@@ -520,12 +535,13 @@
                     <form action="" id="custom-privacy-form">
                         @foreach (Auth::user()->getGroups() as $group)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$group->id}}" name="group_ids[]">
+                                <input class="form-check-input" type="checkbox" value="{{$group->id}}" name="group_ids[]" id="{{strtolower($group->name)}}">
                                 <label class="form-check-label" for="defaultCheck1">
                                 {{$group->name}}
                                 </label>
                             </div>
                         @endforeach
+                        <p>No matching group found.</p>
                     </form>
                 </fieldset>
             </div>
@@ -582,7 +598,7 @@
         var blog = {!! json_encode($blog->toArray()) !!};
 
         document.addEventListener('DOMContentLoaded', ()=> {
-            if(window_url.includes('?') && $.urlParam('action') == 'edit_blog') {
+            if(window_url.includes('?') && ($.urlParam('action') == 'edit_blog' || $.urlParam('action') == 'edit_career_blog')) {
                 $('.main-form .trix-editor trix-editor').html(blog.content);
             } else if (window_url.includes('?') && $.urlParam('action') == 'edit_design_blog') {
                 $('.designs-blog-form .trix-editor trix-editor').html(blog.content);

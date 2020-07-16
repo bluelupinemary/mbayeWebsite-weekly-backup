@@ -19,6 +19,18 @@ trait ModelTrait
     /**
      * @return string
      */
+    public function getShowButtonAttribute($permission, $route)
+    {
+        if (access()->allow($permission)) {
+            return '<a href="'.route($route, $this).'" class="btn btn-flat btn-default">
+                    <i data-toggle="tooltip" data-placement="top" title="Show" class="fa fa-eye"></i>
+                </a>';
+        }
+    }
+
+    /**
+     * @return string
+     */
     public function getDeleteButtonAttribute($permission, $route)
     {
         if (access()->allow($permission)) {

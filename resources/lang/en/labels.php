@@ -69,6 +69,7 @@ return [
                 'change_password_for' => 'Change Password for :user',
                 'create'              => 'Create User',
                 'deactivated'         => 'Deactivated Users',
+                'featured'            => 'Featured Users',
                 'deleted'             => 'Deleted Users',
                 'edit'                => 'Edit User',
                 'edit-profile'        => 'Edit Profile',
@@ -104,6 +105,11 @@ return [
                             'created_at'   => 'Created At',
                             'deleted_at'   => 'Deleted At',
                             'email'        => 'E-mail',
+                            'username'        => 'UserName',
+                            'dob'        => 'DOB',
+                            'age'        => 'Age',
+                            'address'        => 'Address',
+                            'country'        => 'Country',
                             'last_updated' => 'Last Updated',
                             'name'         => 'Name',
                             'status'       => 'Status',
@@ -164,6 +170,7 @@ return [
         'blogs' => [
             'create'     => 'Create Blog',
             'edit'       => 'Edit Blog',
+            'view'       => 'View Blog',
             'management' => 'Blog Management',
             'title'      => 'Blogs',
 

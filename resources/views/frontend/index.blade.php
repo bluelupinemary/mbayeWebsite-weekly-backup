@@ -1,6 +1,8 @@
 @extends('frontend.layouts.game_layout')
 @section('before-styles')
   <link href="{{asset('front')}}/CSS/game/HomeSceneStyle.css" rel="stylesheet"/>    
+  
+
   <style>
      
   </style>

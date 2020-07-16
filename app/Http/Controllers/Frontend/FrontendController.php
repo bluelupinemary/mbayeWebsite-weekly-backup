@@ -410,5 +410,20 @@ public function blog_career_my(Request $request){
    
   
 }
+public function blog_career_friend_post(Request $request){
+    $id = $request['id'];
+    $user = Auth::user();
+    if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
+    return view('frontend.auth.login');
+}
 
+public function blog_career_friend(Request $request){ 
+    $id = $request['id'];
+    $user = Auth::user();
+ 
+    if($user) return  view('frontend.blog.blogview.career.friend_career_blogs',compact('id'));
+    return view('frontend.auth.login');
+   
+  
+}
 }

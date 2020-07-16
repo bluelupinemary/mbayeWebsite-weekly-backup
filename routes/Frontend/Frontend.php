@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
 //routes for friendship
 Route::group(['namespace' => 'Friendship'], function () {
     Route::resource('groups', 'GroupController');
+    Route::get('/my-groups', 'GroupController@create');
     Route::post('/store_group_friends', 'GroupController@storeGroupFriends');
     Route::post('/delete_groups', 'GroupController@deleteGroups');
     Route::get('/listusers','FriendshipController@listusers');
@@ -103,6 +104,7 @@ Route::group(['namespace' => 'Friendship'], function () {
         Route::resource('blogs', 'BlogsController');
         Route::get('stories', 'BlogsController@stories');
         Route::get('/single_blog/{id}', 'BlogsController@show');
+        Route::get('/shared_blog/{id}', 'BlogsController@sharedBlog');
         Route::post('publish_blog', 'BlogsController@publishBlog');
         Route::post('publish_general_blog', 'BlogsController@saveGeneralBlog');
         Route::post('publish_design_blog', 'BlogsController@publishDesignBlog');
@@ -114,6 +116,12 @@ Route::group(['namespace' => 'Friendship'], function () {
     });
 
     Route::post('send_contact_email', 'FrontendController@sendContactAdminEmail');
+
+    // Story
+    Route::get('/single_general_blog/{id}', 'GeneralBlogs\GeneralBlogsController@show');
+    Route::resource('general_blogs', 'GeneralBlogs\GeneralBlogsController');
+    Route::post('share_story', 'GeneralBlogs\GeneralBlogsController@shareBlog');
+    Route::get('/shared_story/{id}', 'GeneralBlogs\GeneralBlogsController@sharedStory');
 });
 
 /*
@@ -164,8 +172,7 @@ Route::get('/blogview/general/my', 'FrontendController@blog_general_my');
 Route::post('/blogview/general/my', 'FrontendController@blog_general_my_post')->name('blog_general_my');
 Route::get('/blogview/general/friend', 'FrontendController@blog_general_friend');
 Route::post('/blogview/general/friend', 'FrontendController@blog_general_friend_post')->name('blog_general_friend');
-Route::get('/single_general_blog/{id}', 'GeneralBlogs\GeneralBlogsController@show');
-Route::resource('general_blogs', 'GeneralBlogs\GeneralBlogsController');
+
 
 /* blogs for the designed panels */
 Route::get('/blogview/designed-panel/all', 'FrontendController@designed_panels_all')->name('designed_panels_all');
@@ -183,6 +190,8 @@ Route::get('/blogview/jobseekers/profiles', 'FrontendController@jobseeker_profil
 
 Route::get('/blogview/career/my', 'FrontendController@blog_career_my');
 Route::post('/blogview/career/my', 'FrontendController@blog_career_my_post')->name('blog_career_my');
+Route::get('/blogview/career/friend', 'FrontendController@blog_career_friend');
+Route::post('/blogview/career/friend', 'FrontendController@blog_career_friend_post')->name('blog_career_friend');
 
 
 //testing routes for Jobseekers profile

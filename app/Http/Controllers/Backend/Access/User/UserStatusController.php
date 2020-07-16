@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Backend\Access\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\Access\User\DeleteUserRequest;
-use App\Http\Requests\Backend\Access\User\EditUserRequest;
-use App\Http\Requests\Backend\Access\User\ManageDeactivatedRequest;
-use App\Http\Requests\Backend\Access\User\ManageDeletedRequest;
+use Illuminate\Support\Carbon;
 use App\Models\Access\User\User;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Repositories\Backend\Access\User\UserRepository;
+use App\Http\Requests\Backend\Access\User\EditUserRequest;
+use App\Http\Requests\Backend\Access\User\DeleteUserRequest;
+use App\Http\Requests\Backend\Access\User\ManageDeletedRequest;
+use App\Http\Requests\Backend\Access\User\ManageFeaturedRequest;
+use App\Http\Requests\Backend\Access\User\ManageDeactivatedRequest;
 
 /**
  * Class UserStatusController.
@@ -46,6 +49,11 @@ class UserStatusController extends Controller
     public function getDeleted(ManageDeletedRequest $request)
     {
         return view('backend.access.users.deleted');
+    }
+
+    public function getfeatured(ManageFeaturedRequest $request)
+    {
+        return view('backend.access.users.featured');
     }
 
     /**
@@ -86,5 +94,24 @@ class UserStatusController extends Controller
         $this->users->restore($deletedUser);
 
         return redirect()->route('admin.access.user.index')->withFlashSuccess(trans('alerts.backend.users.restored'));
+    }
+
+    public function featured(User $user)
+    {
+        if(DB::table('featured_users')->where('user_id', $user->id)->exists())
+        {
+            return redirect()->route('admin.access.user.index')->withFlashWarning(trans('alerts.backend.users.featuredexist'));
+        }
+        else{
+            DB::table('featured_users')->insert([
+                [
+                    'user_id'       => $user->id,
+                    'created_by'    => access()->user()->id,
+                    'created_at'    => Carbon::now(),
+                ]
+            ]);
+
+            return redirect()->route('admin.access.user.index')->withFlashSuccess(trans('alerts.backend.users.featured'));
+        }
     }
 }

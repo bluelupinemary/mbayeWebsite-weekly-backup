@@ -1,11 +1,20 @@
 @extends('frontend.layouts.profile_layout')
 
 @section('before-styles')
+<meta property="og:image" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+<meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($blog->summary), 20, '...') }}">
+<meta property="og:url" content="{{ url('') }}">
+<meta property="og:title" content="{{ $blog->name }}">
+<meta name="twitter:card" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+<meta property="og:type" content="website" /> <meta property="og:image:width" content="720" />
+<meta property="og:image:height" content="720" />
+
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.carousel.min.css') }}">
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.theme.default.min.css') }}">
+<link rel="stylesheet" href="{{ asset('front/CSS/bootstrap-toggle.min.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog-responsive.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('trix/trix.css')}}">
@@ -35,6 +44,9 @@
                             </p>
                             <p class="month">
                                 {{ Carbon\Carbon::parse($blog->publish_datetime)->format('F').', '.Carbon\Carbon::parse($blog->publish_datetime)->format('Y') }}
+                            </p>
+                            <p>
+                                {{ Carbon\Carbon::parse($blog->publish_datetime)->format('h:i A') }}
                             </p>
                         </div>
                         <div class="blog-buttons blog-button-1">
@@ -209,10 +221,86 @@
             <button class="navigator-zoomout-btn">
                 <i class="fas fa-undo-alt"></i>
             </button>
+
+            @php
+                $share_links = Share::currentPage(null, [], '', '')
+                    ->facebook()
+                    ->twitter()
+                    ->linkedin('Extra linkedin summary can be passed here')
+                    ->whatsapp();
+            @endphp
+            
+            <div class="menu-button">
+                <img src="{{asset('front/icons/share.png')}}" alt="">
+                {{-- <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                <a href="#"><i class="zmdi zmdi-google-plus"></i></a>
+                <a href="#"><i class="zmdi zmdi-codepen"></i>   </a>
+                <a href="#"><i class="zmdi zmdi-codepen"></i>   </a> --}}
+                {!! $share_links !!}
+                <a href="#" class="internal-share tooltips top" data-toggle="modal" data-target="#shareBlogModal"><span class="">Repost this blog</span><img src="{{asset('front/icons/alert-icon.png')}}" alt=""></a>
+            </div>
         </div>
         <div class="naff-fart-reaction">
             <audio id="fart-audio" src="{{asset('front/sound-effects/fart.mp3')}}" preload="auto"></audio>
             <img src="{{asset('front/images/naff555Votes.png')}}" alt="">
+        </div>
+    </div>
+
+    <div class="modal" id="shareBlogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title" id="exampleModalLongTitle">Share Story</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="share-blog-form">
+                    @csrf
+                    <textarea name="share_caption" id="" cols="30" rows="3" placeholder="Enter caption here..."></textarea>
+                    <label class="checkbox-inline">
+                        <input id="toggle-event" type="checkbox" data-toggle="toggle" data-on="Yes" data-off="No"> Share as Permanent Blog
+                    </label>
+                    <input type="hidden" name="share_as_permanent" value="0">
+                    <div class="blog_tags">
+                        <fieldset>
+                            <p>Select Tags: </p>
+                            @foreach ($tags as $tag)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{$tag->id}}" name="tag_ids[]">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                    {{$tag->name}}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </fieldset>
+                    </div>
+                    <input type="hidden" name="blog_id" value="{{$blog->id}}">
+                    <div class="blog-share-preview">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="owner-profile-picture">
+                                    <img src="{{asset('storage/profilepicture/'.$blog->owner->getProfilePicture())}}" alt="">
+                                </div>
+                                <div class="owner-name">{{$blog->owner->first_name.' '.$blog->owner->last_name}}</div>
+                            </div>
+                             {{-- <img class="card-img-top" src="" alt="Card image cap"> --}}
+                            <div class="card-body" style="background-image: url({{ asset('storage/img/blog/'.$blog->featured_image) }});">
+                            </div>
+                            <div class="card-footer">
+                                <div class="blog-share-title">{{$blog->name}}</div>
+                                <div class="blog-description"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="share-blog-btn" form="share-blog-form">Share Now</button>
+            </div>
+          </div>
         </div>
     </div>
 </div>
@@ -220,10 +308,14 @@
 
     @section('after-scripts')
     <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="{{asset('front/JS/popper.min.js')}}"></script>
     <script src="{{ asset('front/JS/bootstrap.min.js') }}"></script>
     <script src="{{ asset('front/owl-carousel/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('front/JS/mo.min.js') }}"></script>
+    <script src="{{ asset('js/share.js') }}"></script>
+    <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
+    <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('front/JS/bootstrap-toggle.min.js')}}"></script>
     <script>
         var url = $('meta[name="url"]').attr('content');
         var token = '{{ Session::token() }}';
@@ -959,5 +1051,78 @@
             }
         });
         /* Icon 3 */
+
+        $('#share-blog-btn').click(function(e) {
+            e.preventDefault();
+
+            var form_url = url+'/share_story';
+            var $form = $('form#share-blog-form');
+
+            var post_data = new FormData($form[0]);
+
+            $.ajax({
+                url: form_url,
+                method: 'post',
+                data: post_data,
+                // dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
+                    $('#shareBlogModal').modal('hide');
+                    Swal.fire({
+                        title: '<span class="success">Success!</span>',
+                        text: data.message,
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    });
+                },
+                error: function (request, status, error) {
+                    $('#shareBlogModal').modal('hide');
+                    var response = JSON.parse(request.responseText);
+                    var errorString = '';
+                    var title = 'Error!';
+
+                    if(response.errors) {
+                        title = 'Error in processing request...';
+                        $.each( response.errors, function( key, value) {
+                            errorString += '<p>' + value + '</p>';
+                        });
+                    }
+                    
+                    Swal.fire({
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        title: title,
+                        html: errorString,
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    }).then((res) => {
+                        $('#shareBlogModal').modal('show');
+                    });
+                }
+            });
+        });
+
+        $('#toggle-event').change(function() {
+            var value = $(this).prop('checked');
+
+            if(value) {
+                $('input[name="share_as_permanent"]').val('1');
+                $('.blog_tags').show();
+            } else {
+                $('input[name="share_as_permanent"]').val('0');
+                $('.blog_tags').hide();
+            }
+        });
     </script>
     @endsection

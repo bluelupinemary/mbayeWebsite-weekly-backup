@@ -1001,7 +1001,7 @@ function contentDisplay() {
                     page = page+1 ;
                     loading = true;
             
-                    var url_api=url+"/api/v1/blogs?page="+page
+                    var url_api=url+"/api/v1/my_career_blogs?id="+id+"&page="+page
                     $.getJSON(url_api, function(data) 
                     {
                       

@@ -35,7 +35,6 @@
             background-repeat: no-repeat !important;
             background-position: center !important;
             background-size: contain !important;
-            
         }
 
         
