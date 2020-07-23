@@ -12,22 +12,27 @@ class ShowResponse implements Responsable
 
     protected $blogTags;
 
-    public function __construct($blog, $status,$blogTags)
+    public function __construct($blog, $status,$blogTags,$comments,$emotions)
     {
+
         $this->blog = $blog;
         $this->status = $status;
         $this->blogTags = $blogTags;
+        $this->comments = $comments;
+        $this->emotions = $emotions;
     }
 
     public function toResponse($request)
     {
         $selectedtags = $this->blog->tags->pluck('id')->toArray();
-
+        // dd($this->comments, $this->emotions);
         return view('backend.blogs.show')->with([
             'blog'               => $this->blog,
             'blogTags'           => $this->blogTags,
             'selectedtags'       => $selectedtags,
             'status'             => $this->status,
+            'comments'           =>  $this->comments,
+            'emotions'          => $this->emotions,
         ]);
     }
 }

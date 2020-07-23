@@ -1731,3 +1731,16 @@ img.naff-reaction {
 .easy-autocomplete-container ul {
     background: rgba(12, 44, 90, 0.73) !important;
 }
+.easy-autocomplete-container ul {
+    background: rgba(12, 44, 90, 0.73) !important;
+    list-style: none !important;
+    list-style-type: none !important;
+}
+.easy-autocomplete-container ul  li{
+    list-style: none !important;
+    list-style-type: none !important;
+}
+ul{
+    list-style: none !important;
+    list-style-type: none !important;
+}

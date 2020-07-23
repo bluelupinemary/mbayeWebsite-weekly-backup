@@ -887,9 +887,9 @@ function contentDisplay() {
         $.getJSON(url_api, function(data) 
         {
             images=data['data'];
-            page=data['meta']['current_page'];
-            last_page=data['meta']['last_page'];
-            Total_count=data['meta']['total'];
+            page=data['current_page'];
+            last_page=data['last_page'];
+            Total_count=data['total'];
             snowstack_init();
             jQuery.each(images, snowstack_addimage);
             updateStack(1);

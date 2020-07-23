@@ -1,9 +1,31 @@
 @extends('frontend.layouts.app')
+
+@section('after-styles')
+	<link rel="stylesheet" href="{{asset('front/CSS/search-friends.css')}}">
+	<style>
+		#search-friends {
+			z-index: 1;
+		}
+
+		#search-friends {
+			height: 9.2vw;
+		}
+
+		.add-friend-icon {
+			background: #3cb878;
+			right: 0;
+			top: 1%;
+			left: 50%;
+			transform: translate(-50%, 0);
+		}
+	</style>
+@endsection
+
 @section('content')
 <div class="container">
-  <div class="app">
-    <accept-component :auth="{{ Auth::user() }}" ></accept-component>
-</div>
+	<div class="app">
+		<accept-component :auth="{{ Auth::user() }}" ></accept-component>
+	</div>
     {{-- <h1>Friend Requests</h1>
     <div class="app">
     </div>

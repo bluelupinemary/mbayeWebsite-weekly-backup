@@ -17,10 +17,9 @@ use App\Http\Responses\Backend\Blog\EditResponse;
 use App\Http\Responses\Backend\Blog\IndexResponse;
 use App\Http\Responses\Backend\Blog\CreateResponse;
 use App\Repositories\Frontend\GeneralBlogs\GeneralBlogsRepository;
-use App\Http\Requests\Backend\Blogs\StoreBlogsRequest;
-use App\Http\Requests\Backend\Blogs\ManageBlogsRequest;
-use App\Http\Requests\Backend\Blogs\UpdateBlogsRequest;
 use App\Http\Requests\Backend\GeneralBlogShares\StoreGeneralBlogSharesRequest;
+use App\Http\Requests\Backend\GeneralBlogs\StoreGeneralBlogsRequest;
+use App\Events\GeneralBlogEvent;
 
 /**
  * Class BlogsController.
@@ -51,6 +50,83 @@ class GeneralBlogsController extends Controller
         $this->blog = $generalblog;
     }
 
+    /**
+     * @param \App\Http\Requests\Backend\Blogs\ManageBlogsRequest $request
+     *
+     * @return \App\Http\Responses\Backend\Blog\IndexResponse
+     */
+    public function index(Request $request)
+    {
+        $search = $request->search;
+        $sort = $request->sort;
+        $status = $request->status;
+        // dd(Carbon::now()->subDay());
+
+        $stories = GeneralBlog::where('created_by', Auth::user()->id)
+            ->where('publish_datetime', '>=', Carbon::now()->subDay())
+            ->when($status, function ($query, $status) {
+                return  $query->where('status', $status);
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('content', 'like', '%'.$search.'%');
+                });
+            })
+            ->when($sort, function ($query, $sort) {
+                if($sort == 'asc_name') {
+                    $query = $query->orderBy('name', 'asc');
+                } else if($sort == 'desc_name') {
+                    $query = $query->orderBy('name', 'desc');
+                }
+
+                return  $query;
+            })
+            ->get();
+
+        if($status == 'Draft' || $status == 'Unpublished') {
+            $shared_stories = [];
+        } else {
+            $shared_stories = GeneralBlogShare::where('created_by', Auth::user()->id)
+                ->where('publish_datetime', '>=', Carbon::now()->subDay())
+                ->whereHas('blog', function($q) use ($search, $sort, $status){
+                    $q->when($search, function ($query, $search) {
+                        return $query->where(function ($q) use ($search) {
+                            $q->where('name', 'like', '%'.$search.'%')
+                            ->orWhere('content', 'like', '%'.$search.'%');
+                        });
+                    });
+                })
+                ->with('blog')
+                ->get();
+        }
+
+        $blogs = $stories->merge($shared_stories)
+            ->when($sort, function ($query, $sort) {
+                if($sort == 'asc_publisheddate') {
+                    $query = $query->whereNotNull('publish_datetime')
+                        ->sortBy('publish_datetime');
+                } else if($sort == 'desc_publisheddate') {
+                    $query = $query->whereNotNull('publish_datetime')
+                        ->sortByDesc('publish_datetime');
+                }
+                return  $query;
+            })
+            ->when(!$sort, function ($query, $sort) {
+                return $query->sortByDesc('publish_datetime');
+            })
+            ->paginate(9);
+
+        $alert = false;
+
+        if(!$request->has(['search', 'sort', 'status'])) {
+            $alert = $this->hasExpiringStories($blogs);
+        }
+
+        // dd($alert);
+        return view('frontend.blog.view_all_stories', compact('blogs', 'alert'));
+    }
+
     public function show($id)
     {
         $blog = GeneralBlog::find($id);
@@ -77,6 +153,26 @@ class GeneralBlogsController extends Controller
         $tags = BlogTag::whereNotIn('id', ['8','9'])->get();
         
         return view('frontend.blog.single_general_blog', compact('blog', 'tags'));
+    }
+
+    public function saveGeneralBlog(StoreGeneralBlogsRequest $request)
+    {
+        if($request->blog_id != '') {
+            $blog = GeneralBlog::find($request->blog_id);
+            $saved_blog = $this->blog->updateGeneralBlog($blog, $request->except('_token'));
+        } else {
+            $saved_blog = $this->blog->createGeneralBlog($request->except('_token'));
+        }
+        
+        broadcast(new GeneralBlogEvent($saved_blog))->toOthers();
+        
+        $user = User::find($request->user_id);
+
+        if($user->roles[0]->name == 'User') {
+            return array('status' => 'success', 'message' => 'Blog published successfully!', 'data' => $saved_blog);
+        } else {
+            return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
+        }
     }
 
     public function sharedStory($share_id)
@@ -152,5 +248,18 @@ class GeneralBlogsController extends Controller
         }
         
         return array('message' => 'Shared blog successfully!');
+    }
+
+    public function hasExpiringStories($stories)
+    {
+        $expiring = false;
+
+        foreach($stories as $story) {
+            if($story->isNearlyExpired()) {
+                $expiring = true;
+            }
+        }
+
+        return $expiring;
     }
 }

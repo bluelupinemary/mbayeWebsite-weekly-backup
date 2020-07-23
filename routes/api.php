@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/search', 'Frontend\Friendship\FriendshipController@searchuser')->name('search');
+Route::get('/search/{q}', 'Frontend\Friendship\FriendshipController@searchuser')->name('search');
 Route::post('/readnotification','Frontend\Notify\NotifyController@readnotification');
 Route::get('/blogpost/{blog}', 'Frontend\Comment\CommentController@blogpost');
 Route::post('/notify','Frontend\Notify\NotifyController@getnotifications');
@@ -22,6 +22,19 @@ Route::post('/blogs/{blog}/emotions','Frontend\Like\LikeController@setemotion');
 Route::get('/blogs/{blog}/comments', 'Frontend\Comment\CommentController@index');
 Route::post('/blogs/{blog}/comment', 'Frontend\Comment\CommentController@store');
 Route::post('/save_collage', 'Frontend\User\DashboardController@saveCollage');
+Route::post('/save-careerprofile', 'Frontend\JobSeekerProfile\JobSeekerProfilesController@saveJobSeekerProfile');
+
+
+//general blog emotions and comments
+Route::get('/generalblogpost/{blog}', 'Frontend\Comment\GeneralCommentController@blogpost');
+Route::post('/countgeneralcomments','Frontend\Comment\GeneralCommentController@countcomment');
+Route::post('/countgeneralemotions','Frontend\Like\GeneralLikeController@countemotions');
+Route::post('/usergeneralreaction','Frontend\Like\GeneralLikeController@getUserReaction');
+Route::post('/blogs/{blog}/generalemotions','Frontend\Like\GeneralLikeController@setemotion');
+Route::get('/blogs/{blog}/generalcomments', 'Frontend\Comment\GeneralCommentController@index');
+Route::post('/blogs/{blog}/generalcomment', 'Frontend\Comment\GeneralCommentController@store');
+
+
 
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], function () {
     Route::group(['prefix' => 'auth', 'middleware' => ['guest']], function () {
@@ -63,12 +76,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::resource('bloggeneral', 'GeneralBlogsController', ['except' => ['create', 'edit']]);
         Route::get('bloggeneral_userwise','GeneralBlogsController@show_generalblog_userwise');
         Route::get('showallblogs','BlogsController@show_all_blogs_tagwise');
-        Route::resource('jobseekers', 'JobSeekerProfilesController', ['except' => ['create', 'edit']]);
-        Route::post('jobseeker/search','JobSeekerProfilesController@getres')->name('getres');
-        Route::resource('all_designed_panels', 'BlogPanelDesignController', ['except' => ['create', 'edit']]);
-        Route::get('userwise_designed_panels','BlogPanelDesignController@show_userwise_designed_panels');
-        Route::get('my_career_blogs','BlogsController@show_my_career_blogs');
-        Route::get('friend_career_blogs','BlogsController@show_my_friends_career_blogs');
-        
+
+        Route::resource('all_designed_pannels', 'BlogPannelDesignController', ['except' => ['create', 'edit']]);
+  
 });
 

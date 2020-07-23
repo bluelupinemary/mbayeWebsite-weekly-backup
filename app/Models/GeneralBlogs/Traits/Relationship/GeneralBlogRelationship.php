@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Models\GeneralBlogs\Traits\Relationship;
-
-use App\Models\Like\Like;
-use App\Models\Comment\Comment;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
-use App\Models\BlogVideos\BlogVideo;
+use App\Models\GeneralBlogVideos\GeneralBlogVideo;
+use App\Models\Like\GeneralLike;
+use App\Models\Comment\GeneralComment;
 use App\Models\BlogPrivacy\BlogPrivacy;
 
 /**
@@ -27,7 +26,7 @@ trait GeneralBlogRelationship
      */
     public function videos()
     {
-        return $this->hasMany(BlogVideo::class, 'blog_id');
+        return $this->hasMany(GeneralBlogVideo::class, 'blog_id');
     }
 
     // public function likes(){
@@ -36,11 +35,11 @@ trait GeneralBlogRelationship
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(GeneralComment::class, 'blog_id');
     }
 
     public function likes() {
-        return $this->hasMany(Like::class, 'blog_id');
+        return $this->hasMany(GeneralLike::class, 'blog_id');
     }
 
     public function privacy()

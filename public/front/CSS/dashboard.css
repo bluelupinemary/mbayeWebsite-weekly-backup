@@ -2876,9 +2876,9 @@ a.judy_collins_2 {
 }
 
 .notifications-count.float-right {
-	-webkit-transform: translate(50%, -123%) scale(0.8);
-    -moz-transform: translate(50%, -123%) scale(0.8);
-	transform: translate(50%, -123%) scale(0.8);
+	-webkit-transform: translate(100%, -123%) scale(0.8);
+	-moz-transform: translate(100%, -123%) scale(0.8);
+	transform: translate(100%, -123%) scale(0.8);
 	/* font-size: 0.8vw; */
 }
 

@@ -31,20 +31,7 @@ function create_camera(){
     camera.attachControl(canvas,true);
     scene.activeCamera = camera;
     camera.checkCollisions = true;
-    
-
-    // //save the initial state of the camera
-    // cameraInitState.position = new BABYLON.Vector3(-198.34,80.42,162.37);
-    // cameraInitState.a = camera.alpha;
-    // cameraInitState.b = camera.beta;
-    // cameraInitState.r = camera.radius;
-    // cameraInitState.upperA = camera.upperAlphaLimit;
-    // cameraInitState.lowerA = camera.lowerAlphaLimit;
-    // cameraInitState.upperB = camera.upperBetaLimit;
-    // cameraInitState.lowerB = camera.lowerBetaLimit;
-    // cameraInitState.upperR = camera.upperRadiusLimit;
-    // cameraInitState.lowerR = camera.lowerRadiusLimit;
-    // cameraInitState.angularY = camera.angularSensibilityY;
+   
 
     return camera;
 }//end of create camera function
@@ -54,17 +41,18 @@ function create_camera(){
 function create_light(){
     let light = new BABYLON.HemisphericLight("hemiLight",  new BABYLON.Vector3(-30,200,10), scene);
     light.diffuse = new BABYLON.Color3(1,1,1);
+    light.intensity = 1;
     light.radius = 500;
     light.specular = new BABYLON.Color3(0,0,0);
     light.groundColor = new BABYLON.Color3(0.3,0.3,0.3);
-    
+    return light;
 }//end of create light function
 
 
 //############################################# CREATE THE SCENE'S SKYBOX #############################################//
 //function to create the scene's skybox
 function create_skybox(){ 
-    let skybox = BABYLON.MeshBuilder.CreateBox("contactSkybox", {size:9000.0}, scene);
+    let skybox = BABYLON.MeshBuilder.CreateBox("skybox", {size:9000.0}, scene);
     skybox.position.y = 100;
     skybox.position.z = 1000;
     skybox.rotation.y = BABYLON.Tools.ToRadians(-60);
@@ -72,7 +60,7 @@ function create_skybox(){
     skybox.checkCollisions = true;
     skybox.infiniteDistance = true;
     skybox.renderingGroupId = 0;
-    let skyboxMaterial = new BABYLON.StandardMaterial("contactSkyboxMaterial", scene);
+    let skyboxMaterial = new BABYLON.StandardMaterial("skyboxmatl", scene);
     skyboxMaterial.backFaceCulling = false;
 
     let files = [   
@@ -215,13 +203,12 @@ document.onkeydown = (evt)=>{
 
 
 /*################################################### START CREATE COLLAGES FUNCTION ############################################## */
-function setup_collage(scriptNo){
-    if(scriptNo == 1){
+function setup_collage(){
         let wallMatl = new BABYLON.StandardMaterial(name, scene);
         wallMatl.diffuseColor = BABYLON.Color3.Black();
         // wallMatl.diffuseTexture = new BABYLON.Texture("front/images3D/feetScene/gallery/"+name+".png", scene);
-        wallMatl.diffuseTexture = new BABYLON.Texture("front/textures/storyMbaye/collage-1-2.png", scene);
-        wallMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/collage-1-2.png", scene);
+        wallMatl.diffuseTexture = new BABYLON.Texture(texturePath+"collage-1-2.png", scene);
+        wallMatl.opacityTexture = new BABYLON.Texture(texturePath+"collage-1-2.png", scene);
         wallMatl.diffuseTexture.uScale = 1;
         wallMatl.diffuseTexture.vScale = -1;
         // wallMatl.alpha = 0.7;
@@ -232,19 +219,18 @@ function setup_collage(scriptNo){
         wallMatl.backFaceCulling = false;//Allways show the front and the back of an element
 
         collage_wall.material = wallMatl;
-        add_delay(collage_wall,4000,5000);   
-        
-    }
+        add_delay(collage_wall,3000,5000);   
 }
 
 function change_collage_photo(stageNo){
     if(collage_wall.material) collage_wall.material.dispose();
-    // let matlName = stageMap.get(stageNo).collage;
+    let img = stageMap.get(stageNo).collage;
+    console.log("the collage image: ", img);
     let wallMatl = new BABYLON.StandardMaterial(name, scene);
         wallMatl.diffuseColor = BABYLON.Color3.Black();
         // wallMatl.diffuseTexture = new BABYLON.Texture("front/images3D/feetScene/gallery/"+name+".png", scene);
-        wallMatl.diffuseTexture = new BABYLON.Texture("front/textures/storyMbaye/collage-3-1.png", scene);
-        wallMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/collage-3-1.png", scene);
+        wallMatl.diffuseTexture = new BABYLON.Texture(texturePath+img, scene);
+        wallMatl.opacityTexture = new BABYLON.Texture(texturePath+img, scene);
 
         wallMatl.diffuseTexture.uScale = 1;
         wallMatl.diffuseTexture.vScale = -1;
@@ -263,20 +249,25 @@ function change_collage_photo(stageNo){
 
 
 
-function init_photo(name,size,pos){
+function init_photo(name,size,pos,stageNo){
     let plane = BABYLON.MeshBuilder.CreatePlane(name, {width:size.w,height:size.h}, scene);
     // plane.isVisible = false;
     plane.position = new BABYLON.Vector3(pos.x,pos.y,pos.z);
-    // plane.rotationQuaternion = new BABYLON.Quaternion(rot.x, rot.y, rot.z, rot.w);
-    
     
     let planeMatl = new BABYLON.StandardMaterial(name, scene);
-    planeMatl.diffuseTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
-    // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
-    planeMatl.diffuseTexture.hasAlpha = true;
+    planeMatl.diffuseTexture = new BABYLON.Texture(imagePath+name, scene);
    
-    // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
+    planeMatl.diffuseTexture.hasAlpha = true;
     planeMatl.diffuseTexture.uScale = -1;
+
+    if(stageNo === 5 || stageNo === 6 || stageNo === 7){
+        plane.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(-90),0,BABYLON.Tools.ToRadians(0));
+        planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
+        planeMatl.opacityTexture.uScale = -1;
+        // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
+    }
+    // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
+    
    
     
     // planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
@@ -396,6 +387,54 @@ function init_plane(name,matlName,imgPath,w,h,pos, rot){
   return plane;
 }
 
+function init_disc(stageNo,radius){
+    let img = stageMap.get(stageNo).discImg;
+    if(!radius) radius = 200;
+    
+    let disc = BABYLON.MeshBuilder.CreateDisc("ImageDisc"+stageNo, {radius:radius, tessellation: 0}, scene);
+    
+    disc.position = new BABYLON.Vector3(0,1000,0); 
+  
+    disc.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(90),BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(180));
+    
+    let discMatl = new BABYLON.StandardMaterial("matlName", scene);
+    discMatl.diffuseTexture = new BABYLON.Texture(imagePath+img, scene);
+    discMatl.emissiveColor = BABYLON.Color3.White();
+    
+    hl.addMesh(disc,new BABYLON.Color3(0,0.5,0.5));                                 //add glow effect to the disc
+    discMatl.backFaceCulling = false;//Allways show the front and the back of an element
+
+    disc.material = discMatl;
+
+    // var alpha = 0;
+	// scene.registerBeforeRender(() => {
+	// 	alpha += 0.05;
+		
+	// 	hl.blurHorizontalSize = 0.6 + Math.cos(alpha) * 0.6 + 0.6;		
+	// 	hl.blurVerticalSize = 0.6 + Math.sin(alpha / 3) * 0.6 + 0.6;
+	// });
+
+    // enable_gizmo(disc);
+
+    return disc;
+}
+
+
+function init_earth(){
+    let temp = BABYLON.Mesh.CreateSphere("earth", 30, 200, scene);
+    temp.position = new BABYLON.Vector3(0,0,0);
+    let temp_material = new BABYLON.StandardMaterial("earthMatl",scene);
+    temp_material.diffuseTexture = new BABYLON.Texture(texturePath+'earthMap.jpg', scene);
+    temp_material.diffuseTexture.vScale = -1;
+    temp_material.diffuseTexture.uScale = -1;
+    temp_material.specularColor = new BABYLON.Color3(0,0,0);
+    temp_material.emissiveColor = BABYLON.Color3.White();
+    temp.material = temp_material;
+   
+
+    return temp;
+}//end of init planet function
+
 
 // //function that enables the on mouse over and on mouse out events on a flower
 // function add_action_mgr(theFlower){
@@ -479,6 +518,7 @@ function next_stage(stageNo){
 
 
 var speed = 45;
+let speed2 = 60;
 var frameCount = 200;
 
 var animateCameraTargetToPosition = function(cam, speed, frameCount, newPos) {
@@ -500,11 +540,56 @@ var animateCameraToRadius = function(cam, speed, frameCount, newRad) {
 }
 
 var animateObjectScaling = function(obj, speed, frameCount, newScale) {
-    console.log("scale this: ", obj.name);
     var ease = new BABYLON.CubicEase();
     ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
-    BABYLON.Animation.CreateAndStartAnimation('at4', obj, 'scaling', speed, frameCount, obj.scaling, newScale, 0, ease);
+    BABYLON.Animation.CreateAndStartAnimation('objScale', obj, 'scaling', speed, frameCount, obj.scaling, newScale, 0, ease);
 }
+
+var animateObjectPosition = function(obj, speed, frameCount, newPos) {
+    var ease = new BABYLON.CubicEase();
+    ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+    BABYLON.Animation.CreateAndStartAnimation('objPos', obj, 'position', speed, frameCount, obj.position, newPos, 0, ease);
+}
+
+
+var animateObjectRotation = function(obj, speed, frameCount, newRot) {
+    var ease = new BABYLON.CubicEase();
+    ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+    BABYLON.Animation.CreateAndStartAnimation('objPos', obj, 'rotation', speed, frameCount, obj.rotation, newRot, 0, ease);
+}
+
+
+var setCamDefault = function(radius) {
+    storyCamera.target = new BABYLON.Vector3(0,0,0);
+    if(radius) storyCamera.radius = radius;
+    else storyCamera.radius = 1500;
+    storyCamera.alpha = BABYLON.Tools.ToRadians(90);
+    storyCamera.beta = BABYLON.Tools.ToRadians(90);
+};
+var setCamLateralLeft = function() {
+    animateCameraTargetToPosition(storyCamera, speed, frameCount, new BABYLON.Vector3(5, 15, 0));
+    animateCameraToPosition(storyCamera, speed, frameCount, new BABYLON.Vector3(-85, 15, 0));
+};
+var setCamLateralRight = function() {
+    animateCameraTargetToPosition(storyCamera, speed, frameCount, new BABYLON.Vector3(-5, 15, 0));
+    animateCameraToPosition(storyCamera, speed, frameCount, new BABYLON.Vector3(85, 15, 0));
+};
+var setCamPosterior = function() {
+    animateCameraTargetToPosition(storyCamera, speed, frameCount, new BABYLON.Vector3(0, 15, -5));
+    animateCameraToPosition(storyCamera, speed, frameCount, new BABYLON.Vector3(0, 15, 85));
+};
+var setCamAnterior = function() {
+    animateCameraTargetToPosition(storyCamera, speed, frameCount, new BABYLON.Vector3(0, 15, 5));
+    animateCameraToPosition(storyCamera, speed, frameCount, new BABYLON.Vector3(0, 15, -85));
+};
+var setCamSuperior = function() {
+    storyCamera.beta = BABYLON.Tools.ToRadians(0);
+    storyCamera.radius = 130;
+};
+var setCamInferior = function() {
+    storyCamera.beta = BABYLON.Tools.ToRadians(180);
+    storyCamera.radius = 130;
+};
 
 
 
@@ -563,13 +648,13 @@ function create_animation(theObjName){
 }
 
 let isRotateSkybox = true;
+let isEarthRotating = true;
+let earth_obj;
 function rotate_sky(){
-    let isStartStory = true;
-    
-    
+   
     engine.runRenderLoop(function(){
-        if(isStartStory){
-            earth_obj.rotate(new BABYLON.Vector3(0,4,0), -0.005, BABYLON.Space.LOCAL);
+        if(earth_obj){
+            if(isEarthRotating) earth_obj.rotate(new BABYLON.Vector3(0,4,0), -0.005, BABYLON.Space.LOCAL);
         }
         if(skybox && isRotateSkybox){
             skybox.rotate(new BABYLON.Vector3(0,4,0), 0.001, BABYLON.Space.LOCAL);
@@ -579,83 +664,47 @@ function rotate_sky(){
 }
 
 function remove_stage_objects(){
-    for(const [key,val] of stageObjMap.entries()){
-        console.log("remove obj: ", key,val);
+    for(const [key,val] of currStageObjMap.entries()){
         val.dispose();
     }
-    stageObjMap.clear();
-    console.log(stageObjMap);
+    currStageObjMap.clear();
 }
 
-function remove_text_class(){
+function remove_texts(){
     $('.firstVideoOverlayText div').each(function() {
-        $(this).removeClass('overlayTxt');
+        // $(this).removeClass('overlayTxt');
+        $(this).remove();
     });
 
 }
 
-function start_text_animation(stageNo){
-    let i=0;
+function create_texts(stageNo){
+    let i=1;
     let textArr = stageMap.get(stageNo).texts;
-    $('.firstVideoOverlayText div').each(function() {
-       
-        $(this).attr('class','overlayTxt');
-        $(this).text(textArr[i]);
+    // let h = stageMap.get(stageNo).rowHeight;
+    // console.log(textArr.length, textArr);
+    // $('.overlayTxt').css("height",h);
+    textArr.forEach(function(text){
+        $('.firstVideoOverlayText').append(text);
         i++;
-        // console.log('counter: ',a);
     });
-    // console.log("restarted animation");
-}
 
+    // let lastScriptTxt = document.getElementById("txt7");
+    let lastScriptTxt = document.getElementById("txt1");
+    var animationEvent = whichAnimationEvent();
+    lastScriptTxt.addEventListener(animationEvent, showContinueButton);
 
-let stageObjMap = new Map();
-function setup_stage(stageNo){
-    if(stageNo === 1){
-        
-        $('.firstVideoOverlayText div').each(function() {
-            $(this).attr('class', 'overlayTxt');
-        });
-
-        setup_collage(1);
-        currentStage =3;
-        let burj = init_photo("burj",{w:40,h:80},{x: 0, y: 55, z: -889.87});
-        burj.setEnabled(false);
-        
-        stageObjMap.set(burj.name, burj)                                                //add the object to a map
-
-        setTimeout(function(){
-            burj.setEnabled(true);
-            animateObjectScaling(burj, 20, frameCount, new BABYLON.Vector3(10,10,10));
-            animateCameraToRadius(storyCamera, 20, frameCount, 500);
-        },10000);
-        
-
-    }else if(stageNo === 3){
-        collage_wall.isVisible = false;
-        remove_text_class();
-        remove_stage_objects();
-        setTimeout(function(){
-            start_text_animation(stageNo);
-        },100);
-        change_collage_photo(stageNo);
-        collage_wall.isVisible = true;
-        add_delay(collage_wall,5000,5000); 
-        
-    }
-
-    
-    // console.log("the scene: ", scene.meshes);
-    // scene.meshes.forEach(function(mesh){console.log(mesh.name);});
 }
 
 
 function showContinueButton(){
     $('#continueBtnDiv').css('visibility','visible');
+    // $('#continueBtn').show();
 }
 
 
 
-let lastScriptTxt = document.getElementById("txt7");
+
 
 function whichAnimationEvent(){
 
@@ -673,8 +722,7 @@ function whichAnimationEvent(){
     }
   }
   
-  var animationEvent = whichAnimationEvent();
-  lastScriptTxt.addEventListener(animationEvent, showContinueButton);
+
 
 
 
@@ -731,3 +779,8 @@ function stop_flower_music(){
 
 
 /*################################################### END OF SETUP YOUTUBE PLAYER FUNCTION ############################################## */
+
+
+let lastScriptTxt = document.getElementById("txt1");
+var animationEvent = whichAnimationEvent();
+lastScriptTxt.addEventListener(animationEvent, showContinueButton);

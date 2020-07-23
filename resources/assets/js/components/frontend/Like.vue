@@ -38,6 +38,7 @@ import EventBus from '../../frontend/event-bus';
       export default {
          props:{
             blog_id:Number,
+            is_design:String,
             user:Object
             },
             data:function() {
@@ -58,6 +59,12 @@ import EventBus from '../../frontend/event-bus';
             .listen('NewEmotion',(like) => {
                this.countemotions(this.blog_id);
             });
+            
+            // hide naff reaction if designs blog
+            if(this.is_design) {
+                $('.naff').css('pointer-events', 'none');
+                $('.naff img').hide();
+            }
       },
       methods:{
         countemotions(blogid) {

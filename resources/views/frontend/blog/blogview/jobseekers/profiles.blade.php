@@ -19,6 +19,7 @@
     </style>
 
 @section('content')
+<div class="app">
 <div id="block_land">
     <div class="content">
         <h1 class="text-glow">Turn your device in landscape mode.</h1>
@@ -40,7 +41,7 @@
             <div class="search-form">
                 <div class="input-group-prepend status-div">
                     <select class="custom-select" id="inputGroupSelect02" name="type">
-                        <option  selected value="Career Profile">Career Profile</option>
+                        <option  selected value="Profile">Profile</option>
                         <option value="Companies">Companies</option>
                         <option value="Jobs">Jobs</option>
                     </select>
@@ -116,7 +117,7 @@
     <audio id="fart" src="{{ asset('front') }}/audio/fart/fart.mp3" ></audio>
 </div>      
          <!--   <button class="zoom-btn zoom-out"><i class="fas fa-search-minus"></i></button>-->
-  
+</div>
 
 
     
@@ -124,14 +125,17 @@
 @endsection
 
 @section('before-scripts')
-
- {{-- {{-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script> --}}
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> --}}
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script> --}} --}}
+{{-- 
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script> --}}
 @endsection
 @section('after-scripts') 
 <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
 <script src="{{asset('front/JS/hammer.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+
+{{-- <script src="{{asset('front/JS/jquery.easy-autocomplete.min.js')}}"></script> --}}
 <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
 
 
@@ -415,11 +419,11 @@ $(document).ready(function() {
                 $('input[name="search"]').val(decodeURIComponent($.urlParam('search')));
             }
             
-            if($.urlParam('type') != '') {
+    if($.urlParam('type') != '') {
                 $('select[name="type"]').val($.urlParam('type'));
             }
 
-            if($.urlParam('country') != '') {
+    if($.urlParam('country') != '') {
                 $('select[name="country"]').val($.urlParam('country'));
             }
 
@@ -434,7 +438,7 @@ $(document).ready(function() {
                               }
                           }
                     };
-// $("#countries").easyAutocomplete(options);
+ $("#countries").easyAutocomplete(options);
 
     var elem = document.documentElement;
 function openFullscreen() {

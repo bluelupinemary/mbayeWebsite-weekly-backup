@@ -55,13 +55,17 @@ class FriendRequestNotification extends Notification implements ShouldQueue
                 'sender_id' => $this->friendship->sender_id,
                 'recipient_id'   => $this->friendship->recipient_id,
                 'user' => User::where('id',$this->friendship->sender_id)->first(),
+                'message' => 'sent you friend request'
         ];
     }
 
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'status' => 'OK',
+            'sender_id' => $this->friendship->sender_id,
+            'recipient_id'   => $this->friendship->recipient_id,
+            'user' => User::where('id',$this->friendship->sender_id)->first(),
+            'message' => 'sent you friend request'
         ]);
     }
     public function broadcastType()

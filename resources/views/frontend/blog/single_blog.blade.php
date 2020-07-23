@@ -201,7 +201,7 @@
             </div>
         </div>
         
-        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}"></like-component>
+    <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" :is_design="{{($blog->isDesignsBlog() ? 'true' : 'false')}}"></like-component>
         <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
             @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
                 <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""

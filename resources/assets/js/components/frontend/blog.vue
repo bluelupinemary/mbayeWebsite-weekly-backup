@@ -33,7 +33,11 @@
                 currentCell:-1,
                 magnifyMode : false,
                 last_page:'',
-                Total_pages:Number,
+                Total_pages:0,
+                i:0,
+                page:1,
+                loading:true,
+                newcell:Number,
         }
       },
        mounted () {
@@ -58,23 +62,19 @@
       },
     fetchblogs() {
         let that = this;
-        // var tagname = this.tagvalue.name;   
-        var page = 1;
-        var loading = true;
-        // var images = this.images;
-        // var snowstack_addimage = this.snowstack_addimage;
         /* Calling API for fetching images */
-        axios.get("/api/v1/blogbytag/"+that.tagvalue.name+"?page="+page)
+        axios.get("/api/v1/blogbytag/"+that.tagvalue.name+"?page="+that.page)
         .then((response) => {
             // alert("fetchblogs called");
-            page=1;
+            // page=1;
             that.images=response.data.data;
             var images = response.data.data;
-            console.log(that.images);
-            page=response.data.meta.current_page;
+            that.page=response.data.meta.current_page;
             that.last_page=response.data.meta.last_page;
+            console.log(that.last_page);
             that.Total_pages=(response.data.meta.total/25);
             that.Total_pages=parseInt(that.Total_pages);
+            console.log(that.Total_pages);
             Total_count=response.data.meta.total;
             snowstack_init();
             // checkflow(121212121212122);
@@ -84,7 +84,7 @@
             jQuery("#rstack2").empty();
             jQuery.each(that.images,that.snowstack_addimage);
             that.updateStack(1);
-            loading = false;
+            that.loading = false;
             var keys = {up: true, down: true };
         
             var keymap = { 38: "up", 40: "down" };
@@ -95,19 +95,19 @@
             function updatekeys()
             { 
                 
-                var newcell = that.currentCell;
+                that.newcell = that.currentCell;
                 if (keys.up)
                 {
                     /* Up Arrow */
-                    newcell -= 1;
+                    that.newcell -= 1;
                 }
                 if (keys.down)
                 {
                     /* Down Arrow */
-                    newcell += 1;
+                    that.newcell += 1;
                 }
         
-                that.updateStack(newcell, that.magnifyMode);
+                that.updateStack(that.newcell, that.magnifyMode);
             }
 
             /* update scroll */
@@ -174,19 +174,15 @@
      updatescroll(scroll)
             { 
                 let that = this;
-                // var tagname = this.tagvalue.name;   
-                var page = 1;
-                var loading = true;
-                console.log(scroll);
                 
-                var newcell = that.currentCell;
+                that.newcell = that.currentCell;
                 if (scroll=='up')
                 {
                 
                     /* scroll up */
-                    if (newcell >= 3)
+                    if (that.newcell >= 3)
                     {
-                        newcell -= 3;
+                        that.newcell -= 3;
                         $(".most-naffed").css({'visibility':'visible'});
                     }
                 }
@@ -196,45 +192,45 @@
 
                  if (scroll=='down')
                 { 
-                    if(  that.cells.length>(newcell+3))
+                    if(  that.cells.length>(that.newcell+3))
                         {
-                            loading = false;
+                            that.loading = false;
         
                             }   
                             // $(".most-naffed").css({'visibility':'hidden'});
                   
                     /* scroll down */
                 // alert(page);
-              if(page==that.last_page) {
-                  if(newcell+4==that.cells.length)
+              if(that.page==that.last_page) {
+                  if(that.newcell+4==that.cells.length)
                 {     
-                    that.updateStack(newcell+4, that.magnifyMode);
+                    that.updateStack(that.newcell+4, that.magnifyMode);
                 }
-                loading = false;
+                that.loading = false;
                   // return false;
               }
-              if ((newcell+3) < (that.cells.length))
+              if ((that.newcell+3) < (that.cells.length))
           
                     {
-                        newcell += 3;
+                        that.newcell += 3;
                     }
-                    else if (!loading)
+                    else if (!that.loading)
                     { 
                         /* We hit the right wall, add some more */
-                    
-                        page = page+1 ;
-                        loading = true;
+                // debugger;
+                        that.page = that.page+1 ;
+                        that.loading = true;
                       
-                        // debugger
-                        // alert($(that).tagvalue.name);
-                        var url_api=url+"/api/v1/blogbytag/"+that.tagvalue.name+"?page="+page
+                        
+                    //    alert(that.page);
+                        var url_api=url+"/api/v1/blogbytag/"+that.tagvalue.name+"?page="+that.page
                         $.getJSON(url_api, function(data) 
                         {
     
                             that.images=data['data'];
                       
                   
-                      if((newcell + 3) != that.images.length)
+                      if((that.newcell + 3) != that.images.length)
                               jQuery.each(that.images,that.snowstack_addimage);
                     
                   
@@ -245,13 +241,12 @@
                 }
                 }
               
-                //if((newcell + 3)!=that.images.length)
-                  that.updateStack(newcell, that.magnifyMode);
+                //if((that.newcell + 3)!=that.images.length)
+                  that.updateStack(that.newcell, that.magnifyMode);
             },
     snowstack_addimage(reln, info)
     {   
         let that = this;
-        var i=0;
         var n=1;
         load_count++;
     
@@ -338,13 +333,13 @@
             var top;
             var bottom;
             var left;
-            img.className  = "cell_img_"+i;
+            img.className  = "cell_img_"+that.i;
            
             layoutImageInCell(img, cell.div[0]);
 
-            var cls_overlay="div_overlay_"+i;
-            var cls_title="div_title_"+i;
-            var cls_counts="div_counts_"+i;
+            var cls_overlay="div_overlay_"+that.i;
+            var cls_title="div_title_"+that.i;
+            var cls_counts="div_counts_"+that.i;
            
        
            cell.div.append(jQuery('<a class="mover viewflat blog_img" href="#""  onclick="play_note('+reln+')"></a>').append(img));
@@ -353,29 +348,29 @@
           
             var div_height=$(".div_img").css("height");
             var div_width=$(".div_img").css("width");
-            var div_img=$(".cell_img_"+i).css("height");
+            var div_img=$(".cell_img_"+that.i).css("height");
 
             
-             var pos = $(".cell_img_"+i).position();
+             var pos = $(".cell_img_"+that.i).position();
              width=Math.round(img.width)+1;
              height=Math.round(img.height)+2;
              var height_title=Math.round(img.height)/5
-             top=$(".cell_img_"+i).css("top");
-             bottom=$(".cell_img_"+i).css("bottom");
-             left=$(".cell_img_"+i).css("left");
+             top=$(".cell_img_"+that.i).css("top");
+             bottom=$(".cell_img_"+that.i).css("bottom");
+             left=$(".cell_img_"+that.i).css("left");
 
-             var className="div_count_icon"+i;
-             var className_bg="div_count_bg"+i;
+             var className="div_count_icon"+that.i;
+             var className_bg="div_count_bg"+that.i;
            
              
         
-        $(".div_overlay_"+i).css({width:width, height:height,
+        $(".div_overlay_"+that.i).css({width:width, height:height,
                                                 "position":"absolute",
                                                  left:left,top:top});
-     $(".div_title_"+i).css({'display':'none',width:width, height:height_title,
+     $(".div_title_"+that.i).css({'display':'none',width:width, height:height_title,
                                                 "position":"absolute",
                                                  left:left,top:top}); 
-        $(".div_counts_"+i).css({'display':'none',width:width, height:height,
+        $(".div_counts_"+that.i).css({'display':'none',width:width, height:height,
                                                 "position":"absolute",
                                                 left:left,top:top});
 
@@ -389,14 +384,14 @@
 
      
         
-        largest(nHot_Count,nCool_Count,nNaff_Count,i);
-           cell.div.addClass('div_img_' + i);
+        largest(nHot_Count,nCool_Count,nNaff_Count,that.i);
+           cell.div.addClass('div_img_' + that.i);
     
 
            if (width > height){ 
        
                 //it's a landscape
-                $(".div_title_"+i).css({"text-align":"left"});
+                $(".div_title_"+that.i).css({"text-align":"left"});
                 $(".div_img").attr('type','L');
                 top='85%';
                 var img_height=height+'px';
@@ -413,16 +408,16 @@
             else {
                 height="30%";
                 //it's a portrait
-                $(".div_title_"+i).css({"text-align":"center"});
+                $(".div_title_"+that.i).css({"text-align":"center"});
                 top='70%';
                 }
-                $(".div_count_bg"+i).css({"position":"absolute","width":width,
+                $(".div_count_bg"+that.i).css({"position":"absolute","width":width,
                                                     "float":"right","border":"0px solid white",
                                                     "height":height,"top":top,"left":left,'opacity':'35%','border':'0px solid white'});
 
          
            cell.div.css("opacity", 1);
-           i++;
+           that.i++;
            n++;
            });
         

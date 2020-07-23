@@ -52,18 +52,20 @@ public function fetchrequests(){
     return response()->json($user);
   }
 
-public function sendrequest(User $user){
+public function sendrequest($user_id){
+    $user = User::find($user_id);
     $sender = Auth::user();
     if ($sender->hasSentFriendRequestTo($user)) {
         $sender->unfriend($user);
-        return response()->json("Request Deleted successfully");
+        return response()->json(['status' => $sender->hasSentFriendRequestTo($user), 'message' => "Request Cancelled!"]);
     }else{
+        // dd($user);
         $friendship = $sender->befriend($user);
-        // dd($friendship);
-        $recipient = User::find($friendship->recipient_id);
+        // dd($user);
+        // $recipient = User::where('id',$friendship->recipient_id)->get();
         broadcast(new FriendRequest($friendship))->toOthers();
-        Notification::send($recipient, new FriendRequestNotification($friendship));
-        return response()->json("Requested successfully");
+        Notification::send($user, new FriendRequestNotification($friendship));
+        return response()->json(['status' => $sender->hasSentFriendRequestTo($user), 'message' => "Friend Request Sent!"]);
     }
 }
 
@@ -94,7 +96,7 @@ public function acceptrequest(User $user){
 
     // $friendship->status = 1;
     // $friendship->save();
-    return response()->json("Now you are friends");
+    return response()->json("You are now friends with ".$user->first_name.' '.$user->last_name.'.');
 }
 
 public function denyrequest(User $user){
@@ -108,12 +110,17 @@ public function denyrequest(User $user){
 public function searchuser(Request $request){
     $q = $request['q'];
     if($q != '') {
-        $users = User::where('username','LIKE','%'.$q.'%')
-        ->orWhere('email','LIKE','%'.$q.'%')
-        ->orWhere('first_name','LIKE','%'.$q.'%')
-        ->orWhere('last_name','LIKE','%'.$q.'%')->paginate(15);
+        $users = User::where(function ($query) use ($q) {
+            $query->where('username','LIKE','%'.$q.'%')
+            ->orWhere('email','LIKE','%'.$q.'%')
+            ->orWhere('first_name','LIKE','%'.$q.'%')
+            ->orWhere('last_name','LIKE','%'.$q.'%');
+        })
+        ->whereNotNull('photo')
+        ->where('id', '!=', Auth::user()->id)
+        ->paginate(16);
     } else {
-        $users = User::paginate(15);
+        $users = User::whereNotNull('photo')->where('id', '!=', Auth::user()->id)->paginate(16);
     }
   
     return  response()->json($users);
@@ -182,6 +189,23 @@ public function ungroupfriends(Request $request){
   // dd($group_name,$friend);
   $group = Auth::user()->ungroupFriend($friend, $group->id);
   return response()->json("Deleted from group successfully");
+}
+
+public function hasSentFriendRequest($user_id) {
+    $status= '';
+    $user = User::find($user_id);
+    $sender = Auth::user();
+    if ($sender->hasSentFriendRequestTo($user)) {
+        $status = 1;
+    }else{
+        $status = 0;
+    }
+
+    if($sender->isFriendWith($user)) {
+        $status = 2;
+    }
+
+    return response()->json($status);
 }
 
 }

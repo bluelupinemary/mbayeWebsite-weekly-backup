@@ -33,8 +33,11 @@ export default {
                 currentCell:-1,
                 magnifyMode : false,
                 last_page:'',
-                Total_pages:Number,
+                Total_pages:0,
                 i:0,
+                 page:1,
+                loading:true,
+                newcell:Number,
              
 
         }
@@ -58,19 +61,19 @@ export default {
     fetchblogs() { 
         // alert("here");
         let that = this;
-        var page = 1;
-        var loading = true;
-        var Total_pages;
+        // var page = 1;
+        // var loading = true;
+        // var Total_pages;
         /* Calling API for fetching images */
-        axios.get("/api/v1/blogs?page="+page)
+        axios.get("/api/v1/blogs?page="+ that.page)
         .then((response) => {
-            page=1;
+            // page=1;
             that.images=response.data.data;
             var images = response.data.data;
-            page=response.data.meta.current_page;
-            that.last_page=response.data.meta.last_page;
+             that.page=response.data.meta.current_page;
+             that.last_page=response.data.meta.last_page;
             that.Total_pages=(response.data.meta.total/25);
-            that.Total_pages=parseInt(Total_pages);
+            that.Total_pages=parseInt(that.Total_pages);
             Total_count=response.data.meta.total;
             snowstack_init();
             jQuery("#stack").empty();
@@ -79,7 +82,7 @@ export default {
             jQuery("#rstack2").empty(); 
             jQuery.each(that.images,that.snowstack_addimage);
             that.updateStack(1);
-            loading = false;
+              that.loading = false;
             var keys = {up: true, down: true };
             var keymap = { 38: "up", 40: "down" };
             
@@ -90,19 +93,19 @@ export default {
             function updatekeys()
             { 
                 
-                var newcell = that.currentCell;
+                 that.newcell = that.currentCell;
                 if (keys.up)
                 {
                     /* Up Arrow */
-                    newcell -= 1;
+                     that.newcell -= 1;
                 }
                 if (keys.down)
                 {
                     /* Down Arrow */
-                    newcell += 1;
+                     that.newcell += 1;
                 }
         
-                that.updateStack(newcell, that.magnifyMode);
+                that.updateStack( that.newcell, that.magnifyMode);
             }
 
           
@@ -161,18 +164,18 @@ export default {
         { 
                 let that = this;
                 // var tagname = this.tagvalue.name;   
-                var page = 1;
-                var loading = true;
-                console.log(scroll);
+                // var page = 1;
+                // var loading = true;
+                // console.log(scroll);
                 
-                var newcell = that.currentCell;
+                 that.newcell = that.currentCell;
                 if (scroll=='up')
                 {
                 
                     /* scroll up */
-                    if (newcell >= 3)
+                    if ( that.newcell >= 3)
                     {
-                        newcell -= 3;
+                         that.newcell -= 3;
                         $(".most-naffed").css({'visibility':'visible'});
                     }
                 }
@@ -182,45 +185,45 @@ export default {
 
                  if (scroll=='down')
                 { 
-                    if(  that.cells.length>(newcell+3))
+                    if(  that.cells.length>( that.newcell+3))
                         {
-                            loading = false;
+                              that.loading = false;
         
                             }   
                             // $(".most-naffed").css({'visibility':'hidden'});
                   
                     /* scroll down */
-                // alert(page);
-              if(page==that.last_page) {
-                  if(newcell+4==that.cells.length)
+           
+              if( that.page==that.last_page) {
+                  if( that.newcell+4==that.cells.length)
                 {     
-                    that.updateStack(newcell+4, that.magnifyMode);
+                    that.updateStack( that.newcell+4, that.magnifyMode);
                 }
-                loading = false;
+                  that.loading = false;
                   // return false;
-              }
-              if ((newcell+3) < (that.cells.length))
+              } 
+           //   alert(loading);
+              if (( that.newcell+3) < (that.cells.length))
           
                     {
-                        newcell += 3;
+                         that.newcell += 3;
                     }
-                    else if (!loading)
+                    else if (!that.loading)
                     { 
                         /* We hit the right wall, add some more */
-                    
-                        page = page+1 ;
-                        loading = true;
+                         that.page =  that.page+1 ;
+                         that.loading = true;
                       
                         // debugger
                         // alert($(that).tagvalue.name);
-                        var url_api=url+"/api/v1/blogbytag/"+that.tagvalue.name+"?page="+page
+                        var url_api=url+"/api/v1/blogs?page="+ that.page
                         $.getJSON(url_api, function(data) 
                         {
     
                             that.images=data['data'];
                       
                   
-                      if((newcell + 3) != that.images.length)
+                      if(( that.newcell + 3) != that.images.length)
                               jQuery.each(that.images,that.snowstack_addimage);
                     
                   
@@ -232,7 +235,7 @@ export default {
                 }
               
                 //if((newcell + 3)!=that.images.length)
-                  that.updateStack(newcell, that.magnifyMode);
+                  that.updateStack( that.newcell, that.magnifyMode);
        },
     snowstack_addimage(reln, info)
     {  
@@ -387,9 +390,7 @@ export default {
                 $(".div_title_"+that.i).css({"text-align":"center"});
                 top='70%';
                 }
-               console.log("countbg"+width);
-              console.log("countbg"+height);
-                //  console.log("i"+i);
+            
                 $(".div_count_bg"+that.i).css({"position":"absolute","width":width,
                                                     "float":"right","border":"0px solid white",
                                                     "height":height,"top":top,"left":left,'opacity':'35%','border':'0px solid white'});

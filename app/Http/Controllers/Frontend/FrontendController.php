@@ -274,10 +274,20 @@ class FrontendController extends Controller
         return view('frontend.game.feet_mbaye');
     }
 
-    public function story_mbaye(){
-        return view('frontend.game.story_mbaye');
+    public function head_mbaye(){
+        return view('frontend.game.head_mbaye');
     }
 
+    public function story_mbaye(Request $request){
+        $chapter_no = $request['cNo'];
+        if($chapter_no) return view('frontend.game.story_mbaye')->with('chapter_no',$chapter_no);;
+        return view('frontend.index');
+    }
+   
+    public function story_mbaye2(){
+        $chapter_no = 2;
+        return view('frontend.game.story_mbaye2')->with('chapter_no',$chapter_no);
+    }
 
 
 

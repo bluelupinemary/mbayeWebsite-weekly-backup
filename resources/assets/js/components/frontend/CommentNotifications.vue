@@ -1,34 +1,31 @@
 <template>
-<div class="bell-icon-div ui-widget-content slide_10">
-<span class="badge badge-dark badge-pill">{{notificationCount}}</span>
-<a type="button" data-toggle="modal" data-target="#exampleModalScrollable" v-on:click="show_modal()"><img class="bell-img" src="/front/images/bell.png"></a>
-<!-- Modal -->
-        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Notifications</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                <ul id="example-1">
-                  <li v-for="(notification,index) in this.notifications" :key="index">
-                    <a href="#" v-on:click.prevent="movetoread(notification.id)">{{notification.data.message}}</a>
-                  </li>
-                </ul>
-                </div>
-            </div>
-            </div>
-        </div>
-</div>
+	<div class="notifications-div">
+		<div class="notifications-list">
+			<ul id="example-1">
+				<li v-for="(notification,index) in this.notifications" :key="index">
+					<a href="#" v-if="notification.type.includes('ReactionNotification') && notification.data.emotion == 0" v-on:click.prevent="movetoread(notification.id)">{{notification.data.author_first_name+' '+notification.data.author_last_name}} <img src="/front/icons/hotNew.png" alt=""> your {{notification.data.blog_name}}</a>
+					<a href="#" v-if="notification.type.includes('ReactionNotification') && notification.data.emotion == 1" v-on:click.prevent="movetoread(notification.id)">{{notification.data.author_first_name+' '+notification.data.author_last_name}} <img src="/front/icons/cool300.png" alt=""> your {{notification.data.blog_name}}</a>
+					<a href="#" v-if="notification.type.includes('ReactionNotification') && notification.data.emotion == 2" v-on:click.prevent="movetoread(notification.id)">{{notification.data.author_first_name+' '+notification.data.author_last_name}} <img src="/front/icons/naffPicked.png" alt=""> your {{notification.data.blog_name}}</a>
+					<a href="#" v-if="notification.type.includes('FriendRequestNotification') || notification.type.includes('AcceptRequestNotification')" v-on:click.prevent="movetoread(notification.id)">{{notification.data.user.first_name+' '+notification.data.user.last_name}} {{notification.data.message}}</a>
+					<a href="#" v-if="notification.type.includes('CommentNotification')" v-on:click.prevent="movetoread(notification.id)">{{notification.data.message}}</a>
+					
+					<!-- <a href="#" v-else v-on:click.prevent="movetoread(notification.id)">{{notification.data.author_first_name+' '+notification.data.author_last_name}} <img src="/front/icons/naffPicked.png" alt=""> your {{notification.data.blog_name}}</a> -->
+				</li>
+			</ul>
+		</div>
+		<button class="earth-holo tooltips top">
+			<span>View Notifications</span>
+			<p class="notifications-count">{{notificationCount}}</p>
+			<img src="/front/images/notification-hologram/earthHolo.png" alt="">
+		</button>
+		<img src="/front/images/notification-hologram/hologram.png" alt="" class="hologram">
+	</div>
 </template>
 
 <style scoped>
 #exampleModalScrollable{
-  padding: 0;
-      display: block;
+  	padding: 0;
+    display: block;
     position: absolute;
     background: white;
     width: 40vw;
@@ -63,7 +60,8 @@ import EventBus from '../../frontend/event-bus';
         data:function() {
             return{
                 notifications: [],
-                author:'',
+				author:'',
+				notif_type: ''
         }
       },
       mounted() {
@@ -87,6 +85,7 @@ import EventBus from '../../frontend/event-bus';
           })
             .then((response) => {
                 this.notifications = response.data;
+                console.log(this.notifications);
                 })
             .catch(function (error) {
               console.log(error);
@@ -97,7 +96,7 @@ import EventBus from '../../frontend/event-bus';
             notification_id: id,
           })
             .then((response) => {
-                alert(response.data);
+                // alert(response.data);
                 this.getnotifications();
                 })
             .catch(function (error) {
@@ -106,7 +105,20 @@ import EventBus from '../../frontend/event-bus';
         },
         show_modal() {
           $('#exampleModalScrollable').modal('show');
-        }
+		},
+		checkNotificationType(type) {
+			// var notif_type;
+			console.log(type);
+			if(type == 'App\Notifications\Frontend\ReactionNotification') {
+				return 'reaction';
+			} else if (type == 'App\Notifications\Frontend\CommentNotification') {
+				return 'comment';
+			} else if(type == 'App\Notifications\Frontend\FriendRequestNotification') {
+				return 'friend_request';
+			}
+			// console.log(type,this.notif_type);
+			// return notif_type;
+		}
       }
     }
 </script>

@@ -168,7 +168,7 @@
     var images_new=[];
     var load_count=0;
     var url = $('meta[name="url"]').attr('content');
-    var last_page='';
+    // var last_page='';
     var Total_count=0;
     var scroll_type='';
     var count=0;

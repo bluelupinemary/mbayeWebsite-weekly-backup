@@ -1,0 +1,25 @@
+<template>
+ <p class="button-number">{{this.commentcount}}</p>
+</template>
+
+<script>
+import EventBus from '../../frontend/event-bus';
+export default {
+    data:function() {
+            return{
+                commentcount: '',
+        }
+      },
+     methods: {
+    countcomment (commentcount) {
+      this.commentcount = commentcount;
+    }
+  },
+  mounted () {
+    EventBus.$on('generalcommentcount', (commentcount) => {
+      this.countcomment(commentcount);
+    })
+  }
+}       
+</script>
+ 

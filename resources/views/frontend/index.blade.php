@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+    <input type='hidden' id='storyChapter' value='1'>
     <div>
         <canvas id="canvas"></canvas>
     </div>
@@ -60,12 +61,17 @@
             <img src="{{asset('front')}}/images/rotate-screen.gif" alt="">
         </div>
     </div>
+    <script>
+        
+    </script>
    
 @endsection
 
 @section('after-scripts')
 
     <script>
+        var token = '{{ Session::token() }}';
+        var urlStory = '{{ route('frontend.storyMbayePost') }}';
         var captMbayeLink = '{{ route('frontend.captainMbaye') }}';
     </script>
 

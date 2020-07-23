@@ -36,7 +36,7 @@ class GeneralBlogsRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'blog'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'general_blogs'.DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('public');
     }
 
@@ -48,6 +48,7 @@ class GeneralBlogsRepository extends BaseRepository
     
         return $this->query()
             ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.general_blogs.table').'.created_by')
+            // ->leftJoin('general_blog_shares AS b', 'b.general_blog_id', '=','general_blogs.id' )
             ->select([
                 config('module.general_blogs.table').'.id',
                 config('module.general_blogs.table').'.name',

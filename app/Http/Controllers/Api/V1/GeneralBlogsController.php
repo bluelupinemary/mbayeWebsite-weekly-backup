@@ -12,7 +12,12 @@ use App\Http\Resources\GeneralBlogsResource;
 //use App\Http\Resources\BlogsResource;
 use App\Repositories\Backend\Blogs\BlogsRepository;
 use App\Repositories\Backend\GeneralBlogs\GeneralBlogsRepository;
-
+use App\Models\GeneralBlogShares\GeneralBlogShare;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Comment\Comment;
+use App\Models\Like\Like;
 class GeneralBlogsController extends APIController
 {
     protected $repository;
@@ -35,25 +40,79 @@ class GeneralBlogsController extends APIController
     public function index(Request $request)
     {
    
-        $limit = $request->get('paginate') ? $request->get('paginate') : 14;
+        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
+        $sort = 'desc_name';
+        $general_blogs = DB::table('general_blogs')->get();
+        $general_blog_shares = DB::table('general_blog_shares')->get();
+        if(count($general_blog_shares)>0)
+        {
+        foreach($general_blog_shares as $key=>$value){
+            $blog_id[] = $general_blog_shares[$key]->general_blog_id;
+        }
 
-        return GeneralBlogsResource::collection(
-            $this->repository->getForDataTable()->orderBy($sortBy, $orderBy)->paginate($limit)
-        );
+        $blogs_shared = DB::table('general_blogs')
+                    ->whereIn('id',  $blog_id)
+                    ->get();
+      
+
+            $blogs = $general_blogs->merge($blogs_shared)
+                     ->paginate($limit);
+        } 
+        else
+                $blogs = $general_blogs->paginate($limit);
+                
+            foreach($blogs as $key=>$value){
+            $blogs[$key]->thumb         ='/storage/img/general_blogs/'. $blogs[$key]->featured_image;
+            $blogs[$key]->hotcount      = Like::where('blog_id', $blogs[$key]->id)->where('emotion',0)->count();
+            $blogs[$key]->coolcount     = Like::where('blog_id', $blogs[$key]->id)->where('emotion',1)->count();
+            $blogs[$key]->naffcount     =Like::where('blog_id', $blogs[$key]->id)->where('emotion',2)->count();
+            $blogs[$key]->commentcount  = Comment::where('blog_id', $blogs[$key]->id)->count();
+          }
+        
+        return response()->json($blogs);
+       
+
     }
     public function show_generalblog_userwise(Request $request){
  
       
-        // dd( $btag->name);
+        
         $id=$request['id']; 
-        $limit = $request->get('paginate') ? $request->get('paginate') : 14;
+        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
-        return GeneralBlogsResource::collection(
-            $this->repository->getForDataTable()->where('general_blogs.created_by', $id)->orderBy($sortBy, $orderBy)->paginate($limit)
-        );
+        $general_blogs = DB::table('general_blogs')->where('general_blogs.created_by', $id)->get();
+        $general_blog_shares = DB::table('general_blog_shares')->where('general_blog_shares.created_by', $id)->get();
+       if(count($general_blog_shares)>0)
+       {
+        foreach($general_blog_shares as $key=>$value){
+            $blog_id[] = $general_blog_shares[$key]->general_blog_id;
+        }
+        $blogs_shared = DB::table('general_blogs')
+                    ->whereIn('id',  $blog_id)
+                    ->get();
+
+         $blogs = $general_blogs->merge($blogs_shared)
+                    ->paginate($limit);
+          }   
+          else
+                $blogs = $general_blogs ->paginate($limit);
+               
+           foreach($blogs as $key=>$value){
+           $blogs[$key]->thumb         ='/storage/img/general_blogs/'. $blogs[$key]->featured_image;
+           $blogs[$key]->hotcount      = Like::where('blog_id', $blogs[$key]->id)->where('emotion',0)->count();
+           $blogs[$key]->coolcount     = Like::where('blog_id', $blogs[$key]->id)->where('emotion',1)->count();
+           $blogs[$key]->naffcount     =Like::where('blog_id', $blogs[$key]->id)->where('emotion',2)->count();
+           $blogs[$key]->commentcount  = Comment::where('blog_id', $blogs[$key]->id)->count();
+         }
+   
+       return response()->json($blogs);            
+        // dd($general_blogs);
+        // return GeneralBlogsResource::collection(
+        //     $this->repository->getForDataTable()->where('general_blogs.created_by', $id)->orderBy($sortBy, $orderBy)->paginate($limit)
+        // );
 }
     /**
      * Return the specified resource.

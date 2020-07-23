@@ -14,16 +14,16 @@ use App\Notifications\Frontend\CommentNotification;
 class NotifyController extends Controller
 {
 
-  public function getnotifications(Request $request){
-    $user = User::find($request['user_id']);
-    $notifications = $user->unreadNotifications;
-    return response()->json($notifications);
-    
-  }
+	public function getnotifications(Request $request){
+		$user = User::find($request['user_id']);
+		$notifications = $user->unreadNotifications;
+		return response()->json($notifications);
+		
+	}
 
-  public function readnotification(Request $request){
-    Notify::find($request['notification_id'])->delete();
-    return response()->json("successfully Deleted");
-  }
+	public function readnotification(Request $request){
+		Notify::find($request['notification_id'])->delete();
+		return response()->json("successfully Deleted");
+	}
 
 }

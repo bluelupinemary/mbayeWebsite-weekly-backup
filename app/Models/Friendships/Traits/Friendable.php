@@ -69,7 +69,7 @@ trait Friendable
      */
     public function isFriendWith(Model $recipient)
     {
-        return $this->findFriendship($recipient)->where('status', Status::ACCEPTED)->exists();
+        return Friendship::whereRecipient($this)->whereSender($recipient)->whereStatus(Status::ACCEPTED)->exists();
     }
 
     /**
@@ -428,7 +428,7 @@ trait Friendable
         $friendships = $this->findFriendships(Status::PENDING, $groupSlug)->get(['sender_id', 'recipient_id']);
         $recipients  = $friendships->pluck('recipient_id')->all();
         $senders     = $friendships->pluck('sender_id')->all();
-        return $this->where('id', '!=', $this->getKey())->whereIn('id', array_merge($recipients, $senders));
+        return $this->where('id', '!=', $this->getKey())->whereIn('id', array_merge($senders));
     }
 
     /**

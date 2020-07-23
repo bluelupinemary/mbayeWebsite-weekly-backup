@@ -54,14 +54,14 @@
                                 <img src="{{ asset('front/icons/hotNew.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Hot</p>
-                                    <hotcount-component></hotcount-component>
+                                    <generalhotcount-component></generalhotcount-component>
                                 </div>
                             </div>
                             <div class="button-div coolIcon">
                                 <img src="{{ asset('front/icons/coolIcon.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Cool</p>
-                                    <coolcount-component></coolcount-component>
+                                    <generalcoolcount-component></generalcoolcount-component>
                                 </div>
                             </div>
                             <div class="button-div shareIcon">
@@ -75,14 +75,14 @@
                                 <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Naff</p>
-                                    <naffcount-component></naffcount-component>
+                                    <generalnaffcount-component></generalnaffcount-component>
                                 </div>
                             </div>
                             <div class="button-div commentIcon">
                                 <img src="{{ asset('front/icons/commentsNew.png') }}" alt="" width="40">
                                 <div class="button-details">
                                     <p class="button-title">Declarations</p>
-                                    <commentcount-component></commentcount-component>
+                                    <generalcommentcount-component></generalcommentcount-component>
                                 </div>
                             </div>
                         </div>
@@ -103,21 +103,21 @@
                                     <img src="{{ asset('front/icons/hotNew.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Hot</span><span class="abbr">Hot</span></p>
-                                        <hotcount-component></hotcount-component>
+                                        <generalhotcount-component></generalhotcount-component>
                                     </div>
                                 </div>
                                 <div class="button-div coolIcon">
                                     <img src="{{ asset('front/icons/coolIcon.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Cool</span><span class="abbr">Cool</span></p>
-                                        <coolcount-component></coolcount-component>
+                                        <generalcoolcount-component></generalcoolcount-component>
                                     </div>
                                 </div>
                                 <div class="button-div naffIcon">
                                     <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Naff</span><span class="abbr">Naff</span></p>
-                                        <naffcount-component></naffcount-component>
+                                        <generalnaffcount-component></generalnaffcount-component>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                                     <img src="{{ asset('front/icons/commentsNew.png') }}" alt="" width="40">
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Declarations</span><span class="abbr">Declar.</span></p>
-                                        <commentcount-component></commentcount-component>
+                                        <generalcommentcount-component></generalcommentcount-component>
                                     </div>
                                 </div>
                                 <div class="button-div shareIcon">
@@ -172,14 +172,14 @@
                     @endif
                 </div>
                 <div id="app">
-                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}">
-                    </comment-component>
+                    <generalcomment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}">
+                    </generalcomment-component>
                     <button class="blog-btn blog-minimize"><i class="fas fa-arrow-up"></i></button>
                 </div>
             </div>
         </div>
         
-        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}"></like-component>
+        <generallike-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}"></generallike-component>
         <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
             @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
                 <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""

@@ -17,7 +17,7 @@ trait BlogAttribute
         return '<div class="btn-group action-btn">'.
                 $this->getEditButtonAttribute('edit-blog', 'admin.blogs.edit').
                 $this->getDeleteButtonAttribute('delete-blog', 'admin.blogs.destroy').
-                $this->getShowButtonAttribute('delete-blog', 'admin.blogs.destroy').
+                $this->getShowButtonAttribute('delete-blog', 'admin.blogs.show`').
                 '</div>';
     }
 

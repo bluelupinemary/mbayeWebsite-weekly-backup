@@ -896,6 +896,19 @@ function add_home_mouse_listener(){
                 else if(theInitMesh.name === "homeUranus"){
                     window.open('flowersMbaye',"_self");     
                 }
+                else if(theInitMesh.name === "homeJupiter"){
+                    let cNo = $('#storyChapter').val();
+                    $.ajax({
+                        type: "get",
+                        url:urlStory,
+                        data:{chapter_no:cNo,
+                             _token:token
+                        },
+                        success: function(result){
+                            window.location.href=urlStory+"?cNo="+cNo;
+                        }
+                    });
+                }
                 if(theInitMesh.name === "homeSun" || theInitMesh.name === "sun"){
                     window.open('login',"_self");     
                 }

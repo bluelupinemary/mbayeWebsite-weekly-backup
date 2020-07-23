@@ -602,30 +602,13 @@
             <span>Communicator</span>
             <button class="communicator-button"></button>
         </div>
-        <div class="notifications-div">
-            <div class="notifications-list">
-                <ul>
-                    <li><a href="#">Grace <img src="{{asset('front/icons/naffPicked.png')}}" alt="" class="naff"> your blog Lorem Ipsum is simply dummy text .</a></li>
-                    <li><a href="#">Ali <img src="{{asset('front/icons/cool300.png')}}" alt=""> your blog.</a></li>
-                    <li><a href="#">Abdul <img src="{{asset('front/icons/hotNew.png')}}" alt=""> your blog.</a></li>
-                    <li><a href="#">Vishnu <img src="{{asset('front/icons/commentsNew.png')}}" alt="" class="comment"> your blog Lorem Ipsum is simply dummy text .</a></li>
-                    <li><a href="#">Juliet <img src="{{asset('front/icons/hotNew.png')}}" alt=""> your blog.</a></li>
-                </ul>
-            </div>
-            <button class="earth-holo tooltips top">
-                <span>View Notifications</span>
-                <p class="notifications-count">23</p>
-                <img src="{{asset('front/images/notification-hologram/earthHolo.png')}}" alt="">
-            </button>
-            <img src="{{asset('front/images/notification-hologram/hologram.png')}}" alt="" class="hologram">
+        <div class="app">
+            <commentnotification-component :user="{{ Auth::user() }}"></commentnotification-component>
         </div>
         <button class="navigator-zoomout-btn tooltips zoom-in-out">
             <span>Zoom Out</span>
             <i class="fas fa-undo-alt"></i>
         </button>
-    </div>
-    <div class="app" style="display: none;">
-        <commentnotification-component :user="{{ Auth::user() }}"></commentnotification-component>
     </div>
     <!--end of astronaut img div-->
 </div>

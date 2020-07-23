@@ -206,17 +206,8 @@
   <script src="{{asset('front/JS/circletype.min.js')}}"></script>
   <script type="text/javascript">
 
-    var CWIDTH;
-    var CHEIGHT;
-    var CGAP = 5;
-    var CXSPACING;
-    var CYSPACING;
+    
     var url = $('meta[name="url"]').attr('content');
-    var last_page='';
-    var Total_count=0;
-    var scroll_type='';
-    var count=0;
-
     var ClickCount=0;
     var arrCount = [
      {
@@ -800,10 +791,7 @@ $('.main-naff').mouseover(function() {
           audio.play();
         });
     
-    function translate3d(x, y, z)
-    {
-        return "translate3d(" + x + "px, " + y + "px, " + z + "px)";
-    }
+    
     
    
     var zoomTimer = null;
@@ -873,62 +861,6 @@ $('.main-naff').mouseover(function() {
 
                                                 
     }
-    
-
-
-    function snowstack_init()
-    {
-        CHEIGHT = Math.round(window.innerHeight / 3.5);
-        CWIDTH  = Math.round(CHEIGHT * 300 / 180);
-        CXSPACING = CWIDTH + CGAP;
-        CYSPACING = CHEIGHT + CGAP;
-
-        jQuery("#mirror")[0].style.webkitTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.MozTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-    }
-
-        /*   Hammer.js  */
-
-                    
-                var myBlock = document.getElementById('stack');
-                var mc = new Hammer(myBlock);
-                mc.get('pan').set({direction: Hammer.DIRECTION_HORIZONTAL});
-                mc.on("panleft panright", handleDrag);
-                mc.on('panend', finished);
-
-                var lastPosX = 0;
-                var isDragging = false;
-
-                function handleDrag(ev) {
-                    
-                var elem = ev.target;
-                if (!isDragging) {
-                    isDragging = true;
-                    lastPosX = elem.offsetLeft;
-                }
-                setBlockText(ev.type + " event");
-                var posX = ev.deltaX + lastPosX;
-               // elem.style.left = posX + "px";
-                }
-
-                function finished() {
-                isDragging = false;
-                setBlockText("panned");
-                }
-
-                function setBlockText(msg) { 
-                    if(msg=='panleft event')
-                        var scroll_type='up';
-                    else if(msg=='panright event')
-                        var scroll_type='down';
-                    //else
-                    // scroll_type=msg;
-                    scrollcheck(scroll_type);
-                //  alert(scroll_type);
-                //myBlock.textContent = msg;
-                }
 
    
 

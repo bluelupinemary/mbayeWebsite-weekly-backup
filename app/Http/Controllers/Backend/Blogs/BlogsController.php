@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Backend\Blogs;
 
+use App\Models\Like\Like;
 use App\Models\Blogs\Blog;
+use App\Models\Comment\Comment;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
 use App\Http\Controllers\Controller;
@@ -82,7 +84,13 @@ class BlogsController extends Controller
     public function show(Blog $blog, ManageBlogsRequest $request)
     {
         $blogTags = BlogTag::getSelectData();
-        return new ShowResponse($blog, $this->status, $blogTags);
+        $comments = Comment::where('blog_id',$blog->id)->get();
+        $emotions = [
+            'hotcount'          => Like::where('blog_id',$blog->id)->where('emotion',0)->count(),
+            'coolcount'          => Like::where('blog_id',$blog->id)->where('emotion',1)->count(),
+            'naffcount'          => Like::where('blog_id',$blog->id)->where('emotion',2)->count(),
+        ];
+        return new ShowResponse($blog, $this->status, $blogTags,$comments,$emotions);
     }
 
     /**
@@ -125,6 +133,17 @@ class BlogsController extends Controller
         $this->blog->delete($blog);
 
         return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.deleted')]);
+    }
+
+    public function deletecomment($id){
+        $cmnt = Comment::where('id',$id)->first();
+        $blog = Blog::where('id',$cmnt->blog_id)->first();
+        $comment = $cmnt->delete();
+        // dd($blog);
+        if($comment){
+            return new RedirectResponse(route('admin.blogs.show',$blog->id), ['flash_success' => "Comment Deleted"]);
+        }
+        return new RedirectResponse(route('admin.blogs.show',$blog->id), ['flash_warning' => "Comment Not Find"]);
     }
 
    

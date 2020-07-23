@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-   
+    <input type="hidden" id="chapterNo" value="{{$chapter_no}}"/>
     <canvas id="canvas"></canvas>
     <div id="loadingScreenDiv"></div>
     <div id="loadingScreenPercent"> Loading: 0 % </div>
@@ -19,7 +19,7 @@
     <div id="firstVideoOverlay" >
          <div id="textOverlayDiv">
              <div class="firstVideoOverlayText" id="firstVideoOverlayText">
-                 <div class="" id="txt1"><span style="font-size:5vw;">O</span>nce upon a time, </div>
+                 <div class="" id="txt1" style="padding-top:2vw;"><span style="font-size:5vw;">O</span>nce upon a time, </div>
                  <div class=" " id="txt2">a carpenter from Small Heath in Birmingham,</div>
                  <div class=" " id="txt3">who more than 40 years after leaving those</div>
                  <div class=" " id="txt4">industrial-declined streets,</div>
@@ -47,12 +47,16 @@
     </div>
 
     {{-- <div id="continueBtnDiv" style="position:absolute; right: 3vw; bottom: 3vw;visibility:hidden;"> --}}
-    <div id="continueBtnDiv" style="position:absolute; right: 3vw; bottom: 3vw;">
+    <div id="continueBtnDiv" style="position:absolute; right: 3vw; bottom: 3vw;visibility:hidden;z-index:10">
         <button id="continueBtn" class="btn arrow-down" style="position:relative;"> >
         </button>
     </div>
 
-
+    <script>
+        var chapter_no = '{{ $chapter_no ?? '' }}';
+        var token = '{{ Session::token() }}';
+        var urlStory = '{{ route('frontend.storyMbayePost') }}';
+    </script>
 
 
     
@@ -64,8 +68,17 @@
 
 <script src="{{asset('front')}}/babylonjs/scenes/storyMbaye/storyMbayeMap.js"></script>
 <script src="{{asset('front')}}/babylonjs/scenes/storyMbaye/storyMbayeScene.js"></script>
-<script src="{{asset('front')}}/babylonjs/scenes/storyMbaye/storyMbayeChapter1.js"></script>
-  <script>
-   
-  </script>
+<script>
+    if(chapter_no == 1){
+        let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter1.js";
+        $.getScript( url, function() {
+        });
+    }else if(chapter_no == 2){
+        let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter2.js";
+        $.getScript( url, function() {
+        });
+    }
+    
+</script>
+
 @endsection

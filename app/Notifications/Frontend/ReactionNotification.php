@@ -52,6 +52,7 @@ class ReactionNotification extends Notification implements ShouldQueue
     {
         return [
                 'blog_id' => $this->like->blog_id,
+                'blog_name' => $this->like->blog->name,
                 'author_id' => $this->like->user_id,
                 'author_first_name' => $this->like->user->first_name,
                 'author_last_name' => $this->like->user->last_name,
@@ -64,6 +65,7 @@ class ReactionNotification extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'blog_id' => $this->like->blog_id,
+            'blog_name' => $this->like->blog->name,
             'author_id' => $this->like->user_id,
             'author_first_name' => $this->like->user->first_name,
             'author_last_name' => $this->like->user->last_name,
