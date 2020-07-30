@@ -33,7 +33,7 @@
                 <div class="blog" data-blogid="{{ $blog->id }}"></div>
                 <div class="blog-details-1">
                     <div class="blog-featured-img"
-                        style='background-image: url("{{ asset('storage/img/blog/'.$blog->featured_image) }}")'>
+                        style='background-image: url("{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}")'>
                         {{-- <img src="{{asset('storage/img/blog/'.$blog->featured_image) }}"
                         alt="" class="featured_image"> --}}
                     </div>

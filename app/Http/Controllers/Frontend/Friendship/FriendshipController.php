@@ -39,13 +39,13 @@ public function requests(Request $request){
 
 public function fetchrequests(){
     if(Auth::user()){
-      $requests = Auth::user()->getReq($perPage = 15);
-      return response()->json($requests);
+        $requests = Auth::user()->getReq($perPage = 15);
+        return response()->json($requests);
     }
     else{
-      return response()->json("User is not logedin");
+        return response()->json("User is not logedin");
     }
-  }
+}
 
   public function getuser(Request $request){
     $user = User::find($request['user']);
@@ -71,8 +71,8 @@ public function sendrequest($user_id){
 
 public function unfriend(User $user){
     $recipient = Auth::user();
-        $recipient->unfriend($user);
-        return response()->json("Request Deleted successfully");
+    $recipient->unfriend($user);
+    return response()->json("You have unfriended ".$user->first_name.' '.$user->last_name.'.');
 }
 
 public function checkfriendship(User $user){
@@ -104,7 +104,7 @@ public function denyrequest(User $user){
     $friendship = Friendship::where('sender_id',$user->id)->where('recipient_id',$recipient->id)->update([
         'status' => Status::DENIED,
     ]);
-    return response()->json("Request Rejected");
+    return response()->json("You have declined friend request from ".$user->first_name.' '.$user->last_name.'.');
 }
 
 public function searchuser(Request $request){
@@ -116,11 +116,12 @@ public function searchuser(Request $request){
             ->orWhere('first_name','LIKE','%'.$q.'%')
             ->orWhere('last_name','LIKE','%'.$q.'%');
         })
-        ->whereNotNull('photo')
+        // ->whereNotNull('photo')
         ->where('id', '!=', Auth::user()->id)
         ->paginate(16);
     } else {
-        $users = User::whereNotNull('photo')->where('id', '!=', Auth::user()->id)->paginate(16);
+        // $users = User::whereNotNull('photo')->where('id', '!=', Auth::user()->id)->paginate(16);
+        $users = User::where('id', '!=', Auth::user()->id)->paginate(16);
     }
   
     return  response()->json($users);
@@ -148,12 +149,17 @@ public function listfriends(){
 
 public function fetchfriends(Request $request){
     $u = Auth::user();
-	$search = $request->search;
-	
-    if($search != '') {
-		$friendships = $u->getFriendsSearch($perPage = 15, $search);
+    $search = $request->search;
+    if($request->has('perPage')) {
+        $perPage = $request->perPage;
     } else {
-		$friendships = $u->getFriends($perPage = 15);
+        $perPage = 15;
+    }
+
+    if($search != '') {
+		$friendships = $u->getFriendsSearch($perPage, $search);
+    } else {
+		$friendships = $u->getFriends($perPage);
 	}
 
     // dd($friendships);
@@ -163,10 +169,10 @@ public function fetchfriends(Request $request){
         // }
         // dd( compact('users'));
         return response()->json($friendships);
-        }else{
-            // dd("no friend");
-            return response()->json("no friends");
-        }
+    } else{
+        // dd("no friend");
+        return response()->json("no friends");
+    }
 }
 
 public function block(User $user){

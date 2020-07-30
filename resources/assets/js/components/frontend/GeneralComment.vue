@@ -79,7 +79,6 @@ import EventBus from '../../frontend/event-bus';
                 .then((response) => {
                   // alert(response.data);
                     this.comments = response.data;
-                   
                     })
                 .catch(function (error) {
                   console.log(error);

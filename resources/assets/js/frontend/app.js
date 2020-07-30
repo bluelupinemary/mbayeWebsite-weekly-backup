@@ -50,6 +50,7 @@ Vue.component('searchfriends-component', require('../components/frontend/SearchF
 Vue.component('accept-component', require('../components/frontend/AcceptRequestComponent.vue').default);
 Vue.component('friends-component', require('../components/frontend/FriendComponent.vue').default);
 Vue.component('generalblog-component', require('../components/frontend/GeneralBlog.vue').default);
+Vue.component('generalblogtwo-component', require('../components/frontend/GeneralBlogTwo.vue').default);
 Vue.component('newblog-component', require('../components/frontend/blog.vue').default);
 Vue.component('photoeditor-component', require('../components/frontend/PhotoEditor.vue').default);
 Vue.component('general-photoeditor-component', require('../components/frontend/GeneralBlogPhotoEditor.vue').default);
@@ -57,6 +58,7 @@ Vue.component('designsphotoeditor-component', require('../components/frontend/De
 Vue.component('blogview-component', require('../components/frontend/BlogViewComponent.vue').default);
 Vue.component('designpanelblog-component', require('../components/frontend/DesignPanelBlogComponent.vue').default);
 Vue.component('designpanelhome-component', require('../components/frontend/DesignPanelHomeComponent.vue').default);
+Vue.component('earthlings-activities', require('../components/frontend/EarthlingsActivities.vue').default);
 const app = new Vue({
     el: '.app',
 });

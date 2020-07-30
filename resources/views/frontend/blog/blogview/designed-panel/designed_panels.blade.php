@@ -87,11 +87,6 @@
  
   <script type="text/javascript">
 
-    var CWIDTH;
-    var CHEIGHT;
-    var CGAP = 5;
-    var CXSPACING;
-    var CYSPACING;
     var url = $('meta[name="url"]').attr('content');
     var last_page='';
     var Total_count=0;
@@ -374,7 +369,7 @@ $('.main-naff').mouseover(function() {
 /* Function to redirect to view Blog */
 
 function viewBlog(id){  
-    var url="/single_panel_design/"+id;
+    var url="/single_blog/"+id;
     window.open(
         url,
   '_blank' // <- This is what makes it open in a new window.

@@ -20,7 +20,7 @@ class CreateGeneralCommentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('blog_id')->unsigned();
-            $table->foreign('blog_id')->references('id')->on('general_blogs')->onDelete('cascade');
+            // $table->foreign('blog_id')->references('id')->on('general_blogs')->onDelete('cascade');
             $table->integer('parent_id');
             $table->text('body');
             $table->timestamps();

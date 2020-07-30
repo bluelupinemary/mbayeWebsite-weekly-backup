@@ -129,7 +129,7 @@ function create_flowers_skybox(){
 let mbaye_object,earth_object;
 function load_meshes(){
     Promise.all([
-        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/mbaye/", "MbayePipes0107.glb", flowersScene,  function (evt) {
+        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/mbaye/", "MbayePipes.glb", flowersScene,  function (evt) {
             // onProgress
             var loadedPercent = 0;
             if (evt.lengthComputable) {
@@ -154,24 +154,22 @@ function load_meshes(){
             // mbaye_object.isPickable = false;
            
            
-            var pbr = new BABYLON.PBRMaterial("pbr", flowersScene);
-            // pbr.reflectionTexture = rp.cubeTexture
-
-            for(let i=0;i<result.meshes.length;i++){
-                if(result.meshes[i].name == "Mbaye_primitive1" || result.meshes[i].name == "Mbaye_primitive0"){
-                    result.meshes[i].material = pbr;
-                    result.meshes[i].material.backFaceCulling = false;
+            result.meshes.forEach(function(m) {
+                m.isPickable = true;
+                if(m.name === "MbayeBody"){
+                    let pbr = new BABYLON.PBRMaterial("pbr", flowersScene);
+                    m.material = pbr;
+                    m.material.backFaceCulling = false;
+                    pbr.albedoColor = new BABYLON.Color3(0.5,0.5,0.5);
+                    pbr.emissiveColor = new BABYLON.Color3(0,0,0);
+                    pbr.metallic = 1;
+                    pbr.metallicF0Factor = 0.50;
+                    pbr.roughness = 0.15;
+                    pbr.microSurface = 1; 
+                }else if(m.name === "R_EYEAventurine_primitive1" || m.name === "L_EYEAventurine_primitive1" ){
+                    m.material.albedoColor = new BABYLON.Color3(0.01,0.2,0.07);
                 }
-            }//end of for loop
-
-        
-            pbr.albedoColor = new BABYLON.Color3(0.7,0.7,0.7);
-            pbr.emissiveColor = new BABYLON.Color3(0,0,0);
-            pbr.metallic = 1;
-            pbr.metallicF0Factor = 0.50;
-            pbr.roughness = 0.16;
-
-            pbr.microSurface = 1; // Let the texture controls the value 
+            });
         }),
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/earth/", "earth122319.babylon", flowersScene).then(function (result) {
                 // earthNormalMesh = result.meshes;
@@ -238,6 +236,7 @@ function add_action_mgr(theFlower){
 
 //handles the on mouse over event
 let origScaling, origColor;
+let flowerLbl;
 var onOverFlower =(meshEvent)=>{
     origScaling = meshEvent.source.scaling;
     meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.4,origScaling.y*1.4,origScaling.z*1.4);
@@ -246,12 +245,33 @@ var onOverFlower =(meshEvent)=>{
     let b = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
     let c = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
     hl.addMesh(meshEvent.source, new BABYLON.Color3(a,b,c));
+
+    flowerLbl = document.createElement("span");
+    flowerLbl.setAttribute("id", "flowerLbl");
+    var sty = flowerLbl.style;
+    sty.position = "absolute";
+    sty.lineHeight = "1.2em";
+    sty.padding = "0.5%";
+    sty.color = "#00BFFF  ";
+    sty.fontFamily = "Courgette-Regular";
+    sty.fontSize = "1vw";
+    sty.top = (flowersScene.pointerY-50) + "px";
+    sty.left = (flowersScene.pointerX+10) + "px";
+    sty.cursor = "pointer";
+    
+    let theName =  meshEvent.meshUnderPointer.name;
+    document.body.appendChild(flowerLbl);
+    flowerLbl.textContent = flowerName.get(theName);
 };
 
 //handles the on mouse out event
 var onOutFlower =(meshEvent)=>{
     meshEvent.source.scaling = origScaling;
     hl.removeMesh(meshEvent.source);
+
+    while (document.getElementById("flowerLbl")) {
+        document.getElementById("flowerLbl").parentNode.removeChild(document.getElementById("flowerLbl"));
+    }  
 };
 
 
@@ -265,11 +285,10 @@ var TWO_PI = Math.PI * 2;
 var angle =  TWO_PI/ nb;
 function load_orig_flowers(){
     for (const [flowerName,val] of flowersMbayeMap.entries()) {
-        // let thePos = set_position();
         let thePos;
         if(val[0]!==null) thePos = val[0];
         let theSize = set_scale();
-        let samp = init_flower(flowerName,flowerName+"Matl", "front/images3D/flowers2D/orig/"+flowerName+".png",theSize,thePos.x,thePos.y,thePos.z);
+        init_flower(flowerName,flowerName+"Matl", "front/images3D/flowers2D/orig/"+flowerName+".png",theSize,thePos.x,thePos.y,thePos.z);
     }
 }
 
@@ -331,6 +350,14 @@ function get_has_flower_name(theFlower){
 }
 
 
+function set_scene_active_meshes(scene,isActive){
+    scene.meshes.forEach(function(mesh){
+        mesh.setEnabled(isActive);
+        if(mesh.name === "cloud" || mesh.name === "speech1" || mesh.cloud === "speech2") mesh.setEnabled(false);
+    });
+}
+
+
 //the function that will listen to mouse events
 let currFlower;
 function add_mouse_listener(){
@@ -349,8 +376,8 @@ function add_mouse_listener(){
                     
                     if(hasName){
                         let val = flowersMbayeMap.get(theInitMesh);
-                        let videoId = val[4].id;                            //4th value is the video id
-                        let startTime = val[4].start;
+                        let videoId = val[3].id;                            //4th value is the video id
+                        let startTime = val[3].start;
                         set_carpet_countries(theInitMesh);
                         
                         setTimeout(function(){
@@ -359,10 +386,15 @@ function add_mouse_listener(){
                             set_3D_flower(theInitMesh);
                             open_book_of_flowers(theInitMesh);              //open book of flowers
                             load_flower_music(videoId, startTime);          //load the music video
-                            showPage(val[3],videoId);                       //show wikipedia page
+                            showPage(val[2],videoId);                       //show wikipedia page
                             showSelectedFlowerScene = true;
                             // selectedFlowerScene.debugLayer.show();
-                        },1500);
+                            set_scene_active_meshes(flowersScene,false);
+                            set_scene_active_meshes(selectedFlowerScene,true);
+                        },1000);
+
+                        // console.log("the scene: ", scene.meshes);
+                       
                         
                         // if(theClick===0) play_flower_music();
                         // else change_flower_music();

@@ -69,6 +69,7 @@ import EventBus from '../../frontend/event-bus';
                 this.coolcount= response.data.cool;
                 this.naffcount= response.data.naff;
                 const emo = {
+                // blog_id : this.blog_id,
                 hotcount: response.data.hot,
                 coolcount: response.data.cool,
                 naffcount: response.data.naff,

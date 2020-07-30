@@ -9,6 +9,7 @@ use App\Models\BlogTags\BlogTag;
 use App\Models\BlogVideos\BlogVideo;
 use App\Models\BlogDesignPanels\BlogDesignPanel;
 use App\Models\BlogPrivacy\BlogPrivacy;
+use Illuminate\Support\Str;
 
 /**
  * Class BlogRelationship.
@@ -61,5 +62,28 @@ trait BlogRelationship
     public function privacy()
     {
         return $this->hasMany(BlogPrivacy::class, 'blog_id')->where('blog_type', 'regular');
+    }
+
+    // override the toArray function (called by toJson)
+    public function toArray() {
+        // get the original array to be displayed
+        $data = parent::toArray();
+
+        // change the value of the 'mime' key
+        if ($this->content) {
+            $data['summary'] = Str::limit(strip_tags(preg_replace('#(<figure[^>]*>).*?(</figure>)#', '$1$2', $this->content)), 100, '...');
+        } else {
+            $data['summary'] = null;
+        }
+
+        if($this->publish_datetime) {
+            $data['formatted_date'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y h:i A');
+        }
+        
+        if($this->tags) {
+            $data['all_tags'] = implode(', ', $this->tags->pluck('name')->toArray());
+        }
+
+        return $data;
     }
 }

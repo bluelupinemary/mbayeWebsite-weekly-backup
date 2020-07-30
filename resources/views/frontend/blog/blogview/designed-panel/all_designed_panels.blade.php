@@ -415,24 +415,12 @@ $('.main-naff').mouseover(function() {
     }
     
 
-    function snowstack_init()
-    {
-        CHEIGHT = Math.round(window.innerHeight / 3.5);
-        CWIDTH  = Math.round(CHEIGHT * 300 / 180);
-        CXSPACING = CWIDTH + CGAP;
-        CYSPACING = CHEIGHT + CGAP;
-
-        jQuery("#mirror")[0].style.webkitTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.MozTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-    }
     
 
 /* Function to redirect to view Blog */
 
 function viewBlog(id){  
-    var url="/single_panel_design/"+id;
+    var url="/single_blog/"+id;
     window.open(
         url,
   '_blank' // <- This is what makes it open in a new window.

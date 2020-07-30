@@ -19,6 +19,7 @@
     </style>
 
 @section('content')
+<div class="app">
 <div id="block_land">
     <div class="content">
         <h1 class="text-glow">Turn your device in landscape mode.</h1>
@@ -167,7 +168,7 @@
     <audio id="fart" src="{{ asset('front') }}/audio/fart/fart.mp3" ></audio>
 </div>      
          <!--   <button class="zoom-btn zoom-out"><i class="fas fa-search-minus"></i></button>-->
-  
+</div>  
 
 
     

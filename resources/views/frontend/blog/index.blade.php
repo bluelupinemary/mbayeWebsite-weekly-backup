@@ -141,11 +141,6 @@
   <script src="{{asset('front/JS/hammer.min.js')}}"></script>
   <script type="text/javascript">
 
-    var CWIDTH;
-    var CHEIGHT;
-    var CGAP = 5;
-    var CXSPACING;
-    var CYSPACING;
     var url = $('meta[name="url"]').attr('content');
     var last_page='';
     var Total_count=0;
@@ -323,12 +318,7 @@ function contentDisplay() {
          var audio =  document.getElementById('1');
           audio.play();
         });
-    
-    function translate3d(x, y, z)
-    {
-        return "translate3d(" + x + "px, " + y + "px, " + z + "px)";
-    }
-    
+   
   
     
     var zoomTimer = null;
@@ -399,21 +389,6 @@ function contentDisplay() {
                                                 
     }
     
-
-    function snowstack_init()
-    {
-        CHEIGHT = Math.round(window.innerHeight / 3.5);
-        CWIDTH  = Math.round(CHEIGHT * 300 / 180);
-        CXSPACING = CWIDTH + CGAP;
-        CYSPACING = CHEIGHT + CGAP;
-
-        jQuery("#mirror")[0].style.webkitTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.MozTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-    }
-    
-
 
 /* Function to redirect to view Blog */
 

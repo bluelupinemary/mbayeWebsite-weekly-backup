@@ -895,8 +895,7 @@ function add_home_mouse_listener(){
                 }
                 else if(theInitMesh.name === "homeUranus"){
                     window.open('flowersMbaye',"_self");     
-                }
-                else if(theInitMesh.name === "homeJupiter"){
+                }else if(theInitMesh.name === "homeJupiter"){
                     let cNo = $('#storyChapter').val();
                     $.ajax({
                         type: "get",

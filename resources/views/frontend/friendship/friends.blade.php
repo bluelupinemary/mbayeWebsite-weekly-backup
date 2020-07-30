@@ -1,4 +1,11 @@
 @extends('frontend.layouts.app')
+
+@section('after-styles')
+    <link rel="stylesheet" href="{{asset('front/CSS/search-friends.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/friends.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/blackhole.css')}}">
+@endsection
+
 @section('content')
 <div class="container">
     <div class="app">
@@ -42,5 +49,12 @@
     @endif --}}
 
 </div>
+@endsection
+
+@section('before-scripts')
+	<script src="{{asset('front/JS/blackhole.js')}}"></script>
+    <script>
+    //   blackhole('#blackhole');
+    </script>
 @endsection
 

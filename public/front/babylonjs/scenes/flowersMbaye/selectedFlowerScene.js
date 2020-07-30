@@ -170,7 +170,7 @@ function load_earth_with_flowers_mesh(){
             // mermaidSpeechCloud.rotationQuaternion = new BABYLON.Quaternion( -0.0024,-0.2285,-0.0435,0.9725);
             mermaidSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0138,-0.2008,-0.0438,0.9783);
             light2.includedOnlyMeshes.push(result.meshes[1]);
-        
+            result.meshes[0].name = "cloud";
             // mermaidSpeechCloud.isVisible = false;
             // mermaidSpeechCloud.setEnabled(false);
         }),
@@ -182,6 +182,7 @@ function load_earth_with_flowers_mesh(){
             result.meshes[0].rotationQuaternion = new BABYLON.Quaternion( -0.0190,-0.1905,-0.0420, 0.9802);
             nuvolaSpeech1 = result.meshes[0];
             light2.includedOnlyMeshes.push(result.meshes[1]);
+            result.meshes[0].name = "speech1";
         }),
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/flowersMbayeScene/cloud/", "flowersNuvola2.glb", selectedFlowerScene).then(function (result) {
             result.meshes[0].scaling = new BABYLON.Vector3(22,22,-22);
@@ -193,6 +194,7 @@ function load_earth_with_flowers_mesh(){
             nuvolaSpeech2.isVisible = false;
             nuvolaSpeech2.setEnabled(false);
             light2.includedOnlyMeshes.push(result.meshes[1]);
+            result.meshes[0].name = "speech2";
         }),
     ]).then(() => {
         selectedFlowerCamera.setTarget(new BABYLON.Vector3(0,0,0));
@@ -201,6 +203,7 @@ function load_earth_with_flowers_mesh(){
         mermaidSpeechCloud.isVisible = false;
         mermaidSpeechCloud.setEnabled(false);
 
+        set_scene_active_meshes(selectedFlowerScene,false);
         
 
         // create_3D_flower("2Sunflower"); 
@@ -476,37 +479,40 @@ function create_3D_flower(theFlowerName){
 function set_3D_flower(theFlowerName){
     // selectedFlowerScene.debugLayer.show();
     let val = flowers3DMap.get(theFlowerName);
-    for(i=0;i<val.length;i++){
+    if(val){
 
-        let planeMatl = new BABYLON.StandardMaterial(val[i]+"matl", selectedFlowerScene);
-        planeMatl.diffuseTexture = new BABYLON.Texture("front/images3D/flowers2D/3D/"+val[i]+".png", selectedFlowerScene);
+        for(i=0;i<val.length;i++){
 
-        //1st position of 3d flower
-        if(i===0){
-            planeMatl.diffuseTexture.uScale = -6.140;
-            planeMatl.diffuseTexture.vScale = -8.150;
-            planeMatl.diffuseTexture.uOffset = 1.740;
-            planeMatl.diffuseTexture.vOffset = 0.280;
-        }else if(i===1){
-            planeMatl.diffuseTexture.uScale = -6.2;
-            planeMatl.diffuseTexture.vScale = -8;
-            planeMatl.diffuseTexture.uOffset = -0.42;
-            planeMatl.diffuseTexture.vOffset = -0.420;
-        }else if(i===2){
-            planeMatl.diffuseTexture.uScale = -5.500;
-            planeMatl.diffuseTexture.vScale = -8.780;
-            planeMatl.diffuseTexture.uOffset = 0.280;
-            planeMatl.diffuseTexture.vOffset = -0.070;
-        }
+            let planeMatl = new BABYLON.StandardMaterial(val[i]+"matl", selectedFlowerScene);
+            planeMatl.diffuseTexture = new BABYLON.Texture("front/images3D/flowers2D/3D/"+val[i]+".png", selectedFlowerScene);
 
-        planeMatl.diffuseTexture.hasAlpha = true;
-        planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
-        planeMatl.backFaceCulling = false;
-        flower3D_nuvola[i].material = planeMatl;
-        flower3D_nuvola[i].name = val[i];
-        flower3D_nuvola[i].isVisible = true;
-        // light2.includedOnlyMeshes.push(plane);
-    }
+            //1st position of 3d flower
+            if(i===0){
+                planeMatl.diffuseTexture.uScale = -6.140;
+                planeMatl.diffuseTexture.vScale = -8.150;
+                planeMatl.diffuseTexture.uOffset = 1.740;
+                planeMatl.diffuseTexture.vOffset = 0.280;
+            }else if(i===1){
+                planeMatl.diffuseTexture.uScale = -6.2;
+                planeMatl.diffuseTexture.vScale = -8;
+                planeMatl.diffuseTexture.uOffset = -0.42;
+                planeMatl.diffuseTexture.vOffset = -0.420;
+            }else if(i===2){
+                planeMatl.diffuseTexture.uScale = -5.500;
+                planeMatl.diffuseTexture.vScale = -8.780;
+                planeMatl.diffuseTexture.uOffset = 0.280;
+                planeMatl.diffuseTexture.vOffset = -0.070;
+            }
+
+            planeMatl.diffuseTexture.hasAlpha = true;
+            planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
+            planeMatl.backFaceCulling = false;
+            flower3D_nuvola[i].material = planeMatl;
+            flower3D_nuvola[i].name = val[i];
+            flower3D_nuvola[i].isVisible = true;
+            // light2.includedOnlyMeshes.push(plane);
+        }//end of for loop
+    }//enf of if
 }
 
 function delete_3D_flowers(){
@@ -600,6 +606,8 @@ function add_mouse_listener_selected_flower(){
                     delete_3D_flowers();
                     showSelectedFlowerScene = false;
                     isShowFlowerScene = true;
+                    set_scene_active_meshes(selectedFlowerScene,false);
+                    set_scene_active_meshes(flowersScene,true);
                 }
                 else if(theMeshClicked.name === "wood001_primitive0"){            //show video function enable/disable
                     // console.log("wood clicked");
@@ -705,6 +713,8 @@ var onOverPart =(meshEvent)=>{
             objHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.5,0));
         }else if(meshEvent.source.name === "nuvola"){
             if(currNuvolaText==1){
+                nuvolaSpeech2.isVisible = false;
+                nuvolaSpeech2.setEnabled(false);
                 nuvolaSpeech1.isVisible = true;
                 nuvolaSpeech1.setEnabled(true);
                 currNuvolaText = 0;

@@ -19,6 +19,7 @@
     </style>
 
 @section('content')
+<div class="app">
 <div id="block_land">
     <div class="content">
         <h1 class="text-glow">Turn your device in landscape mode.</h1>
@@ -150,7 +151,7 @@
     <audio id="fart" src="{{ asset('front') }}/audio/fart/fart.mp3" ></audio>
 </div>      
          <!--   <button class="zoom-btn zoom-out"><i class="fas fa-search-minus"></i></button>-->
-  
+</div> 
 
 
     
@@ -717,7 +718,8 @@ function contentDisplay() {
         var id=info.id  ;
         var content=info.content  ;
         var url="/single_general_blog/"+id;
-      
+        var shared=info.shared;
+
         jQuery(img).load(function ()
         {
          
@@ -754,7 +756,7 @@ function contentDisplay() {
 
              var className="div_count_icon"+i;
              var className_bg="div_count_bg"+i;
-           
+             var cls_tag="tag_"+i;
              
         
     $(".div_overlay_"+i).css({width:width, height:height,
@@ -775,7 +777,8 @@ function contentDisplay() {
             cell.div.append(jQuery('<div class="'+className_bg+' div_count_bg" ><div class="button-div button-div-p "><button><img src="{{asset('front/icons/comment.png')}}"  class="commentIcon" alt="" ></button> <div class="button-details"><p class="button-number">'+nComment_Count+'</p></div></div><div class="button-div button-div-p "><div class="button-details"><p class="button-number">'+nNaff_Count+'</p></div>  <button><img class="naffIcon" src="{{asset('front/icons/naff.png')}}"/></button> </div><div class="button-div button-div-p"><div class="button-details"><p class="button-number">'+nCool_Count+'</p> </div><button><img src="{{asset('front/icons/cool.png')}}" class="coolIcon"/></button> </div><div class="button-div button-div-p"><button><img src="{{asset('front/icons/hot.png')}}" class="hotIcon"/></button><div class="button-details"><p class="button-number">'+nHot_Count+'</p></div></div></div>'));
          }
 
-     
+         if(shared=='shared')
+            cell.div.append(jQuery('<li class="'+cls_tag+' tag"><i class="fas fa-tag"></i> Shared</li>'));
         
         largest(nHot_Count,nCool_Count,nNaff_Count,i);
            cell.div.addClass('div_img_' + i);

@@ -70,6 +70,7 @@
                                     <p class="button-number">300k</p>
                                 </div>
                             </div>
+                            @if(!$blog->isDesignsBlog())
                             <div class="button-div naffIcon">
                                 <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                 <div class="button-details">
@@ -77,6 +78,7 @@
                                     <naffcount-component></naffcount-component>
                                 </div>
                             </div>
+                            @endif
                             <div class="button-div commentIcon">
                                 <img src="{{ asset('front/icons/commentsNew.png') }}" alt="" width="40">
                                 <div class="button-details">
@@ -118,6 +120,7 @@
                                         <coolcount-component></coolcount-component>
                                     </div>
                                 </div>
+                                @if(!$blog->isDesignsBlog())
                                 <div class="button-div naffIcon">
                                     <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                     <div class="button-details">
@@ -125,6 +128,7 @@
                                         <naffcount-component></naffcount-component>
                                     </div>
                                 </div>
+                                @endif
                             </div>
         
                             <div class="right">

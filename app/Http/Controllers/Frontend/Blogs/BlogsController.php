@@ -339,5 +339,15 @@ class BlogsController extends Controller
         }
     }
 
-    
+    public function earthlingsActivities(Request $request)
+    {
+        return view('frontend.blog.activities');
+    }
+
+    public function fetchLatestBlogs(Request $request)
+    {
+        $blogs = Blog::with('owner')->orderBy('publish_datetime', 'desc')->paginate(8);
+
+        return response()->json($blogs);
+    }
 }

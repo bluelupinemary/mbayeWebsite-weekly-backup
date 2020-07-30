@@ -5,13 +5,87 @@
         <div id="camera" class="view">
             <div id="dolly" class="view">
                 <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler">
+                    <div v-for="(general_blog,index) in general_blogs" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: general_blogs, callback: callback}" :style="blockStyle(index)">
+                        <a class="mover viewflat blog_img" href="#">
+                            <img :class="'cell_img_'+index" :src="general_blog.thumb">
+                        </a>
+                            
+                        <div :class="'div_title_'+index+' div_title'" style="display:none;z-index:10000000;border:0px solid white">
+                            <p class="p_title">{{general_blog.title}}</p>
+                        </div>
+                        <div :class="'div_overlay_'+index+' div_overlay '+index" style="z-index:1000000;display:none;opacity: 100%; background-color:rgba(23, 80, 213, 0.57)"> 
+                            <div class="blog-buttons_overlay ">
+                                <div class="button-div">
+                                    <button><img class="i_hot" :src="'/front/icons/hot.png'"/></button>
+                                    <div class="button-details">
+                                        <p class="button-number hot-number">0</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="button-div">
+                                    <button><img class="i_cool" :src="'/front/icons/cool.png'" /></button>
+                                    <div class="button-details"> 
+                                        <p class="button-number cool-number">0</p>
+                                    </div>
+                                </div> 
+                                
+                                <div class="button-div"> 
+                                    <button><img class="i_naff" :src="'/front/icons/naff.png'" /></button>
+                                    
+                                    <div class="button-details">
+                                        <p class="button-number naff-number">0</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="button-div">
+                                    <button><img  class="i_comment" :src="'/front/icons/comment.png'" alt=""></button> 
+                                    
+                                    <div class="button-details">
+                                        <p class="button-number comment-number">0</p>
+                                    </div> 
+                                </div> 
+                            </div>
+                            
+                            <button class="button btn_view_blog"><p class="p_button">View Blog</p></button>
+                        </div>
+
+                        <div :class="'div_count_bg'+index+' div_count_bg'" >
+                            <div class="button-div button-div-l ">
+                                <button><img :src="'/front/icons/hot.png'" class="hotIcon" /></button>
+                                <div class="button-details">
+                                    <p class="button-number">0</p>
+                                </div>
+                            </div>
+                            
+                            <div class="button-div button-div-l ">
+                                <button><img :src="'/front/icons/cool.png'" class="coolIcon" /></button>
+                                <div class="button-details">
+                                    <p class="button-number">0</p> 
+                                </div>
+                            </div>
+                            
+                            <div class="button-div button-div-l ">
+                                <button><img  :src="'/front/icons/naff.png'" class="naffIcon" /></button>
+                                <div class="button-details">
+                                    <p class="button-number">0</p>
+                                </div>
+                            </div>
+                            
+                            <div class="button-div button-div-l ">
+                                <button><img :src="'/front/icons/comment.png'"  class="commentIcon" alt="" ></button>
+                                <div class="button-details">
+                                    <p class="button-number">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="mirror" class="view">
+                <!-- <div id="mirror" class="view">
                     <div id="rstack" class="view">
                     </div>
                     <div id="rstack2" class="view">
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
        
@@ -51,22 +125,82 @@ export default {
                 CXSPACING:Number,
                 CYSPACING:Number,
                 emo:Array,
+                general_blogs: {}
         }
     },
-  mounted () {
-    this.fetchblogs();
-    this.broadcastcheck();
-     Echo.channel('general_blogs')
-            .listen('GeneralBlogEvent',(response) => {
-                console.log(response);
-                this.cells.length = 0;
-                this.load_count=0;
-                this.i = 0;
-                this.images = [];
-                this.fetchblogs();       
-            });
+    created() {
+        this.fetchblogs();
+        // this.broadcastcheck();
+        // Echo.channel('general_blogs')
+        //         .listen('GeneralBlogEvent',(response) => {
+        //             console.log(response);
+        //             this.cells.length = 0;
+        //             this.load_count=0;
+        //             this.i = 0;
+        //             this.images = [];
+        //             this.fetchblogs();       
+        //         });
+    },
+    mounted () {
+    // this.fetchblogs();
+    // this.broadcastcheck();
+    //  Echo.channel('general_blogs')
+    //         .listen('GeneralBlogEvent',(response) => {
+    //             console.log(response);
+    //             this.cells.length = 0;
+    //             this.load_count=0;
+    //             this.i = 0;
+    //             this.images = [];
+    //             this.fetchblogs();       
+    //         });
+    // this.$nextTick(() => {
+    //     this.blockStyle();
+    // });
+  },
+  directives: {
+    forCallback(el, binding) {
+      let element = binding.value
+      var key = element.key
+      var len = 0
+
+      if (Array.isArray(element.array)) {
+        len = element.array.length
+      }
+
+      else if (typeof element.array === 'object') {
+        var keys = Object.keys(element.array)
+        key = keys.indexOf(key)
+        len = keys.length
+      }
+
+      if (key == len - 1) {
+        if (typeof element.callback === 'function') {
+          element.callback()
+        }
+      }
+    }
   },
   methods:{
+    callback() {
+        console.log('v-for loop finished')
+        this.updateStack(1);
+        let that = this;
+        window.addEventListener('wheel', function(event)
+        {
+
+            if (event.deltaY < 0)
+            {
+                that.scroll_type='up';
+
+            }
+            else if (event.deltaY > 0)
+            {
+                that.scroll_type='down'; 
+                
+            } 
+            that.scrollcheck(that.scroll_type);
+        });
+    },
     lefthandler(){
           this.scrollcheck('down');
       },
@@ -98,9 +232,11 @@ export default {
             that.Total_pages=parseInt( that.Total_pages);
             that.Total_count=response.data.total;
             that.snowstack_init();
-       
-            jQuery.each(that.images,that.snowstack_addimage);
-            that.updateStack(1);
+            that.general_blogs = response.data.data;
+            // console.log(response.data.data);
+
+            // jQuery.each(that.images,that.snowstack_addimage);
+            // that.updateStack(1);
             that.loading = false;
             var keys = {up: true, down: true };
             var keymap = { 38: "up", 40: "down" };
@@ -109,75 +245,108 @@ export default {
             var scrolltimer = null;
             
             /** Update images on keys */
-            function updatekeys()
-            { 
-                
-                 that.newcell = that.currentCell;
-                if (keys.up)
-                {
-                    /* Up Arrow */
-                      that.newcell -= 1;
-                }
-                if (keys.down)
-                {
-                    /* Down Arrow */
-                      that.newcell += 1;
-                }
+            // function updatekeys()
+            // { 
+            //     console.log('run updatekeys');
+            //      that.newcell = that.currentCell;
+            //     if (keys.up)
+            //     {
+            //         /* Up Arrow */
+            //           that.newcell -= 1;
+            //     }
+            //     if (keys.down)
+            //     {
+            //         /* Down Arrow */
+            //           that.newcell += 1;
+            //     }
         
-                that.updateStack(that.newcell, that.magnifyMode);
-            }
+            //     that.updateStack(that.newcell, that.magnifyMode);
+            // }
         
              
             /*
             ------SCROLLL EVENT FUNCTIONS ON MOUSE WHEEL ------
             */
-            window.addEventListener('wheel', function(event)
-            {
-
-                if (event.deltaY < 0)
-                {
-                    that.scroll_type='up';
-
-                }
-                else if (event.deltaY > 0)
-                {
-                    that.scroll_type='down'; 
-                    
-                } 
-                that.scrollcheck(that.scroll_type);
-            });
+            
             /* scroll check */
       
             // that.scrollcheck()
+            // $(window).load(function() {
+            //     that.blockStyle();
+            // });
+            
         })
         .catch((error) => {
             console.log(error);
         })  
             
     },
-  scrollcheck(scroll)
-        {  
-            let that = this;
-                if (scroll=='up' || scroll=='down')
+    blockStyle(index) {
+        // console.log('index: '+index);
+        let that = this;
+        // var index = 0;
+        // var cell = {};
+        // var realn = that.cells.length;
+        // if(index < that.Total_count) {
+            
+        //     // console.log(realn);
+        //     that.cells.push(cell);
+        // }
+
+            
+            var realn = index;
+            // console.log('realn: '+realn);
+            var x = Math.floor(realn / 2);
+            var y = realn - x * 2;
+            // $('.div_img_'+index).css({
+            //     'width': that.CWIDTH,
+            //     'height': that.CHEIGHT,
+            //     'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            // });
+            return {
+                'width': that.CWIDTH,
+                'height': that.CHEIGHT,
+                'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            };
+
+            // index++;
+        // }
+        
+        // that.CHEIGHT = Math.round(window.innerHeight / 3.5);
+        // that.CWIDTH  = Math.round(that.CHEIGHT * 300 / 180);
+        // that.CXSPACING = that.CWIDTH + that.CGAP;
+        // that.CYSPACING = that.CHEIGHT + that.CGAP;
+        // var realn = Math.floor(index /2 );
+        
+        // cell.div[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+    },
+    scrollcheck(scroll)
+    {  
+        // console.log('scroll: '+scroll);
+        let that = this;
+            if (scroll=='up' || scroll=='down')
+            {
+                if (that.scrolltimer === null)
                 {
-                    if (that.scrolltimer === null)
+                    that.delay = 330;
+                    var doTimer = function ()
                     {
-                       that.delay = 330;
-                        var doTimer = function ()
-                        {
-                           that.updatescroll(scroll);
-                        //scrolltimer = setTimeout(doTimer, delay);
-                            that.delay = 60;
-                        };
-                        doTimer();
-                    }
+                        that.updatescroll(scroll);
+                    //scrolltimer = setTimeout(doTimer, delay);
+                        that.delay = 60;
+                    };
+                    doTimer();
                 }
-                else
-                {
-                    clearTimeout(that.scrolltimer);
-                    that.scrolltimer = null;
-                }
-        },
+            }
+            else
+            {
+                clearTimeout(that.scrolltimer);
+                that.scrolltimer = null;
+            }
+    },
      updatescroll(scroll)
         { 
                 let that = this;
@@ -257,7 +426,7 @@ export default {
     snowstack_addimage(reln, info)
     {
         // debugger;
-        // console.log(reln);
+        console.log(reln);
          
         let that = this;
         // console.log(that.images[reln]['id']);
@@ -325,7 +494,7 @@ export default {
         var id=info.id  ;
         var content=info.content  ;
         var url="/single_blog/"+id;
-        var shared=info.shared;
+      
         jQuery(img).load(function ()
         {
          
@@ -342,12 +511,12 @@ export default {
             var cls_overlay="div_overlay_"+that.i;
             var cls_title="div_title_"+that.i;
             var cls_counts="div_counts_"+that.i;
-            var cls_tag="tag_"+that.i;
+           
        
            cell.div.append(jQuery('<a class="mover viewflat blog_img" href="#""  onclick="play_note('+reln+')"></a>').append(img));
            cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">'+title+'</p></div>'));
            cell.div.append(jQuery('<div class="'+cls_overlay+' div_overlay '+reln+'" style="z-index:1000000;display:none;opacity: 100%; background-color:rgba(23, 80, 213, 0.57)"> <div class="blog-buttons_overlay "> <div class="button-div"><button><img class="i_hot" src="/front/icons/hot.png"/></button><div class="button-details"><p class="button-number hot-number">'+nHot_Count+'</p></div></div><div class="button-div"><button><img class="i_cool" src="/front/icons/cool.png" /></button><div class="button-details"> <p class="button-number cool-number">'+nCool_Count+'</p></div></div> <div class="button-div"> <button><img class="i_naff" src="/front/icons/naff.png" /></button><div class="button-details"><p class="button-number naff-number">'+nNaff_Count+'</p></div></div><div class="button-div"><button><img  class="i_comment" src="/front/icons/comment.png" alt=""></button> <div class="button-details"><p class="button-number comment-number">'+nComment_Count+'</p></div> </div> </div><button class="button btn_view_blog" onclick="viewBlog('+id+')"><p class="p_button">View Blog</p></button></div>'));
-
+          
             var div_height=$(".div_img").css("height");
             var div_width=$(".div_img").css("width");
             var div_img=$(".cell_img_"+that.i).css("height");
@@ -382,8 +551,7 @@ export default {
             
             cell.div.append(jQuery('<div class="'+className_bg+' div_count_bg" ><div class="button-div button-div-p "><button><img src="/front/icons/comment.png"  class="commentIcon" alt="" ></button> <div class="button-details"><p class="button-number">'+nComment_Count+'</p></div></div><div class="button-div button-div-p "><div class="button-details"><p class="button-number">'+nNaff_Count+'</p></div>  <button><img class="naffIcon" src="/front/icons/naff.png"/></button> </div><div class="button-div button-div-p"><div class="button-details"><p class="button-number">'+nCool_Count+'</p> </div><button><img src="/front/icons/cool.png" class="coolIcon"/></button> </div><div class="button-div button-div-p"><button><img src="/front/icons/hot.png" class="hotIcon"/></button><div class="button-details"><p class="button-number">'+nHot_Count+'</p></div></div></div>'));
                  }
-        if(shared=='shared')
-            cell.div.append(jQuery('<li class="'+cls_tag+' tag"><i class="fas fa-tag"></i> Shared</li>'));
+        
         largest(nHot_Count,nCool_Count,nNaff_Count,that.i);
         cell.div.addClass('div_img_' + that.i);
         if (width > height){ 
@@ -472,45 +640,45 @@ export default {
         var dolly = jQuery("#dolly")[0];
         var camera = jQuery("#camera")[0];
         let that = this;
-        $(".div_overlay").css({'display':'none'});//for hiding overlay
-        $(".div_title").css({'display':'none'});
-        $(".div_count_text").css({'display':'block'});
-        $(".div_btn").css({'display':'none'});
-        $(".div_count_bg").css({'display':'flex'});
+        // $(".div_overlay").css({'display':'none'});//for hiding overlay
+        // $(".div_title").css({'display':'none'});
+        // $(".div_count_text").css({'display':'block'});
+        // $(".div_btn").css({'display':'none'});
+        // $(".div_count_bg").css({'display':'flex'});
   
-        if (that.currentCell == newIndex && that.magnifyMode == newmagnifymode)
-        {
-            return;
-        }
+        // if (that.currentCell == newIndex && that.magnifyMode == newmagnifymode)
+        // {
+        //     return;
+        // }
     
-        var oldIndex = that.currentCell;
-        newIndex = Math.min(Math.max(newIndex, 0), that.cells.length - 1);
+        // var oldIndex = that.currentCell;
+        // newIndex = Math.min(Math.max(newIndex, 0), that.cells.length - 1);
         that.currentCell = newIndex;
       
-        if (oldIndex != -1)
-        {
-            var oldCell = that.cells[oldIndex];
-            oldCell.div.attr("class", "cell fader view original div_img");	
-            if (oldCell.reflection)
-            {
-                oldCell.reflection.attr("class", "cell fader view reflection");
-            }
-        }
+        // if (oldIndex != -1)
+        // {
+        //     var oldCell = that.cells[oldIndex];
+        //     oldCell.div.attr("class", "cell fader view original div_img");	
+        //     if (oldCell.reflection)
+        //     {
+        //         oldCell.reflection.attr("class", "cell fader view reflection");
+        //     }
+        // }
    
-        var cell = that.cells[newIndex];
-        cell.div.addClass("selected");
-        if (cell.reflection)
-        {
-          //  cell.reflection.addClass("selected");
-        }
+        // var cell = that.cells[newIndex];
+        // cell.div.addClass("selected");
+        // if (cell.reflection)
+        // {
+        //   //  cell.reflection.addClass("selected");
+        // }
     
-        that.magnifyMode = newmagnifymode;
+        // that.magnifyMode = newmagnifymode;
         
-        if (that.magnifyMode)
-        {
-            cell.div.addClass("magnify");
-            refreshImage(cell.div.find("img")[0], cell);
-        }
+        // if (that.magnifyMode)
+        // {
+        //     cell.div.addClass("magnify");
+        //     refreshImage(cell.div.find("img")[0], cell);
+        // }
     
         if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
             {//alert("here1");
@@ -624,42 +792,62 @@ export default {
             }
         }, 330);
     },
+    updateStack2()
+    {
+        var currentTimer = null;  
+        var dolly = jQuery("#dolly")[0];
+        var camera = jQuery("#camera")[0];
+        let that = this;
+        
+        dolly.style.webkitTransform = that.cameraTransformForCell(1);
+	
+        var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
+        var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
+        
+        var dx = currentMatrix.e - targetMatrix.e;
+        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
+
+        camera.style.webkitTransform = "rotateY(" + angle + "deg)";
+        camera.style.webkitTransitionDuration = "330ms";
+
+        if (currentTimer)
+        {
+            clearTimeout(currentTimer);
+        }
+        
+        currentTimer = setTimeout(function ()
+        {
+            camera.style.webkitTransform = "rotateY(0)";
+            camera.style.webkitTransitionDuration = "2s";
+        }, 330);
+    },
      cameraTransformForCell(n)
     {
         let that = this;
-        //adjusting translation animation
-       if(n==1)
-            that.count=0.5;
-        else
-            that.count+=0.5;
-
         var x = Math.floor(n / 3);
         var y = n - x * 3;
-      
-       if(n==1)
-       {
-                    var cx = (x +0.5) * that.CXSPACING;
-       }
-       else{
-                    if(that.scroll_type=='up') //adjusting translation animation
-                    {  
-                            if(n==that.Total_count)
-                                that.count=0.5;
-                            else
-                                that.count-=1;
-
-                        var cx = (x +that.count) * that.CXSPACING; 
-                        }
-                    else{
-                        var cx = (x +that.count) * that.CXSPACING; 
-                        }
-            }
-      
-
+        // var cx = (x + 0.5) * that.CXSPACING;
         var cy = (y + 0.5) * that.CYSPACING;
-      
-       //that.scroll_type
-     
+
+        if(n==1)
+        {
+            var cx = (x +0.5) * that.CXSPACING;
+        }
+        else{
+            if(that.scroll_type=='up') //adjusting translation animation
+            {  
+                    if(n==that.Total_count)
+                        that.count=0.5;
+                    else
+                        that.count-=1;
+
+                var cx = (x +that.count) * that.CXSPACING; 
+            }
+            else {
+                var cx = (x +that.count) * that.CXSPACING; 
+            }
+        }
+
         if (that.magnifyMode)
         {
             return that.translate3d(-cx, -cy, 180);
@@ -677,10 +865,10 @@ export default {
         that.CXSPACING = that.CWIDTH + that.CGAP;
         that.CYSPACING = that.CHEIGHT + that.CGAP;
 
-        jQuery("#mirror")[0].style.webkitTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.MozTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        // jQuery("#mirror")[0].style.webkitTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        // jQuery("#mirror")[0].style.MozTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        // jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        // jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
     },
     translate3d(x, y, z)
     {

@@ -38,12 +38,16 @@ export default {
                 page:1,
                 loading:true,
                 newcell:Number,
+                CWIDTH:Number,
+                CHEIGHT:Number,
+                CGAP : 5,
+                CXSPACING:Number,
+                CYSPACING:Number,
              
 
         }
     },
   mounted () {
-    
     this.fetchblogs();
      Echo.channel('designpanel_blogs')
             .listen('DesignPanelBlogEvent',(response) => {
@@ -59,8 +63,7 @@ export default {
           this.scrollcheck('up');
       },
     fetchblogs() { 
-    //  alert("here");
-        let that = this;
+           let that = this;
         /* Calling API for fetching images */
         axios.get("/api/v1/all_designed_panels?page="+that.page)
         .then((response) => {
@@ -72,7 +75,7 @@ export default {
             that.Total_pages=(response.data.meta.total/25);
             that.Total_pages=parseInt( that.Total_pages);
             Total_count=response.data.meta.total;
-            snowstack_init();
+             that.snowstack_init();
             jQuery("#stack").empty();
             jQuery("#rstack").empty();
             // jQuery("#mirror").empty();
@@ -187,11 +190,12 @@ export default {
                     /* scroll down */
               
               if(that.page==that.last_page) {
+                   that.loading = true;
                   if(that.newcell+4==that.cells.length)
                 {     
                     that.updateStack(that.newcell+4, that.magnifyMode);
                 }
-                that.loading = false;
+                // that.loading = false;
                   // return false;
               }
               if ((that.newcell+3) < (that.cells.length))
@@ -288,11 +292,11 @@ export default {
         var y = realn - x * 2;
         cell.info = info;
         
-        cell.div = jQuery('<div class="cell fader view original div_img" style="opacity: 0" block_no="'+reln+'" ></div>').width(CWIDTH).height(CHEIGHT);
-        cell.div[0].style.webkitTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-        cell.div[0].style.MozTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-        cell.div[0].style.msTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-        cell.div[0].style.OTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
+        cell.div = jQuery('<div class="cell fader view original div_img" style="opacity: 0" block_no="'+reln+'" ></div>').width(that.CWIDTH).height(that.CHEIGHT);
+        cell.div[0].style.webkitTransform = translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        cell.div[0].style.MozTransform = translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        cell.div[0].style.msTransform = translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        cell.div[0].style.OTransform = translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
     
         var img = document.createElement("img");
         var title=info.name  ;
@@ -320,7 +324,7 @@ export default {
        
            cell.div.append(jQuery('<a class="mover viewflat blog_img" href="#""  onclick="play_note('+reln+')"></a>').append(img));
            cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">'+title+'</p></div>'));
-           cell.div.append(jQuery('<div class="'+cls_overlay+' div_overlay '+reln+'" style="z-index:1000000;display:none;opacity: 100%; background-color:rgba(23, 80, 213, 0.57)"> <div class="blog-buttons_overlay "> <div class="button-div"><button><img class="i_hot" src="/front/icons/hot.png"/></button><div class="button-details"><p class="button-number hot-number">'+nHot_Count+'</p></div></div><div class="button-div"><button><img class="i_cool" src="/front/icons/cool.png" /></button><div class="button-details"> <p class="button-number cool-number">'+nCool_Count+'</p></div></div> <div class="button-div"> <button><img class="i_naff" src="/front/icons/naff.png" /></button><div class="button-details"><p class="button-number naff-number">'+nNaff_Count+'</p></div></div><div class="button-div"><button><img  class="i_comment" src="/front/icons/comment.png" alt=""></button> <div class="button-details"><p class="button-number comment-number">'+nComment_Count+'</p></div> </div> </div><button class="button btn_view_blog" onclick="viewBlog('+id+')"><p class="p_button">View Blog</p></button></div>'));
+           cell.div.append(jQuery('<div class="'+cls_overlay+' div_overlay '+reln+'" style="z-index:1000000;display:none;opacity: 100%; background-color:rgba(23, 80, 213, 0.57)"> <div class="blog-buttons_overlay "> <div class="button-div"><button><img class="i_hot" src="/front/icons/hot.png"/></button><div class="button-details"><p class="button-number hot-number">'+nHot_Count+'</p></div></div><div class="button-div"><button><img class="i_cool" src="/front/icons/cool.png" /></button><div class="button-details"> <p class="button-number cool-number">'+nCool_Count+'</p></div></div><div class="button-div"><button><img  class="i_comment" src="/front/icons/comment.png" alt=""></button> <div class="button-details"><p class="button-number comment-number">'+nComment_Count+'</p></div> </div> </div><button class="button btn_view_blog" onclick="viewBlog('+id+')"><p class="p_button">View Blog</p></button></div>'));
           
             var div_height=$(".div_img").css("height");
             var div_width=$(".div_img").css("width");
@@ -353,9 +357,8 @@ export default {
             cell.div.append(jQuery('<div class="'+className_bg+' div_count_bg" ><div class="button-div button-div-l "><button><img src="/front/icons/hot.png" class="hotIcon" /></button><div class="button-details"><p class="button-number">'+nHot_Count+'</p></div></div><div class="button-div button-div-l "><button><img src="/front/icons/cool.png" class="coolIcon" /></button><div class="button-details"><p class="button-number">'+nCool_Count+'</p> </div></div><div class="button-div button-div-l "><button><img src="/front/icons/comment.png"  class="commentIcon" alt="" ></button><div class="button-details"><p class="button-number">'+nComment_Count+'</p></div></div></div>'));
              }
              else{
-            
-            cell.div.append(jQuery('<div class="'+className_bg+' div_count_bg" ><div class="button-div button-div-p "><button><img src="/front/icons/comment.png"  class="commentIcon" alt="" ></button> <div class="button-details"><p class="button-number">'+nComment_Count+'</p></div></div><div class="button-div button-div-p "><div class="button-details"><p class="button-number">'+nNaff_Count+'</p></div>  <button><img class="naffIcon" src="/front/icons/naff.png"/></button> </div><div class="button-div button-div-p"><div class="button-details"><p class="button-number">'+nCool_Count+'</p> </div><button><img src="/front/icons/cool.png" class="coolIcon"/></button> </div><div class="button-div button-div-p"><button><img src="/front/icons/hot.png" class="hotIcon"/></button><div class="button-details"><p class="button-number">'+nHot_Count+'</p></div></div></div>'));
-                 }
+                 cell.div.append(jQuery('<div class="'+className_bg+' div_count_bg" ><div class="button-div button-div-p comment_div"><button><img src="/front/icons/comment.png" class="commentIcon"  alt="" /></button><div class="button-details"><p class="button-number">'+nComment_Count+'</p></div></div><div class="button-div button-div-p "><div class="button-details"><p class="button-number">'+nCool_Count+'</p></div><button><img src="/front/icons/cool.png" class="coolIcon"/></button></div><div class="button-div button-div-p"><button><img src="/front/icons/hot.png" class="hotIcon"/></button><div class="button-details"><p class="button-number">'+nHot_Count+'</p></div></div></div>'));
+                  }
         
         largest(nHot_Count,nCool_Count,nNaff_Count,that.i);
         cell.div.addClass('div_img_' + that.i);
@@ -399,11 +402,11 @@ export default {
              //first row for reflection
         if (y == 1)
         {
-            cell.reflection = jQuery('<div class="cell fader view reflection" style="opacity: 0"></div>').width(CWIDTH).height(CHEIGHT);
-            cell.reflection[0].style.webkitTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.MozTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.msTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.OTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
+            cell.reflection = jQuery('<div class="cell fader view reflection" style="opacity: 0"></div>').width(that.CWIDTH).height(that.CHEIGHT);
+            cell.reflection[0].style.webkitTransform = translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.MozTransform = translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.msTransform = translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.OTransform = translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
             var rimg = document.createElement("img");
             
             jQuery(rimg).load(function ()
@@ -420,8 +423,8 @@ export default {
         //second row for reflection
         if (y == 0)
         {
-            cell.reflection = jQuery('<div class="cell fader view reflection2" style="opacity: 0"></div>').width(CWIDTH).height(CHEIGHT);
-            cell.reflection[0].style.webkitTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
+            cell.reflection = jQuery('<div class="cell fader view reflection2" style="opacity: 0"></div>').width(that.CWIDTH).height(that.CHEIGHT);
+            cell.reflection[0].style.webkitTransform = translate3d(x * that.CXSPACING, y * CYSPACING, 0);
             cell.reflection[0].style.MozTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
             cell.reflection[0].style.msTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
             cell.reflection[0].style.OTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
@@ -492,7 +495,7 @@ export default {
                 var currentMatrix = new OCSSMatrix(document.defaultView.getComputedStyle(dolly, null).OTransform);
                 var targetMatrix = new OCSSMatrix(dolly.style.OTransform);
                 var dx = currentMatrix.e - targetMatrix.e;
-                var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+                var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
                 camera.style.OTransform = "rotateY(" + angle + "deg)";
                 camera.style.OTransitionDuration = "330ms";
 
@@ -503,7 +506,7 @@ export default {
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
             var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
             camera.style.webkitTransform = "rotateY(" + angle + "deg)";
             camera.style.webkitTransitionDuration = "330ms";
 
@@ -516,7 +519,7 @@ export default {
         var currentMatrix = new DOMMatrix(document.defaultView.getComputedStyle(dolly, null).MozTransform);
         var targetMatrix = new DOMMatrix(dolly.style.MozTransform);
         var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
         camera.style.MozTransform = "rotateY(" + angle + "deg)";
         camera.style.MozTransitionDuration = "330ms";
 
@@ -528,7 +531,7 @@ export default {
         var currentMatrix = new MSCSSMatrix(document.defaultView.getComputedStyle(dolly, null).msTransform);
         var targetMatrix = new MSCSSMatrix(dolly.style.msTransform);
         var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
         camera.style.msTransform = "rotateY(" + angle + "deg)";
         camera.style.msTransitionDuration = "330ms";
 
@@ -540,7 +543,7 @@ export default {
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
             var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
             camera.style.webkitTransform = "rotateY(" + angle + "deg)";
             camera.style.webkitTransitionDuration = "330ms";
 
@@ -551,7 +554,7 @@ export default {
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
             var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
             angle=angle-7.5;
             camera.style.webkitTransform = "rotateY(" + angle + "deg)";
             camera.style.webkitTransitionDuration = "330ms";
@@ -612,7 +615,7 @@ export default {
       
        if(n==1)
        {
-                    var cx = (x +0.5) * CXSPACING;
+                    var cx = (x +0.5) * that.CXSPACING;
        }
        else{
                     if(scroll_type=='up') //adjusting translation animation
@@ -622,15 +625,15 @@ export default {
                             else
                                 count-=1;
 
-                        var cx = (x +count) * CXSPACING; 
+                        var cx = (x +count) * that.CXSPACING; 
                         }
                     else{
-                        var cx = (x +count) * CXSPACING; 
+                        var cx = (x +count) * that.CXSPACING; 
                         }
             }
       
 
-        var cy = (y + 0.5) * CYSPACING;
+        var cy = (y + 0.5) * that.CYSPACING;
       
        //scroll_type
      
@@ -642,6 +645,23 @@ export default {
         {
             return translate3d(-cx, -cy, 0);
         }	
+    },
+     snowstack_init()
+    {
+        let that = this;
+        that.CHEIGHT = Math.round(window.innerHeight / 3.5);
+        that.CWIDTH  = Math.round(that.CHEIGHT * 300 / 180);
+        that.CXSPACING = that.CWIDTH + that.CGAP;
+        that.CYSPACING = that.CHEIGHT + that.CGAP;
+
+        jQuery("#mirror")[0].style.webkitTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        jQuery("#mirror")[0].style.MozTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+    },
+    translate3d(x, y, z)
+    {
+        return "translate3d(" + x + "px, " + y + "px, " + z + "px)";
     },
   }
 }

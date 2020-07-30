@@ -217,32 +217,26 @@
 
             .collage-editor .canvas {
                 position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 1200px;
-                height: 550px;
+                top: 10vh;
+                left: 5vw;
+               /* transform: translate(-50%, -50%); */
+                width: 90vw;
+                height: 80vh;
                 margin: 0 auto;
-                overflow: auto;
-                border: 1px solid #3e3e3e;
+                overflow: hidden;
+              /*  border: 5px solid #3e3e3e; */
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 scrollbar-width: thin;
-	            scrollbar-color: #047999 #c1d7e491;
-            }
-
-            .collage-editor .canvas::-webkit-scrollbar {
-                width: 0.8em;
-            }
-            
-            /* Handle */
-            .collage-editor .canvas::-webkit-scrollbar-thumb {
-                width: 0.8em;
+                scrollbar-color: #047999 #c1d7e491;
+                border: 1px solid #d6d6d6;
             }
 
             .collage-editor .canvas-container {
                 position: absolute !important;
+                width: 90vw;
+                height: 80vh;
                 /* top: 50%;
                 left: 50%; */
                 transform: scale(1);
@@ -250,11 +244,6 @@
                 /* width: 80vw !important;
                 height: 80vh !important; */
             }
-
-            canvas {
-                /* background: #3e3e3e; */
-            }
-
 
             #imgLoader, #startImageLoader {
                 display: none;
@@ -404,11 +393,12 @@
                 font-weight: bold;
                 width: 100%;
                 height: 100%;
-                display: flex;
+                display: none;
                 justify-content: center;
                 align-items: center;
                 background: #3e3e3e;
                 z-index: 1;
+                display: none;
             }
 
             .cancel-btn {
@@ -494,7 +484,13 @@
                 font-size: 1.3vw;
                 border: 0;
                 background: #161616;
-                color: #fff;
+                color: #fff;                
+            }
+
+            .shape-select button.focus,
+            .shape-select button:focus {
+                outline: 0;
+                box-shadow: none!important;
             }
 
             .text-styles {
@@ -504,7 +500,7 @@
                 left: 60vw;
                 transform: translate(-50%, 0);
                 width: 23vw;
-                height: 15vh;
+                height: 18vh;
                 margin: 0 auto;
                 padding: 0.3vw;
                 justify-content: center;
@@ -516,7 +512,50 @@
                 padding: 0.7vw;
             }
 
-            /* The Close Button */
+            .text-styles td {
+                padding-bottom: 0.4vw;
+            }
+
+            .crop-options-styles {
+                position: fixed;
+                background: #161616;
+                bottom: 8vh;
+                left: 65vw;
+                transform: translate(-50%, 0);
+                width: 5.5vw;
+                height: 6vh;
+                margin: 0 auto;
+                padding: 0.3vw;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+            }        
+
+            .crop-options-styles button {
+                width: 5.5vw;
+                height: 7vh;
+                font-size: 1.3vw;
+                border: 0;
+                background: #161616;
+                color: #fff;                
+            }
+
+            .crop-txt{
+                position: fixed;
+                left: 1.75vw;
+                top: 2vh;
+                color: #fff;
+                font-size: 17px;
+                margin: 0 auto;     
+            }
+
+            .crop-txt:hover,
+            .crop-txt:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
             .close {
                 position: fixed;
                 right: 2%;
@@ -524,7 +563,7 @@
                 font-size: 20px;
                 font-weight: bold;
                 margin: 0 auto;
-            }
+            } 
 
             .close:hover,
             .close:focus {
@@ -533,19 +572,274 @@
                 cursor: pointer;
             }
 
+            .undo:hover,
+            .undo:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .redo:hover,
+            .redo:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .clear_canvas:hover,
+            .clear_canvas:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .zoom-in:hover,
+            .zoom-in:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .zoom-out:hover,
+            .zoom-out:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .original-size:hover,
+            .original-size:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .add_shapes:hover,
+            .add_shapes:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .add_text:hover,
+            .add_text:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .remove_object:hover,
+            .remove_object:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .upload:hover,
+            .upload:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .save:hover,
+            .save:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .crop:hover,
+            .crop:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .clear-highlight {
+                position: fixed;
+                right: 14%;
+                color: #fff;
+                font-size: 16px;
+                margin: 0 auto;
+            }
+
+            .clear-highlight:hover,
+            .clear-highlight:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .shapes-icon {
+                fill:#fff;
+            }
+
+            .shapes-icon:hover,
+            .shapes-icon:focus {
+                fill: #17a2b8;
+                cursor: pointer;
+            }
+
+            .icon-help{
+                color: green;
+            }
+
+            .help{
+                position: fixed;
+                right: 3vw;
+                bottom: 1.5vh;
+                font-size: 2.5vw;
+                cursor: pointer;
+            }
+
+            .sidenav-left {
+                position: fixed;
+                width: 6vw;
+                height: 25vw;                
+                z-index: 1;
+                top: 10vw;
+                left: 0vw;                
+                background: transparent;
+                overflow-x: hidden;
+                transform: translate(-50%, 0);
+                padding: 8px 0;
+                margin: 0.5vw;
+                color: #fff;
+            }
+
+            .sidenav-right {
+                position: fixed;
+                width: 6vw;
+                height: 25vw;                
+                z-index: 1;
+                top: 10vw;
+                right: 0vw;                
+                background: transparent;
+                overflow-x: hidden;
+                transform: translate(-50%, 0);
+                padding: 8px 0;
+                margin: 0.5vw;
+                color: #fff;
+            }
+
+            .instructions {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 100vh;
+                background: #00000094;
+                display: absolute;
+            }
+
+            .instruction:hover {
+                border: 1px solid green;
+            }
+
+            .instruction {
+                border: 1px solid red;
+                position: absolute;
+            }
+
+            /* Left controls */
+            .instruction-1 {
+                transform: translate(0.45vw, 21.35vh);
+                width: 3vw;
+                height: 40vh;
+            }
+
+            /* Right controls */
+            .instruction-2 {
+                transform: translate(96.55vw, 21.35vh);
+                width: 3vw;
+                height: 40vh;
+            }
+
+            /* Canvas controls */
+            .instruction-3 {
+                transform: translate(24.95vw, 91.5vh);
+                width: 50vw;
+                height: 8vh;
+            }
+
+            /* Canvas */
+            .instruction-4 {
+                transform: translate(4.75vw, 9.5vh);
+                width: 90.5vw;
+                height: 81vh;
+            }
+
+            /* Cancel button */
+            .instruction-5 {
+                transform: translate(1.75vw, 1.35vh);
+                width: 7.5vw;
+                height: 7vh;
+            }
+
+            .instruction-close-btn {
+                position: absolute;
+                /* right: 1%; */
+                transform: translate(98vw, 9vh);
+                font-size: 1.75vw;
+                color: #df1613;
+                cursor: pointer;
+            }
+
+            .instruction-text {
+                color: #fff;
+                font-family: 'Nasalization';
+                font-size: 1vw;
+                position: absolute;                
+                display: none;
+            }
+
+            /* Left controls instructions */
+            .instruction-text-1 {
+                transform: translate(0.45vw, 21.35vh);
+            }
+
+            /* Right controls instructions */
+            .instruction-text-2 {
+                transform: translate(92.45vw, 21.35vh);
+            }
+
+            /* Canvas controls instructions */
+            .instruction-text-3 {
+                transform: translate(24.95vw, 91.5vh);
+            }
+
+            /* Canvas instructions */
+            .instruction-text-4 {
+                transform: translate(10.65vw, 13vh);
+            }
+
+             /* Cancel button instructions */
+            .instruction-text-5 {
+                transform: translate(1.75vw, 1.6vh);
+            }
 
             @media (min-width : 320px) 
                 and (max-width : 991px)
                 and (orientation : landscape) {
                     .collage-editor .canvas-container {
-                        /* transform: scale(0.6); */
+                        /* transform: scale(0.6);  */
                     }
-                }
+                } 
         </style>
     </head>
     <body>
         <div class="collage-editor">
             <button class="cancel-btn" type="button">Cancel</button>
+            <div class="sidenav-left">
+            <!-- left controls -->
+            </div>
+
+            <div class="sidenav-right">
+            <!-- right controls -->
+            </div>
+
             <div class="canvas">
                 <div class="start-message">
                     <p>
@@ -558,18 +852,19 @@
                 <canvas id="c"></canvas>
             </div>
             <div class="controls">
-                <button id="undo" disabled><label for="" title="Undo"><i class="fas fa-undo"></i></label></button>
-                <button id="redo" disabled><label for="" title="Redo"><i class="fas fa-redo"></i></label></button>
-                <button id="clear_canvas" disabled><label for="" title="Reset"><i class="fas fa-retweet"></i></label></button>                            
+                <button id="undo" class="undo" disabled><label for="" title="Undo"><i class="fas fa-undo"></i></label></button>
+                <button id="redo" class="redo" disabled><label for="" title="Redo"><i class="fas fa-redo"></i></label></button>
+                <button id="clear_canvas" class="clear_canvas" disabled><label for="" title="Reset"><i class="fas fa-retweet"></i></label></button>                            
                 <button class="zoom-in"><label for="" title="Zoom In"><i class="fas fa-search-plus"></i></label></button>
                 <button class="zoom-out"><label for="" title="Zoom Out"><i class="fas fa-search-minus"></i></label></button>
                 <button class="original-size"><label for="" title="100%"><i class="fas fa-expand-arrows-alt"></label></i></button>
                 <button id="add_shapes" class="add_shapes"><label title="Add Shapes"><i class="fas fa-shapes"></label></i></button>
                 <button id="add_text" class="add_text"><label for="" title="Add Text"><i class="fas fa-font"></label></i></button>
-                <button class="remove_object"><label for="" title="Delete Image"><i class="far fa-trash-alt"></i></label></button>
-                <button><label for="imgLoader" class="custom-file-upload" title="Upload image(s)">
+                <button class="upload"><label for="imgLoader" class="custom-file-upload" title="Upload image(s)">
                     <i class="far fa-images"></i>
                 </label></button>
+                <button id="selCrop" class="crop"><label for="" title="Crop"><i class="fa fa-crop"></i></label></button>  
+                <button class="remove_object"><label for="" title="Delete"><i class="far fa-trash-alt"></i></label></button>                
                 <input type="file" name="image" id="imgLoader" accept="image/x-png,image/jpeg" multiple>
                 <button class="save" disabled><label for="" title="Save"><i class="fas fa-save"></i></label></button>
             </div>
@@ -577,38 +872,64 @@
             <div id="shape-select" class="shape-select" style="display:none">
             <span id="close_shapes" class="close">&times;</span>
             <table>
-            <tr><td><button id="circle" class="circle"><label for="" title="Circle"><i class="fas fa-circle"></i></label></button></td>
-                <td><button id="tri" class="triangle"><label for="" title="Triangle"><i class="fas fa-shapes"></i></label></button></td>
-                <td><button id="square" class="square"><label for="" title="Square"><i class="fas fa-square-full"></i></label></button></td>
-                <td><button id="rectangle" class="rectangle"><label for="" title="Rectangle"><i class="fas fa-shapes"></i></label></button></td>
+            <tr><td>
+                 <button id="circle" class="circle"> 
+                    <label for="circle" title="Circle"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon circle">
+                    <circle cx="50" cy="50" r="50"/>
+                    </svg></label>
+                </button>
+                </td>
+                <td>
+                    <button id="tri" class="tri">
+                    <label for="tri" title="Triangle"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="50 15, 100 100, 0 100"/>
+                    </svg></label>
+                    </button>
+                </td>
+                <td>
+                    <button id="square" class="square">
+                    <label for="" title="Square"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <rect width="100" height="100"/>
+                    </svg></label>
+                    </button>
+                </td>
+                <td>
+                    <button id="rectangle" class="rectangle">
+                    <label for="" title="Rectangle"><svg viewBox="-60 0 230 55" height="2.5vw" width="2.5vw" class="shapes-icon">
+                    <rect width="300" height="100"/>
+                    </svg></label>
+                    </button>
+                </td>
             </tr>
             <tr><td>
                     <button id="diamond" class="diamond">
-                    <label for="" title="Diamond"><svg height="5" width="5">
-                    <polygon points="50,0 100,50 50,100 0,50" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Diamond"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="50,0 100,50 50,100 0,50"/>
                     </svg></label>
                     </button>
                 </td>
 
                 <td>
                     <button id="parallelogram" class="parallelogram">
-                    <label for="" title="Parallelogram"><svg height="5" width="5">
-                    <polygon points="25,0 100,0 75,100 0,100" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Parallelogram"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="25,0 100,0 75,100 0,100"/>
                     </svg></label>
                     </button>
                 </td>
 
                 <td>
                     <button id="ellipse" class="ellipse">
-                    <label for="" title="Ellipse">
+                    <label for="" title="Ellipse"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <ellipse cx="50" cy="60" rx="75" ry="37.5"/>
+                    </svg>
                     </label>
                     </button>
                 </td>
 
                 <td>
                     <button id="trapezoid" class="trapezoid">
-                    <label for="" title="Trapezoid"><svg height="5" width="5">
-                    <polygon points="180,10 300,50 300,180 180,220" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Trapezoid"><svg viewBox="130 75 230 55" height="2vw" width="2vw" class="shapes-icon">
+                    <polygon points="180,10 300,50 300,180 180,220"/>
                     </svg></label>
                     </button>
                 </td>
@@ -616,29 +937,32 @@
             
             <tr><td>
                     <button id="star" class="star">
-                    <label for="" title="Star"><i class="fas fa-star"></i></label></button>
+                    <label for="star" title="Star"><svg viewBox="-60 50 320 55" height="3vw" width="3vw" class="shapes-icon">
+                    <polygon points="100,10 40,198 190,78 10,78 160,198"/>
+                    </svg></label>
+                    </button>
                 </td>
 
                 <td>
                     <button id="penta" class="penta">
-                    <label for="" title="Pentagon"><svg height="5" width="5">
-                    <polygon points="50,0 100,38 82,100 18,100 0,38" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Pentagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="50,0 100,38 82,100 18,100 0,38"/>
                     </svg></label>
                     </button>
                 </td>
 
                 <td>
                     <button id="hexa" class="hexa">
-                    <label for="" title="Hexagon"><svg height="5" width="5">
-                    <polygon points="850,75 958,137.5 958,262.5 850,325 742,262.5 742,137.5" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Hexagon"><svg viewBox="-45 0 230 55" height="4.75vw" width="4.75vw" class="shapes-icon">
+                    <polygon points="30.1,84.5 10.2,50 30.1,15.5 69.9,15.5 89.8,50 69.9,84.5"/>
                     </svg></label>
                     </button>
                 </td>
 
                 <td>
                     <button id="hepta" class="hepta">
-                    <label for="" title="Heptagon"><svg height="5" width="5">
-                    <polygon points="50,0 90,20 100,60 75,100 25,100 0,60 10,20" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Heptagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="50,0 90,20 100,60 75,100 25,100 0,60 10,20"/>
                     </svg></label>
                     </button>
                 </td>
@@ -646,63 +970,71 @@
             
             <tr><td>
                     <button id="octa" class="octa">
-                    <label for="" title="Octagon"><svg height="5" width="5">
-                    <polygon points="30,0 70,0 100,30 100,70 70,100 30,100 0,70 0,30" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Octagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="30,0 70,0 100,30 100,70 70,100 30,100 0,70 0,30"/>
                     </svg></label>
                     </button>
             </td>
 
                 <td>
                     <button id="nona" class="nona">
-                    <label for="" title="Nonagon"><svg height="5" width="5">
-                    <polygon points="50,0 83,12 100,43 94,78 68,100 32,100 6,78 0,43 17,12" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Nonagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="50,0 83,12 100,43 94,78 68,100 32,100 6,78 0,43 17,12"/>
                     </svg></label>
                     </button>
                 </td>
 
-                <td>
+             <!--   <td>
                     <button id="deca" class="deca">
-                    <label for="" title="Decagon"><svg height="5" width="5">
-                    <polygon points="50,0 80,10 100,35 100,70 80,90 50,100 20,90 0,70 0,35 20,10" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Decagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="50,0 80,10 100,35 100,70 80,90 50,100 20,90 0,70 0,35 20,10"/>
                     </svg></label>
                     </button>
-                </td>
+                </td> -->
 
                 <td>
                     <button id="bevel" class="bevel">
-                    <label for="" title="Bevel"><svg height="5" width="5">
-                    <polygon points="20,0 80,0 100,20 100,80 80,100 20,100 0,80 0,20" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Bevel"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="20,0 80,0 100,20 100,80 80,100 20,100 0,80 0,20"/>
                     </svg></label>
                     </button>
                 </td>
+
+                <td>
+                    <button id="heart" class="heart">
+                    <label for="" title="Heart"><svg viewBox="-53 0 230 55" height="4.5vw" width="4.5vw" class="shapes-icon">
+                    <path id="heart" d="M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z" />
+                    </svg></label>
+                    </button>
+                </td> 
             </tr>
             
             <tr><td>
                     <button id="rabbet" class="rabbet">
-                    <label for="" title="Rabbet"><svg height="5" width="5">
-                    <polygon points="0,15 15,15 15,0 85,0 85,15 100,15 100,85 85,85 85,100 15,100 15,85 0,85" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Rabbet"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="0,15 15,15 15,0 85,0 85,15 100,15 100,85 85,85 85,100 15,100 15,85 0,85"/>
                     </svg></label>
                     </button>
                 </td>
 
                 <td>
                     <button id="point" class="point">
-                    <label for="" title="Point"><svg height="5" width="5">
-                    <polygon points="0,0 75,0 100,50 75,100 0,100" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Point"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="0,0 75,0 100,50 75,100 0,100"/>
                     </svg></label>
                     </button>
                 </td>
 
                 <td><button id="chevron" class="chevron">
-                    <label for="" title="Chevron"><svg height="5" width="5">
-                    <polygon points="75,0 100,50 75,100 0,100 25,50 0,0" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Chevron"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="75,0 100,50 75,100 0,100 25,50 0,0"/>
                     </svg></label>
                     </button>
                 </td>
 
                 <td><button id="message" class="message">
-                    <label for="" title="Message"><svg height="5" width="5">
-                    <polygon points="0,0 100,0 100,75 75,75 75,100 50,75 0,75" style="fill:white;fill-rule:nonzero;" />
+                    <label for="" title="Message"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                    <polygon points="0,0 100,0 100,75 75,75 75,100 50,75 0,75"/>
                     </svg></label></button>
                 </td>
             </tr>
@@ -727,117 +1059,209 @@
                     <option value="Quicksand" style="font-family:Quicksand">Quicksand</option>
                     <option value="Inconsolata" style="font-family:Inconsolata">Inconsolata</option>
                     </select></td>                
-                    </tr>
+                </tr>
                 <tr><td><label for="text-color">Text color</label></td>
-                    <td><input type="color" id="text-color" data-type="color"/></td>
+                    <td><input type="color" id="text-color"/></td>  
                     <td><label for="bg-color">Text highlight</label></td>
-                    <td><input type="color" id="bg-color" data-type="color"/></td> 
-                </tr>  
-                <tr>   
+                    <td><input type="color" id="bg-color"/></td> 
+                </tr>
+                <tr>
+                    <td><span id="clear-bg-color" class="clear-highlight">Clear highlight</span></td> 
                 </tr>         
                 </table>
+                </div> 
+
+            <div id="crop-options" class="crop-options-styles" style="display:none">
+                <span id="close_crop-options" class="close">&times;</span> 
+                <table>
+                <tr>
+                    <td>
+                        <span id="" class="crop-txt">Crop</span>
+                    </td>              
+                </tr>      
+                </table>
+            </div> 
+
+                <div class="instructions">
+                    <span class="instruction-close-btn"><i class="far fa-times-circle"></i></span>
+                    <div class="instruction instruction-1" data-text-div="instruction-text-1"></div>
+                    <div class="instruction instruction-2" data-text-div="instruction-text-2"></div>
+                    <div class="instruction instruction-3" data-text-div="instruction-text-3"></div>
+                    <div class="instruction instruction-4" data-text-div="instruction-text-4"></div>
+                    <div class="instruction instruction-5" data-text-div="instruction-text-5"></div>
+    
+                    <div class="instruction-text instruction-text-1">Left controls</div>
+                    <div class="instruction-text instruction-text-2">Right controls</div>
+                    <div class="instruction-text instruction-text-3">Canvas controls</div>
+                    <div class="instruction-text instruction-text-4">Canvas</div>
+                    <div class="instruction-text instruction-text-5">Cancel</div>
+                </div>
+
+                <div class="help">
+                    <a class=""><i class="fa fa-question-circle icon-help" aria-hidden="true"></i></a>
                 </div>
         </div>
-        
+       
         <script src="{{asset('front/JS/jquery-1.11.1.min.js')}}"></script>
         <!-- <script src="{{asset('front/JS/jquery-2.1.3x.min.js')}}"></script> -->
         <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.2.0/fabric.all.min.js"></script> -->
         <script src="{{asset('front/JS/fabric.min.js')}}"></script>
-        <script src="{{asset('front/JS/FileSaver.js')}}"></script>       
+        <script src="{{asset('front/JS/FileSaver.js')}}"></script>      
         <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>        
         <script src="{{asset('front/JS/gaTrackingJSFiddle.js')}}"></script>     
         <script src="{{asset('front/JS/lodash.min.js')}}"></script>
         <script>
             $(document).ready(function() {
                 var url = $('meta[name="url"]').attr('content');
+                var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+                var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+                var canvas = document.getElementById("c"); 
                 var canvas = new fabric.Canvas('c', 
                 {
-                    width: '1200',
-                    height: '550',
+                    width: width,
+                    height: height,
                     preserveObjectStacking: true,
                     renderOnAddRemove: false,
                 }
                 );
                 fabric.Object.prototype.objectCaching = false;
                 canvas.backgroundColor="transparent";
+                console.log('innerWidth',window.innerWidth);
+                console.log('innerHeight',window.innerHeight);
+                console.log('screen.width',window.screen.width);
+                console.log('screen.height',window.screen.height);
                 // var canvasWrapper = document.getElementById('canvasWrap');
                 // canvasWrapper.addEventListener("keydown", OnkeyDown, false);
 
                 // save initial state
                 save();
 
+                // show instruction overlay
+                $('.help a').click(function () {
+                $('.instructions').fadeIn();
+                });
+
+                // hide instruction overlay
+                $('.instruction-close-btn').click(function() {
+                $('.instructions').fadeOut();
+                });
+
+                // show instruction text on hover of each box
+                $('.instruction').hover(
+                    function() {
+                        var text_div = $(this).data('text-div');
+                        $('.'+text_div).fadeIn();
+                        console.log("instruction hovered");
+                    },
+                    function() {
+                        var text_div = $(this).data('text-div');
+                        $('.'+text_div).hide();
+                        console.log("instruction not hovered");
+                    }
+                );
+
                 // register event listener for user's actions
                 canvas.on('object:modified', function() {
                     save();
                 }); 
                 
-                //function to hide DIV of shape selector
+                //function to hide DIV of shape selector when close button is clicked
                 $(document).ready(function(){
                 $("#close_shapes").click(function(){
                 $("#shape-select").hide();
                 });
                 });
 
-                //function to hide DIV of text styles selector
+                //function to hide DIV of text styles selector when close button is clicked
                 $(document).ready(function(){
                 $("#close_textstyles").click(function(){
                 $("#text-styles").hide();
                 });
                 });
 
-                //function to show DIV of shape selector
+                //function to hide DIV of text styles selector when close button is clicked
+                $(document).ready(function(){
+                $("#close_crop-options").click(function(){
+                $("#crop-options").hide();
+                });
+                });
+
+                //function to show DIV of shape selector when add shape button is clicked
                 $(document).ready(function(){
                 $("#add_shapes").click(function(){
                 $("#shape-select").show();
                 $("#text-styles").hide();
+                $("#crop-options").hide();
                 });
                 });
 
-                //function to show DIV of text styles selector
+                //function to show DIV of text styles selector when add text button is clicked
                 $(document).ready(function(){
                 $("#add_text").click(function(){
                 $("#text-styles").show();
                 $("#shape-select").hide();
+                $("#crop-options").hide();
                 });
+                });
+
+                //function to show DIV of text styles selector when text is selected
+                canvas.on('selection:created', function() {
+                if(canvas.getActiveObject().get('type')==="i-text"){
+                $("#text-styles").show();
+                $("#shape-select").hide();
+                $("#crop-options").hide();
+                }
+                });
+
+                //function to hide DIV of text styles selector when text is not selected
+                canvas.on('selection:cleared', function() {
+                    $("#text-styles").hide();
+                    $("#shape-select").hide();
+                    $("#crop-options").hide();
+                });
+    
+                //function to set font style
+                $('#FontStyle').change(function() {    
+                    var mFont = $(this).val();
+                    var tObj = canvas.getActiveObject();
+                    tObj.set({
+                        fontFamily: mFont
+                    });
+                    canvas.renderAll();
+                }); 
+
+                //function to change text color of selected text
+                jQuery('#text-color').on('input', function() {
+                    var mFont = $(this).val();
+                    var tObj = canvas.getActiveObject();
+                    tObj.setSelectionStyles({
+                        fill: mFont
+                    });
+                    canvas.renderAll();
                 });
 
                 //function to change background color of selected text
-                $('#bg-color').change((e) => {
-                let obj = canvas.getActiveObject();
-                let $this = $(e.currentTarget);
-                obj.setSelectionStyles({textBackgroundColor:$this.val()});
-                canvas.renderAll();
+                jQuery('#bg-color').on('input', function() {
+                    var mFont = $(this).val();
+                    var tObj = canvas.getActiveObject();
+                    tObj.setSelectionStyles({
+                        textBackgroundColor: mFont
+                    });
+                    canvas.renderAll();
                 });
 
-                //function to change text color of selected text
-                $('#text-color').change((e) => {
-                let obj = canvas.getActiveObject();
-                let $this = $(e.currentTarget);
-                obj.setSelectionStyles({fill:$this.val()});
-                //obj.textBackgroundColor =$this.val();
-                canvas.renderAll();
-                });
 
-                //function to set font style
-                $('#FontStyle').change(function() {    
-                var mFont = $(this).val();
+                 //function to clear highlight
+                $(document).ready(function(){
+                $("#clear-bg-color").click(function(){
+                console.log("clear highlight");
                 var tObj = canvas.getActiveObject();
-                tObj.set({
-                    fontFamily: mFont
+                tObj.setSelectionStyles({
+                        textBackgroundColor: '#ffffff00'
+                    });
+                    canvas.renderAll();
                 });
-                canvas.renderAll();
-                }); 
-
-                //function to show DIV of shape selector when text is selected
-                canvas.on('selection:created', function() {
-                    if(canvas.getActiveObject().get('type')==="i-text"){
-                    $("#text-styles").show();
-                    $("#shape-select").hide();
-                    }
-                });
-
-                canvas.on('selection:cleared', function() {
-                    $("#text-styles").hide();
                 });
                 
                 let imagesMap = new Map();
@@ -878,12 +1302,12 @@
                                     borderColor: '#d6d6d6',
                                     cornerColor: '#d6d6d6',
                                     cornerSize: 10,
-                                    transparentCorners: false, 
+                                    transparentCorners: false,
                                     name:"img"+(imagesMap.size+1),                          
                                     // lockUniScaling: true
                                 });
                                 //image.scale(getRandomNum(0.1, 0.25)).setCoords();
-                                image.scaleToWidth(canvas.getWidth()/4);
+                                image.scaleToWidth(canvas.getWidth()/6);
                                 // image.scaleToHeight(canvas.getHeight());
                                 canvas.add(image).centerObject(image);
                                 imagesMap.set(image.name,image);
@@ -954,78 +1378,142 @@
 
                 $('.remove_object').click(function() {
                     // canvas.remove(canvas.getActiveObject());
-                    Swal.fire({
-                        text: "Are you sure you want to delete this image?",
-                        imageUrl: '../../front/icons/alert-icon.png',
-                        imageWidth: 80,
-                        imageHeight: 80,
-                        imageAlt: 'Mbaye Logo',
-                        width: '30%',
-                        padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes'
-                    }).then((result) => {
-                        if (result.value) {
                             canvas.getActiveObjects().forEach((obj) => {
                                 if(canvas.getActiveObject().get('type')==="image"){
                                 var obj = canvas.getActiveObject();
                                 console.log("image deleted");
                                 imagesMap.delete(obj.name,obj);
                                 canvas.remove(obj); 
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();
                                 }      
-                                else if(canvas.getActiveObject().get('type')==="i-text"){
+                                if(canvas.getActiveObject().get('type')==="i-text"){
                                 var obj = canvas.getActiveObject();
                                 console.log("text deleted");
                                 textMap.delete(obj.name,obj);
                                 canvas.remove(obj);     
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();
                                 }      
-                                else if(canvas.getActiveObject().get('type')==="circle"){
+                                if(canvas.getActiveObject().get('type')==="circle"){
                                 var obj = canvas.getActiveObject();
                                 console.log("shape deleted");
                                 shapesMap.delete(obj.name,obj);
-                                canvas.remove(obj);         
+                                canvas.remove(obj);  
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();       
                                 }       
-                                else if(canvas.getActiveObject().get('type')==="triangle"){
+                                if(canvas.getActiveObject().get('type')==="triangle"){
                                 var obj = canvas.getActiveObject();
                                 console.log("shape deleted");
                                 shapesMap.delete(obj.name,obj);
-                                canvas.remove(obj);         
+                                canvas.remove(obj);   
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();      
                                 }     
-                                else if(canvas.getActiveObject().get('type')==="rect"){
+                                if(canvas.getActiveObject().get('type')==="rect"){
                                 var obj = canvas.getActiveObject();
                                 console.log("shape deleted");
                                 shapesMap.delete(obj.name,obj);
-                                canvas.remove(obj);         
+                                canvas.remove(obj);  
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();       
                                 }    
-                                else if(canvas.getActiveObject().get('type')==="ellipse"){
+                                if(canvas.getActiveObject().get('type')==="ellipse"){
                                 var obj = canvas.getActiveObject();
                                 console.log("shape deleted");
                                 shapesMap.delete(obj.name,obj);
-                                canvas.remove(obj);         
+                                canvas.remove(obj);  
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();       
                                 }   
-                                else if(canvas.getActiveObject().get('type')==="polygon"){
+                                if(canvas.getActiveObject().get('type')==="polygon"){
                                 var obj = canvas.getActiveObject();
                                 console.log("shape deleted");
                                 shapesMap.delete(obj.name,obj);
-                                canvas.remove(obj);         
-                                }           
+                                canvas.remove(obj); 
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();        
+                                }      
+                                if(canvas.getActiveObject().get('type')==="path"){
+                                var obj = canvas.getActiveObject();
+                                console.log("shape deleted");
+                                shapesMap.delete(obj.name,obj);
+                                canvas.remove(obj); 
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();        
+                                }       
                             });
-                            canvas.discardActiveObject().renderAll();
-                            countObjects();
-                        }
-                    });
                 });
 
                 $('html').keyup(function(e){
                     if(e.keyCode == 46) {
                         canvas.getActiveObjects().forEach((obj) => {
-                        deleteMap();
-                        canvas.remove(obj);                        
-                        });
-                        canvas.discardActiveObject().renderAll()
+                                if(canvas.getActiveObject().get('type')==="image"){
+                                var obj = canvas.getActiveObject();
+                                console.log("image deleted");
+                                imagesMap.delete(obj.name,obj);
+                                canvas.remove(obj); 
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();
+                                }      
+                                if(canvas.getActiveObject().get('type')==="i-text"){
+                                var obj = canvas.getActiveObject();
+                                console.log("text deleted");
+                                textMap.delete(obj.name,obj);
+                                canvas.remove(obj);     
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();
+                                }      
+                                if(canvas.getActiveObject().get('type')==="circle"){
+                                var obj = canvas.getActiveObject();
+                                console.log("shape deleted");
+                                shapesMap.delete(obj.name,obj);
+                                canvas.remove(obj);  
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();       
+                                }       
+                                if(canvas.getActiveObject().get('type')==="triangle"){
+                                var obj = canvas.getActiveObject();
+                                console.log("shape deleted");
+                                shapesMap.delete(obj.name,obj);
+                                canvas.remove(obj);   
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();      
+                                }     
+                                if(canvas.getActiveObject().get('type')==="rect"){
+                                var obj = canvas.getActiveObject();
+                                console.log("shape deleted");
+                                shapesMap.delete(obj.name,obj);
+                                canvas.remove(obj);  
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();       
+                                }    
+                                if(canvas.getActiveObject().get('type')==="ellipse"){
+                                var obj = canvas.getActiveObject();
+                                console.log("shape deleted");
+                                shapesMap.delete(obj.name,obj);
+                                canvas.remove(obj);  
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();       
+                                }   
+                                if(canvas.getActiveObject().get('type')==="polygon"){
+                                var obj = canvas.getActiveObject();
+                                console.log("shape deleted");
+                                shapesMap.delete(obj.name,obj);
+                                canvas.remove(obj); 
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();        
+                                }  
+                                if(canvas.getActiveObject().get('type')==="path"){
+                                var obj = canvas.getActiveObject();
+                                console.log("shape deleted");
+                                shapesMap.delete(obj.name,obj);
+                                canvas.remove(obj); 
+                                canvas.discardActiveObject().renderAll();
+                                countObjects();        
+                                }             
+                            });
                     }
                 });
 
@@ -1183,6 +1671,10 @@
                 addBevel();
                 }); 
 
+                $("#heart").on("click", function(e) {
+                addHeart();
+                });
+
                 $("#rabbet").on("click", function(e) {
                 addRabbet();
                 });
@@ -1208,14 +1700,40 @@
                     left: 100, 
                     top: 100,
                     fill: '#FFFFFF', 
+                    cache: false,
+                    borderColor: '#d6d6d6',
+                    cornerColor: '#d6d6d6',
                     name:"text"+(textMap.size+1),   
                 });
                 text.scaleToWidth(canvas.getWidth()/5);
-                canvas.add(text);  
+                canvas.add(text);
+                canvas.setActiveObject(text); 
                 canvas.renderAll();
                 textMap.set(text.name,text);
                 console.log("textMap", textMap);
                 }
+
+               canvas.on("text:editing:entered", function (e) {
+                var obj = canvas.getActiveObject();
+                    if(obj.text === 'Click here to edit text'){
+                        obj.text = "";
+                        obj.hiddenTextarea.value = "";
+                        obj.enterEditing();
+                        obj.dirty = true;
+                        obj.setCoords();
+                        canvas.renderAll();
+                    }
+                });
+
+                canvas.on('text:editing:exited', function(e) {
+                    console.log("success");
+                    if(text.text === ''){
+                        text.text = "Click here to edit text";
+                        text.dirty = true;
+                        text.setCoords(); 
+                        canvas.renderAll();
+                    } 
+                }); 
 
                 //functions to add shapes
                 //Circle
@@ -1228,6 +1746,8 @@
 	                fill: '#DDD',
                     left: 450,
                     top: 175,
+                    borderColor: '#d6d6d6',
+                    cornerColor: '#d6d6d6',
                     name:"shape"+(shapesMap.size+1),  
                 });  
                 canvas.add(Circle);
@@ -1249,6 +1769,8 @@
                     left: 450,
                     top: 175,
                     fill: '#DDD',
+                    borderColor: '#d6d6d6',
+                    cornerColor: '#d6d6d6',
                     name:"shape"+(shapesMap.size+1),    
                 });
   
@@ -1271,6 +1793,8 @@
                     left: 450,
                     top: 175,
                     fill: '#DDD',
+                    borderColor: '#d6d6d6',
+                    cornerColor: '#d6d6d6',
                     name:"shape"+(shapesMap.size+1), 
                 });
   
@@ -1293,6 +1817,8 @@
                     left: 450,
                     top: 175, 
                     fill: '#DDD',
+                    borderColor: '#d6d6d6',
+                    cornerColor: '#d6d6d6',
                     name:"shape"+(shapesMap.size+1), 
                 });
   
@@ -1760,6 +2286,46 @@
                 console.log("shapesMap", shapesMap);
                 }
 
+                //Heart
+                function addHeart(){ 
+                $('.start-message').hide();
+                var Heart;
+                    Heart = new fabric.Path('M 272.70141,238.71731 \
+                    C 206.46141,238.71731 152.70146,292.4773 152.70146,358.71731  \
+                    C 152.70146,493.47282 288.63461,528.80461 381.26391,662.02535 \
+                    C 468.83815,529.62199 609.82641,489.17075 609.82641,358.71731 \
+                    C 609.82641,292.47731 556.06651,238.7173 489.82641,238.71731  \
+                    C 441.77851,238.71731 400.42481,267.08774 381.26391,307.90481 \
+                    C 362.10311,267.08773 320.74941,238.7173 272.70141,238.71731  \
+                    z ');   
+                
+                Heart.set({ 
+                    scaleX: 0.5, 
+                    scaleY: 0.5,
+                    originX: 'left',
+                    originY: 'top',
+                    left: 450,
+                    top: 175,
+                    width: 450,
+                    height: 450,
+                    fill: '#DDD', 
+                    strokeWidth: 0,
+                    borderColor: '#d6d6d6',
+                    cornerColor: '#d6d6d6',
+                    cornerSize: 10,
+                    transparentCorners: false,
+                    name:"shape"+(shapesMap.size+1),     
+                });
+                    
+                    canvas.add(Heart);
+                    canvas.sendToBack(Heart);
+                    canvas.renderAll();
+                    save();
+                    shapesMap.set(Heart.name,Heart);
+                    console.log("shapesMap", shapesMap);
+                }
+  
+
                 //Rabbet
                 function addRabbet(){ 
                 $('.start-message').hide();
@@ -1909,7 +2475,7 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
+
                 canvas.add(Msg);
                 canvas.sendToBack(Msg);
                 canvas.renderAll();
@@ -1918,12 +2484,12 @@
                 console.log("shapesMap", shapesMap);
                 }
 
-                canvas.on({
+               canvas.on({
                 'object:moving': onMoving,
                 'object:scaling': onScaling,
                 'object:rotating': onRotating,
                 'mouse:down': onSelected,
-                });
+                });  
 
 
                 let lastShapeSelected;
@@ -2070,7 +2636,7 @@
 
                 $(".save").click(function(){
                     Swal.fire({
-                        text: "Are you sure you want to save the changes made to the entry?",
+                        html: "Are you sure you want to save the changes made to the entry? <br><br> This will overwrite your previous career profile image.",
                         imageUrl: '../../front/icons/alert-icon.png',
                         imageWidth: 80,
                         imageHeight: 80,
@@ -2109,7 +2675,7 @@
                                     // alert('Collage Saved! Filename: '+res.filename);
                                     Swal.fire({
                                         title: '<span class="success">Success!</span>',
-                                        text: 'Featured Image successfully saved!',
+                                        text: 'Your Career Profile image was successfully saved!',
                                         imageUrl: '../../front/icons/alert-icon.png',
                                         imageWidth: 80,
                                         imageHeight: 80,
@@ -2126,7 +2692,7 @@
                     }
                     });
                     // canvas.setBackgroundColor('#3e3e3e', canvas.renderAll.bind(canvas));
-                }); 
+            }); 
 
                 var scale = 1;
 

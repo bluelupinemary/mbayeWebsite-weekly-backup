@@ -2,7 +2,8 @@
 @extends('frontend.layouts.app')
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
-
+<link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 @section('before-styles')
 @endsection
 <style>
@@ -16,7 +17,11 @@
     .button-div{
         border:0px solid green;
     }
-    </style>
+    .blog_img img {
+        width: 100%;
+        height: 100%;
+    }
+</style>
 
 @section('content')
 <div class="app">
@@ -33,8 +38,71 @@
     <img  class="img-nouvela"  style="display:none" src="{{ asset('front') }}/images/naff555Votes.png" >
     <div>
 </section>
-{{-- <h1 style="background-color: white">{{$tag}}<h1> --}}
-<newblog-component :tagvalue="{{$tagdetails}}"></newblog-component>
+    <div class="most-naffed">
+        <span class="title_text">Most Naffed</span>
+
+
+
+
+
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12">
+            {{-- <div class=""> --}}
+              <div class="carousel slide multi-item-carousel col-md-12" id="theCarousel">
+                {{-- <div class="carousel slide multi-item-carousel " id="theCarousel">  --}}
+                <div class="carousel-inner col-md-12">
+                    {{-- <div class="carousel-inner "> --}}
+                    <div class="col-xs-4 img_left main-naff">
+                        {{-- <div class=" img_left"> --}}
+                            <a href="#1">
+                                <h2 class="blog_name" id="blog_name_h1">Most Naffed!</h2>
+                                <h2 class="blog_name" id="blog_name_first"></h2>
+                                <img src=""  id="1" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="col-xs-4 img_center main-naff">
+                            {{-- <div class=" img_center"> --}}
+                            <a href="#1">
+                                <h2 class="blog_name" id="blog_name_h2">2nd Most Naffed!</h2>
+                                <h2 class="blog_name" id="blog_name_second"></h2>
+                                <img src=""  id="2" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="col-xs-4 img_right main-naff">
+                            {{-- <div class=" img_right"> --}}
+                            <a href="#1">
+                                <h2 class="blog_name" id="blog_name_h3">3rd Most Naffed!</h2>
+                                <h2 class="blog_name" id="blog_name_third"></h2>
+                                <img src=""  id="3" class="img-responsive">
+                            </a>
+                        </div>
+                        <input type="hidden" id="prev_no" value="0">
+                        <input type="hidden" id="middle_no" value="1">
+                        <input type="hidden" id="next_no" value="2">
+                     
+                  
+             
+                </div>
+                <a class="left-arrow carousel-control" href="#theCarousel" data-slide="prev" onclick="go_to_previous()"><i class="glyphicon glyphicon-chevron-left arrow"></i></a>
+                <a class="right-arrow carousel-control" href="#theCarousel" data-slide="next" onclick="go_to_next()"><i class="glyphicon glyphicon-chevron-right arrow"></i></a>
+              </div>
+            </div>
+          </div>
+        <!--<div class="cell_left img_cell">
+
+        </div>
+        <div class="cell_center img_cell">
+            
+        </div>
+        <div class="cell_right img_cell">
+            
+        </div>-->
+    </div>
+    </div>
+
+<generalblogtwo-component></generalblogtwo-component>
+
 <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
     @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
     <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}"  class="img_astro"  alt="">
@@ -53,23 +121,6 @@
     @endif
     <div class="user-photo {{access()->user()->getGender()}}">
         <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
-    </div>
-    <div class="tag-title {{access()->user()->getGender()}}">
-        @if($tag =='films')
-          <img src="{{asset('front/images/planets/Venus.png')}}"/>
-        @elseif($tag=='sports')
-            <img src="{{asset('front/images/planets/Moon.png')}}"/>
-        @elseif($tag=='Mountains and Seas')
-            <img src="{{asset('front/images/planets/Mars.png')}}"/>
-        @elseif($tag=='music')
-            <img src="{{asset('front/images/planets/saturn.png')}}"/>    
-        @elseif($tag=='politics')
-            <img src="{{asset('front/images/planets/Uranus.png')}}"/>  
-        @elseif($tag=='Family and Friends')
-            <img src="{{asset('front/images/planets/sun.png')}}"/>  
-        @elseif($tag=='travel')
-            <img src="{{asset('front/images/planets/Pluto.png')}}"/>  
-         @endif  
     </div>
     <div class="navigator-buttons">
         <div class="column column-1">
@@ -105,7 +156,7 @@
     <button class="music-volume-div tooltips top btn_pointer">
         <span>Music Volume Up/Down</span>
     </button>
-    <button class="navigator-zoomout-btn">
+   <button class="navigator-zoomout-btn">
         <i class="fas fa-undo-alt"></i>
     </button>
 </div>
@@ -113,7 +164,7 @@
    <!--cdefgab-->
   
 <div class="audio-div">
-    <audio id="1" src="{{ asset('front') }}/audio/3/c3.mp3" ></audio>
+    {{-- <audio id="1" src="{{ asset('front') }}/audio/3/c3.mp3" ></audio>
     <audio id="2" src="{{ asset('front') }}/audio/3/d3.mp3" ></audio>
     <audio id="3" src="{{ asset('front') }}/audio/3/e3.mp3" ></audio>
     <audio id="4" src="{{ asset('front') }}/audio/3/f3.mp3" ></audio>
@@ -143,43 +194,283 @@
     <audio id="25" src="{{ asset('front') }}/audio/6/f6.mp3" ></audio>
     <audio id="26" src="{{ asset('front') }}/audio/6/g6.mp3" ></audio>
     <audio id="27" src="{{ asset('front') }}/audio/6/a6.mp3" ></audio>
-    <audio id="28" src="{{ asset('front') }}/audio/6/b6.mp3" ></audio>
+    <audio id="28" src="{{ asset('front') }}/audio/6/b6.mp3" ></audio> --}}
+
     <!--fart -->
     <audio id="fart" src="{{ asset('front') }}/audio/fart/fart.mp3" ></audio>
 </div>      
          <!--   <button class="zoom-btn zoom-out"><i class="fas fa-search-minus"></i></button>-->
-</div>    
+  </div>   
 @endsection
 
 @section('after-scripts') 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
   <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
   <script src="{{asset('front/JS/hammer.min.js')}}"></script>
+  <script src="{{asset('front/JS/circletype.min.js')}}"></script>
   <script type="text/javascript">
 
-    var CWIDTH;
-    var CHEIGHT;
-    var CGAP = 5;
-    var CXSPACING;
-    var CYSPACING;
-    var scrtype = '';
-    var scrollcount = 1;
-    // var images=[];
-    var images_new=[];
-    var load_count=0;
-    var url = $('meta[name="url"]').attr('content');
-    // var last_page='';
-    var Total_count=0;
-    var scroll_type='';
-    var count=0;
-    var tag    ="{{$tag}}";
-
-
-$(document).ready(function() {
     
-    // alert("here");
+    var url = $('meta[name="url"]').attr('content');
+    var ClickCount=0;
+    var arrCount = [
+     {
+        'id': '1', 'name': '1', 'thumb': '/storage/img/general_blogs/1591438745workshop.jpg', 'naffcount': '250' 
+		
+    },
+    {
+        'id': '16', 'name': '2', 'thumb': '/storage/img/general_blogs/1587448424a1.jpg', 'naffcount': '200' 
+		
+    },
+    {
+        'id': '2', 'name': '3', 'thumb': '/storage/img/general_blogs/1591438556a2.jpg', 'naffcount': '190' 
+		
+    },
+
+    {
+        'id': '4', 'name': '4', 'thumb': '/storage/img/general_blogs/1587381503a8.jpg', 'naffcount': '186' 
+		
+    },
+  {
+        'id': '5', 'name': '5', 'thumb': '/storage/img/general_blogs/1590997811a12.JPG', 'naffcount': '175' 
+		
+    },
+    {
+        'id': '6', 'name': '6', 'thumb': '/storage/img/general_blogs/1591438590a1.jpg', 'naffcount': '165' 
+		
+    },
+     {
+        'id': '7', 'name': '7', 'thumb': '/storage/img/general_blogs/1591438711a12.jpg', 'naffcount': '150' 
+		
+    },
+    {
+        'id': '8', 'name': '8', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '140' 
+		
+    },
+    {
+        'id': '9', 'name': '9', 'thumb': '/storage/img/general_blogs/1591017337a27.jpg', 'naffcount': '115' 
+		
+    },
+    {
+        'id': '10', 'name': '10', 'thumb': '/storage/img/general_blogs/1591017196a24.jpg', 'naffcount': '112' 
+		
+    },
+    {
+        'id': '11', 'name': '11', 'thumb': '/storage/img/general_blogs/1591001910a9.jpg', 'naffcount': '111' 
+		
+    },
+    {
+        'id': '12', 'name': '12', 'thumb': '/storage/img/general_blogs/1590996475a15.jpg', 'naffcount': '107' 
+		
+    },
+    {
+        'id': '13', 'name': '13', 'thumb': '/storage/img/general_blogs/1590992683a20.jpg', 'naffcount': '105' 
+		
+    },
+    {
+        'id': '14', 'name': '14', 'thumb': '/storage/img/general_blogs/1590993113a27.jpg', 'naffcount': '100' 
+		
+    },
+    {
+        'id': '15', 'name': '8', 'thumb': '/storage/img/general_blogs/1590837335hotwire.jpg', 'naffcount': '90' 
+		
+    },
+    {
+        'id': '16', 'name': '16', 'thumb': '/storage/img/general_blogs/1589437214a2.jpg', 'naffcount': '89' 
+		
+    },
+    {
+        'id': '17', 'name': '17', 'thumb': '/storage/img/general_blogs/1589280324a30.jpg', 'naffcount': '88' 
+		
+    },
+    {
+        'id': '18', 'name': '18', 'thumb': '/storage/img/general_blogs/15892020981585466954a21.jpg', 'naffcount': '87' 
+		
+    },
+    {
+        'id': '19', 'name': '19', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '86' 
+		
+    },
+    {
+        'id': '20', 'name': '20', 'thumb': '/storage/img/general_blogs/15891789751585467010a28.png', 'naffcount': '85' 
+		
+    },
+    {
+        'id': '21', 'name': '21', 'thumb': '/storage/img/general_blogs/15874496301584960852a27.jpg', 'naffcount': '84' 
+		
+    },
+    {
+        'id': '22', 'name': '22', 'thumb': '/storage/img/general_blogs/1587448424a1.jpg', 'naffcount': '83' 
+		
+    },
+    {
+        'id': '23', 'name': '23', 'thumb': '/storage/img/general_blogs/1587448536a5.jpg', 'naffcount': '82' 
+		
+    },
+    {
+        'id': '24', 'name': '24', 'thumb': '/storage/img/general_blogs/1587448424a1.jpg', 'naffcount': '81' 
+		
+    },
+    {
+        'id': '25', 'name': '25', 'thumb': '/storage/img/general_blogs/1587448329a26.jpg', 'naffcount': '80' 
+		
+    },
+    {
+        'id': '26', 'name': '26', 'thumb': '/storage/img/general_blogs/1587447873a8.jpg', 'naffcount': '79' 
+		
+    },
+    {
+        'id': '27', 'name': '27', 'thumb': '/storage/img/general_blogs/1587447896a9.jpg', 'naffcount': '78' 
+		
+    },
+    {
+        'id': '28', 'name': '28', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '77' 
+		
+    },
+    {
+        'id': '29', 'name': '29', 'thumb': '/storage/img/general_blogs/1587447820a47.jpg', 'naffcount': '76' 
+		
+    },
+    {
+        'id': '30', 'name': '30', 'thumb': '/storage/img/general_blogs/15873817156.jpg', 'naffcount': '75' 
+		
+    },
+    {
+        'id': '31', 'name': '31', 'thumb': '/storage/img/general_blogs/1587381592a25.jpg', 'naffcount': '74' 
+		
+    },
+    {
+        'id': '32', 'name': '32', 'thumb': '/storage/img/general_blogs/1587381749WGKM8334.jpg', 'naffcount': '73' 
+		
+    },
+    {
+        'id': '33', 'name': '33', 'thumb': '/storage/img/general_blogs/15873818711.jpg', 'naffcount': '72' 
+		
+    },
+    {
+        'id': '34', 'name': '34', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '70' 
+		
+    },
+    {
+        'id': '35', 'name': '35', 'thumb': '/storage/img/general_blogs/1587381672NMYK0151.jpg', 'naffcount': '68' 
+		
+    },
+    {
+        'id': '36', 'name': '36', 'thumb': '/storage/img/general_blogs/15873817372.jpg', 'naffcount': '66' 
+		
+    },
+    {
+        'id': '37', 'name': '37', 'thumb': '/storage/img/general_blogs/1587382112a33.jpg', 'naffcount': '65' 
+		
+    },
+    {
+        'id': '38', 'name': '38', 'thumb': '/storage/img/general_blogs/1587382648a5.jpg', 'naffcount': '55' 
+		
+    },
+    {
+        'id': '39', 'name': '39', 'thumb': '/storage/img/general_blogs/1587381556a9.jpg', 'naffcount': '45' 
+		
+    },
+    {
+        'id': '40', 'name': '40', 'thumb': '/storage/img/general_blogs/default.png', 'naffcount': '40' 
+		
+    },
+    {
+        'id': '41', 'name': '41', 'thumb': '/storage/img/general_blogs/1587381503a8.jpg', 'naffcount': '37' 
+		
+    },
+    {
+        'id': '42', 'name': '42', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '36' 
+		
+    },
+    {
+        'id': '43', 'name': '43', 'thumb': '/storage/img/general_blogs/1591438728a11.jpg', 'naffcount': '35' 
+		
+    },
+    {
+        'id': '44', 'name': '44', 'thumb': '/storage/img/general_blogs/1591017337a27.jpg', 'naffcount': '25' 
+		
+    },
+    {
+        'id': '45', 'name': '45', 'thumb': '/storage/img/general_blogs/1587387430a33.jpg', 'naffcount': '15' 
+		
+    },
+    {
+        'id': '46', 'name': '46', 'thumb': '/storage/img/general_blogs/15873829561.jpg', 'naffcount': '13' 
+		
+    },
+    {
+        'id': '47', 'name': '47', 'thumb': '/storage/img/general_blogs/1587386094Museum (4).jpg', 'naffcount': '9' 
+		
+    },
+    {
+        'id': '48', 'name': '48', 'thumb': '/storage/img/general_blogs/1587448424a1.jpg', 'naffcount': '8' 
+		
+    },
+    {
+        'id': '49', 'name': '49', 'thumb': '/storage/img/general_blogs/1587381592a25.jpg', 'naffcount': '7' 
+		
+    },
+    {
+        'id': '50', 'name': '50', 'thumb': '/storage/img/general_blogs/1591438590a1.jpg', 'naffcount': '5' 
+		
+    },
+    ];
+    
+ 
+$(document).ready(function() {
+    $('.main-naff').css('opacity', '1');
+
+
+$("#1").attr("src",arrCount[ClickCount].thumb);
+$("#2").attr("src",arrCount[ClickCount+1].thumb);
+$("#3").attr("src",arrCount[ClickCount+2].thumb);
+
+$("#1").attr("blog_id",arrCount[ClickCount].id);
+$("#2").attr("blog_id",arrCount[ClickCount+1].id);
+$("#3").attr("blog_id",arrCount[ClickCount+2].id);
+
+
+
+$('#1').attr('onClick','viewBlog('+arrCount[ClickCount].id+')');
+$('#2').attr('onClick','viewBlog('+arrCount[ClickCount+1].id+')');
+$('#3').attr('onClick','viewBlog('+arrCount[ClickCount+2].id+')');
+
+// $("#blog_name_first").html("Naff Count:"+arrCount[ClickCount].naffcount);
+// $("#blog_name_second").html("Naff Count:"+arrCount[ClickCount+1].naffcount);
+// $("#blog_name_third").html("Naff Count:"+arrCount[ClickCount+2].naffcount);
+$("#blog_name_first").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount].naffcount+'</span>');
+$("#blog_name_second").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount+1].naffcount+'</span>');
+$("#blog_name_third").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount+2].naffcount+'</span>');
+
+// Planet name circle style
+new CircleType(document.getElementById('blog_name_first'))
+.dir(-1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_second'))
+.dir(-1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_third'))
+.dir(-1)
+.radius(60);
+
+
+new CircleType(document.getElementById('blog_name_h1'))
+.dir(1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_h2'))
+.dir(1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_h3'))
+.dir(1)
+.radius(60);
+
     var elem = document.documentElement;
-function openFullscreen() { 
+function openFullscreen() {
     if (elem.mozRequestFullScreen) {  /* Firefox */
     elem.mozRequestFullScreen(); 
     contentDisplay();
@@ -200,9 +491,8 @@ function openFullscreen() {
   }
 
 }
-if(window.innerWidth < 991 ){ 
-$(document).ready(()=>{  
-    // alert("fullscreen");
+if(window.innerWidth < 991 ){
+$(document).ready(()=>{
     Swal.fire({
             imageUrl: '../../front/icons/alert-icon.png',
             imageWidth: 80,
@@ -221,11 +511,11 @@ $(document).ready(()=>{
 else  contentDisplay();
 
 function contentDisplay() { 
-    // alert("here");
       setTimeout(function(){
         $(".astro-div").css({'display':'flex'}); 
         $(".page").css({'visibility':'visible'});
         $(".astro-div").css({'visibility':'visible'});
+      // $(".most-naffed").css({'visibility':'visible'});
             
             
         $(".page").addClass('animate-zoomIn-arm');
@@ -239,6 +529,152 @@ function contentDisplay() {
 );
     }
 });
+function go_to_next(){
+    var next = document.getElementById( "next_no" ).value;
+    var prev = document.getElementById( "prev_no" ).value;
+    var middle = document.getElementById( "middle_no" ).value;
+    var first=parseInt(prev)+parseInt(3);
+    var second=parseInt(middle)+parseInt(3);
+    var third=parseInt(next)+parseInt(3);
+    if(first >= arrCount.length)
+        {
+            first = 0;
+            second = first+1;
+            third =second+1;
+        }
+        if(second >= arrCount.length)
+        {
+            second = 0;
+            third =second+1;
+        }
+        if(third >= arrCount.length)
+        {
+            third = 0;
+        }
+
+$("#1").attr("src",arrCount[first].thumb);
+$("#2").attr("src",arrCount[second].thumb);
+$("#3").attr("src",arrCount[third].thumb);
+
+$("#1").attr("blog_id",arrCount[first].id);
+$("#2").attr("blog_id",arrCount[second].id);
+$("#3").attr("blog_id",arrCount[third].id);
+
+$('#1').attr('onClick','viewBlog('+arrCount[first].id+')');
+$('#2').attr('onClick','viewBlog('+arrCount[second].id+')');
+$('#3').attr('onClick','viewBlog('+arrCount[third].id+')');
+
+
+document.getElementById("next_no").value = third;
+document.getElementById("prev_no").value = first;
+document.getElementById("middle_no").value = second;
+$("#blog_name_first").text("Naff Count:"+arrCount[first].naffcount);
+$("#blog_name_second").text("Naff Count:"+arrCount[second].naffcount);
+$("#blog_name_third").text("Naff Count:"+arrCount[third].naffcount);
+
+$("#blog_name_h1").text((parseInt(first)+parseInt(1))+"th Most naffed!");
+$("#blog_name_h2").text((parseInt(second)+parseInt(1))+"th Most naffed!");
+$("#blog_name_h3").text((parseInt(third)+parseInt(1))+"th Most naffed!");
+
+// Planet name circle style
+new CircleType(document.getElementById('blog_name_first'))
+.dir(-1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_second'))
+.dir(-1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_third'))
+.dir(-1)
+.radius(60);
+
+
+new CircleType(document.getElementById('blog_name_h1'))
+.dir(1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_h2'))
+.dir(1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_h3'))
+.dir(1)
+.radius(60);
+}
+function go_to_previous(){
+    var next = document.getElementById( "next_no" ).value;
+    var prev = document.getElementById( "prev_no" ).value;
+    var middle = document.getElementById( "middle_no" ).value;
+
+
+   var first=parseInt(prev)-parseInt(3);
+   var second=parseInt(middle)-parseInt(3);
+   var third=parseInt(next)-parseInt(3);
+
+   if(first <= -1)
+        {
+            first = parseInt(arrCount.length)-parseInt(3);
+            second =parseInt(arrCount.length)-parseInt(2);
+            third =parseInt(arrCount.length)-parseInt(1);
+        }
+        if(second <= -1)
+        {
+            second = parseInt(arrCount.length)-parseInt(3);
+            third =parseInt(arrCount.length)-parseInt(2);
+        }
+        if(third <= -1)
+        {
+            third =parseInt(arrCount.length)-parseInt(3);
+        }
+
+$("#1").attr("src",arrCount[first].thumb);
+$("#2").attr("src",arrCount[second].thumb);
+$("#3").attr("src",arrCount[third].thumb);
+
+
+$("#1").attr("blog_id",arrCount[first].id);
+$("#2").attr("blog_id",arrCount[second].id);
+$("#3").attr("blog_id",arrCount[third].id);
+
+$('#1').attr('onClick','viewBlog('+arrCount[first].id+')');
+$('#2').attr('onClick','viewBlog('+arrCount[second].id+')');
+$('#3').attr('onClick','viewBlog('+arrCount[third].id+')');
+
+document.getElementById("next_no").value = third;
+document.getElementById("prev_no").value = first;
+document.getElementById("middle_no").value = second;
+
+$("#blog_name_first").html("Naff Count:"+arrCount[first].naffcount);
+$("#blog_name_second").html("Naff Count:"+arrCount[second].naffcount);
+$("#blog_name_third").html("Naff Count:"+arrCount[third].naffcount);
+// Planet name circle style
+new CircleType(document.getElementById('blog_name_first'))
+.dir(-1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_second'))
+.dir(-1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_third'))
+.dir(-1)
+.radius(60);
+
+
+new CircleType(document.getElementById('blog_name_h1'))
+.dir(1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_h2'))
+.dir(1)
+.radius(60);
+
+new CircleType(document.getElementById('blog_name_h3'))
+.dir(1)
+.radius(60);
+}
+
     (function () {
     
         $(".img-nouvela").removeClass("ani-rollout_naff");
@@ -264,7 +700,6 @@ function contentDisplay() {
                     document.getElementById('block_land').style.display =  'block';
                 }
         }
-
 
         // You might need this, usually it's autoloaded   
             jQuery.noConflict();
@@ -315,7 +750,17 @@ function contentDisplay() {
 });
 
     })();
+// Show title on hover
+$('.main-naff').mouseover(function() { 
 
+//alert("mouseover")
+	$(this).find('.blog_name').addClass('animated zoomIn');
+	$(this).find('.blog_name').css('opacity', '1');
+}).mouseout(function() { 
+    //alert("mouseout")
+	$(this).find('.blog_name').removeClass('animated zoomIn');
+	$(this).find(' .blog_name').css('opacity', '0');
+});
     $('.img-button').hover(
             function () {
                 $(this).parent().find('span').show();
@@ -350,12 +795,9 @@ function contentDisplay() {
           audio.play();
         });
     
-    function translate3d(x, y, z)
-    {
-        return "translate3d(" + x + "px, " + y + "px, " + z + "px)";
-    }
-
     
+    
+   
     var zoomTimer = null;
     
     function refreshImage(elem, cell)
@@ -423,24 +865,13 @@ function contentDisplay() {
 
                                                 
     }
-    
 
-    function snowstack_init()
-    {
-        CHEIGHT = Math.round(window.innerHeight / 3.5);
-        CWIDTH  = Math.round(CHEIGHT * 300 / 180);
-        CXSPACING = CWIDTH + CGAP;
-        CYSPACING = CHEIGHT + CGAP;
+   
 
-        jQuery("#mirror")[0].style.webkitTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.MozTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-        jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + translate3d(0, - CYSPACING * 4 - 1, 0);
-    }
 /* Function to redirect to view Blog */
 
 function viewBlog(id){  
-    var url="/single_blog/"+id;
+    var url="/single_general_blog/"+id;
     window.open(
         url,
   '_blank' // <- This is what makes it open in a new window.
@@ -575,8 +1006,8 @@ function largest(hot_count,cool_count,naff_count,i)
         $('.communicator-span').css('display', 'none');
     }
 });
-
-                
+ 
+           
     </script>
     
 @endsection

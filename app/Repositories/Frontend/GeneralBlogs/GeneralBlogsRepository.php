@@ -2,21 +2,21 @@
 
 namespace App\Repositories\Frontend\GeneralBlogs;
 
+use Image;
+use ImageResize;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use App\Exceptions\GeneralException;
+use App\Repositories\BaseRepository;
+use App\Models\BlogPrivacy\BlogPrivacy;
+use Illuminate\Support\Facades\Storage;
+use App\Models\GeneralBlogs\GeneralBlog;
 use App\Events\Backend\Blogs\BlogCreated;
 use App\Events\Backend\Blogs\BlogDeleted;
 use App\Events\Backend\Blogs\BlogUpdated;
-use App\Exceptions\GeneralException;
-use App\Models\GeneralBlogs\GeneralBlog;
-use App\Models\GeneralBlogVideos\GeneralBlogVideo;
 use App\Models\GeneralBlogImages\GeneralBlogImage;
-use App\Models\BlogPrivacy\BlogPrivacy;
-use App\Repositories\BaseRepository;
-use Carbon\Carbon;
-use DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Image;
-use ImageResize;
+use App\Models\GeneralBlogVideos\GeneralBlogVideo;
 
 /**
  * Class BlogsRepository.
@@ -39,7 +39,7 @@ class GeneralBlogsRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'blog'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'general_blogs'.DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('public');
     }
 
@@ -48,16 +48,19 @@ class GeneralBlogsRepository extends BaseRepository
      */
     public function getForDataTable()
     {
+    
         return $this->query()
             ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.general_blogs.table').'.created_by')
+            // ->leftJoin('general_blog_shares AS b', 'b.general_blog_id', '=','general_blogs.id' )
             ->select([
                 config('module.general_blogs.table').'.id',
                 config('module.general_blogs.table').'.name',
+                config('module.general_blogs.table').'.featured_image',
                 config('module.general_blogs.table').'.publish_datetime',
                 config('module.general_blogs.table').'.status',
                 config('module.general_blogs.table').'.created_by',
                 config('module.general_blogs.table').'.created_at',
-                config('access.users_table').'.first_name as user_name',
+               config('access.users_table').'.first_name as user_name',
             ]);
     }
 
@@ -101,6 +104,24 @@ class GeneralBlogsRepository extends BaseRepository
         }
 
         throw new GeneralException(trans('exceptions.backend.blogs.create_error'));
+    }
+
+    public function replaceContentFileLocation($content)
+    {
+        $new_content = str_replace("/storage/trix-attachments", "/storage/img/blog-attachments", $content);
+
+        return $new_content;
+    }
+    /**
+     * Destroy Old Image.
+     *
+     * @param int $id
+     */
+    public function deleteOldFile($model)
+    {
+        $fileName = $model->featured_image;
+
+        return $this->storage->delete($this->upload_path.$fileName);
     }
 
     public function updateGeneralBlog(GeneralBlog $blog, array $input)
@@ -203,11 +224,11 @@ class GeneralBlogsRepository extends BaseRepository
 
         // $user_photo = explode('.', $user->photo);
         $filename = Str::random().'.jpg';
-        while (Storage::exists('public/img/blog/'.$filename)) {
+        while (Storage::exists('public/img/general_blog/'.$filename)) {
             $filename = Str::random().'.jpg';
         }
 
-        Storage::disk('local')->put('public/img/blog/'.$filename, $image);
+        Storage::disk('local')->put('public/img/general_blog/'.$filename, $image);
         
         // compressing image
         // $source= 'storage/img/blog/'.$filename;
@@ -277,13 +298,6 @@ class GeneralBlogsRepository extends BaseRepository
         }
     }
 
-    public function replaceContentFileLocation($content)
-    {
-        $new_content = str_replace("/storage/trix-attachments", "/storage/img/blog-attachments", $content);
-
-        return $new_content;
-    }
-
     public function deleteTrixAttachments($attachments)
     {
         for($i = 0; $i < count($attachments); $i++) {
@@ -324,7 +338,7 @@ class GeneralBlogsRepository extends BaseRepository
             }
 
             $imgWidth=$info[0];
-            $img  =   ImageResize::make($destination);
+            $img  = ImageResize::make($destination);
 
             $img->resize(500, null, function ($constraint) {
                 $constraint->aspectRatio();

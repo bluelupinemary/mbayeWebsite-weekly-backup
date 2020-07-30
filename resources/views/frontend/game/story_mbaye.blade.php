@@ -27,6 +27,31 @@
                  <div class=" " id="txt6">amongst the high-rise metropolis of</div>
                  <div class=" " id="txt7">Dubai.</div>
              </div>
+             <div id='stage30VideoLayer' style='border:1px solid red;position:relative;width:100vw;height:100vw;z-index:0;display:none;'>
+                {{-- <div class="divTable" style="border:1px solid white;">
+                    <div class="divTableBody">
+                        <div class="divTableRow">
+                        <div class="divTableCell">&nbsp;</div>
+                        <div class="divTableCell">&nbsp;</div>
+                        <div class="divTableCell">&nbsp;</div>
+                        <div class="divTableCell">&nbsp;</div>
+                        </div>
+                        <div class="divTableRow">
+                        <div class="divTableCell">&nbsp;</div>
+                        <div class="divTableCell">&nbsp;</div>
+                        <div class="divTableCell">&nbsp;</div>
+                        <div class="divTableCell">&nbsp;</div>
+                        </div>
+                        <div class="divTableRow">
+                        <div class="divTableCell">&nbsp;</div>
+                        <div class="divTableCell">&nbsp;</div>
+                        <div class="divTableCell">&nbsp;</div>
+                        <div class="divTableCell">&nbsp;</div>
+                        </div>
+                    </div>
+                </div> --}}
+                this is the div
+            </div>
          </div>
         
      </div>
@@ -55,7 +80,7 @@
     <script>
         var chapter_no = '{{ $chapter_no ?? '' }}';
         var token = '{{ Session::token() }}';
-        var urlStory = '{{ route('frontend.storyMbayePost') }}';
+        var urlStory = '{{ route('frontend.storyMbaye') }}';
     </script>
 
 
@@ -74,9 +99,15 @@
         $.getScript( url, function() {
         });
     }else if(chapter_no == 2){
-        let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter2.js";
-        $.getScript( url, function() {
+        let url2 = "{{asset('front')}}"+"/babylonjs/scenes/flowersMbaye/flowersMap.js";
+        $.getScript( url2, function() {
+
+            let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter2.js";
+            $.getScript( url, function() {
+            });
         });
+        
+       
     }
     
 </script>

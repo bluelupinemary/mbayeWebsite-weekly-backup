@@ -125,7 +125,7 @@ let nuvolaSpeechCloud;
 let nuvolaSpeech;
 function load_init_meshes(){
     Promise.all([
-        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/mbaye/", "MbayePipes0107.glb", initScene).then(function (result) {
+        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/mbaye/", "MbayePipes.glb", initScene).then(function (result) {
             // console.log(result.meshes);
             mbayeInitTask = result.meshes;
             
@@ -136,24 +136,26 @@ function load_init_meshes(){
             mbayeInit_object.isPickable = false;
            
            
-            var pbr = new BABYLON.PBRMaterial("pbr", initScene);
+         
             // pbr.reflectionTexture = rp.cubeTexture
 
-            for(let i=0;i<result.meshes.length;i++){
-                if(result.meshes[i].name == "Mbaye_primitive1" || result.meshes[i].name == "Mbaye_primitive0"){
-                    result.meshes[i].material = pbr;
-                    result.meshes[i].material.backFaceCulling = false;
+            result.meshes.forEach(function(m) {
+                m.isPickable = true;
+                if(m.name === "MbayeBody"){
+                    let pbr = new BABYLON.PBRMaterial("pbr", initScene);
+                    m.material = pbr;
+                    m.material.backFaceCulling = false;
+                    pbr.albedoColor = new BABYLON.Color3(0.5,0.5,0.5);
+                    pbr.emissiveColor = new BABYLON.Color3(0,0,0);
+                    pbr.metallic = 1;
+                    pbr.metallicF0Factor = 0.50;
+                    pbr.roughness = 0.15;
+                    pbr.microSurface = 1; 
+                }else if(m.name === "R_EYEAventurine_primitive1" || m.name === "L_EYEAventurine_primitive1" ){
+                    m.material.albedoColor = new BABYLON.Color3(0.01,0.2,0.07);
                 }
-            }//end of for loop
+            });
 
-        
-            pbr.albedoColor = new BABYLON.Color3(0.7,0.7,0.7);
-            pbr.emissiveColor = new BABYLON.Color3(0,0,0);
-            pbr.metallic = 1;
-            pbr.metallicF0Factor = 0.50;
-            pbr.roughness = 0.1;
-
-            pbr.microSurface = 1; // Let the texture controls the value 
                     
         }),
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/nuvola/", "mermaidTail.babylon", initScene).then(function (result) {
@@ -685,17 +687,14 @@ var onOverPlanetOrbitInit =(meshEvent)=>{
     wikiBtn.setAttribute("id", "planetOrbitLbl");
     var sty = wikiBtn.style;
     sty.position = "absolute";
-    sty.lineHeight = "1.2em";
-    sty.padding = "0.5%";
-    sty.color = "#ffffff";
-    sty.fontFamily = "Courgette-Regular";
-    sty.backgroundColor = "#0b91c3a3";
-    sty.opacity = "0.7";
-    sty.fontSize = "1vw";
-    sty.top = initScene.pointerY + "px";
-    sty.left = initScene.pointerX + "px";
-    sty.cursor = "pointer";
-    sty.borderRadius = "10px";
+      sty.lineHeight = "1.2em";
+      sty.padding = "0.5%";
+      sty.color = "#00BFFF  ";
+      sty.fontFamily = "Courgette-Regular";
+      sty.fontSize = "1vw";
+      sty.top = (initScene.pointerY-10) + "px";
+      sty.left = (initScene.pointerX+10) + "px";
+      sty.cursor = "pointer";
     
     
     if(meshEvent.meshUnderPointer.name == "Earth") wikiBtn.setAttribute("onclick", "showPage('Earth')");

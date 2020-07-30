@@ -256,8 +256,8 @@ function add_mouse_listener(){
                   clearTimeout(focusTimer);
 
                   let music = flowersMbayeMap.get(theMesh.name);
-                  let videoId = music[4].id;                            //4th value is the video id
-                  let startTime = music[4].start;
+                  let videoId = music[3].id;                            //4th value is the video id
+                  let startTime = music[3].start;
                   
                   get_foot_mesh(theMesh.name,angle[1]);
                   if(theMesh.name!=currFlower){
@@ -554,30 +554,8 @@ var onOverFlower =(meshEvent)=>{
         // console.log("foot");
     }
     else if(meshEvent.source.name == "footHoverLbl"){
-      // footLbl = document.createElement("p");
-      // footLbl.setAttribute("id", "footLbl");
-      // var sty = footLbl.style;
-      // sty.position = "absolute";
-      // sty.lineHeight = "1.2em";
-      // sty.padding = "0.5%";
-      // sty.color = "#00BFFF  ";
-      // sty.fontFamily = "Courgette-Regular";
-      // // sty.backgroundColor = "#0b91c3a3";
-      // // sty.opacity = "0.7";
-      // sty.fontSize = "0.9vw";
-      // sty.textAlign = "center";
-      // sty.top = (scene.pointerY-200) + "px";
-      // sty.left = (scene.pointerX) + "px";
-      // sty.cursor = "pointer";
-      
-      
-      // document.body.appendChild(footLbl);
-    
-      // footLbl.innerHTML = "All of these flowers are from  <br/> around the world as is the music.<br/>Please love our  universal diversity.<br/><br/>(Try to double-click on the foot.)";
       foot_heart_label.isVisible = true;
     }else{
-
- 
     //floating flowers
       origScaling = meshEvent.source.scaling;
       meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.4,origScaling.y*1.4,origScaling.z*1.4);

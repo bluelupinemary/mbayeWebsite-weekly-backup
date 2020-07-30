@@ -35,9 +35,14 @@ export default {
                 last_page:'',
                 Total_pages:0,
                 i:0,
-                 page:1,
+                page:1,
                 loading:true,
                 newcell:Number,
+                CWIDTH:Number,
+                CHEIGHT:Number,
+                CGAP : 5,
+                CXSPACING:Number,
+                CYSPACING:Number,
              
 
         }
@@ -75,7 +80,7 @@ export default {
             that.Total_pages=(response.data.meta.total/25);
             that.Total_pages=parseInt(that.Total_pages);
             Total_count=response.data.meta.total;
-            snowstack_init();
+            that.snowstack_init();
             jQuery("#stack").empty();
             jQuery("#rstack").empty();
             // jQuery("#mirror").empty();
@@ -193,13 +198,14 @@ export default {
                             // $(".most-naffed").css({'visibility':'hidden'});
                   
                     /* scroll down */
-           
+            
               if( that.page==that.last_page) {
+                     that.loading = true;
                   if( that.newcell+4==that.cells.length)
                 {     
                     that.updateStack( that.newcell+4, that.magnifyMode);
                 }
-                  that.loading = false;
+                //   that.loading = false;
                   // return false;
               } 
            //   alert(loading);
@@ -296,11 +302,11 @@ export default {
         var y = realn - x * 2;
         cell.info = info;
         
-        cell.div = jQuery('<div class="cell fader view original div_img" style="opacity: 0" block_no="'+reln+'" ></div>').width(CWIDTH).height(CHEIGHT);
-        cell.div[0].style.webkitTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-        cell.div[0].style.MozTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-        cell.div[0].style.msTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-        cell.div[0].style.OTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
+        cell.div = jQuery('<div class="cell fader view original div_img" style="opacity: 0" block_no="'+reln+'" ></div>').width(that.CWIDTH).height(that.CHEIGHT);
+        cell.div[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        cell.div[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        cell.div[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        cell.div[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
     
         var img = document.createElement("img");
         var title=info.name  ;
@@ -407,11 +413,11 @@ export default {
              //first row for reflection
         if (y == 1)
         {
-            cell.reflection = jQuery('<div class="cell fader view reflection" style="opacity: 0"></div>').width(CWIDTH).height(CHEIGHT);
-            cell.reflection[0].style.webkitTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.MozTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.msTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.OTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
+            cell.reflection = jQuery('<div class="cell fader view reflection" style="opacity: 0"></div>').width(that.CWIDTH).height(that.CHEIGHT);
+            cell.reflection[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
             var rimg = document.createElement("img");
             
             jQuery(rimg).load(function ()
@@ -428,11 +434,11 @@ export default {
         //second row for reflection
         if (y == 0)
         {
-            cell.reflection = jQuery('<div class="cell fader view reflection2" style="opacity: 0"></div>').width(CWIDTH).height(CHEIGHT);
-            cell.reflection[0].style.webkitTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.MozTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.msTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.OTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
+            cell.reflection = jQuery('<div class="cell fader view reflection2" style="opacity: 0"></div>').width(that.CWIDTH).height(that.CHEIGHT);
+            cell.reflection[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
         
             var rimg = document.createElement("img");
             
@@ -500,7 +506,7 @@ export default {
                 var currentMatrix = new OCSSMatrix(document.defaultView.getComputedStyle(dolly, null).OTransform);
                 var targetMatrix = new OCSSMatrix(dolly.style.OTransform);
                 var dx = currentMatrix.e - targetMatrix.e;
-                var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+                var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
                 camera.style.OTransform = "rotateY(" + angle + "deg)";
                 camera.style.OTransitionDuration = "330ms";
 
@@ -511,7 +517,7 @@ export default {
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
             var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
             camera.style.webkitTransform = "rotateY(" + angle + "deg)";
             camera.style.webkitTransitionDuration = "330ms";
 
@@ -524,7 +530,7 @@ export default {
         var currentMatrix = new DOMMatrix(document.defaultView.getComputedStyle(dolly, null).MozTransform);
         var targetMatrix = new DOMMatrix(dolly.style.MozTransform);
         var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
         camera.style.MozTransform = "rotateY(" + angle + "deg)";
         camera.style.MozTransitionDuration = "330ms";
 
@@ -536,7 +542,7 @@ export default {
         var currentMatrix = new MSCSSMatrix(document.defaultView.getComputedStyle(dolly, null).msTransform);
         var targetMatrix = new MSCSSMatrix(dolly.style.msTransform);
         var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
         camera.style.msTransform = "rotateY(" + angle + "deg)";
         camera.style.msTransitionDuration = "330ms";
 
@@ -548,7 +554,7 @@ export default {
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
             var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
             camera.style.webkitTransform = "rotateY(" + angle + "deg)";
             camera.style.webkitTransitionDuration = "330ms";
 
@@ -559,7 +565,7 @@ export default {
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
             var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
             angle=angle-7.5;
             camera.style.webkitTransform = "rotateY(" + angle + "deg)";
             camera.style.webkitTransitionDuration = "330ms";
@@ -620,7 +626,7 @@ export default {
       
        if(n==1)
        {
-                    var cx = (x +0.5) * CXSPACING;
+                    var cx = (x +0.5) * that.CXSPACING;
        }
        else{
                     if(scroll_type=='up') //adjusting translation animation
@@ -630,26 +636,43 @@ export default {
                             else
                                 count-=1;
 
-                        var cx = (x +count) * CXSPACING; 
+                        var cx = (x +count) *  that.CXSPACING; 
                         }
                     else{
-                        var cx = (x +count) * CXSPACING; 
+                        var cx = (x +count) *  that.CXSPACING; 
                         }
             }
       
 
-        var cy = (y + 0.5) * CYSPACING;
+        var cy = (y + 0.5) *  that.CYSPACING;
       
        //scroll_type
      
         if (that.magnifyMode)
         {
-            return translate3d(-cx, -cy, 180);
+            return that.translate3d(-cx, -cy, 180);
         }
         else
         {
-            return translate3d(-cx, -cy, 0);
+            return that.translate3d(-cx, -cy, 0);
         }	
+    },
+    snowstack_init()
+    {
+        let that = this;
+        that.CHEIGHT = Math.round(window.innerHeight / 3.5);
+        that.CWIDTH  = Math.round(that.CHEIGHT * 300 / 180);
+        that.CXSPACING = that.CWIDTH + that.CGAP;
+        that.CYSPACING = that.CHEIGHT + that.CGAP;
+
+        jQuery("#mirror")[0].style.webkitTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        jQuery("#mirror")[0].style.MozTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+    },
+    translate3d(x, y, z)
+    {
+        return "translate3d(" + x + "px, " + y + "px, " + z + "px)";
     },
   }
 }

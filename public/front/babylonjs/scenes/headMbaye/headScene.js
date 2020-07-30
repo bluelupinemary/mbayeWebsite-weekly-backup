@@ -6,10 +6,11 @@ let DISC_CAM_INIT_POS = {x:2.83, y:0.44,z:580.01};
 let footCamera;
 let cameraInitState = {position:null,a:null,b:null,r:null,upperA:null, lowerA:null, upperB:null, lowerB:null,upperR:null, lowerR:null,angularY:null};
 let astroInitState = {x:0,y:0,z:0};
-let hl,starColor;
+let hl,flowerColor;
 let createContactScene = function(){
     canvas = document.getElementById('canvas');
     engine = new BABYLON.Engine(canvas, true,{ preserveDrawingBuffer: true, stencil: true });
+
     engine.enableOfflineSupport = true;
     scene = new BABYLON.Scene(engine);
     BABYLON.Database.IDBStorageEnabled = true;
@@ -27,7 +28,7 @@ let createContactScene = function(){
     
 
     hl = new BABYLON.HighlightLayer("hl1", scene);
-    starColor = new BABYLON.HighlightLayer("starColor", scene);
+    flowerColor = new BABYLON.HighlightLayer("flowerColor", scene);
 
 
     return scene;
@@ -45,7 +46,7 @@ function create_camera(){
     // camera.ellipsoid = new BABYLON.Vector3(10,10,10);
 
     camera.upperAlphaLimit = 1000;                  //up down tilt upper limit
-    camera.lowerRadiusLimit = 20;                    //zoom in limit
+    camera.lowerRadiusLimit = 40;                    //zoom in limit
     camera.upperRadiusLimit = 500;                 //zoom out limit
     camera.wheelPrecision = 3;                      //wheel scroll speed; lower number faster
     camera.panningSensibility = 500;               //movment of camera when right mouse is clicked; lower number, faster
@@ -130,11 +131,12 @@ function create_skybox(){
 let rfoot_obj;
 let rfoot_meshes;
 let foot_plane, foot_heart_label;
-let headPanelsMap = new Map();
+let panelFlowersMap = new Map();
 function load_3D_mesh(){
     var loadedPercent = 0;
     Promise.all([
           BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/headMbayeScene/", "HeadMbaye.glb", scene,
+          // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/headMbayeScene/", "SamplePanel.glb", scene,
               function (evt) {
                   // onProgress
                   
@@ -149,6 +151,7 @@ function load_3D_mesh(){
             
 
                 result.meshes[0].scaling = new BABYLON.Vector3(8,8,-8);
+                // result.meshes[0].scaling = new BABYLON.Vector3(12,12,-12);
                 result.meshes[0].rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(12),0);
                 result.meshes[0].isPickable = true;
                 rfoot_obj = result.meshes[0];
@@ -156,11 +159,12 @@ function load_3D_mesh(){
                 rfoot_meshes = result.meshes;
                
                 result.meshes.forEach(function(m) {
+              
                     m.isPickable = true;
                     if(m.name === "Head" || m.name === "FP1" || m.name === "FP2" || m.name === "FP3" || m.name === "FP4" || m.name === "FP5" || m.name === "FP6"
                     || m.name === "FP7" || m.name === "FP8" || m.name === "FP9" || m.name === "FP10" || m.name === "FP11" || m.name === "FP12" || m.name === "FP13" 
-                    || m.name === "FP14" || m.name === "FP15" || m.name === "FP16" || m.name === "FP17" || m.name === "FP18"){
-                         let pbr = new BABYLON.PBRMaterial("pbr", scene);
+                    || m.name === "FP14" || m.name === "FP15" || m.name === "FP16" || m.name === "FP17" || m.name === "FP18" || m.name === "Line538"){
+                        let pbr = new BABYLON.PBRMaterial("pbr", scene);
                         m.material = pbr;
                         m.material.backFaceCulling = false;
                         pbr.albedoColor = new BABYLON.Color3(0.5,0.5,0.5);
@@ -171,6 +175,15 @@ function load_3D_mesh(){
                         pbr.microSurface = 1; 
                     }else if(m.name === "Object4046" || m.name === "Object4047" ){
                         m.material.albedoColor = new BABYLON.Color3(0.01,0.2,0.07);
+                    }else if(m.name === "EYE1" || m.name === "EYE2" || m.name === "M-PL1A-RC" || m.name === "M-PR1A-LC" || m.name === "__root__"){
+                      
+                    }else{
+                      //the part is a flower of the panel
+                      let mtl = new BABYLON.StandardMaterial("pbr", scene);
+                      m.material.transparencyMode = 0;
+                      m.visibility = 0;
+                      m.material = mtl;
+                      panelFlowersMap.set(m.name,m);
                     }
                 });
 
@@ -179,7 +192,7 @@ function load_3D_mesh(){
       
       ]).then(() => {
         add_mouse_listener();
-        // setup_music_player();
+        setup_music_player();
 
         // for(const [key,val] of marblePhotos.entries()){
         //   // console.log(val);
@@ -256,46 +269,36 @@ function add_mouse_listener(){
           console.log("camera: ", footCamera.position, footCamera.alpha, footCamera.beta, footCamera.radius);
           // console.log("parent of mesh: ", theMesh.parent);
         
-          if(rFootFlowersMap.has(theMesh.name)){
-              if(theMesh.parent){
-                  //this is the flower on the foot
-                if( litFlowersMap.has(theMesh)){
-                    let val = rFootFlowersMap.get(theMesh.name);
+          if(headFlowersMap.has(theMesh.name)){
+            console.log("flower ", theMesh.name," is clicked.");
+            get_head_mesh(theMesh.name);
+              // if(theMesh.parent){
+              //     //this is the flower on the foot
+              //   if( litFlowersMap.has(theMesh)){
+              //       let val = headFlowersMap.get(theMesh.name);
 
-                    showFlowerModelDiv(val[2]);     //pass the 3d flower name from the mapping
-                }
+              //       showFlowerModelDiv(val[2]);     //pass the 3d flower name from the mapping
+              //   }
 
-              }else{
-                  let angle = rFootFlowersMap.get(theMesh.name);
+              // }else{
+              //     let angle = headFlowersMap.get(theMesh.name);
                  
               
-                  clearTimeout(focusTimer);
+              //     clearTimeout(focusTimer);
 
                   let music = flowersMbayeMap.get(theMesh.name);
-                  let videoId = music[4].id;                            //4th value is the video id
-                  let startTime = music[4].start;
+                  let videoId = music[3].id;                            //4th value is the video id
+                  let startTime = music[3].start;
                   
-                  get_foot_mesh(theMesh.name,angle[1]);
+                  // get_foot_mesh(theMesh.name,angle[1]);
                   if(theMesh.name!=currFlower){
                     load_flower_music(videoId, startTime);          //load the music video
                     currFlower = theMesh.name;
                   }else if(theMesh.name==currFlower) document.getElementById("musicVideoDiv").style.visibility = "visible";
-              }//end of if has parent
+              // }//end of if has parent
               
               
-          }
-
-          if(theMesh === foot_plane){
-              if(!isGalleryVisible){
-                set_gallery_visible(true);
-                isGalleryVisible = true;
-                set_camera_specs("init");
-              }else {
-                set_gallery_visible(false);
-                isGalleryVisible = false;
-              }
-          }
-
+                }
          
          
          
@@ -341,41 +344,39 @@ function add_mouse_listener(){
 }//end of listen to mouse function
 
 let litFlowersMap = new Map();
-function get_foot_mesh(theMesh,camAngle){
-  
+function get_head_mesh(theMesh){
+  console.log(panelFlowersMap);
   // console.log("camAngle", camAngle);
 
   //set to original color
   if(litFlowersMap.size > 0){
     for(const [key,val] of litFlowersMap.entries()){
-      key.material = val;
-      key.actionManager = null;
+      key.visibility = 0;
+      // key.actionManager = null;
+      flowerColor.removeMesh(key);
     }
     litFlowersMap.clear(); 
   }
  
   let ctr=0;
-  // for(i=0;i<meshArr.length;i++){
-    // console.log(theMesh);
-    rfoot_meshes.forEach(function(m) {
-      if (m.name === theMesh) {
+    //for each flower identified from the loaded head of mbaye, check for the flower mapping of the currently selected flower
+    panelFlowersMap.forEach(function(m) {
+     
+      if (m.name === theMesh || m.name.indexOf(theMesh) >= 0) {
+        console.log("here: ", m.name);
           litFlowersMap.set(m,m.material);
-          if(ctr == 0){
-              set_camera_specs(camAngle);
-            }
-          ctr++;
+          m.material.emissiveColor = new BABYLON.Color3(0,1,0);
+          // m.material.emissiveColor = new BABYLON. Color4(0.7,0.5,0,0.2);
+          m.visibility = 1;
          
-          let newMat= m.material.clone();
-          // newMat.emissiveColor = new BABYLON. Color4(0.7,0.5,0,0.2);
-          newMat.emissiveColor = new BABYLON.Color3(0,0,0.5);
-          m.material.isWorldMatrixFrozen = false;
-          m.material = newMat;
-          add_action_mgr(m);
+          // flowerColor.addMesh(m, BABYLON.Color3.Yellow());
+           flowerColor.addMesh(m, BABYLON.Color3.Green());
+          flowerColor.innerGlow = false;
+
+
+          // add_action_mgr(m);
       }
-      
     });
-    
-  // }//end of for
   
   
 }
@@ -460,7 +461,7 @@ let nb = 100;
 var TWO_PI = Math.PI * 2;
 var angle =  TWO_PI/ nb;
 function load_orig_flowers(){
-  for (const [flowerName,val] of rFootFlowersMap.entries()) {
+  for (const [flowerName,val] of headFlowersMap.entries()) {
       // let thePos = set_position();
       let thePos;
       if(val[0]!==null) thePos = val[0];

@@ -1,9 +1,9 @@
 <?php
 use Illuminate\Support\Facades\Route;
 /**
-* Frontend Controllers
-* All route names are prefixed with 'frontend.'.
-*/
+ * Frontend Controllers
+ * All route names are prefixed with 'frontend.'.
+ */
 
 Route::get('/', 'FrontendController@index')->name('index');
 Route::post('/get/states', 'FrontendController@getStates')->name('get.states');
@@ -98,39 +98,43 @@ Route::group(['namespace' => 'Friendship'], function () {
     Route::post('/groupfriend','FriendshipController@groupfriends')->name('friends.group');
     Route::post('/ungroupfriend','FriendshipController@ungroupfriends')->name('friends.ungroup');
 });
- 
+
+    
 //end friendshiproutes
     Route::group(['namespace' => 'Blogs'], function () {
         Route::resource('blogs', 'BlogsController');
+        // Route::get('stories', 'BlogsController@stories');
         Route::get('/single_blog/{id}', 'BlogsController@show');
         Route::get('/shared_blog/{id}', 'BlogsController@sharedBlog');
         Route::post('publish_blog', 'BlogsController@publishBlog');
         Route::post('publish_design_blog', 'BlogsController@publishDesignBlog');
         Route::post('share_blog', 'BlogsController@shareBlog');
+        Route::get('/earthlings_activities', 'BlogsController@earthlingsActivities');
+        Route::get('/fetchblogs', 'BlogsController@fetchLatestBlogs');
     });
 
     Route::group(['namespace' => 'Like'], function () {
         Route::post('/like','LikeController@setemotion')->name('likepost');
     });
 
-    Route::group(['namespace' => 'Like'], function () {
-        Route::post('/generallike','GeneralLikeController@setemotion')->name('generallikepost');
-    });
-
     Route::post('send_contact_email', 'FrontendController@sendContactAdminEmail');
 
     // Story
     Route::group(['namespace' => 'GeneralBlogs'], function () {
-        Route::resource('general_blogs', 'GeneralBlogsController');
-        Route::get('stories', 'GeneralBlogsController@index');
+        Route::get('/stories', 'GeneralBlogsController@index');
         Route::get('/single_general_blog/{id}', 'GeneralBlogsController@show');
         Route::post('publish_general_blog', 'GeneralBlogsController@saveGeneralBlog');
+        Route::resource('general_blogs', 'GeneralBlogsController');
         Route::post('share_story', 'GeneralBlogsController@shareBlog');
         Route::get('/shared_story/{id}', 'GeneralBlogsController@sharedStory');
     });
 
     Route::get('/search_friends', 'Friendship\FriendshipController@searchuser')->name('search');
+
+    //Jobseekers profile
+    Route::get('/jobseekers/setup-profile','JobSeekerProfile\JobSeekerProfilesController@index');
 });
+
 /*
 * Show pages
 */
@@ -156,15 +160,17 @@ Route::get('/visitingMbaye', 'FrontendController@visiting_mbaye')->name('visitin
 Route::get('/participateMbaye', 'FrontendController@participate_mbaye')->name('participateMbaye');
 Route::get('/feetMbaye', 'FrontendController@feet_mbaye')->name('feetMbaye');
 Route::get('/headMbaye', 'FrontendController@head_mbaye')->name('headMbaye');
-// Route::get('/storyMbaye', 'FrontendController@story_mbaye')->name('storyMbaye');
-Route::get('/storyMbayePost', 'FrontendController@story_mbaye')->name('storyMbayePost');
-Route::get('/story', 'FrontendController@story_mbaye2');
+Route::get('/storyMbaye', 'FrontendController@story_mbaye')->name('storyMbaye');
 
 //dummy page for testing
 Route::get('/dummy_page/{id}', 'FrontendController@dummy_page');
 
+
+
+
 // Search Friend Route 
 Route::get('/search/friends', 'FrontendController@search_friends')->name('searchFriends');
+
 
 /* blogs tagwise */
 Route::get('/blogview/tagwise/all', 'FrontendController@blog_tagwise_all')->name('blog_tagwise_all');
@@ -173,8 +179,10 @@ Route::post('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my_post')->
 Route::get('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend');
 Route::post('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend_post')->name('blog_tagwise_friend');
 
+
 /* blogs for the general blogs */
 Route::get('/blogview/general/all', 'FrontendController@blog_general_all')->name('blog_general');
+Route::get('/blogview/general/all2', 'FrontendController@blog_general_all2');
 Route::get('/blogview/general/my', 'FrontendController@blog_general_my');
 Route::post('/blogview/general/my', 'FrontendController@blog_general_my_post')->name('blog_general_my');
 Route::get('/blogview/general/friend', 'FrontendController@blog_general_friend');
@@ -187,19 +195,19 @@ Route::get('/blogview/designed-panel/my', 'FrontendController@designed_panels_my
 Route::post('/blogview/designed-panel/my', 'FrontendController@designed_panels_my_post')->name('designed_panels_my');
 Route::get('/blogview/designed-panel/friend', 'FrontendController@designed_panels_friend')->name('designed_panels_friend');
 Route::get('/blogview/designed-panel/home', 'FrontendController@designed_panels_home')->name('blog_general_home');
-Route::get('/single_panel_design/{id}', 'BlogPanelDesign\BlogPanelDesignController@show');
+// Route::get('/single_panel_design/{id}', 'BlogPanelDesign\BlogPanelDesignController@show');
+
 
 /* blogs for the Jobseekers */
 Route::get('/blogview/jobseekers/profiles', 'FrontendController@jobseeker_profiles')->name('jobseeker_profiles');
 
 /* blogs for the career post */
+
 Route::get('/blogview/career/my', 'FrontendController@blog_career_my');
 Route::post('/blogview/career/my', 'FrontendController@blog_career_my_post')->name('blog_career_my');
 Route::get('/blogview/career/friend', 'FrontendController@blog_career_friend');
 Route::post('/blogview/career/friend', 'FrontendController@blog_career_friend_post')->name('blog_career_friend');
 
-//testing routes for Jobseekers profile
-Route::get('/jobseekers/setup-profile','JobSeekerProfile\JobSeekerProfilesController@index');
 
 //testing routes for Jobseekers profile view
 Route::get('/jobseekers/profileview-test','JobSeekerProfile\JobSeekerProfilesController@profileView');

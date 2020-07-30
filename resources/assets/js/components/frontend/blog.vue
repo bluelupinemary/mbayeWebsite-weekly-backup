@@ -69,13 +69,12 @@
             // page=1;
             that.images=response.data.data;
             var images = response.data.data;
-            that.page=response.data.meta.current_page;
-            that.last_page=response.data.meta.last_page;
-            console.log(that.last_page);
-            that.Total_pages=(response.data.meta.total/25);
+            that.page=response.data.current_page;
+            that.last_page=response.data.last_page;
+             that.Total_pages=(response.data.total/25);
             that.Total_pages=parseInt(that.Total_pages);
-            console.log(that.Total_pages);
-            Total_count=response.data.meta.total;
+           
+            Total_count=response.data.total;
             snowstack_init();
             // checkflow(121212121212122);
             jQuery("#stack").empty();
@@ -202,11 +201,12 @@
                     /* scroll down */
                 // alert(page);
               if(that.page==that.last_page) {
+                   that.loading = true;
                   if(that.newcell+4==that.cells.length)
                 {     
                     that.updateStack(that.newcell+4, that.magnifyMode);
                 }
-                that.loading = false;
+                // that.loading = false;
                   // return false;
               }
               if ((that.newcell+3) < (that.cells.length))
@@ -323,7 +323,7 @@
         var id=info.id  ;
         var content=info.content  ;
         var url="/single_blog/"+id;
-      
+        var shared=info.shared;
         jQuery(img).load(function ()
         {
          
@@ -340,7 +340,7 @@
             var cls_overlay="div_overlay_"+that.i;
             var cls_title="div_title_"+that.i;
             var cls_counts="div_counts_"+that.i;
-           
+            var cls_tag="tag_"+that.i;
        
            cell.div.append(jQuery('<a class="mover viewflat blog_img" href="#""  onclick="play_note('+reln+')"></a>').append(img));
            cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">'+title+'</p></div>'));
@@ -382,7 +382,8 @@
             cell.div.append(jQuery('<div class="'+className_bg+' div_count_bg" ><div class="button-div button-div-p "><button><img src="/front/icons/comment.png"  class="commentIcon" alt="" ></button> <div class="button-details"><p class="button-number">'+nComment_Count+'</p></div></div><div class="button-div button-div-p "><div class="button-details"><p class="button-number">'+nNaff_Count+'</p></div>  <button><img class="naffIcon" src="/front/icons/naff.png"/></button> </div><div class="button-div button-div-p"><div class="button-details"><p class="button-number">'+nCool_Count+'</p> </div><button><img src="/front/icons/cool.png" class="coolIcon"/></button> </div><div class="button-div button-div-p"><button><img src="/front/icons/hot.png" class="hotIcon"/></button><div class="button-details"><p class="button-number">'+nHot_Count+'</p></div></div></div>'));
          }
 
-     
+     if(shared=='shared')
+            cell.div.append(jQuery('<li class="'+cls_tag+' tag"><i class="fas fa-tag"></i> Shared</li>'));
         
         largest(nHot_Count,nCool_Count,nNaff_Count,that.i);
            cell.div.addClass('div_img_' + that.i);

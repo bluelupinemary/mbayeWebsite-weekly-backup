@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Api\V1;
 use Validator;
 use App\Models\Blogs\Blog;
 use App\Models\BlogTags\BlogTag;
+use App\Models\BlogTags\BlogMapTag;
 use App\Repositories\Backend\Blogs\BlogsRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\BlogsResource;
 use App\Http\Resources\GeneralBlogsResource;
+use Illuminate\Support\Facades\DB;
+use App\Models\Comment\Comment;
+use App\Models\Like\Like;
 class BlogsController extends APIController
 {
     protected $repository;
@@ -39,16 +43,64 @@ class BlogsController extends APIController
             $this->repository->getForDataTable()->orderBy($sortBy, $orderBy)->paginate($limit)
         );
     }
+    /**
+     * 
+     */
     public function showbytag(Request $request)
     {
+       
         $btag = BlogTag::where('name',$request['blogtag'])->first();
-    //  dd($btag);
+
         $limit = $request->get('paginate') ? $request->get('paginate') : 21;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
-        return BlogsResource::collection(
-            $btag->blogs()->orderBy($sortBy, $orderBy)->paginate($limit)
-        );
+    
+        // return BlogsResource::collection(
+        //     $btag->blogs()->orderBy($sortBy, $orderBy)->paginate($limit)
+        // );
+
+          $blogs = DB::table('blogs')
+                ->join('blog_map_tags','blog_map_tags.blog_id','=','blogs.id')
+                ->select('blogs.*')
+                ->where('blog_map_tags.tag_id',$btag->id)
+                ->paginate($limit);
+
+          $blog_shares = DB::table('blog_shares')->get();
+          if(count($blog_shares)>0)
+          {
+                foreach($blog_shares as $key=>$value){
+                    $blog_id[] = $blog_shares[$key]->blog_id;
+                }
+          
+            $blogs_shared = DB::table('blogs')
+                ->join('blog_map_tags','blog_map_tags.blog_id','=','blogs.id')
+                ->select('blogs.*')
+                ->whereIn('blogs.id',  $blog_id)
+                ->orwhere('blog_map_tags.tag_id',$btag->id)
+                ->get();  
+              
+
+                
+                if(count($blogs_shared)>0)
+                {
+                    foreach($blogs_shared as $key=>$value){
+                        $blogs_shared[$key]->shared  = 'shared';
+                        } 
+                }
+        $all_blogs = $blogs->merge($blogs_shared)
+        ->sortByDesc('created_at')
+        ->paginate($limit);
+           }
+           foreach($all_blogs as $key=>$value){
+            $all_blogs[$key]->thumb         ='/storage/img/blog/'. $all_blogs[$key]->featured_image;
+            $all_blogs[$key]->hotcount      = Like::where('blog_id', $all_blogs[$key]->id)->where('emotion',0)->count();
+            $all_blogs[$key]->coolcount     = Like::where('blog_id', $all_blogs[$key]->id)->where('emotion',1)->count();
+            $all_blogs[$key]->naffcount     =Like::where('blog_id', $all_blogs[$key]->id)->where('emotion',2)->count();
+            $all_blogs[$key]->commentcount  = Comment::where('blog_id', $all_blogs[$key]->id)->count();
+          }
+     
+        return response()->json($all_blogs);
+         
     }
     public function showbytagforfriend(Request $request){
  

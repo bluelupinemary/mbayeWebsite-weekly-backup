@@ -283,11 +283,6 @@ class FrontendController extends Controller
         if($chapter_no) return view('frontend.game.story_mbaye')->with('chapter_no',$chapter_no);;
         return view('frontend.index');
     }
-   
-    public function story_mbaye2(){
-        $chapter_no = 2;
-        return view('frontend.game.story_mbaye2')->with('chapter_no',$chapter_no);
-    }
 
 
 
@@ -301,6 +296,11 @@ class FrontendController extends Controller
     public function blog_general_all(){
         $user = Auth::user();
         if($user)         return view('frontend.blog.blogview.general.blog_general');
+        return view('frontend.auth.login');
+    }
+    public function blog_general_all2(){
+        $user = Auth::user();
+        if($user)         return view('frontend.blog.blogview.general.blog_general2');
         return view('frontend.auth.login');
     }
    /* For general blogs userwise */

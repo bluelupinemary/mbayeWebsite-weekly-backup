@@ -14,6 +14,7 @@ let imagePath = 'front/images3D/storyMbayeScene/';
 let texturePath = 'front/textures/storyMbaye/';
 
 let createChapter1Scene = function(){
+    
     canvas = document.getElementById('canvas');
     engine = new BABYLON.Engine(canvas, true,{ preserveDrawingBuffer: true, stencil: true });
     engine.enableOfflineSupport = true;
@@ -44,6 +45,7 @@ let createChapter1Scene = function(){
 
 //############################################# LOAD THE SCENE'S MODELS #############################################//
 //function to load the 3D meshes
+let earth_obj;
 let collage_wall;
 var WALL_INIT_POS = new BABYLON.Vector3(-9.12,0,-1500);
 function load_3D_mesh(){
@@ -109,7 +111,7 @@ function setup_stage(stageNo){
             burj.setEnabled(true);
             animateObjectScaling(burj, 20, frameCount, new BABYLON.Vector3(10,10,10));
             animateCameraToRadius(storyCamera, 20, frameCount, 500);
-        },8000);
+        },6000);
         
 
     }else if(stageNo >= 3){                             
@@ -325,7 +327,7 @@ function setup_stage(stageNo){
                 collage_wall.isVisible = true;
                 change_collage_photo(stageNo);
                 add_delay(collage_wall,2000,5000); 
-                setCamDefault(1000);
+                setCamDefault();
             
               
                 animateCameraToRadius(storyCamera, 15, frameCount, 100);
@@ -343,22 +345,51 @@ function setup_stage(stageNo){
                 },1000);
        
         }else if(stageNo === 21){
-                //set camera to init view ; hide collage wall; show earth
-                $("#firstVideoOverlayText").css({'font-size':'3.5vw'});
-                earth_obj.position = new BABYLON.Vector3(270,-120,500);
+                //set camera to init view ; hide collage wall; show earth; show photos
+                $("#firstVideoOverlayText").css({'font-size':'3.2vw'});
+                earth_obj.position = new BABYLON.Vector3(-270,-120,500);
                 earth_obj.rotation = new BABYLON.Vector3(0,0,0);
                 //show earth
                 earth_obj.setEnabled(true);
                 earth_obj.isVisible = true;
                 
-                setCamDefault(490);
+                setCamDefault(600);
                 animateCameraToRadius(storyCamera, 50, frameCount, 900);
                 isEarthRotating = true;
+
+                let allan = init_photo(imgArr[0],{w:500,h:500},{x: 700, y: 170, z: -300},stageNo);           
+                let julian = init_photo(imgArr[1],{w:500,h:500},{x: 0, y: -170, z: -300},stageNo);
+                currStageObjMap.set(allan.name, allan);
+                currStageObjMap.set(julian.name, julian);
+
+                hl.addMesh(allan, new BABYLON.Color3(0,0.5,0.5));
+                hl.addMesh(julian, new BABYLON.Color3(0,0.5,0.5));
+                
+
         }else if(stageNo === 22){
                 //set camera to init view ; 
+                $("#firstVideoOverlayText").css({'font-size':'3.2vw'});
+                setCamInferior();
+                earth_obj.setEnabled(false);
+                earth_obj.isVisible = false;
+                let theDisc = init_disc(stageNo,300);
+                currStageObjMap.set(theDisc.name, theDisc);   
+                scene.meshes.forEach(function(mesh){
+                        console.log(mesh.name);
+                }); 
 
         }else if(stageNo === 23){
                 //set camera to init view ;
+                // $("#firstVideoOverlayText").css({'font-size':'3.2vw'});
+                setCamDefault(50);
+                animateCameraToRadius(storyCamera, 30, frameCount, 1300);
+                
+
+                change_collage_photo(stageNo);
+                collage_wall.isVisible = true;
+                // add_delay(collage_wall,2000,5000); 
+
+
         }
 
         // scene.meshes.forEach(function(mesh){
@@ -368,8 +399,9 @@ function setup_stage(stageNo){
         
     }//end of if else
 
-    if(currentStage===1) currentStage = 3;
+    if(currentStage===1) currentStage = 20;
     else currentStage++;
+//     else currentStage++;
 
     
     // console.log("the scene: ", scene.meshes);
@@ -468,26 +500,41 @@ function create_snow_emitter(){
 
 
 
-  //if continue button is clicked
-  $('#continueBtn').on('click',function(evt){
-    if(currentStage <= 23){
+//   //if continue button is clicked
+//   $('#continueBtn').on('click',function(evt){
+//     // if(currentStage <= 23){
 
-        $('#continueBtnDiv').css('visibility','hidden');
-        setup_stage(currentStage);
-    }else{
-        let cNo = 2;
-        $.ajax({
-        type: "get",
-        url:urlStory,
-        data:{chapter_no:cNo,
-                _token:token
-        },
-        success: function(result){
-                window.location.href=urlStory+"?cNo="+cNo;
+//         $('#continueBtnDiv').css('visibility','hidden');
+//         setup_stage(currentStage);
+//     // }else{
+//     //     let url = window.location.origin;
+//     //     window.open(url+'/storyMbaye/2','_self');
+//     // }
+    
+    
+//     //console.log("continue button is clicked");
+//   });
+
+//if continue button is clicked
+$('#continueBtn').on('click',function(evt){
+        if(currentStage <= 23){
+    
+            $('#continueBtnDiv').css('visibility','hidden');
+            setup_stage(currentStage);
+        }else{
+            let cNo = 2;
+            $.ajax({
+            type: "get",
+            url:urlStory,
+            data:{chapter_no:cNo,
+                    _token:token
+            },
+            success: function(result){
+                    window.location.href=urlStory+"?cNo="+cNo;
+            }
+            });
         }
-        });
-    }
-    
-    
-    //console.log("continue button is clicked");
-  });
+        
+        
+        //console.log("continue button is clicked");
+});

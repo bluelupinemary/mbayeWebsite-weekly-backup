@@ -2,6 +2,7 @@
 
 @section('after-styles')
 	<link rel="stylesheet" href="{{asset('front/CSS/search-friends.css')}}">
+	<link rel="stylesheet" href="{{asset('front/CSS/blackhole.css')}}">
 	<style>
 		#search-friends {
 			z-index: 1;
@@ -11,12 +12,21 @@
 			height: 9.2vw;
 		}
 
+		.friends.zoom-in {
+			width: 25vw !important;
+			height: 25vw !important;
+		}
+
 		.add-friend-icon {
 			background: #3cb878;
 			right: 0;
 			top: 1%;
 			left: 50%;
 			transform: translate(-50%, 0);
+		}
+		
+		.arrow-left {
+			/* transform: scaleX(1); */
 		}
 	</style>
 @endsection
@@ -26,31 +36,13 @@
 	<div class="app">
 		<accept-component :auth="{{ Auth::user() }}" ></accept-component>
 	</div>
-    {{-- <h1>Friend Requests</h1>
-    <div class="app">
-    </div>
-    @if(isset($users))
-    <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-            @foreach ($users as $user)
-            <tr>
-                <td>{{$user->name}}</td>
-                <td>{{$user->email}}</td>
-                <td><accept-component :user_id="{!! json_encode($user->id) !!}"></accept-component></td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    @else
-    <p>No Friend requests </p>
-    @endif --}}
 </div>
+@endsection
+
+@section('before-scripts')
+	<script src="{{asset('front/JS/blackhole.js')}}"></script>
+    <script>
+    //   blackhole('#blackhole');
+    </script>
 @endsection
 

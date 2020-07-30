@@ -2,24 +2,24 @@
 
 namespace App\Repositories\Frontend\Blogs;
 
+use Image;
+use ImageResize;
+use Carbon\Carbon;
+use App\Models\Blogs\Blog;
+use Illuminate\Support\Str;
+use App\Models\BlogTags\BlogTag;
+use Illuminate\Support\Facades\DB;
+use App\Exceptions\GeneralException;
+use App\Models\BlogImages\BlogImage;
+use App\Models\BlogVideos\BlogVideo;
+use App\Repositories\BaseRepository;
+use App\Models\BlogMapTags\BlogMapTag;
+use App\Models\BlogPrivacy\BlogPrivacy;
+use Illuminate\Support\Facades\Storage;
 use App\Events\Backend\Blogs\BlogCreated;
 use App\Events\Backend\Blogs\BlogDeleted;
 use App\Events\Backend\Blogs\BlogUpdated;
-use App\Exceptions\GeneralException;
-use App\Models\BlogMapTags\BlogMapTag;
-use App\Models\Blogs\Blog;
-use App\Models\BlogTags\BlogTag;
-use App\Models\BlogVideos\BlogVideo;
-use App\Models\BlogImages\BlogImage;
 use App\Models\BlogDesignPanels\BlogDesignPanel;
-use App\Models\BlogPrivacy\BlogPrivacy;
-use App\Repositories\BaseRepository;
-use Carbon\Carbon;
-use DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Image;
-use ImageResize;
 
 /**
  * Class BlogsRepository.

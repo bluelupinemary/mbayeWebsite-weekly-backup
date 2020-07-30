@@ -20,6 +20,7 @@
     </style>
 
 @section('content')
+<div class="app">
 <div id="block_land">
     <div class="content">
         <h1 class="text-glow">Turn your device in landscape mode.</h1>
@@ -151,7 +152,7 @@
     <audio id="fart" src="{{ asset('front') }}/audio/fart/fart.mp3" ></audio>
 </div>      
          <!--   <button class="zoom-btn zoom-out"><i class="fas fa-search-minus"></i></button>-->
-  
+</div> 
 
 
     
@@ -987,8 +988,6 @@ $('.main-naff').mouseover(function() {
                 }
             }
     
-  
-
 
    if (scroll=='down')
             { 
@@ -1002,11 +1001,12 @@ $('.main-naff').mouseover(function() {
                 /* scroll down */
             
            if(page==last_page) {
+            that.loading = true;
                if(newcell+4==cells.length)
             {     
                 updateStack(newcell+4, magnifyMode);
             }
-            loading = false;
+             // loading = false;
               // return false;
            }
           if ((newcell+3) < (cells.length))
@@ -1020,13 +1020,10 @@ $('.main-naff').mouseover(function() {
                  
                     page = page+1 ;
                     loading = true;
-                   
-            
                     var url_api=url+"/api/v1/userwise_designed_panels?id="+id+"&page="+page
                     $.getJSON(url_api, function(data) 
                     {
                     images=data['data'];
-               
                       if((newcell + 3) != images.length)
                           jQuery.each(images, snowstack_addimage);
               
@@ -1130,7 +1127,7 @@ $('.main-naff').mouseover(function() {
 /* Function to redirect to view Blog */
 
 function viewBlog(id){  
-    var url="/single_panel_design/"+id;
+    var url="/single_blog/"+id;
     window.open(
         url,
   '_blank' // <- This is what makes it open in a new window.

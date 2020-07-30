@@ -16,21 +16,24 @@
 			<button class="close-view" @click.prevent="closeView('round-image-large' + index)">
 				<i class="fas fa-times-circle"></i>
 			</button>
-			<div :id="'round-image-large' + index" :style="randomBoxShadow()" class="friends ani-rolloutUse" @click="handleImgClick('round-image-large' + index, user.id)">
-				<img v-if="user.photo && user.photo.includes('cropped')" :src="'/storage/profilepicture/crop/' + user.photo" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter"/>
-				<img v-else-if="user.photo == null" :src="'/storage/profilepicture/default.png'" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter"/>
-				<img v-else :src="'/storage/profilepicture/' + user.photo" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter"/>
+			<div :id="'round-image-large' + index" :style="randomBoxShadow()" class="friends ani-rolloutUse">
+				<img v-if="user.photo && user.photo.includes('cropped')" :src="'/storage/profilepicture/crop/' + user.photo" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, user.id)"/>
+				<img v-else-if="user.photo == null" :src="'/storage/profilepicture/default.png'" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, user.id)"/>
+				<img v-else :src="'/storage/profilepicture/' + user.photo" :key="user.id" id="user-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, user.id)"/>
 				
 				<div class="friend-details">
 					<a class="friend-icon view-icon tooltips left" style="" @click.prevent="viewProfile(user.id)">
 						<span>View Profile</span>
 						<i class="fa fa-eye"></i>
 					</a>
-					<a class="friend-icon decline-friend-icon tooltips right" @click.prevent="denyrequest(user.id)">
+					<a class="friend-icon decline-friend-icon tooltips right" @click.prevent="denyrequest(user.id)"
+					@mouseover="addBlackhole()"
+    				@mouseleave="removeBlackhole()">
 						<span>Decline Friend Request</span>
 						<img :src="'/front/icons/blackhole-icon.png'" alt="">
 					</a>
-					<a class="friend-icon add-friend-icon" @click.prevent="acceptrequest(user.id)">
+					<a class="friend-icon add-friend-icon tooltips top" @click.prevent="acceptrequest(user.id)">
+						<span>Accept Friend Request</span>
 						<i class="fa fa-plus"></i>
 					</a>
 					<p class="friend-name">{{user.first_name}} {{user.last_name}}</p>
@@ -80,7 +83,8 @@ export default {
 			last_page: '',
 			showDialog: false,
 			selectedUser: {},
-			activeClass:"hide"
+			activeClass:"hide",
+			declinedRequest: false
         }
     },
   	mounted () {
@@ -88,7 +92,7 @@ export default {
 		Echo.channel('App.User.'+this.auth.id)
 		.listen('FriendRequest',(friendship) => {
 			//this.comments.push(event.comment);
-			console.log(friendship);
+			// console.log(friendship);
 			this.fetchrequests();
 			// this.comments.unshift(comment);
 			
@@ -108,6 +112,7 @@ export default {
 				// this.checkfriendship(this.user_id);
 				
 				this.closeAllView();
+				this.users = [];
 				this.fetchrequests();
 
 				Swal.fire({
@@ -127,9 +132,36 @@ export default {
 			})
 		},
 		denyrequest(user_id){
+			const Swal = require('sweetalert2')
+			this.declinedRequest = true;
+			$('.tooltips span').hide();
+			$('button.close-view').hide();
+
 			axios.get('/denyrequest/'+user_id)
 			.then((response) => {
-			this.fetchrequests();
+				var $this = this;
+				setTimeout(function(){
+					$('canvas').fadeOut(500, function() {
+						$( this ).remove();
+						$this.closeAllView();
+						$this.users = [];
+						$this.fetchrequests();
+						// $('.friends').css('transform', 'translate(-50%, -50%)');
+
+						Swal.fire({
+							title: '<span class="success">Success!</span>',
+							text: response.data,
+							imageUrl: '../../front/icons/alert-icon.png',
+							imageWidth: 80,
+							imageHeight: 80,
+							imageAlt: 'Mbaye Logo',
+							width: '30%',
+							padding: '1rem',
+							background: 'rgb(8 64 147 / 89%)'
+						});	
+					});
+				}, 3000);
+				
 				// alert(response.data);
 				// this.requestsent = response.data;
 			})
@@ -138,10 +170,12 @@ export default {
 			})
 		},
 		fetchrequests(){
-			axios.get('/fetchrequests/')
+			axios.get(`/fetchrequests?page=${this.page}`)
 			.then((response) => {
-				// alert(response.data);
+				// console.log(response);
 				this.users = response.data.data;
+				this.page = response.data.current_page;
+          		this.last_page = response.data.last_page;
 			//  this.getuser(response.data.data)
 			})
 			.catch((error) => {
@@ -162,6 +196,7 @@ export default {
 		handleImgClick(id, user_id) {
 			// var target = event.target;
 			console.log('view');
+			this.declinedRequest = false;
 			$('#'+id).closest('div.main-friends').addClass('with-background');
 			$('#'+id).addClass('zoom-in');
 		
@@ -169,62 +204,59 @@ export default {
 				$('#'+id+' .friend-details').css('display', 'flex');
 				$('#'+id).closest('div.main-friends').find('.close-view').css('display', 'flex');
 			});
-
+			blackhole('.with-background', 255, 2.5);
 		},
 		closeView(id) {
 			console.log('close');
 			$('#'+id).closest('div.main-friends').removeClass('with-background');
 			$('#'+id).removeClass('zoom-in');
 			$('#'+id+' .friend-details').css('display', 'none');
-			$('#'+id).closest('div.main-friends').find('.close-view').css('display', 'none');
+			$('#'+id).closest('div.main-friends').find('button.close-view').css('display', 'none');
 		},
 		closeAllView() {
 			$('.main-friends').removeClass('with-background');
 			$('.friends').removeClass('zoom-in');
-			$('.friend-details, .close-view').hide();
-		},
-		backSearched() {
-			this.searched = false;
-			this.userList = [];
+			$('.friends').removeClass('rotate');
+			$('.friend-details, button.close-view').hide();
+			$('canvas').remove();
 		},
 		viewProfile(id) {
 			window.location.href = '/user_dashboard/'+id;
 		},
 		nextPage(page) {
-		const API = `/search_friends?q=${this.query}&page=${page + 1}`;
-		fetch(API)
-			.then(response => {
-			if (response.ok) {
-				return response.json();
-			} else throw response.json();
+			axios.get(`/fetchrequests?page=${page + 1}`)
+			.then((response) => {
+				// console.log(response);
+				this.page = page + 1;
+				this.users = response.data.data;
+			//  this.getuser(response.data.data)
 			})
-			.then(responseJson => {
-			this.page = page + 1;
-			//   if (responseJson.links.last !== responseJson.links.first) {
-			//     this.next = true;
-			//   }
-			//   debugger;
-			this.userList = responseJson.data;
+			.catch((error) => {
+				console.log(error);
 			})
-			.catch(err => alert(err));
 		},
 
 		previousPage(page) {
-		const API = `/search_friends?q=${this.query}&page=${page - 1}`;
-		fetch(API)
-			.then(response => {
-			if (response.ok) {
-				return response.json();
-			} else throw response.json();
+			axios.get(`/fetchrequests?page=${page - 1}`)
+			.then((response) => {
+				// console.log(response);
+				this.page = page - 1;
+				this.users = response.data.data;
+			//  this.getuser(response.data.data)
 			})
-			.then(responseJson => {
-			this.page = this.page - 1;
-			//   if (responseJson.links.last !== responseJson.links.first) {
-			//     this.next = true;
-			//   }
-			this.userList = responseJson.data;
+			.catch((error) => {
+				console.log(error);
 			})
-			.catch(err => alert(err));
+		},
+		addBlackhole() {
+			if(!this.declinedRequest) {
+				$('canvas').fadeIn(500);
+			}
+		},
+		removeBlackhole() {
+			if(!this.declinedRequest) {
+				$('canvas').fadeOut(500);
+			}
 		}
   }
 }

@@ -71,7 +71,7 @@
 
     <script>
         var token = '{{ Session::token() }}';
-        var urlStory = '{{ route('frontend.storyMbayePost') }}';
+        var urlStory = '{{ route('frontend.storyMbaye') }}';
         var captMbayeLink = '{{ route('frontend.captainMbaye') }}';
     </script>
 
