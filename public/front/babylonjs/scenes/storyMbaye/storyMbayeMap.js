@@ -261,7 +261,7 @@ let stageMap = new Map(
         [ 17,{ 
             "collage":'collage-17-1.png',  
             "discImg":"",
-            "imagesUsed":[],
+            "imagesUsed":['girls.png'],
             "texts":["<div class='overlayTxt' id='txt1' style='height:4.2vw;text-align:center;padding-top:0vw;'><span style='font-size:5vw;'>He drove</span> through the pass of San Bernardino, Switzerland</div>",
                     "<div class='overlayTxt' id='txt2' style='height:4.2vw;text-align:center;font-size:4vw;'>in a snow storm</div>",
                     "<div class='overlayTxt' id='txt3' style='height:4.2vw;text-align:center;'>to a company lodged in amongst the Alps.</div>",
@@ -405,14 +405,31 @@ let stageMap = new Map(
         [ 25,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":['panel18.png','panel12.png','panel16.png','panel18-s.png','panel12-s.png','panel16-s.png'],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:left;padding-top:1vw;padding-left:5vw;'>Hence the panels were to be with some form of holes for us to see </div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:left;padding-left:5vw;'>through and also the wind to pass through and make the noise</div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:left;padding-left:5vw;'>of nature around the sculpture.</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:left;padding-left:5vw;'>Thinking of the holes or perforations we needed.</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:left;padding-left:5vw;'>The carpenter said to himself why do all the holes need</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:left;padding-left:5vw;'>to be the same. That would represent geometry not nature</div>",
-                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:left;padding-left:5vw;'>and hence would be wrong. </div>"
+            "imagesUsed":['25panel1.png','25panel2.png','25panel3.png','25panel4.png','25panel5.png','25panel6.png',
+                        '25panel7.png','25panel8.png','25panel9.png','25panel10.png','25panel11.png','25panel12.png',
+                        '25panel13.png','25panel14.png','25panel15.png','25panel16.png','25panel17.png','25panel18.png',
+                        '25panel1-s.png','25panel2-s.png','25panel3-s.png','25panel4-s.png','25panel5-s.png','25panel6-s.png',
+                        '25panel7-s.png','25panel8-s.png','25panel9-s.png','25panel10-s.png','25panel11-s.png','25panel12-s.png',
+                        '25panel13-s.png','25panel14-s.png','25panel15-s.png','25panel16-s.png','25panel17-s.png','25panel18-s.png',
+                        ],
+            "imagePos":[
+                        {x:900,y:0,z:-700},{x:-500,y:300,z:-700},{x:300,y:350,z:-700},{x:-1100,y:-500,z:-1000},{x:0,y:-350,z:-500},{x:0,y:400,z:-900},
+                        {x:-550,y:200,z:-300},{x:600,y:-250,z:-400},{x:600,y:250,z:-400},{x:-700,y:-50,z:-500},{x:500,y:-250,z:-600},{x:-350,y:-200,z:-500},
+                        {x:-800,y:-400,z:-900},{x:450,y:150,z:-500},{x:300,y:-300,z:-700},{x:650,y:0,z:-600},{x:0,y:0,z:-800},{x:0,y:0,z:-50},
+                        {x:900,y:0,z:-700},{x:-500,y:300,z:-700},{x:300,y:350,z:-700},{x:-1100,y:-500,z:-1000},{x:0,y:-350,z:-500},{x:0,y:400,z:-900},
+                        {x:-550,y:200,z:-300},{x:600,y:-250,z:-400},{x:600,y:250,z:-400},{x:-700,y:-50,z:-500},{x:500,y:-250,z:-600},{x:-350,y:-200,z:-500},
+                        {x:-800,y:-400,z:-900},{x:450,y:150,z:-500},{x:300,y:-300,z:-700},{x:650,y:0,z:-600},{x:0,y:0,z:-800},{x:0,y:0,z:-50},
+                        ],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;padding-top:1vw;'>Hence the panels were to be with some form of holes</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>for us to see through and</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>also the wind to pass through</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>and make the noise of nature around the sculpture.</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;padding-top:2vw;'>Thinking of the holes or perforations we needed.</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;'>The carpenter said to himself,</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:center;'>\"Why do all the holes need to be the same?</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>That would represent geometry</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:4vw;text-align:center;'>not nature!\"</div>",
+                    "<div class='overlayTxt' id='txt10' style='height:4vw;text-align:center;'>and hence would be wrong.</div>"
                  ],   
             }
         ],  
@@ -468,26 +485,40 @@ let stageMap = new Map(
         [ 29,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:left;padding-top:1vw;padding-left:5vw;'>We engaged firstly two young people from the Philippines,</div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:left;padding-left:5vw;'>Christine Jan  and Christian  Aver,</div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:left;padding-left:5vw;'>who did some flowers then other members of our team who</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:left;padding-left:5vw;'>wanted to partake Issabeleza and Saju designed some</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:left;padding-left:5vw;'>firstly on paper then in the computer.</div>"
+            "imagesUsed":['christineAver.png','christianAver.png','sketch1.png','sketch2.png','sketch3.png','sketch4.png','sketch5.png','sketch6.png','sketch7.png','sketch8.png','sketch9.png','sketch10.png'],
+            "imagePos":[{x:200,y:0,z:-400},{x:-150,y:-50,z:-400},{x:-1100,y:-550,z:-1500},{x:-1000,y:700,z:-2300},{x:1400,y:0,z:-2300},{x:700,y:750,z:-2000},{x:1000,y:-400,z:-1200},
+                {x:-1300,y:500,z:-1500},{x:100,y:-700,z:-2000},{x:-300,y:500,z:-2500},{x:1100,y:450,z:-1200},{x:-1500,y:100,z:-2500}
+                ],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;padding-top:1vw;'>We engaged firstly two young people from the Philippines,</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;padding-left:5vw;font-size:4vw;'>Jan  and Christian,</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:left;padding-left:5vw;'>who did some flowers</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:left;padding-left:5vw;'>then other members</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:left;padding-left:5vw;'>of our team who</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:left;padding-left:5vw;'>wanted to partake</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:left;padding-left:5vw;font-size:3vw;'>Issabeleza and Saju</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:left;padding-left:10vw;'>designed some</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:left;padding-left:13vw;'>firstly on paper</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:4vw;text-align:left;padding-left:20vw;'>then in the</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:4vw;text-align:left;padding-left:20vw;'>computer.</div>"
                  ],
             }
         ], 
         [ 30,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":['1Protea.png','2Sunflower.png','3ArumLily.png','4ColoradoBlueColumbine.png','5AlpineColumbine.png','1A.png','2A.png','3A.png','4A.png','5A.png'],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:left;padding-top:1vw;padding-left:5vw;'>Every leaf or petal of every flower of every bouquet of flowers </div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:left;padding-left:5vw;'>is identified and coded. The pieces which are cut out are kept </div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:left;padding-left:5vw;'>to install on a counter panel to be given to the person who designed</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:left;padding-left:5vw;'>the bouquet of every panel. These are all unique and so nobody</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:left;padding-left:5vw;'>copies these panels, every petal is recognizable. All of this required </div>",
-                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:left;padding-left:5vw;'>a lot of research and administering and we must thank  </div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:left;padding-left:5vw;'>Madona, Avey, Juliet and Eda for this.</div>"
+            "imagesUsed":['1Protea.png','2Sunflower.png','3ArumLily.png','4ColoradoBlueColumbine.png','5AlpineColumbine.png','1A.png','2A.png','3A.png','4A.png','5A.png','avey.png','juliet.png','madonna.png','eda.png'],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:3.5vw;text-align:center;padding-top:1vw;'>Every leaf or petal of every flower of</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:3.5vw;text-align:center;'>every bouquet of flowers</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:3.5vw;text-align:center;'>is identified and coded.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:3.5vw;text-align:center;'>The pieces which are cut out are kept</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:3.5vw;text-align:center;'>to install on a counter panel to be given to the person who designed</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:3.5vw;text-align:center;'>the boquet of every panel.</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:3.5vw;text-align:center;'>These are all unique and so nobody copies these panels,</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:3.5vw;text-align:left;padding-left:5vw;'>every petal is recognizable.<span style='padding-left:20vw;'>All of this required a lot</span></div>",
+                    "<div class='overlayTxt' id='txt9' style='height:3.5vw;text-align:center;padding-left:30vw;'>of research</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:3.5vw;text-align:center;padding-left:30vw;'>and administering.</div>",
+                    "<div class='overlayTxt' id='txt10' style='height:4vw;text-align:center;;'>We must thank</div>",
+                    "<div class='overlayTxt' id='txt11' style='height:4vw;text-align:center;font-size:4vw;'>Madona, Avey, Juliet and Eda for this.</div>"
                  ],
             }
         ], 
@@ -503,5 +534,59 @@ let stageMap = new Map(
                  ],
             }
         ], 
+        [ 32,{ 
+            "collage":'collage-32-1.png',  
+            "discImg":"",
+            "imagesUsed":[],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:left;padding-top:1vw;padding-left:5vw;'>The flowers are laser-cut into stainless steel sheets and then</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:left;padding-left:5vw;'>sandblasted and bent to shape the head or body.</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:left;padding-left:5vw;'>Thence mechanically fitted to its location. Each panel</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:left;padding-left:5vw;'>should stay forever or until some form of revolution or</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:left;padding-left:5vw;'>rebellion decides to dismantle her.</div>",
+                 ],
+            }
+        ],
+        [ 33,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['32view1.png','32view2.png','32view3.png','32view4.png','32view5.png'],
+            "imagePos":[{x: 1000, y: 0, z: -500},{x: -1000, y: 0, z: -495},{x: 1000, y: 0, z: -490},{x: -1000, y: 0, z: -485},{x: 1000, y: 0, z: -480},],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;padding-top:1vw;'>As we have 594 different bouquets of flowers</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>to install on her body.</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;padding-top:20vw;'>We thought.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>Who could help</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'> with the designing of each panel.</div>",
+                 ],
+            }
+        ],
+        
+
+ 
+ 
+
+
+
+
+
+
+
+        [ 34,{ 
+            "collage":'collage-34-1.png',  
+            "discImg":"",
+            "imagesUsed":['worldFlowers.png'],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>Then we thought, </div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>why ask one or two people </div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>and why from one country or two.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>Surely someone is capable of designing a panel</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'>given the right tools in every country in the world. </div>",
+                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;'>So why not ask everyone in the world </div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:center;'>if they would like to design a panel.</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>So that is what we are doing.</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:4vw;text-align:center;padding-top:3vw;'>We want someone from every country in the world </div>",
+                    "<div class='overlayTxt' id='txt10' style='height:4vw;text-align:center;'>to design at least one panel. </div>",
+                    "<div class='overlayTxt' id='txt11' style='height:4vw;text-align:center;'>Can you? Just go to design a panel.</div>",
+                 ],
+            }
+        ],
     ]
 );

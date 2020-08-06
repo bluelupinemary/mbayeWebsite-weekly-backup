@@ -50,7 +50,7 @@
                 @if($blog->getTable() == 'general_blogs')
                 <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
                     <div class="container">
-                        <div class="front @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/blog/'.$blog->getFeaturedImage())}})">
+                        <div class="front @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/general_blogs/'.$blog->getFeaturedImage())}})">
                             <div class="inner">
                                 <p class="blog-name">{{$blog->name}}</p>
                                 <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
@@ -74,7 +74,7 @@
                 @elseif($blog->getTable() == 'general_blog_shares')
                 <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
                     <div class="container">
-                        <div class="front shared-blog @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/blog/'.$blog->blog->getFeaturedImage())}})">
+                        <div class="front shared-blog @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/general_blogs/'.$blog->blog->getFeaturedImage())}})">
                             <div class="inner">
                                 <p class="blog-name">{{$blog->blog->name}}</p>
                                 <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>

@@ -164,21 +164,24 @@
     });
 
     testOrientation();
+    window.addEventListener("orientationchange", function(event) {
+        testOrientation();
+    }, false); 
 
-    window.addEventListener("orientationchange", function (event) {
+    window.addEventListener("resize", function(event) {
         testOrientation();
     }, false);
 
-
-    window.addEventListener("resize", function (event) {
-        testOrientation();
-    }, false);
-
-
+    
     function testOrientation() {
-        var width = $(document).width();
-        var height = $(document).height();
-        document.getElementById('block_land').style.display = (width > height) ? 'none' : 'block';
+        document.getElementById('block_land').style.display = (screen.width > screen.height) ? 'none' : 'block';
+
+        //above condition is not working sometimes then this condition will work
+        if (window.innerHeight < window.innerWidth) {
+            document.getElementById('block_land').style.display = 'none';
+        } else {
+            document.getElementById('block_land').style.display = 'block';
+        }
     }
 
 </script>

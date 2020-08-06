@@ -17,24 +17,7 @@
     .button-div{
         border:0px solid green;
     }
-    .blog_img img {
-        /* width: 100%;
-        height: 100%; */
-    }
-    .div_overlay {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-    }
-
-    img.reflection {
-        -webkit-box-reflect: below 9% -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
-    }
-
-    img.reflection2 {
-        -webkit-box-reflect: below 220% -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
-    }
-</style>
+    </style>
 
 @section('content')
 <div class="app">
@@ -114,7 +97,7 @@
     </div>
     </div>
 
-<generalblogtwo-component></generalblogtwo-component>
+<generalblog-component></generalblog-component>
 
 <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
     @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
@@ -177,7 +160,7 @@
    <!--cdefgab-->
   
 <div class="audio-div">
-    {{-- <audio id="1" src="{{ asset('front') }}/audio/3/c3.mp3" ></audio>
+    <audio id="1" src="{{ asset('front') }}/audio/3/c3.mp3" ></audio>
     <audio id="2" src="{{ asset('front') }}/audio/3/d3.mp3" ></audio>
     <audio id="3" src="{{ asset('front') }}/audio/3/e3.mp3" ></audio>
     <audio id="4" src="{{ asset('front') }}/audio/3/f3.mp3" ></audio>
@@ -207,7 +190,7 @@
     <audio id="25" src="{{ asset('front') }}/audio/6/f6.mp3" ></audio>
     <audio id="26" src="{{ asset('front') }}/audio/6/g6.mp3" ></audio>
     <audio id="27" src="{{ asset('front') }}/audio/6/a6.mp3" ></audio>
-    <audio id="28" src="{{ asset('front') }}/audio/6/b6.mp3" ></audio> --}}
+    <audio id="28" src="{{ asset('front') }}/audio/6/b6.mp3" ></audio>
 
     <!--fart -->
     <audio id="fart" src="{{ asset('front') }}/audio/fart/fart.mp3" ></audio>
@@ -723,7 +706,7 @@ new CircleType(document.getElementById('blog_name_h3'))
           
             $(".div_count_icon").css({'display':'none'});
             $(".div_count_bg").css({'display':'none'});
-            $("#clicked_img .overlay").css({'display':'none'});   
+            $("#clicked_img .div_overlay").css({'display':'none'});   
             $("#clicked_img .div_title").css({'display':'none'});   
             $("#clicked_img .div_btn").css({'display':'none'});
             $(".div_overlay").removeClass("div_overlay_p");
@@ -739,7 +722,7 @@ new CircleType(document.getElementById('blog_name_h3'))
             var  width=$("#clicked_img> a>img").css("width");
             var  height=$("#clicked_img> a>img" ).css("height");
          
-            $("#clicked_img .overlay").css({'display':'flex'});
+            $("#clicked_img .div_overlay").css({'display':'flex','top':'0px'});
             $("#clicked_img .div_title").css({'display':'block'});
             $("#clicked_img .div_btn").css({'display':'block'});
 

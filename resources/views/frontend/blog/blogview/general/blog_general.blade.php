@@ -4,207 +4,176 @@
 <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
 <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-@section('before-styles')
+@section('after-styles')
 @endsection
-<style>
-    .blog-button-1{ 
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-55%,-1%);
-    width: 100%;
-    }
-    .button-div{
-        border:0px solid green;
-    }
-    </style>
 
 @section('content')
 <div class="app">
-<div id="block_land">
-    <div class="content">
-        <h1 class="text-glow">Turn your device in landscape mode.</h1>
-        <img src="{{ asset('front') }}/images/rotate-screen.gif" alt="">
+    <div id="block_land">
+        <div class="content">
+            <h1 class="text-glow">Turn your device in landscape mode.</h1>
+            <img src="{{ asset('front') }}/images/rotate-screen.gif" alt="">
+        </div>
     </div>
-</div>
-<!-- For nouvela animation -->
-<section class="container-fluid">
-    <div class="div_container " style=""> 
-        <div id="overlay"></div>
-    <img  class="img-nouvela"  style="display:none" src="{{ asset('front') }}/images/naff555Votes.png" >
-    <div>
-</section>
+    <!-- For nouvela animation -->
+    <section class="container-fluid">
+        <div class="div_container " style=""> 
+            <div id="overlay"></div>
+        <img  class="img-nouvela"  style="display:none" src="{{ asset('front') }}/images/naff555Votes.png" >
+        <div>
+    </section>
     <div class="most-naffed">
         <span class="title_text">Most Naffed</span>
-
-
-
-
-
-    <div class="container">
-        <div class="row ">
-            <div class="col-md-12">
-            {{-- <div class=""> --}}
-              <div class="carousel slide multi-item-carousel col-md-12" id="theCarousel">
-                {{-- <div class="carousel slide multi-item-carousel " id="theCarousel">  --}}
-                <div class="carousel-inner col-md-12">
-                    {{-- <div class="carousel-inner "> --}}
-                    <div class="col-xs-4 img_left main-naff">
-                        {{-- <div class=" img_left"> --}}
-                            <a href="#1">
-                                <h2 class="blog_name" id="blog_name_h1">Most Naffed!</h2>
-                                <h2 class="blog_name" id="blog_name_first"></h2>
-                                <img src=""  id="1" class="img-responsive">
-                            </a>
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div class="carousel slide multi-item-carousel col-md-12" id="theCarousel">
+                        <div class="carousel-inner col-md-12">
+                            <div class="col-xs-4 img_left main-naff">
+                                <a href="#1">
+                                    <h2 class="blog_name" id="blog_name_h1">Most Naffed!</h2>
+                                    <h2 class="blog_name" id="blog_name_first"></h2>
+                                    <img src=""  id="1" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="col-xs-4 img_center main-naff">
+                                <a href="#1">
+                                    <h2 class="blog_name" id="blog_name_h2">2nd Most Naffed!</h2>
+                                    <h2 class="blog_name" id="blog_name_second"></h2>
+                                    <img src=""  id="2" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="col-xs-4 img_right main-naff">
+                                <a href="#1">
+                                    <h2 class="blog_name" id="blog_name_h3">3rd Most Naffed!</h2>
+                                    <h2 class="blog_name" id="blog_name_third"></h2>
+                                    <img src=""  id="3" class="img-responsive">
+                                </a>
+                            </div>
+                            <input type="hidden" id="prev_no" value="0">
+                            <input type="hidden" id="middle_no" value="1">
+                            <input type="hidden" id="next_no" value="2">
                         </div>
-                        <div class="col-xs-4 img_center main-naff">
-                            {{-- <div class=" img_center"> --}}
-                            <a href="#1">
-                                <h2 class="blog_name" id="blog_name_h2">2nd Most Naffed!</h2>
-                                <h2 class="blog_name" id="blog_name_second"></h2>
-                                <img src=""  id="2" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="col-xs-4 img_right main-naff">
-                            {{-- <div class=" img_right"> --}}
-                            <a href="#1">
-                                <h2 class="blog_name" id="blog_name_h3">3rd Most Naffed!</h2>
-                                <h2 class="blog_name" id="blog_name_third"></h2>
-                                <img src=""  id="3" class="img-responsive">
-                            </a>
-                        </div>
-                        <input type="hidden" id="prev_no" value="0">
-                        <input type="hidden" id="middle_no" value="1">
-                        <input type="hidden" id="next_no" value="2">
-                     
-                  
-             
+                        <a class="left-arrow carousel-control" href="#theCarousel" data-slide="prev" onclick="go_to_previous()"><i class="glyphicon glyphicon-chevron-left arrow"></i></a>
+                        <a class="right-arrow carousel-control" href="#theCarousel" data-slide="next" onclick="go_to_next()"><i class="glyphicon glyphicon-chevron-right arrow"></i></a>
+                    </div>
                 </div>
-                <a class="left-arrow carousel-control" href="#theCarousel" data-slide="prev" onclick="go_to_previous()"><i class="glyphicon glyphicon-chevron-left arrow"></i></a>
-                <a class="right-arrow carousel-control" href="#theCarousel" data-slide="next" onclick="go_to_next()"><i class="glyphicon glyphicon-chevron-right arrow"></i></a>
-              </div>
             </div>
-          </div>
-        <!--<div class="cell_left img_cell">
-
         </div>
-        <div class="cell_center img_cell">
-            
-        </div>
-        <div class="cell_right img_cell">
-            
-        </div>-->
-    </div>
     </div>
 
-<generalblog-component></generalblog-component>
+    <generalblog-component :user_id="0"></generalblog-component>
 
-<div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
-    @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
-    <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}"  class="img_astro"  alt="">
-    <div class="tos-div thomasina">
-        <button class="tos-btn tooltips right">
-            <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt="">
-            <span class="tooltiptext">Terms of Services</span></button>
-    </div>
-    @else
-    <img src="{{ asset('front/images/astronut/Tom_blog.png') }}" alt=""class="img_astro" alt="">
-    <div class="tos-div">
-        <button class="tos-btn tooltips right">
-            <img  class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt="">
-            <span class="tooltiptext">Terms of Services</span></button>
-    </div>
-    @endif
-    <div class="user-photo {{access()->user()->getGender()}}">
-        <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
-    </div>
-    <div class="navigator-buttons">
-        <div class="column column-1">
-            <button class="music-btn tooltips left"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt="">
-                <span class="tooltiptext">Music on/off</span></button>
-            <button class="home-btn tooltips left"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt="">
-                <span class="tooltiptext">Home</span></button>
+    <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+        @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+            <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}"  class="img_astro"  alt="">
+            <div class="tos-div thomasina">
+                <button class="tos-btn tooltips right">
+                    <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt="">
+                    <span class="tooltiptext">Terms of Services</span>
+                </button>
+            </div>
+        @else
+            <img src="{{ asset('front/images/astronut/Tom_blog.png') }}" alt=""class="img_astro" alt="">
+            <div class="tos-div">
+                <button class="tos-btn tooltips right">
+                    <img  class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt="">
+                    <span class="tooltiptext">Terms of Services</span>
+                </button>
+            </div>
+        @endif
+        <div class="user-photo {{access()->user()->getGender()}}">
+            <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
         </div>
-        <div class="column column-2">
-            <button class="editphoto-btn tooltips top"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+        <div class="navigator-buttons">
+            <div class="column column-1">
+                <button class="music-btn tooltips left"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt="">
+                    <span class="tooltiptext">Music on/off</span></button>
+                <button class="home-btn tooltips left"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt="">
+                    <span class="tooltiptext">Home</span></button>
+            </div>
+            <div class="column column-2">
+                <button class="editphoto-btn tooltips top"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+            </div>
+            <div class="column column-3">
+                <button class="tooltips right ">
+                <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                <button class="profile-btn tooltips right">
+                    <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt="">
+                    <span class="tooltiptext">User Profile</span>
+                </button>
+            </div>
         </div>
-        <div class="column column-3">
-            <button class="tooltips right ">
-             <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
-            <button class="profile-btn tooltips right">
-                <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt="">
-                <span class="tooltiptext">User Profile</span></button>
+        <button class="zoom-btn zoom-in "><i class="fas fa-search-plus"></i></button>
+        <!-- <button class="navigator-zoom navigator-zoomin"></button>-->
+        <div class="instructions-div btn_pointer tooltips right">
+            <button class="instructions-btn tooltips right">
+                <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt="">
+                <span class="tooltiptext">Instructions</span>
+            </button>
         </div>
+        <button class="communicator-div tooltips top btn_pointer @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom   @else  tomasina @endif" >
+        
+        </button>
+        <div class="comm-btn  top btn_pointer">
+            <span class="communicator-span    tooltips_span tooltiptext" >Communicator</span>
+        </div>
+        <button class="music-volume-div tooltips top btn_pointer">
+            <span>Music Volume Up/Down</span>
+        </button>
+        <button class="navigator-zoomout-btn">
+            <i class="fas fa-undo-alt"></i>
+        </button>
     </div>
- <button class="zoom-btn zoom-in "><i class="fas fa-search-plus"></i></button>
-     <!-- <button class="navigator-zoom navigator-zoomin"></button>-->
-    <div class="instructions-div btn_pointer tooltips right">
-        <button class="instructions-btn tooltips right">
-            <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt="">
-            <span class="tooltiptext">Instructions</span></button>
-    </div>
-    <button class="communicator-div tooltips top btn_pointer @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom   @else  tomasina @endif" >
-      
-    </button>
-    <div class="comm-btn  top btn_pointer">
-    <span class="communicator-span    tooltips_span tooltiptext" >Communicator</span>
-    </div>
-    <button class="music-volume-div tooltips top btn_pointer">
-        <span>Music Volume Up/Down</span>
-    </button>
-   <button class="navigator-zoomout-btn">
-        <i class="fas fa-undo-alt"></i>
-    </button>
-</div>
     <!-- For  notes --->
-   <!--cdefgab-->
+    <!--cdefgab-->
   
-<div class="audio-div">
-    <audio id="1" src="{{ asset('front') }}/audio/3/c3.mp3" ></audio>
-    <audio id="2" src="{{ asset('front') }}/audio/3/d3.mp3" ></audio>
-    <audio id="3" src="{{ asset('front') }}/audio/3/e3.mp3" ></audio>
-    <audio id="4" src="{{ asset('front') }}/audio/3/f3.mp3" ></audio>
-    <audio id="5" src="{{ asset('front') }}/audio/3/g3.mp3" ></audio>
-    <audio id="6" src="{{ asset('front') }}/audio/3/a3.mp3" ></audio>
-    <audio id="7" src="{{ asset('front') }}/audio/3/b3.mp3" ></audio>
+    <div class="audio-div">
+        {{-- <audio id="1" src="{{ asset('front') }}/audio/3/c3.mp3" ></audio>
+        <audio id="2" src="{{ asset('front') }}/audio/3/d3.mp3" ></audio>
+        <audio id="3" src="{{ asset('front') }}/audio/3/e3.mp3" ></audio>
+        <audio id="4" src="{{ asset('front') }}/audio/3/f3.mp3" ></audio>
+        <audio id="5" src="{{ asset('front') }}/audio/3/g3.mp3" ></audio>
+        <audio id="6" src="{{ asset('front') }}/audio/3/a3.mp3" ></audio>
+        <audio id="7" src="{{ asset('front') }}/audio/3/b3.mp3" ></audio>
 
-    <audio id="8" src="{{ asset('front') }}/audio/4/c4.mp3" ></audio>
-    <audio id="9" src="{{ asset('front') }}/audio/4/d4.mp3" ></audio>
-    <audio id="10" src="{{ asset('front') }}/audio/4/e4.mp3" ></audio>
-    <audio id="11" src="{{ asset('front') }}/audio/4/f4.mp3" ></audio>
-    <audio id="12" src="{{ asset('front') }}/audio/4/g4.mp3" ></audio>
-    <audio id="13" src="{{ asset('front') }}/audio/4/a4.mp3" ></audio>
-    <audio id="14" src="{{ asset('front') }}/audio/4/b4.mp3" ></audio>
-    
-    <audio id="15" src="{{ asset('front') }}/audio/5/c5.mp3" ></audio>
-    <audio id="16" src="{{ asset('front') }}/audio/5/d5.mp3" ></audio>
-    <audio id="17" src="{{ asset('front') }}/audio/5/e5.mp3" ></audio>
-    <audio id="18" src="{{ asset('front') }}/audio/5/f5.mp3" ></audio>
-    <audio id="19" src="{{ asset('front') }}/audio/5/g5.mp3" ></audio>
-    <audio id="20" src="{{ asset('front') }}/audio/5/a5.mp3" ></audio>
-    <audio id="21" src="{{ asset('front') }}/audio/5/b5.mp3" ></audio>
+        <audio id="8" src="{{ asset('front') }}/audio/4/c4.mp3" ></audio>
+        <audio id="9" src="{{ asset('front') }}/audio/4/d4.mp3" ></audio>
+        <audio id="10" src="{{ asset('front') }}/audio/4/e4.mp3" ></audio>
+        <audio id="11" src="{{ asset('front') }}/audio/4/f4.mp3" ></audio>
+        <audio id="12" src="{{ asset('front') }}/audio/4/g4.mp3" ></audio>
+        <audio id="13" src="{{ asset('front') }}/audio/4/a4.mp3" ></audio>
+        <audio id="14" src="{{ asset('front') }}/audio/4/b4.mp3" ></audio>
+        
+        <audio id="15" src="{{ asset('front') }}/audio/5/c5.mp3" ></audio>
+        <audio id="16" src="{{ asset('front') }}/audio/5/d5.mp3" ></audio>
+        <audio id="17" src="{{ asset('front') }}/audio/5/e5.mp3" ></audio>
+        <audio id="18" src="{{ asset('front') }}/audio/5/f5.mp3" ></audio>
+        <audio id="19" src="{{ asset('front') }}/audio/5/g5.mp3" ></audio>
+        <audio id="20" src="{{ asset('front') }}/audio/5/a5.mp3" ></audio>
+        <audio id="21" src="{{ asset('front') }}/audio/5/b5.mp3" ></audio>
 
-    <audio id="22" src="{{ asset('front') }}/audio/6/c6.mp3" ></audio>
-    <audio id="23" src="{{ asset('front') }}/audio/6/d6.mp3" ></audio>
-    <audio id="24" src="{{ asset('front') }}/audio/6/e6.mp3" ></audio>
-    <audio id="25" src="{{ asset('front') }}/audio/6/f6.mp3" ></audio>
-    <audio id="26" src="{{ asset('front') }}/audio/6/g6.mp3" ></audio>
-    <audio id="27" src="{{ asset('front') }}/audio/6/a6.mp3" ></audio>
-    <audio id="28" src="{{ asset('front') }}/audio/6/b6.mp3" ></audio>
+        <audio id="22" src="{{ asset('front') }}/audio/6/c6.mp3" ></audio>
+        <audio id="23" src="{{ asset('front') }}/audio/6/d6.mp3" ></audio>
+        <audio id="24" src="{{ asset('front') }}/audio/6/e6.mp3" ></audio>
+        <audio id="25" src="{{ asset('front') }}/audio/6/f6.mp3" ></audio>
+        <audio id="26" src="{{ asset('front') }}/audio/6/g6.mp3" ></audio>
+        <audio id="27" src="{{ asset('front') }}/audio/6/a6.mp3" ></audio>
+        <audio id="28" src="{{ asset('front') }}/audio/6/b6.mp3" ></audio> --}}
 
-    <!--fart -->
-    <audio id="fart" src="{{ asset('front') }}/audio/fart/fart.mp3" ></audio>
-</div>      
+        <!--fart -->
+        <audio id="fart" src="{{ asset('front') }}/audio/fart/fart.mp3" ></audio>
+    </div>      
          <!--   <button class="zoom-btn zoom-out"><i class="fas fa-search-minus"></i></button>-->
-  </div>   
+</div>   
 @endsection
 
 @section('after-scripts') 
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-  <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
-  <script src="{{asset('front/JS/hammer.min.js')}}"></script>
-  <script src="{{asset('front/JS/circletype.min.js')}}"></script>
-  <script type="text/javascript">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('front/JS/hammer.min.js')}}"></script>
+    <script src="{{asset('front/JS/circletype.min.js')}}"></script>
+    <script type="text/javascript">
 
     
     var url = $('meta[name="url"]').attr('content');
@@ -706,7 +675,7 @@ new CircleType(document.getElementById('blog_name_h3'))
           
             $(".div_count_icon").css({'display':'none'});
             $(".div_count_bg").css({'display':'none'});
-            $("#clicked_img .div_overlay").css({'display':'none'});   
+            $("#clicked_img .overlay").css({'display':'none'});   
             $("#clicked_img .div_title").css({'display':'none'});   
             $("#clicked_img .div_btn").css({'display':'none'});
             $(".div_overlay").removeClass("div_overlay_p");
@@ -722,7 +691,7 @@ new CircleType(document.getElementById('blog_name_h3'))
             var  width=$("#clicked_img> a>img").css("width");
             var  height=$("#clicked_img> a>img" ).css("height");
          
-            $("#clicked_img .div_overlay").css({'display':'flex','top':'0px'});
+            $("#clicked_img .overlay").css({'display':'flex'});
             $("#clicked_img .div_title").css({'display':'block'});
             $("#clicked_img .div_btn").css({'display':'block'});
 

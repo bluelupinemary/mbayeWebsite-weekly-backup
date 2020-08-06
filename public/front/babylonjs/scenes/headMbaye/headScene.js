@@ -135,7 +135,7 @@ let panelFlowersMap = new Map();
 function load_3D_mesh(){
     var loadedPercent = 0;
     Promise.all([
-          BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/headMbayeScene/", "HeadMbaye.glb", scene,
+          BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/headMbayeScene/", "HeadMbaye0803.glb", scene,
           // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/headMbayeScene/", "SamplePanel.glb", scene,
               function (evt) {
                   // onProgress
@@ -159,11 +159,18 @@ function load_3D_mesh(){
                 rfoot_meshes = result.meshes;
                
                 result.meshes.forEach(function(m) {
-              
+                 
+                    if(m.name === "FP7") {
+                      m.hasVertexAlpha = false;
+                    }
+                    
+                    if(m.name === 'no name') m.name = "82Gladiolus";
                     m.isPickable = true;
                     if(m.name === "Head" || m.name === "FP1" || m.name === "FP2" || m.name === "FP3" || m.name === "FP4" || m.name === "FP5" || m.name === "FP6"
                     || m.name === "FP7" || m.name === "FP8" || m.name === "FP9" || m.name === "FP10" || m.name === "FP11" || m.name === "FP12" || m.name === "FP13" 
-                    || m.name === "FP14" || m.name === "FP15" || m.name === "FP16" || m.name === "FP17" || m.name === "FP18" || m.name === "Line538"){
+                    || m.name === "FP14" || m.name === "FP15" || m.name === "FP16" || m.name === "FP17" || m.name === "FP18" || m.name === "FP17_primitive0" || m.name === "FP17_primitive1"
+                    || m.name === "FP8_primitive0" || m.name === "FP8_primitive1"){
+                    
                         let pbr = new BABYLON.PBRMaterial("pbr", scene);
                         m.material = pbr;
                         m.material.backFaceCulling = false;
@@ -173,19 +180,21 @@ function load_3D_mesh(){
                         pbr.metallicF0Factor = 0.50;
                         pbr.roughness = 0.15;
                         pbr.microSurface = 1; 
-                    }else if(m.name === "Object4046" || m.name === "Object4047" ){
+                    }else if(m.name === "L_EYEAventurine" || m.name === "R_EYEAventurine" ){
                         m.material.albedoColor = new BABYLON.Color3(0.01,0.2,0.07);
-                    }else if(m.name === "EYE1" || m.name === "EYE2" || m.name === "M-PL1A-RC" || m.name === "M-PR1A-LC" || m.name === "__root__"){
-                      
+                    }else if(m.name === "L_EYEObsidian" || m.name === "R_EYEObsidian" || m.name === "__root__"){
+                    }else if(m.name === "HeadCover"){
+                        m.visibility = 0.7;
                     }else{
-                      //the part is a flower of the panel
-                      let mtl = new BABYLON.StandardMaterial("pbr", scene);
-                      m.material.transparencyMode = 0;
-                      m.visibility = 0;
-                      m.material = mtl;
-                      panelFlowersMap.set(m.name,m);
+                      console.log(m.name);
+                        //the part is a flower of the panel
+                        let mtl = new BABYLON.StandardMaterial("pbr", scene);
+                        m.material.transparencyMode = 0;
+                        m.visibility = 0;
+                        m.material = mtl;
+                        panelFlowersMap.set(m.name,m);
                     }
-                });
+                });//end of foreach
 
                
             }),
@@ -259,43 +268,23 @@ function add_mouse_listener(){
           let theMesh = pickinfo.pickedMesh;
           let mesh_arr = [];
          
-          // if(!isGizmoDragging ) {
-          // // if(marblePhotos.has(theMesh.name)) enable_gizmo(theMesh);
-         
-          if(theMesh.name === "footHeartLbl") enable_gizmo(theMesh);
-          //   enable_gizmo(theMesh);
-          // }
-          console.log("the mesh clicked: ", theMesh,theMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
-          console.log("camera: ", footCamera.position, footCamera.alpha, footCamera.beta, footCamera.radius);
+
           // console.log("parent of mesh: ", theMesh.parent);
-        
           if(headFlowersMap.has(theMesh.name)){
             console.log("flower ", theMesh.name," is clicked.");
             get_head_mesh(theMesh.name);
-              // if(theMesh.parent){
-              //     //this is the flower on the foot
-              //   if( litFlowersMap.has(theMesh)){
-              //       let val = headFlowersMap.get(theMesh.name);
-
-              //       showFlowerModelDiv(val[2]);     //pass the 3d flower name from the mapping
-              //   }
-
-              // }else{
-              //     let angle = headFlowersMap.get(theMesh.name);
-                 
-              
-              //     clearTimeout(focusTimer);
+           
 
                   let music = flowersMbayeMap.get(theMesh.name);
                   let videoId = music[3].id;                            //4th value is the video id
                   let startTime = music[3].start;
                   
-                  // get_foot_mesh(theMesh.name,angle[1]);
+                
                   if(theMesh.name!=currFlower){
                     load_flower_music(videoId, startTime);          //load the music video
                     currFlower = theMesh.name;
                   }else if(theMesh.name==currFlower) document.getElementById("musicVideoDiv").style.visibility = "visible";
-              // }//end of if has parent
+        
               
               
                 }
@@ -564,36 +553,6 @@ let flowerLbl;
 let footMatl;
 var onOverFlower =(meshEvent)=>{
   // console.log(meshEvent.source.name);
-  
-
-  if(meshEvent.source.parent == null){
-    if(meshEvent.source == rfoot_obj){
-        // console.log("foot");
-    }
-    else if(meshEvent.source.name == "footHoverLbl"){
-      // footLbl = document.createElement("p");
-      // footLbl.setAttribute("id", "footLbl");
-      // var sty = footLbl.style;
-      // sty.position = "absolute";
-      // sty.lineHeight = "1.2em";
-      // sty.padding = "0.5%";
-      // sty.color = "#00BFFF  ";
-      // sty.fontFamily = "Courgette-Regular";
-      // // sty.backgroundColor = "#0b91c3a3";
-      // // sty.opacity = "0.7";
-      // sty.fontSize = "0.9vw";
-      // sty.textAlign = "center";
-      // sty.top = (scene.pointerY-200) + "px";
-      // sty.left = (scene.pointerX) + "px";
-      // sty.cursor = "pointer";
-      
-      
-      // document.body.appendChild(footLbl);
-    
-      // footLbl.innerHTML = "All of these flowers are from  <br/> around the world as is the music.<br/>Please love our  universal diversity.<br/><br/>(Try to double-click on the foot.)";
-      foot_heart_label.isVisible = true;
-    }else{
-
  
     //floating flowers
       origScaling = meshEvent.source.scaling;
@@ -623,16 +582,8 @@ var onOverFlower =(meshEvent)=>{
       let theName =  meshEvent.meshUnderPointer.name;
       document.body.appendChild(flowerLbl);
       flowerLbl.textContent = flowerName.get(theName);
-    }
-  }else{
-      if(meshEvent.source.name !== "footHoverLbl"){
-        //flower on the foot
-        footMatl = meshEvent.source.material;
-        meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,0.7,0.7);
-      }
-   
-  }
-  
+ 
+ 
   
 };
 
@@ -723,6 +674,7 @@ function set_gallery_visible(isSet){
   scene.executeWhenReady(function () {    
     document.getElementById("loadingScreenDiv").style.display = "none";
     document.getElementById("loadingScreenPercent").style.display = "none";
+    document.getElementById("loadingScreenOverlay").style.display = "block";
     engine.runRenderLoop(function(){
       if(scene){
           scene.render();
@@ -835,3 +787,11 @@ $('#flowerModelDiv #fullscreen-btn').on("click", function (e) {
   document.getElementById("flowerModelDiv").style.visibility = "visible";
   // $('#flowerModelDiv').show();
 }//end of showCharDescDiv function
+
+
+$('#loadingScreenOverlay').on('click', function(evt){
+  $(this).remove();
+  $('#loadingScreenDiv').remove();
+  document.getElementById("loadingScreenPercent").style.visibility = "hidden"; 
+  // scene.debugLayer.show();
+});

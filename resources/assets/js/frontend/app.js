@@ -50,7 +50,7 @@ Vue.component('searchfriends-component', require('../components/frontend/SearchF
 Vue.component('accept-component', require('../components/frontend/AcceptRequestComponent.vue').default);
 Vue.component('friends-component', require('../components/frontend/FriendComponent.vue').default);
 Vue.component('generalblog-component', require('../components/frontend/GeneralBlog.vue').default);
-Vue.component('generalblogtwo-component', require('../components/frontend/GeneralBlogTwo.vue').default);
+// Vue.component('generalblogtwo-component', require('../components/frontend/GeneralBlogTwo.vue').default);
 Vue.component('newblog-component', require('../components/frontend/blog.vue').default);
 Vue.component('photoeditor-component', require('../components/frontend/PhotoEditor.vue').default);
 Vue.component('general-photoeditor-component', require('../components/frontend/GeneralBlogPhotoEditor.vue').default);

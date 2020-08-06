@@ -27,30 +27,14 @@
                  <div class=" " id="txt6">amongst the high-rise metropolis of</div>
                  <div class=" " id="txt7">Dubai.</div>
              </div>
-             <div id='stage30VideoLayer' style='border:1px solid red;position:relative;width:100vw;height:100vw;z-index:0;display:none;'>
-                {{-- <div class="divTable" style="border:1px solid white;">
-                    <div class="divTableBody">
-                        <div class="divTableRow">
-                        <div class="divTableCell">&nbsp;</div>
-                        <div class="divTableCell">&nbsp;</div>
-                        <div class="divTableCell">&nbsp;</div>
-                        <div class="divTableCell">&nbsp;</div>
-                        </div>
-                        <div class="divTableRow">
-                        <div class="divTableCell">&nbsp;</div>
-                        <div class="divTableCell">&nbsp;</div>
-                        <div class="divTableCell">&nbsp;</div>
-                        <div class="divTableCell">&nbsp;</div>
-                        </div>
-                        <div class="divTableRow">
-                        <div class="divTableCell">&nbsp;</div>
-                        <div class="divTableCell">&nbsp;</div>
-                        <div class="divTableCell">&nbsp;</div>
-                        <div class="divTableCell">&nbsp;</div>
-                        </div>
-                    </div>
-                </div> --}}
-                this is the div
+             <div id='stage31VideoLayer' style='position:absolute;width:100vw;height:auto;z-index:-10;display:none;'>
+                <video id="theVid" preload="metadata" controls="true" muted playsinline width="100%" height="100%">
+                    <source src="front/videos/storyMbaye/31FacePanels.mp4"
+                            type="video/mp4">
+                 
+                    Sorry, your browser doesn't support embedded videos.
+                </video>
+               
             </div>
          </div>
         

@@ -199,6 +199,7 @@
     var count=0;
  var tag    ="{{$tag}}";
  var id    ="{{$id}}";
+ var user = "{{$user_id}}"
 console.log(url)
 console.log(id)
 $(document).ready(function() {
@@ -902,7 +903,7 @@ function contentDisplay() {
         var page = 1;
         var loading = true;
         /* Calling API for fetching images */
-        var url_api=url+"/api/v1/blogbytagoffriend?tag="+tag+"&id="+id+"&page="+page
+        var url_api=url+"/api/v1/blogbytagoffriend?tag="+tag+"&user="+user+"&id="+id+"&page="+page
         $.getJSON(url_api, function(data) 
         {
             images=data['data'];
@@ -1022,7 +1023,7 @@ function contentDisplay() {
                     page = page+1 ;
                     loading = true;
                    
-                    var url_api=url+"/api/v1/blogbytagoffriend?tag="+tag+"&id="+id+"&page="+page
+                    var url_api=url+"/api/v1/blogbytagoffriend?tag="+tag+"&user="+user+"&id="+id+"&page="+page
                     $.getJSON(url_api, function(data) 
                     {
                         images=data['data'];

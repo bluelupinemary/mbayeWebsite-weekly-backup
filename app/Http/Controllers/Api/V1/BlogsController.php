@@ -4,15 +4,19 @@ namespace App\Http\Controllers\Api\V1;
 
 use Validator;
 use App\Models\Blogs\Blog;
-use App\Models\BlogTags\BlogTag;
 use App\Models\BlogTags\BlogMapTag;
-use App\Repositories\Backend\Blogs\BlogsRepository;
+use App\Repositories\Frontend\Blogs\BlogsRepository;
 use Illuminate\Http\Request;
-use App\Http\Resources\BlogsResource;
-use App\Http\Resources\GeneralBlogsResource;
+use App\Models\Access\User\User;
+use App\Models\BlogTags\BlogTag;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\BlogsResource;
+use App\Models\BlogPrivacy\BlogPrivacy;
+use App\Http\Resources\GeneralBlogsResource;
 use App\Models\Comment\Comment;
 use App\Models\Like\Like;
+
 class BlogsController extends APIController
 {
     protected $repository;
@@ -103,15 +107,37 @@ class BlogsController extends APIController
          
     }
     public function showbytagforfriend(Request $request){
+            $user = User::find($request['id']);
+            $auth = User::find($request['user']);
+            // $f = $auth->isFriendWith($user);
+            // dd($f);
+            // if($auth->isFriendWith($user)){
+            //     dd($user->groups());
+            // }else{
+            //     dd('no friendship');
+            // }
  
             $btag = BlogTag::where('name',$request['tag'])->first();
-            // dd( $btag->name);
             $id=$request['id'];
+            $blogs = $btag->blogs()->where('created_by', $id)->get();
+            $privateblogs = $blogs->join('blog_privacy','blogs.id','blog_privacy.blog_id');
+            dump($privateblogs);
+            // foreach($blogs as $blog){
+            //     $pri[] = BlogPrivacy::where('blog_id',$blog->id)->pluck('group_id');
+            //     foreach($pri as $pr){
+            //         if (!$pr->isEmpty()) {
+            //             $group[] = $pr;
+            //         }
+            //     }
+            // }
+            // dump($group);
+            // dump($pri);
+            exit;
             $limit = $request->get('paginate') ? $request->get('paginate') : 21;
             $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
             $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
             return BlogsResource::collection(
-                $btag->blogs()->where('created_by', $id)->orderBy($sortBy, $orderBy)->paginate($limit)
+                $blogs->orderBy($sortBy, $orderBy)->paginate($limit)
             );
     }
     /**

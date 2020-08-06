@@ -39,6 +39,46 @@
         width:100%;
         height:100%;
     }
+    #loadingScreenOverlay{
+        font-family: 'Courgette-Regular';
+        font-weight: normal;
+        font-style: normal;
+        text-align: center;
+        text-shadow: -2px 1px 20px black;
+        font-size: 1.5vw;
+        color: #e9ba29;
+    }
+    #heartBDiv{
+        bottom: 0%;
+        position: absolute;
+        right: 0;
+       
+        transform: translate(-25%,-30%);
+        -ms-transform: translate(-25%,-30%);
+    }
+    #heartTDiv{
+        top: 5vw;
+        left: 5vw;
+        position: absolute;
+    }
+    .heartImg{
+        width:20vw;
+        height:auto;
+        filter: drop-shadow(0 0 5px gold);
+        -webkit-filter: drop-shadow(0 0 5px gold);
+        -moz-filter: drop-shadow(0 0 5px gold);
+    }
+    #heartTTxt{
+        position:absolute;
+        left: 1vw;
+        padding: 2vw;
+        top: 3.5vw;
+    }
+    #heartBTxt{
+        position: absolute;
+        left: 2.5vw;
+        top: 6.5vw;
+    }
   </style>
 @endsection
 
@@ -46,6 +86,18 @@
     <canvas id="canvas"></canvas>
     <div id="loadingScreenDiv"></div>
     <div id="loadingScreenPercent"> Loading: 0 % </div>
+    <div id="loadingScreenOverlay">
+      <div id="heartBDiv">
+          <img class="heartImg" src="{{asset('front')}}/images3D/headScene/heart.png"/>
+          <span id="heartBTxt">Click anywhere to start.</span>
+      </div>
+      <div id="heartTDiv">
+        <img class="heartImg" src="{{asset('front')}}/images3D/headScene/heart.png"/>
+        <span id="heartTTxt">Please select any flower
+          and see them light-up on
+          Mbaye’s face.</span>
+      </div>
+    </div>
     <div id="block_land">
       <div class="content">
           <h1 class="text-glow">Turn your device in landscape mode.</h1>

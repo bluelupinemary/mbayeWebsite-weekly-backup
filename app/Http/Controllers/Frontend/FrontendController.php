@@ -84,8 +84,9 @@ class FrontendController extends Controller
 
         $tag = $request['tag'];
         $id = $request['id'];
+        $user_id =Auth::id();
         $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id'));
+        if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id','user_id'));
         return view('frontend.auth.login');
     }
     public function blog_tagwise_friend_post(Request $request){
@@ -176,7 +177,7 @@ class FrontendController extends Controller
                 
                 $source= 'storage/img/email-attachments/'.$attachments[$i];
                 // dd(getimagesize(asset('storage/img/blog-attachments/'.$attachments[$i])));
-                $dest="storage/img/blog-attachments/".$attachments[$i];
+                $dest= 'storage/img/email-attachments/'.$attachments[$i];
                 $path= $this->compress($source,$dest, $quality);// compressing images
             }
         }
@@ -318,7 +319,7 @@ class FrontendController extends Controller
 
     public function blog_general_my(Request $request){
         // dd($request);
-        $id = $request['id'];
+        $id = Auth::user()->id;
         $user = Auth::user();
         // if($user)         return view('frontend.blog.blogview.general.blog_general_userwise',compact('id'));
         if($user) return  view('frontend.blog.blogview.general.blog_general_userwise',compact('id'));

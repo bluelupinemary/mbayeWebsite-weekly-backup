@@ -134,7 +134,7 @@
             }
 
             html, body {
-                background-image: url(../../front/images/skybox_bg1.png);
+                background-image: url(../../front/images/skybox_bg1.jpg);
                 background-size: cover; 
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
@@ -462,36 +462,7 @@
                 background: rgba(0, 0, 0, 0.7) !important;
             }
 
-            .shape-select {
-                position: fixed;
-                background: #161616;
-                bottom: 8vh;
-                left: 55vw;
-                transform: translate(-50%, 0);
-                width: 23vw;
-                height: 15vh;
-                margin: 0 auto;
-                padding: 0.3vw;
-                justify-content: center;
-                align-items: center;
-                overflow-y: scroll;
-                color: #fff;
-            }
-
-            .shape-select button {
-                width: 5vw;
-                height: 7vh;
-                font-size: 1.3vw;
-                border: 0;
-                background: #161616;
-                color: #fff;                
-            }
-
-            .shape-select button.focus,
-            .shape-select button:focus {
-                outline: 0;
-                box-shadow: none!important;
-            }
+            
 
             .text-styles {
                 position: fixed;
@@ -644,6 +615,13 @@
 
             .save:hover,
             .save:focus {
+                color: #17a2b8;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .download:hover,
+            .download:focus {
                 color: #17a2b8;
                 text-decoration: none;
                 cursor: pointer;
@@ -820,6 +798,108 @@
                 transform: translate(1.75vw, 1.6vh);
             }
 
+            #shapes-box::-webkit-scrollbar,#shape-color-box::-webkit-scrollbar{
+                width: 0.6em;
+                background: #c1d7e491;
+            }
+            #shapes-box::-webkit-scrollbar-thumb,#shape-color-box::-webkit-scrollbar-thumb {
+                background: #047999;
+            }
+
+            #shapes-box{
+                scrollbar-width: thin;
+                scrollbar-color: #047999 #c1d7e491;
+                width:59%;
+                height:100%;
+                display: flex;
+                flex-wrap:wrap;
+                overflow-y:auto;
+                overflow-x:hidden;
+                justify-content: center;
+            }
+            #close_shapes{
+                position:absolute;
+                color:white;
+                right:0;
+                top:0;
+            }
+             #shape-color-box{
+                padding-top: 5%;
+                position:relative;
+                border-right: 0.5px solid gray;
+                width: 37%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .strokeWidthContainer {
+                  width: 70%;
+            }
+
+            .strokeSlider {
+              -webkit-appearance: none;
+              width: 60%;
+              height: 1vh;
+              background: #d3d3d3;
+              outline: none;
+              opacity: 0.7;
+              -webkit-transition: .2s;
+              transition: opacity .2s;
+            }
+
+            .strokeSlider:hover {
+              opacity: 1;
+            }
+
+            .strokeSlider::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 1vw;
+              height: 1vw;
+              background: #4CAF50;
+              cursor: pointer;
+              border-radius: 50%;
+            }
+
+            .strokeSlider::-moz-range-thumb {
+              width: 1vw;
+              height: 1vw;
+              background: #4CAF50;
+              cursor: pointer;
+              border-radius: 50%;
+            }
+            .shape-select {
+                display: flex;
+                position: fixed;
+                background: #161616;
+                bottom: 8vh;
+                left: 40vw;
+                width: 25vw;
+                height: 10vw;
+                margin: 0 auto;
+                padding: 0.3vw;
+                align-items: center;
+                color: #fff;
+            }
+
+            .shape-select button {
+                width: 4vw;
+                height: 4vw;
+                font-size: 1.3vw;
+                border: 0;
+                background: transparent;
+                color: #fff;                
+            }
+
+            .shape-select button.focus,
+            .shape-select button:focus {
+                outline: 0;
+                box-shadow: none!important;
+            }
+
+            
             @media (min-width : 320px) 
                 and (max-width : 991px)
                 and (orientation : landscape) {
@@ -867,179 +947,154 @@
                 <button class="remove_object"><label for="" title="Delete"><i class="far fa-trash-alt"></i></label></button>                
                 <input type="file" name="image" id="imgLoader" accept="image/x-png,image/jpeg" multiple>
                 <button class="save" disabled><label for="" title="Save"><i class="fas fa-save"></i></label></button>
+                <button class="download" disabled><label for="" title="Download"><i class="fas fa-download"></i></label></button>
             </div>
 
-            <div id="shape-select" class="shape-select" style="display:none">
-            <span id="close_shapes" class="close">&times;</span>
-            <table>
-            <tr><td>
-                 <button id="circle" class="circle"> 
-                    <label for="circle" title="Circle"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon circle">
-                    <circle cx="50" cy="50" r="50"/>
-                    </svg></label>
-                </button>
-                </td>
-                <td>
-                    <button id="tri" class="tri">
-                    <label for="tri" title="Triangle"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="50 15, 100 100, 0 100"/>
-                    </svg></label>
-                    </button>
-                </td>
-                <td>
-                    <button id="square" class="square">
-                    <label for="" title="Square"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <rect width="100" height="100"/>
-                    </svg></label>
-                    </button>
-                </td>
-                <td>
-                    <button id="rectangle" class="rectangle">
-                    <label for="" title="Rectangle"><svg viewBox="-60 0 230 55" height="2.5vw" width="2.5vw" class="shapes-icon">
-                    <rect width="300" height="100"/>
-                    </svg></label>
-                    </button>
-                </td>
-            </tr>
-            <tr><td>
-                    <button id="diamond" class="diamond">
-                    <label for="" title="Diamond"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="50,0 100,50 50,100 0,50"/>
-                    </svg></label>
-                    </button>
-                </td>
 
-                <td>
-                    <button id="parallelogram" class="parallelogram">
-                    <label for="" title="Parallelogram"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="25,0 100,0 75,100 0,100"/>
-                    </svg></label>
-                    </button>
-                </td>
+            <div id="shape-select" class="shape-select" style="display:none;">
+                <div id="close_shapes" class="close" style=""><img style="width:1.5vw;" src="{{asset('front')}}/images3D/close-btn2.png"/></div>
+                <div id='shape-color-box' style="overflow-y: visible;overflow-x:hidden">
+                    <div style="width: 100%;position: relative;">
+                        <input type="color" id="shapeFill" name="fill" value="#e66465">
+                        <br><label for="fill">Fill</label>
+                    </div>
+                    <div style="width: 100%;position: relative;">
+                        <input type="color" id="shapeStroke" name="stroke" value="#e66465"><br>
+                        <label for="stroke">Stroke</label>
+                    </div>
+                    <div class="strokeWidthContainer" style="width: 100%;position: relative;">
+                      <input type="range" min="1" max="5" value="1" class="strokeSlider" id="strokeRange">
+                      <br/>
+                       <label for="strokeWidth">Width: <span id="strokeVal"></span></label>
+                    </div>
+                </div>
+                <div id='shapes-box' style="">
+                       
+                                <button id="circle" class="circle"> 
+                                    <label for="circle" title="Circle"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon circle">
+                                    <circle cx="50" cy="50" r="50"/>
+                                    </svg></label>
+                                </button>
+                               
+                                <button id="tri" class="tri">
+                                    <label for="tri" title="Triangle"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="50 15, 100 100, 0 100"/>
+                                    </svg></label>
+                                </button>
+                              
+                             
+                                <button id="square" class="square">
+                                    <label for="" title="Square"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <rect width="100" height="100"/>
+                                    </svg></label>
+                                </button>
+                              
+                                    <button id="rectangle" class="rectangle">
+                                    <label for="" title="Rectangle"><svg viewBox="-60 0 230 55" height="2.5vw" width="2.5vw" class="shapes-icon">
+                                    <rect width="300" height="100"/>
+                                    </svg></label>
+                               
+                                    <button id="diamond" class="diamond">
+                                    <label for="" title="Diamond"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="50,0 100,50 50,100 0,50"/>
+                                    </svg></label>
+                                    </button>
+                              
+                                    <button id="parallelogram" class="parallelogram">
+                                    <label for="" title="Parallelogram"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="25,0 100,0 75,100 0,100"/>
+                                    </svg></label>
+                                    </button>
+                              
+                                    <button id="ellipse" class="ellipse">
+                                    <label for="" title="Ellipse"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <ellipse cx="50" cy="60" rx="75" ry="37.5"/>
+                                    </svg>
+                                    </label>
+                                    </button>
+                            
+                                    <button id="trapezoid" class="trapezoid">
+                                    <label for="" title="Trapezoid"><svg viewBox="130 75 230 55" height="2vw" width="2vw" class="shapes-icon">
+                                    <polygon points="180,10 300,50 300,180 180,220"/>
+                                    </svg></label>
+                                    </button>
+                             
+                                    <button id="star" class="star">
+                                    <label for="star" title="Star"><svg viewBox="-60 50 320 55" height="3vw" width="3vw" class="shapes-icon">
+                                    <polygon points="100,10 40,198 190,78 10,78 160,198"/>
+                                    </svg></label>
+                                    </button>
+                              
+                                    <button id="penta" class="penta">
+                                    <label for="" title="Pentagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="50,0 100,38 82,100 18,100 0,38"/>
+                                    </svg></label>
+                                    </button>
+                              
+                                    <button id="hexa" class="hexa">
+                                    <label for="" title="Hexagon"><svg viewBox="-45 0 230 55" height="4.75vw" width="4.75vw" class="shapes-icon">
+                                    <polygon points="30.1,84.5 10.2,50 30.1,15.5 69.9,15.5 89.8,50 69.9,84.5"/>
+                                    </svg></label>
+                                    </button>
+                               
+                                    <button id="hepta" class="hepta">
+                                    <label for="" title="Heptagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="50,0 90,20 100,60 75,100 25,100 0,60 10,20"/>
+                                    </svg></label>
+                                    </button>
+                                
+                                    <button id="octa" class="octa">
+                                    <label for="" title="Octagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="30,0 70,0 100,30 100,70 70,100 30,100 0,70 0,30"/>
+                                    </svg></label>
+                                    </button>
+                         
+                                    <button id="nona" class="nona">
+                                    <label for="" title="Nonagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="50,0 83,12 100,43 94,78 68,100 32,100 6,78 0,43 17,12"/>
+                                    </svg></label>
+                                    </button>
+                               
+                                    <button id="bevel" class="bevel">
+                                    <label for="" title="Bevel"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="20,0 80,0 100,20 100,80 80,100 20,100 0,80 0,20"/>
+                                    </svg></label>
+                                    </button>
+                              
+                                    <button id="heart" class="heart">
+                                    <label for="" title="Heart"><svg viewBox="-53 0 230 55" height="4.5vw" width="4.5vw" class="shapes-icon">
+                                    <path id="heart" d="M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z" />
+                                    </svg></label>
+                              
+                                    <button id="rabbet" class="rabbet">
+                                    <label for="" title="Rabbet"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="0,15 15,15 15,0 85,0 85,15 100,15 100,85 85,85 85,100 15,100 15,85 0,85"/>
+                                    </svg></label>
+                                    </button>
+                              
+                                    <button id="point" class="point">
+                                    <label for="" title="Point"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="0,0 75,0 100,50 75,100 0,100"/>
+                                    </svg></label>
+                                    </button>
+                              <button id="chevron" class="chevron">
+                                    <label for="" title="Chevron"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="75,0 100,50 75,100 0,100 25,50 0,0"/>
+                                    </svg></label>
+                                    </button>
+                               <button id="message" class="message">
+                                    <label for="" title="Message"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
+                                    <polygon points="0,0 100,0 100,75 75,75 75,100 50,75 0,75"/>
+                                    </svg></label>
+                                </button>
+                               
 
-                <td>
-                    <button id="ellipse" class="ellipse">
-                    <label for="" title="Ellipse"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <ellipse cx="50" cy="60" rx="75" ry="37.5"/>
-                    </svg>
-                    </label>
-                    </button>
-                </td>
 
-                <td>
-                    <button id="trapezoid" class="trapezoid">
-                    <label for="" title="Trapezoid"><svg viewBox="130 75 230 55" height="2vw" width="2vw" class="shapes-icon">
-                    <polygon points="180,10 300,50 300,180 180,220"/>
-                    </svg></label>
-                    </button>
-                </td>
-            </tr>
-            
-            <tr><td>
-                    <button id="star" class="star">
-                    <label for="star" title="Star"><svg viewBox="-60 50 320 55" height="3vw" width="3vw" class="shapes-icon">
-                    <polygon points="100,10 40,198 190,78 10,78 160,198"/>
-                    </svg></label>
-                    </button>
-                </td>
 
-                <td>
-                    <button id="penta" class="penta">
-                    <label for="" title="Pentagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="50,0 100,38 82,100 18,100 0,38"/>
-                    </svg></label>
-                    </button>
-                </td>
+                </div>
+           </div>
 
-                <td>
-                    <button id="hexa" class="hexa">
-                    <label for="" title="Hexagon"><svg viewBox="-45 0 230 55" height="4.75vw" width="4.75vw" class="shapes-icon">
-                    <polygon points="30.1,84.5 10.2,50 30.1,15.5 69.9,15.5 89.8,50 69.9,84.5"/>
-                    </svg></label>
-                    </button>
-                </td>
 
-                <td>
-                    <button id="hepta" class="hepta">
-                    <label for="" title="Heptagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="50,0 90,20 100,60 75,100 25,100 0,60 10,20"/>
-                    </svg></label>
-                    </button>
-                </td>
-            </tr>
-            
-            <tr><td>
-                    <button id="octa" class="octa">
-                    <label for="" title="Octagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="30,0 70,0 100,30 100,70 70,100 30,100 0,70 0,30"/>
-                    </svg></label>
-                    </button>
-            </td>
-
-                <td>
-                    <button id="nona" class="nona">
-                    <label for="" title="Nonagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="50,0 83,12 100,43 94,78 68,100 32,100 6,78 0,43 17,12"/>
-                    </svg></label>
-                    </button>
-                </td>
-
-             <!--   <td>
-                    <button id="deca" class="deca">
-                    <label for="" title="Decagon"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="50,0 80,10 100,35 100,70 80,90 50,100 20,90 0,70 0,35 20,10"/>
-                    </svg></label>
-                    </button>
-                </td> -->
-
-                <td>
-                    <button id="bevel" class="bevel">
-                    <label for="" title="Bevel"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="20,0 80,0 100,20 100,80 80,100 20,100 0,80 0,20"/>
-                    </svg></label>
-                    </button>
-                </td>
-
-                <td>
-                    <button id="heart" class="heart">
-                    <label for="" title="Heart"><svg viewBox="-53 0 230 55" height="4.5vw" width="4.5vw" class="shapes-icon">
-                    <path id="heart" d="M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z" />
-                    </svg></label>
-                    </button>
-                </td> 
-            </tr>
-            
-            <tr><td>
-                    <button id="rabbet" class="rabbet">
-                    <label for="" title="Rabbet"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="0,15 15,15 15,0 85,0 85,15 100,15 100,85 85,85 85,100 15,100 15,85 0,85"/>
-                    </svg></label>
-                    </button>
-                </td>
-
-                <td>
-                    <button id="point" class="point">
-                    <label for="" title="Point"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="0,0 75,0 100,50 75,100 0,100"/>
-                    </svg></label>
-                    </button>
-                </td>
-
-                <td><button id="chevron" class="chevron">
-                    <label for="" title="Chevron"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="75,0 100,50 75,100 0,100 25,50 0,0"/>
-                    </svg></label>
-                    </button>
-                </td>
-
-                <td><button id="message" class="message">
-                    <label for="" title="Message"><svg viewBox="-60 0 230 55" height="3.5vw" width="3.5vw" class="shapes-icon">
-                    <polygon points="0,0 100,0 100,75 75,75 75,100 50,75 0,75"/>
-                    </svg></label></button>
-                </td>
-            </tr>
-            </table>
-            </div>
 
             <div id="text-styles" class="text-styles" style="display:none">
                 <span id="close_textstyles" class="close">&times;</span>
@@ -1068,8 +1123,8 @@
                 <tr>
                     <td><span id="clear-bg-color" class="clear-highlight">Clear highlight</span></td> 
                 </tr>         
-                </table>
-                </div> 
+                </table> 
+            </div> 
 
             <div id="crop-options" class="crop-options-styles" style="display:none">
                 <span id="close_crop-options" class="close">&times;</span> 
@@ -1126,7 +1181,8 @@
                 }
                 );
                 fabric.Object.prototype.objectCaching = false;
-                canvas.backgroundColor="transparent";
+            
+                                 
                 console.log('innerWidth',window.innerWidth);
                 console.log('innerHeight',window.innerHeight);
                 console.log('screen.width',window.screen.width);
@@ -1168,56 +1224,56 @@
                 
                 //function to hide DIV of shape selector when close button is clicked
                 $(document).ready(function(){
-                $("#close_shapes").click(function(){
-                $("#shape-select").hide();
-                });
-                });
-
-                //function to hide DIV of text styles selector when close button is clicked
-                $(document).ready(function(){
-                $("#close_textstyles").click(function(){
-                $("#text-styles").hide();
-                });
+                    $("#close_shapes").click(function(){
+                        $("#shape-select").hide();
+                    });
                 });
 
                 //function to hide DIV of text styles selector when close button is clicked
                 $(document).ready(function(){
-                $("#close_crop-options").click(function(){
-                $("#crop-options").hide();
+                    $("#close_textstyles").click(function(){
+                        $("#text-styles").hide();
+                    });
                 });
+
+                //function to hide DIV of text styles selector when close button is clicked
+                $(document).ready(function(){
+                    $("#close_crop-options").click(function(){
+                        $("#crop-options").hide();
+                    });
                 });
 
                 //function to show DIV of shape selector when add shape button is clicked
                 $(document).ready(function(){
-                $("#add_shapes").click(function(){
-                $("#shape-select").show();
-                $("#text-styles").hide();
-                $("#crop-options").hide();
-                });
+                    $("#add_shapes").click(function(){
+                        $("#shape-select").show();
+                        $("#text-styles").hide();
+                        $("#crop-options").hide();
+                    });
                 });
 
                 //function to show DIV of text styles selector when add text button is clicked
                 $(document).ready(function(){
-                $("#add_text").click(function(){
-                $("#text-styles").show();
-                $("#shape-select").hide();
-                $("#crop-options").hide();
-                });
+                    $("#add_text").click(function(){
+                        $("#text-styles").show();
+                        $("#shape-select").hide();
+                        $("#crop-options").hide();
+                    });
                 });
 
                 //function to show DIV of text styles selector when text is selected
                 canvas.on('selection:created', function() {
-                if(canvas.getActiveObject().get('type')==="i-text"){
-                $("#text-styles").show();
-                $("#shape-select").hide();
-                $("#crop-options").hide();
-                }
+                    if(canvas.getActiveObject().get('type')==="i-text"){
+                        $("#text-styles").show();
+                        $("#shape-select").hide();
+                        $("#crop-options").hide();
+                    }
                 });
 
                 //function to hide DIV of text styles selector when text is not selected
                 canvas.on('selection:cleared', function() {
                     $("#text-styles").hide();
-                    $("#shape-select").hide();
+                    // $("#shape-select").hide();
                     $("#crop-options").hide();
                 });
     
@@ -1338,14 +1394,7 @@
                                 // start fabricJS stuff
                                 
                                 var image = new fabric.Image(imgObj);
-                                // image.set({
-                                //     left: 250,
-                                //     top: 250,
-                                //     // angle: 20,
-                                //     padding: 10,
-                                //     cornersize: 10
-                                //     width: 110,
-                                // });
+                        
                                 image.set({
                                     left: 0, 
                                     top: 0, 
@@ -1537,6 +1586,7 @@
                     $('#undo').prop('disabled', false);
                     $('#clear_canvas').prop('disabled', false);
                     $('.save').prop('disabled', false);
+                    $('.download').prop('disabled', false);
                 }
                 state = JSON.stringify(canvas);
                 }
@@ -1608,87 +1658,87 @@
                 }); 
 
                 $("#circle").on("click", function(e) {
-                addCircle();
+                    addShape('circle');
                 });
 
                 $("#tri").on("click", function(e) {
-                addTri();
+                addShape('triangle');
                 }); 
 
                 $("#square").on("click", function(e) {
-                addSquare();
+                addShape('square');
                 });
 
                 $("#rectangle").on("click", function(e) {
-                addRect();
+                addShape('rectangle');
                 });
 
                 $("#diamond").on("click", function(e) {
-                addDiam();
+                addShape('diamond');
                 }); 
 
                 $("#parallelogram").on("click", function(e) {
-                addParallelo();
+                addShape('parallelogram');
                 });
 
                 $("#ellipse").on("click", function(e) {
-                addEllipse();
+                addShape('ellipse');
                 }); 
 
                 $("#trapezoid").on("click", function(e) {
-                addTrapez();
+                addShape('trapezoid');
                 });
 
                 $("#star").on("click", function(e) {
-                addStar();
+                addShape('star');
                 });
 
                 $("#penta").on("click", function(e) {
-                addPenta();
+                addShape('pentagon');
                 }); 
 
                 $("#hexa").on("click", function(e) {
-                addHexa();
+                addShape('hexagon');
                 });
 
                 $("#hepta").on("click", function(e) {
-                addHepta();
+                addShape('heptagon');
                 }); 
 
                 $("#octa").on("click", function(e) {
-                addOcta();
+                addShape('octagon');
                 });
 
                 $("#nona").on("click", function(e) {
-                addNona();
+                addShape('nonagon');
                 }); 
 
                 $("#deca").on("click", function(e) {
-                addDeca();
+                addShape('decagon');
                 });
 
                 $("#bevel").on("click", function(e) {
-                addBevel();
+                addShape('bevel');
                 }); 
 
                 $("#heart").on("click", function(e) {
-                addHeart();
+                addShape('heart');
                 });
 
                 $("#rabbet").on("click", function(e) {
-                addRabbet();
+                addShape('rabbet');
                 });
 
                 $("#point").on("click", function(e) {
-                addRtPoint();
+                addShape('point');
                 }); 
 
                 $("#chevron").on("click", function(e) {
-                addRtChev();
+                addShape('chevron');
                 });
 
                 $("#message").on("click", function(e) {
-                addMsg();
+                addShape('message');
                 });
 
                 //function to add text
@@ -1735,11 +1785,14 @@
                     } 
                 }); 
 
+
+        function addShape(shape){
+
+             
                 //functions to add shapes
                 //Circle
-                function addCircle(){ 
-                $('.start-message').hide();
-                var Circle = new fabric.Circle({
+            if(shape==='circle'){
+                var theShape = new fabric.Circle({
 	                radius: 300,
                     scaleX: 0.35, 
                     scaleY: 0.35,
@@ -1750,18 +1803,8 @@
                     cornerColor: '#d6d6d6',
                     name:"shape"+(shapesMap.size+1),  
                 });  
-                canvas.add(Circle);
-                canvas.sendToBack(Circle);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Circle.name,Circle);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Triangle
-                function addTri(){ 
-                $('.start-message').hide();
-                var Tri = new fabric.Triangle({
+            }else if(shape==='triangle'){
+                var theShape = new fabric.Triangle({
                     width: 200, 
                     height: 200, 
                     scaleX: 1, 
@@ -1774,18 +1817,8 @@
                     name:"shape"+(shapesMap.size+1),    
                 });
   
-                canvas.add(Tri);
-                canvas.sendToBack(Tri);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Tri.name,Tri);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Square
-                function addSquare(){ 
-                $('.start-message').hide();
-                var Square = new fabric.Rect({
+            }else if(shape==='square'){
+                var theShape = new fabric.Rect({
                     width: 100, 
                     height: 100, 
                     scaleX: 2, 
@@ -1797,19 +1830,8 @@
                     cornerColor: '#d6d6d6',
                     name:"shape"+(shapesMap.size+1), 
                 });
-  
-                canvas.add(Square);
-                canvas.sendToBack(Square);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Square.name,Square);
-                console.log("shapesMap", shapesMap);
-                } 
-
-                //Rectangle
-                function addRect(){ 
-                $('.start-message').hide();
-                var Rect = new fabric.Rect({
+            }else if(shape==='rectangle'){
+                var theShape = new fabric.Rect({
                     width: 200, 
                     height: 100, 
                     scaleX: 1.5, 
@@ -1821,20 +1843,8 @@
                     cornerColor: '#d6d6d6',
                     name:"shape"+(shapesMap.size+1), 
                 });
-  
-                canvas.add(Rect);
-                canvas.sendToBack(Rect);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Rect.name,Rect);
-                console.log("shapesMap", shapesMap);
-                } 
-
-                //Diamonds
-                function addDiam(){
-                $('.start-message').hide(); 
-                var Diam;
-                    Diam = new fabric.Polygon([
+            }else if(shape==='diamond'){
+                var theShape = new fabric.Polygon([
                     {x:50,y:0},
                     {x:100,y:50},
                     {x:50,y:100},
@@ -1857,19 +1867,8 @@
                     name:"shape"+(shapesMap.size+1),         
                 });
   
-                canvas.add(Diam);
-                canvas.sendToBack(Diam);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Diam.name,Diam);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Parallelogram
-                function addParallelo(){ 
-                $('.start-message').hide();
-                var Parallelo;
-                    Parallelo = new fabric.Polygon([
+            }else if(shape==='parallelogram'){
+                var theShape = new fabric.Polygon([
                     {x:25,y:0},
                     {x:100,y:0},
                     {x:75,y:100},
@@ -1893,18 +1892,8 @@
       
                 });
   
-                canvas.add(Parallelo);
-                canvas.sendToBack(Parallelo);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Parallelo.name,Parallelo);
-                console.log("shapesMap", shapesMap);
-                } 
-
-                //Ellipse
-                function addEllipse(){
-                $('.start-message').hide(); 
-                var ellipse = new fabric.Ellipse({ 
+            }else if(shape==='ellipse'){
+                var theShape = new fabric.Ellipse({ 
                     rx: 80, 
                     ry: 40, 
                     scaleX: 2, 
@@ -1922,20 +1911,8 @@
                     transparentCorners: false, 
                     name:"shape"+(shapesMap.size+1),  
                 }); 
-  
-                canvas.add(ellipse);
-                canvas.sendToBack(ellipse);
-                canvas.renderAll();
-                save();
-                shapesMap.set(ellipse.name,ellipse);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Trapezoid
-                function addTrapez(){ 
-                $('.start-message').hide();
-                var clipPoly;
-                    clipPoly = new fabric.Polygon([
+            }else if(shape==='trapezoid'){
+                var theShape = new fabric.Polygon([
                     { x: 180, y: 10 },
                     { x: 300, y: 50 },
                     { x: 300, y: 180 },
@@ -1958,20 +1935,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(clipPoly);
-                canvas.sendToBack(clipPoly);
-                canvas.renderAll();
-                save();
-                shapesMap.set(clipPoly.name,clipPoly);
-                console.log("shapesMap", shapesMap);
-                } 
-
-                //Star
-                function addStar(){
-                $('.start-message').hide(); 
-                var Star;
-                    Star = new fabric.Polygon([
+            }else if(shape==='star'){
+                var theShape = new fabric.Polygon([
                     {x:350,y:75},
                     {x:380,y:160},
                     {x:470,y:160},
@@ -2000,20 +1965,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(Star);
-                canvas.sendToBack(Star);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Star.name,Star);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Pentagon
-                function addPenta(){ 
-                $('.start-message').hide();
-                var Penta;
-                    Penta = new fabric.Polygon([
+            }else if(shape==='pentagon'){
+                var theShape = new fabric.Polygon([
                     {x:50,y:0},
                     {x:100,y:38},
                     {x:82,y:100},
@@ -2037,20 +1990,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(Penta);
-                canvas.sendToBack(Penta);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Penta.name,Penta);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Hexagon
-                function addHexa(){ 
-                $('.start-message').hide();
-                var Hexa;
-                    Hexa = new fabric.Polygon([
+            }else if(shape==='hexagon'){
+                var theShape = new fabric.Polygon([
                     {x:850,y:75},
                     {x:958,y:137.5},
                     {x:958,y:262.5},
@@ -2075,20 +2016,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(Hexa);
-                canvas.sendToBack(Hexa);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Hexa.name,Hexa);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Heptagon
-                function addHepta(){ 
-                $('.start-message').hide();
-                var Hepta;
-                    Hepta = new fabric.Polygon([
+            }else if(shape==='heptagon'){
+                var theShape = new fabric.Polygon([
                     {x:50,y:0},
                     {x:90,y:20},
                     {x:100,y:60},
@@ -2114,20 +2043,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(Hepta);
-                canvas.sendToBack(Hepta);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Hepta.name,Hepta);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Octagon
-                function addOcta(){ 
-                $('.start-message').hide();
-                var Octa;
-                    Octa = new fabric.Polygon([
+            }else if(shape==='octagon'){
+                var theShape = new fabric.Polygon([
                     {x:30,y:0},
                     {x:70,y:0},
                     {x:100,y:30},
@@ -2154,20 +2071,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(Octa);
-                canvas.sendToBack(Octa);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Octa.name,Octa);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Nonagon
-                function addNona(){ 
-                $('.start-message').hide();
-                var Nona;
-                    Nona = new fabric.Polygon([
+            }else if(shape==='nonagon'){
+                var theShape = new fabric.Polygon([
                     {x:50,y:0},
                     {x:83,y:12},
                     {x:100,y:43},
@@ -2195,20 +2100,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(Nona);
-                canvas.sendToBack(Nona);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Nona.name,Nona);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Decagon
-                function addDeca(){ 
-                $('.start-message').hide();
-                var Deca;
-                    Deca = new fabric.Polygon([
+            }else if(shape==='decagon'){
+                var theShape = new fabric.Polygon([
                     {x:50,y:0},
                     {x:80,y:10},
                     {x:100,y:35},
@@ -2237,20 +2130,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(Deca);
-                canvas.sendToBack(Deca);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Deca.name,Deca);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Bevel
-                function addBevel(){ 
-                $('.start-message').hide();
-                var Bevel;
-                    Bevel = new fabric.Polygon([
+            }else if(shape==='bevel'){
+                var theShape = new fabric.Polygon([
                     {x:20,y:0},
                     {x:80,y:0},
                     {x:100,y:20},
@@ -2277,19 +2158,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(Bevel);
-                canvas.sendToBack(Bevel);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Bevel.name,Bevel);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Heart
-                function addHeart(){ 
-                $('.start-message').hide();
-                var Heart;
+            }else if(shape==='heart'){
+                var theShape;
                     Heart = new fabric.Path('M 272.70141,238.71731 \
                     C 206.46141,238.71731 152.70146,292.4773 152.70146,358.71731  \
                     C 152.70146,493.47282 288.63461,528.80461 381.26391,662.02535 \
@@ -2317,20 +2187,8 @@
                     name:"shape"+(shapesMap.size+1),     
                 });
                     
-                    canvas.add(Heart);
-                    canvas.sendToBack(Heart);
-                    canvas.renderAll();
-                    save();
-                    shapesMap.set(Heart.name,Heart);
-                    console.log("shapesMap", shapesMap);
-                }
-  
-
-                //Rabbet
-                function addRabbet(){ 
-                $('.start-message').hide();
-                var Rabbet;
-                    Rabbet = new fabric.Polygon([
+            }else if(shape==='rabbet'){
+                var theShape = new fabric.Polygon([
                     {x:0,y:15},
                     {x:15,y:15},
                     {x:15,y:0},
@@ -2361,20 +2219,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(Rabbet);
-                canvas.sendToBack(Rabbet);
-                canvas.renderAll();
-                save();
-                shapesMap.set(Rabbet.name,Rabbet);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Point
-                function addRtPoint(){ 
-                $('.start-message').hide();
-                var RtPoint;
-                    RtPoint = new fabric.Polygon([
+            }else if(shape==='point'){
+                var theShape = new fabric.Polygon([
                     {x:0,y:0},
                     {x:75,y:0},
                     {x:100,y:50},
@@ -2399,19 +2245,8 @@
       
                 });
   
-                canvas.add(RtPoint);
-                canvas.sendToBack(RtPoint);
-                canvas.renderAll();
-                save();
-                shapesMap.set(RtPoint.name,RtPoint);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Chevron
-                function addRtChev(){ 
-                $('.start-message').hide();
-                var RtChev;
-                    RtChev = new fabric.Polygon([
+            }else if(shape==='chevron'){
+                var theShape = new fabric.Polygon([
                     {x:75,y:0},
                     {x:100,y:50},
                     {x:75,y:100},
@@ -2436,20 +2271,8 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-  
-                canvas.add(RtChev);
-                canvas.sendToBack(RtChev);
-                canvas.renderAll();
-                save();
-                shapesMap.set(RtChev.name,RtChev);
-                console.log("shapesMap", shapesMap);
-                }
-
-                //Message
-                function addMsg(){ 
-                $('.start-message').hide();
-                var Msg;
-                    Msg = new fabric.Polygon([
+            }else if(shape==='message'){
+                var theShape = new fabric.Polygon([
                     {x:0,y:0},
                     {x:100,y:0},
                     {x:100,y:75},
@@ -2475,15 +2298,17 @@
                     name:"shape"+(shapesMap.size+1),    
       
                 });
-
-                canvas.add(Msg);
-                canvas.sendToBack(Msg);
+            }
+                canvas.add(theShape);
+                canvas.sendToBack(theShape);
                 canvas.renderAll();
                 save();
-                shapesMap.set(Msg.name,Msg);
+                shapesMap.set(theShape.name,theShape);
                 console.log("shapesMap", shapesMap);
-                }
 
+        }//end of addshape function
+
+                //setup mouse events functions
                canvas.on({
                 'object:moving': onMoving,
                 'object:scaling': onScaling,
@@ -2618,19 +2443,34 @@
 
                 //function to check if object is on rotating
                 function onRotating(options){
-                console.log("selected is rotating",options.target.name);
+                    console.log("selected is rotating",options.target.name);
                 }
 
                 canvas.on('selection:cleared', function() {
-                console.log("nothing selected");
-                // canvas.requestRenderAll();
+                    console.log("nothing selected");
+                    // canvas.requestRenderAll();
+                    // currShapeSelected = null;
                 });
 
                 //function to check if object is on selected
+                let currShapeSelected;
                 function onSelected(options){
                     if(options.target){
-                    console.log("selected", options.target.name);
-                    objSelected = options.target;
+                        console.log("selected", options.target.name, "width: ",options.target.strokeWidth);
+                        let width = Math.ceil(options.target.strokeWidth/2);
+                        strokeVal.innerHTML = width+"";
+                        strokeSlider.value = width+"";
+                        shapeFill.value = options.target.fill;
+                        shapeStroke.value = options.target.stroke;
+
+                        if(shapesMap.has(options.target.name)){
+                             console.log("selected image is a shape",options.target);
+                            
+                             currShapeSelected = options.target;
+                        }
+
+                        objSelected = options.target;
+
                     }
                 }
 
@@ -2761,6 +2601,54 @@
                     if(object_count < 1) {
                         $('.save').prop('disabled', true);
                     }
+                }
+
+
+               
+                $('#shapeStroke').on('change',function(){
+                    if(currShapeSelected){
+                        currShapeSelected.stroke = $('#shapeStroke').val();
+                        currShapeSelected.strokeWidth = 1;
+                        currShapeSelected = null;
+                    }
+                });
+
+                let shapeFillColor;
+                $('#shapeFill').on('change',function(){
+                    if(currShapeSelected){
+                        currShapeSelected.fill = $('#shapeFill').val();
+                        currShapeSelected = null;
+                    }
+                });
+
+                var strokeSlider = document.getElementById("strokeRange");
+                var strokeVal = document.getElementById("strokeVal");
+                strokeVal.innerHTML = strokeSlider.value;
+
+                strokeSlider.oninput = function() {
+                    if(currShapeSelected){
+                        console.log("stroke width: ",currShapeSelected.strokeWidth,"change to: ",this.value);
+                        currShapeSelected.strokeWidth =  strokeSlider.value*2;
+                        strokeVal.innerHTML = strokeSlider.value;
+                    }
+                    
+                }
+
+                $(".download").on("click", function(e) {
+                        downloadImage();
+                 
+                });
+
+                function downloadImage() {
+                    var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will 
+
+                    var link = window.document.createElement('a');
+                    link.href = image;
+                    link.download = "screenshot.jpg";
+                    var click = document.createEvent("MouseEvents");
+                    click.initEvent("click", true, false);
+                    link.dispatchEvent(click); 
+
                 }
 
             });

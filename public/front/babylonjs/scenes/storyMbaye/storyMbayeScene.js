@@ -264,7 +264,7 @@ function init_photo(name,size,pos,stageNo){
         planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
         planeMatl.opacityTexture.uScale = -1;
         // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
-    }else if(stageNo === 25 || stageNo === 26 || stageNo === 30){
+    }else if(stageNo === 25 || stageNo === 26 || stageNo === 29 || stageNo === 30){
         planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
         planeMatl.opacityTexture.uScale = -1;
     }

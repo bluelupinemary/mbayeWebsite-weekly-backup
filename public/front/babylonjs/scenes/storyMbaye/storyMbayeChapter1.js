@@ -282,6 +282,7 @@ function setup_stage(stageNo){
         }else if(stageNo === 17){
                 //set camera to init view ; show collage wall
                 $('#firstVideoOverlayText').css('color','#0ab7ea');
+                let girls = init_photo(imgArr[0],{w:100,h:100},{x: 0, y: 0, z: 0},stageNo);    
                 create_snow_emitter(); 
                 setCamDefault(490);
                 change_collage_photo(stageNo);
@@ -399,7 +400,7 @@ function setup_stage(stageNo){
         
     }//end of if else
 
-    if(currentStage===1) currentStage = 20;
+    if(currentStage===1) currentStage = 3;
     else currentStage++;
 //     else currentStage++;
 

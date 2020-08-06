@@ -1523,17 +1523,18 @@ outline: 0;
 }
 .div_count_bg{
     position: absolute;
-    width: 343px;
+    width: 100%;
     float: right;
     border: 0px solid white;
     height: 15%;
-    top: 82%;
+    bottom: 0%;
     left: 0px;
     background-color: #00800052 ;
     opacity: 1 !important;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap !important;
+    display: none;
 }
 
 .div_count_bg_p{
@@ -1686,7 +1687,7 @@ width:50%;
 .div_title
 {
     padding: 6%;
-    padding-left: 23%;
+    /* padding-left: 23%; */
 }
 
 .button-number{
@@ -1812,7 +1813,7 @@ body
 div.origin
 {
 	left: 50%;
-	top: 50%;
+    top: 50%;
 }
 
 div#camera
@@ -1901,7 +1902,11 @@ div.cell
    
     -o-transition-property: -o-transform opacity;
 	-o-transition-duration: 550ms;
-	-o-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 div.cell img
@@ -1910,16 +1915,16 @@ div.cell img
 
 	-webkit-transition-property: -webkit-transform /* PERF -webkit-box-shadow */ /* border-color */;
 	-webkit-transition-duration: 550ms;
-    -webkit-transform: translate3d(0, 0, 0);
+    /* -webkit-transform: translate3d(0, 0, 0); */
     
     -moz-transition-property: -moz-transform ;
 	-moz-transition-duration: 550ms;
-    -moz-transform: translate3d(0, 0, 0);
+    /* -moz-transform: translate3d(0, 0, 0); */
     
   
     -o-transition-property: -webkit-transform ;
 	-o-transition-duration: 550ms;
-	-o-transform: translate3d(0, 0, 0);
+	/* -o-transform: translate3d(0, 0, 0); */
 }
 
 div.original img
@@ -3007,4 +3012,66 @@ div.cell.reflection2 img
         }
       
       }
+}
+
+.overlay {
+    display: flex;
+    flex-direction: column;
+    top: 0px;
+    height: 100%;
+    /* border: 1px solid red; */
+    position: absolute;
+    width: 100%;
+    display: none;
+}
+
+.div_overlay {
+    z-index:1000000;
+    /* display:none; */
+    opacity: 100%;
+    background-color:rgba(23, 80, 213, 0.57);
+}
+
+.div_count_bg.hotness {
+    background-color: #d8070752;
+}
+
+.div_count_bg.coolness {
+    background-color: #0076a352;
+}
+
+.div_count_bg.naffness {
+    background-color: #c7bd0052;
+}
+
+.div_count_small {
+    height: 30%;
+}
+
+.blog-button-1{ 
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-55%,-1%);
+    width: 100%;
+}
+.button-div{
+    border:0px solid green;
+}
+.blog_img img {
+    /* width: 100%;
+    height: 100%; */
+}
+.div_overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+img.reflection {
+    -webkit-box-reflect: below 9% -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
+}
+
+img.reflection2 {
+    -webkit-box-reflect: below 220% -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
 }

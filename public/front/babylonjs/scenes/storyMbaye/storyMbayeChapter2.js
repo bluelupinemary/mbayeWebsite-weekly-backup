@@ -67,7 +67,8 @@ function load_3D_mesh(){
                 mbaye_obj = result.meshes[0];
 
                 result.meshes.forEach(function(m){
-                  m.isPickable = true;
+                 
+                  m.isPickable = false;
                   if(m.name === "MbayeBody" || m.name === "BodyPanels"){
                       let pbr = new BABYLON.PBRMaterial("pbr", scene);
                       m.material = pbr;
@@ -86,10 +87,22 @@ function load_3D_mesh(){
             ;
 
             }),
+            BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/storyMbayeScene/", "collageWall2.glb", scene
+            ).then(function (result) {
+              result.meshes[0].scaling = new BABYLON.Vector3(0.7,0.4,-0.5);
+              result.meshes[1].name = "collageWall";
+              // result.meshes[0].isPickable = true;
+              collage_wall = result.meshes[1];
+              collage_wall.isVisible = false;
+              
+              result.meshes[0].position = WALL_INIT_POS;
+
+          }),
       ]).then(() => {
         earth_obj = init_earth();
         earth_obj.setEnabled(false);
         add_mouse_listener();
+        setup_collage();
         
     });
 }//end of load design meshes
@@ -103,7 +116,9 @@ let currStageObjMap = new Map();
 let currTimer;
 let secondCamView, isMbayeRotating=false, isWorldFlowersActive = false;
 let worldFlowers;
-
+let video31;
+let stage32map = new Map();
+let stage25map = [];
 function setup_stage(stageNo){
 
     let imgArr=[];
@@ -119,7 +134,7 @@ function setup_stage(stageNo){
 
     if(stageNo === 24){                                      
       //for the current stage, change font size of text; show texts; add zoomin animation
-      $('.firstVideoOverlayText').css('font-size','3vw');
+       $('.firstVideoOverlayText').css('font-size','3vw');
       
         setCamDefault(500);
         mbaye_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-105),0);
@@ -130,44 +145,29 @@ function setup_stage(stageNo){
         
     }else if(stageNo === 25){                                      
       //for the current stage, change font size of text; show texts; add zoomin animation
+        $('.firstVideoOverlayText').css('font-size','3vw');
         setCamDefault(500);
         mbaye_obj.setEnabled(false);
         mbaye_obj.isVisible =false;
-        let d1 = init_photo(imgArr[0],{w:350,h:400},{x: 0, y: 100, z: -300},stageNo);           
-        let d2 = init_photo(imgArr[1],{w:350,h:400},{x: -400, y: 0, z: -300},stageNo);
-        let d3 = init_photo(imgArr[2],{w:350,h:400},{x: 400, y: 0, z: -300},stageNo);  
-       
-        let s1 = init_photo(imgArr[3],{w:350,h:400},{x: 0, y: 100, z: -300},stageNo);           
-        let s2 = init_photo(imgArr[4],{w:350,h:400},{x: -400, y: 0, z: -300},stageNo);
-        let s3 = init_photo(imgArr[5],{w:350,h:400},{x: 400, y: 0, z: -300},stageNo);  
-        
-        d1.visibility  = 0;
-        d2.visibility =0;
-        d3.visibility =0;
-  
-      
-        currStageObjMap.set(s1.name, s1);
-        currStageObjMap.set(s2.name, s2);
-        currStageObjMap.set(s3.name, s3);
-     
-        currStageObjMap.set(d1.name, d1);
-        currStageObjMap.set(d2.name, d2);
-        currStageObjMap.set(d3.name, d3);
-      
-        add_delay(s1,500,2500);
-        add_delay(s2,500,2500);
-        add_delay(s3,500,2500);
+
+        for(i=0;i<imgArr.length;i++){
+            let pos = stageMap.get(stageNo).imagePos;
+            let temp = init_photo(imgArr[i],{w:300,h:300},pos[i],stageNo); 
+            if(i<18){
+              temp.visibility = 0;
+              add_delay(temp,500,2500);
+            }
+            currStageObjMap.set(temp.name, temp); 
+            stage25map.push(temp); 
+
+        }//end of for
+
     
-        
         currTimer = setTimeout(function(){
-          animateObjectFadeOut(s1, 30, 200, 0);
-          animateObjectFadeOut(s2, 30, 200, 0);
-          animateObjectFadeOut(s3, 30, 200, 0);
-         
-          animateObjectFadeOut(d1, 30, 200, 1);
-          animateObjectFadeOut(d2, 30, 200, 1);
-          animateObjectFadeOut(d3, 30, 200, 1);
-          
+          for(i=0;i<stage25map.length;i++){
+            if(i<18) animateObjectFadeOut(stage25map[i], 30, 200, 1);
+            else animateObjectFadeOut(stage25map[i], 30, 200, 0);
+          }
         },3000);
     
     }else if(stageNo === 26){                                      
@@ -178,6 +178,9 @@ function setup_stage(stageNo){
         let boy = init_photo(imgArr[0],{w:500,h:500},{x: -200, y: -70, z: -30},stageNo);  
         currStageObjMap.set(boy.name, boy);
         add_delay(boy,2000,3000);
+
+
+        
     
     }else if(stageNo === 27){                                      
       //for the current stage, change font size of text; show texts; add zoomin animation
@@ -212,33 +215,73 @@ function setup_stage(stageNo){
         set_camera_specs(stageNo);
         currStageObjMap.set(worldFlowers.name, worldFlowers);
     }else if(stageNo === 29){                                      
-        //for the current stage, change font size of text; show texts; add zoomin animation
-        setCamDefault();
+        //for the current stage, change font size of text; show texts, create planes for flowers and peeps; show flowers and peeps
+        $('.firstVideoOverlayText').css('font-size','3vw');
+         
+        mbaye_obj.setEnabled(false);
+        mbaye_obj.isVisible =false;
+        
+        setCamDefault(400);
         removeFlowers();
         set_camera_specs(stageNo);
       
         scene.animatables.forEach(function(anim){
               anim.stop();
         });
+
+     
+        let initDelay = 1000;
+        for(i=0;i<imgArr.length;i++){
+            let pos = stageMap.get(stageNo).imagePos;
+            let temp = init_photo(imgArr[i],{w:300,h:300},pos[i],stageNo);
+            add_delay(temp,initDelay,2000);
+            currStageObjMap.set(temp.name, temp);
+            initDelay += 1000;
+        }//end of for loop
        
        
     
     }else if(stageNo === 30){                                      
         //for the current stage,add images of black and orig flowers
         setCamDefault();
+        mbaye_obj.setEnabled(false);
+        mbaye_obj.isVisible =false;
         set_camera_specs(stageNo);
-        let f1 = init_photo(imgArr[0],{w:250,h:300},{x: 0, y: 500, z: -800},stageNo);           
-        let f2 = init_photo(imgArr[1],{w:250,h:300},{x: -1000, y: 0, z: -800},stageNo);
-        let f3 = init_photo(imgArr[2],{w:250,h:300},{x: 1000, y: 0, z: -800},stageNo);  
-        let f4 = init_photo(imgArr[3],{w:250,h:300},{x: -700, y: -500, z: -800},stageNo);
-        let f5 = init_photo(imgArr[4],{w:250,h:300},{x: 700, y: -500, z: -800},stageNo);  
+        $('.firstVideoOverlayText').css('font-size','3vw');
 
-        let b1 = init_photo(imgArr[5],{w:250,h:300},{x: 0, y: 500, z: -800},stageNo);           
-        let b2 = init_photo(imgArr[6],{w:250,h:300},{x: -1000, y: 0, z: -800},stageNo);
-        let b3 = init_photo(imgArr[7],{w:250,h:300},{x: 1000, y: 0, z: -800},stageNo);  
-        let b4 = init_photo(imgArr[8],{w:250,h:300},{x: -700, y: -500, z: -800},stageNo);
-        let b5 = init_photo(imgArr[9],{w:250,h:300},{x: 700, y: -500, z: -800},stageNo);  
-        b1.visibility  = 0;
+        let f1 = init_photo(imgArr[0],{w:250,h:300},{x: 0, y: 200, z: -600},stageNo);           
+        let f2 = init_photo(imgArr[1],{w:250,h:300},{x: -1000, y: 400, z: -600},stageNo);
+        let f3 = init_photo(imgArr[2],{w:250,h:300},{x: 1000, y: 400, z: -600},stageNo);  
+        let f4 = init_photo(imgArr[3],{w:250,h:300},{x: -800, y: -400, z: -600},stageNo);
+        let f5 = init_photo(imgArr[4],{w:250,h:300},{x: 800, y: -400, z: -600},stageNo);  
+
+        let b1 = init_photo(imgArr[5],{w:250,h:300},{x: 0, y: 200, z: -600},stageNo);           
+        let b2 = init_photo(imgArr[6],{w:250,h:300},{x: -1000, y: 400, z: -600},stageNo);
+        let b3 = init_photo(imgArr[7],{w:250,h:300},{x: 1000, y: 400, z: -600},stageNo);  
+        let b4 = init_photo(imgArr[8],{w:250,h:300},{x: -800, y: -400, z: -600},stageNo);
+        let b5 = init_photo(imgArr[9],{w:250,h:300},{x: 800, y: -400, z: -600},stageNo); 
+        b1.material.emissiveColor = BABYLON.Color3.Green();
+        b2.material.emissiveColor = BABYLON.Color3.Green();
+        b3.material.emissiveColor = BABYLON.Color3.Green();
+        b4.material.emissiveColor = BABYLON.Color3.Green();
+        b5.material.emissiveColor = BABYLON.Color3.Green();
+
+
+        let avey = init_photo(imgArr[10],{w:400,h:400},{x: 500, y: 300, z: -800},stageNo);           
+        let juliet = init_photo(imgArr[11],{w:350,h:350},{x: -250, y: -200, z: -800},stageNo);
+        let madonna = init_photo(imgArr[12],{w:350,h:350},{x: -500, y: 400, z: -800},stageNo);  
+        let eda = init_photo(imgArr[13],{w:250,h:250},{x: 300, y: -300, z: -800},stageNo);  
+        avey.rotation.y = BABYLON.Tools.ToRadians(-110);
+        madonna.rotation.y = BABYLON.Tools.ToRadians(110);
+        eda.rotation.y = BABYLON.Tools.ToRadians(-100);
+        juliet.rotation.y = BABYLON.Tools.ToRadians(100);
+        
+        avey.visibility = 0;
+        juliet.visibility = 0;
+        madonna.visibility = 0;
+        eda.visibility = 0;
+        
+        b1.visibility =0;
         b2.visibility =0;
         b3.visibility =0;
         b4.visibility =0;
@@ -255,6 +298,11 @@ function setup_stage(stageNo){
         currStageObjMap.set(b3.name, b3);
         currStageObjMap.set(b4.name, b4);
         currStageObjMap.set(b5.name, b5);
+
+        currStageObjMap.set(avey.name, avey);
+        currStageObjMap.set(madonna.name, madonna);
+        currStageObjMap.set(juliet.name, juliet);
+        currStageObjMap.set(eda.name, eda);
 
         add_delay(f1,500,2500);
         add_delay(f2,500,2500);
@@ -274,27 +322,105 @@ function setup_stage(stageNo){
           animateObjectFadeOut(b3, 30, 200, 1);
           animateObjectFadeOut(b4, 30, 200, 1);
           animateObjectFadeOut(b5, 30, 200, 1);
-          
         },3000);
+
+        
+        currTimer = setTimeout(function(){
+         
+          animateObjectRotation(avey, 20, 100, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(0),0));
+          animateObjectRotation(madonna, 20, 100, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(0),0));
+          animateObjectRotation(eda, 20, 100, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(0),0));
+          animateObjectRotation(juliet, 20, 100, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(0),0));
+
+
+          animateObjectFadeOut(avey, 50, 200, 1);
+          animateObjectFadeOut(juliet, 50, 200, 1);
+          animateObjectFadeOut(madonna, 50, 200, 1);
+          animateObjectFadeOut(eda, 50, 200, 1);
+          
+        },5000);
+
     }else if(stageNo === 31){                                      
-      //for the current stage,add images of black and orig flowers
+      //for the current stage,show video of people and their panel
+       
         setCamDefault(80);
-        mbaye_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-105),0);
-        mbaye_obj.setEnabled(true);
-        mbaye_obj.isVisible = true;
+        mbaye_obj.isVisible = false;
+        mbaye_obj.setEnabled(false);
 
         scene.animatables.forEach(function(anim){
             anim.stop();
         });
 
-        currTimer = setTimeout(function(){
-            animateObjectRotation(mbaye_obj, 20, 200, new BABYLON.Vector3(-0.2,2.7,0));
-        },500);
         
+        $('#stage31VideoLayer').css('display','block');
+        video31 = document.getElementById("theVid");
+        video31.play();
+        video31.muted = false;
+        video31.loop = true;
 
+
+       
+     
+
+       
+    }else if(stageNo === 32){                                      
+      //for the current stage,create planes for the 
+        setCamDefault(80);
+        mbaye_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-105),0);
+        mbaye_obj.isVisible = true;
+        mbaye_obj.setEnabled(true);
+
+            
+        $('#stage31VideoLayer').css('display','none');
+        video31.pause();
+        video31.currentTime = 0;
+
+        change_collage_photo(stageNo);
+        collage_wall.isVisible = true;
 
      
-    }
+     
+    }else if(stageNo === 33){                                      
+      //for the current stage,create planes for the 
+        collage_wall.isVisible = false;
+        collage_wall.setEnabled(false);
+        setCamDefault(100);
+        mbaye_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-105),0);
+        mbaye_obj.isVisible = true;
+        mbaye_obj.setEnabled(true);
+
+         for(i=0;i<imgArr.length;i++){
+          // currTimer = setTimeout(function(){
+            let temp = init_photo(imgArr[i],{w:700,h:400},{x: 1000, y: 0, z: -500+(i*5)},stageNo);
+            temp.isVisible = false;
+            stage32map.set(temp,null);
+            currStageObjMap.set(temp.name, temp);
+        }
+    
+        
+       let initTime = 500;
+
+       for(const [key,val] of stage32map.entries()){
+            currTimer = setTimeout(function(){
+                key.isVisible =true;
+                animateObjectPosition(key,20,100,new BABYLON.Vector3(0,0,key.position.z));
+            },initTime);
+            initTime+=2500;
+        }//end of for
+      }else if(stageNo === 34){    
+          $('.firstVideoOverlayText').css('font-size','3vw');
+          mbaye_obj.isVisible = false;
+          mbaye_obj.setEnabled(false);
+          let temp = init_photo(imgArr[0],{w:400,h:400},{x: 0, y: 0, z: -800});
+          setCamDefault(50);
+          animateCameraToRadius(storyCamera,10,frameCount,800);
+
+          change_collage_photo(stageNo);
+          collage_wall.isVisible = true;
+          collage_wall.setEnabled(true);
+
+
+      }
     currentStage++;
     // currentStage = 31;
 
@@ -424,10 +550,10 @@ function removeFlowers(){
     $('.firstVideoOverlayText').css('display', 'block');
 
     rotate_sky();                                                   //start rotating the sky
-    // currentStage = 24;
-    // setup_stage(24);                                                 //start showing the script 1, stage 1
     currentStage = 24;
-    setup_stage(24); 
+    setup_stage(24);                                                 //start showing the script 1, stage 1
+    // currentStage = 25;
+    // setup_stage(25); 
     
     engine.runRenderLoop(function(){
       if(scene){

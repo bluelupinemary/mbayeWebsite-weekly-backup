@@ -10,10 +10,13 @@ use App\Models\Like\GeneralLike;
 use Illuminate\Support\Facades\DB;
 use App\Models\Comment\GeneralComment;
 use App\Models\GeneralBlogs\GeneralBlog;
+use App\Models\GeneralBlogShares\GeneralBlogShare;
 use App\Http\Resources\GeneralBlogsResource;
 use App\Repositories\Frontend\GeneralBlogs\GeneralBlogsRepository;
 use App\Models\Comment\Comment;
-use App\Models\Like\Like;
+use Carbon\Carbon;
+
+// use App\Models\Like\Like;
 class GeneralBlogsController extends APIController
 {
     protected $repository;
@@ -54,41 +57,34 @@ class GeneralBlogsController extends APIController
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
         $sort = 'desc_name';
-        $general_blogs = DB::table('general_blogs')->get();
-        $general_blog_shares = DB::table('general_blog_shares')->get();
+        $general_blogs = GeneralBlog::get();
+        $general_blog_shares = GeneralBlogShare::where('publish_datetime', '>=', Carbon::now()->subDay())->with('blog')->get();
 
-
-        if(count($general_blog_shares)>0)
-        {
-        foreach($general_blog_shares as $key=>$value){
-            $blog_id[] = $general_blog_shares[$key]->general_blog_id;
-        }
-
-        $blogs_shared = DB::table('general_blogs')
-                    ->whereIn('id',  $blog_id)
-                    ->get();
-        }
-        if(count($blogs_shared)>0)
-         {
-            foreach($blogs_shared as $key=>$value){
-                $blogs_shared[$key]->shared  = 'shared';
-          }                              
-     
-
-            $blogs = $general_blogs->merge($blogs_shared)
-                  ->sortByDesc('created_at')
-                  ->paginate($limit);
-        } 
-        else
-            { $blogs = $general_blogs->paginate($limit);
+        if($request->has('user_id') && $request->user_id != 0) {
+            $general_blogs = $general_blogs->where('created_by', $request->user_id);
+            $general_blog_shares = $general_blog_shares->where('created_by', $request->user_id);
+        }                         
+        
+        $blogs = $general_blogs->merge($general_blog_shares)
+                ->sortByDesc('publish_datetime')
+                ->paginate($limit);
+       
+        
+        foreach($blogs as $blog){
+            if($blog->blog) {
+                $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
+                $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
+                $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
+                $blog->blog->commentcount  = $blog->blog->comments->count();
+                $blog->blog->most_reaction = $blog->blog->mostReaction();
+            } else {
+                $blog->hotcount = $blog->likes->where('emotion',0)->count();
+                $blog->coolcount     = $blog->likes->where('emotion',1)->count();
+                $blog->naffcount     = $blog->likes->where('emotion',2)->count();
+                $blog->commentcount  = $blog->comments->count();
+                $blog->most_reaction = $blog->mostReaction();
             }
-            foreach($blogs as $key=>$value){
-            $blogs[$key]->thumb         ='/storage/img/general_blogs/'. $blogs[$key]->featured_image;
-            $blogs[$key]->hotcount      = Like::where('blog_id', $blogs[$key]->id)->where('emotion',0)->count();
-            $blogs[$key]->coolcount     = Like::where('blog_id', $blogs[$key]->id)->where('emotion',1)->count();
-            $blogs[$key]->naffcount     =Like::where('blog_id', $blogs[$key]->id)->where('emotion',2)->count();
-            $blogs[$key]->commentcount  = Comment::where('blog_id', $blogs[$key]->id)->count();
-          }
+        }
      
         return response()->json($blogs);
     }
@@ -128,10 +124,10 @@ class GeneralBlogsController extends APIController
                     
                 foreach($blogs as $key=>$value){
                 $blogs[$key]->thumb         ='/storage/img/general_blogs/'. $blogs[$key]->featured_image;
-                $blogs[$key]->hotcount      = Like::where('blog_id', $blogs[$key]->id)->where('emotion',0)->count();
-                $blogs[$key]->coolcount     = Like::where('blog_id', $blogs[$key]->id)->where('emotion',1)->count();
-                $blogs[$key]->naffcount     =Like::where('blog_id', $blogs[$key]->id)->where('emotion',2)->count();
-                $blogs[$key]->commentcount  = Comment::where('blog_id', $blogs[$key]->id)->count();
+                $blogs[$key]->hotcount      = GeneralLike::where('blog_id', $blogs[$key]->id)->where('emotion',0)->count();
+                $blogs[$key]->coolcount     = GeneralLike::where('blog_id', $blogs[$key]->id)->where('emotion',1)->count();
+                $blogs[$key]->naffcount     = GeneralLike::where('blog_id', $blogs[$key]->id)->where('emotion',2)->count();
+                $blogs[$key]->commentcount  = GeneralComment::where('blog_id', $blogs[$key]->id)->count();
             }
     
         return response()->json($blogs);   
