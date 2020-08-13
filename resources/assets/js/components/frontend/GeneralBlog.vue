@@ -1,15 +1,17 @@
 <template>
+<div>
 <div class="page view ">
 
     <div class="origin view">
         <div id="camera" class="view">
             <div id="dolly" class="view">
                 <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler">
-                    <div v-for="(general_blog,index) in general_blogs" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: general_blogs, callback: callback}" :style="blockStyle(index)" style="opacity: 0;">
+                    <div v-for="(general_blog,index) in general_blogs" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: general_blogs, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index)">
                         
                         <a class="mover viewflat blog_img" href="#">
-                            <img v-if="isOdd(index)" :class="'cell_img_'+index+' reflection'" :src="'/storage/img/general_blogs/'+general_blog.featured_image" @load="layoutImageInCell('cell_img_'+index)">
-                            <img v-else :class="'cell_img_'+index+' reflection2'" :src="'/storage/img/general_blogs/'+general_blog.featured_image" @load="layoutImageInCell('cell_img_'+index)">
+                            <input type="hidden" name="audio" :value="general_blog.audio">
+                            <img :class="'cell_img_'+index" :src="'/storage/img/general_blogs/'+general_blog.featured_image" @load="layoutImageInCell('cell_img_'+index, index)">
+                            
                         </a>
                             
                         <div class="overlay">
@@ -122,6 +124,8 @@
        
     </div>
 </div>
+<button class="btn btn_primary"></button>
+</div>
 </template>
 
 <script>
@@ -131,65 +135,72 @@ export default {
         user_id: Number
     },
     data:function() {
-            return{
-               url: $('meta[name="url"]').attr('content'),
-                images:[],
-                load_count:0,
-                count:0,
-                scroll_type:String,
-                scrolltimer:null,
-                delay:330,
-                cells : [],
-                currentCell:-1,
-                magnifyMode : false,
-                last_page:'',
-                Total_pages:0,
-                Total_count:0,
-                i:0,
-                page:1,
-                current_page:Number,
-                loading:true,
-                newcell:Number,
-                CWIDTH:Number,
-                CHEIGHT:Number,
-                CGAP : 5,
-                CXSPACING:Number,
-                CYSPACING:Number,
-                emo:Array,
-                general_blogs: {},
-                prevNum:0,
-                currentNum:0,
-                cellCount:Number
+        return {
+            url: $('meta[name="url"]').attr('content'),
+            images:[],
+            load_count:0,
+            count:0,
+            scroll_type:String,
+            scrolltimer:null,
+            delay:330,
+            cells : [],
+            currentCell:-1,
+            magnifyMode : false,
+            last_page:'',
+            Total_pages:0,
+            Total_count:0,
+            i:0,
+            page:1,
+            current_page:Number,
+            loading:true,
+            newcell:Number,
+            CWIDTH:Number,
+            CHEIGHT:Number,
+            CGAP : 5,
+            CXSPACING:Number,
+            CYSPACING:Number,
+            newblog:[],
+            k:0,
+            general_blogs: {},
+            prevNum:0,
+            currentNum:0,
+            cellCount:Number,
+            currentAudio: 0,
+            lastAudioNum: 3,
+            audio: [
+                'c',
+                'd',
+                'e',
+                'f',
+                'g',
+                'a',
+                'b'
+            ],
+            audio_player: new Audio()
         }
     },
-    created() {
-        this.fetchblogs();
-        // this.broadcastcheck();
-        // Echo.channel('general_blogs')
-        //         .listen('GeneralBlogEvent',(response) => {
-        //             console.log(response);
-        //             this.cells.length = 0;
-        //             this.load_count=0;
-        //             this.i = 0;
-        //             this.images = [];
-        //             this.fetchblogs();       
-        //         });
-    },
+    // created() {
+    //     this.fetchblogs();
+    //     // this.broadcastcheck();
+        
+        
+    // },
     mounted () {
-    // this.fetchblogs();
-    // this.broadcastcheck();
-    //  Echo.channel('general_blogs')
-    //         .listen('GeneralBlogEvent',(response) => {
-    //             console.log(response);
-    //             this.cells.length = 0;
-    //             this.load_count=0;
-    //             this.i = 0;
-    //             this.images = [];
-    //             this.fetchblogs();       
-    //         });
-    // this.$nextTick(() => {
-    //     this.blockStyle();
-    // });
+    this.fetchblogs();
+    Echo.channel('general_blogs')
+                .listen('GeneralBlogEvent',(response) => {
+                    console.log(response);
+                    // let i=0;
+                    this.newblog[this.k] = response;
+                    this.k++;
+                    // this.fetchblogs();
+                    // let arr= [];
+                    // Object.keys(this.general_blogs).map(key=>{
+                    //         arr.push(this.general_blogs[key])
+                    // })
+                    // arr.unshift(response);  
+                    // this.general_blogs = arr;
+                });
   },
   directives: {
     forCallback(el, binding) {
@@ -218,7 +229,9 @@ export default {
     callback() {
         // console.log('v-for loop finished')
         // this.updateStack(1);
-        let that = this;
+        // let that = this;
+        // that.lastAudioNum = 3;
+        // that.currentAudio = 0;
     },
     lefthandler(){
           this.scrollcheck('down');
@@ -226,20 +239,20 @@ export default {
     righthandler(){
           this.scrollcheck('up');
       },
-      broadcastcheck(){
-          axios.get("/api/v1/fetchgeneralblogs?page="+this.page+'&user_id='+this.user_id)
-         .then((response) => {
-            this.images=response.data.data;
-            jQuery.each(this.images,this.testfunc);
-        })
-        .catch((error) => {
-            console.log(error);
-        }) 
-      },
+    //   broadcastcheck(){
+    //       axios.get("/fetchgeneralblogs?page="+this.page+'&user_id='+this.user_id)
+    //      .then((response) => {
+    //         this.images=response.data.data;
+    //         jQuery.each(this.images,this.testfunc);
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     }) 
+    //   },
     fetchblogs() {
         let that = this;
        /* Calling API for fetching images */
-        axios.get("/api/v1/fetchgeneralblogs?page="+that.page+'&user_id='+that.user_id)
+        axios.get("/fetchgeneralblogs?page="+that.page+'&user_id='+that.user_id)
         .then((response) => {
             // debugger
     //    console.log(response.data);
@@ -254,16 +267,18 @@ export default {
             that.cellCount = response.data.to;
             console.log('cell count: ', that.cellCount);
             that.general_blogs = {};
-            var i = 0;
+            // var i = 0;
             $.each(response.data.data, function(index, value) {
                 if(value.blog) {
-                    that.$set(that.general_blogs, i, value.blog);
+                    that.$set(that.general_blogs, index, value.blog);
                 } else {
-                    that.$set(that.general_blogs, i, value);
+                    that.$set(that.general_blogs, index, value);
                 }
-                
+                that.emotionchange(index);
+                // that.commentchange(index)
+                that.general_blogs[index].audio = that.getAudio();
                 // that.general_blogs.push(value);
-                i++;
+                // i++;
             });
             // that.general_blogs = response.data.data;
             console.log(response.data.data);
@@ -318,7 +333,7 @@ export default {
 
             $(document).keydown(function (e) {
                 var arrow = { left: 37, up: 38, right: 39, down: 40 };
-
+                
                 switch (e.which) {
                     case arrow.left:
                         that.scroll_type='left'; 
@@ -331,6 +346,9 @@ export default {
                     break;
                     case arrow.down:
                         that.scroll_type='down'; 
+                    break;
+                    default:
+                        that.scroll_type='';
                     break;
                 }
 
@@ -476,7 +494,7 @@ export default {
                     
                     // debugger
                     // alert($(that).tagvalue.name);
-                    var url_api=url+"/api/v1/fetchgeneralblogs?page="+that.page+'&user_id='+that.user_id
+                    var url_api=url+"/fetchgeneralblogs?page="+that.page+'&user_id='+that.user_id
                     $.getJSON(url_api, function(data) 
                     {
                         console.log(data.data, that.cellCount);
@@ -488,6 +506,7 @@ export default {
                             } else {
                                 that.$set(that.general_blogs, i, value);
                             }
+                            that.general_blogs[i].audio = that.getAudio();
 
                             i++;
                         });
@@ -983,21 +1002,30 @@ export default {
     {
         return "translate3d(" + x + "px, " + y + "px, " + z + "px)";
     },
-    countcomment(){
-        alert("helloo from comments");
-    },
-    testfunc(reln, info) {
-        Echo.channel('generalblogLike'+this.images[reln]['id'])
+    // commentchange(){
+    //     Echo.channel('generalblog'+this.general_blogs[index].id)
+    //         .listen('NewGeneralComment',(comment) => {
+    //             // console.log(like);
+    //             this.general_blogs[index].commentcount=comment.commentcount;
+    //         });
+    // },
+    emotionchange(index) {
+        // console.log(this.general_blogs[index].id);
+        Echo.channel('generalblogLike'+this.general_blogs[index].id)
             .listen('NewGeneralEmotion',(like) => {
-                // console.log(like.coolcount);
-                this.cells.length = 0;
-                this.load_count=0;
-                this.i = 0;
-                this.images = [];
-                this.fetchblogs(); 
+                // console.log(like);
+                this.general_blogs[index].hotcount=like.hotcount;
+                this.general_blogs[index].coolcount=like.coolcount;
+                this.general_blogs[index].naffcount=like.naffcount;
+            });
+
+        Echo.channel('generalblog'+this.general_blogs[index].id)
+            .listen('NewGeneralComment',(comment) => {
+                // console.log(like);
+                this.general_blogs[index].commentcount=comment.commentcount;
             });
     },
-    layoutImageInCell(img_class) {
+    layoutImageInCell(img_class, index) {
         let that = this;
         var iwidth = $('.'+img_class).width();
         var iheight = $('.'+img_class).height();
@@ -1049,6 +1077,17 @@ export default {
             'top': Math.round((cheight - iheight) / 2) + "px",
             'left': Math.round((cwidth - iwidth) / 2) + "px",
         });
+
+        if(that.isOdd(index)) {
+            $('.'+img_class).addClass('reflection');
+        } else {
+            $('.'+img_class).addClass('reflection2');
+        }
+
+        
+        // var audio = that.getAudio();
+        // console.log(audio);
+        // $('.'+img_class).closest('.blog_img').find('input[name="audio'+index+'"]').val(audio);
     },
     isOdd(value) {
         if (value%2 != 0)
@@ -1058,7 +1097,38 @@ export default {
     },
     viewBlog(id) {
 		window.location.href = '/single_general_blog/'+id;
-	}
+    },
+    getAudio()
+    {
+        if(this.lastAudioNum >= 6) {
+            this.lastAudioNum = 3;
+        }
+
+        if(this.currentAudio == this.audio.length) {
+            this.currentAudio = 0;
+            this.lastAudioNum++;
+        }
+
+        var lastAudioNum = this.lastAudioNum;
+
+        // console.log('audio length: '+this.audio.length);
+        console.log('current audio: '+this.currentAudio);
+        console.log('last audio num: '+this.lastAudioNum);
+
+        var audio = this.audio[this.currentAudio]+''+lastAudioNum;
+
+        this.currentAudio++;
+
+        return audio;
+    },
+    playAudio(div_class)
+    {
+        let that = this;
+        var music = $('.'+div_class+' input[name="audio"]').val();
+        that.audio_player.pause();
+        that.audio_player.src = that.url+'/front/audio/'+music+'.mp3';
+        that.audio_player.play();
+    }
     }
 }
 

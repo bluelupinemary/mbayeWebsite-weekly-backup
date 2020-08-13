@@ -42,6 +42,7 @@ class NewGeneralComment implements ShouldBroadcast
     public function broadcastWith()
         {
             return [
+                'commentcount' => GeneralComment::where('blog_id',$this->comment->blog_id)->count(),
                 'body' => $this->comment->body,
                 'created_at' => $this->comment->created_at,
                 'user' => [

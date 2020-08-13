@@ -2077,6 +2077,8 @@ function showDesignsBlogSection()
 // show blog section and forms
 function showCareerBlogSection()
 {
+    $('.main-form').addClass('career-blog-form');
+    $('.text-editor-fullview.blog-content').addClass('career-blog-content');
     $('.main-form').show();
     $('.featured-image-div.all-blog').show();
     $('.communicator-buttons').css('display', 'flex');
@@ -2556,6 +2558,8 @@ function hideCurrentSection()
     var section = $.urlParam('section');
 
     if(section == 'blog' || section == 'career_blog') {
+        $('.main-form').removeClass('career-blog-form');
+        $('.text-editor-fullview.blog-content').removeClass('career-blog-content');
         hideBlogSection();
     } else if(section == 'general_blog') {
         hideGeneralBlogSection();

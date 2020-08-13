@@ -90,8 +90,11 @@
             $.getScript( url, function() {
             });
         });
-        
-       
+    }
+    else if(chapter_no == 3){
+        let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter3.js";
+        $.getScript( url, function() {
+        });
     }
     
 </script>

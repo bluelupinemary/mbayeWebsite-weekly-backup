@@ -12,7 +12,7 @@
 }
 body { 
     /* The image used */
-background-image: url(../front/images/skybox_bg1.png);   
+background-image: url(../front/images/skybox_bg1.jpg);   
      /*background-image: url(../front/images/ViewBlogFormatter.png);*/
  
 	  width: 100%;
@@ -906,7 +906,7 @@ header{
 
   }
   .mbaye_reg{
-    background-image: url(../front/images/skybox_bg1.png) !important;
+    background-image: url(../front/images/skybox_bg1.jpg) !important;
     width: 100%;
     height: auto; 
 	font-size: 16px;

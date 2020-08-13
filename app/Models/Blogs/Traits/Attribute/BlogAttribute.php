@@ -148,4 +148,28 @@ trait BlogAttribute
 
         return $url;
     }
+
+    public function mostReaction()
+    {
+        $hotness = $this->likes->where('emotion', 0)->count();
+        $coolness = $this->likes->where('emotion', 1)->count();
+        $naffness = $this->likes->where('emotion', 2)->count();
+       
+        if($hotness || $coolness || $naffness) {
+            if($hotness > $coolness && $hotness > $naffness){
+                $most = 'hotness';
+            }
+            else{
+                if($coolness > $hotness && $coolness > $naffness){
+                    $most = 'coolness';
+                }
+                else
+                    $most = 'naffness';
+            }
+        } else {
+            $most = '';
+        }
+        
+        return $most;
+    }
 }

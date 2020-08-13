@@ -12,6 +12,7 @@ use App\Http\Requests\Frontend\User\UpdateProfileRequest;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use App\Models\GeneralBlogs\GeneralBlog;
 
+
 /**
  * Class ProfileController.
  */
@@ -32,10 +33,6 @@ class ProfileController extends Controller
         $this->user = $user;
     }
 
-    public function editprofile(){
-        $user = Auth::user();
-        return view('frontend.auth.update',compact('user'));
-    }
 
     /**
      * @param UpdateProfileRequest $request
@@ -106,5 +103,11 @@ class ProfileController extends Controller
         }
         
         return view('frontend.user.communicator', compact('blog'));
+    }
+
+    public function editProfile()
+    {
+        $user = Auth::user();
+        return view('frontend.user.edit_profile',compact('user'));
     }
 }

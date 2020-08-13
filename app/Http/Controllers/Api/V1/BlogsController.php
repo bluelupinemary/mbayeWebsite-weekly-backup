@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Api\V1;
 
 use Validator;
+use App\Models\Like\Like;
 use App\Models\Blogs\Blog;
-use App\Models\BlogTags\BlogMapTag;
-use App\Repositories\Frontend\Blogs\BlogsRepository;
 use Illuminate\Http\Request;
+use App\Models\Comment\Comment;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
 use Illuminate\Support\Facades\DB;
+use App\Models\BlogTags\BlogMapTag;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\BlogsResource;
 use App\Models\BlogPrivacy\BlogPrivacy;
 use App\Http\Resources\GeneralBlogsResource;
-use App\Models\Comment\Comment;
-use App\Models\Like\Like;
+use App\Models\Friendships\FriendFriendshipGroups;
+use App\Repositories\Frontend\Blogs\BlogsRepository;
 
 class BlogsController extends APIController
 {
@@ -109,35 +110,36 @@ class BlogsController extends APIController
     public function showbytagforfriend(Request $request){
             $user = User::find($request['id']);
             $auth = User::find($request['user']);
+            $friendship = $user->getFriendship($auth);
+            $groups = FriendFriendshipGroups::where('friend_id',$auth->id)->where('friendship_id',$friendship->id)->pluck("group_id");
+            // dd($groups);
             // $f = $auth->isFriendWith($user);
-            // dd($f);
             // if($auth->isFriendWith($user)){
-            //     dd($user->groups());
+            //     $groups = $user->getGroups();
+            //     dd($groups);
             // }else{
             //     dd('no friendship');
             // }
  
             $btag = BlogTag::where('name',$request['tag'])->first();
             $id=$request['id'];
-            $blogs = $btag->blogs()->where('created_by', $id)->get();
-            $privateblogs = $blogs->join('blog_privacy','blogs.id','blog_privacy.blog_id');
-            dump($privateblogs);
-            // foreach($blogs as $blog){
-            //     $pri[] = BlogPrivacy::where('blog_id',$blog->id)->pluck('group_id');
-            //     foreach($pri as $pr){
-            //         if (!$pr->isEmpty()) {
-            //             $group[] = $pr;
-            //         }
-            //     }
-            // }
-            // dump($group);
-            // dump($pri);
-            exit;
+            $blogs_private = $btag->blogs()->where('created_by', $id)->whereHas('privacy', function($q) use ($groups) {
+                $q->whereIn('group_id', $groups);
+            })->get();
+            // dd($blogs_private);
+            $blogs_public = $btag->blogs()->where('created_by', $id)->doesntHave('privacy')->get();
+
+            // dd($blogs_public); 
+            
             $limit = $request->get('paginate') ? $request->get('paginate') : 21;
             $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
             $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
+            $blogs = $blogs_private->merge($blogs_public);
+            // $blogs = $blog->collapse()->all();
+            // dd($blogs);
+
             return BlogsResource::collection(
-                $blogs->orderBy($sortBy, $orderBy)->paginate($limit)
+                $blogs->paginate($limit)
             );
     }
     /**

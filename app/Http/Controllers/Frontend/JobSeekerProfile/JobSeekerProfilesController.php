@@ -103,4 +103,73 @@ class JobSeekerProfilesController extends Controller
     {
         
     }
+
+    /**
+     * Function to save details into work experinece 
+     */
+    public function save_work_experience(Request $request){
+     dd( $request);
+            $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
+            $id = $JobSeekerProfile->id;
+            $work_experience = new WorkExperience();
+            $work_experience->designation = $request->designation;
+            $work_experience->company_name = $request->company_name;
+            $work_experience->address = $request->address;
+            $work_experience->role = $request->role;
+            $work_experience->contact_no = $request->contact_no;
+            $work_experience->start_date = $request->start_date;
+            $work_experience->end_date = $request->end_date;
+            $work_experience->jobseeker_profile_id = $id;
+            $work_experience->created_at = date('Y-m-d H:i:s');
+            $work_experience->save();
+        }
+        /**
+     * Function to save details into education
+     */
+    public function save_education(Request $request){
+     
+        $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
+        $id = $JobSeekerProfile->id;
+        $education = new Education();
+        $education->school_name = $request->school_name;
+        $education->field_of_study = $request->field_of_study;
+        $education->start_date = $request->start_date;
+        $education->end_date = $request->end_date;
+        $education->description = $request->description;
+        $education->jobseeker_profile_id = $id;
+        $education->created_at = date('Y-m-d H:i:s');
+        $education->save();
+    }
+    /**
+     * Function to save character references
+     */
+    public function save_character_references(Request $request){
+     
+        $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
+        $id = $JobSeekerProfile->id;
+        $reference = new CharacterReferences();
+        $reference->name = $request->name;
+        $reference->email = $request->email;
+        $reference->company_name = $request->company_name;
+        $reference->designation = $request->designation;
+        $reference->jobseeker_profile_id = $id;
+        $reference->created_at = date('Y-m-d H:i:s');
+        $reference->save();
+    }
+    public function save_contact_details(Request $request){
+     
+        $contact = new JobSeekerProfile();
+        $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
+        $secondary_email = $JobSeekerProfile->secondary_email;
+        $secondary_mobile_number = $JobSeekerProfile->secondary_mobile_number;
+        $contact->secondary_email  = $request->secondary_email ;
+        $contact->secondary_mobile_number =  $request->secondary_mobile_number ;
+       
+        if($secondary_email=='' ||$secondary_mobile_number=='')
+                $contact->save();
+        else
+
+               $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('secondary_email' => $request->secondary_email,'secondary_mobile_number' => $request->secondary_mobile_number));
+    }
+    
 }

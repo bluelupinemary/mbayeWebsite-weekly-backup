@@ -350,4 +350,68 @@ class BlogsController extends Controller
 
         return response()->json($blogs);
     }
+
+    public function getTag($tag_name) {
+        $tag = BlogTag::where('code', 'like', '%'.$tag_name.'%')->first();
+
+        return $tag->id;
+    }
+
+    public function fetchBlogs(Request $request)
+    {
+        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
+        $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
+        $sort = 'desc_name';
+
+        if($request->has('tag') && $request->tag != '') {
+            $tag = $this->getTag($request->tag);
+            $blogs = Blog::where('status', 'Published')
+                ->whereHas('tags', function($q) use($tag) {
+                    $q->where('tag_id', $tag);
+                })->get();
+        } else {
+            $blogs = Blog::where('status', 'Published')
+                ->whereHas('tags', function($q) {
+                    $q->whereNotIn('tag_id', [8,9]);
+                })->get();
+        }
+
+        $blog_shares = BlogShare::whereIn('blog_id', $blogs->pluck('id')->toArray())->with('blog')->get();
+
+        if($request->has('user_id') && $request->user_id != 0) {
+            $blogs = $blogs->where('created_by', $request->user_id);
+            $blog_shares = $blog_shares->where('created_by', $request->user_id);
+        }
+        
+        $blogs = $blogs->merge($blog_shares)
+                ->sortByDesc('publish_datetime')
+                ->paginate($limit);
+       
+        
+        foreach($blogs as $blog){
+            if($blog->blog) {
+                if($blog->blog->featured_image == '') {
+                    $blog->blog->featured_image = 'blog-default-featured-image.png';
+                }
+                $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
+                $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
+                $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
+                $blog->blog->commentcount  = $blog->blog->comments->count();
+                $blog->blog->most_reaction = $blog->blog->mostReaction();
+                $blog->blog->name = $blog->caption;
+            } else {
+                if($blog->featured_image == '') {
+                    $blog->featured_image = 'blog-default-featured-image.png';
+                }
+                $blog->hotcount = $blog->likes->where('emotion',0)->count();
+                $blog->coolcount     = $blog->likes->where('emotion',1)->count();
+                $blog->naffcount     = $blog->likes->where('emotion',2)->count();
+                $blog->commentcount  = $blog->comments->count();
+                $blog->most_reaction = $blog->mostReaction();
+            }
+        }
+     
+        return response()->json($blogs);
+    }
 }

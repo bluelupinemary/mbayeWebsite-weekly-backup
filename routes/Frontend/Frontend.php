@@ -47,6 +47,12 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::post('profile/save-cropped-photo', 'ProfileController@saveCroppedPhoto')->name('profile.save-cropped-photo');
 
+          /*
+         * Edit User Profile Page
+         */
+        Route::get('profile/edit-profile', 'ProfileController@editProfile')->name('profile.edit-profile');
+        Route::patch('profile/edit-profile', 'ProfileController@update')->name('profile.update');
+
         /*
          * User's Contacts / Phone Directory Page (3D)
          */
@@ -111,6 +117,7 @@ Route::group(['namespace' => 'Friendship'], function () {
         Route::post('share_blog', 'BlogsController@shareBlog');
         Route::get('/earthlings_activities', 'BlogsController@earthlingsActivities');
         Route::get('/fetchblogs', 'BlogsController@fetchLatestBlogs');
+        // Route::get('/fetchAllBlogs', 'BlogsController@fetchBlogs');
     });
 
     Route::group(['namespace' => 'Like'], function () {
@@ -122,6 +129,7 @@ Route::group(['namespace' => 'Friendship'], function () {
     // Story
     Route::group(['namespace' => 'GeneralBlogs'], function () {
         Route::get('/stories', 'GeneralBlogsController@index');
+        Route::get('/fetchgeneralblogs','GeneralBlogsController@fetchgeneralblogs');
         Route::get('/single_general_blog/{id}', 'GeneralBlogsController@show');
         Route::post('publish_general_blog', 'GeneralBlogsController@saveGeneralBlog');
         Route::resource('general_blogs', 'GeneralBlogsController');
@@ -139,7 +147,7 @@ Route::group(['namespace' => 'Friendship'], function () {
 * Show pages
 */
 Route::get('pages/{slug}', 'FrontendController@showPage')->name('pages.show');
-Route::get('/initial-agreement', 'FrontendController@initial_agreement')->name('initial_agreement');
+Route::get('/initial-agreement', 'FrontendController@initial_agreement')->name('initial-agreement');
 Route::get('/terms_and_agreement', 'FrontendController@terms_and_agreement')->name('terms_and_agreement');
 Route::get('/copyright_claims', 'FrontendController@copyright_claims')->name('copyright_claims');
 Route::get('/privacy_policy', 'FrontendController@privacy_policy')->name('privacy_policy');
@@ -194,12 +202,12 @@ Route::get('/blogview/designed-panel/all', 'FrontendController@designed_panels_a
 Route::get('/blogview/designed-panel/my', 'FrontendController@designed_panels_my');
 Route::post('/blogview/designed-panel/my', 'FrontendController@designed_panels_my_post')->name('designed_panels_my');
 Route::get('/blogview/designed-panel/friend', 'FrontendController@designed_panels_friend')->name('designed_panels_friend');
-Route::get('/blogview/designed-panel/home', 'FrontendController@designed_panels_home')->name('blog_general_home');
+Route::get('/blogview/designed-panel/home', 'FrontendController@designed_panels_all')->name('blog_general_home');
 // Route::get('/single_panel_design/{id}', 'BlogPanelDesign\BlogPanelDesignController@show');
 
 
 /* blogs for the Jobseekers */
-Route::get('/blogview/jobseekers/profiles', 'FrontendController@jobseeker_profiles')->name('jobseeker_profiles');
+Route::get('/blogview/career', 'FrontendController@jobseeker_profiles')->name('jobseeker_profiles');
 
 /* blogs for the career post */
 
@@ -211,3 +219,12 @@ Route::post('/blogview/career/friend', 'FrontendController@blog_career_friend_po
 
 //testing routes for Jobseekers profile view
 Route::get('/jobseekers/profileview-test','JobSeekerProfile\JobSeekerProfilesController@profileView');
+
+Route::group(['namespace' => 'Blogs'], function () {
+    Route::get('/fetchAllBlogs', 'BlogsController@fetchBlogs');
+});
+
+Route::post('save_work_experience', 'JobSeekerProfile\JobSeekerProfilesController@save_work_experience');
+Route::post('save_education', 'JobSeekerProfile\JobSeekerProfilesController@save_education');
+Route::post('save_character_references', 'JobSeekerProfile\JobSeekerProfilesController@save_character_references');
+Route::post('save_contact_details', 'JobSeekerProfile\JobSeekerProfilesController@save_contact_details');

@@ -157,7 +157,7 @@ export default {
 			})
 		},
         fetchfriends(){
-			axios.get('/fetchfriends?perPage=3')
+			axios.get('/fetchfriends?perPage=8')
 			.then((response) => {
 				console.log(response);
 				this.users = response.data.data;
@@ -171,7 +171,7 @@ export default {
 		},
 		search() {
 			this.page = 1;
-			axios.get(`/fetchfriends?perPage=3&search=${this.query}&page=${this.page}`)
+			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${this.page}`)
 			.then((response) => {
 				console.log(response);
 				this.users = [];
@@ -303,7 +303,7 @@ export default {
 			this.declinedRequest = false;
 		},
 		nextPage(page) {
-			axios.get(`/fetchfriends?perPage=3&search=${this.query}&page=${page + 1}`)
+			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${page + 1}`)
 			.then((response) => {
 				// console.log(response);
 				this.page = page + 1;
@@ -317,7 +317,7 @@ export default {
 			})
 		},
 		previousPage(page) {
-			axios.get(`/fetchfriends?perPage=3&search=${this.query}&page=${page - 1}`)
+			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${page - 1}`)
 			.then((response) => {
 				// console.log(response);
 				this.page = page - 1;

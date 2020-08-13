@@ -3073,5 +3073,5 @@ img.reflection {
 }
 
 img.reflection2 {
-    -webkit-box-reflect: below 220% -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
+    -webkit-box-reflect: below 210% -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
 }

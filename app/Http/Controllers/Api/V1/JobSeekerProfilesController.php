@@ -37,92 +37,52 @@ class JobSeekerProfilesController extends APIController
     public function index(Request $request)
     {
      
-        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $limit = $request->get('paginate') ? $request->get('paginate') : 25;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'job_seeker_profiles.created_at';
         $search=$request['search'];
         $type=$request['type'];
-        if( $type=='Profile')
-                 $type='Career Profile';
         $country=$request['country'];
-        //fetch all companies with respect to country
-        if($search=='' && ( $type!='' &&  $type=='Companies')){
-            if($country != ''){
-                $company = CompanyProfile::where('country','LIKE','%'.$country.'%')->get();
-            }
-            else{
-            $company = CompanyProfile::all();
-            }
+        $city=$request['city'];
 
-           
-            foreach($company as $key=>$value){
-                $company[$key]->thumb='/storage/img/CompanyProfile/'. $company[$key]->featured_image;
-              }
-            return response()->json(array('data'=>$company));
-        
-        }
         //search for companies 
+        if($type!='' &&  $type=='Companies'){
+            $company = CompanyProfile::when($search, function ($query, $search) {
+                    $query->where('company_name','LIKE','%'.$search.'%');
+                })
+                ->when($country, function ($query, $country) {
+                    $query->where('country','LIKE','%'.$country.'%');
+                })
+                ->when($city, function($query, $city) {
+                    $query->where('address', 'LIKE', '%'.$city.'%');
+                })
+                ->with('industry')
+                ->paginate($limit);
 
-        if($search!='' && ( $type!='' &&  $type=='Companies')){
-            if($country != ''){
-                $company = CompanyProfile::where('company_name','LIKE','%'.$search.'%')->
-                where('country','LIKE','%'.$country.'%')->get();
-            }
-            else{
-            $company = CompanyProfile::where('company_name','LIKE','%'.$search.'%')->get();
-            }
-            foreach($company as $key=>$value){
-                $company[$key]->thumb='/storage/img/CompanyProfile/'. $company[$key]->featured_image;
-              }
-            return response()->json(array('company'=>$company));
-        
+            return response()->json($company);
         }
-        //search for careerr profiles
-        if($search!='' && ( $type!='' &&  $type=='Career Profile')){
-            if($country != ''){
-                $profession = DB::table('professions')
+
+        //search for career profiles
+        if($type!='' &&  $type=='Profile'){
+            $profession = DB::table('professions')
                 ->join('job_seeker_profiles','professions.id','=','job_seeker_profiles.profession_id')
                 ->join('users','users.id','=','job_seeker_profiles.user_id')
-                ->where('profession_name', 'like' , '%'. $search .'%')
-                ->where(function($query) use ($country) {
+                ->when($search, function ($query, $search) {
+                    $query->where('profession_name', 'like' , '%'. $search .'%');
+                })
+                ->when($country, function ($query, $country) {
                     $query->orWhere('country', 'like' , '%'. $country .'%')
-                    ->orWhere('present_country', 'like' , '%'. $country .'%');
+                        ->orWhere('present_country', 'like' , '%'. $country .'%');
+                })
+                ->when($city, function ($query, $city) {
+                    $query->where('present_city', 'like' , '%'. $city .'%');
                 })
                 ->select('professions.*','job_seeker_profiles.*','users.*')
-                ->paginate(25);
-            }
-            else{
-                $profession = DB::table('professions')
-                ->join('job_seeker_profiles','professions.id','=','job_seeker_profiles.profession_id')
-                ->join('users','users.id','=','job_seeker_profiles.user_id')
-                ->where('profession_name', 'like' , '%'. $search .'%')
-                ->select('professions.*','job_seeker_profiles.secondary_email','users.username')
-                ->paginate(20);
-            }
-            foreach($profession as $key=>$value){
-                $profession[$key]->thumb='/storage/img/JobSeekerProfile/'. $profession[$key]->featured_image;
-              }
-            return response()->json(array('profession'=>$profession));
-        
+                ->paginate($limit);
+
+            return response()->json($profession);
         }
-       if($search=='' && $type=='Career Profile' ){
-                     $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'job_seeker_profiles.created_at';
-                        return JobSeekerProfileResource::collection(
-                            $this->repository->getForDataTable()->orderBy($sortBy, $orderBy)->paginate($limit)
-                        );
-            
-                    }
-            
-        if($search=='' && $type=='' ){
-            $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'job_seeker_profiles.created_at';
-                return JobSeekerProfileResource::collection(
-                    $this->repository->getForDataTable()->orderBy($sortBy, $orderBy)->paginate($limit)
-                );
-
-            }
-
-
-}
+    }
     /**
      * Return the specified resource.
      *

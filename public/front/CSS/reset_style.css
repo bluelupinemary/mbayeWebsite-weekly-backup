@@ -145,6 +145,45 @@
   opacity: 2;
 }
 
+.txt_oldpass_div{
+    position: absolute;
+    top: 10vh;
+    left: 10vw;
+    -webkit-transform: translate(-135%, -97%);
+    -moz-transform: translate(-135%, -97%);
+    transform: translate(-31%, -135%);
+   /* border: 1px solid red;*/
+    width: 19vw;
+    height: 2.5vw;
+    opacity: 2;
+  }
+
+.txt_newpass_div{
+    position: absolute;
+    top: 15vh;
+    left: 10vw;
+    -webkit-transform: translate(-135%, -97%);
+    -moz-transform: translate(-135%, -97%);
+    transform: translate(-31%, -135%);
+   /* border: 1px solid red;*/
+    width: 19vw;
+    height: 2.5vw;
+    opacity: 2;
+  }
+
+.txt_newconfpass_div{
+    position: absolute;
+    top: 20vh;
+    left: 10vw;
+    -webkit-transform: translate(-135%, -97%);
+    -moz-transform: translate(-135%, -97%);
+    transform: translate(-31%, -135%);
+   /* border: 1px solid red;*/
+    width: 19vw;
+    height: 2.5vw;
+    opacity: 2;
+  }
+
 .txt_email_div .txt_email{
   text-align: center;
   font-family: 'Space Age';
@@ -167,6 +206,20 @@
   /*border:2px solid red;*/
 }
 
+.button-passreset-div{
+    position: absolute;
+    top: 20vh;
+    left: 13vw;
+    -webkit-transform: translate(-135%, -97%);
+    -moz-transform: translate(-135%, -97%);
+    transform: translate(-47%, -2%);
+    /*border: 1px solid red;*/
+    width: 16.8vw;
+    height: 2.5vw;
+    opacity: 2;
+    /*border:2px solid red;*/
+  }
+
 
 .button-div .btn_send_verification{
   text-align: center;
@@ -181,6 +234,21 @@
   border-radius: 3px;
   padding: 2%;
 }
+
+.button-passreset-div .btn_passreset{
+    text-align: center;
+    font-family: 'Space Age';
+    color: #ffffff;
+    font-size: 0.9vw;
+    vertical-align: middle;
+    line-height: 1vw;
+    width: 16.8vw;
+   /* height: 2vw;*/
+    border:2px solid white;
+    border-radius: 3px;
+    padding: 2%;
+  }
+
 .form-control
 {
   border1:0px solid white;
@@ -201,7 +269,7 @@
   /* #17a2b8;*/
 
   border: 0;
-  
+
   font-size: 0.9vw;
   /*text-shadow: 0px 0px 8px #343a40;*/
   height: 2vw;
@@ -212,7 +280,7 @@
 }
 .btn-info {
   background-color: #24bad2fa !important;
-    border-color: #17a2b8 !important;
+ border-color: #17a2b8 !important;
 }
 
 
@@ -413,6 +481,14 @@
   margin: 1.25vw auto 0 !important;
 }
 
+.btn-success{
+margin-right: 0.5vw;
+}
+
+.btn-danger{
+margin-left: 0.5vw;
+}
+
 .terms-div {
   position: absolute;
   top: 50%;
@@ -451,7 +527,7 @@
     -webkit-transform: translate(-715%, -624%);
     -moz-transform: translate(-715%, -624%);
     transform: translate(-715%, -624%);
-   /*  border: 1px solid red;*/ 
+   /*  border: 1px solid red;*/
     width: 5vw;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -484,10 +560,45 @@
   opacity: 1;
   /* border: 1px solid red; */
 }
-
-
-
-
+.alert{
+    position: absolute ;
+    left: 33% ;
+    font-size: 20px ;
+    }
+.alert-success{
+    left: 10%;
+    text-align: center;
+    z-index: 10000;
+    /*background-color: #ffffff ;*/
+    /*padding: 30px;*/
+    background: rgba(8, 64, 147, 0.62);
+    font-family: "Nasalization";}
+.sucess_msg{
+        /*background-color: #eaeaea ;*/
+        padding: 30px;
+        background:rgba(8, 64, 147, 0.62);
+        box-shadow: 0px 0px 20px #17a2b8;
+}
+.logo_mbaye
+{
+    /*padding: 30px;
+    background: rgba(8, 64, 147, 0.62);*/
+    width: 22% ;
+    transform: translate(172%, 0%);
+}
+#overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 100000;
+        cursor: pointer;
+      }
 .communicator-buttons {
   position: absolute;
   top: 50%;
@@ -500,7 +611,7 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  
+
 }
 .communicator-buttons .terms-button {
   width: 51%;
@@ -512,7 +623,7 @@
 /*// Extra small devices (portrait phones, less than 576px)*/
 /*---------------------------------------------------------------------------------*/
 @media (max-width: 575.98px) {
-     
+
 }
 
 
@@ -522,13 +633,13 @@
 /*---------------------------------------------------------------------------------*/
 @media (min-width: 576px) and (max-width: 767.98px) {
 
-   
+
 }
 
 /*---------------------------------------------------------------------------------*/
 /*// Medium devices (tablets, 768px and up)*/
 /*---------------------------------------------------------------------------------*/
-@media (min-width: 768px) and (max-width: 991.98px) { 
+@media (min-width: 768px) and (max-width: 991.98px) {
 
 }
 
@@ -536,21 +647,21 @@
 /*// Large devices (desktops, 992px and up)*/
 /*---------------------------------------------------------------------------------*/
 @media (min-width: 992px) and (max-width: 1198px) {
-     
+
 }
 
 /*---------------------------------------------------------------------------------*/
 @media (min-width: 1200px) {
-    
+
 }
 
 
 /*---------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------*/
 @media (min-width: 1920px) {
-     
+
 }
 /*---------------------------------------------------------------------------------*/
 @media (min-width: 2500px) {
-    
+
 }

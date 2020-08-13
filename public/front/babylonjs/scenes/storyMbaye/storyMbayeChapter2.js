@@ -152,23 +152,25 @@ function setup_stage(stageNo){
 
         for(i=0;i<imgArr.length;i++){
             let pos = stageMap.get(stageNo).imagePos;
-            let temp = init_photo(imgArr[i],{w:300,h:300},pos[i],stageNo); 
+            let temp = init_photo(imgArr[i],{w:300,h:300},pos[i],stageNo);
+            temp.visibility = 0; 
             if(i<18){
-              temp.visibility = 0;
-              add_delay(temp,500,2500);
+              add_delay(temp,2000,2500);
+            }else{
+              add_delay(temp,1000,1000);
             }
             currStageObjMap.set(temp.name, temp); 
             stage25map.push(temp); 
 
         }//end of for
-
+ 
     
         currTimer = setTimeout(function(){
           for(i=0;i<stage25map.length;i++){
             if(i<18) animateObjectFadeOut(stage25map[i], 30, 200, 1);
             else animateObjectFadeOut(stage25map[i], 30, 200, 0);
           }
-        },3000);
+        },4000);
     
     }else if(stageNo === 26){                                      
       //for the current stage, change font color, show 360 photo of flower shop  
@@ -249,17 +251,17 @@ function setup_stage(stageNo){
         set_camera_specs(stageNo);
         $('.firstVideoOverlayText').css('font-size','3vw');
 
-        let f1 = init_photo(imgArr[0],{w:250,h:300},{x: 0, y: 200, z: -600},stageNo);           
-        let f2 = init_photo(imgArr[1],{w:250,h:300},{x: -1000, y: 400, z: -600},stageNo);
-        let f3 = init_photo(imgArr[2],{w:250,h:300},{x: 1000, y: 400, z: -600},stageNo);  
-        let f4 = init_photo(imgArr[3],{w:250,h:300},{x: -800, y: -400, z: -600},stageNo);
-        let f5 = init_photo(imgArr[4],{w:250,h:300},{x: 800, y: -400, z: -600},stageNo);  
+        let f1 = init_photo(imgArr[0],{w:250,h:300},{x: 0, y: 200, z: -400},stageNo);           
+        let f2 = init_photo(imgArr[1],{w:250,h:300},{x: -900, y: 300, z: -400},stageNo);
+        let f3 = init_photo(imgArr[2],{w:250,h:300},{x: -700, y: -250, z: -400},stageNo); 
+        let f4 = init_photo(imgArr[3],{w:250,h:300},{x: 900, y: 300, z: -400},stageNo);  
+        let f5 = init_photo(imgArr[4],{w:250,h:300},{x: 700, y: -250, z: -400},stageNo); 
 
-        let b1 = init_photo(imgArr[5],{w:250,h:300},{x: 0, y: 200, z: -600},stageNo);           
-        let b2 = init_photo(imgArr[6],{w:250,h:300},{x: -1000, y: 400, z: -600},stageNo);
-        let b3 = init_photo(imgArr[7],{w:250,h:300},{x: 1000, y: 400, z: -600},stageNo);  
-        let b4 = init_photo(imgArr[8],{w:250,h:300},{x: -800, y: -400, z: -600},stageNo);
-        let b5 = init_photo(imgArr[9],{w:250,h:300},{x: 800, y: -400, z: -600},stageNo); 
+        let b1 = init_photo(imgArr[5],{w:250,h:300},{x: 0, y: 200, z: -400},stageNo);           
+        let b2 = init_photo(imgArr[6],{w:250,h:300},{x: -900, y: 300, z: -400},stageNo);
+        let b3 = init_photo(imgArr[7],{w:250,h:300},{x: -700, y: -250, z: -400},stageNo); 
+        let b4 = init_photo(imgArr[8],{w:250,h:300},{x: 900, y: 300, z: -400},stageNo);  
+        let b5 = init_photo(imgArr[9],{w:250,h:300},{x: 700, y: -250, z: -400},stageNo);
         b1.material.emissiveColor = BABYLON.Color3.Green();
         b2.material.emissiveColor = BABYLON.Color3.Green();
         b3.material.emissiveColor = BABYLON.Color3.Green();
@@ -267,10 +269,10 @@ function setup_stage(stageNo){
         b5.material.emissiveColor = BABYLON.Color3.Green();
 
 
-        let avey = init_photo(imgArr[10],{w:400,h:400},{x: 500, y: 300, z: -800},stageNo);           
-        let juliet = init_photo(imgArr[11],{w:350,h:350},{x: -250, y: -200, z: -800},stageNo);
-        let madonna = init_photo(imgArr[12],{w:350,h:350},{x: -500, y: 400, z: -800},stageNo);  
-        let eda = init_photo(imgArr[13],{w:250,h:250},{x: 300, y: -300, z: -800},stageNo);  
+        let avey = init_photo(imgArr[10],{w:400,h:400},{x: 800, y: 250, z: -800},stageNo);           
+        let juliet = init_photo(imgArr[11],{w:400,h:400},{x: -400, y: -280, z: -800},stageNo);
+        let madonna = init_photo(imgArr[12],{w:350,h:350},{x: -800, y: 300, z: -800},stageNo);  
+        let eda = init_photo(imgArr[13],{w:250,h:250},{x: 400, y: -350, z: -800},stageNo);  
         avey.rotation.y = BABYLON.Tools.ToRadians(-110);
         madonna.rotation.y = BABYLON.Tools.ToRadians(110);
         eda.rotation.y = BABYLON.Tools.ToRadians(-100);
@@ -342,7 +344,7 @@ function setup_stage(stageNo){
 
     }else if(stageNo === 31){                                      
       //for the current stage,show video of people and their panel
-       
+      $('.firstVideoOverlayText').css('font-size','4.5vw');
         setCamDefault(80);
         mbaye_obj.isVisible = false;
         mbaye_obj.setEnabled(false);
@@ -357,73 +359,80 @@ function setup_stage(stageNo){
         video31.play();
         video31.muted = false;
         video31.loop = true;
-
-
+  
+     
        
-     
-
-       
-    }else if(stageNo === 32){                                      
-      //for the current stage,create planes for the 
-        setCamDefault(80);
-        mbaye_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-105),0);
-        mbaye_obj.isVisible = true;
-        mbaye_obj.setEnabled(true);
-
-            
-        $('#stage31VideoLayer').css('display','none');
-        video31.pause();
-        video31.currentTime = 0;
-
-        change_collage_photo(stageNo);
-        collage_wall.isVisible = true;
-
-     
-     
-    }else if(stageNo === 33){                                      
-      //for the current stage,create planes for the 
-        collage_wall.isVisible = false;
-        collage_wall.setEnabled(false);
-        setCamDefault(100);
-        mbaye_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-105),0);
-        mbaye_obj.isVisible = true;
-        mbaye_obj.setEnabled(true);
-
-         for(i=0;i<imgArr.length;i++){
-          // currTimer = setTimeout(function(){
-            let temp = init_photo(imgArr[i],{w:700,h:400},{x: 1000, y: 0, z: -500+(i*5)},stageNo);
-            temp.isVisible = false;
-            stage32map.set(temp,null);
-            currStageObjMap.set(temp.name, temp);
-        }
+    }
     
+    else if(stageNo === 32){                                    
+      //for the current stage,create planes for the
+        // $("#firstVideoOverlayText").css({ 'color' : '#0ab7ea','font-size':'4.2vw'});
         
-       let initTime = 500;
+        $("#firstVideoOverlayText").css({'font-size':'4.2vw'});
+          setCamDefault(75);
+          mbaye_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-105),0);
+          mbaye_obj.isVisible = true;
+          mbaye_obj.setEnabled(true);
 
-       for(const [key,val] of stage32map.entries()){
-            currTimer = setTimeout(function(){
-                key.isVisible =true;
-                animateObjectPosition(key,20,100,new BABYLON.Vector3(0,0,key.position.z));
-            },initTime);
-            initTime+=2500;
-        }//end of for
-      }else if(stageNo === 34){    
-          $('.firstVideoOverlayText').css('font-size','3vw');
-          mbaye_obj.isVisible = false;
-          mbaye_obj.setEnabled(false);
-          let temp = init_photo(imgArr[0],{w:400,h:400},{x: 0, y: 0, z: -800});
-          setCamDefault(50);
-          animateCameraToRadius(storyCamera,10,frameCount,800);
+              
+          $('#stage31VideoLayer').css('display','none');
+          try{
+            video31.pause();
+            video31.currentTime = 0;
+          }catch(e){
+            console.log('no video found');
+          };
 
           change_collage_photo(stageNo);
           collage_wall.isVisible = true;
-          collage_wall.setEnabled(true);
+          add_delay(collage_wall,1000,2000);
+
+    
+    }
+    
+    else if(stageNo === 33){                                      
+          //for the current stage,create planes for the 
+          $("#firstVideoOverlayText").css({ 'color' : '#efad0c','font-size':'4.2vw'});
+          collage_wall.isVisible = false;
+          collage_wall.setEnabled(false);
+          setCamDefault(100);
+
+
+          mbaye_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-105),0);
+          mbaye_obj.isVisible = false;
+          mbaye_obj.setEnabled(false);
+          
+          let temp = init_photo(imgArr[0],{w:1100,h:600},{x: 0, y: 0, z: -500},stageNo);
+          currStageObjMap.set(temp.name, temp);
+
+          currTimer = setTimeout(function(){
+              animateObjectFadeOut(temp, 30, 200, 0);
+             
+          },2000);
+
+          currTimer = setTimeout(function(){
+            mbaye_obj.isVisible = true;
+            mbaye_obj.setEnabled(true);
+            animateObjectRotationNoEase(mbaye_obj, 20, frameCount, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(255),0));
+            add_delay(mbaye_obj,100,1000);
+          },3500);
+
+
+    }else if(stageNo === 34){    
+          $('.firstVideoOverlayText').css('font-size','3vw');
+          mbaye_obj.isVisible = false;
+          mbaye_obj.setEnabled(false);
+          setCamDefault(1500);
+          animateCameraToRadius(storyCamera,20,frameCount,300);
+
+          let temp = init_photo(imgArr[0],{w:600,h:500},{x: 0, y: 0, z: -500},stageNo);
+          currStageObjMap.set(temp.name, temp);
 
 
       }
+    
     currentStage++;
     // currentStage = 31;
-
     
     // console.log("the scene: ", scene.activeCamera);
     // scene.meshes.forEach(function(mesh){console.log(mesh.name);});
@@ -552,8 +561,8 @@ function removeFlowers(){
     rotate_sky();                                                   //start rotating the sky
     currentStage = 24;
     setup_stage(24);                                                 //start showing the script 1, stage 1
-    // currentStage = 25;
-    // setup_stage(25); 
+    // currentStage = 34;
+    // setup_stage(34); 
     
     engine.runRenderLoop(function(){
       if(scene){
@@ -570,8 +579,25 @@ function removeFlowers(){
 
   //if continue button is clicked
   $('#continueBtn').on('click',function(evt){
-    $('#continueBtnDiv').css('visibility','hidden');
-    setup_stage(currentStage);
+    // $('#continueBtnDiv').css('visibility','hidden');
+    // setup_stage(currentStage);
+
+    if(currentStage <= 34){
+        $('#continueBtnDiv').css('visibility','hidden');
+        setup_stage(currentStage);
+    }else{
+        let cNo = 3;
+        $.ajax({
+        type: "get",
+        url:urlStory,
+        data:{chapter_no:cNo,
+                _token:token
+        },
+        success: function(result){
+                window.location.href=urlStory+"?cNo="+cNo;
+        }
+        });
+    }
     
     //console.log("continue button is clicked");
   });

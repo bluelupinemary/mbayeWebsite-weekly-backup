@@ -75,14 +75,12 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('blogbytagoffriend','BlogsController@showbytagforfriend');
         Route::resource('bloggeneral', 'GeneralBlogsController', ['except' => ['create', 'edit']]);
         Route::get('bloggeneral_userwise','GeneralBlogsController@show_generalblog_userwise');
-        Route::get('fetchgeneralblogs','GeneralBlogsController@fetchgeneralblogs');
+        
         Route::get('showallblogs','BlogsController@show_all_blogs_tagwise');
 
-        Route::resource('all_designed_panels', 'BlogPanelDesignController', ['except' => ['create', 'edit']]);
-        Route::get('userwise_designed_panels','BlogPanelDesignController@show_userwise_designed_panels');
-        Route::get('my_career_blogs','BlogsController@show_my_career_blogs');
-        Route::resource('jobseekers', 'JobSeekerProfilesController', ['except' => ['create', 'edit']]);
-        Route::post('jobseeker/search','JobSeekerProfilesController@getres')->name('getres');
+        // Route::resource('all_designed_pannels', 'BlogPannelDesignController', ['except' => ['create', 'edit']]);
+
+        Route::get('jobseekers', 'JobSeekerProfilesController@index');
   
 });
 

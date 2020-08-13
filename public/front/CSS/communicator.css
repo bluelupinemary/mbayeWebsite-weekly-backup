@@ -739,8 +739,9 @@ trix-toolbar .trix-button--icon-text-font::before {
 }
 
 .video-insert-btn {
-    padding: 3%;
+    padding: 2%;
     height: 100%;
+    width: 25%;
     /* align-self: center; */
     /* margin-left: 3px; */
     border: 0;
@@ -818,7 +819,9 @@ button.fullscreen:hover span {
     width: 100%;
     left: 0;
     top: 0;
-    background: linear-gradient(180deg, rgba(77,92,129,1) 0%, rgba(123,139,179,1) 50%, rgba(77,92,129,1) 100%);
+    /* background: linear-gradient(180deg, rgba(77,92,129,1) 0%, rgba(123,139,179,1) 50%, rgba(77,92,129,1) 100%); */
+    background: url(../images/skybox_bg1-1.jpg);
+    background-size: cover;
     height: 100vh;
     padding: 20px;
     display: none;
@@ -1854,6 +1857,7 @@ a:hover {
     position: absolute;
     /* border: 1px solid red; */
     width: 8vw;
+    height: 1vw;
     top: 50%;
     /* left: 50%; */
     transform: translate(0%, 626%);
@@ -1861,6 +1865,7 @@ a:hover {
     /* bottom: 0; */
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
 }
 
 .custom-privacy.flower-list {
@@ -1878,11 +1883,13 @@ a:hover {
     font-family: 'Space Age';
     border-radius: 5px;
     box-shadow: -2px -1px #000000;
+    width: 70%;
 }
 
 .custom-privacy.flower-list button {
     background: #430808;
     color: #7f8788;
+    width: 80%;
 }
 
 .modal {
@@ -1990,3 +1997,157 @@ a:hover {
     font-size: 0.9vw;
 }
 
+/* Regular Blog Form Custom BG color */
+.main-form .trix-editor trix-toolbar .trix-button, .text-editor-fullview.blog-content trix-toolbar .trix-button {
+    border-bottom: 1px solid #cccccc82;
+}
+
+.main-form input, .main-form select {
+    background: #00489447 !important;
+}
+
+.main-form .trix-editor trix-editor, .text-editor-fullview.blog-content trix-editor {
+    background: transparent;
+    border: 1px solid #cccccc82;
+}
+
+.main-form .trix-editor {
+    background: #00489447;
+}
+
+.main-form .trix-editor trix-toolbar .trix-button-group, .text-editor-fullview.blog-content trix-toolbar .trix-button-group {
+    border: 1px solid #cccccc82;
+    border-top-color: #cccccc82;
+}
+
+.main-form .trix-editor trix-toolbar .trix-button:not(:first-child), .text-editor-fullview.blog-content trix-toolbar .trix-button:not(:first-child) {
+    border-left: 1px solid #cccccc82;
+}
+
+.main-form .add-video-btn {
+    background: #00489447;
+    border: 1px solid #cccccc82;
+}
+
+.main-form .video-insert-btn {
+    background: #00489447;
+}
+
+.text-editor-fullview.blog-content trix-toolbar, .text-editor-fullview.blog-content trix-editor {
+    background: #00489447;
+}
+
+/* Designs Blog Form Custom BG color */
+.designs-blog-form .trix-editor trix-toolbar .trix-button, .text-editor-fullview.designs-blog-content trix-toolbar .trix-button {
+    border-bottom: 1px solid #cccccc82;
+}
+
+.designs-blog-form input, .designs-blog-form select {
+    background: #f7505091 !important;
+}
+
+.designs-blog-form .trix-editor trix-editor, .text-editor-fullview.designs-blog-content trix-editor {
+    background: transparent;
+    border: 1px solid #cccccc82;
+}
+
+.designs-blog-form .trix-editor {
+    background: #f7505091;
+}
+
+.designs-blog-form .trix-editor trix-toolbar .trix-button-group, .text-editor-fullview.designs-blog-content trix-toolbar .trix-button-group {
+    border: 1px solid #cccccc82;
+    border-top-color: #cccccc82;
+}
+
+.designs-blog-form .trix-editor trix-toolbar .trix-button:not(:first-child), .text-editor-fullview.designs-blog-content trix-toolbar .trix-button:not(:first-child) {
+    border-left: 1px solid #cccccc82;
+}
+
+.designs-blog-form .video-insert-btn {
+    background: #f7505091;
+}
+
+.text-editor-fullview.designs-blog-content trix-toolbar, .text-editor-fullview.designs-blog-content trix-editor {
+    background: #f7505091;
+}
+
+/* General Blog Form Custom BG color */
+.general-blog-form .trix-editor trix-toolbar .trix-button, .text-editor-fullview.general-blog-content trix-toolbar .trix-button {
+    border-bottom: 1px solid #cccccc82;
+}
+
+.general-blog-form input, .general-blog-form select {
+    background: #17722c9e !important;
+}
+
+.general-blog-form .trix-editor trix-editor, .text-editor-fullview.general-blog-content trix-editor {
+    background: transparent;
+    border: 1px solid #cccccc82;
+}
+
+.general-blog-form .trix-editor {
+    background: #17722c9e;
+}
+
+.general-blog-form .trix-editor trix-toolbar .trix-button-group, .text-editor-fullview.general-blog-content trix-toolbar .trix-button-group {
+    border: 1px solid #cccccc82;
+    border-top-color: #cccccc82;
+}
+
+.general-blog-form .trix-editor trix-toolbar .trix-button:not(:first-child), .text-editor-fullview.general-blog-content trix-toolbar .trix-button:not(:first-child) {
+    border-left: 1px solid #cccccc82;
+}
+
+.general-blog-form .add-video-btn {
+    background: #17722c9e;
+    border: 1px solid #cccccc82;
+}
+
+.general-blog-form .video-insert-btn {
+    background: #17722c9e;
+}
+
+.text-editor-fullview.general-blog-content trix-toolbar, .text-editor-fullview.general-blog-content trix-editor {
+    background: #17722c9e;
+}
+
+/* Career Blog Form Custom BG color */
+.career-blog-form .trix-editor trix-toolbar .trix-button, .text-editor-fullview.career-blog-content trix-toolbar .trix-button {
+    border-bottom: 1px solid #cccccc82;
+}
+
+.career-blog-form input, .career-blog-form select {
+    background: #ce961987 !important;
+}
+
+.career-blog-form .trix-editor trix-editor, .text-editor-fullview.career-blog-content trix-editor{
+    background: transparent;
+    border: 1px solid #cccccc82;
+}
+
+.career-blog-form .trix-editor {
+    background: #ce961987;
+}
+
+.career-blog-form .trix-editor trix-toolbar .trix-button-group, .text-editor-fullview.career-blog-content trix-toolbar .trix-button-group {
+    border: 1px solid #cccccc82;
+    border-top-color: #cccccc82;
+}
+
+.career-blog-form .trix-editor trix-toolbar .trix-button:not(:first-child), .text-editor-fullview.career-blog-content trix-toolbar .trix-button:not(:first-child) {
+    border-left: 1px solid #cccccc82;
+}
+
+.career-blog-form .add-video-btn {
+    background: #ce961987;
+    border: 1px solid #cccccc82;
+}
+
+.career-blog-form .video-insert-btn {
+    background: #ce961987;
+}
+
+.text-editor-fullview.career-blog-content trix-toolbar, .text-editor-fullview.career-blog-content trix-editor {
+    background: #ce961987;
+}

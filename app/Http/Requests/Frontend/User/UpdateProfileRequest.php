@@ -30,7 +30,16 @@ class UpdateProfileRequest extends Request
         return [
             'first_name' => 'required|max:255',
             'last_name'  => 'required|max:255',
-            'email'      => ['sometimes', 'required', 'email', 'max:255', Rule::unique('users')],
+            //'email'      => ['sometimes', 'required', 'email', 'max:255', Rule::unique('users')],
+            'dob'        => 'date_format:Y-m-d|before:today',
+            'age'        => 'required',
+            'gender'     => 'required',
+            'address'    => 'required',
+            'country'    => 'required',
+            'id_number'  => 'required',
+            'mobile_number'  => 'required',
+            //'photo'      => 'required',
+            'username'   => 'required',
         ];
     }
 }

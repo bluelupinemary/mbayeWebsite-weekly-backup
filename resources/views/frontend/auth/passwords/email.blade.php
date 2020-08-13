@@ -23,16 +23,16 @@
     @if (session('status'))
     <script>
          var message= '{{ session('status')}}';
-         
+
     </script>
-  
+
    <!-- <div class="alert alert-success">
      //  {{--session('status') --}}
     </div>-->
     @endif
     @if($errors->any())
-   
-  
+
+
     <script>
          var err_message=  ' {!! implode('', $errors->all())!!}';
         /*<!--  {!! implode('', $errors->all('<div class="errror">:message</div>')) !!}--*/
@@ -71,16 +71,16 @@
                                             {{ Form::input('email', 'email', null, ['class' => 'form-control txt_email', 'placeholder' => trans('validation.attributes.frontend.register-user.email')]) }}
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row border1">
                                         <div class="button-div">
                                             {{ Form::submit('Send Verification Link', ['class' => 'btn btn-info btn_send_verification']) }}
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
                         {{ Form::close() }}
                 </div>
-              
+
 @endsection
 
 @section('before-scripts')
@@ -92,7 +92,7 @@
         var err_message;
         var url = $('meta[name="url"]').attr('content');
         console.log(url)
-        // for showing message to turn to landscape 
+        // for showing message to turn to landscape
           testOrientation();
         window.addEventListener("orientationchange", function(event) {
             testOrientation();
@@ -116,9 +116,9 @@
         }
           $(document).ready(function () {
             $('.home-div,.back-div').css('pointer-events', 'auto');
-           
+
         });
-       
+
         $('.home-button').click(function() {
 
             window.location.href = "{{URL::to('')}}"
@@ -158,7 +158,7 @@
 
 
                 $(".btn_send_verification").click(function(){
-                 
+
                     var emessage='The email field is required';
                     var title = 'Error!';
                    if($(".txt_email").val()==''){
@@ -175,13 +175,13 @@
                             });
                             return false;
                    }
-                  
+
                 });
 
 
                 $(".p_terms").click(function(){
                   window.location.href = "{{URL::to('/terms')}}"
-                    
+
                 });
 
 

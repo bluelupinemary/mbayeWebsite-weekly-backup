@@ -53,7 +53,7 @@ class RegisterRequest extends Request
     {
         return [
             'g-recaptcha-response.required_if' => trans('validation.required', ['attribute' => 'captcha']),
-            'password.regex'                   => 'Password must contain at least 1 uppercase letter and 1 number.',
+            'password.regex'                   => 'Password must contain at least one number and both uppercase and lowercase letters.',
             'is_term_accept.required'          => 'Pleasse accept terms & agreement to continue',
         ];
     }

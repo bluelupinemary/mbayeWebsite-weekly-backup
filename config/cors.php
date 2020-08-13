@@ -35,8 +35,9 @@ return [
             'X-Auth-Token',
             'Origin',
             'x-xsrf-token',
-            'x_csrftoken',
+            'x-csrf-token',
             'Authorization',
+           ' X-Requested-With'
         ],
 
          'expose_headers' => [
@@ -53,6 +54,10 @@ return [
             'status'  => 403,
         ],
 
+        'CORS_ALLOW_HEADERS' => [
+            'x-csrf-token',
+            'x-requested-with'
+        ],
         /*
          * Preflight request will respond with value for the max age header.
          */

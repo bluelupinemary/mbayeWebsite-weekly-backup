@@ -38,7 +38,18 @@ class ChangePasswordRequest extends Request
     public function messages()
     {
         return [
-            'password.regex' => 'Password must contain at least 1 uppercase letter and 1 number.',
+            'password.regex' => ' The password must contain at least one number and both uppercase and lowercase letters.',
+            'password.required' => ' New password is required.',
+            'password.min' => ' The password must be at least 8 characters.'
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if ($this->has('old_password') && !Hash::check($this->old_password, \Auth::user()->password)) {
+                $validator->errors()->add('old_password', ' Old password is not valid.');
+            }
+        });
     }
 }

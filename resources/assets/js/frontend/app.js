@@ -59,6 +59,7 @@ Vue.component('blogview-component', require('../components/frontend/BlogViewComp
 Vue.component('designpanelblog-component', require('../components/frontend/DesignPanelBlogComponent.vue').default);
 Vue.component('designpanelhome-component', require('../components/frontend/DesignPanelHomeComponent.vue').default);
 Vue.component('earthlings-activities', require('../components/frontend/EarthlingsActivities.vue').default);
+Vue.component('career-profile', require('../components/frontend/CareerProfileComponent.vue').default);
 const app = new Vue({
     el: '.app',
 });

@@ -68,14 +68,19 @@ class FrontendController extends Controller
         if($user)         return view('frontend.blog.index');
         return view('frontend.auth.login');
     }
-    public function blog_tagwise_all(Request $request){
-
-        // dd($request['tag']);
-        $tagdetails = BlogTag::where('name',$request['tag'])->first();
-        $tag = $request['tag'];
-        // dd($tag);
-        if(Auth::user())         return view('frontend.blog.blogview.tagwise.blog_tagwise',compact('tag','tagdetails'));
-        return view('frontend.auth.login');
+    public function blog_tagwise_all(Request $request)
+    {
+        if($request->has('tag') && $request->tag != '') {
+            $tag = $request['tag'];
+        } else {
+            $tag = '';
+        }
+        
+        if(Auth::user()) {
+            return view('frontend.blog.blogview.tagwise.blog_tagwise',compact('tag'));
+        } else {
+            return view('frontend.auth.login');
+        }
     }
     /**
      * Blogs of  friends tag wise
@@ -84,9 +89,9 @@ class FrontendController extends Controller
 
         $tag = $request['tag'];
         $id = $request['id'];
-        $user_id =Auth::id();
+
         $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id','user_id'));
+        if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id'));
         return view('frontend.auth.login');
     }
     public function blog_tagwise_friend_post(Request $request){
@@ -105,10 +110,14 @@ class FrontendController extends Controller
     public function blog_tagwise_my(Request $request){
 
         $tag = $request['tag'];
-        $id = $request['id'];
         $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id'));
-        return view('frontend.auth.login');
+
+        if($user) {
+            $id = $user->id;
+            return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id'));
+        } else {
+            return view('frontend.auth.login');
+        }
     }
     public function blog_tagwise_my_post(Request $request){
      
@@ -347,22 +356,22 @@ public function blog_general_friend_post(Request $request){
 }
      /* For all designed panel blogs */
      public function designed_panels_all(){ 
-        $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.designed-panel.all_designed_panels');
-        return view('frontend.auth.login');
+        return view('frontend.blog.blogview.designed-panel.all_designed_panels');
     }
 
      /**
      * All the designed panel Blogs of logged in user 
      */
-    public function designed_panels_my(Request $request){
-
-   
-        $id = $request['id'];
-        $tag=$request['tag'];
+    public function designed_panels_my(Request $request)
+    {
+        // $tag=$request['tag'];
         $user = Auth::user();
-        if($user )         return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id','tag'));
-        return view('frontend.auth.login');
+        if($user ) {
+            $id = Auth::user()->id;
+            return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id'));
+        } else {
+            return view('frontend.auth.login');
+        }
     }
 
     public function designed_panels_my_post(Request $request){
@@ -377,13 +386,15 @@ public function blog_general_friend_post(Request $request){
    /**
      * All designed panel blogs of friends
      */
-    public function designed_panels_friend(Request $request){
-
- 
+    public function designed_panels_friend(Request $request)
+    {
         $id = $request['id'];
         $user = Auth::user();
-        if($user)        return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id'));
-        return view('frontend.auth.login');
+        if($user) {
+            return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id'));
+        } else {
+            return view('frontend.auth.login');
+        }
     }
     /**
      * All designed panel blogs without astronaut
@@ -412,14 +423,16 @@ public function blog_general_friend_post(Request $request){
     return view('frontend.auth.login');
 }
 
-public function blog_career_my(Request $request){ 
-    $id = $request['id'];
+public function blog_career_my(Request $request)
+{ 
     $user = Auth::user();
  
-    if($user) return  view('frontend.blog.blogview.career.my_career_blogs',compact('id'));
-    return view('frontend.auth.login');
-   
-  
+    if($user) {
+        $id = $user->id;
+        return  view('frontend.blog.blogview.career.my_career_blogs',compact('id'));
+    } else {
+        return view('frontend.auth.login');
+    }
 }
 public function blog_career_friend_post(Request $request){
     $id = $request['id'];
@@ -432,9 +445,10 @@ public function blog_career_friend(Request $request){
     $id = $request['id'];
     $user = Auth::user();
  
-    if($user) return  view('frontend.blog.blogview.career.friend_career_blogs',compact('id'));
-    return view('frontend.auth.login');
-   
-  
+    if($user) {
+        return  view('frontend.blog.blogview.career.friend_career_blogs',compact('id'));
+    } else {
+        return view('frontend.auth.login');
+    }
 }
 }

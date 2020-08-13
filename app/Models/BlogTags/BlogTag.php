@@ -24,7 +24,7 @@ class BlogTag extends BaseModel
      */
     protected $table;
 
-    protected $fillable = ['name', 'status', 'created_by', 'updated_by'];
+    protected $fillable = ['name', 'code', 'status', 'created_by', 'updated_by'];
 
     public function __construct(array $attributes = [])
     {

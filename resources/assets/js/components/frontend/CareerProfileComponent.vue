@@ -1,93 +1,78 @@
 <template>
 <div class="page view ">
-
+    <div class="blog-search ">
+        <form action="" method="GET">
+          
+            <div class="search-form">
+                <div class="input-group-prepend status-div">
+                    <select class="custom-select" id="inputGroupSelect02" name="type" v-model="type">
+                        <option  selected value="Profile">Profile</option>
+                        <option value="Companies">Companies</option>
+                        <option value="Jobs">Jobs</option>
+                    </select>
+                </div>
+                <div class="search-input-fields">
+                    <input type="text" class="form-control" placeholder="Search" name="search" autocomplete="off" v-model="search">
+                </div>
+                <button type="submit" class="btn search-btn" @click.prevent="searchCareers">Search</button>
+            </div>
+            <div class="search-form ">
+            <div class="input-group-prepend country-div">
+                <input type="text"  id="countries"  class="form-control" placeholder="Country" name="country" autocomplete="off" @change="setCountry">
+                <input type="text"  id="cities"  class="form-control" placeholder="City" name="city" autocomplete="off" @change="setCity">
+                <!-- <select class="custom-select" id="cities" name="type" v-model="city">
+                    <option selected value="">City</option>
+                </select> -->
+            </div>
+        </div>
+        </form>
+    </div>
     <div class="origin view">
         <div id="camera" class="view">
             <div id="dolly" class="view">
                 <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler">
-                    <div v-for="(designs_blog,index) in designs_blogs" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: designs_blogs, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index)">
+                    <div v-for="(profile,index) in profiles" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: profiles, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index)">
                         
                         <a class="mover viewflat blog_img" href="#">
-                            <input type="hidden" name="audio" :value="designs_blog.audio">
-                            <img :class="'cell_img_'+index" :src="'/storage/img/blog/'+designs_blog.featured_image" @load="layoutImageInCell('cell_img_'+index, index)">
-                            
+                            <input type="hidden" name="audio" :value="profile.audio">
+                            <img :class="'cell_img_'+index" :src="image_storage+'/'+profile.featured_image" @load="layoutImageInCell('cell_img_'+index, index)">
                         </a>
                             
                         <div class="overlay">
-                            <div :class="'div_title_'+index+' div_title'" style="display:none;z-index:10000000;border:0px solid white">
-                                <p class="p_title">{{designs_blog.name}}</p>
-                            </div>
-                            <div :class="'div_overlay_'+index+' div_overlay '+index"> 
-                                <div class="blog-buttons_overlay ">
-                                    <div class="button-div">
-                                        <button><img class="i_hot" :src="'/front/icons/hot.png'"/></button>
-                                        <div class="button-details">
-                                            <p class="button-number hot-number">{{designs_blog.hotcount}}</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="button-div">
-                                        <button><img class="i_cool" :src="'/front/icons/cool.png'" /></button>
-                                        <div class="button-details"> 
-                                            <p class="button-number cool-number">{{designs_blog.coolcount}}</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="button-div">
-                                        <button><img  class="i_comment" :src="'/front/icons/comment.png'" alt=""></button> 
-                                        
-                                        <div class="button-details">
-                                            <p class="button-number comment-number">{{designs_blog.commentcount}}</p>
-                                        </div> 
-                                    </div> 
-                                </div>
-                                
-                                <button class="button btn_view_blog" @click.prevent="viewBlog(designs_blog.id)"><p class="p_button">View Blog</p></button>
-                            </div>
-                        </div>
+                            <div :class="'div_overlay_'+index+' div_overlay '+index">
+                                <div class="details">
+                                    <table v-if="current_type == 'Profile'">
+                                        <tr>
+                                            <td>Name:</td>
+                                            <td>{{profile.first_name}} {{profile.last_name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Profession:</td>
+                                            <td>{{profile.profession_name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location:</td>
+                                            <td>{{profile.present_city}}, {{profile.present_country}}</td>
+                                        </tr>
+                                    </table>
 
-                        <div :class="'div_count_bg'+index+' div_count_bg div_count_regular '+designs_blog.most_reaction" >
-                            <div class="button-div button-div-l ">
-                                <button><img :src="'/front/icons/hot.png'" class="hotIcon" /></button>
-                                <div class="button-details">
-                                    <p class="button-number">{{designs_blog.hotcount}}</p>
+                                    <table v-if="current_type == 'Companies'">
+                                        <tr>
+                                            <td>Name:</td>
+                                            <td>{{profile.company_name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Industry:</td>
+                                            <td>{{profile.industry.industry_name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location:</td>
+                                            <td>{{profile.address}}</td>
+                                        </tr>
+                                    </table>
                                 </div>
+                                <button class="button btn_view_blog" @click.prevent="viewBlog(profile.id)"><p class="p_button">View Profile</p></button>
                             </div>
-                            
-                            <div class="button-div button-div-l ">
-                                <button><img :src="'/front/icons/cool.png'" class="coolIcon" /></button>
-                                <div class="button-details">
-                                    <p class="button-number">{{designs_blog.coolcount}}</p> 
-                                </div>
-                            </div>
-                            
-                            <div class="button-div button-div-l ">
-                                <button><img :src="'/front/icons/comment.png'"  class="commentIcon" alt="" ></button>
-                                <div class="button-details">
-                                    <p class="button-number">{{designs_blog.commentcount}}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div :class="'div_count_bg'+index+' div_count_bg div_count_small '+designs_blog.most_reaction" >
-                            <div class="button-div button-div-p ">
-                                <button><img src="/front/icons/comment.png"  class="commentIcon" alt="" ></button> 
-                                
-                                <div class="button-details"><p class="button-number">{{designs_blog.commentcount}}</p></div>
-                            </div>
-                            
-                            <div class="button-div button-div-p">
-                                <div class="button-details"><p class="button-number">{{designs_blog.coolcount}}</p> </div>
-                                
-                                <button><img src="/front/icons/cool.png" class="coolIcon"/></button> 
-                            </div>
-                            
-                            <div class="button-div button-div-p">
-                                <button><img src="/front/icons/hot.png" class="hotIcon"/></button>
-                                
-                                <div class="button-details"><p class="button-number">{{designs_blog.hotcount}}</p></div>
-                            </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -108,7 +93,7 @@
 import EventBus from '../../frontend/event-bus';
 export default {
     props: {
-        user_id: Number
+
     },
     data:function() {
         return {
@@ -136,7 +121,7 @@ export default {
             CXSPACING:Number,
             CYSPACING:Number,
             emo:Array,
-            designs_blogs: {},
+            profiles: {},
             prevNum:0,
             currentNum:0,
             cellCount:Number,
@@ -151,13 +136,19 @@ export default {
                 'a',
                 'b'
             ],
-            audio_player: new Audio()
+            audio_player: new Audio(),
+            search: '',
+            type: 'Profile',
+            current_type: 'Profile',
+            country: '',
+            city: '',
+            image_storage: '',
         }
     },
     created() {
-        this.fetchblogs();
+        this.fetchCareers();
         // this.broadcastcheck();
-        // Echo.channel('designs_blogs')
+        // Echo.channel('profiles')
         //         .listen('GeneralBlogEvent',(response) => {
         //             console.log(response);
         //             this.cells.length = 0;
@@ -170,7 +161,7 @@ export default {
     mounted () {
     // this.fetchblogs();
     // this.broadcastcheck();
-    //  Echo.channel('designs_blogs')
+    //  Echo.channel('profiles')
     //         .listen('GeneralBlogEvent',(response) => {
     //             console.log(response);
     //             this.cells.length = 0;
@@ -221,7 +212,7 @@ export default {
           this.scrollcheck('up');
       },
       broadcastcheck(){
-          axios.get("/fetchAllBlogs?page="+this.page+'&user_id='+this.user_id+'&tag=designs')
+          axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+that.country+'&city='+that.city)
          .then((response) => {
             this.images=response.data.data;
             jQuery.each(this.images,this.testfunc);
@@ -230,39 +221,36 @@ export default {
             console.log(error);
         }) 
       },
-    fetchblogs() {
+    fetchCareers() {
         let that = this;
        /* Calling API for fetching images */
-        axios.get("/fetchAllBlogs?page="+that.page+'&user_id='+that.user_id+'&tag=designs')
+        axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+that.country+'&city='+that.city)
         .then((response) => {
-            // debugger
-    //    console.log(response.data);
-            that.images=response.data.data;
-            // console.log(that.images.id);
-            that.current_page=response.data.current_page;
-            that.last_page=response.data.last_page;
-            that.Total_pages=(response.data.total/25);
-            that.Total_pages=parseInt( that.Total_pages);
-            that.Total_count=response.data.total;
+            
             that.snowstack_init();
-            that.cellCount = response.data.to;
-            console.log('cell count: ', that.cellCount);
-            that.designs_blogs = {};
-            var i = 0;
-            $.each(response.data.data, function(index, value) {
-                if(value.blog) {
-                    that.$set(that.designs_blogs, i, value.blog);
-                } else {
-                    that.$set(that.designs_blogs, i, value);
-                }
-                that.designs_blogs[i].audio = that.getAudio();
-                // that.designs_blogs.push(value);
-                i++;
-            });
-            // that.designs_blogs = response.data.data;
-            console.log(response.data.data);
 
-            // jQuery.each(that.images,that.snowstack_addimage);
+            if(that.type == 'Profile') {
+                that.image_storage = '/storage/career/employee/';
+            } else if(that.type == 'Companies') {
+                that.image_storage = '/storage/career/company/';
+            }
+            that.profiles = {};
+
+            if(response.data) {
+                that.current_page=response.data.current_page;
+                that.last_page=response.data.last_page;
+                that.Total_pages=(response.data.total/25);
+                that.Total_pages=parseInt( that.Total_pages);
+                that.Total_count=response.data.total;
+                that.cellCount = response.data.to;
+                that.profiles = response.data.data;
+
+                $.each(that.profiles, function(index, value) {
+                    that.profiles[index].audio = that.getAudio();
+                    // console.log('profiles '+index+': ', that.profiles[index]);
+                });
+            }
+
             that.updateStack(1);
             that.loading = false;
             var keys = {up: true, down: true };
@@ -270,27 +258,7 @@ export default {
             
             var keytimer = null;
             var scrolltimer = null;
-            
-            /** Update images on keys */
-            // function updatekeys()
-            // { 
-            //     console.log('run updatekeys');
-            //      that.newcell = that.currentCell;
-            //     if (keys.up)
-            //     {
-            //         /* Up Arrow */
-            //           that.newcell -= 1;
-            //     }
-            //     if (keys.down)
-            //     {
-            //         /* Down Arrow */
-            //           that.newcell += 1;
-            //     }
         
-            //     that.updateStack(that.newcell, that.magnifyMode);
-            // }
-        
-             
             /*
             ------SCROLLL EVENT FUNCTIONS ON MOUSE WHEEL ------
             */
@@ -312,7 +280,7 @@ export default {
 
             $(document).keydown(function (e) {
                 var arrow = { left: 37, up: 38, right: 39, down: 40 };
-
+                
                 switch (e.which) {
                     case arrow.left:
                         that.scroll_type='left'; 
@@ -345,6 +313,114 @@ export default {
             console.log(error);
         })  
             
+    },
+    searchCareers() {
+        let that = this;
+        that.profiles = {};
+       /* Calling API for fetching images */
+        axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+that.country+'&city='+that.city)
+        .then((response) => {
+            
+            that.snowstack_init();
+            if(that.type == 'Profile') {
+                that.image_storage = '/storage/career/employee/';
+            } else if(that.type == 'Companies') {
+                that.image_storage = '/storage/career/company/';
+            }
+
+            
+
+            if(response.data) {
+                that.current_page=response.data.current_page;
+                that.last_page=response.data.last_page;
+                that.Total_pages=(response.data.total/25);
+                that.Total_pages=parseInt( that.Total_pages);
+                that.Total_count=response.data.total;
+                that.cellCount = response.data.to;
+                that.profiles = response.data.data;
+                that.lastAudioNum = 3;
+                that.currentAudio = 0;
+                that.current_type = that.type;
+
+                $.each(that.profiles, function(index, value) {
+                    that.profiles[index].audio = that.getAudio();
+                    // console.log('profiles '+index+': ', that.profiles[index]);
+                });
+            }
+
+            // that.updateStack(1);
+            // that.loading = false;
+            // var keys = {up: true, down: true };
+            // var keymap = { 38: "up", 40: "down" };
+            
+            // var keytimer = null;
+            // var scrolltimer = null;
+        
+            // /*
+            // ------SCROLLL EVENT FUNCTIONS ON MOUSE WHEEL ------
+            // */
+            // window.addEventListener('wheel', function(event)
+            // {
+
+            //     if (event.deltaY < 0)
+            //     {
+            //         that.scroll_type='left';
+
+            //     }
+            //     else if (event.deltaY > 0)
+            //     {
+            //         that.scroll_type='right'; 
+                    
+            //     } 
+            //     that.scrollcheck(that.scroll_type);
+            // });
+
+            // $(document).keydown(function (e) {
+            //     var arrow = { left: 37, up: 38, right: 39, down: 40 };
+                
+            //     switch (e.which) {
+            //         case arrow.left:
+            //             that.scroll_type='left'; 
+            //         break;
+            //         case arrow.up:
+            //             that.scroll_type='up'; 
+            //         break;
+            //         case arrow.right:
+            //             that.scroll_type='right'; 
+            //         break;
+            //         case arrow.down:
+            //             that.scroll_type='down'; 
+            //         break;
+            //         default:
+            //             that.scroll_type='';
+            //         break;
+            //     }
+
+            //     that.scrollcheck(that.scroll_type);
+            // });
+            /* scroll check */
+      
+            // that.scrollcheck()
+            // $(window).load(function() {
+            //     that.blockStyle();
+            // });
+            
+        })
+        .catch((error) => {
+            console.log(error);
+        })  
+            
+    },
+    setCountry(event) 
+    {
+        console.log(event.target.value)
+        this.country = event.target.value;
+        this.city = '';
+    },
+    setCity(event) 
+    {
+        console.log(event.target.value)
+        this.city = event.target.value;
     },
     blockStyle(index) {
         // console.log('index: '+index);
@@ -473,7 +549,7 @@ export default {
                     
                     // debugger
                     // alert($(that).tagvalue.name);
-                    var url_api=url+"/fetchAllBlogs?page="+that.page+'&user_id='+that.user_id+'&tag=designs';
+                    var url_api=url+"/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+that.country+'&city='+that.city;
                     $.getJSON(url_api, function(data) 
                     {
                         console.log(data.data, that.cellCount);
@@ -481,18 +557,17 @@ export default {
                         var i = that.cellCount;
                         $.each(data.data, function(index, value) {
                             if(value.blog) {
-                                that.$set(that.designs_blogs, i, value.blog);
+                                that.$set(that.profiles, i, value.blog);
                             } else {
-                                that.$set(that.designs_blogs, i, value);
+                                that.$set(that.profiles, i, value);
                             }
-                            that.designs_blogs[i].audio = that.getAudio();
 
                             i++;
                         });
 
                         that.cellCount = data.to;
-                        // that.designs_blogs.concat(data.data);
-                        console.log(that.designs_blogs, that.cellCount);
+                        // that.profiles.concat(data.data);
+                        console.log(that.profiles, that.cellCount);
                         // that.updateStack(1);
                         that.loading = false;
                     // if((that.newcell + 3) != that.images.length)
@@ -992,7 +1067,7 @@ export default {
                 this.load_count=0;
                 this.i = 0;
                 this.images = [];
-                this.fetchblogs(); 
+                this.fetchCareers(); 
             });
     },
     layoutImageInCell(img_class, index) {
@@ -1066,7 +1141,7 @@ export default {
             return false;
     },
     viewBlog(id) {
-		window.location.href = '/single_blog/'+id;
+		window.location.href = '/single_general_blog/'+id;
     },
     getAudio()
     {
@@ -1082,8 +1157,8 @@ export default {
         var lastAudioNum = this.lastAudioNum;
 
         // console.log('audio length: '+this.audio.length);
-        console.log('current audio: '+this.currentAudio);
-        console.log('last audio num: '+this.lastAudioNum);
+        // console.log('current audio: '+this.currentAudio);
+        // console.log('last audio num: '+this.lastAudioNum);
 
         var audio = this.audio[this.currentAudio]+''+lastAudioNum;
 

@@ -204,9 +204,6 @@ class BlogsRepository extends BaseRepository
         foreach ($tags as $tag) {
             if (is_numeric($tag)) {
                 $tags_array[] = $tag;
-            } else {
-                $newTag = BlogTag::create(['name' => $tag, 'status' => 1, 'created_by' => 1]);
-                $tags_array[] = $newTag->id;
             }
         }
 

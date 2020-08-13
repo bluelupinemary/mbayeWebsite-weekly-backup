@@ -535,7 +535,7 @@ trait UserAttribute
         if($gender == 'female') {
             $astronaut = 'Major Thomasina.png';
         } else {
-            $astronaut = 'tom close up v2 - 1.png';
+            $astronaut = 'Major Tom.png';
         }
 
         return $astronaut;
@@ -594,4 +594,5 @@ trait UserAttribute
 
         return $groups;
     }
+
 }

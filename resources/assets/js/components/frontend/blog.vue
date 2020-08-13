@@ -5,256 +5,561 @@
         <div id="camera" class="view">
             <div id="dolly" class="view">
                 <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler">
+                    <div v-for="(blog,index) in blogs" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: blogs, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index)">
+                        
+                        <a class="mover viewflat blog_img" href="#">
+                            <input type="hidden" name="audio" :value="blog.audio">
+                            <img :class="'cell_img_'+index" :src="'/storage/img/blog/'+blog.featured_image" @load="layoutImageInCell('cell_img_'+index, index)">
+                            
+                        </a>
+                            
+                        <div class="overlay">
+                            <div :class="'div_title_'+index+' div_title'" style="display:none;z-index:10000000;border:0px solid white">
+                                <p class="p_title">{{blog.name}}</p>
+                            </div>
+                            <div :class="'div_overlay_'+index+' div_overlay '+index"> 
+                                <div class="blog-buttons_overlay ">
+                                    <div class="button-div">
+                                        <button><img class="i_hot" :src="'/front/icons/hot.png'"/></button>
+                                        <div class="button-details">
+                                            <p class="button-number hot-number">{{blog.hotcount}}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="button-div">
+                                        <button><img class="i_cool" :src="'/front/icons/cool.png'" /></button>
+                                        <div class="button-details"> 
+                                            <p class="button-number cool-number">{{blog.coolcount}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-div"> 
+                                        <button><img class="i_naff" :src="'/front/icons/naff.png'" /></button>
+                                        
+                                        <div class="button-details">
+                                            <p class="button-number naff-number">{{blog.naffcount}}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="button-div">
+                                        <button><img  class="i_comment" :src="'/front/icons/comment.png'" alt=""></button> 
+                                        
+                                        <div class="button-details">
+                                            <p class="button-number comment-number">{{blog.commentcount}}</p>
+                                        </div> 
+                                    </div> 
+                                </div>
+                                
+                                <button class="button btn_view_blog" @click.prevent="viewBlog(blog.id)"><p class="p_button">View Blog</p></button>
+                            </div>
+                        </div>
+
+                        <div :class="'div_count_bg'+index+' div_count_bg div_count_regular '+blog.most_reaction" >
+                            <div class="button-div button-div-l ">
+                                <button><img :src="'/front/icons/hot.png'" class="hotIcon" /></button>
+                                <div class="button-details">
+                                    <p class="button-number">{{blog.hotcount}}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="button-div button-div-l ">
+                                <button><img :src="'/front/icons/cool.png'" class="coolIcon" /></button>
+                                <div class="button-details">
+                                    <p class="button-number">{{blog.coolcount}}</p> 
+                                </div>
+                            </div>
+
+                            <div class="button-div button-div-l ">
+                                <button><img  :src="'/front/icons/naff.png'" class="naffIcon" /></button>
+                                <div class="button-details">
+                                    <p class="button-number">{{blog.naffcount}}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="button-div button-div-l ">
+                                <button><img :src="'/front/icons/comment.png'"  class="commentIcon" alt="" ></button>
+                                <div class="button-details">
+                                    <p class="button-number">{{blog.commentcount}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div :class="'div_count_bg'+index+' div_count_bg div_count_small '+blog.most_reaction" >
+                            <div class="button-div button-div-p ">
+                                <button><img src="/front/icons/comment.png"  class="commentIcon" alt="" ></button> 
+                                
+                                <div class="button-details"><p class="button-number">{{blog.commentcount}}</p></div>
+                            </div>
+
+                            <div class="button-div button-div-p ">
+                                <div class="button-details"><p class="button-number">{{blog.naffcount}}</p></div>  
+                                
+                                <button><img class="naffIcon" src="/front/icons/naff.png"/></button> 
+                            </div>
+                            
+                            <div class="button-div button-div-p">
+                                <div class="button-details"><p class="button-number">{{blog.coolcount}}</p> </div>
+                                
+                                <button><img src="/front/icons/cool.png" class="coolIcon"/></button> 
+                            </div>
+                            
+                            <div class="button-div button-div-p">
+                                <button><img src="/front/icons/hot.png" class="hotIcon"/></button>
+                                
+                                <div class="button-details"><p class="button-number">{{blog.hotcount}}</p></div>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
-                <div id="mirror" class="view">
+                <!-- <div id="mirror" class="view">
                     <div id="rstack" class="view">
                     </div>
                     <div id="rstack2" class="view">
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
+       
     </div>
 </div>
 </template>
 
-
 <script>
-      export default {
-         props:{
-            tagvalue:Object,
-            },
-        data:function() {
-             return{
-                images:[],
-                scrolltimer:null,
-                delay:330,
-                cells : [],
-                currentCell:-1,
-                magnifyMode : false,
-                last_page:'',
-                Total_pages:0,
-                i:0,
-                page:1,
-                loading:true,
-                newcell:Number,
+import EventBus from '../../frontend/event-bus';
+export default {
+    props: {
+        user_id: Number,
+        tag: String
+    },
+    data:function() {
+        return {
+            url: $('meta[name="url"]').attr('content'),
+            images:[],
+            load_count:0,
+            count:0,
+            scroll_type:String,
+            scrolltimer:null,
+            delay:330,
+            cells : [],
+            currentCell:-1,
+            magnifyMode : false,
+            last_page:'',
+            Total_pages:0,
+            Total_count:0,
+            i:0,
+            page:1,
+            current_page:Number,
+            loading:true,
+            newcell:Number,
+            CWIDTH:Number,
+            CHEIGHT:Number,
+            CGAP : 5,
+            CXSPACING:Number,
+            CYSPACING:Number,
+            newblog:[],
+            k:0,
+            blogs: {},
+            prevNum:0,
+            currentNum:0,
+            cellCount:Number,
+            currentAudio: 0,
+            lastAudioNum: 3,
+            audio: [
+                'c',
+                'd',
+                'e',
+                'f',
+                'g',
+                'a',
+                'b'
+            ],
+            audio_player: new Audio()
         }
-      },
-       mounted () {
-    // alert('mounted');
-      console.log(this.tagvalue);
+    },
+    // created() {
+    //     this.fetchblogs();
+    //     // this.broadcastcheck();
+    //     // Echo.channel('blogs')
+    //     //         .listen('GeneralBlogEvent',(response) => {
+    //     //             console.log(response);
+    //     //             this.cells.length = 0;
+    //     //             this.load_count=0;
+    //     //             this.i = 0;
+    //     //             this.images = [];
+    //     //             this.fetchblogs();       
+    //     //         });
+    // },
+    mounted () {
     this.fetchblogs();
-     Echo.channel('new_blog')
-            .listen('NewBlogEvent',(response) => {
-                console.log(response);
-
-                //  this.images = [];
-                    this.fetchblogs();
-            });
+    Echo.channel('new_blog')
+                .listen('NewBlogEvent',(response) => {
+                    console.log(response);
+                    // let i=0;
+                    this.newblog[this.k] = response;
+                    this.k++;
+                    // this.fetchblogs();
+                    // let arr= [];
+                    // Object.keys(this.general_blogs).map(key=>{
+                    //         arr.push(this.general_blogs[key])
+                    // })
+                    // arr.unshift(response);  
+                    // this.general_blogs = arr;
+                });
   },
-    
-      methods: {
-        lefthandler(){
+  directives: {
+    forCallback(el, binding) {
+      let element = binding.value
+      var key = element.key
+      var len = 0
+
+      if (Array.isArray(element.array)) {
+        len = element.array.length
+      }
+
+      else if (typeof element.array === 'object') {
+        var keys = Object.keys(element.array)
+        key = keys.indexOf(key)
+        len = keys.length
+      }
+
+      if (key == len - 1) {
+        if (typeof element.callback === 'function') {
+          element.callback()
+        }
+      }
+    }
+  },
+  methods:{
+    callback() {
+        // console.log('v-for loop finished')
+        // this.updateStack(1);
+        // let that = this;
+        // that.lastAudioNum = 3;
+        // that.currentAudio = 0;
+    },
+    lefthandler(){
           this.scrollcheck('down');
       },
-      righthandler(){
+    righthandler(){
           this.scrollcheck('up');
+      },
+      broadcastcheck(){
+          axios.get("/fetchAllBlogs?page="+this.page+'&user_id='+this.user_id+'&tag='+this.tag)
+         .then((response) => {
+            this.images=response.data.data;
+            jQuery.each(this.images,this.testfunc);
+        })
+        .catch((error) => {
+            console.log(error);
+        }) 
       },
     fetchblogs() {
         let that = this;
-        /* Calling API for fetching images */
-        axios.get("/api/v1/blogbytag/"+that.tagvalue.name+"?page="+that.page)
+       /* Calling API for fetching images */
+        axios.get("/fetchAllBlogs?page="+that.page+'&user_id='+that.user_id+'&tag='+this.tag)
         .then((response) => {
-            // alert("fetchblogs called");
-            // page=1;
+            // debugger
+    //    console.log(response.data);
             that.images=response.data.data;
-            var images = response.data.data;
-            that.page=response.data.current_page;
+            // console.log(that.images.id);
+            that.current_page=response.data.current_page;
             that.last_page=response.data.last_page;
-             that.Total_pages=(response.data.total/25);
-            that.Total_pages=parseInt(that.Total_pages);
-           
-            Total_count=response.data.total;
-            snowstack_init();
-            // checkflow(121212121212122);
-            jQuery("#stack").empty();
-            jQuery("#rstack").empty();
-            // jQuery("#mirror").empty();
-            jQuery("#rstack2").empty();
-            jQuery.each(that.images,that.snowstack_addimage);
+            that.Total_pages=(response.data.total/25);
+            that.Total_pages=parseInt( that.Total_pages);
+            that.Total_count=response.data.total;
+            that.snowstack_init();
+            that.cellCount = response.data.to;
+            console.log('cell count: ', that.cellCount);
+            that.blogs = {};
+            var i = 0;
+            $.each(response.data.data, function(index, value) {
+                if(value.blog) {
+                    that.$set(that.blogs, index, value.blog);
+                } else {
+                    that.$set(that.blogs, index, value);
+                }
+                that.emotionchange(index);
+                // that.commentchange(index);
+                
+                // that.general_blogs.push(value);
+                // i++;
+                that.blogs[index].audio = that.getAudio();
+
+                // i++;
+            });
+            // that.blogs = response.data.data;
+            console.log(response.data.data);
+
+            // jQuery.each(that.images,that.snowstack_addimage);
             that.updateStack(1);
             that.loading = false;
             var keys = {up: true, down: true };
-        
             var keymap = { 38: "up", 40: "down" };
             
             var keytimer = null;
-            // var scrolltimer = null;
+            var scrolltimer = null;
             
-            function updatekeys()
-            { 
-                
-                that.newcell = that.currentCell;
-                if (keys.up)
-                {
-                    /* Up Arrow */
-                    that.newcell -= 1;
-                }
-                if (keys.down)
-                {
-                    /* Down Arrow */
-                    that.newcell += 1;
-                }
+            /** Update images on keys */
+            // function updatekeys()
+            // { 
+            //     console.log('run updatekeys');
+            //      that.newcell = that.currentCell;
+            //     if (keys.up)
+            //     {
+            //         /* Up Arrow */
+            //           that.newcell -= 1;
+            //     }
+            //     if (keys.down)
+            //     {
+            //         /* Down Arrow */
+            //           that.newcell += 1;
+            //     }
         
-                that.updateStack(that.newcell, that.magnifyMode);
-            }
-
-            /* update scroll */
-
-
-            // that.updatescroll();
-            
-            // var delay = 330;
+            //     that.updateStack(that.newcell, that.magnifyMode);
+            // }
         
-          
-        /*
-          ------SCROLLL EVENT FUNCTIONS ON MOUSE WHEEL ------
-        */
+             
+            /*
+            ------SCROLLL EVENT FUNCTIONS ON MOUSE WHEEL ------
+            */
             window.addEventListener('wheel', function(event)
             {
 
                 if (event.deltaY < 0)
                 {
-                    scroll_type='up';
+                    that.scroll_type='left';
 
                 }
                 else if (event.deltaY > 0)
                 {
-                    scroll_type='down'; 
+                    that.scroll_type='right'; 
                     
                 } 
-                that.scrollcheck(scroll_type);
+                that.scrollcheck(that.scroll_type);
             });
-            
-        /* scroll check */
+
+            $(document).keydown(function (e) {
+                var arrow = { left: 37, up: 38, right: 39, down: 40 };
+
+                switch (e.which) {
+                    case arrow.left:
+                        that.scroll_type='left'; 
+                    break;
+                    case arrow.up:
+                        that.scroll_type='up'; 
+                    break;
+                    case arrow.right:
+                        that.scroll_type='right'; 
+                    break;
+                    case arrow.down:
+                        that.scroll_type='down'; 
+                    break;
+                    default:
+                        that.scroll_type='';
+                    break;
+                }
+
+                that.scrollcheck(that.scroll_type);
+            });
+            /* scroll check */
       
             // that.scrollcheck()
-            
+            // $(window).load(function() {
+            //     that.blockStyle();
+            // });
             
         })
         .catch((error) => {
             console.log(error);
-        })      
+        })  
             
     },
+    blockStyle(index) {
+        // console.log('index: '+index);
+        let that = this;
+        // var index = 0;
+        // var cell = {};
+        // var realn = that.cellCount;
+        // console.log(realn);
+        // if(index < that.Total_count) {
+            
+            // console.log(realn);
+        // }
+
+            
+            var realn = index;
+            // console.log('realn: '+realn);
+            var x = Math.floor(realn / 2);
+            var y = realn - x * 2;
+
+            // that.currentNum = x;
+            // console.log('blockStyle: ', that.currentNum, that.prevNum)
+            // if(that.currentNum != that.prevNum) {
+            //     that.prevNum = that.currentNum;
+            //     // that.cells.push([]);
+            // }
+            // $('.div_img_'+index).css({
+            //     'width': that.CWIDTH,
+            //     'height': that.CHEIGHT,
+            //     'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            // });
+            return {
+                'width': that.CWIDTH,
+                'height': that.CHEIGHT,
+                'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            };
+
+            // index++;
+        // }
+        
+        // that.CHEIGHT = Math.round(window.innerHeight / 3.5);
+        // that.CWIDTH  = Math.round(that.CHEIGHT * 300 / 180);
+        // that.CXSPACING = that.CWIDTH + that.CGAP;
+        // that.CYSPACING = that.CHEIGHT + that.CGAP;
+        // var realn = Math.floor(index /2 );
+        
+        // cell.div[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+    },
     scrollcheck(scroll)
-            {  //alert(scroll)
-            let that = this;
-                if (scroll=='up' || scroll=='down')
+    {  
+        // console.log('scroll: '+scroll);
+        let that = this;
+            if (scroll=='up' || scroll=='down' || scroll=='left' || scroll=='right')
+            {
+                if (that.scrolltimer === null)
                 {
-                    if (that.scrolltimer === null)
+                    that.delay = 330;
+                    var doTimer = function ()
                     {
-                       that.delay = 330;
-                        var doTimer = function ()
-                        {
-                           that.updatescroll(scroll);
-                        //scrolltimer = setTimeout(doTimer, delay);
-                            that.delay = 60;
-                        };
-                        doTimer();
-                    }
+                        // console.log('scroll: '+scroll);
+                        that.updatescroll(scroll);
+                        // that.scrolltimer = setTimeout(doTimer, that.delay);
+                        that.delay = 60;
+                    };
+                    doTimer();
                 }
-                else
-                {
-                    clearTimeout(that.scrolltimer);
-                    that.scrolltimer = null;
-                }
-            },
-     updatescroll(scroll)
-            { 
+            }
+            else
+            {
+                clearTimeout(that.scrolltimer);
+                that.scrolltimer = null;
+            }
+    },
+    updatescroll(scroll)
+        { 
                 let that = this;
-                
                 that.newcell = that.currentCell;
-                if (scroll=='up')
+                console.log('newcell: ',that.newcell);
+                if (scroll=='left')
                 {
                 
                     /* scroll up */
                     if (that.newcell >= 3)
                     {
                         that.newcell -= 3;
-                        $(".most-naffed").css({'visibility':'visible'});
+                        $(".most-naffed").show();
                     }
                 }
         
       
 
 
-                 if (scroll=='down')
+                 if (scroll=='right')
                 { 
-                    if(  that.cells.length>(that.newcell+3))
+                     
+                $(".most-naffed").hide();
+                    if(  that.cellCount>(that.newcell+3))
                         {
                             that.loading = false;
         
-                            }   
-                            // $(".most-naffed").css({'visibility':'hidden'});
+                        }   
+                           
                   
                     /* scroll down */
-                // alert(page);
-              if(that.page==that.last_page) {
-                   that.loading = true;
-                  if(that.newcell+4==that.cells.length)
-                {     
-                    that.updateStack(that.newcell+4, that.magnifyMode);
-                }
-                // that.loading = false;
-                  // return false;
-              }
-              if ((that.newcell+3) < (that.cells.length))
-          
-                    {
-                        that.newcell += 3;
+               
+                if(that.page==that.last_page) {
+                    that.loading = true;
+                    if(that.newcell+4==that.cellCount)
+                    {     
+                        // console.log(that.cellCount)
+                        that.updateStack(that.newcell+4, that.magnifyMode);
                     }
-                    else if (!that.loading)
-                    { 
-                        /* We hit the right wall, add some more */
-                // debugger;
-                        that.page = that.page+1 ;
-                        that.loading = true;
-                      
-                        
-                    //    alert(that.page);
-                        var url_api=url+"/api/v1/blogbytag/"+that.tagvalue.name+"?page="+that.page
-                        $.getJSON(url_api, function(data) 
-                        {
-    
-                            that.images=data['data'];
-                      
-                  
-                      if((that.newcell + 3) != that.images.length)
-                              jQuery.each(that.images,that.snowstack_addimage);
+                    // that.loading = false;
                     
-                  
-                        });
-                    
-        
-                  
                 }
+
+                if ((that.newcell+3) < (that.cellCount)) {
+                    that.newcell += 3;
+                } else if (!that.loading) { 
+                    /* We hit the right wall, add some more */
+                
+                    that.page = that.page+1 ;
+                    that.loading = true;
+                    
+                    // debugger
+                    // alert($(that).tagvalue.name);
+                    var url_api=url+"/fetchAllBlogs?page="+that.page+'&user_id='+that.user_id+'&tag='+this.tag;
+                    $.getJSON(url_api, function(data) 
+                    {
+                        console.log(data.data, that.cellCount);
+
+                        var i = that.cellCount;
+                        $.each(data.data, function(index, value) {
+                            if(value.blog) {
+                                that.$set(that.blogs, i, value.blog);
+                            } else {
+                                that.$set(that.blogs, i, value);
+                            }
+                            that.blogs[i].audio = that.getAudio();
+
+                            i++;
+                        });
+
+                        that.cellCount = data.to;
+                        // that.blogs.concat(data.data);
+                        console.log(that.blogs, that.cellCount);
+                        // that.updateStack(1);
+                        that.loading = false;
+                    // if((that.newcell + 3) != that.images.length)
+                    //         jQuery.each(that.images,that.snowstack_addimage);
+                
+                
+                    });
+                } 
+               
+                }
+
+                if(scroll == 'up')
+                {
+                    /* Up Arrow */
+                    that.newcell -= 1;
+                }
+                if (scroll == 'down')
+                {
+                    /* Down Arrow */
+                    that.newcell += 1;
                 }
               
-                //if((that.newcell + 3)!=that.images.length)
+                //if((newcell + 3)!=that.images.length)
                   that.updateStack(that.newcell, that.magnifyMode);
-            },
+       },
     snowstack_addimage(reln, info)
-    {   
+    {
+        // debugger;
+        console.log(reln);
+         
         let that = this;
+        // console.log(that.images[reln]['id']);
         var n=1;
-        load_count++;
-    
+        that.load_count++;
             var nHot_Count;
             var nCool_Count;
             var nNaff_Count;
             var nComment_Count;
-
             if(that.images[reln]['hotcount']!==null){
                 nHot_Count=that.images[reln]['hotcount'];
             }
@@ -281,16 +586,6 @@
             else
             nComment_Count=0;
 
-        //change background color based on largeset count
-
-
-        //    Hot_Count=nHot_Count;
-        //    Cool_Count=nCool_Count;
-        //    Naff_Count=nNaff_Count;
-        //    Comment_Count=nComment_Count;
-
-
-
         if((nHot_Count/1000)>=1)
         nHot_Count=nHot_Count/1000+"K";
 
@@ -305,25 +600,25 @@
 
         var cell = {};
         // jQuery("#stack").empty();
-        var realn = that.cells.length;
+        var realn = that.cellCount;
         that.cells.push(cell);
     
         var x = Math.floor(realn / 2);
         var y = realn - x * 2;
         cell.info = info;
         
-        cell.div = jQuery('<div class="cell fader view original div_img" style="opacity: 0" block_no="'+reln+'" ></div>').width(CWIDTH).height(CHEIGHT);
-        cell.div[0].style.webkitTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-        cell.div[0].style.MozTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-        cell.div[0].style.msTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-        cell.div[0].style.OTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
+        cell.div = jQuery('<div class="cell fader view original div_img" style="opacity: 0" block_no="'+reln+'" ></div>').width(that.CWIDTH).height(that.CHEIGHT);
+        cell.div[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        cell.div[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        cell.div[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        cell.div[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
     
         var img = document.createElement("img");
         var title=info.name  ;
         var id=info.id  ;
         var content=info.content  ;
         var url="/single_blog/"+id;
-        var shared=info.shared;
+      
         jQuery(img).load(function ()
         {
          
@@ -340,7 +635,7 @@
             var cls_overlay="div_overlay_"+that.i;
             var cls_title="div_title_"+that.i;
             var cls_counts="div_counts_"+that.i;
-            var cls_tag="tag_"+that.i;
+           
        
            cell.div.append(jQuery('<a class="mover viewflat blog_img" href="#""  onclick="play_note('+reln+')"></a>').append(img));
            cell.div.append(jQuery('<div class="'+cls_title+' div_title" style="display:none;z-index:10000000;border:0px solid white"><p class="p_title">'+title+'</p></div>'));
@@ -362,12 +657,11 @@
              var className="div_count_icon"+that.i;
              var className_bg="div_count_bg"+that.i;
            
-             
         
         $(".div_overlay_"+that.i).css({width:width, height:height,
                                                 "position":"absolute",
                                                  left:left,top:top});
-     $(".div_title_"+that.i).css({'display':'none',width:width, height:height_title,
+        $(".div_title_"+that.i).css({'display':'none',width:width, height:height_title,
                                                 "position":"absolute",
                                                  left:left,top:top}); 
         $(".div_counts_"+that.i).css({'display':'none',width:width, height:height,
@@ -380,16 +674,11 @@
              else{
             
             cell.div.append(jQuery('<div class="'+className_bg+' div_count_bg" ><div class="button-div button-div-p "><button><img src="/front/icons/comment.png"  class="commentIcon" alt="" ></button> <div class="button-details"><p class="button-number">'+nComment_Count+'</p></div></div><div class="button-div button-div-p "><div class="button-details"><p class="button-number">'+nNaff_Count+'</p></div>  <button><img class="naffIcon" src="/front/icons/naff.png"/></button> </div><div class="button-div button-div-p"><div class="button-details"><p class="button-number">'+nCool_Count+'</p> </div><button><img src="/front/icons/cool.png" class="coolIcon"/></button> </div><div class="button-div button-div-p"><button><img src="/front/icons/hot.png" class="hotIcon"/></button><div class="button-details"><p class="button-number">'+nHot_Count+'</p></div></div></div>'));
-         }
-
-     if(shared=='shared')
-            cell.div.append(jQuery('<li class="'+cls_tag+' tag"><i class="fas fa-tag"></i> Shared</li>'));
+                 }
         
         largest(nHot_Count,nCool_Count,nNaff_Count,that.i);
-           cell.div.addClass('div_img_' + that.i);
-    
-
-           if (width > height){ 
+        cell.div.addClass('div_img_' + that.i);
+        if (width > height){ 
        
                 //it's a landscape
                 $(".div_title_"+that.i).css({"text-align":"left"});
@@ -406,7 +695,7 @@
                         height="15%";
              
             } 
-            else {
+        else {
                 height="30%";
                 //it's a portrait
                 $(".div_title_"+that.i).css({"text-align":"center"});
@@ -418,7 +707,7 @@
 
          
            cell.div.css("opacity", 1);
-           that.i++;
+        that.i++;
            n++;
            });
         
@@ -428,11 +717,11 @@
              //first row for reflection
         if (y == 1)
         {
-            cell.reflection = jQuery('<div class="cell fader view reflection" style="opacity: 0"></div>').width(CWIDTH).height(CHEIGHT);
-            cell.reflection[0].style.webkitTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.MozTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.msTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.OTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
+            cell.reflection = jQuery('<div class="cell fader view reflection" style="opacity: 0"></div>').width(that.CWIDTH).height(that.CHEIGHT);
+            cell.reflection[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
             var rimg = document.createElement("img");
             
             jQuery(rimg).load(function ()
@@ -449,11 +738,11 @@
         //second row for reflection
         if (y == 0)
         {
-            cell.reflection = jQuery('<div class="cell fader view reflection2" style="opacity: 0"></div>').width(CWIDTH).height(CHEIGHT);
-            cell.reflection[0].style.webkitTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.MozTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.msTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
-            cell.reflection[0].style.OTransform = translate3d(x * CXSPACING, y * CYSPACING, 0);
+            cell.reflection = jQuery('<div class="cell fader view reflection2" style="opacity: 0"></div>').width(that.CWIDTH).height(that.CHEIGHT);
+            cell.reflection[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+            cell.reflection[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
         
             var rimg = document.createElement("img");
             
@@ -469,14 +758,15 @@
             jQuery("#rstack2").append(cell.reflection);
         }
     },
-    updateStack(newIndex, newmagnifymode)
+     updateStack(newIndex, newmagnifymode)
     {
+        console.log('newIndex:' +newIndex);
         var currentTimer = null;  
         var dolly = jQuery("#dolly")[0];
         var camera = jQuery("#camera")[0];
         let that = this;
-        $(".div_overlay").css({'display':'none'});//for hiding overlay
-        $(".div_title").css({'display':'none'});
+        $(".overlay").css({'display':'none'});//for hiding overlay
+        // $(".div_title").css({'display':'none'});
         $(".div_count_text").css({'display':'block'});
         $(".div_btn").css({'display':'none'});
         $(".div_count_bg").css({'display':'flex'});
@@ -487,33 +777,34 @@
         }
     
         var oldIndex = that.currentCell;
-        newIndex = Math.min(Math.max(newIndex, 0), that.cells.length - 1);
+        newIndex = Math.min(Math.max(newIndex, 0), that.cellCount - 1);
+        
         that.currentCell = newIndex;
       
-        if (oldIndex != -1)
-        {
-            var oldCell = that.cells[oldIndex];
-            oldCell.div.attr("class", "cell fader view original div_img");	
-            if (oldCell.reflection)
-            {
-                oldCell.reflection.attr("class", "cell fader view reflection");
-            }
-        }
+        // if (oldIndex != -1)
+        // {
+        //     var oldCell = that.cells[oldIndex];
+        //     oldCell.div.attr("class", "cell fader view original div_img");	
+        //     if (oldCell.reflection)
+        //     {
+        //         oldCell.reflection.attr("class", "cell fader view reflection");
+        //     }
+        // }
    
-        var cell = that.cells[newIndex];
-        cell.div.addClass("selected");
-        if (cell.reflection)
-        {
-          //  cell.reflection.addClass("selected");
-        }
+        // var cell = that.cells[newIndex];
+        // cell.div.addClass("selected");
+        // if (cell.reflection)
+        // {
+        //   //  cell.reflection.addClass("selected");
+        // }
     
-        that.magnifyMode = newmagnifymode;
+        // that.magnifyMode = newmagnifymode;
         
-        if (that.magnifyMode)
-        {
-            cell.div.addClass("magnify");
-            refreshImage(cell.div.find("img")[0], cell);
-        }
+        // if (that.magnifyMode)
+        // {
+        //     cell.div.addClass("magnify");
+        //     refreshImage(cell.div.find("img")[0], cell);
+        // }
     
         if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
             {//alert("here1");
@@ -521,7 +812,7 @@
                 var currentMatrix = new OCSSMatrix(document.defaultView.getComputedStyle(dolly, null).OTransform);
                 var targetMatrix = new OCSSMatrix(dolly.style.OTransform);
                 var dx = currentMatrix.e - targetMatrix.e;
-                var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+                var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
                 camera.style.OTransform = "rotateY(" + angle + "deg)";
                 camera.style.OTransitionDuration = "330ms";
 
@@ -532,7 +823,7 @@
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
             var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
             camera.style.webkitTransform = "rotateY(" + angle + "deg)";
             camera.style.webkitTransitionDuration = "330ms";
 
@@ -545,7 +836,7 @@
         var currentMatrix = new DOMMatrix(document.defaultView.getComputedStyle(dolly, null).MozTransform);
         var targetMatrix = new DOMMatrix(dolly.style.MozTransform);
         var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
         camera.style.MozTransform = "rotateY(" + angle + "deg)";
         camera.style.MozTransitionDuration = "330ms";
 
@@ -557,7 +848,7 @@
         var currentMatrix = new MSCSSMatrix(document.defaultView.getComputedStyle(dolly, null).msTransform);
         var targetMatrix = new MSCSSMatrix(dolly.style.msTransform);
         var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
         camera.style.msTransform = "rotateY(" + angle + "deg)";
         camera.style.msTransitionDuration = "330ms";
 
@@ -569,7 +860,7 @@
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
             var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
             camera.style.webkitTransform = "rotateY(" + angle + "deg)";
             camera.style.webkitTransitionDuration = "330ms";
 
@@ -580,7 +871,7 @@
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
             var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (CXSPACING * 3.0), -1), 1) * 45;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
             angle=angle-7.5;
             camera.style.webkitTransform = "rotateY(" + angle + "deg)";
             camera.style.webkitTransitionDuration = "330ms";
@@ -627,51 +918,222 @@
             }
         }, 330);
     },
-    cameraTransformForCell(n)
+    updateStack2()
+    {
+        var currentTimer = null;  
+        var dolly = jQuery("#dolly")[0];
+        var camera = jQuery("#camera")[0];
+        let that = this;
+        
+        dolly.style.webkitTransform = that.cameraTransformForCell(1);
+	
+        var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
+        var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
+        
+        var dx = currentMatrix.e - targetMatrix.e;
+        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
+
+        camera.style.webkitTransform = "rotateY(" + angle + "deg)";
+        camera.style.webkitTransitionDuration = "330ms";
+
+        if (currentTimer)
+        {
+            clearTimeout(currentTimer);
+        }
+        
+        currentTimer = setTimeout(function ()
+        {
+            camera.style.webkitTransform = "rotateY(0)";
+            camera.style.webkitTransitionDuration = "2s";
+        }, 330);
+    },
+     cameraTransformForCell(n)
     {
         let that = this;
         //adjusting translation animation
-       if(n==1)
-            count=0.5;
+        if(n==1)
+            that.count=0.5;
         else
-            count+=0.5;
+            that.count+=0.5;
 
         var x = Math.floor(n / 3);
         var y = n - x * 3;
-      
-       if(n==1)
-       {
-                    var cx = (x +0.5) * CXSPACING;
-       }
-       else{
-                    if(scroll_type=='up') //adjusting translation animation
+        // var cx = (x + 0.5) * that.CXSPACING;
+	    // var cy = (y + 0.5) * that.CYSPACING;
+        if(n==1)
+        {
+                        var cx = (x +0.5) * that.CXSPACING;
+        }
+        else {
+                    if(that.scroll_type=='left') //adjusting translation animation
                     {  
-                            if(n==Total_count)
-                                count=0.5;
+                            if(n==that.Total_count)
+                                that.count=0.5;
                             else
-                                count-=1;
+                                that.count-=1;
 
-                        var cx = (x +count) * CXSPACING; 
-                        }
-                    else{
-                        var cx = (x +count) * CXSPACING; 
-                        }
-            }
+                        var cx = (x +that.count) * that.CXSPACING; 
+                    }
+                    else {
+                        var cx = (x +that.count) * that.CXSPACING; 
+                    }
+        }
       
 
-        var cy = (y + 0.5) * CYSPACING;
+        var cy = (y + 0.5) * that.CYSPACING;
       
-       //scroll_type
+       that.scroll_type
      
         if (that.magnifyMode)
         {
-            return translate3d(-cx, -cy, 180);
+            return that.translate3d(-cx, -cy, 180);
         }
         else
         {
-            return translate3d(-cx, -cy, 0);
+            return that.translate3d(-cx, -cy, 0);
         }	
     },
-      }
+    snowstack_init()
+    {
+        let that = this;
+        that.CHEIGHT = Math.round(window.innerHeight / 3.5);
+        that.CWIDTH  = Math.round(that.CHEIGHT * 300 / 180);
+        that.CXSPACING = that.CWIDTH + that.CGAP;
+        that.CYSPACING = that.CHEIGHT + that.CGAP;
+
+        // jQuery("#mirror")[0].style.webkitTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        // jQuery("#mirror")[0].style.MozTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        // jQuery("#mirror")[0].style.msTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+        // jQuery("#mirror")[0].style.OTransform = "scaleY(-1.0) " + that.translate3d(0, - that.CYSPACING * 4 - 1, 0);
+    },
+    translate3d(x, y, z)
+    {
+        return "translate3d(" + x + "px, " + y + "px, " + z + "px)";
+    },
+    countcomment(){
+        alert("helloo from comments");
+    },
+    emotionchange(index) {
+        // console.log(this.general_blogs[index].id);
+        Echo.channel('blogLike'+this.blogs[index].id)
+            .listen('NewEmotion',(like) => {
+                // console.log(like);
+                this.blogs[index].hotcount=like.hotcount;
+                this.blogs[index].coolcount=like.coolcount;
+                this.blogs[index].naffcount=like.naffcount;
+            });
+
+        Echo.channel('blog'+this.blogs[index].id)
+            .listen('NewComment',(comment) => {
+                // console.log(like);
+                this.blogs[index].commentcount=comment.commentcount;
+            });
+    },
+    layoutImageInCell(img_class, index) {
+        let that = this;
+        var iwidth = $('.'+img_class).width();
+        var iheight = $('.'+img_class).height();
+        var cwidth = $('.'+img_class).closest('.cell').width();
+        var cheight = $('.'+img_class).closest('.cell').height();
+        // console.log('cell width and height: ', cwidth, cheight)
+        var ratio = Math.min(cheight / iheight, cwidth / iwidth);
+        
+        iwidth *= ratio;
+        iheight *= ratio;
+        //for putting image in center
+
+        var width_for_count=Math.round(iwidth) + "px";
+        var height_for_count= Math.round((iheight) /5)+ "px";
+        var top_for_count= Math.round((cwidth - iwidth) / 2) + "px";
+        var left_for_count= Math.round((cheight - iheight) / 2) + "px";
+
+        if (iwidth < iheight) {
+            $('.'+img_class).closest('.cell').find('.div_count_regular').remove();
+            $('.'+img_class).closest('.cell').find('.div_count_small').css('display', 'flex');
+        } else {
+            $('.'+img_class).closest('.cell').find('.div_count_regular').css('display', 'flex');
+            $('.'+img_class).closest('.cell').find('.div_count_small').remove();
+        }
+
+        $('.'+img_class).closest('.cell').css({
+            // 'width': Math.round(iwidth) + "px",
+            // 'height': Math.round(iheight) + "px",
+            'opacity': 1
+        });
+
+        $('.'+img_class).css({
+            'width': Math.round(iwidth) + "px",
+            'height': Math.round(iheight) + "px",
+            // 'height': '100%',
+            'left': Math.round((cwidth - iwidth) / 2) + "px",
+	        'top': Math.round((cheight - iheight) / 2) + "px"
+        });
+
+        $('.'+img_class).closest('.cell').find('.div_count_bg').css({
+            'width': Math.round(iwidth) + "px",
+            'left': Math.round((cwidth - iwidth) / 2) + "px",
+            'bottom': Math.round((cheight - iheight) / 2) + "px"
+        });
+
+        $('.'+img_class).closest('.cell').find('.div_overlay').css({
+            'width': Math.round(iwidth) + "px",
+            'height': Math.round(iheight) + "px",
+            'top': Math.round((cheight - iheight) / 2) + "px",
+            'left': Math.round((cwidth - iwidth) / 2) + "px",
+        });
+
+        if(that.isOdd(index)) {
+            $('.'+img_class).addClass('reflection');
+        } else {
+            $('.'+img_class).addClass('reflection2');
+        }
+
+        
+        // var audio = that.getAudio();
+        // console.log(audio);
+        // $('.'+img_class).closest('.blog_img').find('input[name="audio'+index+'"]').val(audio);
+    },
+    isOdd(value) {
+        if (value%2 != 0)
+            return true;
+        else
+            return false;
+    },
+    viewBlog(id) {
+		window.location.href = '/single_blog/'+id;
+    },
+    getAudio()
+    {
+        if(this.lastAudioNum >= 6) {
+            this.lastAudioNum = 3;
+        }
+
+        if(this.currentAudio == this.audio.length) {
+            this.currentAudio = 0;
+            this.lastAudioNum++;
+        }
+
+        var lastAudioNum = this.lastAudioNum;
+
+        // console.log('audio length: '+this.audio.length);
+        console.log('current audio: '+this.currentAudio);
+        console.log('last audio num: '+this.lastAudioNum);
+
+        var audio = this.audio[this.currentAudio]+''+lastAudioNum;
+
+        this.currentAudio++;
+
+        return audio;
+    },
+    playAudio(div_class)
+    {
+        let that = this;
+        var music = $('.'+div_class+' input[name="audio"]').val();
+        that.audio_player.pause();
+        that.audio_player.src = that.url+'/front/audio/'+music+'.mp3';
+        that.audio_player.play();
     }
+    }
+}
+
 </script>

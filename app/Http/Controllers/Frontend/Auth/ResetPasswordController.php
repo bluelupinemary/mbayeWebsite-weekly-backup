@@ -88,7 +88,7 @@ class ResetPasswordController extends Controller
     protected function validationErrorMessages()
     {
         return [
-            'password.regex' => 'Password must contain at least 1 uppercase letter, 1 lowercase letter and 1 number.',
+            'password.regex' => 'Password must contain at least one number and both uppercase and lowercase letters.',
         ];
     }
 

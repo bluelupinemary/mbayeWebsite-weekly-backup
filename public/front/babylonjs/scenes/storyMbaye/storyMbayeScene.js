@@ -233,6 +233,9 @@ function change_collage_photo(stageNo){
 
         wallMatl.diffuseTexture.uScale = 1;
         wallMatl.diffuseTexture.vScale = -1;
+
+        wallMatl.opacityTexture.uScale = 1;
+        wallMatl.opacityTexture.vScale = -1;
         // wallMatl.alpha = 0.7;
         // wallMatl.alpha = 0.3;
         wallMatl.diffuseTexture.hasAlpha = true;
@@ -564,6 +567,11 @@ var animateObjectRotation = function(obj, speed, frameCount, newRot) {
     var ease = new BABYLON.CubicEase();
     ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
     BABYLON.Animation.CreateAndStartAnimation('objPos', obj, 'rotation', speed, frameCount, obj.rotation, newRot, 0, ease);
+}
+
+var animateObjectRotationNoEase = function(obj, speed, frameCount, newRot) {
+  
+    BABYLON.Animation.CreateAndStartAnimation('objPos', obj, 'rotation', speed, frameCount, obj.rotation, newRot, 0, null);
 }
 
 var animateObjectFadeOut = function(obj, speed, frameCount, visibility) {

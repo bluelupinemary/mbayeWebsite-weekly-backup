@@ -47,4 +47,5 @@ class Group extends Model
 
         return $users;
     }
+
 }

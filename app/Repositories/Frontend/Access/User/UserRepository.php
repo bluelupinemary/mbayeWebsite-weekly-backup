@@ -267,12 +267,41 @@ class UserRepository extends BaseRepository
      */
     public function updateProfile($id, $input)
     {
-        dd($input);
+
+        // dd($input);
         $user = $this->find($id);
         $user->first_name = $input['first_name'];
         $user->last_name = $input['last_name'];
-
+        $user->dob = $input['dob'];
+        $user->age = $input['age'];
+        $user->sponser_name = $input['sponser_name'];
+        $user->sponser_id = $input['sponser_id'];
+        $user->gender = $input['gender'];
+        $user->address = $input['address'];
+        $user->country = $input['country'];
+        $user->id_number = $input['id_number'];
+        $user->mobile_number = $input['mobile_number'];
+        $user->org_type = $input['org_type'];
+        $user->org_name = $input['org_name'];
+        $user->username = $input['username'];
+        //$user->password = $input['password'];
+        $user->occupation = $input['occupation'];
         $user->updated_by = access()->user()->id;
+
+        if ($input['photo']=='' || $input['photo']==null){
+        return $user->save();}
+
+        else{
+          // for uploading and saving captured image
+          $base64 = str_replace('data:image/jpeg;base64,', '', $input['photo']);
+          $base64 = str_replace(' ', '+', $base64);
+          $image = base64_decode($base64);
+
+          $filename =  '-snap'.mt_rand().'.jpg';
+          Storage::disk('local')->put('public/profilepicture/'.$filename, $image);
+          $user->photo =$filename;
+          return $user->save();}
+        //   dd($user->photo);
 
         // if ($user->canChangeEmail()) {
         //     //Address is not current address
@@ -298,7 +327,6 @@ class UserRepository extends BaseRepository
         //     }
         // }
 
-        return $user->save();
     }
 
     /**

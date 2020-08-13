@@ -127,6 +127,55 @@ class GeneralBlogsController extends Controller
         return view('frontend.blog.view_all_stories', compact('blogs', 'alert'));
     }
 
+    /**
+     * Returns all general blogs
+     */
+    public function fetchgeneralblogs(Request $request)
+    {
+   
+        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
+        $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
+        $sort = 'desc_name';
+        $general_blogs = GeneralBlog::get();
+        $general_blog_shares = GeneralBlogShare::where('publish_datetime', '>=', Carbon::now()->subDay())->with('blog')->get();
+
+        if($request->has('user_id') && $request->user_id != 0) {
+            $general_blogs = $general_blogs->where('created_by', $request->user_id);
+            $general_blog_shares = $general_blog_shares->where('created_by', $request->user_id);
+        }                         
+        
+        $blogs = $general_blogs->merge($general_blog_shares)
+                ->sortByDesc('publish_datetime')
+                ->paginate($limit);
+       
+        
+        foreach($blogs as $blog){
+            if($blog->blog) {
+                if($blog->blog->featured_image == '') {
+                    $blog->blog->featured_image = 'blog-default-featured-image.png';
+                }
+                $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
+                $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
+                $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
+                $blog->blog->commentcount  = $blog->blog->comments->count();
+                $blog->blog->most_reaction = $blog->blog->mostReaction();
+                $blog->blog->name = $blog->caption;
+            } else {
+                if($blog->featured_image == '') {
+                    $blog->featured_image = 'blog-default-featured-image.png';
+                }
+                $blog->hotcount = $blog->likes->where('emotion',0)->count();
+                $blog->coolcount     = $blog->likes->where('emotion',1)->count();
+                $blog->naffcount     = $blog->likes->where('emotion',2)->count();
+                $blog->commentcount  = $blog->comments->count();
+                $blog->most_reaction = $blog->mostReaction();
+            }
+        }
+     
+        return response()->json($blogs);
+    }
+
     public function show($id)
     {
         $blog = GeneralBlog::find($id);

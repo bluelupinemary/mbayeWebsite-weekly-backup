@@ -667,7 +667,7 @@ function add_capt_mouse_listener(){
             else return;
             if(pickinfo.hit){
                 var theInitMesh = pickinfo.pickedMesh.name;
-                console.log("THe mesh clicked: ", theInitMesh, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
+                // console.log("THe mesh clicked: ", theInitMesh, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
             
                 if(theInitMesh === "a"){
                     agreeCameraUseDisc.isVisible = false;
