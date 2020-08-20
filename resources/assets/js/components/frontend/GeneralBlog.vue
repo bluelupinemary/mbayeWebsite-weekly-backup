@@ -15,9 +15,17 @@
                         </a>
                             
                         <div class="overlay">
-                            <div :class="'div_title_'+index+' div_title'" style="display:none;z-index:10000000;border:0px solid white">
+                            <div v-if="general_blog.shared == false" :class="'div_title_'+index+' div_title'" style="display:none;z-index:10000000;border:0px solid white">
                                 <p class="p_title">{{general_blog.name}}</p>
                             </div>
+
+                            <div v-else-if="general_blog.shared" :class="'div_title_'+index+' div_title text_left'" style="display:none;z-index:10000000;border:0px solid white">
+                                <p class="p_title">Title: {{general_blog.name}}</p>
+                                <p class="p_title">Owner: {{general_blog.owner.first_name}} {{general_blog.owner.last_name}}</p>
+                            </div>
+
+                            <li v-if="general_blog.shared" :class="'tag tag_'+index"><i class="fas fa-tag"></i> Shared</li>
+
                             <div :class="'div_overlay_'+index+' div_overlay '+index"> 
                                 <div class="blog-buttons_overlay ">
                                     <div class="button-div">
@@ -124,7 +132,24 @@
        
     </div>
 </div>
-<button class="btn btn_primary"></button>
+<div v-if="k == 0" style="width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 0px;
+    z-index: 10000000 !important;
+    left: 0;">
+    <button class="btn btn-primary" style="position:absolute;">sometext</button>
+    <!-- <button v-else class="btn btn-danger" style="position:absolute;">sometext</button> -->
+</div>
+<div v-else style="width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 0px;
+    z-index: 10000000 !important;
+    left: 0;">
+    <button class="btn btn-danger" @click.prevent="fetchblogs" style="position:absolute;">Remount</button>
+    <!-- <button v-else class="btn btn-danger" style="position:absolute;">sometext</button> -->
+</div>
 </div>
 </template>
 
@@ -132,7 +157,8 @@
 import EventBus from '../../frontend/event-bus';
 export default {
     props: {
-        user_id: Number
+        user_id: Number,
+        type: ''
     },
     data:function() {
         return {
@@ -252,7 +278,7 @@ export default {
     fetchblogs() {
         let that = this;
        /* Calling API for fetching images */
-        axios.get("/fetchgeneralblogs?page="+that.page+'&user_id='+that.user_id)
+        axios.get("/fetchgeneralblogs?page="+that.page+'&user_id='+that.user_id+'&type='+that.type)
         .then((response) => {
             // debugger
     //    console.log(response.data);
@@ -268,11 +294,14 @@ export default {
             console.log('cell count: ', that.cellCount);
             that.general_blogs = {};
             // var i = 0;
+            that.k = 0;
             $.each(response.data.data, function(index, value) {
                 if(value.blog) {
                     that.$set(that.general_blogs, index, value.blog);
+                    that.general_blogs[index].shared = true;
                 } else {
                     that.$set(that.general_blogs, index, value);
+                    that.general_blogs[index].shared = false;
                 }
                 that.emotionchange(index);
                 // that.commentchange(index)
@@ -281,7 +310,7 @@ export default {
                 // i++;
             });
             // that.general_blogs = response.data.data;
-            console.log(response.data.data);
+            console.log(that.general_blogs);
 
             // jQuery.each(that.images,that.snowstack_addimage);
             that.updateStack(1);
@@ -494,7 +523,7 @@ export default {
                     
                     // debugger
                     // alert($(that).tagvalue.name);
-                    var url_api=url+"/fetchgeneralblogs?page="+that.page+'&user_id='+that.user_id
+                    var url_api=url+"/fetchgeneralblogs?page="+that.page+'&user_id='+that.user_id+'&type='+that.type;
                     $.getJSON(url_api, function(data) 
                     {
                         console.log(data.data, that.cellCount);
@@ -1071,7 +1100,7 @@ export default {
             'bottom': Math.round((cheight - iheight) / 2) + "px"
         });
 
-        $('.'+img_class).closest('.cell').find('.div_overlay').css({
+        $('.'+img_class).closest('.cell').find('.overlay').css({
             'width': Math.round(iwidth) + "px",
             'height': Math.round(iheight) + "px",
             'top': Math.round((cheight - iheight) / 2) + "px",

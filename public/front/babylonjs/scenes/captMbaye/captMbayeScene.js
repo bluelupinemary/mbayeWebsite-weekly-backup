@@ -693,7 +693,7 @@ function add_capt_mouse_listener(){
                 }else if(theInitMesh === "foundation" || theInitMesh ===  "homeVenus"){
                     showPage("https://www.captaindiagne.org/");
                 }else if(theInitMesh === "bbc" || theInitMesh ===  "homePluto"){
-                    showPage("https://www.bbc.com/news/magazine-26793157");
+                    showPage(" https://www.bbc.co.uk/news/special/2014/newsspec_6954/index.html");
                 }else if(theInitMesh ===  "homeSun" || theInitMesh === "initWebCamScreen"){
               //      console.log("sun is clicked!");
                     show_capt_webCamera();

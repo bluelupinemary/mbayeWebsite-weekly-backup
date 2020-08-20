@@ -9,9 +9,8 @@ let astroInitState = {x:0,y:0,z:0};
 let hl,starColor;
 let skybox;
 
-let currentStage = 24;
-let imagePath = 'front/images3D/storyMbayeScene/';
-let texturePath = 'front/textures/storyMbaye/';
+let currentStage = 35;
+
 
 let createChapter2Scene = function(){
     
@@ -27,11 +26,10 @@ let createChapter2Scene = function(){
     scene.environmentTexture = hdrTexture;
     
     load_3D_mesh();
-    // load_orig_flowers();
     skybox = create_skybox();
     storyCamera = create_camera();
     storyLight = create_light();
-    // load_orig_flowers();
+    load_orig_flowers(3);
     // create_contacts_gui();
     
     // scene.debugLayer.show();
@@ -48,7 +46,7 @@ let createChapter2Scene = function(){
 //function to load the 3D meshes
 let rfoot_obj;
 let collage_wall;
-var WALL_INIT_POS = new BABYLON.Vector3(-9.12,0,-1500);
+var WALL_INIT_POS = new BABYLON.Vector3(-9.12,0,-1100);
 function load_3D_mesh(){
     var loadedPercent = 0;
     Promise.all([
@@ -95,6 +93,7 @@ function load_3D_mesh(){
         // earth_obj.setEnabled(false);
         add_mouse_listener();
         setup_collage();
+        setup_music_player();
         
     });
 }//end of load design meshes
@@ -106,15 +105,14 @@ function load_3D_mesh(){
 let earth_obj;
 let currStageObjMap = new Map();
 let currTimer;
-let secondCamView, isMbayeRotating=false, isWorldFlowersActive = false;
 let worldFlowers;
-let video31;
-let stage32map = new Map();
-let stage25map = [];
+let videoDisc;
+
 function setup_stage(stageNo){
 
     let imgArr=[];
     if(currTimer) clearTimeout(currTimer);
+  
     remove_texts();                                                 //delete/remove html texts from the dom tree
     remove_stage_objects();                                         //delete/remove previously created objects from the scene thru currStageObjMap
     
@@ -127,30 +125,228 @@ function setup_stage(stageNo){
     if(stageNo === 35){                                      
       //for the current stage, change font size of text; show texts; add zoomin animation
        $('.firstVideoOverlayText').css('font-size','3vw');
-        console.log("here");
-        storyCamera.radius = 50;
+        storyCamera.radius = 45;
         rfoot_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(90),0);
         storyCamera.targetScreenOffset = new BABYLON.Vector2(0,2);
+        
         animateObjectRotationNoEase(rfoot_obj, 10, frameCount, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(450),0));
-    }else if(stageNo === 36){             
-        storyCamera.radius = 500;                         
-        // rfoot_obj.isVisible = false;
-        // rfoot_obj.setEnabled(false);
+    }else if(stageNo === 36){  
+        $('.firstVideoOverlayText').css('font-size','4.5vw');        
+        setCamDefault(150);   
+        storyCamera.targetScreenOffset = new BABYLON.Vector2(0,0);
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
+
+        let temp = init_photo(imgArr[0],{w:700,h:450},{x:0,y:0,z:0},stageNo); 
+        currStageObjMap.set(temp.name,temp);                 
+        // change_collage_photo(stageNo);
+        // collage_wall.isVisible = true;
+        // collage_wall.setEnabled(true);
+        animateCameraToRadius(storyCamera, 20, frameCount, 500);
+
+    }else if(stageNo === 37){   
+      $("#firstVideoOverlayText").css({ 'color' : '#37fff6','font-size':'3vw'});
+        scene.animatables.forEach(function(anim){
+          anim.stop();
+        });
+
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
+      
+        setCamDefault(50); 
+        change_collage_photo(stageNo);
+        collage_wall.isVisible = true;
+        collage_wall.setEnabled(true);
+
+    }else if(stageNo === 38){   
+        $("#firstVideoOverlayText").css({ 'color' : '#efad0c','font-size':'3.5vw'});
+        collage_wall.isVisible = false;
+        collage_wall.setEnabled(false);
+
+        // rfoot_obj.position = new BABYLON.Vector3(56,-15,50);
+        // rfoot_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(45),0);
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
+     
+        storyCamera.radius = 140;
+        // setCamDefault(1000);
+        storyCamera.alpha = 1.5784;
+        storyCamera.beta = 1.5814;
+  
+
+        let initDelay = 1000;
+        for(i=0;i<imgArr.length;i++){
+            let pos = stageMap.get(stageNo).imagePos;
+            let temp = init_photo(imgArr[i],{w:70,h:70},pos[i],stageNo);
+            add_delay(temp,initDelay,2000);
+            currStageObjMap.set(temp.name, temp);
+            initDelay += 2000;
+        }//end of for loop
+
+         
+    }else if(stageNo === 39){
+       $("#firstVideoOverlayText").css({'font-size':'3vw'});
+      
+        setCamDefault(500);
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
+        rfoot_obj.position = new BABYLON.Vector3(0,0,0);
+        videoDisc = init_video("videoStage39",550,stageNo);
+        videoDisc.material.diffuseTexture.uOffset = 0.16;
+        videoDisc.material.diffuseTexture.uScale = 0.7;
+        currStageObjMap.set(videoDisc.name, videoDisc);
+        hl.addMesh(videoDisc, new BABYLON.Color3(0,0.5,0.5));
+
+    }else if(stageNo === 40){   
+        $("#firstVideoOverlayText").css({'font-size':'4vw'});
+
+        if(videoDisc){
+            try{
+                let theVid = videoDisc.material.diffuseTexture.video;
+                theVid.pause();
+                theVid.currentTime = 0;
+            }catch(e){
+
+            };
+        }
+        setCamDefault(850);
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
+        rfoot_obj.position = new BABYLON.Vector3(0,0,0);
+
+        let imgs = [];
+        let pos = stageMap.get(stageNo).imagePos;
+
+        for(i=0;i<imgArr.length;i++){
+          let temp = init_photo(imgArr[i],{w:250,h:300},pos[i],stageNo);
+          imgs.push(temp);
+          currStageObjMap.set(temp.name, temp);
+          if(i>4) temp.visibility = 0;
+        }
+
+        currTimer = setTimeout(function(){
+          for(i=0;i<imgs.length;i++){
+            if(i<5) animateObjectFadeOut(imgs[i], 30, 200, 0);
+            else animateObjectFadeOut(imgs[i], 30, 200, 1);
+          }
+        },2000); 
+    }else if(stageNo === 41){   
+        $("#firstVideoOverlayText").css({'font-size':'3.5vw'});
+        try{
+          stop_music();
+        }catch(e){
+
+        }
+        // setCamDefault(1500);
+        rfoot_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(90),0);
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
+
+        setCamLateralLeft();
+        storyCamera.alpha = 2.8724466335934786;
+        storyCamera.beta= 1.3812596352337896;
+        setFlowerVisibility();
+        storyCamera.upperRadiusLimit = 1800;
+        storyCamera.radius = 1000;
+        animateCameraToRadius(storyCamera,20,frameCount,1700);
+
+
+    }else if(stageNo === 42){   
+        $("#firstVideoOverlayText").css({'font-size':'3.7vw'});
+        removeFlowers();
+        setCamDefault(300);
+        
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
+        storyCamera.targetScreenOffset = new BABYLON.Vector2(0,0);
+        storyCamera.upperRadiusLimit = 1500;
+        let worldFlowers = init_photo(imgArr[0],{w:700,h:700},{x: 0, y: 0, z:-1000},stageNo);
+        currStageObjMap.set(worldFlowers.name, worldFlowers);
+    
+    }else if(stageNo === 43){   
+        $("#firstVideoOverlayText").css({'font-size':'4vw'});
+     
+        setCamDefault(180);
+        
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
+
+        let temp = init_photo(imgArr[0],{w:1200,h:600},{x:0,y:0,z:-500},stageNo); 
+        currStageObjMap.set(temp.name,temp);      
+
+        add_delay(temp,1000,4000);
+
+    }else if(stageNo === 44){   
+        $("#firstVideoOverlayText").css({'font-size':'3.5vw'});
+        
+        setCamDefault(300);
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
 
         change_collage_photo(stageNo);
         collage_wall.isVisible = true;
         collage_wall.setEnabled(true);
 
-        animateCameraToRadius(storyCamera, 20, frameCount, 50);
-
-    }else if(stageNo === 37){             
-        setCamDefault(500);    
+        animateCameraToRadius(storyCamera,30,frameCount,800);
+       
+    }else if(stageNo === 45){   
+        $("#firstVideoOverlayText").css({'font-size':'3.2vw'});
         collage_wall.isVisible = false;
         collage_wall.setEnabled(false);
 
-     
+        rfoot_obj.position = new BABYLON.Vector3(-70,-25,390);
+        rfoot_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(115),0);
+        rfoot_obj.isVisible = true;
+        rfoot_obj.setEnabled(true);
+        setCamDefault(200);
 
-  }
+        let imgs = [];
+        let pos = stageMap.get(stageNo).imagePos;
+
+        for(i=0;i<imgArr.length;i++){
+          let temp = init_photo(imgArr[i],{w:10,h:10},{x:-80,y:-25,z:380},stageNo);
+          // let temp = init_photo(imgArr[i],{w:100,h:100},{x:0,y:0,z:0},stageNo);
+          imgs.push(temp);
+          currStageObjMap.set(temp.name, temp);
+        }
+
+        currTimer = setTimeout(function(){
+            for(i=0;i<imgs.length;i++){
+                animateObjectPosition(imgs[i],20,frameCount,pos[i]);
+                animateObjectScaling(imgs[i],20,frameCount,new BABYLON.Vector3(15,15,15));
+            }
+        },3000);
+        
+
+        animateCameraToRadius(storyCamera,50,frameCount,500);
+    }else if(stageNo === 46){   
+        $("#firstVideoOverlayText").css({'font-size':'3.5vw'});
+        rfoot_obj.position = new BABYLON.Vector3(0,0,0);
+        setCamDefault(200);
+
+        collage_wall.isVisible = false;
+        collage_wall.setEnabled(false);
+
+        rfoot_obj.isVisible = false;
+        rfoot_obj.setEnabled(false);
+        let temp = init_photo(imgArr[0],{w:1200,h:600},{x:0,y:0,z:-500},stageNo); 
+        currStageObjMap.set(temp.name,temp);      
+     
+    }else if(stageNo === 47){   
+        $("#firstVideoOverlayText").css({'font-size':'3.7vw'});
+        // storyCamera.position = new BABYLON.Vector3(0,0,0);
+        rfoot_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(90),0);
+        rfoot_obj.isVisible = true;
+        rfoot_obj.setEnabled(true);
+        setCamSuperior(300);
+      
+        storyCamera.targetScreenOffset = new BABYLON.Vector2(0,-4);
+        animateCameraToRadius(storyCamera,40,frameCount,45);
+      
+     
+    }
+
+
     currentStage++;
     // currentStage = 31;
 
@@ -160,7 +356,7 @@ function setup_stage(stageNo){
 }
 
 function set_camera_specs(stageNo){
- 
+
 }
 
 let dome;
@@ -168,7 +364,7 @@ function setup_3D_photo(){
   if(dome) dome.dispose();
    dome = new BABYLON.PhotoDome(
       "testdome",
-      "front/images3D/storyMbayeScene/flower.jpg",
+      "front/textures/storyMbaye/collage-37-1.png",
       { 
           resolution: 64,
           size: 1000
@@ -179,67 +375,6 @@ function setup_3D_photo(){
   dome.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-130),0);
 
 }
-
-
-function set_scale(){
-  let size = getRandomInt(4,5)
-  return size;
-}
-
-//function that randomizes int
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-let stageFlowersMap = new Map();
-function load_orig_flowers(){
-  for (const [flowerName,val] of rFootFlowersMap.entries()) {
-      // let thePos = set_position();
-      let thePos;
-      if(val[0]!==null) thePos = val[0];
-      let theSize = set_scale();
-      let samp = init_flower(flowerName,flowerName+"Matl", "front/images3D/flowers2D/orig/"+flowerName+".png",theSize,thePos.x,thePos.y,thePos.z);
-      stageFlowersMap.set(flowerName,samp);
-  }
-}
-
-
-function init_flower(name,matlName,imgPath,size, x, y, z){
-  let plane = BABYLON.Mesh.CreatePlane(name, size, scene);
-  plane.isVisible = false;
-          
-  plane.position = new BABYLON.Vector3(x,y,z);
-  plane.rotation.y = BABYLON.Tools.ToRadians(-90);
-  
-  let planeMatl = new BABYLON.StandardMaterial(matlName, scene);
-  planeMatl.diffuseColor = BABYLON.Color3.Black();
-  planeMatl.diffuseTexture = new BABYLON.Texture(imgPath, scene);
-  
-  planeMatl.diffuseTexture.hasAlpha = true;
-  planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
-  planeMatl.emissiveColor = BABYLON.Color3.White();
-  planeMatl.backFaceCulling = false;//Allways show the front and the back of an element
-  planeMatl.freeze();
-  
-  plane.material = planeMatl;
-  // plane.freezeWorldMatrix();
-  // add_action_mgr(plane);
-  return plane;
-}
-
-function setFlowerVisibility(){
-  for (const [flowerName,val] of stageFlowersMap.entries()) {
-      val.isVisible = true;
-  }
-}
-
-function removeFlowers(){
-  for (const [flowerName,val] of stageFlowersMap.entries()) {
-      val.dispose();
-  }
-  stageFlowersMap.clear();
-}
-
 
 
 
@@ -254,10 +389,10 @@ function removeFlowers(){
     $('.firstVideoOverlayText').css('display', 'block');
 
     rotate_sky();                                                   //start rotating the sky
-    // currentStage = 24;
-    // setup_stage(24);                                                 //start showing the script 1, stage 1
-    currentStage = 35;
-    setup_stage(35); 
+    // currentStage = 35;
+    // setup_stage(35);                                                 //start showing the script 1, stage 1
+    currentStage = 39;
+    setup_stage(39); 
     
     engine.runRenderLoop(function(){
       if(scene){
@@ -274,8 +409,25 @@ function removeFlowers(){
 
   //if continue button is clicked
   $('#continueBtn').on('click',function(evt){
-    $('#continueBtnDiv').css('visibility','hidden');
-    setup_stage(currentStage);
+    // $('#continueBtnDiv').css('visibility','hidden');
+    // setup_stage(currentStage);
+
+    if(currentStage <= 47){
+      $('#continueBtnDiv').css('visibility','hidden');
+      setup_stage(currentStage);
+    }else{
+        let cNo = 4;
+        $.ajax({
+        type: "get",
+        url:urlStory,
+        data:{chapter_no:cNo,
+                _token:token
+        },
+        success: function(result){
+                window.location.href=urlStory+"?cNo="+cNo;
+        }
+        });
+    }
     
     //console.log("continue button is clicked");
   });

@@ -10,8 +10,6 @@ let hl,starColor;
 let skybox;
 
 let currentStage = 24;
-let imagePath = 'front/images3D/storyMbayeScene/';
-let texturePath = 'front/textures/storyMbaye/';
 
 let createChapter2Scene = function(){
     
@@ -114,7 +112,6 @@ function load_3D_mesh(){
 
 let currStageObjMap = new Map();
 let currTimer;
-let secondCamView, isMbayeRotating=false, isWorldFlowersActive = false;
 let worldFlowers;
 let video31;
 let stage32map = new Map();
@@ -484,66 +481,6 @@ function setup_3D_photo(){
 
 
 
-
-
-function set_scale(){
-  let size = getRandomInt(4,5)
-  return size;
-}
-
-//function that randomizes int
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-let stageFlowersMap = new Map();
-function load_orig_flowers(){
-  for (const [flowerName,val] of rFootFlowersMap.entries()) {
-      // let thePos = set_position();
-      let thePos;
-      if(val[0]!==null) thePos = val[0];
-      let theSize = set_scale();
-      let samp = init_flower(flowerName,flowerName+"Matl", "front/images3D/flowers2D/orig/"+flowerName+".png",theSize,thePos.x,thePos.y,thePos.z);
-      stageFlowersMap.set(flowerName,samp);
-  }
-}
-
-
-function init_flower(name,matlName,imgPath,size, x, y, z){
-  let plane = BABYLON.Mesh.CreatePlane(name, size, scene);
-  plane.isVisible = false;
-          
-  plane.position = new BABYLON.Vector3(x,y,z);
-  plane.rotation.y = BABYLON.Tools.ToRadians(-90);
-  
-  let planeMatl = new BABYLON.StandardMaterial(matlName, scene);
-  planeMatl.diffuseColor = BABYLON.Color3.Black();
-  planeMatl.diffuseTexture = new BABYLON.Texture(imgPath, scene);
-  
-  planeMatl.diffuseTexture.hasAlpha = true;
-  planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
-  planeMatl.emissiveColor = BABYLON.Color3.White();
-  planeMatl.backFaceCulling = false;//Allways show the front and the back of an element
-  planeMatl.freeze();
-  
-  plane.material = planeMatl;
-  // plane.freezeWorldMatrix();
-  // add_action_mgr(plane);
-  return plane;
-}
-
-function setFlowerVisibility(){
-  for (const [flowerName,val] of stageFlowersMap.entries()) {
-      val.isVisible = true;
-  }
-}
-
-function removeFlowers(){
-  for (const [flowerName,val] of stageFlowersMap.entries()) {
-      val.dispose();
-  }
-  stageFlowersMap.clear();
-}
 
 
 

@@ -52,7 +52,7 @@
 
     <div id="musicVideoDiv" style="visibility:hidden;">
         <img id="close-btn"  src="{{asset('front')}}/images3D/close-btn.png" data-toggle="tooltip" title="Close" align="right" style="padding-top:0.1vw;width:1.3vw;"/>
-        <div class="player" id="player" data-player="youtube-player-1" style="width:20vw;height: 12vw;right: 0;top:0;position: relative;"></div>
+        <div class="player" id="player" data-player="youtube-player-1" style="width:20vw;height: 12vw;right: 0;top:0;position: absolute;"></div>
     </div>
 
     {{-- <div id="continueBtnDiv" style="position:absolute; right: 3vw; bottom: 3vw;visibility:hidden;"> --}}
@@ -73,6 +73,7 @@
 
 @section('after-scripts')
 
+<script src="https://www.youtube.com/iframe_api"></script> 
 <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
 
 <script src="{{asset('front')}}/babylonjs/scenes/storyMbaye/storyMbayeMap.js"></script>
@@ -91,8 +92,16 @@
             });
         });
     }
-    else if(chapter_no == 3){
-        let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter3.js";
+    else if(chapter_no == 3){ 
+        let url2 = "{{asset('front')}}"+"/babylonjs/scenes/flowersMbaye/flowersMap.js";
+        $.getScript( url2, function() {
+
+            let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter3.js";
+            $.getScript( url, function() {
+            });
+        });
+    }else if(chapter_no == 4){
+        let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter4.js";
         $.getScript( url, function() {
         });
     }

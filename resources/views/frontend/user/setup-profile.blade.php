@@ -17,8 +17,9 @@
             
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
-            <a href="#">Setup Profile</a>
+            <h3 class="heading_setup">Setup Profile</h3>
             <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
+            <a href="" class="profession" data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
             <a href="" class="education" data-toggle="modal" data-target="#EducationModal">Education</a>
             <a href="" class="work-experience" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
             <a href="" class="contacts" data-toggle="modal" data-target="#ContactModal">Contact</a>
@@ -261,143 +262,152 @@
             <div class="help">
                 <a class=""><i class="fa fa-question-circle icon-help" aria-hidden="true"></i></a>
             </div>
-      
-            <div class="modal" id="WorkExperienceModal"  class="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                
-              <div class="form-main">
-                <div class="form-block">
-                <div class="modal-dialog  modal-lg" role="document">
+        <form method="POST" action="{{url('save_work_experience')}}" id="work-experience-form"  enctype="multipart/form-data">
+             <div class="modal" id="WorkExperienceModal"  class="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="form-block"> <div class="modal-dialog  modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLongTitle">Work Experiences</h5>
-                     
-                      <button type="button"  class="close clone-btn"  aria-label="Clone">
-                        <span aria-hidden="true" >&#43;</span>
-                      </button>
-
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="app" style="display: none;">
-                      
                     </div>
-                    <div class="modal-body">
-                        <div class="work-experience-body">
-                            {{-- <div class="search-box">
-                                <input type="text" class="form-control search-groups" placeholder="Search group">
-                            </div> --}}
+                    <div class="modal-body work-modal-body">
+                        <div class="work-experience-body main_work_experience_div workDiv_1">
                             <fieldset>
-                                <form method="POST" action="{{url('save_work_experience')}}" id="work-experience-form">
+                                <button type="button"  class="close clone-btn-workexperience"  aria-label="Clone">
+                                    <span aria-hidden="true" class="btn-plus">&#8853;</span>
+                                  </button>
+                                  <button type="button"  class="close remove-btn-workexperience"  aria-label="Clone" onclick="remove_work_experience(this)">
+                                    <span aria-hidden="true" class="btn-plus" >&#8854;</span>
+                                    </button>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 input-group-sm">
-                                          <label for="StartDate">Start Date</label>
-                                          <input type="date" class="form-control" id="start_date" name="start_date" >
+                                          <label for="StartDate">Start Date<span style="color:red">*</span></label>
+                                          <input type="date" class="form-control" id="start_date" name="start_date[]" >
                                         </div>
                                         <div class="form-group col-md-6 input-group-sm">
-                                          <label for="EndDate">End Date</label>
-                                          <input type="date" class="form-control" id="end_date" name="end_date" >
+                                          <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                          <input type="date" class="form-control" id="end_date" name="end_date[]" >
                                         </div>
                                       </div>
                                         <div class="form-group input-group-sm">
-                                            <label for="CompName">Company Name</label>
-                                            <input type="text" class="form-control" id="company_name" name="company_name" placeholder="">
+                                            <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                            <input type="text" class="form-control" id="company_name" name="company_name[]" placeholder="">
                                         </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="CompRole">Role</label>
-                                        <input type="text" class="form-control" id="CompRole" name="role" placeholder="">
+                                        <label for="CompRole">Role<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" id="CompRole" name="role[]" placeholder="">
                                       </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="CompDesig">Designation</label>
-                                        <input type="text" class="form-control" id="CompDesig" name="designation" placeholder="">
+                                        <label for="CompDesig">Designation<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" id="CompDesig" name="designation[]" placeholder="">
                                       </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="Contact">Contact</label>
-                                        <input type="text" class="form-control" id="Contact" name="contact_no" placeholder="">
+                                        <label for="Contact">Contact<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" id="Contact" name="contact_no[]" placeholder="">
                                       </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="Address">Address</label>
-                                        <input type="text" class="form-control" id="Address" name="address" placeholder="">
+                                        <label for="Address">Address<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" id="Address" name="address[]" placeholder="">
                                       </div>
-                                   
-                                   
-                                </form>
                             </fieldset>
-                            
                         </div>
                     </div>
-                    
-                  </div>
-                </div>
-                </div>
-            </div>
                     <div class="work_experience-clone"></div>
-                    <div class=" modal-footer">
-                        <button type="button" class="btn btn-primary work-experience-done">Done</button>
-                      </div>
+                    <div class="modal-footer">
+                        <input type="submit"  class="btn btn-primary work-experience-done" value="Done" id="submit"/>
+                    </div>
+                </div>
             </div>
+           </div>
+         </div>
+        </form>
 
-              <div class="modal" id="EducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+        <form method="POST" action="{{url('save_education')}}" id="education-form" enctype="multipart/form-data">
+            <div class="modal" id="EducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="education_form-block"> 
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLongTitle">Education</h5>
+
+                     
+                     
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
+                      
                     </div>
                     <div class="app" style="display: none;">
                       
                     </div>
-                    <div class="modal-body">
-                        <div class="education-body">
-                            {{-- <div class="search-box">
-                                <input type="text" class="form-control search-groups" placeholder="Search group">
-                            </div> --}}
+                    <div class="modal-body education-modal-body">
+                       
+                        <div class="education-body main_education_div div_1">
+                           
                             <fieldset>
-                                <form method="POST" action="{{url('save_work_experience')}}" id="education-form">
+                                <button type="button"  class="close clone-btn-education"  aria-label="Clone">
+                                    <span aria-hidden="true" class="btn-plus" >&#8853;</span>
+                                  </button>
+
+                                  <button type="button"  class="close remove-btn-education"  aria-label="Clone" onclick="remove(this)">
+                                    <span aria-hidden="true" class="btn-plus" >&#8854;</span>
+                                    </button>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 input-group-sm">
-                                          <label for="StartDate">Start Date</label>
-                                          <input type="date" class="form-control" id="StartDate"  name="start_date" placeholder="">
+                                          <label for="StartDate">Start Date<span style="color:red">*</span></label>
+                                          <input type="date" class="form-control" id="StartDate"  name="start_date[]" >
                                         </div>
                                         <div class="form-group col-md-6 input-group-sm">
-                                          <label for="EndDate">End Date</label>
-                                          <input type="date" class="form-control" id="EndDate" name="end_date"  placeholder="">
+                                          <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                          <input type="date" class="form-control" id="EndDate" name="end_date[]"  >
                                         </div>
                                       </div>
                                         <div class="form-group input-group-sm">
-                                            <label for="SchoolName">School Name</label>
-                                            <input type="text" class="form-control" id="SchoolName" name="school_name"  placeholder="">
+                                            <label for="SchoolName">School Name<span style="color:red">*</span></label>
+                                            <input type="text" class="form-control" id="SchoolName" name="school_name[]"  >
                                         </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="FieldOfStudy">Field Of Study</label>
-                                        <input type="text" class="form-control" id="FieldOfStudy"  name="field_of_study"  placeholder="">
+                                        <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" id="FieldOfStudy"  name="field_of_study[]"  >
                                       </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="Description">Description</label><br>
-                                        <textarea id="Description" name="description" rows="7" cols="88">
+                                        <label for="Description">Description<span style="color:red">*</span></label><br>
+                                        <textarea id="Description" name="description[]" rows="7" cols="70">
                                             </textarea>
                                       </div>
-                                     
-                                </form>
+                              
                             </fieldset>
-                            
-                        </div>
+                        </div>  
+             
                     </div>
+              
+        <div class="education-clone"></div>
                     <div class="modal-footer">
-                      {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-                      <button type="button" class="btn btn-primary education-done">Done</button>
+                     <input type="submit"  class="btn btn-primary education-done" value="Done" id="submit_education"/>
                     </div>
-                  </div>
                 </div>
+            </div>
+       
               </div>
+            </div>
+         </form>
 
+
+         <form method="POST" action="" id="reference-form"  enctype="multipart/form-data">
               <div class="modal" id="CharacterReferencesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="reference_form-block ">
+                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLongTitle">Character References</h5>
+
+                    
+
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -405,42 +415,47 @@
                     <div class="app" style="display: none;">
                       
                     </div>
-                    <div class="modal-body">
-                        <div class="reference-body">
-                     
-                            <fieldset>
-                                <form action="" id="reference-form">
-                                   
+                    <div class="modal-body reference-modal-body">
+                       <div class="reference-body  main_reference_div referenceDiv_1">
+                         <fieldset> 
+                                <button type="button"  class="close clone-btn-reference"  aria-label="Clone">
+                                    <span aria-hidden="true" class="btn-plus">&#8853;</span>
+                                  </button>
+                                  <button type="button"  class="close remove-btn-reference"  aria-label="Clone" onclick="remove_reference(this)">
+                                    <span aria-hidden="true" class="btn-plus" >&#8854;</span>
+                                    </button>
                                         <div class="form-group input-group-sm">
-                                            <label for="Name"> Name</label>
-                                            <input type="text" class="form-control" id="Name" name="name" placeholder="">
+                                            <label for="Name"> Name<span style="color:red">*</span></label>
+                                            <input type="text" class="form-control" id="Name" name="name[]" placeholder="">
                                         </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="Email">Email</label>
-                                        <input type="email" class="form-control" id="Email"  name="email" placeholder="">
+                                        <label for="Email">Email<span style="color:red">*</span></label>
+                                        <input type="email" class="form-control" id="Email"  name="email[]" placeholder="">
                                       </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="CompName">Company Name</label>
-                                        <input type="text" class="form-control" id="CompName"  name="company_name" placeholder="">
+                                        <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" id="CompName"  name="company_name[]" placeholder="">
                                       </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="Designation">Designation</label>
-                                        <input type="text" class="form-control" id="Designation"  name="designation" placeholder="">
+                                        <label for="Designation">Designation<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" id="Designation"  name="designation[]" placeholder="">
                                       </div>
-                                     
-                                </form>
+                            
                             </fieldset>
-                            
-                            
                         </div>
                     </div>
+           
+                    <div class="reference-clone"></div>
                     <div class="modal-footer">
-                      {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-                      <button type="button" class="btn btn-primary characterRederences-done">Done</button>
+                        <input type="submit"  class="btn btn-primary characterRederences-done" value="Done" id="submit_reference"/>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
+        </div>  
+        </div>
+       </form>  
+
+
 
               <div class="modal" id="AboutMeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
@@ -461,55 +476,63 @@
                                    
                                         <div class="form-group input-group-sm">
                                             <label for="fName"> First Name</label>
-                                            <input type="text"  class="form-control" id="fName" disabled value="{{ $user->first_name }}">
+                                            <input type="text"  class="form-control disabled_field" id="fName" disabled value="{{ $user->first_name }}">
                                         </div>
                                       <div class="form-group input-group-sm">
                                         <label for="lName">Last Name</label>
-                                        <input type="text" class="form-control" id="lName" disabled value="{{ $user->last_name }}">
+                                        <input type="text" class="form-control disabled_field" id="lName" disabled value="{{ $user->last_name }}">
                                       </div>
                                       
                                       <div class="form-group input-group-sm">
                                         <label for="dob">Date Of Birth</label>
-                                        <input type="text" class="form-control" id="dob" disabled value="{{ $user->dob }}">
+                                        <input type="text" class="form-control disabled_field" id="dob" disabled value="{{ $user->dob }}">
                                       </div>
                                       <div class="form-group input-group-sm">
                                         <label for="age">Age</label>
-                                        <input type="text" class="form-control" id="age" disabled value="{{ $user->age }}">
+                                        <input type="text" class="form-control disabled_field" id="age" disabled value="{{ $user->age }}">
                                       </div>
                                       <div class="form-group input-group-sm">
                                         <label for="gender">Gender</label>
-                                        <input type="text" class="form-control" id="gender" disabled value="{{ $user->gender }}">
+                                        <input type="text" class="form-control disabled_field" id="gender" disabled value="{{ $user->gender }}">
                                       </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="Address">Address</label>
-                                        <input type="text" class="form-control" id="my_Address" disabled value="{{ $user->address }}">
+                                        <label for="Address"> Registered Address</label>
+                                        <input type="text" class="form-control disabled_field" id="my_Address" disabled value="{{ $user->address }}">
                                       </div>
                                        <div class="form-group input-group-sm">
                                         <label for="Country">Country</label>
-                                        <input type="text" class="form-control" id="Country" disabled value="{{ $user->country }}">
+                                        <input type="text" class="form-control disabled_field" id="Country" disabled value="{{ $user->country }}">
                                       </div>
-                                     <div class="form-group input-group-sm">
-                                        <label for="pCountry">Present Country</label>
-                                        <select name="country" class="countries " id="countryId">
-                                            <option value="">Select Country</option>
-                                        </select>
+
+                                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                     Add Current Address
+                                      </button>
+                                    </br>
+                                      <div class="collapse" id="collapseExample">
+                                            <div class="form-group input-group-sm ">
+                                                <label for="pCountry">Present Country</label>
+                                                <select name="country" class="countries "  id="countryId">
+                                                    <option value="" class='dropdown-item'>Select Country</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group input-group-sm">
+                                                <label for="pCity">Present State</label>
+                                                <select name="state" class="states  " id="stateId">
+                                                    <option value="">Select State</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group input-group-sm">
+                                                <label for="pCity">Present City</label>
+                                                <select name="city" class="cities " id="cityId">
+                                                    <option value="">Select City</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group input-group-sm">
+                                                <label for="pAddress">Present Address</label>
+                                                <input type="text" class="form-control" id="pAddress" >
+                                            </div>
                                       </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="pCity">Present State</label>
-                                        <select name="state" class="states  " id="stateId">
-                                            <option value="">Select State</option>
-                                        </select>
-                                      </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="pCity">Present City</label>
-                                        <select name="city" class="cities " id="cityId">
-                                            <option value="">Select City</option>
-                                        </select>
-                                      </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="pAddress">Present Address</label>
-                                        <input type="text" class="form-control" id="pAddress" >
-                                      </div>
+                                     
                                       
                                       
                                      
@@ -545,18 +568,18 @@
                                    
                                         <div class="form-group input-group-sm">
                                             <label for="pEmail"> Primary Email</label>
-                                            <input type="text"  class="form-control" id="pEmail" name="email" disabled value="{{ $user->email }}" >
+                                            <input type="text"  class="form-control disabled_field" id="pEmail" name="email" disabled value="{{ $user->email }}" >
                                         </div>
                                       <div class="form-group input-group-sm">
                                         <label for="pMobNumber">Primary Mobile Number</label>
-                                        <input type="text" class="form-control" id="pMobNumber" name="mobile_number" disabled value="{{ $user->mobile_number }}" >
+                                        <input type="text" class="form-control disabled_field" id="pMobNumber" name="mobile_number" disabled value="{{ $user->mobile_number }}" >
                                       </div>
                                       <div class="form-group input-group-sm">
                                         <label for="sEmail">Secondary Email</label>
                                         <input type="email" class="form-control" id="sEmail" name="secondary_email" >
                                       </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="sMobNumber">Primary  Mobile Number</label>
+                                        <label for="sMobNumber">Secondary  Mobile Number</label>
                                         <input type="text" class="form-control" id="sMobNumber" name="secondary_mobile_number" >
                                       </div>
                                      
@@ -567,12 +590,79 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                      {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
                       <button type="button" class="btn btn-primary contact-done">Done</button>
                     </div>
                   </div>
                 </div>
               </div>
+
+
+    
+              <form method="POST" action="" id="profession-form" enctype="multipart/form-data">
+                <div class="modal" id="ProfessionSkillModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="profession_form-block"> 
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Profession And Skills</h5>
+    
+                         
+                         
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          
+                        </div>
+                        <div class="app" style="display: none;">
+                        </div>
+                        <div class="modal-body ">
+                            <div class="profession-body">
+                                <fieldset>
+                                   
+                                        <div class="form-row">
+                                            <div class="form-group col-md-10 input-group-sm">
+                                              <label for="Profession">Profession<span style="color:red">*</span></label>
+                                              <input type="text" class="form-control" id="Profession"  name="Profession" >
+                                              {{-- <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                                   aria-haspopup="true" aria-expanded="false">Dropdown
+                                                    <span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li>@foreach($profession ?? '' as $profession)
+                                                            <a href="{{URL::route('home',$profession ?? ''->id)}}">
+                                                                <option value="{{$profession ?? ''->id}}">{{ $profession ?? ''->profession_name }}</option>
+                                                            </a>
+                                                        @endforeach
+                                                    </li>
+                                                </ul>
+                                            </li> --}}
+                                        </div>
+                                        <div id="profession_list"></div>      
+                                          </div>
+                                          <div class="form-row"> 
+                                          <div class="form-group col-md-10 input-group-sm">
+                                            <label for="skills">Skills<span style="color:red">*</span></label>
+                                            <textarea id="skills" name="skills" rows="7" cols="60">
+                                            </textarea>
+                                     
+                                          </div>  
+                                        </div>
+                                  
+                                </fieldset>
+                            </div>  
+                 
+                        </div>
+                  
+         
+                        <div class="modal-footer">
+                         <input type="submit"  class="btn btn-primary profession-done" value="Done" id="submit_profession"/>
+                        </div>
+                    </div>
+                </div>
+           
+                  </div>
+                </div>
+             </form>
 @endsection
 @section('after-scripts')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
@@ -587,7 +677,7 @@
 <script src="{{asset('front/JS/gaTrackingJSFiddle.js')}}"></script>     
 <script src="{{asset('front/JS/lodash.min.js')}}"></script>
 <script src="{{asset('front/system-google-font-picker/jquery.fontselect.js')}}"></script>
-
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="//geodata.solutions/includes/countrystatecity.js"></script>
 
 
@@ -790,17 +880,10 @@
 
             }
         }
-
-
-
-
-
-
-
-
-
-
-
+        $(".remove-btn-education").hide();
+        $(".remove-btn-workexperience").hide();
+        $(".remove-btn-reference").hide();
+        
         /*FUNCTIONS RELATED TO THE EDITOR TOOLBAR*/
         //function to hide DIV of shape, text, crop divs of toolbar when x icon is clicked
         $(".toolbar-close").on('click',function(){
@@ -1811,43 +1894,114 @@
             }
         );
                 
-        // clone
-        $('.clone-btn').click(function(e) {
+        // clone-btn-workexperience
+        $('.clone-btn-workexperience').click(function(e) {
             e.preventDefault();
             
-            // $("#WorkExperienceModal").clone().appendTo(".work_experience-clone");
-            // var clone = $('.form-main').clone('.form-block');
+            var $form = $('form#work-experience-form');
+            var newel = $('.main_work_experience_div').clone();
+            $(newel).insertAfter(".work-experience-body:last");
+            var new_ele = $('.work-experience-body:last');
+            new_ele.find('input').val("");
+            var count = $(".work-experience-body");
+                    new_ele.removeClass('workDiv_'+(count.length-1))
+                    new_ele.addClass('workDiv_'+count.length)
+                  
+                 if(count.length>1){
+                    $(".work-experience-body:last .clone-btn-workexperience").hide();
+                    $(".work-experience-body:last .remove-btn-workexperience").show();
+                 }
            
-            // $('.form-main').append(clone);
-        
-      var newel = $('.form-block:last').clone();
-      $(newel).insertAfter(".form-block:last");
-
-// // Selecting last id 
-// var lastname_id = $('.form-block input[type=text]:nth-child(1)').last().attr('id');
-//   var split_id = lastname_id.split('_');
-//   var index = Number(split_id[1]) + 1;   
-//   var newel = $('.form-block:last').clone(true);
-//   $(newel).find('input[type=text]:nth-child(1)').attr("id","name_"+index);
-//   $(newel).insertAfter(".form-block:last");
-
         });
         //work experience save
         $('.work-experience-done').click(function(e) {
             e.preventDefault();
             var form_url = url+'/save_work_experience';
             var $form = $('form#work-experience-form');
-            // console.log($form.length)
-
-            var arrData = [];
+            var form_data = $('#work-experience-form').serialize();
             var post_data = new FormData($form[0]);
-            for(var i=0; i<$form.length; i++){
-               arrData[i] =$form[i];
- 
+            var count = $(".work-experience-body");
+            totalDiv=count.length;
+            var alert_status;
+        
+            for(var i=1;i<=totalDiv;i++){
+
+                // console.log("here");
+                var start_date = $("form#work-experience-form .workDiv_"+i+" #start_date").val();
+                var end_date = $("form#work-experience-form .workDiv_"+i+' #end_date').val();
+                var company_name = $("form#work-experience-form .workDiv_"+i+' #company_name').val();
+                var CompRole = $("form#work-experience-form .workDiv_"+i+' #CompRole').val();
+                var CompDesig = $("form#work-experience-form .workDiv_"+i+' #CompDesig').val();
+                var Contact = $("form#work-experience-form .workDiv_"+i+' #Contact').val();
+                var Address = $("form#work-experience-form .workDiv_"+i+' #Address').val();
+
+               
+
+                if(start_date==''){
+                    alert_status = true;
+                     message = 'Start Date is required';
+                     $("form#work-experience-form .workDiv_"+i+" #StartDate").focus();
                 }
-        console.log(arrData);    
-
-
+                else if(end_date==''){
+                     alert_status = true;
+                     message = 'End Date is required';
+                     $("form#work-experience-form .workDiv_"+i+" #EndDate").focus();
+                }
+                else if(company_name==''){
+                     alert_status = true;
+                     message = 'Company Name is required';
+                     $("form#work-experience-form .workDiv_"+i+" #company_name").focus();
+                }
+                else if(CompRole==''){
+                     alert_status = true;
+                     message = 'Role is required';
+                     $("form#work-experience-form .div_"+i+" #CompRole").focus();
+                }
+                else if(CompDesig==''){
+                     alert_status = true;
+                     message = 'Designation is required';
+                     $("form#work-experience-form .div_"+i+" #CompDesig").focus();
+                }
+                else if(Contact==''){
+                     alert_status = true;
+                     message = 'Contact is required';
+                     $("form#work-experience-form .div_"+i+" #Contact").focus();
+                }
+                else if(Address==''){
+                     alert_status = true;
+                     message = 'Address is required';
+                     $("form#work-experience-form .div_"+i+" #Address").focus();
+                }
+            }
+          
+    if(alert_status) {
+        Swal.fire({
+            title: 'Discard Changes',
+            text: message,
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText:
+                'Discard Changes',
+            cancelButtonText:
+                'Cancel',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+        }).then((res) => {
+            if (res.value) {
+                if(action) {
+                    window.location.href = action;
+                }
+            }
+        });
+    } else {
             $.ajax({
                 url: form_url,
                 method: 'post',
@@ -1898,17 +2052,108 @@
                     });
                 }
             });
+    }
                     
-                });
+     });
 
-
+        // clone-btn-education
+        $('.clone-btn-education').click(function(e) {
+                    e.preventDefault();
+                //    $(".remove-btn-education").hide();
+                    var $form = $('form#education-form');
+                    var newel = $('.education-body:last').clone();
+                    $(newel).insertAfter(".education-body:last");
+                    var new_ele = $('.education-body:last');
+                    new_ele.find('input').val("");
+                    var count = $(".education-body");
+                    new_ele.removeClass('div_'+(count.length-1))
+                    new_ele.addClass('div_'+count.length)
+                  
+                 if(count.length>1){
+                    $(".education-body:last .clone-btn-education").hide();
+                    $(".education-body:last .remove-btn-education").show();
+                 }
+                 
+        });
+ 
     //education save
     $('.education-done').click(function(e) {
             e.preventDefault();
             var form_url = url+'/save_education';
             var $form = $('form#education-form');
+            var form_data = $('#education-form').serialize();
             var post_data = new FormData($form[0]);
-           
+            var count = $(".education-body");
+            totalDiv=count.length;
+            var alert_status;
+          
+            for(var i=1;i<=totalDiv;i++){
+
+                // console.log("here");
+                var start_date = $("form#education-form .div_"+i+" #StartDate").val();
+                var end_date = $("form#education-form .div_"+i+' #EndDate').val();
+                var school_name = $("form#education-form .div_"+i+' #SchoolName').val();
+                var field_of_study = $("form#education-form .div_"+i+' #FieldOfStudy').val();
+                var desccription = $("form#education-form .div_"+i+' #Description').val();
+               
+
+                if(start_date==''){
+                    alert_status = true;
+                     message = 'Start Date is required';
+                     $("form#education-form .div_"+i+" #StartDate").focus();
+                }
+                else if(end_date==''){
+                     alert_status = true;
+                     message = 'End Date is required';
+                     $("form#education-form .div_"+i+" #EndDate").focus();
+                }
+                else if(school_name==''){
+                     alert_status = true;
+                     message = 'School Name is required';
+                     $("form#education-form .div_"+i+" #SchoolName").focus();
+                }
+                else if(field_of_study==''){
+                     alert_status = true;
+                     message = 'Filed Of study is required';
+                     $("form#education-form .div_"+i+" #FieldOfStudy").focus();
+                }
+                else if(desccription==''){
+                     alert_status = true;
+                     message = 'Description is required';
+                     $("form#education-form .div_"+i+" #Description").focus();
+                }
+            }
+            
+    if(alert_status) {
+        Swal.fire({
+            title: 'Discard Changes',
+            text: message,
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText:
+                'Discard Changes',
+            cancelButtonText:
+                'Cancel',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+        }).then((res) => {
+            if (res.value) {
+                if(action) {
+                    window.location.href = action;
+                }
+            }
+        });
+    } else {
+        
+
             $.ajax({
                 url: form_url,
                 method: 'post',
@@ -1959,9 +2204,29 @@
                     });
                 }
             });
-                    
+        }      
                 });   
 
+
+        // clone-btn-character reference
+        $('.clone-btn-reference').click(function(e) {
+                            e.preventDefault();
+                            var $form = $('form#reference-form');
+                            var newel = $('.main_reference_div').clone();
+                            $(newel).insertAfter(".reference-body:last");
+                            var new_ele = $('.reference-body:last');
+                            new_ele.find('input').val("");
+                            var count = $(".reference-body");
+                            new_ele.removeClass('referenceDiv_'+(count.length-1))
+                            new_ele.addClass('referenceDiv_'+count.length)
+                           
+                            if(count.length>1){
+                                $(".reference-body:last .clone-btn-reference").hide();
+                                $(".reference-body:last .remove-btn-reference").show();
+                            }
+                          
+                        
+                });
 
         //Character reference save
         $('.characterRederences-done').click(function(e) {
@@ -1969,7 +2234,70 @@
             var form_url = url+'/save_character_references';
             var $form = $('form#reference-form');
             var post_data = new FormData($form[0]);
-           
+            var count = $(".reference-body");
+            totalDiv=count.length;
+            var alert_status;
+          
+            for(var i=1;i<=totalDiv;i++){
+
+                // console.log("here");
+                var Name = $("form#reference-form .referenceDiv_"+i+" #Name").val();
+                var Email = $("form#reference-form .referenceDiv_"+i+' #Email').val();
+                var CompName = $("form#reference-form .referenceDiv_"+i+' #CompName').val();
+                var Designation = $("form#reference-form .referenceDiv_"+i+' #Designation').val();
+               
+
+                if(Name==''){
+                    alert_status = true;
+                     message = 'Name is required';
+                     $("form#reference-form .referenceDiv_"+i+" #Name").focus();
+                }
+                else if(Email==''){
+                     alert_status = true;
+                     message = 'Email is required';
+                     $("form#reference-form .referenceDiv_"+i+' #Email').focus();
+                }
+                else if(CompName==''){
+                     alert_status = true;
+                     message = 'Company Name is required';
+                     $("form#reference-form .referenceDiv_"+i+' #CompName').focus();
+                }
+                else if(Designation==''){
+                     alert_status = true;
+                     message = 'Designation is required';
+                     $("form#reference-form .referenceDiv_"+i+' #Designation').focus();
+                }
+               
+            }
+            
+    if(alert_status) {
+        Swal.fire({
+            title: 'Discard Changes',
+            text: message,
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText:
+                'Discard Changes',
+            cancelButtonText:
+                'Cancel',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+        }).then((res) => {
+            if (res.value) {
+                if(action) {
+                    window.location.href = action;
+                }
+            }
+        });
+    } else {
             $.ajax({
                 url: form_url,
                 method: 'post',
@@ -2021,6 +2349,7 @@
                 }
             });
                     
+    } 
                 });   
 
         //conatct details save
@@ -2081,7 +2410,135 @@
                 }
             });
                     
-                });     
+                }); 
+
+               //Character reference save
+        $('.profession-done').click(function(e) {
+            e.preventDefault();
+            var form_url = url+'/save_professional_details';
+            var $form = $('form#profession-form');
+            var post_data = new FormData($form[0]);
+            var alert_status;
+          
+          
+                var professsion = $("form#profession-form #Profession").val();
+                var skills = $("form#profession-form  #skills").val();
+              
+                if(professsion==''){
+                    alert_status = true;
+                     message = 'Profession is required';
+                     $("form#profession-form  #Profession").focus();
+                }
+                else if(skills==''){
+                     alert_status = true;
+                     message = 'Skills is required';
+                     $("form#profession-form #skills").focus();
+                }
+               
+               
+                   
+    if(alert_status) {
+        Swal.fire({
+            title: 'Discard Changes',
+            text: message,
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText:
+                'Discard Changes',
+            cancelButtonText:
+                'Cancel',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+        }).then((res) => {
+            if (res.value) {
+                if(action) {
+                    window.location.href = action;
+                }
+            }
+        });
+    } else {
+            $.ajax({
+                url: form_url,
+                method: 'post',
+                data: post_data ,
+                // dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    Swal.fire({
+                        title: '<span class="success">Success!</span>',
+                        text: data.message,
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    }).then((res) => {
+                        // window.open(url+'/single_blog/'+data.data.id);
+                        //window.location.href = url+'/single_general_blog/'+data.data.id;
+                        // resetGeneralBlogForm();
+                    });
+                },
+                error: function (request, status, error) {
+                    var response = JSON.parse(request.responseText);
+                    var errorString = '';
+                    var title = 'Error!';
+
+                    if(response.errors) {
+                        title = 'Error in processing request...';
+                        $.each( response.errors, function( key, value) {
+                            errorString += '<p>' + value + '</p>';
+                        });
+                    }
+                    
+                    Swal.fire({
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        title: title,
+                        html: errorString,
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    });
+                }
+            });
+                    
+    } 
+                });   
+
+                 $('#Profession').on('keyup',function() {
+                    var query = $(this).val(); 
+                    var form_url = url+'/search';
+                    $.ajax({
+                        url:form_url,
+                        type:"GET",
+                        data:{'profession':query},
+                        success:function (data) {
+                            $('#profession_list').html(data);
+                        }
+                    })
+                    // end of ajax call
+                });    
+
+                $(document).on('click', 'li', function(){
+                  
+                  var value = $(this).text();
+                  $('#Profession').val(value);
+                  $('#profession_list').html("");
+              });
        
     });
                 function openNav()
@@ -2096,6 +2553,15 @@
                 document.getElementById("mySidenav").style.width = "0";
                 document.getElementById("main").style.marginLeft= "0";
                 document.body.style.backgroundColor = "white";
+                }
+                function remove(e){
+                    $(e).closest('.education-body').remove();
+                }
+                function remove_work_experience(e){
+                    $(e).closest('.work-experience-body').remove();
+                }
+                function remove_reference(e){
+                    $(e).closest('.reference-body').remove();
                 }
 </script>
 @endsection

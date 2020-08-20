@@ -37,4 +37,13 @@ class NewEmotion implements ShouldBroadcast
     {
         return new Channel('blogLike'.$this->like->blog_id);
     }
+
+    public function broadcastWith()
+    {
+        return [
+            'hotcount' => Like::where('blog_id',$this->like->blog_id)->where('emotion',0)->count(),
+            'coolcount' => Like::where('blog_id',$this->like->blog_id)->where('emotion',1)->count(),
+            'naffcount' => Like::where('blog_id',$this->like->blog_id)->where('emotion',2)->count(),
+        ];
+    }
 }

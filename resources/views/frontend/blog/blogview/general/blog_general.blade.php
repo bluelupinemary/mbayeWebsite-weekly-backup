@@ -3,7 +3,23 @@
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
 <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+{{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> --}}
+<link rel="stylesheet" href="{{asset('front/CSS/bootstrap.min.css')}}">
+<style>
+    div.origin {
+        left: 60%;
+        /* top: 60%; */
+    }
+
+    /* .blog_name {
+        top: 70%;
+    }
+
+    .naff_count {
+        top: 0;
+        bottom: -70%;
+    } */
+</style>
 @section('after-styles')
 @endsection
 
@@ -22,45 +38,8 @@
         <img  class="img-nouvela"  style="display:none" src="{{ asset('front') }}/images/naff555Votes.png" >
         <div>
     </section>
-    <div class="most-naffed">
-        <span class="title_text">Most Naffed</span>
-        <div class="container">
-            <div class="row ">
-                <div class="col-md-12">
-                    <div class="carousel slide multi-item-carousel col-md-12" id="theCarousel">
-                        <div class="carousel-inner col-md-12">
-                            <div class="col-xs-4 img_left main-naff">
-                                <a href="#1">
-                                    <h2 class="blog_name" id="blog_name_h1">Most Naffed!</h2>
-                                    <h2 class="blog_name" id="blog_name_first"></h2>
-                                    <img src=""  id="1" class="img-responsive">
-                                </a>
-                            </div>
-                            <div class="col-xs-4 img_center main-naff">
-                                <a href="#1">
-                                    <h2 class="blog_name" id="blog_name_h2">2nd Most Naffed!</h2>
-                                    <h2 class="blog_name" id="blog_name_second"></h2>
-                                    <img src=""  id="2" class="img-responsive">
-                                </a>
-                            </div>
-                            <div class="col-xs-4 img_right main-naff">
-                                <a href="#1">
-                                    <h2 class="blog_name" id="blog_name_h3">3rd Most Naffed!</h2>
-                                    <h2 class="blog_name" id="blog_name_third"></h2>
-                                    <img src=""  id="3" class="img-responsive">
-                                </a>
-                            </div>
-                            <input type="hidden" id="prev_no" value="0">
-                            <input type="hidden" id="middle_no" value="1">
-                            <input type="hidden" id="next_no" value="2">
-                        </div>
-                        <a class="left-arrow carousel-control" href="#theCarousel" data-slide="prev" onclick="go_to_previous()"><i class="glyphicon glyphicon-chevron-left arrow"></i></a>
-                        <a class="right-arrow carousel-control" href="#theCarousel" data-slide="next" onclick="go_to_next()"><i class="glyphicon glyphicon-chevron-right arrow"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+    <most-naffed></most-naffed>
 
     <generalblog-component :user_id="0"></generalblog-component>
 
@@ -168,11 +147,14 @@
 </div>   
 @endsection
 
-@section('after-scripts') 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+@section('after-scripts')
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/JS/hammer.min.js')}}"></script>
     <script src="{{asset('front/JS/circletype.min.js')}}"></script>
+    
     <script type="text/javascript">
 
     
@@ -384,55 +366,57 @@
     
  
 $(document).ready(function() {
-    $('.main-naff').css('opacity', '1');
+
+    // $('.carousel').carousel()
+    // $('.main-naff').css('opacity', '1');
 
 
-$("#1").attr("src",arrCount[ClickCount].thumb);
-$("#2").attr("src",arrCount[ClickCount+1].thumb);
-$("#3").attr("src",arrCount[ClickCount+2].thumb);
+// $("#1").attr("src",arrCount[ClickCount].thumb);
+// $("#2").attr("src",arrCount[ClickCount+1].thumb);
+// $("#3").attr("src",arrCount[ClickCount+2].thumb);
 
-$("#1").attr("blog_id",arrCount[ClickCount].id);
-$("#2").attr("blog_id",arrCount[ClickCount+1].id);
-$("#3").attr("blog_id",arrCount[ClickCount+2].id);
+// $("#1").attr("blog_id",arrCount[ClickCount].id);
+// $("#2").attr("blog_id",arrCount[ClickCount+1].id);
+// $("#3").attr("blog_id",arrCount[ClickCount+2].id);
 
 
 
-$('#1').attr('onClick','viewBlog('+arrCount[ClickCount].id+')');
-$('#2').attr('onClick','viewBlog('+arrCount[ClickCount+1].id+')');
-$('#3').attr('onClick','viewBlog('+arrCount[ClickCount+2].id+')');
+// $('#1').attr('onClick','viewBlog('+arrCount[ClickCount].id+')');
+// $('#2').attr('onClick','viewBlog('+arrCount[ClickCount+1].id+')');
+// $('#3').attr('onClick','viewBlog('+arrCount[ClickCount+2].id+')');
 
-// $("#blog_name_first").html("Naff Count:"+arrCount[ClickCount].naffcount);
-// $("#blog_name_second").html("Naff Count:"+arrCount[ClickCount+1].naffcount);
-// $("#blog_name_third").html("Naff Count:"+arrCount[ClickCount+2].naffcount);
-$("#blog_name_first").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount].naffcount+'</span>');
-$("#blog_name_second").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount+1].naffcount+'</span>');
-$("#blog_name_third").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount+2].naffcount+'</span>');
+// $("#blog_name_0").html("Naff Count:"+arrCount[ClickCount].naffcount);
+// $("#blog_name_1").html("Naff Count:"+arrCount[ClickCount+1].naffcount);
+// $("#blog_name_2").html("Naff Count:"+arrCount[ClickCount+2].naffcount);
+// $("#blog_name_0").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount].naffcount+'</span>');
+// $("#blog_name_1").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount+1].naffcount+'</span>');
+// $("#blog_name_2").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount+2].naffcount+'</span>');
 
 // Planet name circle style
-new CircleType(document.getElementById('blog_name_first'))
-.dir(-1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_0'))
+// .dir(-1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_second'))
-.dir(-1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_1'))
+// .dir(-1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_third'))
-.dir(-1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_2'))
+// .dir(-1)
+// .radius(60);
 
 
-new CircleType(document.getElementById('blog_name_h1'))
-.dir(1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_h0'))
+// .dir(1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_h2'))
-.dir(1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_h1'))
+// .dir(1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_h3'))
-.dir(1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_h2'))
+// .dir(1)
+// .radius(60);
 
     var elem = document.documentElement;
 function openFullscreen() {
@@ -517,55 +501,55 @@ function go_to_next(){
             third = 0;
         }
 
-$("#1").attr("src",arrCount[first].thumb);
-$("#2").attr("src",arrCount[second].thumb);
-$("#3").attr("src",arrCount[third].thumb);
+// $("#1").attr("src",arrCount[first].thumb);
+// $("#2").attr("src",arrCount[second].thumb);
+// $("#3").attr("src",arrCount[third].thumb);
 
-$("#1").attr("blog_id",arrCount[first].id);
-$("#2").attr("blog_id",arrCount[second].id);
-$("#3").attr("blog_id",arrCount[third].id);
+// $("#1").attr("blog_id",arrCount[first].id);
+// $("#2").attr("blog_id",arrCount[second].id);
+// $("#3").attr("blog_id",arrCount[third].id);
 
-$('#1').attr('onClick','viewBlog('+arrCount[first].id+')');
-$('#2').attr('onClick','viewBlog('+arrCount[second].id+')');
-$('#3').attr('onClick','viewBlog('+arrCount[third].id+')');
+// $('#1').attr('onClick','viewBlog('+arrCount[first].id+')');
+// $('#2').attr('onClick','viewBlog('+arrCount[second].id+')');
+// $('#3').attr('onClick','viewBlog('+arrCount[third].id+')');
 
 
 document.getElementById("next_no").value = third;
 document.getElementById("prev_no").value = first;
 document.getElementById("middle_no").value = second;
-$("#blog_name_first").text("Naff Count:"+arrCount[first].naffcount);
-$("#blog_name_second").text("Naff Count:"+arrCount[second].naffcount);
-$("#blog_name_third").text("Naff Count:"+arrCount[third].naffcount);
+// $("#blog_name_0").text("Naff Count:"+arrCount[first].naffcount);
+// $("#blog_name_1").text("Naff Count:"+arrCount[second].naffcount);
+// $("#blog_name_2").text("Naff Count:"+arrCount[third].naffcount);
 
-$("#blog_name_h1").text((parseInt(first)+parseInt(1))+"th Most naffed!");
-$("#blog_name_h2").text((parseInt(second)+parseInt(1))+"th Most naffed!");
-$("#blog_name_h3").text((parseInt(third)+parseInt(1))+"th Most naffed!");
+// $("#blog_name_h0").text((parseInt(first)+parseInt(1))+"th Most naffed!");
+// $("#blog_name_h1").text((parseInt(second)+parseInt(1))+"th Most naffed!");
+// $("#blog_name_h2").text((parseInt(third)+parseInt(1))+"th Most naffed!");
 
 // Planet name circle style
-new CircleType(document.getElementById('blog_name_first'))
-.dir(-1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_0'))
+// .dir(-1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_second'))
-.dir(-1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_1'))
+// .dir(-1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_third'))
-.dir(-1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_2'))
+// .dir(-1)
+// .radius(60);
 
 
-new CircleType(document.getElementById('blog_name_h1'))
-.dir(1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_h0'))
+// .dir(1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_h2'))
-.dir(1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_h1'))
+// .dir(1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_h3'))
-.dir(1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_h2'))
+// .dir(1)
+// .radius(60);
 }
 function go_to_previous(){
     var next = document.getElementById( "next_no" ).value;
@@ -610,34 +594,34 @@ document.getElementById("next_no").value = third;
 document.getElementById("prev_no").value = first;
 document.getElementById("middle_no").value = second;
 
-$("#blog_name_first").html("Naff Count:"+arrCount[first].naffcount);
-$("#blog_name_second").html("Naff Count:"+arrCount[second].naffcount);
-$("#blog_name_third").html("Naff Count:"+arrCount[third].naffcount);
+// $("#blog_name_0").html("Naff Count:"+arrCount[first].naffcount);
+// $("#blog_name_1").html("Naff Count:"+arrCount[second].naffcount);
+// $("#blog_name_2").html("Naff Count:"+arrCount[third].naffcount);
 // Planet name circle style
-new CircleType(document.getElementById('blog_name_first'))
-.dir(-1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_0'))
+// .dir(-1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_second'))
-.dir(-1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_1'))
+// .dir(-1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_third'))
-.dir(-1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_2'))
+// .dir(-1)
+// .radius(60);
 
 
-new CircleType(document.getElementById('blog_name_h1'))
-.dir(1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_h0'))
+// .dir(1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_h2'))
-.dir(1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_h1'))
+// .dir(1)
+// .radius(60);
 
-new CircleType(document.getElementById('blog_name_h3'))
-.dir(1)
-.radius(60);
+// new CircleType(document.getElementById('blog_name_h2'))
+// .dir(1)
+// .radius(60);
 }
 
     (function () {
@@ -719,12 +703,12 @@ new CircleType(document.getElementById('blog_name_h3'))
 $('.main-naff').mouseover(function() { 
 
 //alert("mouseover")
-	$(this).find('.blog_name').addClass('animated zoomIn');
-	$(this).find('.blog_name').css('opacity', '1');
+	$(this).find('.blog_name, .naff_count').addClass('animated zoomIn');
+	$(this).find('.blog_name, .naff_count').css('opacity', '1');
 }).mouseout(function() { 
     //alert("mouseout")
-	$(this).find('.blog_name').removeClass('animated zoomIn');
-	$(this).find(' .blog_name').css('opacity', '0');
+	$(this).find('.blog_name, .naff_count').removeClass('animated zoomIn');
+	$(this).find('.blog_name, .naff_count').css('opacity', '0');
 });
     $('.img-button').hover(
             function () {

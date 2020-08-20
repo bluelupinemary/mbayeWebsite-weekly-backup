@@ -138,12 +138,18 @@ class GeneralBlogsController extends Controller
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
         $sort = 'desc_name';
         $general_blogs = GeneralBlog::get();
-        $general_blog_shares = GeneralBlogShare::where('publish_datetime', '>=', Carbon::now()->subDay())->with('blog')->get();
+        // $general_blog_shares = GeneralBlogShare::where('publish_datetime', '>=', Carbon::now()->subDay())->with('blog')->get();
+        $general_blog_shares = GeneralBlogShare::with('blog')->get();
 
         if($request->has('user_id') && $request->user_id != 0) {
             $general_blogs = $general_blogs->where('created_by', $request->user_id);
             $general_blog_shares = $general_blog_shares->where('created_by', $request->user_id);
-        }                         
+        } else if($request->has('user_id') && $request->user_id == 0 && $request->type == 'friend') {
+            $friends_id = Auth::user()->getFriends()->pluck('id')->toArray();
+            
+            $general_blogs = $general_blogs->whereIn('created_by', $friends_id);
+            $general_blog_shares = $general_blog_shares->whereIn('created_by', $friends_id);
+        }               
         
         $blogs = $general_blogs->merge($general_blog_shares)
                 ->sortByDesc('publish_datetime')
@@ -155,17 +161,19 @@ class GeneralBlogsController extends Controller
                 if($blog->blog->featured_image == '') {
                     $blog->blog->featured_image = 'blog-default-featured-image.png';
                 }
+                $blog->blog->owner = $blog->blog->owner;
                 $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
                 $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
                 $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
                 $blog->blog->commentcount  = $blog->blog->comments->count();
                 $blog->blog->most_reaction = $blog->blog->mostReaction();
-                $blog->blog->name = $blog->caption;
+                // $blog->blog->name = $blog->caption;
             } else {
                 if($blog->featured_image == '') {
                     $blog->featured_image = 'blog-default-featured-image.png';
                 }
-                $blog->hotcount = $blog->likes->where('emotion',0)->count();
+                $blog->owner         = $blog->owner;
+                $blog->hotcount      = $blog->likes->where('emotion',0)->count();
                 $blog->coolcount     = $blog->likes->where('emotion',1)->count();
                 $blog->naffcount     = $blog->likes->where('emotion',2)->count();
                 $blog->commentcount  = $blog->comments->count();
@@ -173,6 +181,17 @@ class GeneralBlogsController extends Controller
             }
         }
      
+        return response()->json($blogs);
+    }
+
+    public function mostNaffed(Request $request)
+    {
+        $blogs = GeneralBlog::withCount('naffLikes')
+            // ->having('naff_likes_count', '>', 0)
+            ->orderBy('naff_likes_count', 'desc')
+            ->limit(50)
+            ->get();
+
         return response()->json($blogs);
     }
 

@@ -8,12 +8,12 @@ var colors = [
     , "#2ecc71"
     , "#3498db"
     , "#9b59b6"
-    , "#34495e"
+    , "#000000"
     , "#16a085"
     , "#27ae60"
-    , "#2980b9"
+    , "#1B4F72"
     , "#8e44ad"
-    , "#2c3e50"
+    , "#495057"
     , "#f1c40f"
     , "#e67e22"
     , "#e74c3c"
@@ -1090,6 +1090,11 @@ $('.groups-btn').click(function() {
 $('.general-button').click(function() {
     $('.submenu').not('.general-submenu').hide();
     $('.general-submenu').fadeToggle();
+});
+
+$('.blogtags-button').click(function() {
+    $('.submenu').not('.blogtags-submenu').hide();
+    $('.blogtags-submenu').fadeToggle();
 });
 
 $('.careers-btn').click(function() {

@@ -22,7 +22,7 @@
         <div>
     </section>
 
-    <generalblog-component :user_id="{{$id}}"></generalblog-component>
+    <generalblog-component :user_id="{{$id}}" :type="'{{$type}}'"></generalblog-component>
 
     <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
         @if(Auth::user()->gender != null && Auth::user()->gender == 'female')

@@ -10,8 +10,6 @@ let hl,starColor;
 let skybox;
 
 let currentStage = 1;
-let imagePath = 'front/images3D/storyMbayeScene/';
-let texturePath = 'front/textures/storyMbaye/';
 
 let createChapter1Scene = function(){
     
@@ -120,6 +118,7 @@ function setup_stage(stageNo){
         if(currTimer) clearTimeout(currTimer);
         remove_texts();                                                 //delete/remove html texts from the dom tree
         remove_stage_objects();                                         //delete/remove previously created objects from the scene thru currStageObjMap
+        remove_highlighted_objects(hl);
         let imgArr = stageMap.get(stageNo).imagesUsed;                  //the arr of images set in the stage map
         
         setTimeout(function(){
@@ -282,7 +281,7 @@ function setup_stage(stageNo){
         }else if(stageNo === 17){
                 //set camera to init view ; show collage wall
                 $('#firstVideoOverlayText').css('color','#0ab7ea');
-                let girls = init_photo(imgArr[0],{w:100,h:100},{x: 0, y: 0, z: 0},stageNo);    
+                // let girls = init_photo(imgArr[0],{w:100,h:100},{x: 0, y: 0, z: 0},stageNo);    
                 create_snow_emitter(); 
                 setCamDefault(490);
                 change_collage_photo(stageNo);
@@ -353,18 +352,17 @@ function setup_stage(stageNo){
                 //show earth
                 earth_obj.setEnabled(true);
                 earth_obj.isVisible = true;
-                
-                setCamDefault(600);
-                animateCameraToRadius(storyCamera, 50, frameCount, 900);
-                isEarthRotating = true;
 
                 let allan = init_photo(imgArr[0],{w:500,h:500},{x: 700, y: 170, z: -300},stageNo);           
                 let julian = init_photo(imgArr[1],{w:500,h:500},{x: 0, y: -170, z: -300},stageNo);
                 currStageObjMap.set(allan.name, allan);
                 currStageObjMap.set(julian.name, julian);
 
-                hl.addMesh(allan, new BABYLON.Color3(0,0.5,0.5));
-                hl.addMesh(julian, new BABYLON.Color3(0,0.5,0.5));
+                setCamDefault(600);
+                animateCameraToRadius(storyCamera, 50, frameCount, 900);
+                isEarthRotating = true;
+
+              
                 
 
         }else if(stageNo === 22){
@@ -373,11 +371,12 @@ function setup_stage(stageNo){
                 setCamInferior();
                 earth_obj.setEnabled(false);
                 earth_obj.isVisible = false;
-                let theDisc = init_disc(stageNo,300);
+                // let theDisc = init_disc(stageNo,300);
+                let theDisc = init_photo(imgArr[0],{w:700,h:700},{x: 0, y: 1000, z: 0},stageNo);
+                theDisc.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(90),BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(180));
                 currStageObjMap.set(theDisc.name, theDisc);   
-                scene.meshes.forEach(function(mesh){
-                        console.log(mesh.name);
-                }); 
+                hl.addMesh(theDisc,new BABYLON.Color3(0,0.5,0.5));
+               
 
         }else if(stageNo === 23){
                 //set camera to init view ;
@@ -485,8 +484,8 @@ function create_snow_emitter(){
     $('.firstVideoOverlayText').css('display', 'block');
 
     rotate_sky();                                                   //start rotating the sky
-    currentStage = 1;
-    setup_stage(1);                                                 //start showing the script 1, stage 1
+    currentStage = 22;
+    setup_stage(22);                                                 //start showing the script 1, stage 1
     
     engine.runRenderLoop(function(){
       if(scene){

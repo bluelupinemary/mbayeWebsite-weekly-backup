@@ -80,42 +80,83 @@
             filter: drop-shadow(2px 4px 6px black);
             text-shadow: 2px 4px 6px #000;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
             display: none;
         }
 
         .blog-summary {
-            position: absolute;
+            /* position: absolute;
             top: 34%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            text-align: center;
+            transform: translate(-50%, -50%); */
+            width: 60%;
+            /* text-align: center; */
         }
 
         .blog-date {
-            position: absolute;
+            /* position: absolute;
             top: 55%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); */
             color: #979595;
         }
 
         .blog-tags {
-            position: absolute;
+            /* position: absolute;
             top: 68%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); */
             color: #979595;
             font-family: Arial;
-            font-size: 0.9vw;
+            font-size: 0.7vw;
+            width: 19vw;
         }
 
         .friend-details-2 a {
-            position: absolute;
+            /* position: absolute;
             top: 86%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); */
             color: #0bbbb5;
+        }
+
+        .tags {
+            list-style: none;
+            margin: 0;
+            /* overflow: hidden; */
+            padding: 0;
+            display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+            display: -ms-flexbox;  /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+                -ms-flex-flow: row wrap;
+                    flex-flow: row wrap;
+            justify-content: center;            
+            /* flex-wrap: wrap;   */
+        }
+
+        .tags li {
+            /* float: left;  */
+        }
+
+        .tag {
+            background: #2d3339;
+            border-radius: 3em;
+            color: #999;
+            /* display: inline-block; */
+            /* height: 26px; */
+            line-height: 2.5em;
+            padding: 0% 5%;
+            /* position: relative; */
+            margin: 0 2% 2% 0;
+            text-decoration: none;
+            white-space: nowrap;
+            text-shadow: none;
         }
     </style>
 @endsection

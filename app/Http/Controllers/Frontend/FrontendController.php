@@ -88,10 +88,16 @@ class FrontendController extends Controller
     public function blog_tagwise_friend(Request $request){
 
         $tag = $request['tag'];
-        $id = $request['id'];
+        $type = 'friend';
+
+        if($request->has('id')) {
+            $id = $request->id;
+        } else {
+            $id = 0;
+        }
 
         $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id'));
+        if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id','type'));
         return view('frontend.auth.login');
     }
     public function blog_tagwise_friend_post(Request $request){
@@ -111,10 +117,11 @@ class FrontendController extends Controller
 
         $tag = $request['tag'];
         $user = Auth::user();
+        $type = '';
 
         if($user) {
             $id = $user->id;
-            return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id'));
+            return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id','type'));
         } else {
             return view('frontend.auth.login');
         }
@@ -330,20 +337,31 @@ class FrontendController extends Controller
         // dd($request);
         $id = Auth::user()->id;
         $user = Auth::user();
+        $type = '';
         // if($user)         return view('frontend.blog.blogview.general.blog_general_userwise',compact('id'));
-        if($user) return  view('frontend.blog.blogview.general.blog_general_userwise',compact('id'));
+        if($user) return  view('frontend.blog.blogview.general.blog_general_userwise',compact('id','type'));
         return view('frontend.auth.login');
        
       
     }
 
  /* For general blogs userwise */
- public function blog_general_friend(Request $request){
-      
-    $id = $request['id'];
+ public function blog_general_friend(Request $request)
+ {   
     $user = Auth::user();
-    if($user)         return view('frontend.blog.blogview.general.blog_general_userwise',compact('id'));
-    return view('frontend.auth.login');
+    $type = 'friend';
+
+    if($request->has('id')) {
+        $id = $request->id;
+    } else {
+        $id = 0;
+    }
+
+    if($user) {
+        return view('frontend.blog.blogview.general.blog_general_userwise',compact('id','type'));
+    } else {
+        return view('frontend.auth.login');
+    }
 }
 public function blog_general_friend_post(Request $request){
     $id = $request['id'];
@@ -366,9 +384,11 @@ public function blog_general_friend_post(Request $request){
     {
         // $tag=$request['tag'];
         $user = Auth::user();
+        $type = '';
+
         if($user ) {
             $id = Auth::user()->id;
-            return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id'));
+            return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id','type'));
         } else {
             return view('frontend.auth.login');
         }
@@ -388,10 +408,17 @@ public function blog_general_friend_post(Request $request){
      */
     public function designed_panels_friend(Request $request)
     {
-        $id = $request['id'];
         $user = Auth::user();
+        $type = 'friend';
+
+        if($request->has('id')) {
+            $id = $request->id;
+        } else {
+            $id = 0;
+        }
+
         if($user) {
-            return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id'));
+            return view('frontend.blog.blogview.designed-panel.designed_panel_userwise',compact('id','type'));
         } else {
             return view('frontend.auth.login');
         }
@@ -407,13 +434,14 @@ public function blog_general_friend_post(Request $request){
     }
 
      /* For all users jobseeker */
-     public function jobseeker_profiles(Request $request){ 
-        $search = $request->search;
-        $type = $request->type;
-        $country = $request->country;
+     public function jobseeker_profiles(Request $request){
         $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.jobseekers.profiles',compact('search','type','country'));
-        return view('frontend.auth.login');
+        if($user) {
+            $country = $user->country;
+            return view('frontend.blog.blogview.jobseekers.profiles',compact('country'));
+        } else {
+            return view('frontend.auth.login');
+        }
     }
   /* For career blogs my */
   public function blog_career_my_post(Request $request){
@@ -441,12 +469,18 @@ public function blog_career_friend_post(Request $request){
     return view('frontend.auth.login');
 }
 
-public function blog_career_friend(Request $request){ 
-    $id = $request['id'];
+public function blog_career_friend(Request $request) {
     $user = Auth::user();
+    $type = 'friend';
+
+    if($request->has('id')) {
+        $id = $request->id;
+    } else {
+        $id = 0;
+    }
  
     if($user) {
-        return  view('frontend.blog.blogview.career.friend_career_blogs',compact('id'));
+        return  view('frontend.blog.blogview.career.friend_career_blogs',compact('id', 'type'));
     } else {
         return view('frontend.auth.login');
     }

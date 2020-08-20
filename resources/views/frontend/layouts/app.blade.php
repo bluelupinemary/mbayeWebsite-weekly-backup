@@ -56,13 +56,6 @@
             {{ Html::script('js/jquerysession.min.js') }}
             {{ Html::script('js/frontend/frontend.min.js') }}
             {!! Html::script('js/select2/select2.min.js') !!}
-
-            <script type="text/javascript">
-                if("{{Route::currentRouteName()}}" !== "frontend.user.account")
-                {
-                    $.session.clear();
-                }
-            </script>
             @include('includes.partials.ga')
 
     </body>

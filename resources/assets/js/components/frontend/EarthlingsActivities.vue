@@ -28,7 +28,11 @@
                 <div class="friend-details-2">
                     <p class="blog-summary">{{blog.summary}}</p>
 					<p class="blog-date">{{blog.formatted_date}}</p>
-					<p class="blog-tags">{{blog.all_tags}}</p>
+					<div class="blog-tags">
+                        <ul class="tags">
+                            <li v-for="(tag,i) in blog.tags" :key="i" class="tag"><i class="fas fa-tag"></i> {{ tag.name }}</li>
+                        </ul>
+                    </div>
                     <a href="" @click.prevent="viewBlog(blog.id)">(Click this to view the post)</a>
 				</div>
 			</div>
@@ -47,7 +51,12 @@
                 <div class="friend-details-2">
                     <p class="blog-summary">{{blog.summary}}</p>
 					<p class="blog-date">{{blog.formatted_date}}</p>
-					<p class="blog-tags">{{blog.all_tags}}</p>
+					<div class="blog-tags">
+                        <ul class="tags">
+                            <li v-for="(tag,i) in blog.tags" :key="i" class="tag"><i class="fas fa-tag"></i> {{ tag.name }}</li>
+                        </ul>
+                    </div>
+					<!-- <p class="blog-tags">{{blog.all_tags}}</p> -->
                     <a href="" @click.prevent="viewBlog(blog.id)">(Click this to view the post)</a>
 				</div>
 			</div>
@@ -304,13 +313,13 @@ export default {
 		showBlogDetails(div_id, id) {
             if(this.currentID == id) {
                 $('#'+div_id+' .friend-details').hide();
-                $('#'+div_id+' .friend-details-2').show();
+                $('#'+div_id+' .friend-details-2').css('display', 'flex');
             }
         },
         hideBlogDetails(div_id, id) {
             if(this.currentID == id) {
                 $('#'+div_id+' .friend-details').show();
-                $('#'+div_id+' .friend-details-2').hide();
+                $('#'+div_id+' .friend-details-2').css('display', 'none');
             }
         },
   	}

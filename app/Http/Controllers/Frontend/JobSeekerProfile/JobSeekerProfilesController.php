@@ -14,6 +14,7 @@ use App\Models\JobSeekerProfile\Education;
 use App\Models\JobSeekerProfile\JobSeekerProfile;
 use App\Models\JobSeekerProfile\WorkExperience;
 use App\Models\JobSeekerProfile\CharacterReferences;
+use App\Models\JobSeekerProfile\Profession;
 use App\Repositories\Frontend\JobSeekerProfile\JobSeekerProfilesRepository;
 
 /**
@@ -108,53 +109,70 @@ class JobSeekerProfilesController extends Controller
      * Function to save details into work experinece 
      */
     public function save_work_experience(Request $request){
-     dd( $request);
+    //  dd(count($request->start_date));
+    // dd($request);
+       
             $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
             $id = $JobSeekerProfile->id;
-            $work_experience = new WorkExperience();
-            $work_experience->designation = $request->designation;
-            $work_experience->company_name = $request->company_name;
-            $work_experience->address = $request->address;
-            $work_experience->role = $request->role;
-            $work_experience->contact_no = $request->contact_no;
-            $work_experience->start_date = $request->start_date;
-            $work_experience->end_date = $request->end_date;
-            $work_experience->jobseeker_profile_id = $id;
-            $work_experience->created_at = date('Y-m-d H:i:s');
-            $work_experience->save();
+          
+
+            for($counter = 0; $counter < count($request->start_date); $counter++){
+                $work_experience = new WorkExperience();
+                $work_experience->designation = $request->designation[$counter];
+                $work_experience->company_name = $request->company_name[$counter];
+                $work_experience->address = $request->address[$counter];
+                $work_experience->role = $request->role[$counter];
+                $work_experience->contact_no = $request->contact_no[$counter];
+                $work_experience->start_date = $request->start_date[$counter];
+                $work_experience->end_date = $request->end_date[$counter];
+                $work_experience->jobseeker_profile_id = $id;
+                $work_experience->created_at = date('Y-m-d H:i:s');
+                $work_experience->save();
+               
+            }
+
+          
+            
+           
         }
         /**
      * Function to save details into education
      */
     public function save_education(Request $request){
-     
+      
         $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
         $id = $JobSeekerProfile->id;
-        $education = new Education();
-        $education->school_name = $request->school_name;
-        $education->field_of_study = $request->field_of_study;
-        $education->start_date = $request->start_date;
-        $education->end_date = $request->end_date;
-        $education->description = $request->description;
-        $education->jobseeker_profile_id = $id;
-        $education->created_at = date('Y-m-d H:i:s');
-        $education->save();
+        for($counter = 0; $counter < count($request->start_date); $counter++){
+            $education = new Education();
+            $education->school_name = $request->school_name[$counter];
+            $education->field_of_study = $request->field_of_study[$counter];
+            $education->start_date = $request->start_date[$counter];
+            $education->end_date = $request->end_date[$counter];
+            $education->description = $request->description[$counter];
+            $education->jobseeker_profile_id = $id;
+            $education->created_at = date('Y-m-d H:i:s');
+            $education->save();
+        }
     }
     /**
      * Function to save character references
      */
     public function save_character_references(Request $request){
      
+
+     
         $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
         $id = $JobSeekerProfile->id;
-        $reference = new CharacterReferences();
-        $reference->name = $request->name;
-        $reference->email = $request->email;
-        $reference->company_name = $request->company_name;
-        $reference->designation = $request->designation;
-        $reference->jobseeker_profile_id = $id;
-        $reference->created_at = date('Y-m-d H:i:s');
-        $reference->save();
+        for($counter = 0; $counter < count($request->name); $counter++){
+            $reference = new CharacterReferences();
+            $reference->name = $request->name[$counter];
+            $reference->email = $request->email[$counter];
+            $reference->company_name = $request->company_name[$counter];
+            $reference->designation = $request->designation[$counter];
+            $reference->jobseeker_profile_id = $id;
+            $reference->created_at = date('Y-m-d H:i:s');
+            $reference->save();
+        }
     }
     public function save_contact_details(Request $request){
      
@@ -171,5 +189,57 @@ class JobSeekerProfilesController extends Controller
 
                $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('secondary_email' => $request->secondary_email,'secondary_mobile_number' => $request->secondary_mobile_number));
     }
+
+
+ 
+        public function search(Request $request){
+        
+            if($request->ajax()) {
+              
+                $data = Profession::where('profession_name', 'LIKE', $request->profession.'%')
+                    ->get();
+               
+                $output = '';
+               
+                if (count($data)>0) {
+                  
+                    $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
+                  
+                    foreach ($data as $row){
+                       
+                        $output .= '<li class="list-group-item" >'.$row->profession_name.'</li>';
+                    }
+                  
+                    $output .= '</ul>';
+                }
+                else {
+                 
+                    $output .= '<li class="list-group-item">'.'No results'.'</li>';
+                }
+               
+                return $output;
+            }
+        }
+     /**
+     * Function to save_professional_details
+     */
+    public function save_professional_details(Request $request){
+     
+     
     
-}
+            $id =    Auth::user()->id;
+            $Profession_id = Profession::where('profession_name',$request->Profession)->first();
+            $profession_id=$Profession_id['id'];
+            $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
+            $skills = $JobSeekerProfile->skills;
+            $Profession = new JobSeekerProfile();
+            $Profession->skills = $request->skills;
+            $Profession->profession_id = $profession_id;
+            // if($skills=='')
+            //     $Profession->save();
+            //  else
+
+             $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('skills' => $request->skills,'profession_id' => $profession_id));
+
+    }
+    }

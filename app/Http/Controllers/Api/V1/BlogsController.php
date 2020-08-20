@@ -112,15 +112,6 @@ class BlogsController extends APIController
             $auth = User::find($request['user']);
             $friendship = $user->getFriendship($auth);
             $groups = FriendFriendshipGroups::where('friend_id',$auth->id)->where('friendship_id',$friendship->id)->pluck("group_id");
-            // dd($groups);
-            // $f = $auth->isFriendWith($user);
-            // if($auth->isFriendWith($user)){
-            //     $groups = $user->getGroups();
-            //     dd($groups);
-            // }else{
-            //     dd('no friendship');
-            // }
- 
             $btag = BlogTag::where('name',$request['tag'])->first();
             $id=$request['id'];
             $blogs_private = $btag->blogs()->where('created_by', $id)->whereHas('privacy', function($q) use ($groups) {

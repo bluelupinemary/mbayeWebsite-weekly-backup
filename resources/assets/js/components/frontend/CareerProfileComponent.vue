@@ -93,7 +93,7 @@
 import EventBus from '../../frontend/event-bus';
 export default {
     props: {
-
+        user_country: String
     },
     data:function() {
         return {
@@ -223,8 +223,15 @@ export default {
       },
     fetchCareers() {
         let that = this;
-       /* Calling API for fetching images */
-        axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+that.country+'&city='+that.city)
+
+        /* Calling API for fetching images */
+        if(that.user_country != '') {
+            var country = that.user_country;
+        } else {
+            var country = that.country;
+        }
+
+        axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+country+'&city='+that.city)
         .then((response) => {
             
             that.snowstack_init();
@@ -318,7 +325,13 @@ export default {
         let that = this;
         that.profiles = {};
        /* Calling API for fetching images */
-        axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+that.country+'&city='+that.city)
+        if(that.user_country != '' && that.country == '') {
+            var country = that.user_country;
+        } else {
+            var country = that.country;
+        }
+
+        axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+country+'&city='+that.city)
         .then((response) => {
             
             that.snowstack_init();
@@ -549,7 +562,13 @@ export default {
                     
                     // debugger
                     // alert($(that).tagvalue.name);
-                    var url_api=url+"/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+that.country+'&city='+that.city;
+                    if(that.user_country != '' && that.country == '') {
+                        var country = that.user_country;
+                    } else {
+                        var country = that.country;
+                    }
+
+                    var url_api=url+"/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+country+'&city='+that.city;
                     $.getJSON(url_api, function(data) 
                     {
                         console.log(data.data, that.cellCount);

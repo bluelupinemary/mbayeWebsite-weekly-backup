@@ -15,6 +15,7 @@
 @endsection
 
 @section('content')
+<div class="app">
 <div id="page-content">
     <div class="communicator">
         <div class="main-screen">
@@ -229,7 +230,7 @@
                 </div>
                 <div class="menu-div-2">
                     <img src="{{asset('front/images/communicator-buttons/buttons/storyCareBtn.png')}}" class="communicator-button chat-button" alt="">
-                    <img src="{{asset('front/images/communicator-buttons/buttons/yourProfileBtn.png')}}" class="communicator-button chat-button" alt="">
+                    <your-profile-btn :user="{{ Auth::user() }}"></your-profile-btn>
                     <img src="{{asset('front/images/communicator-buttons/buttons/designsBtn.png')}}" class="communicator-button designs-button" alt="">
                 </div>
                 <div class="featured-image-div all-blog">
@@ -401,12 +402,26 @@
                 <div class="top-buttons">
                     <img src="{{asset('front/images/communicator-buttons/Back.png')}}" class="communicator-button back-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/ExtraButtonA.png')}}" class="communicator-button" alt="">
-                    <img src="{{asset('front/images/communicator-buttons/ExtraButtonB.png')}}" class="communicator-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/ExtraButtonB.png')}}" class="communicator-button blogtags-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/General.png')}}" class="communicator-button general-button" alt="">
                     <div class="submenu general-submenu">
                         <ul>
                             <li><a href="" class="create-general-blog"><i class="fas fa-plus"></i> Create New Story</a></li>
                             <li><a href="" class="view-all-general-blogs"><i class="fas fa-list"></i> View All Stories of the day</a></li>
+                        </ul>
+                    </div>
+                    <div class="submenu blogtags-submenu">
+                        <ul>
+                            <li><a href="{{url('/blogview/career/friend')}}" class=""><img src="{{asset('front/images/planets/Mercury.png')}}" alt=""><span>-</span><span class="tag-name">Careers</span></a></li>
+                            <li><a href="{{url('/blogview/designed-panel/friend')}}" class=""><img src="{{asset('front/images/planets/Neptune.png')}}" alt=""><span>-</span><span class="tag-name">Designs</span></a></li>
+                            <li><a href="{{url('/blogview/tagwise/friend?tag=family_and_friends')}}" class=""><img src="{{asset('front/images/planets/sun.png')}}" alt=""><span>-</span><span class="tag-name">Family and Friends</span></a></li>
+                            <li><a href="{{url('/blogview/tagwise/friend?tag=films')}}" class=""><img src="{{asset('front/images/planets/Venus.png')}}" alt=""><span>-</span><span class="tag-name">Films</span></a></li>
+                            <li><a href="{{url('/blogview/general/friend')}}" class=""><img src="{{asset('front/images/planets/Jupiter.png')}}" alt=""><span>-</span><span class="tag-name">General</span></a></li>
+                            <li><a href="{{url('/blogview/tagwise/friend?tag=music')}}" class=""><img src="{{asset('front/images/planets/Saturn.png')}}" class="" alt=""><span>-</span><span class="tag-name">Music</span></a></li>
+                            <li><a href="{{url('/blogview/tagwise/friend?tag=mountain_and_seas')}}" class=""><img src="{{asset('front/images/planets/Mars.png')}}" alt=""><span>-</span><span class="tag-name">Our Mountains and Seas</span></a></li>
+                            <li><a href="{{url('/blogview/tagwise/friend?tag=politics')}}" class=""><img src="{{asset('front/images/planets/Uranus.png')}}" alt=""><span>-</span><span class="tag-name">Politics</span></a></li>
+                            <li><a href="{{url('/blogview/tagwise/friend?tag=sports')}}" class=""><img src="{{asset('front/images/planets/Moon-w.png')}}" alt=""><span>-</span><span class="tag-name">Sports</span></a></li>
+                            <li><a href="{{url('/blogview/tagwise/friend?tag=travel')}}" class=""><img src="{{asset('front/images/planets/Pluto.png')}}" alt=""><span>-</span><span class="tag-name">Travel</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -487,7 +502,7 @@
     </div>
     <div id="app"></div>
 </div>
-<div class="app">
+
 <div class="modal photo-editor-modal" id="photoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">

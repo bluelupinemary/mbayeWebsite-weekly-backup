@@ -71,8 +71,8 @@ class JobSeekerProfilesController extends APIController
                     $query->where('profession_name', 'like' , '%'. $search .'%');
                 })
                 ->when($country, function ($query, $country) {
-                    $query->orWhere('country', 'like' , '%'. $country .'%')
-                        ->orWhere('present_country', 'like' , '%'. $country .'%');
+                    $query->orWhere('present_country', 'like' , '%'. $country .'%');
+                    // ->orWhere('country', 'like' , '%'. $country .'%')
                 })
                 ->when($city, function ($query, $city) {
                     $query->where('present_city', 'like' , '%'. $city .'%');

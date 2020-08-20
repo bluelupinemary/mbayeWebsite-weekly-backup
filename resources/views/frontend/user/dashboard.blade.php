@@ -2,7 +2,7 @@
 
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
-    <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/jquery.mobile-1.4.5.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}">

@@ -213,14 +213,15 @@ function load_home_meshes(){
         })
 
     ]).then(() => {
-        setTimeout(function(){
+        add_video_to_mesh(1);
+        // setTimeout(function(){
             initLight.includedOnlyMeshes.push(videoHome_obj);
             initLight.includedOnlyMeshes.push(videoHome_obj2);
             initLight.includedOnlyMeshes.push(agreeCameraUseDisc);
-            add_video_to_mesh(1);
+           
             initCamera.target = new BABYLON.Vector3(0,0,0);
             initCamera.radius = 1400;
-        },1000);
+        // },1000);
 
         // setTimeout(function(){
         //     document.getElementById("loadingScreenPercent").style.visibility = "hidden";

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Blogs;
 
+use App\Events\DesignPanelBlogEvent;
 use Carbon\Carbon;
 use App\Models\Blogs\Blog;
 use Illuminate\Support\Str;
@@ -326,9 +327,11 @@ class BlogsController extends Controller
         if($request->blog_id != '') {
             $blog = Blog::find($request->blog_id);
             $saved_blog = $this->blog->updateDesignBlog($blog, $request->except('_token'));
+
         } else {
             $saved_blog = $this->blog->createDesignBlog($request->except('_token'));
         }
+        broadcast(new DesignPanelBlogEvent($saved_blog))->toOthers();
         
         $user = User::find($request->user_id);
 
@@ -346,7 +349,7 @@ class BlogsController extends Controller
 
     public function fetchLatestBlogs(Request $request)
     {
-        $blogs = Blog::with('owner')->orderBy('publish_datetime', 'desc')->paginate(8);
+        $blogs = Blog::with(['owner', 'tags'])->orderBy('publish_datetime', 'desc')->paginate(8);
 
         return response()->json($blogs);
     }
@@ -365,45 +368,91 @@ class BlogsController extends Controller
         $sort = 'desc_name';
 
         if($request->has('tag') && $request->tag != '') {
+            // filtered by tag
             $tag = $this->getTag($request->tag);
             $blogs = Blog::where('status', 'Published')
                 ->whereHas('tags', function($q) use($tag) {
                     $q->where('tag_id', $tag);
-                })->get();
+                })->with('owner')->get();
+            
+            if($tag == 8 || $tag == 9) {
+                $blog_shares = BlogShare::whereIn('blog_id', $blogs->pluck('id')->toArray())
+                    ->whereDoesntHave('tags')->get();
+            } else {
+                
+                $blog_shares = BlogShare::whereIn('blog_id', $blogs->pluck('id')->toArray())
+                    ->orWhereHas('tags', function($q) use($tag) {
+                        $q->where('tag_id', $tag);
+                    })
+                    ->get();
+            }
         } else {
+            // all blogs
             $blogs = Blog::where('status', 'Published')
                 ->whereHas('tags', function($q) {
                     $q->whereNotIn('tag_id', [8,9]);
-                })->get();
+                })->with('owner')->get();
+            
+            $blog_shares = BlogShare::whereIn('blog_id', $blogs->pluck('id')->toArray())
+            ->orWhereHas('tags', function($q) {
+                $q->whereNotIn('tag_id', [8,9]);
+            })->get();
         }
-
-        $blog_shares = BlogShare::whereIn('blog_id', $blogs->pluck('id')->toArray())->with('blog')->get();
 
         if($request->has('user_id') && $request->user_id != 0) {
             $blogs = $blogs->where('created_by', $request->user_id);
             $blog_shares = $blog_shares->where('created_by', $request->user_id);
+        } else if($request->has('user_id') && $request->user_id == 0 && $request->type == 'friend') {
+            $friends_id = Auth::user()->getFriends()->pluck('id')->toArray();
+            
+            $blogs = $blogs->whereIn('created_by', $friends_id);
+            $blog_shares = $blog_shares->whereIn('created_by', $friends_id);
         }
         
         $blogs = $blogs->merge($blog_shares)
                 ->sortByDesc('publish_datetime')
                 ->paginate($limit);
-       
         
         foreach($blogs as $blog){
-            if($blog->blog) {
-                if($blog->blog->featured_image == '') {
-                    $blog->blog->featured_image = 'blog-default-featured-image.png';
+            if($blog->blog_type) {
+                if($blog->blog_type == 'App\Models\Blogs\Blog') {
+                    if($blog->blog->featured_image == '') {
+                        $blog->blog->featured_image = '/storage/img/blog/blog-default-featured-image.png';
+                    } else {
+                        $blog->blog->featured_image = '/storage/img/blog/'.$blog->blog->featured_image;
+                    }
+
+                    $blog->blog->owner = $blog->blog->owner;
+                    $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
+                    $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
+                    $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
+                    $blog->blog->commentcount  = $blog->blog->comments->count();
+                    $blog->blog->most_reaction = $blog->blog->mostReaction();
+                    // $blog->blog->name = $blog->caption;
+                } else if($blog->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
+                    $blog->blog = $blog->general_blog;
+                    
+                    if($blog->general_blog->featured_image == '') {
+                        $blog->blog->featured_image = '/storage/img/blog/blog-default-featured-image.png';
+                    } else {
+                        $blog->blog->featured_image = '/storage/img/general_blogs/'.$blog->general_blog->featured_image;
+                    }
+
+                    $blog->blog->owner = $blog->general_blog->owner;
+                    $blog->blog->hotcount  = $blog->general_blog->likes->where('emotion',0)->count();
+                    $blog->blog->coolcount     = $blog->general_blog->likes->where('emotion',1)->count();
+                    $blog->blog->naffcount     = $blog->general_blog->likes->where('emotion',2)->count();
+                    $blog->blog->commentcount  = $blog->general_blog->comments->count();
+                    $blog->blog->most_reaction = $blog->general_blog->mostReaction();
+                    // $blog->blog->name = $blog->caption;
                 }
-                $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
-                $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
-                $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
-                $blog->blog->commentcount  = $blog->blog->comments->count();
-                $blog->blog->most_reaction = $blog->blog->mostReaction();
-                $blog->blog->name = $blog->caption;
             } else {
                 if($blog->featured_image == '') {
-                    $blog->featured_image = 'blog-default-featured-image.png';
+                    $blog->featured_image = '/storage/img/blog/blog-default-featured-image.png';
+                } else {
+                    $blog->featured_image = '/storage/img/blog/'.$blog->featured_image;
                 }
+
                 $blog->hotcount = $blog->likes->where('emotion',0)->count();
                 $blog->coolcount     = $blog->likes->where('emotion',1)->count();
                 $blog->naffcount     = $blog->likes->where('emotion',2)->count();

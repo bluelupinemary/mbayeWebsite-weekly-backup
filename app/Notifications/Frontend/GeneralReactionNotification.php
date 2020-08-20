@@ -56,6 +56,7 @@ class GeneralReactionNotification extends Notification implements ShouldQueue
                 'author_first_name' => $this->like->user->first_name,
                 'author_last_name' => $this->like->user->last_name,
                 'emotion' => $this->like->emotion,
+                'blog_name' => $this->like->blog->name,
                 'message' => $this->like->user->first_name." give reaction on ".$this->like->blog->name,
         ];
     }
@@ -68,6 +69,7 @@ class GeneralReactionNotification extends Notification implements ShouldQueue
             'author_first_name' => $this->like->user->first_name,
             'author_last_name' => $this->like->user->last_name,
             'emotion' => $this->like->emotion,
+            'blog_name' => $this->like->blog->name,
             'message' => $this->like->user->first_name." give reaction on ".$this->like->blog->name,
 
         ]);

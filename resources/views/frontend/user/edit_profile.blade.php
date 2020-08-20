@@ -1040,7 +1040,7 @@
 @section('after-scripts')
     <!-----------------------------------   script section ------------------------------------------>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script type="text/javascript" src="{{ asset('front') }}/JS/jquery-2.1.3x.min"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <!-- <script type="text/javascript" src="webcamjs/webcam.min.js"></script> -->
@@ -1945,17 +1945,17 @@ document.getElementById('my_camera').innerHTML =
 
                 }
 
-                 $(document).ready(function(){
-                 $("#Div_for_wiki2").click(function(){
-                 $("#Div_for_wiki").hide();
-                });
-                 $("#divv").click(function(){
-                 $("#Div_for_wiki").show();
-                });
-                 $("#viki").click(function(){
-                 $("#Div_for_wiki2").show();
-                });
-                });
+            // $(document).ready(function(){
+                 $("#Div_for_wiki2").on('click',function(){
+                      $("#Div_for_wiki").hide();
+                  });
+                 $("#divv").on('click',function(){
+                      $("#Div_for_wiki").show();
+                  });
+                 $("#viki").on('click',function(){
+                    $("#Div_for_wiki2").show();
+                  });
+            // });
 
 
                 /*
@@ -1974,7 +1974,7 @@ document.getElementById('my_camera').innerHTML =
                 /*
                 Function to redirect to update passwrod page
                 */
-                function redirectToUpdatePassword{
+                function redirectToUpdatePassword(){
                   window.location = "{{ url('/account') }}";
                 }
 

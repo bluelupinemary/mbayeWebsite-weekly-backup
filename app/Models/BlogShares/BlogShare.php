@@ -40,23 +40,7 @@ class BlogShare extends Model
 
     public function blog()
     {
-        // return $this->belongsTo($thi);
-        // if($this->blog_type == 'App\Models\Blogs\Blog') {
-        //     return $this->belongsTo(Blog::class);
-        // }
-        // if($this->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
-        //     return $this->belongsTo(GeneralBlog::class);
-        // }
-        // dd($this->blog_type);
-        switch ($this->blog_type)
-        {
-            case 'App\Models\Blogs\Blog':
-                return $this->belongsTo('App\Models\Blogs\Blog');
-            case 'App\Models\GeneralBlogs\GeneralBlog':
-                return $this->belongsTo('App\Models\GeneralBlogs\GeneralBlog');
-            default:
-                return $this->belongsTo('App\Models\Blogs\Blog');
-        }
+        return $this->belongsTo('App\Models\Blogs\Blog', 'blog_id');
     }
 
     public function general_blog()

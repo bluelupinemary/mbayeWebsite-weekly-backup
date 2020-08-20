@@ -2942,8 +2942,12 @@ a.judy_collins_2 {
 }
 
 .notifications-list img {
-	width: 17%;
-	margin: 0 5%;
+	width: 19%;
+	margin: 0 1%;
+}
+
+.notifications-list img.naff-icon {
+	width: 13%;
 }
 
 .notifications-list img.comment {

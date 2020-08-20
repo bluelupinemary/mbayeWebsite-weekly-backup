@@ -60,6 +60,8 @@ Vue.component('designpanelblog-component', require('../components/frontend/Desig
 Vue.component('designpanelhome-component', require('../components/frontend/DesignPanelHomeComponent.vue').default);
 Vue.component('earthlings-activities', require('../components/frontend/EarthlingsActivities.vue').default);
 Vue.component('career-profile', require('../components/frontend/CareerProfileComponent.vue').default);
+Vue.component('most-naffed', require('../components/frontend/MostNaffedComponent.vue').default);
+Vue.component('your-profile-btn', require('../components/frontend/YourProfileBtnComponent.vue').default);
 const app = new Vue({
     el: '.app',
 });

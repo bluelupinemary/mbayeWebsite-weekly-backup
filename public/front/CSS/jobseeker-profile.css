@@ -286,8 +286,8 @@
                 border: 0 !important;
             }
             .arrow {
-                width: 70px;
-                height: 16px;
+                width: 92px;
+                height: 20px;
                 overflow: hidden;
                 position: absolute;
                 left: 50%;
@@ -665,6 +665,7 @@
                 padding: 8px 0;
                 margin: 0.5vw;
                 color: #fff;
+                overflow: hidden;
             }
 
             .sidenav-right {
@@ -936,7 +937,7 @@
                 top: 21%;
                 left: 0;
                 background-color: #111;
-                overflow-x: hidden;
+                overflow: hidden;
                 transition: 0.5s;
                 
               }
@@ -1003,7 +1004,14 @@
 .modal.show{
     background-color: transparent !important;
 } 
-.modal .modal-footer {
+.modal  {
+    border: 0;
+    background: rgba(8, 64, 147, 0.62);
+}
+.modal-footer {
+    border-top: 0px ;
+}
+.modal-footer {
     border: 0;
     background: rgba(8, 64, 147, 0.62);
 }
@@ -1062,12 +1070,12 @@
     background: rgba(8, 64, 147, 0.62);
 }
 
-.work-experience-body,.education-body ,.reference-body,.aboutme-body,.contact-body{
+.work-experience-body,.education-body ,.reference-body,.aboutme-body,.contact-body,.profession-body{
     color: #fff;
-    font-size: 0.7em;
+    font-size: 0.9em;
 }
 
-#work-experience-form p ,#work-education-form p,#reference-form p,#aboutme-form p,#contact-form p{
+#work-experience-form p ,#work-education-form p,#reference-form p,#aboutme-form p,#contact-form p,#profession-form p{
     display: none;
     text-align: center;
 }
@@ -1077,14 +1085,14 @@
     margin: 0 auto;
 }
 
-.work-experience-body fieldset ,.education-body fieldset,.reference-body fieldset,.aboutme-body fieldset,.contact-body fieldset{
+.work-experience-body fieldset ,.education-body fieldset,.reference-body fieldset,.aboutme-body fieldset,.contact-body fieldset,.profession-body fieldset{
     border: 1px solid #fff;
     margin-top: 3%;
     border-radius: 10px;
     padding: 4% 2% 4% 4%;
 }
 
-.work-experience-body .form-check ,.education-body .form-check,.reference-body .form-check,.aboutme-body .form-check,.contact-body .form-check {
+.work-experience-body .form-check ,.education-body .form-check,.reference-body .form-check,.aboutme-body .form-check,.contact-body .form-check,.profession-body .form-check {
     display: inline-block;
     padding-left: 1.50rem;
     width: 32%;
@@ -1100,14 +1108,72 @@
 .modal-box{
     
 }
-/*               
-.work-experience {
-    position: absolute;
+.heading_setup{
    
-    width: 8vw;
-    top: 50%;
-    transform: translate(0%, 626%);
-    right: 0;
+    color: white;
+    transition: 0.3s;
+    font-family:Nasalization;
+    text-align: center;
+}
+.btn-footer{
     display: flex;
-    justify-content: flex-end;
-}  */
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: center;
+}
+.btn-plus{
+    color: #00dcff;
+    font-size: 0.9em;
+}
+.education-modal-body{
+    height: 33vw;
+    overflow-y: auto;
+}
+.work-modal-body{
+    height: 34vw;
+    overflow-y: auto;
+}
+.reference-modal-body{
+    height: 25vw;
+    overflow-y: auto;
+}
+textarea {
+    resize: none;
+  }
+
+  .disabled_field{
+    background-color: #d6d0d0fc !important
+  }
+.remove-btn-education{
+   z-index:1000000!important;
+}
+#profession_list{
+position: absolute;
+    left: 0;
+    right: 0;
+    top: 34%;
+    transform: translate(8%, -2%);
+    display: flex;
+    border: 0px solid blue;
+    width: 75%;
+    z-index: 100;
+}
+    #profession_list ul  li{
+        list-style: none !important;
+        list-style-type: none !important;
+        font-family: Nasalization;
+        /* padding: 0; */
+        text-align: left;
+        padding-left: 5%;
+        color:#25636d;
+    }
+
+    .list-group,.list-group-item{
+        width: 100%;
+    }
+    .list-group-item:hover{
+        background-color: #17a2b8;
+    }
+    .list-group-item{
+        color:#25636d;
+    }

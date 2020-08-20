@@ -130,6 +130,7 @@ Route::group(['namespace' => 'Friendship'], function () {
     Route::group(['namespace' => 'GeneralBlogs'], function () {
         Route::get('/stories', 'GeneralBlogsController@index');
         Route::get('/fetchgeneralblogs','GeneralBlogsController@fetchgeneralblogs');
+        Route::get('/fetchmostnaff','GeneralBlogsController@mostNaffed');
         Route::get('/single_general_blog/{id}', 'GeneralBlogsController@show');
         Route::post('publish_general_blog', 'GeneralBlogsController@saveGeneralBlog');
         Route::resource('general_blogs', 'GeneralBlogsController');
@@ -141,6 +142,8 @@ Route::group(['namespace' => 'Friendship'], function () {
 
     //Jobseekers profile
     Route::get('/jobseekers/setup-profile','JobSeekerProfile\JobSeekerProfilesController@index');
+
+    Route::get('jobseekers', 'JobSeekerProfile\JobSeekerProfilesController@getJobSeekers');
 });
 
 /*
@@ -228,3 +231,5 @@ Route::post('save_work_experience', 'JobSeekerProfile\JobSeekerProfilesControlle
 Route::post('save_education', 'JobSeekerProfile\JobSeekerProfilesController@save_education');
 Route::post('save_character_references', 'JobSeekerProfile\JobSeekerProfilesController@save_character_references');
 Route::post('save_contact_details', 'JobSeekerProfile\JobSeekerProfilesController@save_contact_details');
+Route::post('save_professional_details', 'JobSeekerProfile\JobSeekerProfilesController@save_professional_details');
+Route::get('search', 'JobSeekerProfile\JobSeekerProfilesController@search');

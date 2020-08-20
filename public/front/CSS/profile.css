@@ -1781,3 +1781,7 @@ input#countries {
 .country-div select {
     flex: 50%;
 }
+
+.blog-search input::placeholder {
+    color: #6c757d;
+}

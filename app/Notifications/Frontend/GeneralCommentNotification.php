@@ -58,7 +58,7 @@ class GeneralCommentNotification extends Notification implements ShouldQueue
                 'comment_id' => $this->comment->id,
                 'comment_body' => $this->comment->body,
                 'comment_commented_at' => $this->comment->created_at,
-                'message' => $this->comment->user->first_name." commented on ".$this->comment->blog->name,
+                'message' => $this->comment->user->first_name.' '.$this->comment->user->last_name.' commented on your "'.$this->comment->blog->name.'" story',
         ];
     }
 
@@ -72,7 +72,7 @@ class GeneralCommentNotification extends Notification implements ShouldQueue
             'comment_id' => $this->comment->id,
             'comment_body' => $this->comment->body,
             'comment_commented_at' => $this->comment->created_at,
-            'message' => $this->comment->user->first_name." commented on ".$this->comment->blog->name,
+            'message' => $this->comment->user->first_name.' '.$this->comment->user->last_name.' commented on your "'.$this->comment->blog->name.'" story',
         ]);
     }
     public function broadcastType()

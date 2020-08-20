@@ -1,4 +1,7 @@
-
+let secondCamView, isMbayeRotating=false, isWorldFlowersActive = false, isFootRotateActive=false, isHeadRotateActive=false;
+let imagePath = 'front/images3D/storyMbayeScene/';
+let texturePath = 'front/textures/storyMbaye/';
+let videoPath = 'front/videos/storyMbaye/'
 //############################################# CREATE THE SCENE'S CAMERAS #############################################//
 //function to add the camera to the scene
 function create_camera(){
@@ -123,6 +126,8 @@ function enable_gizmo(themesh){
 let isPlane2Selected = false;
 let isLaunchEnabled = false;
 let currFlower;
+
+
 function add_mouse_listener(){
   var onPointerDownVisit = function (evt) {
       if(scene) var pickinfo = scene.pick(scene.pointerX, scene.pointerY);
@@ -143,10 +148,22 @@ function add_mouse_listener(){
           console.log("the mesh clicked: ", theMesh,theMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
          
        
-        //   enable_gizmo(theMesh);
-        //   console.log("camera: ", storyCamera.position, storyCamera.alpha, storyCamera.beta, storyCamera.radius);
-          // console.log("parent of mesh: ", theMesh.parent);
+          if(clickableFlowersMap.has(theMesh.name)){
+            console.log("flower ", theMesh.name," is clicked.");
+            let flower = clickableFlowersMap.get(theMesh.name);
+            let music = flowersMbayeMap.get(flower);
+            let videoId = music[3].id;                            //4th value is the video id
+            let startTime = music[3].start;
+            
         
+            if(theMesh.name!=currFlower){
+            load_music(videoId, startTime);          //load the music video
+            currFlower = theMesh.name;
+            }else if(theMesh.name==currFlower) document.getElementById("musicVideoDiv").style.visibility = "visible";
+        
+              
+              
+          }
       
          
          
@@ -267,7 +284,7 @@ function init_photo(name,size,pos,stageNo){
         planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
         planeMatl.opacityTexture.uScale = -1;
         // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
-    }else if(stageNo === 25 || stageNo === 26 || stageNo === 29 || stageNo === 30){
+    }else if(stageNo === 25 || stageNo === 26 || stageNo === 29 || stageNo === 30 || stageNo==36 || stageNo==38 || stageNo==40){
         planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
         planeMatl.opacityTexture.uScale = -1;
     }
@@ -283,6 +300,32 @@ function init_photo(name,size,pos,stageNo){
 
     
     return plane;
+}
+
+
+function init_video(name,radius,stageNo){
+    let disc = BABYLON.MeshBuilder.CreateDisc(name, {radius:radius, tessellation: 0}, scene);
+    
+    disc.position = new BABYLON.Vector3(0,0,-1000); 
+  
+    disc.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(180),0);
+    
+
+    let video;
+    if(stageNo == 39){
+        video = stageMap.get(stageNo).video;
+    }
+
+    var mat = new BABYLON.StandardMaterial("mat", scene);
+    mat.emissiveColor = BABYLON.Color3.White();
+	
+	var videoTexture = new BABYLON.VideoTexture("video", [videoPath+video], scene, true, true);
+
+	mat.diffuseTexture = videoTexture;
+	disc.material = mat;
+
+    
+    return disc;
 }
 
 
@@ -582,12 +625,14 @@ var animateObjectFadeOut = function(obj, speed, frameCount, visibility) {
 
 
 var setCamDefault = function(radius) {
+    
     storyCamera.target = new BABYLON.Vector3(0,0,0);
-    storyCamera.position = new BABYLON.Vector3(0,0,0);
+    // storyCamera.position = new BABYLON.Vector3(0,0,0);
     if(radius) storyCamera.radius = radius;
     else storyCamera.radius = 1500;
     storyCamera.alpha = BABYLON.Tools.ToRadians(90);
     storyCamera.beta = BABYLON.Tools.ToRadians(90);
+    console.log("set new pos ",storyCamera.radius);
     
 };
 var setCamLateralLeft = function() {
@@ -626,6 +671,13 @@ let isMbayeRotateActive = false;
 var radiusAnimEnded = function() {
     if(isMbayeRotateActive){
         animateObjectRotation(mbaye_obj, 15, frameCount, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(255),0));
+    }
+    if(isFootRotateActive){
+        animateObjectRotationNoEase(rfoot_obj, 10, frameCount, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(450),0));
+    }
+    if(isHeadRotateActive){
+        animateObjectRotationNoEase(head_obj, 20, frameCount, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(450),0));
+        if(currentStage-1 == 52) highlightFlowers();
     }
 }
 
@@ -701,6 +753,7 @@ function rotate_sky(){
 
 function remove_stage_objects(){
     for(const [key,val] of currStageObjMap.entries()){
+        
         val.dispose();
     }
     currStageObjMap.clear();
@@ -712,6 +765,10 @@ function remove_texts(){
         $(this).remove();
     });
 
+}
+
+function remove_highlighted_objects(hlayer){
+    hlayer.removeAllMeshes();
 }
 
 function create_texts(stageNo){
@@ -805,12 +862,13 @@ function load_music(videoId,start) {
     $('.player').empty();
     yt_player.loadVideoById(videoId,start);
     yt_player.playVideo();
-    // document.getElementById("musicVideoDiv").style.visibility = "visible";
+    document.getElementById("musicVideoDiv").style.visibility = "visible";
 }
 
 
-function stop_flower_music(){
+function stop_music(){
     yt_player.stopVideo(); 
+    document.getElementById("musicVideoDiv").style.visibility = "hidden";
 }
 
 
@@ -820,3 +878,81 @@ function stop_flower_music(){
 let lastScriptTxt = document.getElementById("txt1");
 var animationEvent = whichAnimationEvent();
 lastScriptTxt.addEventListener(animationEvent, showContinueButton);
+
+
+
+
+
+/*################################################### START OF CREATE FLOWERS IMAGES ############################################## */
+function set_scale(){
+    let size = getRandomInt(4,5)
+    return size;
+  }
+  
+  //function that randomizes int
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  
+  let stageFlowersMap = new Map();
+  function load_orig_flowers(cno){
+      let theMap;
+    if(cno == 2){
+        theMap = rFootFlowersMap;
+    }else if(cno == 3){
+        theMap = flowersMbayeMap;
+    }
+    if(theMap){
+        console.log("happening");
+        for (const [flowerName,val] of theMap.entries()) {
+            // let thePos = set_position();
+            let thePos;
+            
+            if(val[0]!==null) thePos = val[0];
+          
+            let theSize = set_scale();
+            
+            if(cno==3) theSize = 50;
+            let samp = init_flower(flowerName,flowerName+"Matl", "front/images3D/flowers2D/orig/"+flowerName+".png",theSize,thePos.x,thePos.y,thePos.z);
+            stageFlowersMap.set(flowerName,samp);
+        }
+    }
+    
+  }
+  
+  
+  function init_flower(name,matlName,imgPath,size, x, y, z){
+    let plane = BABYLON.Mesh.CreatePlane(name, size, scene);
+    plane.isVisible = false;
+            
+    plane.position = new BABYLON.Vector3(x,y,z);
+    plane.rotation.y = BABYLON.Tools.ToRadians(-90);
+    
+    let planeMatl = new BABYLON.StandardMaterial(matlName, scene);
+    planeMatl.diffuseColor = BABYLON.Color3.Black();
+    planeMatl.diffuseTexture = new BABYLON.Texture(imgPath, scene);
+    
+    planeMatl.diffuseTexture.hasAlpha = true;
+    planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
+    planeMatl.emissiveColor = BABYLON.Color3.White();
+    planeMatl.backFaceCulling = false;//Allways show the front and the back of an element
+    planeMatl.freeze();
+    
+    plane.material = planeMatl;
+    // plane.freezeWorldMatrix();
+    // add_action_mgr(plane);
+    return plane;
+  }
+  
+  function setFlowerVisibility(){
+    for (const [flowerName,val] of stageFlowersMap.entries()) {
+        val.isVisible = true;
+    }
+  }
+  
+  function removeFlowers(){
+    for (const [flowerName,val] of stageFlowersMap.entries()) {
+        val.dispose();
+    }
+    stageFlowersMap.clear();
+  }

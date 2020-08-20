@@ -42,6 +42,10 @@ trait GeneralBlogRelationship
         return $this->hasMany(GeneralLike::class, 'blog_id');
     }
 
+    public function naffLikes() {
+        return $this->hasMany(GeneralLike::class, 'blog_id')->where('emotion', 2);
+    }
+
     public function privacy()
     {
         return $this->hasMany(BlogPrivacy::class, 'blog_id')->where('blog_type', 'general');
