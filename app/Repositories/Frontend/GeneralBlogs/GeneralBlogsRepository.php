@@ -71,7 +71,9 @@ class GeneralBlogsRepository extends BaseRepository
         $input['slug'] = Str::slug($input['name']);
         $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
         $input['created_by'] = access()->user()->id;
-
+        if(isset($input['shareable'])){
+            $input['shareable'] = 0;
+        }
         if($input['edited_featured_image']) {
             $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
         } else if(array_key_exists('featured_image', $input)) {

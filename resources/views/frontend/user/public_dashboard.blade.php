@@ -36,107 +36,107 @@
 
     @if($travel_preview != '')
     <style>
-    .pluto_preview {
-        background-image: url({{$travel_preview}});
-    }
+        .pluto_preview {
+            background-image: url({{$travel_preview}});
+        }
     </style>
     @endif
 
     @if($designs_preview != '')
     <style>
-    .neptune_preview {
-        background-image: url({{$designs_preview}});
-    }
+        .neptune_preview {
+            background-image: url({{$designs_preview}});
+        }
     </style>
     @endif
 
     @if($general_preview != '')
     <style>
-    .jupiter_preview {
-        background-image: url({{$general_preview}});
-    }
+        .jupiter_preview {
+            background-image: url({{$general_preview}});
+        }
     </style>
     @endif
 
     @if($politics_preview != '')
     <style>
-    .uranus_preview .mover-1, .uranus_preview .map {
-        display: none;
-    }
-    .uranus_preview {
-        -webkit-transition: transform 200ms linear;
-        -moz-transition: transform 200ms linear;
-        -o-transition: transform 200ms linear;
-        transition: transform 200ms linear;
-        background-size: cover;
-        background-image: url({{$politics_preview}});
-        transform-style: preserve-3d;
-        -webkit-animation: spin 4s linear infinite alternate; /* Safari 4+ */
-        -moz-animation: spin 4s linear infinite alternate; /* Fx 5+ */
-        -o-animation: spin 4s linear infinite alternate; /* Opera 12+ */
-        animation: spin 4s linear infinite alternate;
-    }
+        .uranus_preview .mover-1, .uranus_preview .map {
+            display: none;
+        }
+        .uranus_preview {
+            -webkit-transition: transform 200ms linear;
+            -moz-transition: transform 200ms linear;
+            -o-transition: transform 200ms linear;
+            transition: transform 200ms linear;
+            background-size: cover;
+            background-image: url({{$politics_preview}});
+            transform-style: preserve-3d;
+            -webkit-animation: spin 4s linear infinite alternate; /* Safari 4+ */
+            -moz-animation: spin 4s linear infinite alternate; /* Fx 5+ */
+            -o-animation: spin 4s linear infinite alternate; /* Opera 12+ */
+            animation: spin 4s linear infinite alternate;
+        }
     </style>
     @endif
 
     @if($music_preview != '')
     <style>
-    .saturn_preview .mover-1, .saturn_preview .map {
-        display: none;
-    }
-    .saturn_preview {
-        -webkit-transition: transform 200ms linear;
-        -moz-transition: transform 200ms linear;
-        -o-transition: transform 200ms linear;
-        transition: transform 200ms linear;
-        background-size: cover;
-        background-image: url({{$music_preview}});
-        transform-style: preserve-3d;
-        -webkit-animation: spin 4s linear infinite alternate; /* Safari 4+ */
-        -moz-animation: spin 4s linear infinite alternate; /* Fx 5+ */
-        -o-animation: spin 4s linear infinite alternate; /* Opera 12+ */
-        animation: spin 4s linear infinite alternate;
-    }
+        .saturn_preview .mover-1, .saturn_preview .map {
+            display: none;
+        }
+        .saturn_preview {
+            -webkit-transition: transform 200ms linear;
+            -moz-transition: transform 200ms linear;
+            -o-transition: transform 200ms linear;
+            transition: transform 200ms linear;
+            background-size: cover;
+            background-image: url({{$music_preview}});
+            transform-style: preserve-3d;
+            -webkit-animation: spin 4s linear infinite alternate; /* Safari 4+ */
+            -moz-animation: spin 4s linear infinite alternate; /* Fx 5+ */
+            -o-animation: spin 4s linear infinite alternate; /* Opera 12+ */
+            animation: spin 4s linear infinite alternate;
+        }
     </style>
     @endif
 
     @if($sports_preview != '')
     <style>
-    .moon_preview {
-        background-image: url({{$sports_preview}});
-    }
+        .moon_preview {
+            background-image: url({{$sports_preview}});
+        }
     </style>
     @endif
 
     @if($films_preview != '')
     <style>
-    .venus_preview {
-        background-image: url({{$films_preview}});
-    }
+        .venus_preview {
+            background-image: url({{$films_preview}});
+        }
     </style>
     @endif
 
     @if($mountains_and_seas_preview != '')
     <style>
-    .mars_preview {
-        background-image: url({{$mountains_and_seas_preview}});
-    }
+        .mars_preview {
+            background-image: url({{$mountains_and_seas_preview}});
+        }
     </style>
     @endif
 
     @if($careers_preview != '')
     <style>
-    .mercury_preview {
-        background-image: url({{$careers_preview}});
-    }
+        .mercury_preview {
+            background-image: url({{$careers_preview}});
+        }
     </style>
     @endif
 
     @if($family_and_friends_preview != '')
     <style>
-    .sun_preview {
-        background-image: url({{$family_and_friends_preview}});
-    }
+        .sun_preview {
+            background-image: url({{$family_and_friends_preview}});
+        }
     </style>
     @endif
 @endsection
@@ -192,7 +192,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <button class="view"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <button class="view" onclick="view_my_designs_blogs({{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -209,7 +209,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <button class="view" onclick="view_general_blogs('general',{{$userId}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <button class="view" onclick="view_general_blogs({{$userId}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -247,7 +247,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <button class="view" onclick="view_my_blogs_tagwise('Mountains and Seas',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <button class="view" onclick="view_my_blogs_tagwise('mountains_and_seas',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -281,7 +281,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <button class="view" onclick="view_my_blogs_tagwise('Family and Friends',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <button class="view" onclick="view_my_blogs_tagwise('family_and_friends',{{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -298,7 +298,7 @@
             <div class="planet-buttons">
                 <span class="pop-up view-pop-up">View Blogs</span>
                 <span class="pop-up back-pop-up">Back</span>
-                <button class="view" onclick="view_my_career_posts({{Auth::user()->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+                <button class="view" onclick="view_my_career_posts({{$user->id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
                 <button class="back"><img src="{{asset('front/icons/arrow-back.png')}}" alt=""></button>
                 
             </div>
@@ -627,98 +627,60 @@
             <i class="fas fa-undo-alt"></i>
         </button>
     </div>
-    <div class="app" style="display: none;">
-        <commentnotification-component :user="{{ $user }}"></commentnotification-component>
-    </div>
     <!--end of astronaut img div-->
 </div>
 @endsection
 
 @section('before-scripts')
-    <script src="{{asset('front/JS/jquery-1.11.1.min.js')}}"></script>
-    <script>
-        var token = '{{ Session::token() }}';
-        var url_view_general_blog = '{{ route('frontend.blog_general_friend') }}';
-        var url_view_tag_wise_blog = '{{ route('frontend.blog_tagwise_friend') }}';
-        var url_view_my_career_blog = '{{ route('frontend.blog_career_friend') }}';
-    </script>
+<script src="{{asset('front/JS/jquery-1.11.1.min.js')}}"></script>
 @endsection
 
 @section('after-scripts')
-    <script src="{{asset('front/JS/jquery.mousewheel.min.js')}}"></script>
-    <script src="{{asset('front/JS/TweenMax.min.js')}}"></script>
-    <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
-    <script src="{{asset('front/JS/jquery.ui.touch-punch.min.js')}}"></script>
-    {{-- <script src="{{asset('front/JS/draggabilly.min.js')}}"></script> --}}
-    <script src="{{asset('front/JS/cropper.min.js')}}"></script>
-    <script src="{{asset('front/JS/circletype.min.js')}}"></script>
-    <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
-    
-    <script src="{{asset('front/JS/jquery.mobile-1.4.5.min.js')}}"></script>
-    <script src="{{asset('front/JS/dashboard.js')}}"></script>
-    <script>
-        // $('button.navigator-zoomin').click( function() {
-        //     alert();
-        //     $('.navigator-buttons, .tos-div, .instructions-div, .navigator-zoomout-btn, .communicator-div').css('pointer-events', 'none !important');
-        // });
+<script src="{{asset('front/JS/jquery.mousewheel.min.js')}}"></script>
+<script src="{{asset('front/JS/TweenMax.min.js')}}"></script>
+<script src="{{asset('front/JS/jquery-ui.js')}}"></script>
+<script src="{{asset('front/JS/jquery.ui.touch-punch.min.js')}}"></script>
+{{-- <script src="{{asset('front/JS/draggabilly.min.js')}}"></script> --}}
+<script src="{{asset('front/JS/cropper.min.js')}}"></script>
+<script src="{{asset('front/JS/circletype.min.js')}}"></script>
+<script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
 
-        /**
- * Function to redirect to general blogs
- * @param {tag} tag 
- * @param {id} id 
- */
-function view_general_blogs(tag,id){
-$.ajax({
-    type: "POST",
-    url:url_view_general_blog,
-    data:{id:id,
-         tag:tag,
-         _token:token
-        },
-    success: function(result){
-            window.location.href=url_view_general_blog+"?id="+id+'&tag='+tag;
-    }});
+<script src="{{asset('front/JS/jquery.mobile-1.4.5.min.js')}}"></script>
+<script src="{{asset('front/JS/dashboard.js')}}"></script>
+<script>
+    var url_view_general_blog = '{{ route('frontend.blog_general_friend') }}';
+    var url_view_tag_wise_blog = '{{ route('frontend.blog_tagwise_friend') }}';
+    var url_view_my_career_blog = '{{ route('frontend.blog_career_friend') }}';
+    var url_view_my_designs_blog = '{{ route('frontend.designed_panels_friend') }}';
 
-}
+    /**
+     * Function to redirect to general blogs
+     * @param {tag} tag 
+     * @param {id} id 
+     */
+    function view_general_blogs(id){
+        window.location.href=url_view_general_blog+"?id="+id;
+    }
 
+    /**
+    * Function to redirect to tagwise blogs
+    * @param {tag} tag 
+    * @param {id} id 
+    */
+    function view_my_blogs_tagwise(tag,id){
+        window.location.href=url_view_tag_wise_blog+"?id="+id+'&tag='+tag;
+    }
 
-/**
-* Function to redirect to tagwise blogs
-* @param {tag} tag 
-* @param {id} id 
-*/
-function view_my_blogs_tagwise(tag,id){
+    /**
+     *  Function to redirect to my career posts
+     * @param {id} id 
+     */
+    function view_my_career_posts(id){
+        window.location.href=url_view_my_career_blog+"?id="+id;
+    }
 
-$.ajax({
-    type: "POST",
-    url:url_view_tag_wise_blog,
-    data:{id:id,
-         tag:tag,
-         _token:token
-        },
-    success: function(result){
-            window.location.href=url_view_tag_wise_blog+"?id="+id+'&tag='+tag;
-    }});
-
-}
-
-
-/**
- *  Function to redirect to my career posts
- * @param {id} id 
- */
- function view_my_career_posts(id){
-
-$.ajax({
-    type: "POST",
-    url:url_view_my_career_blog,
-    data:{id:id,
-         _token:token
-        },
-    success: function(result){
-            window.location.href=url_view_my_career_blog+"?id="+id;
-    }});
-
-}
-    </script>
+    function view_my_designs_blogs(id){
+        window.location.href=url_view_my_designs_blog+"?id="+id;
+    }
+</script>
 @endsection

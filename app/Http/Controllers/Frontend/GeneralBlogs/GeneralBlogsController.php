@@ -3,23 +3,27 @@
 namespace App\Http\Controllers\Frontend\GeneralBlogs;
 
 use Carbon\Carbon;
-use App\Models\GeneralBlogs\GeneralBlog;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Events\GeneralBlogEvent;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
-use App\Models\GeneralBlogShares\GeneralBlogShare;
-use App\Models\BlogShares\BlogShare;
 use App\Http\Controllers\Controller;
+use App\Models\BlogShares\BlogShare;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Responses\RedirectResponse;
+use App\Models\GeneralBlogs\GeneralBlog;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Responses\Backend\Blog\EditResponse;
 use App\Http\Responses\Backend\Blog\IndexResponse;
+use App\Models\Friendships\FriendFriendshipGroups;
+use App\Models\GeneralBlogShares\GeneralBlogShare;
 use App\Http\Responses\Backend\Blog\CreateResponse;
+use App\Notifications\Frontend\BlogActivityNotification;
+use App\Notifications\Frontend\GeneralBlogActivityNotification;
 use App\Repositories\Frontend\GeneralBlogs\GeneralBlogsRepository;
-use App\Http\Requests\Backend\GeneralBlogShares\StoreGeneralBlogSharesRequest;
 use App\Http\Requests\Backend\GeneralBlogs\StoreGeneralBlogsRequest;
-use App\Events\GeneralBlogEvent;
+use App\Http\Requests\Backend\GeneralBlogShares\StoreGeneralBlogSharesRequest;
 
 /**
  * Class BlogsController.
@@ -132,17 +136,27 @@ class GeneralBlogsController extends Controller
      */
     public function fetchgeneralblogs(Request $request)
     {
-   
+        $friends = Auth::user()->getFriends();
+        $friendships = Auth::user()->getAcceptedFriendships();
+        $fsid = $friendships->pluck('id');
+        $fid = $friends->pluck('id');
+        $groups = FriendFriendshipGroups::whereIn('friendship_id',$fsid)->pluck("group_id");
+        // dd($groups);
         $limit = $request->get('paginate') ? $request->get('paginate') : 21;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
         $sort = 'desc_name';
-        $general_blogs = GeneralBlog::get();
-        // $general_blog_shares = GeneralBlogShare::where('publish_datetime', '>=', Carbon::now()->subDay())->with('blog')->get();
-        $general_blog_shares = GeneralBlogShare::with('blog')->get();
+        $general_blogs_private = GeneralBlog::whereHas('privacy', function($q) use ($groups) {
+            $q->whereIn('group_id', $groups);
+        })->get();
+        // dd($general_blogs_private);
+        $general_blogs_public = GeneralBlog::doesntHave('privacy')->get();
+        // dd(compact('general_blogs_public'));
+        $general_blog_shares = GeneralBlogShare::where('publish_datetime', '>=', Carbon::now()->subDay())->with('blog')->get();
 
         if($request->has('user_id') && $request->user_id != 0) {
-            $general_blogs = $general_blogs->where('created_by', $request->user_id);
+            $general_blogs_private = $general_blogs_private->where('created_by',$request->user_id);
+            $general_blogs_public = $general_blogs_public->where('created_by',$request->user_id);
             $general_blog_shares = $general_blog_shares->where('created_by', $request->user_id);
         } else if($request->has('user_id') && $request->user_id == 0 && $request->type == 'friend') {
             $friends_id = Auth::user()->getFriends()->pluck('id')->toArray();
@@ -151,10 +165,10 @@ class GeneralBlogsController extends Controller
             $general_blog_shares = $general_blog_shares->whereIn('created_by', $friends_id);
         }               
         
-        $blogs = $general_blogs->merge($general_blog_shares)
+        $blogs = $general_blogs_private->merge($general_blogs_public,$general_blog_shares)
                 ->sortByDesc('publish_datetime')
                 ->paginate($limit);
-       
+    //    dd($blogs);
         
         foreach($blogs as $blog){
             if($blog->blog) {
@@ -169,10 +183,6 @@ class GeneralBlogsController extends Controller
                 $blog->blog->most_reaction = $blog->blog->mostReaction();
                 // $blog->blog->name = $blog->caption;
             } else {
-                if($blog->featured_image == '') {
-                    $blog->featured_image = 'blog-default-featured-image.png';
-                }
-                $blog->owner         = $blog->owner;
                 $blog->hotcount      = $blog->likes->where('emotion',0)->count();
                 $blog->coolcount     = $blog->likes->where('emotion',1)->count();
                 $blog->naffcount     = $blog->likes->where('emotion',2)->count();
@@ -230,9 +240,24 @@ class GeneralBlogsController extends Controller
             $saved_blog = $this->blog->updateGeneralBlog($blog, $request->except('_token'));
         } else {
             $saved_blog = $this->blog->createGeneralBlog($request->except('_token'));
+
+            // get blog privacy group_id
+            $group_ids = $saved_blog->privacy->pluck('group_id')->toArray();
+
+            if($group_ids) {
+                $user_ids = FriendFriendshipGroups::whereIn('group_id', $group_ids)->pluck('friend_id')->toArray();
+
+                $friends = User::whereIn('id', $user_ids)->get();
+            } else {
+                $friends = Auth::user()->getFriends();
+            }
+            
+            Notification::send($friends, new GeneralBlogActivityNotification($saved_blog));
         }
         
         broadcast(new GeneralBlogEvent($saved_blog))->toOthers();
+        // $friends = Auth::user()->getFriends();
+        // Notification::send($friends, new BlogActivityNotification($saved_blog));
         
         $user = User::find($request->user_id);
 

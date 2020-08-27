@@ -12,7 +12,7 @@ let skybox;
 let currentStage = 35;
 
 
-let createChapter2Scene = function(){
+let createChapter3Scene = function(){
     
     canvas = document.getElementById('canvas');
     engine = new BABYLON.Engine(canvas, true,{ preserveDrawingBuffer: true, stencil: true });
@@ -50,18 +50,7 @@ var WALL_INIT_POS = new BABYLON.Vector3(-9.12,0,-1100);
 function load_3D_mesh(){
     var loadedPercent = 0;
     Promise.all([
-            BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/feetMbayeScene/", "FrontRFoot.babylon", scene,
-            function (evt) {
-                // onProgress
-                
-                if (evt.lengthComputable) {
-                    loadedPercent = (evt.loaded * 100 / evt.total).toFixed();
-                } else {
-                    var dlCount = evt.loaded / (1024 * 1024);
-                    loadedPercent += Math.floor(dlCount * 100.0) / 100.0;
-                }
-                document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+loadedPercent+" %";
-        }).then(function (result) {
+            BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/feetMbayeScene/", "FrontRFoot.babylon", scene).then(function (result) {
         
 
             result.meshes[0].scaling = new BABYLON.Vector3(12,12,12);
@@ -115,7 +104,7 @@ function setup_stage(stageNo){
   
     remove_texts();                                                 //delete/remove html texts from the dom tree
     remove_stage_objects();                                         //delete/remove previously created objects from the scene thru currStageObjMap
-    
+    remove_highlighted_objects(hl);
     if(stageMap.has(stageNo)) imgArr = stageMap.get(stageNo).imagesUsed;                  //the arr of images set in the stage map
 
     setTimeout(function(){
@@ -139,9 +128,7 @@ function setup_stage(stageNo){
 
         let temp = init_photo(imgArr[0],{w:700,h:450},{x:0,y:0,z:0},stageNo); 
         currStageObjMap.set(temp.name,temp);                 
-        // change_collage_photo(stageNo);
-        // collage_wall.isVisible = true;
-        // collage_wall.setEnabled(true);
+      
         animateCameraToRadius(storyCamera, 20, frameCount, 500);
 
     }else if(stageNo === 37){   
@@ -163,13 +150,10 @@ function setup_stage(stageNo){
         collage_wall.isVisible = false;
         collage_wall.setEnabled(false);
 
-        // rfoot_obj.position = new BABYLON.Vector3(56,-15,50);
-        // rfoot_obj.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(45),0);
         rfoot_obj.isVisible = false;
         rfoot_obj.setEnabled(false);
      
         storyCamera.radius = 140;
-        // setCamDefault(1000);
         storyCamera.alpha = 1.5784;
         storyCamera.beta = 1.5814;
   
@@ -181,6 +165,7 @@ function setup_stage(stageNo){
             add_delay(temp,initDelay,2000);
             currStageObjMap.set(temp.name, temp);
             initDelay += 2000;
+           
         }//end of for loop
 
          
@@ -222,6 +207,7 @@ function setup_stage(stageNo){
           imgs.push(temp);
           currStageObjMap.set(temp.name, temp);
           if(i>4) temp.visibility = 0;
+          
         }
 
         currTimer = setTimeout(function(){
@@ -305,9 +291,9 @@ function setup_stage(stageNo){
 
         for(i=0;i<imgArr.length;i++){
           let temp = init_photo(imgArr[i],{w:10,h:10},{x:-80,y:-25,z:380},stageNo);
-          // let temp = init_photo(imgArr[i],{w:100,h:100},{x:0,y:0,z:0},stageNo);
           imgs.push(temp);
           currStageObjMap.set(temp.name, temp);
+          hl.addMesh(temp,new BABYLON.Color3(0,0.5,0.5));
         }
 
         currTimer = setTimeout(function(){
@@ -342,22 +328,17 @@ function setup_stage(stageNo){
       
         storyCamera.targetScreenOffset = new BABYLON.Vector2(0,-4);
         animateCameraToRadius(storyCamera,40,frameCount,45);
-      
+
+        
      
     }
 
 
     currentStage++;
-    // currentStage = 31;
-
-    
-    // console.log("the scene: ", scene.activeCamera);
     // scene.meshes.forEach(function(mesh){console.log(mesh.name);});
 }
 
-function set_camera_specs(stageNo){
 
-}
 
 let dome;
 function setup_3D_photo(){
@@ -377,22 +358,33 @@ function setup_3D_photo(){
 }
 
 
-
-
   //function that will render the scene on loop
-  var scene = createChapter2Scene();
-  
-    
+  var scene = createChapter3Scene();
+  let loadingTimer;
+  if(scene.isLoading){
+      let c=0;
+      loadingTimer = setInterval(function () {
+
+        if(c<101){
+          document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+c+" %";
+          c++;
+        }
+        
+    }, 250);
+  }
+
   scene.executeWhenReady(function () {    
+    clearInterval(loadingTimer);
+    document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+"100%";
     document.getElementById("loadingScreenDiv").style.display = "none";
     document.getElementById("loadingScreenPercent").style.display = "none";
     $('.firstVideoOverlayText').css('display', 'block');
 
     rotate_sky();                                                   //start rotating the sky
-    // currentStage = 35;
-    // setup_stage(35);                                                 //start showing the script 1, stage 1
-    currentStage = 39;
-    setup_stage(39); 
+    currentStage = 35;
+    setup_stage(35);                                                 //start showing the script 1, stage 1
+    // currentStage = 36;
+    // setup_stage(36); 
     
     engine.runRenderLoop(function(){
       if(scene){
@@ -431,3 +423,13 @@ function setup_3D_photo(){
     
     //console.log("continue button is clicked");
   });
+
+
+// $(function() {
+//   function clock() {
+//     var theDate = new Date();
+//     var t = theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
+//     console.log(t);
+//   }
+//   setInterval(clock, 1000);
+// });

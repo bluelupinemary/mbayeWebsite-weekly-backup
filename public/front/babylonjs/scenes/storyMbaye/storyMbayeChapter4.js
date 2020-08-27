@@ -12,7 +12,7 @@ let skybox;
 let currentStage = 24;
 
 let faceFlowersMap = new Map();
-let createChapter2Scene = function(){
+let createChapter4Scene = function(){
     
     canvas = document.getElementById('canvas');
     engine = new BABYLON.Engine(canvas, true,{ preserveDrawingBuffer: true, stencil: true });
@@ -26,17 +26,11 @@ let createChapter2Scene = function(){
     scene.environmentTexture = hdrTexture;
     
     load_3D_mesh();
-    // load_orig_flowers();
     skybox = create_skybox();
     storyCamera = create_camera();
     storyLight = create_light();
-    // load_orig_flowers();
-    // create_contacts_gui();
-    
-    // scene.debugLayer.show();
+    hl = new BABYLON.HighlightLayer("hl1", scene);
     flowerColor = new BABYLON.HighlightLayer("hl1", scene);
-
-    
 
     return scene;
 }
@@ -51,18 +45,7 @@ var WALL_INIT_POS = new BABYLON.Vector3(-9.12,0,-1100);
 function load_3D_mesh(){
     var loadedPercent = 0;
     Promise.all([
-            BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/headMbayeScene/", "HeadMbaye0803.glb", scene,
-            function (evt) {
-                // onProgress
-                
-                if (evt.lengthComputable) {
-                    loadedPercent = (evt.loaded * 100 / evt.total).toFixed();
-                } else {
-                    var dlCount = evt.loaded / (1024 * 1024);
-                    loadedPercent += Math.floor(dlCount * 100.0) / 100.0;
-                }
-                document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+loadedPercent+" %";
-        }).then(function (result) {
+            BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/headMbayeScene/", "HeadMbaye0803.glb", scene).then(function (result) {
         
 
             result.meshes[0].scaling = new BABYLON.Vector3(12,12,-12);
@@ -140,7 +123,7 @@ function load_3D_mesh(){
 let earth_obj;
 let currStageObjMap = new Map();
 let currTimer;
-
+let videoDisc;
 let worldFlowers;
 
 function setup_stage(stageNo){
@@ -160,71 +143,231 @@ function setup_stage(stageNo){
     if(stageNo === 48){                                      
       //for the current stage, change font size of text; show texts; add zoomin animation
         setCamDefault(150);
-        $('.firstVideoOverlayText').css('font-size','3vw');
-
+        $('.firstVideoOverlayText').css('font-size','3.2vw');
+       let initdelay = 1000;
         for(i=0;i<imgArr.length;i++){
             let pos = stageMap.get(stageNo).imagePos;
-            let temp = init_photo(imgArr[i],{w:200,h:200},pos[i],stageNo);
-            // add_delay(temp,initDelay,2000);
+            let temp = init_photo(imgArr[i],{w:200,h:200},{x:20,y:-15,z:-250},stageNo);
+            add_delay(temp,initdelay,3000);
             currStageObjMap.set(temp.name, temp);
-            // initDelay += 2000;
+            animateObjectPosition(temp,20,frameCount,pos[i]);
+            initdelay += 1000;
         }//end of for loop
        
     }else if(stageNo === 49){                                      
         //for the current stage, change font size of text; show texts; add zoomin animation
         setCamDefault(150);
-         $('.firstVideoOverlayText').css('font-size','3.5vw');
-        //  head_obj.rotation.y = BABYLON.Tools.ToRadians(270);
+         $('.firstVideoOverlayText').css('font-size','3.2vw');
+        
+         let initdelay = 1000;
+         for(i=0;i<imgArr.length;i++){
+             let pos = stageMap.get(stageNo).imagePos;
+             let temp = init_photo(imgArr[i],{w:200,h:200},pos[i],stageNo);
+             add_delay(temp,initdelay,4000);
+             currStageObjMap.set(temp.name, temp);
+             initdelay += 3000;
+         }//end of for loop
 
-        animateCameraToRadius(storyCamera,50,frameCount,100);
-        // isHeadRotateActive = true;
     }else if(stageNo === 50){                                      
         //for the current stage, change font size of text; show texts; add zoomin animation
-        setCamDefault(100);
+        setCamDefault(120);
         head_obj.rotation.y = BABYLON.Tools.ToRadians(90);
-         $('.firstVideoOverlayText').css('font-size','3vw');
+        head_obj.isVisible = true;
+        head_obj.setEnabled(true);
+        $('.firstVideoOverlayText').css('font-size','3.2vw');
 
-        // isHeadRotateActive = false;
+    
+        animateObjectRotationNoEase(head_obj, 40, frameCount, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(270),0));
+        let imgs = [];
+        for(i=0;i<imgArr.length;i++){
+            let temp = init_photo(imgArr[i],{w:25,h:25},{x:0,y:0,z:0},stageNo);
+            temp.rotation.y = BABYLON.Tools.ToRadians(180);
+            temp.visibility = 0;
+            currStageObjMap.set(temp.name, temp);
+            temp.setParent(head_obj);
+            imgs.push(temp);
+            hl.addMesh(temp, new BABYLON.Color3(0,0.5,0.5));
+           
+        }//end of for loop
 
-        animateObjectRotationNoEase(head_obj, 15, frameCount, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(450),0));
+        currTimer = setTimeout(function(){
+            let pos = stageMap.get(stageNo).imagePos;
+            for(i=0;i<imgs.length;i++){
+                animateObjectFadeOut(imgs[i], 30, 200, 1);
+                animateObjectPosition(imgs[i],25,100,pos[i]);
+            }
+        },5000);
     }else if(stageNo === 51){                                      
         //for the current stage, change font size of text; show texts; add zoomin animation
         setCamDefault(100);
         head_obj.rotation.y = BABYLON.Tools.ToRadians(90);
-         $('.firstVideoOverlayText').css('font-size','3vw');
+        head_obj.isVisible = false;
+        head_obj.setEnabled(false);
+         $('.firstVideoOverlayText').css({'font-size':'4.7vw','color' : '#0ee6e6'});
          scene.animatables.forEach(function(anim){
             anim.stop();
           });
-  
-        animateCameraToRadius(storyCamera,50,frameCount,150);
+          let delay = 1000;
+          let imgs = [];
+          let scale = stageMap.get(stageNo).imageScale;
+          let startPos = stageMap.get(stageNo).startPos;
+          let pos = stageMap.get(stageNo).imagePos;
+          for(i=0;i<imgArr.length;i++){
+                s = scale[i];
+                let temp = init_photo(imgArr[i],{w:50,h:50},{x:pos[i].x,y:pos[i].y-800,z:pos[i].z},stageNo);
+                temp.scaling = new BABYLON.Vector3(s.x,s.y,s.z);    
+                currStageObjMap.set(temp.name, temp);
+                imgs.push(temp);
+                hl.addMesh(temp, new BABYLON.Color3(0,0.5,0.5));
+            }//end of for loop 
+
+            
+            animateObjectPositionNoEase(imgs[0],40,frameCount,pos[0]);
+            animateObjectPositionNoEase(imgs[1],25,frameCount,pos[1]);
+            animateObjectPositionNoEase(imgs[2],30,frameCount,pos[2]);
+            animateObjectPositionNoEase(imgs[3],25,frameCount,pos[3]);
+            animateObjectPositionNoEase(imgs[4],35,frameCount,pos[4]);
+
+       
+        // animateCameraToRadius(storyCamera,50,frameCount,150);
         
     }else if(stageNo === 52){                                      
         //for the current stage, change font size of text; show texts; add zoomin animation
+        head_obj.isVisible = true;
+        head_obj.setEnabled(true);
         head_obj.position = BABYLON.Vector3.Zero();
         head_obj.rotation.y = BABYLON.Tools.ToRadians(90);
-        // setCamDefault(100);
+        setCamDefault(200);
         
-        $('.firstVideoOverlayText').css('font-size','3vw');
+        $("#firstVideoOverlayText").css({ 'color' : '#efad0c','font-size':'3.7vw'});
          scene.animatables.forEach(function(anim){
             anim.stop();
         });
 
         animateCameraToRadius(storyCamera,50,frameCount,100);
-       
         isHeadRotateActive = true;
+        
     }else if(stageNo === 53){                                      
         unhighlightFlowers();
-    }else if(stageNo === 54){                                      
-       
+        $("#firstVideoOverlayText").css({ 'color' : '#efad0c','font-size':'3.8vw'});
+        head_obj.isVisible = false;
+        head_obj.setEnabled(false);
+        let theDisc = init_disc(stageNo);
+        currStageObjMap.set(theDisc.name, theDisc);
+        setCamInferior();
+        animateObjectPosition(theDisc, 20, frameCount, new BABYLON.Vector3(0,500,0));
+
+    }else if(stageNo === 54){      
+        setCamDefault(200);
+                                
+        $("#firstVideoOverlayText").css({ 'color' : '#efad0c','font-size':'4.3vw'});
+        head_obj.isVisible = false;
+        head_obj.setEnabled(false);
+        let temp = init_photo(imgArr[0],{w:1200,h:600},{x:0,y:0,z:-500},stageNo); 
+        currStageObjMap.set(temp.name,temp);     
+        add_delay(temp, 2000, 5000);
+
     }else if(stageNo === 55){                                      
-       
+        setCamDefault(200);                          
+        $("#firstVideoOverlayText").css({ 'color' : '#0ee6e6','font-size':'5vw'});
+        head_obj.isVisible = false;
+        head_obj.setEnabled(false);
+        let temp = init_photo(imgArr[0],{w:1200,h:600},{x:1000,y:0,z:-500},stageNo); 
+        currStageObjMap.set(temp.name,temp);     
+        animateObjectPosition(temp, 20, frameCount, new BABYLON.Vector3(0,0,-500));
+        add_delay(temp, 2000, 5000);
+
     }else if(stageNo === 56){                                      
-       
+        setCamDefault(200);                          
+        $("#firstVideoOverlayText").css({ 'color' : '#efad0c','font-size':'4.2vw'});
+        head_obj.isVisible = false;
+        head_obj.setEnabled(false);
+        let temp = init_photo(imgArr[0],{w:1200,h:600},{x:-1000,y:0,z:-500},stageNo); 
+        currStageObjMap.set(temp.name,temp);     
+        animateObjectPosition(temp, 20, frameCount, new BABYLON.Vector3(0,0,-500));
+        add_delay(temp, 2000, 5000);
+
     }else if(stageNo === 57){                                      
-       
+        setCamDefault(150);
+         $('.firstVideoOverlayText').css('font-size','4.2vw');
+         let pos = stageMap.get(stageNo).imagePos;
+         let imgs = [];
+         let initdelay = 1000;
+         for(i=0;i<imgArr.length;i++){
+             let temp = init_photo(imgArr[i],{w:200,h:200},pos[i],stageNo);
+            imgs.push(temp);
+            hl.addMesh(temp, new BABYLON.Color3(0,0.5,0.5));
+             currStageObjMap.set(temp.name, temp);
+         }//end of for loop
+
+    }else if(stageNo === 58){                                      
+        setCamDefault(200);
+        $("#firstVideoOverlayText").css({ 'color' : '#0ee6e6','font-size':'4.2vw'});
+         let pos = stageMap.get(stageNo).imagePos;
+         let startPos = stageMap.get(stageNo).startPos;
+         let scale = stageMap.get(stageNo).imageScale;
+         let imgs = [];
+        //  let initdelay = 1000;
+         for(i=0;i<imgArr.length;i++){
+            let temp = init_photo(imgArr[i],{w:200,h:200},startPos[i],stageNo);
+            imgs.push(temp);
+            temp.scaling = new BABYLON.Vector3(scale[i].x,scale[i].y, scale[i].z);
+            currStageObjMap.set(temp.name, temp);
+         }//end of for loop
+
+         for(i=0;i<imgs.length;i++){
+            animateObjectPosition(imgs[i], 30,frameCount, pos[i]);
+         }
+
+    }else if(stageNo === 59){                                      
+        // setCamDefault(150);
+        $("#firstVideoOverlayText").css({ 'color' : '#efad0c','font-size':'4.2vw'});
+
+        setCamDefault(500);
+        videoDisc = init_video("59Welding",550,stageNo);
+        videoDisc.material.diffuseTexture.uOffset = 0.16;
+        videoDisc.material.diffuseTexture.uScale = 0.7;
+        currStageObjMap.set(videoDisc.name, videoDisc);
+        hl.addMesh(videoDisc, new BABYLON.Color3(0,0.5,0.5));
+         
+    }else if(stageNo === 60){                                      
+        setCamDefault();
+        if(videoDisc){
+            try{
+                let theVid = videoDisc.material.diffuseTexture.video;
+                theVid.pause();
+                theVid.currentTime = 0;
+            }catch(e){
+
+            };
+        }
+        $("#firstVideoOverlayText").css({ 'color' : '#efad0c','font-size':'5vw'});
+        let theDisc = init_disc(stageNo);
+        animateObjectPosition(theDisc, 50, frameCount, new BABYLON.Vector3(0,500,0));
+        currStageObjMap.set(theDisc.name, theDisc);
+        setCamInferior();
+        
+
+    }else if(stageNo === 61){                                      
+        setCamDefault(200);
+        $("#firstVideoOverlayText").css({ 'color' : '#0ee6e6','font-size':'3.5vw'});
+        
+        let imgs = [];
+        let pos = stageMap.get(stageNo).imagePos;
+        let startPos = stageMap.get(stageNo).startPos;
+        let temp = init_photo(imgArr[0],{w:200,h:250},startPos[0],stageNo);
+        currStageObjMap.set(temp.name, temp);
+        imgs.push(temp);
+        for(i=1;i<imgArr.length;i++){
+            let temp = init_photo(imgArr[i],{w:450,h:250},startPos[i],stageNo);
+            imgs.push(temp);
+            currStageObjMap.set(temp.name, temp);
+         }//end of for loop
+
+         for(i=0;i<imgs.length;i++){
+            animateObjectPosition(imgs[i], 30,frameCount, pos[i]);
+         }
     }
-
-
 
 
     currentStage++;
@@ -282,19 +425,32 @@ function setup_3D_photo(){
 
 
   //function that will render the scene on loop
-  var scene = createChapter2Scene();
-  
-    
+  var scene = createChapter4Scene();
+  let loadingTimer;
+  if(scene.isLoading){
+      let c=0;
+      loadingTimer = setInterval(function () {
+
+        if(c<101){
+          document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+c+" %";
+          c++;
+        }
+        
+    }, 250);
+  }
+
   scene.executeWhenReady(function () {    
+    clearInterval(loadingTimer);
+    document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+"100%";
     document.getElementById("loadingScreenDiv").style.display = "none";
     document.getElementById("loadingScreenPercent").style.display = "none";
     $('.firstVideoOverlayText').css('display', 'block');
 
     rotate_sky();                                                   //start rotating the sky
-    // currentStage = 46;
-    // setup_stage(46);                                                 //start showing the script 1, stage 1
     currentStage = 48;
-    setup_stage(48); 
+    setup_stage(48);                                                 //start showing the script 1, stage 1
+    // currentStage = 49;
+    // setup_stage(49); 
     
     engine.runRenderLoop(function(){
       if(scene){
@@ -311,25 +467,25 @@ function setup_3D_photo(){
 
   //if continue button is clicked
   $('#continueBtn').on('click',function(evt){
-    $('#continueBtnDiv').css('visibility','hidden');
-    setup_stage(currentStage);
+    // $('#continueBtnDiv').css('visibility','hidden');
+    // setup_stage(currentStage);
 
-    // if(currentStage <= 45){
-    //   $('#continueBtnDiv').css('visibility','hidden');
-    //   setup_stage(currentStage);
-    // }else{
-    //     let cNo = 4;
-    //     $.ajax({
-    //     type: "get",
-    //     url:urlStory,
-    //     data:{chapter_no:cNo,
-    //             _token:token
-    //     },
-    //     success: function(result){
-    //             window.location.href=urlStory+"?cNo="+cNo;
-    //     }
-    //     });
-    // }
+    if(currentStage <= 61){
+      $('#continueBtnDiv').css('visibility','hidden');
+      setup_stage(currentStage);
+    }else{
+        let cNo = 5;
+        $.ajax({
+        type: "get",
+        url:urlStory,
+        data:{chapter_no:cNo,
+                _token:token
+        },
+        success: function(result){
+                window.location.href=urlStory+"?cNo="+cNo;
+        }
+        });
+    }
     
     //console.log("continue button is clicked");
   });

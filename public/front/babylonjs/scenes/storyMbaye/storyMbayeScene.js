@@ -145,7 +145,7 @@ function add_mouse_listener(){
         
         //   if(pipesMap.has(theMesh.name))  enable_gizmo(theMesh);
           // }
-          console.log("the mesh clicked: ", theMesh,theMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
+          console.log("the mesh clicked: ", theMesh,theMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.scaling);
          
        
           if(clickableFlowersMap.has(theMesh.name)){
@@ -279,20 +279,31 @@ function init_photo(name,size,pos,stageNo){
     planeMatl.diffuseTexture.hasAlpha = true;
     planeMatl.diffuseTexture.uScale = -1;
 
+    // if(stageNo === 57){
+
+    // }else{
+    //     planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
+    //     planeMatl.opacityTexture.uScale = -1;
+    // }
+   
+
+    // if(stageNo === 5 || stageNo === 6 || stageNo === 7){            //images at the bottom
+    //     plane.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(-90),0,BABYLON.Tools.ToRadians(0));
+       
+    // }
+
     if(stageNo === 5 || stageNo === 6 || stageNo === 7){            //images at the bottom
         plane.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(-90),0,BABYLON.Tools.ToRadians(0));
         planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
         planeMatl.opacityTexture.uScale = -1;
         // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
-    }else if(stageNo === 25 || stageNo === 26 || stageNo === 29 || stageNo === 30 || stageNo==36 || stageNo==38 || stageNo==40){
+    }else if(stageNo === 25 || stageNo === 26 ||  stageNo === 29 || stageNo === 30 || stageNo === 36 || stageNo === 38 || stageNo === 40 || stageNo === 48 || stageNo === 49 || stageNo === 50 || stageNo === 53 || stageNo === 58 || stageNo===61){
         planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
         planeMatl.opacityTexture.uScale = -1;
     }
-    // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
-    
+
    
-    
-    // planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
+   
     planeMatl.emissiveColor = BABYLON.Color3.White();
     planeMatl.backFaceCulling = false;                          //Allways show the front and the back of an element
     
@@ -312,7 +323,7 @@ function init_video(name,radius,stageNo){
     
 
     let video;
-    if(stageNo == 39){
+    if(stageNo == 39 || stageNo == 59){
         video = stageMap.get(stageNo).video;
     }
 
@@ -455,7 +466,13 @@ function init_disc(stageNo,radius){
     discMatl.diffuseTexture = new BABYLON.Texture(imagePath+img, scene);
     discMatl.emissiveColor = BABYLON.Color3.White();
     
-    hl.addMesh(disc,new BABYLON.Color3(0,0.5,0.5));                                 //add glow effect to the disc
+    if(stageNo === 53){
+        discMatl.opacityTexture = new BABYLON.Texture(imagePath+img, scene);
+        // hl.addMesh(disc,new BABYLON.Color3(0,0.5,0.5));    
+    }
+        hl.addMesh(disc,new BABYLON.Color3(0,0.5,0.5));                                 //add glow effect to the disc
+   
+  
     discMatl.backFaceCulling = false;//Allways show the front and the back of an element
 
     disc.material = discMatl;
@@ -605,6 +622,12 @@ var animateObjectPosition = function(obj, speed, frameCount, newPos) {
     BABYLON.Animation.CreateAndStartAnimation('objPos', obj, 'position', speed, frameCount, obj.position, newPos, 0, ease);
 }
 
+var animateObjectPositionNoEase = function(obj, speed, frameCount, newPos) {
+    var ease = new BABYLON.CubicEase();
+    ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+    BABYLON.Animation.CreateAndStartAnimation('objPos', obj, 'position', speed, frameCount, obj.position, newPos, 0, null);
+}
+
 
 var animateObjectRotation = function(obj, speed, frameCount, newRot) {
     var ease = new BABYLON.CubicEase();
@@ -685,6 +708,7 @@ var animCamEnded = function() {
     
 }
 
+
 var posAnimEnded = function() {
     if(secondCamView == "top") setCamDefault(80);
 
@@ -753,7 +777,6 @@ function rotate_sky(){
 
 function remove_stage_objects(){
     for(const [key,val] of currStageObjMap.entries()){
-        
         val.dispose();
     }
     currStageObjMap.clear();
@@ -919,7 +942,7 @@ function set_scale(){
     }
     
   }
-  
+
   
   function init_flower(name,matlName,imgPath,size, x, y, z){
     let plane = BABYLON.Mesh.CreatePlane(name, size, scene);

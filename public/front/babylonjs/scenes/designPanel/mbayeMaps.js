@@ -1956,6 +1956,8 @@ var blackFlowerPositionMap_focus = new Map([
 //10 - Different angle view of the head of mbaye in head scene
 //11 - Night Scene
 //12 - To the lift view
+//13 - View Side of mbaye
+//14 - View of head
 var vrPartsMap = new Map([                                                       
     [1,[    {name:"Lift",x: 702,y:-402,z:-559,rotX: -0.7328, rotY:-0.4978, rotZ:-0.2175,rotW:-0.4082,scale:1},
             {name:"Museum",x: 801,y:-197,z:544,rotX:-0.4029, rotY:-0.2341, rotZ:-0.6281,rotW:-0.6220,scale:1},

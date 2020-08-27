@@ -80,9 +80,16 @@ trait BlogRelationship
             $data['formatted_date'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y h:i A');
         }
         
+        if($this->featured_image == null) {
+            $data['featured_image'] = 'blog-default-featured-image.png';
+        }
+
         if($this->tags) {
             $data['all_tags'] = implode(', ', $this->tags->pluck('name')->toArray());
+            $data['tags'] = $this->tags;
         }
+
+        $data['owner'] = $this->owner;
 
         return $data;
     }

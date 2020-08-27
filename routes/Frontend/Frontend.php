@@ -202,8 +202,8 @@ Route::post('/blogview/general/friend', 'FrontendController@blog_general_friend_
 
 /* blogs for the designed panels */
 Route::get('/blogview/designed-panel/all', 'FrontendController@designed_panels_all')->name('designed_panels_all');
-Route::get('/blogview/designed-panel/my', 'FrontendController@designed_panels_my');
-Route::post('/blogview/designed-panel/my', 'FrontendController@designed_panels_my_post')->name('designed_panels_my');
+Route::get('/blogview/designed-panel/my', 'FrontendController@designed_panels_my')->name('designed_panels_my');
+Route::post('/blogview/designed-panel/my', 'FrontendController@designed_panels_my_post')->name('designed_panels_my_post');
 Route::get('/blogview/designed-panel/friend', 'FrontendController@designed_panels_friend')->name('designed_panels_friend');
 Route::get('/blogview/designed-panel/home', 'FrontendController@designed_panels_all')->name('blog_general_home');
 // Route::get('/single_panel_design/{id}', 'BlogPanelDesign\BlogPanelDesignController@show');
@@ -211,6 +211,7 @@ Route::get('/blogview/designed-panel/home', 'FrontendController@designed_panels_
 
 /* blogs for the Jobseekers */
 Route::get('/blogview/career', 'FrontendController@jobseeker_profiles')->name('jobseeker_profiles');
+Route::get('/my_career_profile/{id}', 'JobSeekerProfile\JobSeekerProfilesController@show_my_profile');
 
 /* blogs for the career post */
 
@@ -233,3 +234,8 @@ Route::post('save_character_references', 'JobSeekerProfile\JobSeekerProfilesCont
 Route::post('save_contact_details', 'JobSeekerProfile\JobSeekerProfilesController@save_contact_details');
 Route::post('save_professional_details', 'JobSeekerProfile\JobSeekerProfilesController@save_professional_details');
 Route::get('search', 'JobSeekerProfile\JobSeekerProfilesController@search');
+Route::post('get_career_details', 'JobSeekerProfile\JobSeekerProfilesController@get_career_details');
+
+Route::get('/sample_page', function() {
+    return view('frontend/user/sample-page');
+});

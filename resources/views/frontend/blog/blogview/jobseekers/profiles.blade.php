@@ -655,43 +655,43 @@ function openFullscreen() {
   }
 
 }
-if(window.innerWidth < 991 ){
-$(document).ready(()=>{
-    Swal.fire({
-            imageUrl: '../../front/icons/alert-icon.png',
-            imageWidth: 80,
-            imageHeight: 80,
-            html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
-            padding: '15px',
-            background: 'rgba(8, 64, 147, 0.62)',
-            allowOutsideClick: false
-        }).then((result) => {
-            if (result.value) {
-                openFullscreen()
-            }
-        });
-    });
-}
-else  contentDisplay();
+// if(window.innerWidth < 991 ){
+// $(document).ready(()=>{
+//     Swal.fire({
+//             imageUrl: '../../front/icons/alert-icon.png',
+//             imageWidth: 80,
+//             imageHeight: 80,
+//             html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+//             padding: '15px',
+//             background: 'rgba(8, 64, 147, 0.62)',
+//             allowOutsideClick: false
+//         }).then((result) => {
+//             if (result.value) {
+//                 openFullscreen()
+//             }
+//         });
+//     });
+// }
+// else  contentDisplay();
 
-function contentDisplay() { 
-      setTimeout(function(){
-        $(".astro-div").css({'display':'flex'}); 
-        $(".page").css({'visibility':'visible'});
-        $(".astro-div").css({'visibility':'visible'});
-      // $(".most-naffed").css({'visibility':'visible'});
+// function contentDisplay() { 
+//       setTimeout(function(){
+//         $(".astro-div").css({'display':'flex'}); 
+//         $(".page").css({'visibility':'visible'});
+//         $(".astro-div").css({'visibility':'visible'});
+//       // $(".most-naffed").css({'visibility':'visible'});
             
             
-        $(".page").addClass('animate-zoomIn-arm');
+//         $(".page").addClass('animate-zoomIn-arm');
   
-        $('.page').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){ 
-   $(".page").removeClass('animate-zoomIn-arm');
-    $(".page").addClass('zoomIn-arm');
-   });
+//         $('.page').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){ 
+//    $(".page").removeClass('animate-zoomIn-arm');
+//     $(".page").addClass('zoomIn-arm');
+//    });
 
-        }, 1000
-);
-    }
+//         }, 1000
+// );
+//     }
 });
 function go_to_next(){
     var next = document.getElementById( "next_no" ).value;

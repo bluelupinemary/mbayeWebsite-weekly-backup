@@ -1,7 +1,7 @@
 let clickableFlowersMap = new Map([
-    [ "40PetuniaExserta-2.png","12Buttercup"],
+    [ "40PetuniaExserta-2.png","29PetuniaExserta"],
     [ "40westerncolumbine-2.png","23WesternColumbine"],
-    [ "40protea-2.png","1Protea"],
+    [ "40chickweed-2.png","8Chickweed"],
     [ "40sweetpea-2.png","77SweetPea"],
     [ "40petunia-2.png","28Petunia"],
 ]);
@@ -591,8 +591,8 @@ let stageMap = new Map(
             "texts":["<div class='overlayTxt' id='txt1' style='height:5.5vw;text-align:center;padding-top:2vw;'>We required the best marble in the world</div>",
                     "<div class='overlayTxt' id='txt2' style='height:5.5vw;text-align:center;padding-left:15vw;'>and so if Michelangelo of Italy</div>",
                     "<div class='overlayTxt' id='txt3' style='height:5.5vw;text-align:left;padding-left:2vw;'>would use white marble from Carrara Italy</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:5.5vw;text-align:left;padding-left:2vw;'>then so might we.<span style='padding-left:25vw;'>We considered</span></div>",
-                    "<div class='overlayTxt' id='txt5' style='height:5.5vw;text-align:left;padding-left:2vw;'>alternatives <span style='padding-left:33vw;'>but no the best was</span></div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5.5vw;text-align:left;padding-left:2vw;'>then so might we.</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5.5vw;text-align:left;padding-left:2vw;'>We considered alternatives but no the best was</div>",
                     "<div class='overlayTxt' id='txt6' style='height:5.5vw;text-align:center;padding-left:39vw;'>required.</div>",
                     "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:left;padding-left:2vw;'>For us no doubt the best was from</div>",
                     "<div class='overlayTxt' id='txt8' style='height:5.5vw;text-align:center;padding-left:30vw;'>Carrara Italy.</div>"
@@ -731,13 +731,13 @@ let stageMap = new Map(
             "collage":'collage-44-1.png',  
             "discImg":"",
             "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4.5vw;text-align:left;padding-left:3vw;'><span style='font-size:4.5vw;'>The carpenter</span> could not build Mbaye all on his own.</div>",
+            "texts":["<div class='overlayTxt' id='txt1' style='height:4.5vw;text-align:left;padding-left:3vw;padding-top:3vw;'><span style='font-size:4.5vw;'>The carpenter</span> could not build Mbaye all on his own.</div>",
                     "<div class='overlayTxt' id='txt2' style='height:4.5vw;text-align:center;'>He needed help,advice and expertise</div>",
                     "<div class='overlayTxt' id='txt3' style='height:4.5vw;text-align:left;padding-left:3vw;font-size:4vw;'>that he admitted, he never possessed.</div>",
                     "<div class='overlayTxt' id='txt4' style='height:4.5vw;text-align:left:padding-left:5vw;'>He could not carve, bend, and weld all that was required.</div>",
                     "<div class='overlayTxt' id='txt5' style='height:4.5vw;text-align:left;padding-left:3vw;'>He was also required in many other sectors to build this</div>",
                     "<div class='overlayTxt' id='txt6' style='height:4.5vw;text-align:center;font-size:4vw;'>monument.</div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4.5vw;text-align:left;padding-top:7vw;padding-left:3vw;'>It is why he has chosen to remove his name from her</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4.5vw;text-align:left;padding-left:3vw;'>It is why he has chosen to remove his name from her</div>",
                     "<div class='overlayTxt' id='txt8' style='height:4.5vw;text-align:center;'>but add those of all others who contributed in good faith. </div>",
                     "<div class='overlayTxt' id='txt9' style='height:4.5vw;text-align:center;font-size:2.5vw;'>Those who were in bad faith are best forgotten.</div>",
                  ],
@@ -746,20 +746,21 @@ let stageMap = new Map(
         [ 45,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":['45photoSaju.png','45photoFiroj.png','45photoVidya.png','45photoPeter.png'],
-            "imagePos":[{x:0,y:-70,z:-100},{x:-450,y:180,z:-200},{x:300,y:180,z:-250},{x:500,y:-120,z:-300}],
+            "imagesUsed":['45photoSaju.png','45photoFiroj.png','45photoVidya.png','45photoPeter.png','45photo5.png','45photo6.png','45photo7.png','45photo8.png',],
+            "imagePos":[{x:0,y:-35,z:50},{x:-400,y:160,z:-150},{x:300,y:180,z:-250},{x:400,y:-90,z:-150},
+                        {x:690,y:270,z:-500},{x:420,y:-320,z:-500},{x:-450,y:140,z:-600},{x:0,y:250,z:-400}],
             "texts":["<div class='overlayTxt' id='txt1' style='height:3.5vw;text-align:left;padding-left:2vw;'><span style='font-size:4vw;'>The carving</span> of these flowers</div>",
                      "<div class='overlayTxt' id='txt2' style='height:3.5vw;text-align:center;padding-left:8vw;'>required help from many people</div>",
                     "<div class='overlayTxt' id='txt3' style='height:3.5vw;text-align:center;padding-left:8vw;'>who you can see in our pictures.</div>",
                     "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:left;padding-left:2vw;'>The credit of the work</div>",
                     "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:left;padding-left:2vw;'>is for all involved including those like the sculptor</div>",
                     "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:left;padding-left:2vw;'>Francesca Bernardini</div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:left;padding-left:2vw;'>who gave some nice advice. <span style='padding-left:15vw;'>As did all the professionals</span></div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;padding-left:25vw;'>in this field and in many fields</div>",
-                    "<div class='overlayTxt' id='txt9' style='height:4vw;text-align:center;padding-left:27vw;'>we walked for inspiration</div>",
-                    "<div class='overlayTxt' id='txt10' style='height:3.5vw;text-align:center;padding-left:28vw;'>and advice.</div>",
-                    "<div class='overlayTxt' id='txt11' style='height:4vw;text-align:left;padding-left:2vw;'>We wish to here recognize the great works of</div>",
-                    "<div class='overlayTxt' id='txt12' style='height:4vw;text-align:center;font-size:4vw;'>Saju, Firoj,Peter and Vidya.</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:left;padding-left:2vw;'>who gave some nice advice. <span style='padding-left:17vw;'>As did all the professionals</span></div>",
+                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;padding-left:26vw;'>in this field and in many fields</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:3.5vw;text-align:center;padding-left:29vw;'>we walked for inspiration</div>",
+                    "<div class='overlayTxt' id='txt10' style='height:3.5vw;text-align:center;padding-left:30vw;'>and advice.</div>",
+                    "<div class='overlayTxt' id='txt11' style='height:4.5vw;text-align:left;padding-left:2vw;'>We wish to here recognize the great works of</div>",
+                    "<div class='overlayTxt' id='txt12' style='height:4.5vw;text-align:center;font-size:4vw;'>Saju, Firoj,Peter and Vidya.</div>",
                  ],
             }
         ],
@@ -802,21 +803,21 @@ let stageMap = new Map(
         [ 48,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":['48photo1.png','48photo2.png','48photo3.png','48photo4.png','48photo5.png'],
-            "imagePos":[{x:-580,y:230,z:-700},{x:-600,y:-250,z:-750},{x:20,y:-10,z:-250},{x:500,y:-180,z:-800},{x:500,y:200,z:-600}],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:3.5vw;text-align:center;'>The head of a Mbaye</div>",
-                    "<div class='overlayTxt' id='txt2' style='height:3.5vw;text-align:center;'>was another great feat overcoming</div>",
-                    "<div class='overlayTxt' id='txt3' style='height:3.5vw;text-align:center;'>the difficulties of her size</div>",
+            "imagesUsed":['48photo3.png','48photo1.png','48photo2.png','48photo4.png','48photo5.png'],
+            "imagePos":[{x:20,y:-15,z:-250},{x:-500,y:200,z:-600},{x:-500,y:-190,z:-600},{x:450,y:-130,z:-650},{x:400,y:160,z:-500}],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>The head of Mbaye</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>was another great feat overcoming</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>the difficulties of her size</div>",
                     "<div class='overlayTxt' id='txt4' style='height:3.5vw;text-align:center;padding-left:20vw;'>and of those who</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:3.5vw;text-align:center;padding-left:30vw;'>proposed helping us.</div>",
-                    "<div class='overlayTxt' id='txt6' style='height:3.5vw;text-align:left;padding-left:2vw;'>We tried many people’s</div>",
-                    "<div class='overlayTxt' id='txt1' style='height:3.5vw;text-align:left;padding-left:2vw;;'>offers but dismissed all. <span style='padding-left:20vw;'>Preferring to rely on people we</span></div>",
-                    "<div class='overlayTxt' id='txt3' style='height:3.5vw;text-align:center;padding-left:28vw;'>taught ourselves and we</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:3.5vw;text-align:center;padding-left:25vw;'>ourselves honestly learnt</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:3.5vw;text-align:center;padding-left:20vw;'>from the better parts of</div>",
-                    "<div class='overlayTxt' id='txt6' style='height:3.5vw;text-align:center;padding-left:20vw;'>those who advised us.</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:3.5vw;text-align:left;padding-left:2vw;;'>Dismissing many of their ill intentions.</div>",
-                    "<div class='overlayTxt' id='txt6' style='height:3.5vw;text-align:left;padding-left:2vw;'>Some were personal opinions.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:3.5vw;text-align:center;padding-left:30vw;'>proposed helping us.</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:3.5vw;text-align:left;padding-left:2vw;'>We tried many people’s</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:3.5vw;text-align:left;padding-left:2vw;;'>offers but dismissed all. <span style='padding-left:20vw;font-size:3vw;'>Preferring to rely on people we</span></div>",
+                    "<div class='overlayTxt' id='txt7' style='height:3.5vw;text-align:center;padding-left:28vw;'>taught ourselves and we</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:3.5vw;text-align:center;padding-left:25vw;'>ourselves honestly learnt</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:3.5vw;text-align:center;padding-left:21vw;'>from the better parts of</div>",
+                    "<div class='overlayTxt' id='txt10' style='height:3.5vw;text-align:center;padding-left:17vw;'>those who advised us.</div>",
+                    "<div class='overlayTxt' id='txt11' style='height:3.5vw;text-align:left;padding-left:2vw;;'>Dismissing many of their ill intentions.</div>",
+                    "<div class='overlayTxt' id='txt12' style='height:3.5vw;text-align:left;padding-left:2vw;'>Some were personal opinions.</div>",
                 ],
             }
         ],
@@ -824,15 +825,19 @@ let stageMap = new Map(
         [ 49,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>Everyone had their idea how the ears or eyes, mouth or nose </div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>should be. Changing our ideas for their own. Others took funds </div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>for work and never completed obligations.</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>Some people who worked with us just could not follow our moral code.</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'>It’s correct to mention that in building Mbaye, we learnt from many</div>",
-                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;'>people. We learnt we could not give a sketch or drawing of her head</div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:center;'>and have someone produce it as we wanted. They naturally change</div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>works and details.</div>"
+            "imagesUsed":['49photo5.png','49photo1.png','49photo2.png','49photo3.png','49photo4.png'],
+            "imagePos":[{x:-10,y:-20,z:-350},{x:480,y:170,z:-550},{x: 450,y: -180,z: -550},{x: -420,y: 170,z: -550},{x: -390,y: -140,z: -450}],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:left;padding-left:2vw;'>Everyone had their idea</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>how the ears or eyes, mouth or nose should be.</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;padding-left:5vw;'>Changing our ideas for their own.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>Others took funds for work and never completed obligations.</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:left;padding-top:3vw;padding-left:2vw;'>Some people who worked with us just could not</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;padding-left:30vw;'>follow our moral code.</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:left;padding-left:13vw;'>It\'s correct to mention <span style='padding-left:13vw;'>that in building Mbaye</span></div>",
+                    "<div class='overlayTxt' id='txt8' style='height:3.5vw;text-align:center;padding-left:27vw;'>we learnt from many people.</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:3.5vw;text-align:center;'>We learnt we could not give a sketch or drawing of her head</div>",
+                    "<div class='overlayTxt' id='txt10' style='height:3.5vw;text-align:center;'>and have someone produce it as we wanted.</div>",
+                    "<div class='overlayTxt' id='txt11' style='height:3.5vw;text-align:center;'>They naturally change works and details.</div>"
                 ],
             }
         ],
@@ -840,25 +845,38 @@ let stageMap = new Map(
         [ 50,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>Hence, the shape of the face had to be designed in 3D by a 3D </div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>design genius. Several persons helped with this, not just one man.</div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>Due to each man really having other ambitions in life and maybe </div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>not fully believing in the vision of the carpenter, the designs</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'>were passed from one 3D genius to another as the carpenter </div>",
-                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;'>insisted on the face telling the sentiments he wanted portrayed.</div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:center;'>We thank you Franky, Saju and Sethu.</div>"
+            "imagesUsed":['45photoSaju.png','50photoSethu.png','50photoFranky.png'],
+            "imagePos":[{x: 1.5,y: -0.6, z: 0},{x: 1.1, y: 0.8, z: 0.9},{x: 1.3,y: 0.8,z: -0.9}],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>Hence, the shape of the face had to be designed in 3D</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>by a 3D design genius.</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>Several persons helped with this, not just one man.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:left;padding-left:2vw;'>Due to each man really having</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:left;padding-left:2vw;'>other ambitions in life and</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:3.5vw;text-align:left;padding-left:2vw;'>maybe not fully believing</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:3.5vw;text-align:left;padding-left:2vw;'>in the vision of the carpenter, <span style='padding-left:20vw;'>the designs were passed</span></div>",
+                    "<div class='overlayTxt' id='txt8' style='height:3.5vw;text-align:center;padding-left:27vw;'>from one 3D genius to another</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:3.5vw;text-align:left;padding-left:2vw;'>as the carpenter</div>",
+                    "<div class='overlayTxt' id='txt10' style='height:3.5vw;text-align:left;padding-left:2vw;'>insisted on the face telling</div>",
+                    "<div class='overlayTxt' id='txt11' style='height:5vw;text-align:left;padding-left:2vw;'>the sentiments he wanted portrayed.</div>",
+                    "<div class='overlayTxt' id='txt12' style='height:3.5vw;text-align:center;padding-left:10vw;font-size:4.5vw;'>We thank you Franky, Saju and Sethu.</div>"
                 ],
             }
         ],
         [ 51,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>We did not want an aggressive, growling lioness but a peaceful,</div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>young mother content in herself - smiling or almost laughing. </div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>Her head is proportionally a little big. Just as young animals  </div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>appear to have. Similar to the feet, if you ever noticed.</div>"
+            "imagesUsed":['51photo1.png','51photo2.png','51photo3.png','51photo4.png','51photo5.png'],
+            "imagePos":[{x: 300, y: 110,z: -400},{x: 300,y: -80,z: -500},{x: 50,y: 50,z: -600},{x: -180,y: -160,z: -400},{x: -260, y: 90,z: -380}],
+            "startPos":[{x: 300, y: -500,z: -400},{x: 300,y: -600,z: -500},{x: 50,y: -700,z: -600},{x: -180,y: -1000,z: -400},{x: -260, y: -600,z: -380}],
+            "imageScale":[{x: 3.5,y: 3.5, z: 1},{x: 6,y: 6, z: 1},{x: 9,y: 9, z: 1},{x: 7,y: 7, z: 1},{x: 5.5,y: 5.5, z: 1}],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:5.7vw;text-align:left;padding-left:2vw;padding-top:1vw;'>We did not want an aggressive,</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5.7vw;text-align:left;padding-left:8vw;'>growling lioness but a peaceful, young</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5.7vw;text-align:center;padding-left:21vw;'>mother content in herself</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5.7vw;text-align:center;padding-left:19vw;'> -smiling or almost laughing.</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5.7vw;text-align:left;padding-left:2vw;'>Her head is proportionally a little big.</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:6vw;text-align:left;padding-left:2vw;'>Just as young animals appear to have.</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:6vw;text-align:center;'>Similar to the feet,</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5.7vw;text-align:center;'>if you ever noticed.</div>"
                 ],
             }
         ],
@@ -866,137 +884,216 @@ let stageMap = new Map(
             "collage":'',  
             "discImg":"",
             "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>Most of all, the surface of her face is covered again</div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>with the flowery mesh panels giving a decoration,which maybe </div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>female lions would like to have. Just as young girls </div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>sometimes have too much makeup, maybe Mbaye also</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'>has too much decoration on her face.</div>"
+            "texts":["<div class='overlayTxt' id='txt1' style='height:5vw;text-align:left;padding-left:2vw;'>Most of all, the surface of her face is covered</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5vw;text-align:left;padding-left:2vw;'>again with the flowery mesh panels</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5vw;text-align:left;padding-left:2vw;'>giving a decoration,</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5vw;text-align:left;padding-left:2vw;'>which maybe</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5vw;text-align:left;padding-left:5vw;'>female lions would <span style='padding-left:27vw;'>like to have.</span></div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5vw;text-align:left;padding-left:7vw;'>Just as young girls <span style='padding-left:25vw;'>sometimes have too</span></div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5vw;text-align:center;padding-left:27vw;'>much makeup,</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5vw;text-align:left;padding-left:2vw;padding-top:3vw;'>maybe Mbaye also</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:5vw;text-align:center;'>has too much decoration on her face.</div>"
                 ],
             }
         ],
         [ 53,{ 
             "collage":'',  
-            "discImg":"",
+            "discImg":"53photo.png",
             "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>From scaling her, we could then 3D-print her in any size.</div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>We required them in a format that we could 3D-print her </div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>in her full size of almost 5-meter-high head.</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>With this, we needed to produce a mould to shape stainless </div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'>steel sheets to. </div>",
-                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;'>We discovered through trial and error that our best method </div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:center;'>was to build that mould in 18mm thick layers of MDF.</div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>Thence, we could build a mould hollow on the inside.</div>",
+            "texts":["<div class='overlayTxt' id='txt1' style='height:5vw;text-align:left;padding-left:2vw;padding-top:0.5vw;'>Once we finally had her face design completed</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5vw;text-align:center;padding-left:30vw;'>in a computer,</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5vw;text-align:left;padding-left:2vw;'>then we could scale that size up</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5vw;text-align:center;padding-left:25vw;'>up to any size we wanted.</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5vw;text-align:left;padding-left:2vw;'>The same applied to the rest of her.</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5vw;text-align:left;padding-left:7vw;'>We could then 3D-print her in any size.</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5vw;text-align:left;padding-left:2vw;'>We required them in a format that we could</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5vw;text-align:left;padding-left:2vw;'>3D-print her in her full size of almost</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:5vw;text-align:center;padding-left:30vw;'>5-meter-high head.</div>"
                 ],
             }
-        ],
+        ],																																		 																											
         [ 54,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>No matter what, it was a formidable task. To make the mould</div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>for the entire head in layers of 18mm, considering over 5 meters</div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>height of her head, we would require 277 layers of MDF</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>all fitting together. </div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'>As the mould was built, we needed to shape the thick </div>",
-                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;'>stainless steel sheets to that mould. There was no press and die</div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:center;'>machine that could do this, so every millimetre of her </div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>had to be cut, hammered, welded and grinded by hand </div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>thence polished.</div>",
+            "imagesUsed":['54photo.png'],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:5vw;text-align:left;padding-left:2vw;'>With this, we needed to produce a mould</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5vw;text-align:center;padding-left:17vw;'>to shape stainless steel sheets to.</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5vw;text-align:left;padding-left:2vw;padding-top:4vw;'>We discovered through trial and error</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5vw;text-align:left;padding-left:2vw;'>that our best method </div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5vw;text-align:left;padding-left:2vw;'>was to build that mould in 18mm thick layers </div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5vw;text-align:center;padding-left:40vw;'>of MDF.</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5vw;text-align:left;padding-left:2vw;padding-top:1vw;'>Thence, we could build a mould hollow</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5vw;text-align:center;padding-left:35vw;'>on the inside.</div>"
                 ],
             }
-        ],
+        ],																										
         [ 55,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>We had some great metal carpenters working for us who </div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>had shown great service and love to their works.</div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>Including Ibrahim and Babul from Bangladesh who</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>had been with us for many years and worked on</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'>some of the most prestigious buildings in the world including </div>",
-                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;'>the Burj Khalifa.</div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:center;'>They were accompanied by many others including </div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>Devenand , Firoj, Vidya, IK, Iftekhar,Peter,</div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>Chisom,Benjamin,Kenneth,  Jonard, Gabriel and Obinna.</div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>Each one of them learning to do something they have never done before.</div>",
+            "imagesUsed":['55photo.png'],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:5.5vw;text-align:left;padding-left:2vw;padding-top:2vw;'>No matter what, it was a formidable task.</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5.5vw;text-align:left;padding-left:2vw;'>To make the mould for the entire head</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5.5vw;text-align:center;padding-left:25vw;'>in layers of 18mm,</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5.5vw;text-align:left;padding-left:2vw;padding-top:2vw;'>considering over 5 meters</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:6vw;text-align:left;padding-left:2vw;'>height of her head,</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:6vw;text-align:left;padding-left:2vw;'>we would require 277 layers of MDF</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:center;padding-left:25vw;'>all fitting together.</div>"
                 ],
             }
         ],
         [ 56,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>The welding of stainless steel is very, very difficult. </div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>Only TIG welding is good enough and few welders</div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>can TIG-weld to the quality we required.</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>The weld needs to pass from one side to the other</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'>and avoid distortion over its length. So we must diffuse the heat </div>",
-                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;'>or its passes to all other areas of the metal surface and the shape</div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:center;'>distorts. </div>",
+            "imagesUsed":['56photo.png'],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:5vw;text-align:left;padding-left:2vw;padding-top:1vw'>As the mould was built,</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5vw;text-align:left;padding-left:2vw;'>we needed to shape the thick stainless steel sheets</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5vw;text-align:center;padding-left:35vw;'>to that mould.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5vw;text-align:left;padding-left:2vw;'>There was no press and die </div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5vw;text-align:left;padding-left:2vw;'>machine that could do this, </div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5vw;text-align:left;padding-left:2vw;'>so every millimetre of her </div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5vw;text-align:left;padding-left:2vw;'>had to be cut, hammered, welded and grinded </div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5vw;text-align:center;padding-left:40vw;'>by hand </div>",
+                    "<div class='overlayTxt' id='txt9' style='height:5vw;text-align:center;'>thence polished.</div>",
                 ],
             }
         ],
         [ 57,{ 
             "collage":'',  
             "discImg":"",
-            "imagesUsed":[''],
-            "texts":["<div class='overlayTxt' id='txt1' style='height:4vw;text-align:center;'>Even the polishing can distort the shape we have produced</div>",
-                    "<div class='overlayTxt' id='txt2' style='height:4vw;text-align:center;'>by concentrating too much in one area creating excessive heat</div>",
-                    "<div class='overlayTxt' id='txt3' style='height:4vw;text-align:center;'>that passes to another area.</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:4vw;text-align:center;'>We had incorporated some structural greater strength in the panels</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:4vw;text-align:center;'>of the face by utilizing some pipes around the flower patterns.</div>",
-                    "<div class='overlayTxt' id='txt6' style='height:4vw;text-align:center;'>These helped greatly in the rigidity of the face. These pipes were </div>",
-                    "<div class='overlayTxt' id='txt7' style='height:4vw;text-align:center;'>connected to the internal structure that sustained the</div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>weight of five tons of the head </div>",
-                    "<div class='overlayTxt' id='txt8' style='height:4vw;text-align:center;'>which was to be connected to the back bone of the body of Mbaye.</div>"
+            "imagesUsed":['57photo1.png','57photo2.png','57photo3.png'],
+            "imagePos":[{x:-200,y:-60,z:-400},{x:200,y:70,z:-400},{x:0,y:0,z:-220}],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:5vw;text-align:left;padding-left:2vw;'>We had some great metal carpenters</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5vw;text-align:left;padding-left:12vw;'>working for us who had shown great service </div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5vw;text-align:center;padding-left:23vw;'>and love to their works. </div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5vw;text-align:center;'>Including Ibrahim and Babul </div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5vw;text-align:left;padding-left:2vw;'>from Bangladesh </div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5vw;text-align:left;padding-left:2vw;'>who had been with us for </div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5vw;text-align:left;padding-left:10vw;'>many years and worked on </div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5vw;text-align:center;padding-left:20vw;'>some of the most prestigious </div>",
+                    "<div class='overlayTxt' id='txt9' style='height:5vw;text-align:left;padding-left:2vw;'>buildings in the world including the Burj Khalifa.</div>"
+                ],
+            }
+        ],																			
+        [ 58,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['58photo1.png','58photo2.png','58photo3.png','58photo4.png','58photo5.png','58photo6.png','58photo7.png','58photo8.png','58photo9.png','58photo10.png','58photo11.png','58photo12.png',],
+            "imagePos":[{x: 400,y: 100,z: -500},{x: 260,y: 110,z: -495},{x: 300, y: -20,z: -480},{x: 100, y: 150, z: -485},{x: 110,y: -30,z: -300},{x: -40, y: 15, z: -500},{x: 0,y: -150,z: -450},{x: -130, y: 120, z: -400},{x: -170, y: 20, z: -350},{x: -150, y: -130, z: -500},{x: -310, y: 110, z: -450} ,{x: -300, y: -60, z: -420}],
+            "startPos":[{x: 1000,y: 100,z: -500},{x: 900,y: 110,z: -495},{x: 1000, y: -20,z: -480},{x: 100, y: 500, z: -485},{x: 110,y: -700,z: -300},{x: -40, y: -800, z: -500},{x: 0,y: -600,z: -480},{x: -130, y: 600, z: -400},{x: -900, y: 20, z: -350},{x: -150, y: -800, z: -500},{x: -900, y: 110, z: -450} ,{x: -1000, y: -60, z: -420}],
+            "imageScale":[{x: 1,y: 1, z: 1},{x: 0.8,y:0.8, z: 1},{x: 0.9,y:0.9, z: 1},{x: 1,y: 1, z: 1},{x: 1,y: 1, z: 1},{x: 1.2,y: 1.2, z: 1},{x: 0.9,y: 0.9, z: 1},{x: 1,y: 1, z: 1},{x: 0.7,y: 0.7, z: 0.8},{x: 1.3,y: 1.3, z: 1},{x: 1,y: 1, z: 1},{x: 1,y: 1, z: 1}],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:5vw;text-align:left;padding-left:2vw;padding-top:1vw;'>They were accompanied by many others including</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5vw;text-align:left;padding-left:12vw;'>Alesther,<span style='padding-left:13vw;'>Firoj,</span><span style='padding-left:30vw;'>Vidya,</span></div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5vw;text-align:left;padding-left:6vw;'>Devenand,<span style='padding-left:12vw;'>Iftekhar,Peter,Benjamin,</span></div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5vw;text-align:left;padding-left:8vw;'>Chisom,<span style='padding-left:40vw;'>Kenneth,Jonard,</span></div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5vw;text-align:left;padding-left:2vw;'>Wisdom,<span style='padding-left:42vw;'>Babul,</span><span style='padding-left:8vw;'>Gabriel.<span></div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5vw;text-align:left;padding-left:2vw;'>Each one of them learning</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:left;padding-left:7vw;'>to do something </div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5.5vw;text-align:left;padding-left:10vw;'>they have never </div>",
+                    "<div class='overlayTxt' id='txt9' style='height:5vw;text-align:center;'>done before.</div>"
+                ],
+            }
+        ],						
+        [ 59,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":[],
+            "video":['59Welding.mp4'],
+            "texts":["<div class='overlayTxt' id='txt1' style='height:5vw;text-align:center;padding-top:1vw;'> The welding of stainless steel is very, very difficult. </div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5vw;text-align:left;padding-left:2vw;'>Only TIG welding is good enough </div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5vw;text-align:center;padding-left:30vw;'>and few welders </div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5vw;text-align:center;'>can TIG-weld to the quality we required. </div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5vw;text-align:left;padding-left:2vw;'>The weld needs to pass from one side to the other </div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5vw;text-align:center;'>and avoid distortion over its length. </div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:left;padding-left:2vw;'>So we must diffuse the heat </div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5.5vw;text-align:center;padding-left:10vw;'>or its passes to all other areas of the </div>",
+                    "<div class='overlayTxt' id='txt9' style='height:5vw;text-align:center;'>metal surface and the shape distorts.</div>"
                 ],
             }
         ],
+        [ 60,{ 
+            "collage":'',  
+            "discImg":"60photo.png",
+            "imagesUsed":[],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:6vw;text-align:left;padding-left:2vw;padding-top:1vw;'>Even the polishing </div>",
+                    "<div class='overlayTxt' id='txt2' style='height:6vw;text-align:center;'>can distort the shape </div>",
+                    "<div class='overlayTxt' id='txt3' style='height:6vw;text-align:center;padding-left:25vw;'>we have produced </div>",
+                    "<div class='overlayTxt' id='txt4' style='height:6vw;text-align:left;padding-left:2vw;'>by concentrating </div>",
+                    "<div class='overlayTxt' id='txt5' style='height:6vw;text-align:left;padding-left:2vw;'>too much in one area</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:6vw;text-align:center;padding-left:20vw;'>creating excessive heat </div>",
+                    "<div class='overlayTxt' id='txt7' style='height:6vw;text-align:center;'>that passes to another area.</div>"
+                ]
+            }
+        ],
+        [ 61,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['61photo1.png','61photo2.png','61photo3.png','61photo4.png','61photo5.png'],
+            "imagePos":[{x:0,y:0,z:-500},{x:300,y:-140,z:-600},{x: 300,y: 140,z: -600},{x:-300,y:-140,z:-600},{x:-300,y:140,z:-600}],
+            "startPos":[{x:0,y:0,z:-200},{x:1000,y:-300,z:-600},{x: 1000,y: 300,z: -600},{x:-1000,y:-300,z:-600},{x:-1000,y:300,z:-600}],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:4.5vw;text-align:center;padding-top:3vw;'>We had incorporated some greater structural strength</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4.5vw;text-align:center;'>in the panels of the face by utilizing some pipes</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4.5vw;text-align:center;'>around the flower patterns. </div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4.5vw;text-align:center;'>These helped greatly in the rigidity of the face. </div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4.5vw;text-align:center;'>These pipes were connected to the </div>",
+                    "<div class='overlayTxt' id='txt6' style='height:4.5vw;text-align:center;'>internal structure that sustained the </div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4.5vw;text-align:center;'>weight of five tons of the head</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:4.5vw;text-align:center;'>which was to be connected to the</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:4.5vw;text-align:center;'>back bone of the body of Mbaye.</div>",
+                ]
+            }
+        ],      
+        [ 62,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['62photo.png'],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:6vw;text-align:center;padding-top:3vw;'>Now we will </div>",
+                    "<div class='overlayTxt' id='txt2' style='height:6vw;text-align:center;'>tell you all about her eyes</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:6vw;text-align:center;'>which the carpenter</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:6vw;text-align:center;'>insisted</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:6vw;text-align:center;'>were to be</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:6vw;text-align:center;'>made of</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:6vw;text-align:center;'>natural stone.</div>"
+                ]
+            }
+        ],
+        [ 63,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['63photo1.png','63photo2.png','63photo3.png','63photo4.png','63photo5.png'],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:5.5vw;text-align:center;padding-top:3vw;'>Here, many stones were excluded </div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5.5vw;text-align:center;'>due to their inconsistent </div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5.5vw;text-align:center;'>colour or other inappropriate properties.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5.5vw;text-align:center;'>Plus the significance</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5.5vw;text-align:center;'>of those stones.</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5.5vw;text-align:center;'>Then we had to deal with the politely-termed, </div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:center;'>inconsistent behaviour of </div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:center;'>suppliers and agents.</div>"
+                ]
+            }
+        ],
         
-         
-         
-       
-        
-         
-         
-        
-         
-        
-        
-        
-        
-         
-        
-         
-        
-        
-         
-         
-         
-        
-        
-        
-        
-        
-         
-        
- 
- 
+		
+		
+																				
 
 
- 
+																						
 
-
-
-         
-
+																			
+														 
 
 
 
 
 
-
- 
+				
+														
+						
+											
+										
+												
+											 
+											
 
 
          

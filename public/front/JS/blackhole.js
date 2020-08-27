@@ -3,7 +3,7 @@ function blackhole(element, maxOrbit, positionY) {
 	    w = $(element).width(),
 	    cw = w,
 	    ch = h,
-	    maxorbit = maxOrbit, // distance from center
+	    // maxorbit = maxOrbit, // distance from center
 	    centery = ch/positionY,
 		centerx = cw/2;
 
@@ -15,7 +15,8 @@ function blackhole(element, maxOrbit, positionY) {
 	    expanse = false; // if clicked
 
 	var canvas = $('<canvas/>').attr({width: cw, height: ch}).appendTo(element),
-	    context = canvas.get(0).getContext("2d");
+		context = canvas.get(0).getContext("2d");
+	var maxorbit = Math.ceil(canvas.get(0).width / 5.5);
 
 	context.globalCompositeOperation = "multiply";
 
@@ -51,9 +52,17 @@ function blackhole(element, maxOrbit, positionY) {
 		rands.push(Math.random() * (maxorbit/2) + 1);
 		rands.push(Math.random() * (maxorbit/2) + maxorbit);
 
+		var rands2 = [];
+		rands2.push(Math.random() * (255/2) + 1);
+		rands2.push(Math.random() * (255/2) + 255);
+
 		this.orbital = (rands.reduce(function(p, c) {
 			return p + c;
 		}, 0) / rands.length);
+
+		this.orbital2 = (rands2.reduce(function(p, c) {
+			return p + c;
+		}, 0) / rands2.length);
 		// Done getting that random number, it's stored in this.orbital
 
 		this.x = centerx; // All of these stars are at the center x position at all times
@@ -73,7 +82,7 @@ function blackhole(element, maxOrbit, positionY) {
 		}
 
 		stars.push(this);
-		this.color = 'rgba(255,255,255,'+ (1 - ((this.orbital) / 255)) +')'; // Color the star white, but make it more transparent the further out it is generated
+		this.color = 'rgba(255,255,255,'+ (1 - ((this.orbital2) / 255)) +')'; // Color the star white, but make it more transparent the further out it is generated
 
 		this.hoverPos = centery + (maxorbit/2) + this.collapseBonus;  // Where the star will go on hover of the blackhole
 		this.expansePos = centery + (this.id%100)*-10 + (Math.floor(Math.random() * 20) + 1); // Where the star will go when expansion takes place

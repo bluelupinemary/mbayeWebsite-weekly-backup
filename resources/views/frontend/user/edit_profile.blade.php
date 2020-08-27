@@ -612,10 +612,12 @@
          <!-- <div class="camborder1"></div>  -->
           <div id="my_camera" class="camera_alignment" style="display:none;"></div>
 
-          @if(str_contains($user->photo, 'cropped'))       
-            <div id="currentimg" class="camera_alignment"><img  id="user-photo" style="display: block; height:auto; width:15vw;" name="photo" src="{{asset('storage/profilepicture/crop/'.$user->photo)}}"/></div>  
-          @else
-             <div id="currentimg" class="camera_alignment"><img  id="user-photo" style="display: block; height:auto; width:15vw;" name="photo" src="{{asset('storage/profilepicture/'.$user->photo)}}"/></div>    
+          @if($user->photo)
+            @if(str_contains($user->photo, 'cropped'))       
+              <div id="currentimg" class="camera_alignment"><img  id="user-photo" style="display: block; height:auto; width:15vw;" name="photo" src="{{asset('storage/profilepicture/crop/'.$user->photo)}}"/></div>  
+            @else
+              <div id="currentimg" class="camera_alignment"><img  id="user-photo" style="display: block; height:auto; width:15vw;" name="photo" src="{{asset('storage/profilepicture/'.$user->photo)}}"/></div>    
+            @endif
           @endif
           
       

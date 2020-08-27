@@ -131,7 +131,7 @@ function setup_stage(stageNo){
                 animateCameraToRadius(storyCamera, 20, frameCount, 500);
                 change_collage_photo(stageNo);
                 collage_wall.isVisible = true;
-                add_delay(collage_wall,5000,5000); 
+                add_delay(collage_wall,3000,5000); 
 
         }else if(stageNo === 4){
                 //set camera to default/init view; hide collage wall; create image disc; view skybox top; add scaling animation to disc
@@ -323,7 +323,7 @@ function setup_stage(stageNo){
                 $("#firstVideoOverlayText").css({'font-size':'3vw'});
                 earth_obj.setEnabled(false);
                 earth_obj.isVisible = false;
-                collage_wall.position = WALL_INIT_POS;
+                collage_wall.position.z = -1200;
                 collage_wall.isVisible = true;
                 change_collage_photo(stageNo);
                 add_delay(collage_wall,2000,5000); 
@@ -382,7 +382,7 @@ function setup_stage(stageNo){
                 //set camera to init view ;
                 // $("#firstVideoOverlayText").css({'font-size':'3.2vw'});
                 setCamDefault(50);
-                animateCameraToRadius(storyCamera, 30, frameCount, 1300);
+                animateCameraToRadius(storyCamera, 30, frameCount, 1200);
                 
 
                 change_collage_photo(stageNo);
@@ -484,8 +484,8 @@ function create_snow_emitter(){
     $('.firstVideoOverlayText').css('display', 'block');
 
     rotate_sky();                                                   //start rotating the sky
-    currentStage = 22;
-    setup_stage(22);                                                 //start showing the script 1, stage 1
+    currentStage = 1;
+    setup_stage(1);                                                 //start showing the script 1, stage 1
     
     engine.runRenderLoop(function(){
       if(scene){

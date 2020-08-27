@@ -31,6 +31,7 @@ class Blog extends BaseModel
         'status',
         'featured_image',
         'created_by',
+        'shareable',
     ];
 
     protected $dates = [

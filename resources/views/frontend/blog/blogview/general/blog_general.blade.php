@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{{asset('front/CSS/bootstrap.min.css')}}">
 <style>
     div.origin {
-        left: 60%;
+        /* left: 60%; */
         /* top: 60%; */
     }
 
@@ -91,11 +91,13 @@
                 <span class="tooltiptext">Instructions</span>
             </button>
         </div>
-        <button class="communicator-div tooltips top btn_pointer @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom   @else  tomasina @endif" >
-        
-        </button>
-        <div class="comm-btn  top btn_pointer">
-            <span class="communicator-span    tooltips_span tooltiptext" >Communicator</span>
+        {{-- <button class="communicator-div tooltips top btn_pointer @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom   @else  tomasina @endif" >
+            <span>Communicator</span>
+            <button class="communicator-button"></button>
+        </button> --}}
+        <div class="communicator-div tooltips right">
+            <span class="tooltiptext">Communicator</span>
+            <button class="communicator-button"></button>
         </div>
         <button class="music-volume-div tooltips top btn_pointer">
             <span>Music Volume Up/Down</span>
@@ -440,43 +442,43 @@ function openFullscreen() {
   }
 
 }
-if(window.innerWidth < 991 ){
-$(document).ready(()=>{
-    Swal.fire({
-            imageUrl: '../../front/icons/alert-icon.png',
-            imageWidth: 80,
-            imageHeight: 80,
-            html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
-            padding: '15px',
-            background: 'rgba(8, 64, 147, 0.62)',
-            allowOutsideClick: false
-        }).then((result) => {
-            if (result.value) {
-                openFullscreen()
-            }
-        });
-    });
-}
-else  contentDisplay();
+// if(window.innerWidth < 991 ){
+// $(document).ready(()=>{
+//     Swal.fire({
+//             imageUrl: '../../front/icons/alert-icon.png',
+//             imageWidth: 80,
+//             imageHeight: 80,
+//             html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+//             padding: '15px',
+//             background: 'rgba(8, 64, 147, 0.62)',
+//             allowOutsideClick: false
+//         }).then((result) => {
+//             if (result.value) {
+//                 openFullscreen()
+//             }
+//         });
+//     });
+// }
+// else  contentDisplay();
 
-function contentDisplay() { 
-      setTimeout(function(){
-        $(".astro-div").css({'display':'flex'}); 
-        $(".page").css({'visibility':'visible'});
-        $(".astro-div").css({'visibility':'visible'});
-      // $(".most-naffed").css({'visibility':'visible'});
+// function contentDisplay() { 
+//       setTimeout(function(){
+//         $(".astro-div").css({'display':'flex'}); 
+//         $(".page").css({'visibility':'visible'});
+//         $(".astro-div").css({'visibility':'visible'});
+//       // $(".most-naffed").css({'visibility':'visible'});
             
             
-        $(".page").addClass('animate-zoomIn-arm');
+//         $(".page").addClass('animate-zoomIn-arm');
   
-        $('.page').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){ 
-   $(".page").removeClass('animate-zoomIn-arm');
-    $(".page").addClass('zoomIn-arm');
-   });
+//         $('.page').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){ 
+//    $(".page").removeClass('animate-zoomIn-arm');
+//     $(".page").addClass('zoomIn-arm');
+//    });
 
-        }, 1000
-);
-    }
+//         }, 1000
+// );
+//     }
 });
 function go_to_next(){
     var next = document.getElementById( "next_no" ).value;
@@ -902,18 +904,16 @@ function largest(hot_count,cool_count,naff_count,i)
         
             if(!navigator_zoom) {
                 $('.zoom-btn').hide();
-                $('.navigator-buttons').css('pointer-events', 'auto');
-                $('.communicator-div').css('pointer-events', 'auto');
-                $('.instruction-div').css('pointer-events', 'auto');
-                $('.tos-div').css('pointer-events', 'auto');
-                $('.btn_pointer').css('pointer-events', 'auto');
                 $('.navigator-div').addClass('animate-navigator-zoomin');
                 
-
-               $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                $('.navigator-div.animate-navigator-zoomin').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
                     $('.navigator-div').removeClass('animate-navigator-zoomin');
                     $('.navigator-div').addClass('zoomin');
-                    $('.zoom-btn').hide();
+
+                    // $('.zoom-btn').hide();
+                    $('.navigator-buttons, .communicator-div, .instruction-div, .tos-div').css('pointer-events', 'auto');
+                    // $('.btn_pointer').css('pointer-events', 'auto');
+                    
                 });
             } else {
             
@@ -929,7 +929,7 @@ function largest(hot_count,cool_count,naff_count,i)
                 $('.navigator-div').removeClass('animate-navigator-zoomout');
                 $('.navigator-div').removeClass('zoomin');
                 $('.zoom-btn').show();
-                
+                $('.navigator-buttons, .communicator-div, .instruction-div, .tos-div').css('pointer-events', 'none');
             });
 
             navigator_zoom = !navigator_zoom;

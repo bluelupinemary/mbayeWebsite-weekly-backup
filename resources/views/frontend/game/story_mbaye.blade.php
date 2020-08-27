@@ -104,6 +104,10 @@
         let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter4.js";
         $.getScript( url, function() {
         });
+    }else if(chapter_no == 5){
+        let url = "{{asset('front')}}"+"/babylonjs/scenes/storyMbaye/storyMbayeChapter5.js";
+            $.getScript( url, function() {
+        });
     }
     
 </script>

@@ -165,7 +165,7 @@
 <div id="page-content">
 <div class="container">
     <div class="app">
-        <earthlings-activities :auth="{{ Auth::user() }}"></earthlings-activities>
+        <earthlings-activities :user="{{ Auth::user() }}"></earthlings-activities>
     </div>
 </div>
 </div>

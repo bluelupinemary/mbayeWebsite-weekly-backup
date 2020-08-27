@@ -689,75 +689,36 @@ $('button.collage').click(function() {
  * @param {tag} tag 
  * @param {id} id 
  */
-function view_blog(tag,id){
-
-	$.ajax({
-		type: "POST",
-		url:url_view_tag_wise_blog,
-		data:{id:id,
-			 tag:tag,
-			 _token:token
-			},
-		success: function(result){
-				window.location.href=url_view_tag_wise_blog+"?id="+id+'&tag='+tag;
-		}});
-	
+function view_blog(tag){
+	window.location.href=url_view_tag_wise_blog+'?tag='+tag;
 }
+
 /**
  * Function to redirect to general blogs
  * @param {tag} tag 
  * @param {id} id 
  */
-function view_general_blogs (tag,id){
-
-	$.ajax({
-		type: "POST",
-		url:url_view_general_blog,
-		data:{id:id,
-			 tag:tag,
-			 _token:token
-			},
-		success: function(result){
-				window.location.href=url_view_general_blog+"?id="+id+'&tag='+tag;
-		}});
-	
+function view_general_blogs (){
+	window.location.href=url_view_general_blog;
 }
-
 
 /**
  * Function to redirect to tagwise blogs
  * @param {tag} tag 
  * @param {id} id 
  */
-function view_my_blogs_tagwise(tag,id){
-
-	$.ajax({
-		type: "POST",
-		url:url_view_tag_wise_blog,
-		data:{id:id,
-			 tag:tag,
-			 _token:token
-			},
-		success: function(result){
-				window.location.href=url_view_tag_wise_blog+"?id="+id+'&tag='+tag;
-		}});
-	
+function view_my_blogs_tagwise(tag){
+	window.location.href=url_view_tag_wise_blog+'?tag='+tag;
 }
 
 /**
  *  Function to redirect to my career posts
  * @param {id} id 
  */
-function view_my_career_posts(id){
+function view_my_career_posts(){
+	window.location.href=url_view_my_career_blog;
+}
 
-	$.ajax({
-		type: "POST",
-		url:url_view_my_career_blog,
-		data:{id:id,
-			 _token:token
-			},
-		success: function(result){
-				window.location.href=url_view_my_career_blog+"?id="+id;
-		}});
-	
+function view_my_designs_blogs(){
+	window.location.href=url_view_my_designs_blog;
 }

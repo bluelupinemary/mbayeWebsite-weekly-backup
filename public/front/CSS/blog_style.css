@@ -380,7 +380,7 @@ s#blog_name_0 {
 .navigator-div img {
     cursor: pointer;
     width: 100%;
-    height: 100%;
+    height: auto;
     -ms-flex-item-align: center;
     -ms-grid-row-align: center;
     /* align-self: center; */
@@ -552,10 +552,10 @@ s#blog_name_0 {
 }
 
 .zoomIn-arm {
-    -webkit-transform: translate(2%, 7%) scale(1.2);
-    -moz-transform: translate(2%, 7%) scale(1.2);
-    -o-transform: translate(2%, 7%) scale(1.2);
-    transform: translate(2%, 7%) scale(1.2);
+    -webkit-transform: translate(27%, -23%) scale(1.5);
+        -moz-transform: translate(27%, -23%) scale(1.5);
+            -o-transform: translate(27%, -23%) scale(1.5);
+                transform:translate(27%, -23%) scale(1.5);
 }
 
 @-webkit-keyframes zoomInArm {
@@ -650,24 +650,23 @@ s#blog_name_0 {
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -389%);
-    -moz-transform: translate(-50%, -389%);
-    -ms-transform: translate(-50%, -389%);
-    transform:  translate(-50%, -389%);
+    -webkit-transform: translate(-78%, 105%);
+    -moz-transform: translate(-78%, 105%);
+    -ms-transform: translate(-78%, 105%);
+    transform: translate(-78%, 105%);
     background: black;
     border: 0;
     color: #fff;
-    width: 6.6vw;
-    height: 5vw;
-    font-size: 1em;
+    width: 5.4vw;
+    height: 3.2vw;
+    font-size: 1vw;
     z-index: 1000000;
-    border-radius: 25% 25% 0% 37%;
+    border-radius: 3px;
     opacity: 0.7;
     display: block;
     cursor: pointer;
     pointer-events: auto;
     justify-content: center;
-
 }
 .zoom-btn :hover {
    /* pointer-events: none !important;*/
@@ -809,26 +808,25 @@ s#blog_name_0 {
 }
 .instructions-div {
     position: absolute;
- 
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-59%, -1584%);
-    -moz-transform: translate(-59%, -1584%);
-    -ms-transform: translate(-59%, -1584%);
-    transform: translate(-38%, 533%);
+    -webkit-transform: translate(-52%, 512%);
+    -moz-transform: translate(-52%, 512%);
+    -ms-transform: translate(-52%, 512%);
+    transform: translate(-52%, 512%);
     width: 2vw;
-    height: 1.5vw;
+    height: 1.2vw;
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
 }
-.astro-div.tom .communicator-div {
+/* .astro-div.tom .communicator-div {
     -webkit-transform:translate(467%, 291%) skew(22deg, 10deg);
     -moz-transform:translate(467%, 291%) skew(22deg, 10deg);
     -ms-transform:translate(467%, 291%) skew(22deg, 10deg);
     transform: translate(467%, 291%) skew(22deg, 10deg);
-}
+} */
 .navigator-div .tooltips span {
     font-size: 0.7vw;
 }
@@ -906,7 +904,7 @@ outline: 0;
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-    visibility: hidden;
+    /* visibility: hidden; */
     pointer-events: none;
     z-index: 1000000 !important;
   }
@@ -977,9 +975,16 @@ outline: 0;
         -ms-transform: translate(33%, -50%) !important;
             transform: translate(33%, -50%) !important;
 }
-.communicator-div:hover{
+.communicator-div:hover button{
     -webkit-box-shadow: 0px 0px 3px #17a2b8;
             box-shadow: 0px 0px 3px #17a2b8;
+}
+
+.navigator-div .tooltips.right span {
+    -webkit-transform: translate(33%, -50%);
+    -moz-transform: translate(33%, -50%);
+    -ms-transform: translate(33%, -50%);
+    transform: translate(33%, -50%);
 }
 .music-volume-div:hover{
     -webkit-box-shadow: 0px 0px 3px #17a2b8;
@@ -1019,11 +1024,11 @@ outline: 0;
     position: absolute !important;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(519%, 312%) skew(16deg, 10deg);
-    -moz-transform: translate(519%, 312%) skew(16deg, 10deg);
-    -ms-transform: translate(519%, 312%) skew(16deg, 10deg);
+    -webkit-transform: translate(384%, 222%);
+    -moz-transform: translate(384%, 222%);
+    -ms-transform: translate(384%, 222%);
     /* border: 1px solid red; */
-    transform: translate(384%, 222%) skew(16deg, 10deg);
+    transform: translate(384%, 222%);
      border:0px solid red !important; 
     width: 2.8vw;
     height: 3vw;
@@ -1057,13 +1062,32 @@ outline: 0;
     display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
     display: flex;
 }
-.astro-div.tom .communicator-div {
+/* .astro-div.tom .communicator-div {
     -webkit-transform: translate(390%, 222%) skew(25deg, 20deg);
     -moz-transform: translate(390%, 222%) skew(25deg, 20deg);
         -ms-transform: translate(390%, 222%) skew(25deg, 20deg);
         transform: translate(384%, 222%) skew(16deg, 10deg);
-    /* height: 1.2vw;  translate(-49%, -311%) skew(16deg, 10deg);*/
-}
+    height: 1.2vw;  translate(-49%, -311%) skew(16deg, 10deg);
+} */
+
+.navigator-div.tom .communicator-div button {
+    -webkit-transform: skew(28deg, 8deg);
+    -moz-transform: skew(28deg, 8deg);
+    -ms-transform: skew(28deg, 8deg);
+    transform: skew(28deg, 8deg);
+  }
+  
+  .communicator-div button {
+    border: 0;
+    background: transparent;
+    -webkit-transform: skew(23deg, 8deg);
+    -moz-transform: skew(23deg, 8deg);
+    transform: skew(23deg, 8deg);
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    padding: 0;
+  }
 .tomasina{
     -webkit-transform: translate(360%, 202%) skew(16deg, 10deg);
     -moz-transform: translate(360%, 202%) skew(16deg, 10deg);
@@ -1098,7 +1122,7 @@ outline: 0;
     display: inline;
 }
 
-  .instructions-btn .tooltiptext::after {
+  .instructions-btn .tooltiptext::after, .communicator-div .tooltiptext::after {
     content: '';
     margin-top: 0.9vw;
     border-top: 0.1vw solid transparent;
@@ -1111,10 +1135,8 @@ outline: 0;
     width: 0;
     height: 0;
     margin-top: -0.5vw;
-    border-top: 0.1vw solid transparent;
-    border-bottom: 0.1vw solid transparent;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
+    border-top: 0.5vw solid transparent;
+    border-bottom: 0.5vw solid transparent;
   }
   .tos-btn .tooltiptext::after {
     content: '';
@@ -1129,10 +1151,8 @@ outline: 0;
     width: 0;
     height: 0;
     margin-top: -0.5vw;
-    border-top: 0.1vw solid transparent;
-    border-bottom: 0.1vw solid transparent;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
+    border-top: 0.5vw solid transparent;
+    border-bottom: 0.5vw solid transparent;
   }
   .profile-btn .tooltiptext::after {
     content: '';
@@ -1147,10 +1167,8 @@ outline: 0;
     width: 0;
     height: 0;
     margin-top: -0.5vw;
-    border-top: 0.1vw solid transparent;
-    border-bottom: 0.1vw solid transparent;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
+    border-top: 0.5vw solid transparent;
+    border-bottom: 0.5vw solid transparent;
   }
   .tooltip:hover .tooltiptext {
     visibility: visible;
@@ -1222,8 +1240,8 @@ outline: 0;
 
 
 .tooltips {
-    position: relative;
-    display: inline;
+    /* position: relative;
+    display: inline; */
 }
 .tooltips span {
     position: absolute;
@@ -1254,10 +1272,10 @@ outline: 0;
 }
 
 .tooltips.top span {
-    -webkit-transform: translate(-49%, -211%);
-    -moz-transform: translate(-49%, -211%);
-        -ms-transform: translate(-49%, -211%);
-            transform: translate(-49%, -211%);
+    -webkit-transform: translate(-50%, -244%);
+    -moz-transform: translate(-50%, -244%);
+    -ms-transform: translate(-50%, -244%);
+    transform: translate(-50%, -244%);
 }
 
 .tooltips.top span:after {
@@ -1404,23 +1422,6 @@ outline: 0;
     width: 11%;
 }
 
-.instructions-div {
-    position: absolute;
-    /* border: 1px solid red; */
-    top: 50%;
-    left: 50%;
-    -webkit-transform:  translate(-52%, 532%);
-    -moz-transform: translate(-52%, 532%);
-        -ms-transform:  translate(-52%, 532%);
-        transform: translate(-52%, 532%);
-        width: 1.7vw;
-        height: 1.1vw;
-    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-    display: -ms-flexbox;  /* TWEENER - IE 10 */
-    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
-    display: flex;
-}
-
 .instructions-div button {
     width: 100%;
     -ms-flex-wrap: wrap;
@@ -1429,7 +1430,7 @@ outline: 0;
 
 .instructions-div img {
     width: 100%;
-   /* height: 100%;*/
+    height: auto;
 }
 
 .tos-div img  {
@@ -1439,6 +1440,8 @@ outline: 0;
 }
 
 .navigator-div button.tooltips {
+    width: 100%;
+    height: 100%;
     background: transparent;
     border: 0;
     padding: 0;
@@ -1460,12 +1463,12 @@ outline: 0;
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-77%, -385%);
-    -moz-transform: translate(-77%, -385%);
-        -ms-transform: translate(-77%, -385%);
-        transform: translate(-83%, 107%);
-        width: 5vw;
-        height: 3vw;
+    -webkit-transform: translate(-78%, 105%);
+    -moz-transform: translate(-78%, 105%);
+    -ms-transform: translate(-78%, 105%);
+    transform: translate(-78%, 105%);
+    width: 5.4vw;
+    height: 3.2vw;
     display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
     display: -ms-flexbox;  /* TWEENER - IE 10 */
     display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
@@ -1791,12 +1794,14 @@ body
 .view
 {
 	position: absolute;
-/*	display: block;*/
+	display: block;
+    transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
     -o-transform-style: preserve-3d;
-    z-index: 10000;
+    transform: rotateX(0deg);
+    /* z-index: 10000; */
       /* transform: translate(0%, 0%); */
  
 }
@@ -1823,13 +1828,13 @@ body
     -moz-perspective: 600;
     -ms-perspective: 600;
     -o-perspective: 600;
-    position:relative;
+    /* position: absolute; */
 	width: 100%;
     height: 100%;
 	margin: 0 auto;
     text-align: center;
-    visibility: hidden;
-    z-index: 10000;
+    /* visibility: hidden; */
+    /* z-index: 10000; */
    
     
 }
@@ -1838,6 +1843,7 @@ div.origin
 {
 	left: 50%;
     top: 50%;
+    /* transform: translate(-50%, -50%); */
 }
 
 div#camera
@@ -2083,6 +2089,11 @@ div.reflection.selected .mover
 .button-div-p .commentIcon{
     width: 1.5vw;
 }
+
+button:focus {
+    outline: 0;
+} 
+
 @supports (-webkit-touch-callout: none) {
     /* CSS specific to iOS devices */ 
 
@@ -2144,40 +2155,15 @@ div.cell.reflection2 img
 /*---------------------------------------------------------------------------------*/
 
 @media (max-width: 575.98px) {
-    .btn_pointer{
+    /* .btn_pointer{
         pointer-events: none ;
         cursor:pointer;
-    }
+    } */
     .navigator-buttons{
     pointer-events: none }
   
     .navigator-zoom {
         display:block
-    }
-    .zoom-btn{
-        display:block; 
-        position: absolute;
-        border: 0;
-        background: #fff0;
-        top: 50%;
-        left: 50%;
-        -webkit-transform:translate(-85%, 105%);
-        -moz-transform: translate(-85%, 105%);
-        -ms-transform:translate(-85%, 105%);
-        transform: translate(-83%, 81%);
-        transform: translate(-85%, 105%);
-        width: 5vw;
-        height: 3.2vw;
-        outline: 0;
-        pointer-events: auto;
-        /* border: 1px solid red; */
-        background: #00000070;
-        /* z-index: 2; */
-        border-radius: 3px;
-       /* display: flex;*/
-        font-size:1vw;
-        color: #fff;
-        justify-content: center;
     }
    .p_title,.text_hot,.text_cool,.text_naff,.p_button{
         font-size:0.4rem;
@@ -2244,13 +2230,13 @@ div.cell.reflection2 img
       }
     
 /* Astro animation */
-.astro-div.zoomin {
+/* .astro-div.zoomin {
     pointer-events: auto;
     -webkit-transform: translate(47%, -50%) scale(2);
     -moz-transform: translate(47%, -50%) scale(2);
         -ms-transform:  translate(47%, -50%) scale(2);
         transform:  translate(47%, -50%) scale(2);
-}
+} */
 .astro-div.animate-navigator-zoomin {
     -webkit-animation: navigatorAnimateZoomIn 1s linear; /* Safari 4+ */ /* Fx 5+ */ /* Opera 12+ */
     -moz-animation: navigatorAnimateZoomIn 1s linear; /* Fx 5+ */
@@ -2319,17 +2305,32 @@ div.cell.reflection2 img
 
 /*---------------------------------------------------------------------------------*/
 
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .btn_pointer{
+@media (max-width: 767.98px) {
+    .carousel-inner .active + .carousel-item, .carousel-inner .active + .carousel-item + .carousel-item, .carousel-inner .active + .carousel-item + .carousel-item {
+        display: none !important;
+    }
+    .img-responsive {
+        box-shadow: 3px 3px 10px 1px rgba(0, 0, 0, 0.62);
+    }
+    .blog_name, .naff_count {
+        font-size: 1.5vw;
+    }
+    .blog_name {
+        top: -45% !important;
+    }
+    .carousel {
+        height: 35vw;
+    }
+    /* .btn_pointer{
         pointer-events: none;
         cursor:pointer;
-    }
+    } */
     .navigator-buttons{
         pointer-events: none }
     .navigator-zoom {
         display:block
     }
-    .zoom-btn{
+    /* .zoom-btn{
         display:block; 
         position: absolute;
         border: 0;
@@ -2345,15 +2346,12 @@ div.cell.reflection2 img
         height: 3.2vw;
         outline: 0;
         pointer-events: auto;
-        /* border: 1px solid red; */
         background: #00000070;
-        /* z-index: 2; */
         border-radius: 3px;
-      /*  display: flex;*/
         font-size:1vw;
         color: #fff;
         justify-content: center;
-    }
+    } */
    
     .p_title,.text_hot,.text_cool,.text_naff,.p_button{
         font-size:0.45rem;
@@ -2417,13 +2415,13 @@ div.cell.reflection2 img
       }
          
 /* Astro animation */
-.astro-div.zoomin {
+/* .astro-div.zoomin {
     pointer-events: auto;
     -webkit-transform:translate(30%, -35%) scale(1.7);
     -moz-transform: translate(30%, -35%) scale(1.7);
         -ms-transform: translate(30%, -35%) scale(1.7);
        transform:translate(30%, -35%) scale(1.7);
-}
+} */
 .astro-div.animate-navigator-zoomin {
     -webkit-animation: navigatorAnimateZoomIn 1s linear; /* Safari 4+ */ /* Fx 5+ */ /* Opera 12+ */
     -moz-animation: navigatorAnimateZoomIn 1s linear; /* Fx 5+ */
@@ -2494,26 +2492,27 @@ div.cell.reflection2 img
 
 @media (min-width: 768px) and (max-width: 991.98px) {
 
-   .most-naffed {
-        transform: translate(-152%, -159%);
+    .most-naffed {
+        /* transform: translate(-152%, -159%); */
     }
+    
     .tomasina {
         -webkit-transform: translate(437%, 258%) skew(16deg, 10deg);
         -moz-transform: translate(437%, 258%) skew(16deg, 10deg);
         -ms-transform: translate(437%, 258%) skew(16deg, 10deg);
         transform: translate(437%, 258%) skew(16deg, 10deg);
     }
-    .btn_pointer{
+    /* .btn_pointer{
         pointer-events: none;
         cursor:pointer;
-    }
+    } */
 
     .navigator-buttons{
         pointer-events: none }
     .navigator-zoom {
         display:block
     }
-    .zoom-btn{
+    /* .zoom-btn{
         display:block; 
         pointer-events: auto;
         display: block;
@@ -2533,12 +2532,11 @@ div.cell.reflection2 img
         pointer-events: auto;
         background: #000000e3;
         border-radius: 3px;
-        /*display: flex;*/
         font-size: 1vw;
         color: #fff;
         justify-content: center;
 
-    }
+    } */
     .p_title,.text_hot,.text_cool,.text_naff,.p_button{
         font-size:0.5rem;
     }
@@ -2669,30 +2667,15 @@ div.cell.reflection2 img
         -webkit-box-pack: justify;
         -ms-flex-pack: justify;
         justify-content: space-between;
+        pointer-events: none;
       
     }
-   .instructions-div {
-        position: absolute;
-     
-        top: 50%;
-        left: 50%;
-        -webkit-transform:  translate(-49%, 577%);
-        -moz-transform: translate(-49%, 523%);
-        -ms-transform:  translate(-49%, 577%);
-        transform: translate(-49%, 577%);
-        width: 2vw;
-        height: 1.3vw;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-    }
-    .astro-div.tom .communicator-div {
+    /* .astro-div.tom .communicator-div {
         -webkit-transform:translate(467%, 291%) skew(22deg, 10deg);
         -moz-transform:translate(467%, 291%) skew(22deg, 10deg);
         -ms-transform:translate(467%, 291%) skew(22deg, 10deg);
         transform: translate(467%, 291%) skew(22deg, 10deg);
-    }
+    } */
    .navigator-div .tooltips span {
         font-size: 0.7vw;
     }
@@ -2760,16 +2743,16 @@ div.cell.reflection2 img
 /*---------------------------------------------------------------------------------*/
 
 @media (min-width: 992px) and (max-width: 1198px) {
-    .btn_pointer{
+    /* .btn_pointer{
         pointer-events: none;
         cursor:pointer;
-    }
-    .navigator-buttons{
-        pointer-events: auto }
+    } */
+    /* .navigator-buttons{
+        pointer-events: auto } */
     .navigator-zoom {
         display:none
     }
-    .zoom-btn{
+    /* .zoom-btn{
         position: absolute;
         display:block;
         border: 0;
@@ -2785,15 +2768,15 @@ div.cell.reflection2 img
         height: 3.2vw;
         outline: 0;
         pointer-events: auto;
-        /* border: 1px solid red; */
+        border: 1px solid red;
         background: #000000e3;
-        /* z-index: 2; */
+        z-index: 2;
         border-radius: 3px;
-      /*  display: flex;*/
+       display: flex;
         font-size:1vw;
         color: #fff;
         justify-content: center;
-    }
+    } */
     .p_title,.text_hot,.text_cool,.text_naff,.p_button{
         font-size:0.7rem;
     }
@@ -2862,16 +2845,16 @@ div.cell.reflection2 img
 /*---------------------------------------------------------------------------------*/
 
 @media (min-width: 1200px) {
-    .btn_pointer{
+    /* .btn_pointer{
         pointer-events: none;
         cursor:pointer;
-    }
-    .navigator-buttons{
-        pointer-events: auto }
+    } */
+    /* .navigator-buttons{
+        pointer-events: auto } */
     .navigator-zoom {
         display:none;
     }
-    .zoom-btn{
+    /* .zoom-btn{
         display:block;
         position: absolute;
         border: 0;
@@ -2886,15 +2869,15 @@ div.cell.reflection2 img
         height: 3.2vw;
         outline: 0;
         pointer-events: auto;
-        /* border: 1px solid red; */
+        border: 1px solid red;
         background: #000000e3;
-        /* z-index: 2; */
+        z-index: 2;
         border-radius: 3px;
-      /*  display: flex;*/
+       display: flex;
         font-size:1vw;
         color: #fff;
         justify-content: center;
-    }
+    } */
     .p_title,.text_hot,.text_cool,.text_naff,.p_button{
         font-size:0.7vw;
     }
@@ -2969,12 +2952,12 @@ div.cell.reflection2 img
 /*---------------------------------------------------------------------------------*/
 
 @media (min-width: 1920px) {
-    .btn_pointer{
+    /* .btn_pointer{
         pointer-events: auto;
         cursor:pointer;
-    }
-    .navigator-buttons{
-        pointer-events: auto }
+    } */
+    /* .navigator-buttons{
+        pointer-events: auto } */
     .p_title,.text_hot,.text_cool,.text_naff,.p_button{
         font-size:0.7vw;
     }
@@ -3092,12 +3075,35 @@ div.cell.reflection2 img
     position: absolute;
 }
 
-img.reflection {
-    -webkit-box-reflect: below 9% -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
+.blog_img.reflection {
+    -webkit-box-reflect: below 15px -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
 }
 
-img.reflection2 {
-    -webkit-box-reflect: below 210% -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
+.blog_img.reflection:after, .blog_img.reflection2:after {
+    content: "";
+    display: block;
+    position: absolute;
+    /* background-image: url(/storage/img/general_blogs/1596094961danielkorpai_article_card.png); */
+    width: auto;
+    /* height: 214px; */
+    margin-bottom: 100px;
+    -moz-transform: scaleY(-1);
+    /* border: 1px solid red; */
+    bottom: -155%;
+    left: 0;
+    right: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.2;
+}
+
+.blog_img.reflection2:after {
+    /* bottom: -779px; */
+}
+
+.blog_img.reflection2 {
+    -webkit-box-reflect: below 440px -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
 }
 
 /* show 3 items */

@@ -30,7 +30,7 @@
     <div class="origin view">
         <div id="camera" class="view">
             <div id="dolly" class="view">
-                <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler">
+                <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler" v-touch:swipe.top="tophandler" v-touch:swipe.down="bottomhandler">
                     <div v-for="(profile,index) in profiles" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: profiles, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index)">
                         
                         <a class="mover viewflat blog_img" href="#">
@@ -136,7 +136,36 @@ export default {
                 'a',
                 'b'
             ],
-            audio_player: new Audio(),
+            audio_player: {
+                'c3': new Audio('../../../front/audio/c3.mp3'),
+                'd3': new Audio('../../../front/audio/d3.mp3'),
+                'e3': new Audio('../../../front/audio/e3.mp3'),
+                'f3': new Audio('../../../front/audio/f3.mp3'),
+                'g3': new Audio('../../../front/audio/g3.mp3'),
+                'a3': new Audio('../../../front/audio/a3.mp3'),
+                'b3': new Audio('../../../front/audio/b3.mp3'),
+                'c4': new Audio('../../../front/audio/c4.mp3'),
+                'd4': new Audio('../../../front/audio/d4.mp3'),
+                'e4': new Audio('../../../front/audio/e4.mp3'),
+                'f4': new Audio('../../../front/audio/f4.mp3'),
+                'g4': new Audio('../../../front/audio/g4.mp3'),
+                'a4': new Audio('../../../front/audio/a4.mp3'),
+                'b4': new Audio('../../../front/audio/b4.mp3'),
+                'c5': new Audio('../../../front/audio/c5.mp3'),
+                'd5': new Audio('../../../front/audio/d5.mp3'),
+                'e5': new Audio('../../../front/audio/e5.mp3'),
+                'f5': new Audio('../../../front/audio/f5.mp3'),
+                'g5': new Audio('../../../front/audio/g5.mp3'),
+                'a5': new Audio('../../../front/audio/a5.mp3'),
+                'b5': new Audio('../../../front/audio/b5.mp3'),
+                'c6': new Audio('../../../front/audio/c6.mp3'),
+                'd6': new Audio('../../../front/audio/d6.mp3'),
+                'e6': new Audio('../../../front/audio/e6.mp3'),
+                'f6': new Audio('../../../front/audio/f6.mp3'),
+                'g6': new Audio('../../../front/audio/g6.mp3'),
+                'a6': new Audio('../../../front/audio/a6.mp3'),
+                'b6': new Audio('../../../front/audio/b6.mp3'),
+            },
             search: '',
             type: 'Profile',
             current_type: 'Profile',
@@ -206,11 +235,17 @@ export default {
         // that.currentAudio = 0;
     },
     lefthandler(){
-          this.scrollcheck('down');
-      },
+          this.scrollcheck('right');
+    },
     righthandler(){
-          this.scrollcheck('up');
-      },
+          this.scrollcheck('left');
+    },
+    tophandler(){
+        this.scrollcheck('down');
+    },
+    bottomhandler(){
+        this.scrollcheck('up');
+    },
       broadcastcheck(){
           axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+that.country+'&city='+that.city)
          .then((response) => {
@@ -467,6 +502,10 @@ export default {
             return {
                 'width': that.CWIDTH,
                 'height': that.CHEIGHT,
+                '-webkit-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                '-moz-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                '-ms-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                '-o-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
                 'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
             };
 
@@ -872,66 +911,19 @@ export default {
         // }
     
         if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
-            {//alert("here1");
-                dolly.style.OTransform = that.cameraTransformForCell(newIndex);
-                var currentMatrix = new OCSSMatrix(document.defaultView.getComputedStyle(dolly, null).OTransform);
-                var targetMatrix = new OCSSMatrix(dolly.style.OTransform);
-                var dx = currentMatrix.e - targetMatrix.e;
-                var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
-                camera.style.OTransform = "rotateY(" + angle + "deg)";
-                camera.style.OTransitionDuration = "330ms";
-
-            }
-        else if(navigator.userAgent.indexOf("Chrome") != -1 )
-        { //alert("here2");
-            dolly.style.webkitTransform = that.cameraTransformForCell(newIndex);
-            var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
-            var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
-            var dx = currentMatrix.e - targetMatrix.e;
-            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
-            camera.style.webkitTransform = "rotateY(" + angle + "deg)";
-            camera.style.webkitTransitionDuration = "330ms";
-
-        }
-    
-        else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
-        { 
-        
-        dolly.style.MozTransform = that.cameraTransformForCell(newIndex);
-        var currentMatrix = new DOMMatrix(document.defaultView.getComputedStyle(dolly, null).MozTransform);
-        var targetMatrix = new DOMMatrix(dolly.style.MozTransform);
-        var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
-        camera.style.MozTransform = "rotateY(" + angle + "deg)";
-        camera.style.MozTransitionDuration = "330ms";
-
-
-        }
-        else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
         {
-        dolly.style.msTransform = that.cameraTransformForCell(newIndex);
-        var currentMatrix = new MSCSSMatrix(document.defaultView.getComputedStyle(dolly, null).msTransform);
-        var targetMatrix = new MSCSSMatrix(dolly.style.msTransform);
-        var dx = currentMatrix.e - targetMatrix.e;
-        var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
-        camera.style.msTransform = "rotateY(" + angle + "deg)";
-        camera.style.msTransitionDuration = "330ms";
-
-
-        }  
-        else if(navigator.userAgent.indexOf("iPhone") != -1 )
-      {
-            dolly.style.webkitTransform = that.cameraTransformForCell(newIndex);
-            var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
-            var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
+            dolly.style.OTransform = that.cameraTransformForCell(newIndex);
+            var currentMatrix = new OCSSMatrix(document.defaultView.getComputedStyle(dolly, null).OTransform);
+            var targetMatrix = new OCSSMatrix(dolly.style.OTransform);
             var dx = currentMatrix.e - targetMatrix.e;
             var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
-            camera.style.webkitTransform = "rotateY(" + angle + "deg)";
-            camera.style.webkitTransitionDuration = "330ms";
+            camera.style.OTransform = "rotateY(" + angle + "deg)";
+            camera.style.OTransitionDuration = "330ms";
 
         }
-        else if(navigator.userAgent.toLowerCase().indexOf('safari/') > -1)
-      {
+        else if(navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1)
+        {
+            // alert();
             dolly.style.webkitTransform = that.cameraTransformForCell(newIndex);
             var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
             var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
@@ -942,10 +934,38 @@ export default {
             camera.style.webkitTransitionDuration = "330ms";
 
         }
+        else if(navigator.userAgent.indexOf("Chrome") != -1 ) // Chrome and Safari browsers
+        {
+            dolly.style.webkitTransform = that.cameraTransformForCell(newIndex);
+            var currentMatrix = new WebKitCSSMatrix(document.defaultView.getComputedStyle(dolly, null).webkitTransform);
+            var targetMatrix = new WebKitCSSMatrix(dolly.style.webkitTransform);
+            var dx = currentMatrix.e - targetMatrix.e;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
+            camera.style.webkitTransform = "rotateY(" + angle + "deg)";
+            camera.style.webkitTransitionDuration = "330ms";
+        }
         
-        else{
-       
-        }      
+        else if(navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1) // Mozilla browsers
+        { 
+            // console.log('firefox');
+            dolly.style.MozTransform = that.cameraTransformForCell(newIndex);
+            var currentMatrix = new DOMMatrix(document.defaultView.getComputedStyle(dolly, null).MozTransform);
+            var targetMatrix = new DOMMatrix(dolly.style.MozTransform);
+            var dx = currentMatrix.e - targetMatrix.e;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
+            camera.style.MozTransform = "rotateY(" + angle + "deg)";
+            camera.style.MozTransitionDuration = "330ms";
+        }
+        else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+        {
+            dolly.style.msTransform = that.cameraTransformForCell(newIndex);
+            var currentMatrix = new MSCSSMatrix(document.defaultView.getComputedStyle(dolly, null).msTransform);
+            var targetMatrix = new MSCSSMatrix(dolly.style.msTransform);
+            var dx = currentMatrix.e - targetMatrix.e;
+            var angle = Math.min(Math.max(dx / (that.CXSPACING * 3.0), -1), 1) * 45;
+            camera.style.msTransform = "rotateY(" + angle + "deg)";
+            camera.style.msTransitionDuration = "330ms";
+        }   
     
         if (currentTimer)
         {
@@ -954,32 +974,30 @@ export default {
         
         currentTimer = setTimeout(function ()
         {
-            if(navigator.userAgent.indexOf("Chrome") != -1 )
-             {
+            if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
+            {
+                camera.style.OTransform = "rotateY(0)";
+                camera.style.OTransitionDuration = "2s";
+            }
+            else if(navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1)
+            {
                 camera.style.webkitTransform = "rotateY(0)";
                 camera.style.webkitTransitionDuration = "2s";
-             }
-             else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
-             {
+            }
+            else if(navigator.userAgent.indexOf("Chrome") != -1 )
+            {
+                camera.style.webkitTransform = "rotateY(0)";
+                camera.style.webkitTransitionDuration = "2s";
+            }
+            else if(navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1) 
+            {
                 camera.style.MozTransform = "rotateY(0)";
                 camera.style.MozTransitionDuration = "2s";
-             }
-
-             else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
-            {
-
-            camera.style.msTransform = "rotateY(0)";
-            camera.style.msTransitionDuration = "2s";
-             }
-            
-             else if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
-            {
-            camera.style.OTransform = "rotateY(0)";
-            camera.style.OTransitionDuration = "2s";
             }
-            else if(navigator.userAgent.indexOf("iPhone") != -1 ){
-                camera.style.webkitTransform = "rotateY(0)";
-                camera.style.webkitTransitionDuration = "2s";
+            else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+            {
+                camera.style.msTransform = "rotateY(0)";
+                camera.style.msTransitionDuration = "2s";
             }
         }, 330);
     },
@@ -1143,9 +1161,48 @@ export default {
         });
 
         if(that.isOdd(index)) {
-            $('.'+img_class).addClass('reflection');
+            $('.'+img_class).closest('.blog_img').addClass('reflection');
+            var bottomPos = Math.round(iheight) + 110;
+
+            if(navigator.userAgent.indexOf("Firefox") != -1) {
+                $(`<style type="text/css">
+                    .div_img_`+index+` .blog_img:after {
+                        background-image: url(`+$('.'+img_class).attr('src')+`);
+                        height: `+Math.round(iheight)+`px;
+                        bottom: -`+bottomPos+`px;
+                    }
+                </style>`).appendTo($('head'));
+            }
         } else {
-            $('.'+img_class).addClass('reflection2');
+            $('.'+img_class).closest('.blog_img').addClass('reflection2');
+
+            var nextIndex = parseInt(index) + 1;
+            var nextImage = $('.div_img_'+nextIndex).height();
+            
+            if(nextImage == undefined) {
+                var prevIndex = parseInt(index) - 1;
+                nextImage = $('.div_img_'+prevIndex).height();
+                console.log('next cell height: ', nextImage);
+            }
+
+            
+            var reflection_pos = (Math.round(nextImage) * 2) + 30;
+
+            $('.'+img_class).closest('.blog_img').attr('style', '-webkit-box-reflect: below '+reflection_pos+'px -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));')
+
+            var bottomPos = Math.round(iheight) + (Math.round(nextImage) * 2) + 120;
+
+            if(navigator.userAgent.indexOf("Firefox") != -1) {
+                $(`<style type="text/css">
+                    .div_img_`+index+` .blog_img:after {
+                        background-image: url(`+$('.'+img_class).attr('src')+`);
+                        height: `+Math.round(iheight)+`px;
+                        bottom: -`+bottomPos+`px;
+                    }
+                </style>`).appendTo($('head'));
+            }
+
+            
         }
 
         
@@ -1159,8 +1216,10 @@ export default {
         else
             return false;
     },
-    viewBlog(id) {
-		window.location.href = '/single_general_blog/'+id;
+    viewBlog(id) { 
+      
+        // alert("here");
+	 window.location.href = '/my_career_profile/'+id;
     },
     getAudio()
     {
@@ -1189,9 +1248,15 @@ export default {
     {
         let that = this;
         var music = $('.'+div_class+' input[name="audio"]').val();
-        that.audio_player.pause();
-        that.audio_player.src = that.url+'/front/audio/'+music+'.mp3';
-        that.audio_player.play();
+        // var audio_player = 'audio_player_'+music;
+        that.audio_player[music].pause();
+        that.audio_player[music].currentTime = 0.1;
+        // that.audio_player[music].src = that.url+'/front/audio/'+music+'.mp3';
+        that.audio_player[music].play();
+
+        that.audio_player[music].onended = function() {
+            that.audio_player[music].pause();
+        };
     }
     }
 }

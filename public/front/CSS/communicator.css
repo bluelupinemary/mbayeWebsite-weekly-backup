@@ -242,10 +242,12 @@
 
 .designs-blog-form select[name="panel_id"] {
     flex: 40%;
+    height: auto !important;
 }
 
 .email-form select, .designs-blog-form select {
     padding: 1%;
+    height: auto !important;
 }
 
 .email-form select option, .designs-blog-form select option {

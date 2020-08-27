@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Responses\RedirectResponse;
 use App\Models\JobSeekerProfile\Education;
-use App\Models\JobSeekerProfile\JobSeekerProfile;
-use App\Models\JobSeekerProfile\WorkExperience;
-use App\Models\JobSeekerProfile\CharacterReferences;
 use App\Models\JobSeekerProfile\Profession;
+use App\Models\JobSeekerProfile\WorkExperience;
+use App\Models\JobSeekerProfile\JobSeekerProfile;
+use App\Models\JobSeekerProfile\CharacterReferences;
 use App\Repositories\Frontend\JobSeekerProfile\JobSeekerProfilesRepository;
+
 
 /**
  * Class profileController.
@@ -242,4 +243,28 @@ class JobSeekerProfilesController extends Controller
              $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('skills' => $request->skills,'profession_id' => $profession_id));
 
     }
+
+    
+public function show_my_profile($id)
+{
+    $profile = JobSeekerProfile::find($id);
+    // dd($profile);
+    return view('frontend.blog.blogview.career.my_career_profile', compact('profile'));
+}
+
+public function get_career_details(Request $request){
+    // dd($request->all());
+    $profile_id= $request->profile_id;
+    $user_id= $request->user_id;
+    $User_details = User::find($user_id);
+    $JobSeekerProfile_details = JobSeekerProfile::find($profile_id);
+    $Reference_details= CharacterReferences::where('jobseeker_profile_id', '=', $profile_id)->get();
+    $work_experience= WorkExperience::where('jobseeker_profile_id', '=', $profile_id)->get();
+    $Education_details= Education::where('jobseeker_profile_id', '=', $profile_id)->get();
+    // dd($Reference_details);
+    $resultData=array('User_details'=>$User_details,'JobSeekerProfile_details'=>$JobSeekerProfile_details,'Reference_details'=>$Reference_details,'work_experience'=>$work_experience,'Education_details'=>$Education_details);
+    return  $resultData;
+    // dd( $User_details);
+    
+}
     }

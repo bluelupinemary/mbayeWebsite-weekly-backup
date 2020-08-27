@@ -350,7 +350,7 @@ function add_video_to_mesh(vidNo){
         videoTexture.invertX = true;
         
         videoTexture.uOffset = 0.04;
-        videoTexture.vOffset = 0.16;
+        videoTexture.vOffset = 0.14;
 
     
         videoTexture.uScale = -1.1;
@@ -1099,6 +1099,7 @@ let isInitCameraMoving = false;
 let isIntroDone = false;
 let TWO_MIN=2.3*60*1000;
 
+//check the lenght of the video and set the length of video1 so we know where it stops
 theScene.executeWhenReady(function () {   
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
@@ -1120,10 +1121,10 @@ theScene.executeWhenReady(function () {
                 //     add_video_to_mesh(2);
                 //     isIntroDone = true;
                 //  }
-                if(videoTexture.video.currentTime > 136) {
+                if(videoTexture.video.currentTime > 246) {
                         add_video_to_mesh(2);
                         isIntroDone = true;
-                    }
+                }
             }
         }    
     }); 

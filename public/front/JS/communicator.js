@@ -303,7 +303,7 @@ $('.start-div').click( function() {
 $('.communicator-buttons .save-button').click(function (e) {
     e.preventDefault();
 
-    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a').css('pointer-events', 'none');
+    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'none');
 
     // initialize form and other input fields
     var $form = $('form#main-form');
@@ -367,6 +367,8 @@ $('.communicator-buttons .save-button').click(function (e) {
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
+
+                    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
                 },
                 error: function (request, status, error) {
                     var response = JSON.parse(request.responseText);
@@ -391,6 +393,8 @@ $('.communicator-buttons .save-button').click(function (e) {
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
+
+                    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
                 }
             });
         }
@@ -420,6 +424,8 @@ $('.communicator-buttons .save-button').click(function (e) {
                     padding: '1rem',
                     background: 'rgba(8, 64, 147, 0.62)'
                 });
+
+                $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
             },
             error: function (request, status, error) {
                 var response = JSON.parse(request.responseText);
@@ -444,17 +450,19 @@ $('.communicator-buttons .save-button').click(function (e) {
                     padding: '1rem',
                     background: 'rgba(8, 64, 147, 0.62)'
                 });
+
+                $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
             }
         });
     }
-
-    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div').css('pointer-events', 'auto');
 });
 
 // publish/launch blog
 $('.communicator-buttons .publish-button').click(function (e) {
     e.preventDefault();
 
+    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'none');
+    
     // initialize form and other input fields
     var $form = $('form#main-form');
     var content = $(".main-form input[name='blog-trixFields[content]']").val();
@@ -525,12 +533,16 @@ $('.communicator-buttons .publish-button').click(function (e) {
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.62)'
             });
+
+            $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
         }
     });
 });
 
 $('.general-blog-buttons .publish-button').click(function (e) {
     e.preventDefault();
+
+    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .general-blog-buttons').css('pointer-events', 'none');
 
     // initialize form and other input fields
     var $form = $('form#general-blog-form');
@@ -599,6 +611,8 @@ $('.general-blog-buttons .publish-button').click(function (e) {
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.62)'
             });
+
+            $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .general-blog-buttons').css('pointer-events', 'auto');
         }
     });
 });
@@ -606,7 +620,7 @@ $('.general-blog-buttons .publish-button').click(function (e) {
 $('.designs-blog-buttons .save-button').click(function (e) {
     e.preventDefault();
 
-    // $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a').css('pointer-events', 'none');
+    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'none');
 
     // initialize form and other input fields
     var $form = $('form#designs-blog-form');
@@ -667,6 +681,8 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
+
+                    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
                 },
                 error: function (request, status, error) {
                     var response = JSON.parse(request.responseText);
@@ -691,6 +707,8 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
+
+                    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
                 }
             });
         }
@@ -720,6 +738,8 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                     padding: '1rem',
                     background: 'rgba(8, 64, 147, 0.62)'
                 });
+
+                $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
             },
             error: function (request, status, error) {
                 var response = JSON.parse(request.responseText);
@@ -744,15 +764,19 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                     padding: '1rem',
                     background: 'rgba(8, 64, 147, 0.62)'
                 });
+
+                $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
             }
         });
     }
 
-    // $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div').css('pointer-events', 'auto');
+    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
 });
 
 $('.designs-blog-buttons .publish-button').click(function (e) {
     e.preventDefault();
+
+    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'none');
 
     // initialize form and other input fields
     var $form = $('form#designs-blog-form');
@@ -823,6 +847,8 @@ $('.designs-blog-buttons .publish-button').click(function (e) {
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.62)'
             });
+
+            $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
         }
     });
 });
@@ -1265,6 +1291,8 @@ $('.email-button').click( function() {
 $('.email-send').click(function (e) {
     e.preventDefault();
 
+    $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .email-buttons').css('pointer-events', 'none');
+
     // initialize form and other input fields
     var $form = $('form#email-form');
     var content = $("#email-form input[name='blog-trixFields[email_content]']").val();
@@ -1299,6 +1327,7 @@ $('.email-send').click(function (e) {
             }).then((res) => {
                 $form[0].reset();
                 $(".email-form trix-editor div").empty();
+                $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .email-buttons').css('pointer-events', 'auto');
             });
         },
         error: function (request, status, error) {
@@ -1324,6 +1353,8 @@ $('.email-send').click(function (e) {
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.62)'
             });
+
+            $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .email-buttons').css('pointer-events', 'auto');
         }
     });
 });

@@ -197,9 +197,9 @@ function setup_stage(stageNo){
         if(e1) animateObjectPosition(e1, 20, frameCount, new BABYLON.Vector3(-800,200,0));
         if(e2) animateObjectPosition(e2, 10, 100, new BABYLON.Vector3(0,0,-600));
         if(e3) animateObjectPosition(e3, 20, frameCount, new BABYLON.Vector3(800,200,0));
-        hl.addMesh(e1, new BABYLON.Color3(0.5,0.5,0.5));
-        hl.addMesh(e2, new BABYLON.Color3(0.5,0.5,0.5));
-        hl.addMesh(e3, new BABYLON.Color3(0.5,0.5,0.5));
+        hl.addMesh(e1, new BABYLON.Color3(0,0.5,0.5));
+        hl.addMesh(e2, new BABYLON.Color3(0,0.5,0.5));
+        hl.addMesh(e3, new BABYLON.Color3(0,0.5,0.5));
     }else if(stageNo === 28){                                      
         //for the current stage, change font size of text; show texts; add zoomin animation
         mbaye_obj.setEnabled(false);
@@ -498,8 +498,8 @@ function setup_3D_photo(){
     rotate_sky();                                                   //start rotating the sky
     currentStage = 24;
     setup_stage(24);                                                 //start showing the script 1, stage 1
-    // currentStage = 34;
-    // setup_stage(34); 
+    // currentStage = 29;
+    // setup_stage(29); 
     
     engine.runRenderLoop(function(){
       if(scene){

@@ -16,8 +16,7 @@
 			<div v-if="index == 0" :id="'round-image-large' + index" :style="randomBoxShadow()" class="friends ani-rolloutUse zoom-in" 
                 @mouseover="showBlogDetails('round-image-large' + index, blog.id)"
     			@mouseout="hideBlogDetails('round-image-large' + index, blog.id)">
-				<img v-if="blog.featured_image" :src="'/storage/img/blog/' + blog.featured_image" :key="blog.id" id="blog-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, blog.id)"/>
-				<img v-else :src="'/storage/img/blog/blog-default-featured-image.png'" :key="blog.id" id="blog-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, blog.id)"/>
+				<img :src="blog.featured_image" :key="blog.id" id="blog-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, blog.id)"/>
 				
 				<div class="friend-details" style="display: block;" >
                     <p class="blog-title">{{blog.name}}</p>
@@ -33,14 +32,13 @@
                             <li v-for="(tag,i) in blog.tags" :key="i" class="tag"><i class="fas fa-tag"></i> {{ tag.name }}</li>
                         </ul>
                     </div>
-                    <a href="" @click.prevent="viewBlog(blog.id)">(Click this to view the post)</a>
+                    <a href="" @click.prevent="viewBlog(blog)">(Click this to view the post)</a>
 				</div>
 			</div>
             <div v-else :id="'round-image-large' + index" :style="randomBoxShadow()" class="friends ani-rolloutUse"
                 @mouseover="showBlogDetails('round-image-large' + index, blog.id)"
     			@mouseout="hideBlogDetails('round-image-large' + index, blog.id)">
-				<img v-if="blog.featured_image" :src="'/storage/img/blog/' + blog.featured_image" :key="blog.id" id="blog-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, blog.id)"/>
-				<img v-else :src="'/storage/img/blog/blog-default-featured-image.png'" :key="blog.id" id="blog-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, blog.id)"/>
+				<img :src="blog.featured_image" :key="blog.id" id="blog-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, blog.id)"/>
 				
 				<div class="friend-details">
                     <p class="blog-title">{{blog.name}}</p>
@@ -57,7 +55,7 @@
                         </ul>
                     </div>
 					<!-- <p class="blog-tags">{{blog.all_tags}}</p> -->
-                    <a href="" @click.prevent="viewBlog(blog.id)">(Click this to view the post)</a>
+                    <a href="" @click.prevent="viewBlog(blog)">(Click this to view the post)</a>
 				</div>
 			</div>
       	</div>
@@ -83,11 +81,11 @@
 <script>
 export default {
     props:{
-            auth:Object
+        user: Object
     },
     data:function() {
 		return {
-			blogs:{},
+			blogs: [],
 			blogList: [],
 			page: 1,
 			query: "",
@@ -103,6 +101,7 @@ export default {
         }
     },
 	mounted () {
+		// console.log(this.auth.id);
 		this.fetchblogs();
 		
 		// Echo.channel('App.blog.'+this.auth.id)
@@ -116,14 +115,41 @@ export default {
 	},
   	methods:{
         fetchblogs(){
-			axios.get('/fetchblogs')
+			let that = this;
+
+			axios.post('/api/blog_activities/', {
+                user_id: this.user.id,
+            })
 			.then((response) => {
-                console.log(response);
-                this.currentID = response.data.data[0].id;
-				this.blogs = response.data.data;
-				this.page = response.data.current_page;
-				this.last_page = response.data.last_page;
-				// alert(response.data);
+                // console.log(response.data.data);
+				// that.blogs = response.data;
+				that.page = response.data.current_page;
+				that.last_page = response.data.last_page;
+
+				var i = 0;
+				that.blogs = [];
+				$.each(response.data.data, function(index, value) {
+					that.$set(that.blogs, index, value.data.blog);
+
+					if(value.type.includes('GeneralBlogActivityNotification')) {
+						if(that.blogs[index].featured_image != null) {
+							that.blogs[index].featured_image = '/storage/img/general_blogs/'+that.blogs[index].featured_image;
+						} else {
+							that.blogs[index].featured_image = '/storage/img/general_blogs/blog-default-featured-image.png';
+						}
+					} else if(value.type.includes('BlogActivityNotification')) {
+						if(that.blogs[index].featured_image != null) {
+							that.blogs[index].featured_image = '/storage/img/blog/'+that.blogs[index].featured_image;
+						} else {
+							that.blogs[index].featured_image = '/storage/img/blog/blog-default-featured-image.png';
+						}
+					}
+
+					that.blogs[index].notification_id = value.id;
+					that.blogs[index].notification_type = value.type;
+				});
+				// console.log(that.currentID);
+				that.currentID = that.blogs[0].id;
 			})
 			.catch((error) => {
 				console.log(error);
@@ -179,8 +205,23 @@ export default {
 		// 		console.log(error);
 		// 	});
 		// },
-		viewBlog(id) {
-			window.location.href = '/single_blog/'+id;
+		viewBlog(blog) {
+			axios.post('/api/readnotification', {
+                notification_id: blog.notification_id,
+            })
+            .then((response) => {
+                if(blog.notification_type.includes('GeneralBlogActivityNotification')) {
+                    window.open('/single_general_blog/'+blog.id, '_blank');
+                } else if(blog.notification_type.includes('BlogActivityNotification')) {
+                    window.open('/single_blog/'+blog.id, '_blank');
+                }
+
+				this.fetchblogs();
+				this.refreshHtml();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 		},
 		randomBoxShadow() {
 			var color = Math.floor(Math.random()*16777215).toString(16);
@@ -252,9 +293,6 @@ export default {
 			// $('.friend-details, button.close-view').hide();
 			$('canvas').remove();
 		},
-		viewProfile(id) {
-			window.location.href = '/blog_dashboard/'+id;
-		},
 		refreshHtml() {
 			$('.friends').css({
 				'transition': '0s',
@@ -270,41 +308,84 @@ export default {
 			this.declinedRequest = false;
 		},
 		nextPage(page) {
-			axios.get(`/fetchblogs?page=${page + 1}`)
+			let that = this;
+
+			axios.post(`/api/blog_activities?page=${page + 1}`, {
+                user_id: this.user.id,
+            })
 			.then((response) => {
-				// console.log(response);
-				this.page = page + 1;
-				this.blogs = [];
-				this.blogs = response.data.data;
-				this.currentID = response.data.data[0].id;
-				this.refreshHtml();
-			//  this.getblog(response.data.data)
+                // console.log(response.data);
+				
+				// that.blogs = response.data;
+				that.page = page + 1;
+				that.blogs = [];
+				var i = 0;
+				$.each(response.data.data, function(index, value) {
+					that.$set(that.blogs, i, value.data.blog);
+
+					if(value.type.includes('GeneralBlogActivityNotification')) {
+						if(that.blogs[i].featured_image != null) {
+							that.blogs[i].featured_image = '/storage/img/general_blogs/'+that.blogs[i].featured_image;
+						} else {
+							that.blogs[i].featured_image = '/storage/img/general_blogs/blog-default-featured-image.png';
+						}
+					} else if(value.type.includes('BlogActivityNotification')) {
+						if(that.blogs[i].featured_image != null) {
+							that.blogs[i].featured_image = '/storage/img/blog/'+that.blogs[i].featured_image;
+						} else {
+							that.blogs[i].featured_image = '/storage/img/blog/blog-default-featured-image.png';
+						}
+					}
+
+					that.blogs[i].notification_id = value.id;
+					that.blogs[i].notification_type = value.type;
+					i++;
+				});
+				// console.log(that.blogs);
+				that.currentID = that.blogs[0].id;
+				that.refreshHtml();
 			})
 			.catch((error) => {
 				console.log(error);
 			})
 		},
 		previousPage(page) {
-			axios.get(`/fetchblogs?page=${page - 1}`)
+			let that = this;
+
+			axios.post(`/api/blog_activities?page=${page - 1}`, {
+                user_id: this.user.id,
+            })
 			.then((response) => {
-				// console.log(response);
-				this.page = page - 1;
-				this.blogs = [];
-				this.blogs = response.data.data;
-				this.currentID = response.data.data[0].id;
-				this.refreshHtml();
-				// $('.friends').css({
-				// 	'transition': '0s',
-				// 	'top': '',
-				// 	'left': '',
-				// 	'width': '',
-				// 	'height': ''
-				// });
-				// $('.friends').removeClass('zoom-in');
-				// $('.friend-details').removeAttr("style");
-				// $('#round-image-large0').addClass('zoom-in');
-				// $('#round-image-large0 .friend-details').css("display", 'block');
-			//  this.getblog(response.data.data)
+                // console.log(response.data);
+				
+				// that.blogs = response.data;
+				that.page = page - 1;
+				that.blogs = [];
+				var i = 0;
+				$.each(response.data.data, function(index, value) {
+					that.$set(that.blogs, i, value.data.blog);
+
+					if(value.type.includes('GeneralBlogActivityNotification')) {
+						if(that.blogs[i].featured_image != null) {
+							that.blogs[i].featured_image = '/storage/img/general_blogs/'+that.blogs[i].featured_image;
+						} else {
+							that.blogs[i].featured_image = '/storage/img/general_blogs/blog-default-featured-image.png';
+						}
+					} else if(value.type.includes('BlogActivityNotification')) {
+						if(that.blogs[i].featured_image != null) {
+							that.blogs[i].featured_image = '/storage/img/blog/'+that.blogs[i].featured_image;
+						} else {
+							that.blogs[i].featured_image = '/storage/img/blog/blog-default-featured-image.png';
+						}
+					}
+
+					that.blogs[i].notification_id = value.id;
+					that.blogs[i].notification_type = value.type;
+					i++;
+				});
+				// console.log(that.blogs);
+				that.currentID = that.blogs[0].id;
+				that.refreshHtml();
 			})
 			.catch((error) => {
 				console.log(error);

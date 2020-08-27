@@ -90,6 +90,7 @@ class BlogsController extends Controller
             'coolcount'          => Like::where('blog_id',$blog->id)->where('emotion',1)->count(),
             'naffcount'          => Like::where('blog_id',$blog->id)->where('emotion',2)->count(),
         ];
+        dd($blog);
         return new ShowResponse($blog, $this->status, $blogTags,$comments,$emotions);
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Frontend\Blogs;
 
-use App\Events\DesignPanelBlogEvent;
 use Carbon\Carbon;
 use App\Models\Blogs\Blog;
 use Illuminate\Support\Str;
@@ -10,19 +9,24 @@ use App\Events\NewBlogEvent;
 use Illuminate\Http\Request;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
+use App\Events\DesignPanelBlogEvent;
 use App\Http\Controllers\Controller;
+use App\Models\BlogShares\BlogShare;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Responses\RedirectResponse;
+use App\Models\GeneralBlogs\GeneralBlog;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Responses\Backend\Blog\EditResponse;
 use App\Http\Responses\Backend\Blog\IndexResponse;
+use App\Models\Friendships\FriendFriendshipGroups;
 use App\Http\Responses\Backend\Blog\CreateResponse;
 use App\Repositories\Frontend\Blogs\BlogsRepository;
 use App\Http\Requests\Backend\Blogs\StoreBlogsRequest;
 use App\Http\Requests\Backend\Blogs\ManageBlogsRequest;
 use App\Http\Requests\Backend\Blogs\UpdateBlogsRequest;
-use App\Http\Requests\Backend\DesignsBlogs\StoreDesignsBlogsRequest;
-use App\Models\BlogShares\BlogShare;
 use App\Http\Requests\Backend\BlogShares\StoreBlogSharesRequest;
+use App\Http\Requests\Backend\DesignsBlogs\StoreDesignsBlogsRequest;
+use App\Notifications\Frontend\BlogActivityNotification;
 
 /**
  * Class BlogsController.
@@ -279,9 +283,23 @@ class BlogsController extends Controller
             $saved_blog = $this->blog->update($blog, $request->except('_token'));
         } else {
             $saved_blog = $this->blog->create($request->except('_token'));
+
+            // get blog privacy group_id
+            $group_ids = $saved_blog->privacy->pluck('group_id')->toArray();
+
+            if($group_ids) {
+                $user_ids = FriendFriendshipGroups::whereIn('group_id', $group_ids)->pluck('friend_id')->toArray();
+
+                $friends = User::whereIn('id', $user_ids)->get();
+            } else {
+                $friends = Auth::user()->getFriends();
+            }
+            
+            Notification::send($friends, new BlogActivityNotification($saved_blog));
         }
         // dd(compact('saved_blog'));
         broadcast(new NewBlogEvent($saved_blog))->toOthers();
+        
         $user = User::find($request->user_id);
 
         if($user->roles[0]->name == 'User') {
@@ -332,7 +350,8 @@ class BlogsController extends Controller
             $saved_blog = $this->blog->createDesignBlog($request->except('_token'));
         }
         broadcast(new DesignPanelBlogEvent($saved_blog))->toOthers();
-        
+        $friends = Auth::user()->getFriends();
+        Notification::send($friends, new BlogActivityNotification($saved_blog));
         $user = User::find($request->user_id);
 
         if($user->roles[0]->name == 'User') {
@@ -349,7 +368,30 @@ class BlogsController extends Controller
 
     public function fetchLatestBlogs(Request $request)
     {
-        $blogs = Blog::with(['owner', 'tags'])->orderBy('publish_datetime', 'desc')->paginate(8);
+        $friends = Auth::user()->getFriends();
+        $friendships = Auth::user()->getAcceptedFriendships();
+        $fsid = $friendships->pluck('id');
+        $fid = $friends->pluck('id');
+        $groups = FriendFriendshipGroups::whereIn('friendship_id',$fsid)->pluck("group_id");
+        // $blogs = Blog::with('owner')->orderBy('publish_datetime', 'desc');
+        $blogs_private = Blog::whereIn('created_by', $fid)->whereHas('privacy', function($q) use ($groups) {
+            $q->whereIn('group_id', $groups);
+        })->get();
+        $blogs_public = Blog::whereIn('created_by', $fid)->doesntHave('privacy')->get();
+        // dd(compact('general_blogs_private'));
+        $general_blogs_private = GeneralBlog::whereIn('created_by', $fid)->whereHas('privacy', function($q) use ($groups) {
+            $q->whereIn('group_id', $groups);
+        })->get();
+        // dd($general_blogs_private);
+        $general_blogs_public = GeneralBlog::whereIn('created_by', $fid)->doesntHave('privacy')->get();
+        // dd(compact('general_blogs_private'));
+        $reguler_blogs = $blogs_private->merge($blogs_public);
+        $general_blogs = $general_blogs_private->merge($general_blogs_public);
+        $blogs = $reguler_blogs->merge($general_blogs)
+        ->sortByDesc('publish_datetime')
+        ->paginate(8);
+        // dd($blogs);
+        // $blogs = Blog::with(['owner', 'tags'])->orderBy('publish_datetime', 'desc')->paginate(8);
 
         return response()->json($blogs);
     }
@@ -366,41 +408,42 @@ class BlogsController extends Controller
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
         $sort = 'desc_name';
+        $friendships = Auth::user()->getAcceptedFriendships();
+        $fsid = $friendships->pluck('id');
+        $groups = FriendFriendshipGroups::whereIn('friendship_id',$fsid)->pluck("group_id");
 
         if($request->has('tag') && $request->tag != '') {
-            // filtered by tag
             $tag = $this->getTag($request->tag);
-            $blogs = Blog::where('status', 'Published')
+            $private_blogs = Blog::where('status', 'Published')
                 ->whereHas('tags', function($q) use($tag) {
                     $q->where('tag_id', $tag);
-                })->with('owner')->get();
-            
-            if($tag == 8 || $tag == 9) {
-                $blog_shares = BlogShare::whereIn('blog_id', $blogs->pluck('id')->toArray())
-                    ->whereDoesntHave('tags')->get();
-            } else {
-                
-                $blog_shares = BlogShare::whereIn('blog_id', $blogs->pluck('id')->toArray())
-                    ->orWhereHas('tags', function($q) use($tag) {
-                        $q->where('tag_id', $tag);
-                    })
-                    ->get();
-            }
+                })->whereHas('privacy', function($q) use ($groups) {
+                    $q->whereIn('group_id', $groups);
+                })->get();
+            $public_blogs  = Blog::where('status', 'Published')
+            ->whereHas('tags', function($q) use($tag) {
+                $q->where('tag_id', $tag);
+            })->doesntHave('privacy')->get();
+            // dd($public_blogs);
         } else {
-            // all blogs
-            $blogs = Blog::where('status', 'Published')
+            $private_blogs = Blog::where('status', 'Published')
                 ->whereHas('tags', function($q) {
                     $q->whereNotIn('tag_id', [8,9]);
-                })->with('owner')->get();
-            
-            $blog_shares = BlogShare::whereIn('blog_id', $blogs->pluck('id')->toArray())
-            ->orWhereHas('tags', function($q) {
-                $q->whereNotIn('tag_id', [8,9]);
-            })->get();
+                })->whereHas('privacy', function($q) use ($groups) {
+                    $q->whereIn('group_id', $groups);
+                })->get();
+
+            $public_blogs = Blog::where('status', 'Published')
+                ->whereHas('tags', function($q) {
+                    $q->whereNotIn('tag_id', [8,9]);
+                })->doesntHave('privacy')->get();
         }
 
+        $blog_shares = BlogShare::whereIn('blog_id', $public_blogs->pluck('id')->toArray())->with('blog')->get();
+
         if($request->has('user_id') && $request->user_id != 0) {
-            $blogs = $blogs->where('created_by', $request->user_id);
+            $public_blogs = $public_blogs->where('created_by', $request->user_id);
+            $private_blogs = $private_blogs->where('created_by', $request->user_id);
             $blog_shares = $blog_shares->where('created_by', $request->user_id);
         } else if($request->has('user_id') && $request->user_id == 0 && $request->type == 'friend') {
             $friends_id = Auth::user()->getFriends()->pluck('id')->toArray();
@@ -409,7 +452,7 @@ class BlogsController extends Controller
             $blog_shares = $blog_shares->whereIn('created_by', $friends_id);
         }
         
-        $blogs = $blogs->merge($blog_shares)
+        $blogs = $public_blogs->merge($private_blogs,$blog_shares)
                 ->sortByDesc('publish_datetime')
                 ->paginate($limit);
         
@@ -446,13 +489,16 @@ class BlogsController extends Controller
                     $blog->blog->most_reaction = $blog->general_blog->mostReaction();
                     // $blog->blog->name = $blog->caption;
                 }
+                $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
+                $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
+                $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
+                $blog->blog->commentcount  = $blog->blog->comments->count();
+                $blog->blog->most_reaction = $blog->blog->mostReaction();
+                $blog->blog->name = $blog->caption;
             } else {
                 if($blog->featured_image == '') {
-                    $blog->featured_image = '/storage/img/blog/blog-default-featured-image.png';
-                } else {
-                    $blog->featured_image = '/storage/img/blog/'.$blog->featured_image;
+                    $blog->featured_image = 'blog-default-featured-image.png';
                 }
-
                 $blog->hotcount = $blog->likes->where('emotion',0)->count();
                 $blog->coolcount     = $blog->likes->where('emotion',1)->count();
                 $blog->naffcount     = $blog->likes->where('emotion',2)->count();

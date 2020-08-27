@@ -15,6 +15,7 @@ Route::get('/search/{q}', 'Frontend\Friendship\FriendshipController@searchuser')
 Route::post('/readnotification','Frontend\Notify\NotifyController@readnotification');
 Route::get('/blogpost/{blog}', 'Frontend\Comment\CommentController@blogpost');
 Route::post('/notify','Frontend\Notify\NotifyController@getnotifications');
+Route::post('/blog_activities','Frontend\Notify\NotifyController@getBlogActivities');
 Route::post('/countcomments','Frontend\Comment\CommentController@countcomment');
 Route::post('/countemotions','Frontend\Like\LikeController@countemotions');
 Route::post('/userreaction','Frontend\Like\LikeController@getUserReaction');

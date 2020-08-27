@@ -827,7 +827,7 @@ header{
     height: 100%;
     display: none;
     color: #fff;
-    z-index: 3000000;
+    z-index: 99999999;
 }
 #block_land h1 {
   text-transform: uppercase;
