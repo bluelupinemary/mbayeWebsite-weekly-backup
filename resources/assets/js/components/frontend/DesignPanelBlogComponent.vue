@@ -1,134 +1,175 @@
 <template>
 <div>
-<div class="page view ">
-
-    <div class="origin view">
-        <div id="camera" class="view">
-            <div id="dolly" class="view">
-                <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler" v-touch:swipe.top="tophandler" v-touch:swipe.down="bottomhandler">
-                    <div v-for="(designs_blog,index) in designs_blogs" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: designs_blogs, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index)">
-                        
-                        <a class="mover viewflat blog_img" href="#">
-                            <input type="hidden" name="audio" :value="designs_blog.audio">
-                            <img :class="'cell_img_'+index" :src="'/storage/img/blog/'+designs_blog.featured_image" @load="layoutImageInCell('cell_img_'+index, index)">
+    <div class="page view ">
+        <div class="origin view">
+            <div id="camera" class="view">
+                <div id="dolly" class="view">
+                    <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler">
+                        <div v-for="(designs_blog,index) in designs_blogs" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: designs_blogs, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index)">
                             
-                        </a>
-                            
-                        <div class="overlay">
-                            <div v-if="designs_blog.shared == false" :class="'div_title_'+index+' div_title'" style="display:none;z-index:10000000;border:0px solid white">
-                                <p class="p_title">{{designs_blog.name}}</p>
-                            </div>
+                            <a class="mover viewflat blog_img" href="#">
+                                <input type="hidden" name="audio" :value="designs_blog.audio">
+                                <img :class="'cell_img_'+index" :src="'/storage/img/'+designs_blog.thumb" @load="layoutImageInCell('cell_img_'+index, index)">
+                                
+                            </a>
+                                
+                            <div class="overlay">
+                                <div v-if="designs_blog.shared == false" :class="'div_title_'+index+' div_title'" style="display:none;z-index:10000000;border:0px solid white">
+                                    <p class="p_title">{{designs_blog.name}}</p>
+                                </div>
 
-                            <div v-else-if="designs_blog.shared" :class="'div_title_'+index+' div_title text_left'" style="display:none;z-index:10000000;border:0px solid white">
-                                <p class="p_title">Title: {{designs_blog.name}}</p>
-                                <p class="p_title">Owner: {{designs_blog.owner.first_name}} {{designs_blog.owner.last_name}}</p>
-                            </div>
+                                <div v-else-if="designs_blog.shared" :class="'div_title_'+index+' div_title text_left'" style="display:none;z-index:10000000;border:0px solid white">
+                                    <p class="p_title">Title: {{designs_blog.name}}</p>
+                                    <p class="p_title">Owner: {{designs_blog.owner.first_name}} {{designs_blog.owner.last_name}}</p>
+                                </div>
 
-                            <li v-if="designs_blog.shared" :class="'tag tag_'+index"><i class="fas fa-tag"></i> Shared</li>
+                                <li v-if="designs_blog.shared" :class="'tag tag_'+index"><i class="fas fa-tag"></i> Shared</li>
 
-                            <div :class="'div_overlay_'+index+' div_overlay '+index"> 
-                                <div class="blog-buttons_overlay ">
-                                    <div class="button-div">
-                                        <button><img class="i_hot" :src="'/front/icons/hot.png'"/></button>
-                                        <div class="button-details">
-                                            <p class="button-number hot-number">{{designs_blog.hotcount}}</p>
+                                <div :class="'div_overlay_'+index+' div_overlay '+index"> 
+                                    <div class="blog-buttons_overlay ">
+                                        <div class="button-div">
+                                            <button><img class="i_hot" :src="'/front/icons/hot.png'"/></button>
+                                            <div class="button-details">
+                                                <p class="button-number hot-number">{{designs_blog.hotcount}}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="button-div">
-                                        <button><img class="i_cool" :src="'/front/icons/cool.png'" /></button>
-                                        <div class="button-details"> 
-                                            <p class="button-number cool-number">{{designs_blog.coolcount}}</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="button-div">
-                                        <button><img  class="i_comment" :src="'/front/icons/comment.png'" alt=""></button> 
                                         
-                                        <div class="button-details">
-                                            <p class="button-number comment-number">{{designs_blog.commentcount}}</p>
+                                        <div class="button-div">
+                                            <button><img class="i_cool" :src="'/front/icons/cool.png'" /></button>
+                                            <div class="button-details"> 
+                                                <p class="button-number cool-number">{{designs_blog.coolcount}}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="button-div">
+                                            <button><img  class="i_comment" :src="'/front/icons/comment.png'" alt=""></button> 
+                                            
+                                            <div class="button-details">
+                                                <p class="button-number comment-number">{{designs_blog.commentcount}}</p>
+                                            </div> 
                                         </div> 
-                                    </div> 
+                                    </div>
+                                    
+                                    <button class="button btn_view_blog" @click.prevent="viewBlog(designs_blog.id, designs_blog.type)"><p class="p_button">View Blog</p></button>
                                 </div>
-                                
-                                <button class="button btn_view_blog" @click.prevent="viewBlog(designs_blog.id, designs_blog.type)"><p class="p_button">View Blog</p></button>
                             </div>
-                        </div>
 
-                        <div :class="'div_count_bg'+index+' div_count_bg div_count_regular '+designs_blog.most_reaction" >
-                            <div class="button-div button-div-l ">
-                                <button><img :src="'/front/icons/hot.png'" class="hotIcon" /></button>
-                                <div class="button-details">
-                                    <p class="button-number">{{designs_blog.hotcount}}</p>
+                            <div :class="'div_count_bg'+index+' div_count_bg div_count_regular '+designs_blog.most_reaction" >
+                                <div class="button-div button-div-l ">
+                                    <button><img :src="'/front/icons/hot.png'" class="hotIcon" /></button>
+                                    <div class="button-details">
+                                        <p class="button-number">{{designs_blog.hotcount}}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="button-div button-div-l ">
+                                    <button><img :src="'/front/icons/cool.png'" class="coolIcon" /></button>
+                                    <div class="button-details">
+                                        <p class="button-number">{{designs_blog.coolcount}}</p> 
+                                    </div>
+                                </div>
+                                
+                                <div class="button-div button-div-l ">
+                                    <button><img :src="'/front/icons/comment.png'"  class="commentIcon" alt="" ></button>
+                                    <div class="button-details">
+                                        <p class="button-number">{{designs_blog.commentcount}}</p>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="button-div button-div-l ">
-                                <button><img :src="'/front/icons/cool.png'" class="coolIcon" /></button>
-                                <div class="button-details">
-                                    <p class="button-number">{{designs_blog.coolcount}}</p> 
-                                </div>
-                            </div>
-                            
-                            <div class="button-div button-div-l ">
-                                <button><img :src="'/front/icons/comment.png'"  class="commentIcon" alt="" ></button>
-                                <div class="button-details">
-                                    <p class="button-number">{{designs_blog.commentcount}}</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div :class="'div_count_bg'+index+' div_count_bg div_count_small '+designs_blog.most_reaction" >
-                            <div class="button-div button-div-p ">
-                                <button><img src="/front/icons/comment.png"  class="commentIcon" alt="" ></button> 
+                            <div :class="'div_count_bg'+index+' div_count_bg div_count_small '+designs_blog.most_reaction" >
+                                <div class="button-div button-div-p ">
+                                    <button><img src="/front/icons/comment.png"  class="commentIcon" alt="" ></button> 
+                                    
+                                    <div class="button-details"><p class="button-number">{{designs_blog.commentcount}}</p></div>
+                                </div>
                                 
-                                <div class="button-details"><p class="button-number">{{designs_blog.commentcount}}</p></div>
-                            </div>
-                            
-                            <div class="button-div button-div-p">
-                                <div class="button-details"><p class="button-number">{{designs_blog.coolcount}}</p> </div>
+                                <div class="button-div button-div-p">
+                                    <div class="button-details"><p class="button-number">{{designs_blog.coolcount}}</p> </div>
+                                    
+                                    <button><img src="/front/icons/cool.png" class="coolIcon"/></button> 
+                                </div>
                                 
-                                <button><img src="/front/icons/cool.png" class="coolIcon"/></button> 
-                            </div>
-                            
-                            <div class="button-div button-div-p">
-                                <button><img src="/front/icons/hot.png" class="hotIcon"/></button>
+                                <div class="button-div button-div-p">
+                                    <button><img src="/front/icons/hot.png" class="hotIcon"/></button>
+                                    
+                                    <div class="button-details"><p class="button-number">{{designs_blog.hotcount}}</p></div>
+                                </div>
                                 
-                                <div class="button-details"><p class="button-number">{{designs_blog.hotcount}}</p></div>
                             </div>
-                            
                         </div>
                     </div>
+                    <!-- <div id="mirror" class="view">
+                        <div id="rstack" class="view">
+                        </div>
+                        <div id="rstack2" class="view">
+                        </div>
+                    </div> -->
                 </div>
-                <!-- <div id="mirror" class="view">
-                    <div id="rstack" class="view">
-                    </div>
-                    <div id="rstack2" class="view">
-                    </div>
-                </div> -->
+            </div>
+        
+        </div>
+    </div>
+    <div v-if="designs_blogs.length == 0 && current_page == '1'" class="no-data-message">
+        <p>No posts available.</p>
+    </div>
+    <div :class="'astro-div navigator-div '+getUserGender(user.gender)">
+        <img v-if="user.gender == 'female'" src="/front/images/astronut/Thomasina_blog.png"  class="img_astro" alt="">
+        <img v-else src="/front/images/astronut/Tom_blog.png" alt="" class="img_astro">
+        <div class="tos-div thomasina">
+            <button class="tos-btn tooltips right">
+                <img class="btn_pointer" src="/front/images/astronut/navigator-buttons/tosBtn.png" alt="">
+                <span class="tooltiptext">Terms of Services</span>
+            </button>
+        </div>
+        <div :class="'user-photo '+(user.gender != null ? user.gender: 'male')">
+            <img :src="'/storage/profilepicture/'+(user.photo == null ? 'default.png' : (user.photo.includes('-cropped') ? 'crop/'+user.photo : user.photo))">
+        </div>
+        <div class="navigator-buttons">
+            <div class="column column-1">
+                <button class="music-btn tooltips left"><img class="btn_pointer" src="/front/images/astronut/navigator-buttons/musicBtn.png" alt="">
+                    <span class="tooltiptext">Music on/off</span></button>
+                <button class="home-btn tooltips left"><img class="btn_pointer" src="/front/images/astronut/navigator-buttons/homeBtn.png" alt="">
+                    <span class="tooltiptext">Home</span></button>
+            </div>
+            <div class="column column-2">
+                <button class="editphoto-btn tooltips top"><img class="btn_pointer" src="/front/images/astronut/navigator-buttons/greenButtons.png" alt=""><span class="">Edit Profile Photo</span></button>
+            </div>
+            <div class="column column-3">
+                <button class="tooltips right ">
+                <img class="btn_pointer" src="/front/images/astronut/navigator-buttons/freeBtn.png" alt=""></button>
+                <button class="profile-btn tooltips right">
+                    <img class="btn_pointer" src="/front/images/astronut/navigator-buttons/profileBtn.png" alt="">
+                    <span class="tooltiptext">User Profile</span>
+                </button>
             </div>
         </div>
-       
+        <button class="zoom-btn zoom-in "><i class="fas fa-search-plus"></i></button>
+        <!-- <button class="navigator-zoom navigator-zoomin"></button>-->
+        <div class="instructions-div btn_pointer tooltips right">
+            <button class="instructions-btn tooltips right">
+                <img class="btn_pointer" src="/front/images/astronut/navigator-buttons/instructionsBtn.png" alt="">
+                <span class="tooltiptext">Instructions</span>
+            </button>
+        </div>
+        <div class="communicator-div tooltips right">
+            <span class="tooltiptext">Communicator</span>
+            <button class="communicator-button"></button>
+        </div>
+        <div class="new-posts-div">
+            <img src="/front/images/notification-hologram/hologram.png" alt="" class="hologram">
+            <button class="new-posts" @click.prevent="fetchblogs" :disabled="(k == 0 ? true : false)">
+                <span v-if="k > 0" class="light"></span>
+                New Posts
+            </button>
+        </div>
+        <button class="music-volume-div tooltips top btn_pointer">
+            <span>Music Volume Up/Down</span>
+        </button>
+        <button class="navigator-zoomout-btn">
+            <i class="fas fa-undo-alt"></i>
+        </button>
     </div>
-</div>
-<div v-if="k == 0" style="width: 100px;
-    height: 100px;
-    position: fixed;
-    top: 0px;
-    z-index: 10000000 !important;
-    left: 0;">
-    <button class="btn btn-primary" style="position:absolute;">sometext</button>
-    <!-- <button v-else class="btn btn-danger" style="position:absolute;">sometext</button> -->
-</div>
-<div v-else style="width: 100px;
-    height: 100px;
-    position: fixed;
-    top: 0px;
-    z-index: 10000000 !important;
-    left: 0;">
-    <button class="btn btn-danger" @click.prevent="fetchblogs" style="position:absolute;">Remount</button>
-    <!-- <button v-else class="btn btn-danger" style="position:absolute;">sometext</button> -->
-</div>
 </div>
 </template>
 
@@ -136,6 +177,7 @@
 import EventBus from '../../frontend/event-bus';
 export default {
     props: {
+        user: Object,
         user_id: Number,
         type: ''
     },
@@ -166,7 +208,7 @@ export default {
             CYSPACING:Number,
             newblog:[],
             k:0,
-            designs_blogs: {},
+            designs_blogs: [],
             prevNum:0,
             currentNum:0,
             cellCount:Number,
@@ -279,12 +321,6 @@ export default {
     righthandler(){
           this.scrollcheck('left');
     },
-    tophandler(){
-        this.scrollcheck('down');
-    },
-    bottomhandler(){
-        this.scrollcheck('up');
-    },
     //   broadcastcheck(){
     //       axios.get("/fetchAllBlogs?page="+this.page+'&user_id='+this.user_id+'&tag=designs')
     //      .then((response) => {
@@ -297,6 +333,11 @@ export default {
     //   },
     fetchblogs() {
         let that = this;
+        that.page = 1;
+        that.currentAudio = 0;
+        that.lastAudioNum = 3;
+        that.general_blogs = [];
+
        /* Calling API for fetching images */
         axios.get("/fetchAllBlogs?page="+that.page+'&user_id='+that.user_id+'&tag=designs&type='+that.type)
         .then((response) => {
@@ -311,20 +352,9 @@ export default {
             that.Total_count=response.data.total;
             that.snowstack_init();
             that.cellCount = response.data.to;
-            console.log('cell count: ', that.cellCount);
-            that.designs_blogs = {};
-            var i = 0;
+            // console.log('cell count: ', that.cellCount);
+            // var i = 0;
             that.k = 0;
-            // $.each(response.data.data, function(index, value) {
-            //     if(value.blog) {
-            //         that.$set(that.designs_blogs, i, value.blog);
-            //     } else {
-            //         that.$set(that.designs_blogs, i, value);
-            //     }
-            //     that.designs_blogs[i].audio = that.getAudio();
-            //     // that.designs_blogs.push(value);
-            //     i++;
-            // });
             $.each(response.data.data, function(index, value) {
                 if(value.blog) {
                     that.$set(that.designs_blogs, index, value.blog);
@@ -556,26 +586,29 @@ export default {
                     
                     // debugger
                     // alert($(that).tagvalue.name);
-                    var url_api=url+"/fetchAllBlogs?page="+that.page+'&user_id='+that.user_id+'&tag=designs&type='+that.type;
-                    $.getJSON(url_api, function(data) 
-                    {
-                        console.log(data.data, that.cellCount);
-
-                        var i = that.cellCount;
+                    // var url_api=url+"/fetchAllBlogs?page="+that.page+'&user_id='+that.user_id+'&tag=designs&type='+that.type;
+                    axios.get("/fetchAllBlogs?page="+that.page+'&user_id='+that.user_id+'&tag=designs&type='+that.type)
+                    .then((response) => {
+                        var data = response.data;
+                        console.log(response);
+                        // console.log(that.cellCount);
+                        var i = Object.keys(that.designs_blogs).length;
                         $.each(data.data, function(index, value) {
                             if(value.blog) {
                                 that.$set(that.designs_blogs, i, value.blog);
-                                that.designs_blogs[index].shared = true;
+                                that.designs_blogs[i].shared = true;
+                                that.designs_blogs[i].type = value.blog_type;
                             } else {
                                 that.$set(that.designs_blogs, i, value);
-                                that.designs_blogs[index].shared = false;
+                                that.designs_blogs[i].shared = false;
+                                that.designs_blogs[i].type = '';
                             }
                             that.designs_blogs[i].audio = that.getAudio();
 
                             i++;
                         });
 
-                        that.cellCount = data.to;
+                        that.cellCount = Object.keys(that.designs_blogs).length;
                         // that.designs_blogs.concat(data.data);
                         console.log(that.designs_blogs, that.cellCount);
                         // that.updateStack(1);
@@ -1142,7 +1175,7 @@ export default {
             
             var reflection_pos = (Math.round(nextImage) * 2) + 30;
 
-            $('.'+img_class).closest('.blog_img').attr('style', '-webkit-box-reflect: below '+reflection_pos+'px -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));')
+            $('.'+img_class).closest('.blog_img').attr('style', '-webkit-box-reflect: below '+reflection_pos+'px -webkit-gradient(linear, right top, right bottom, from(rgb(255 255 255 / 0)), to(rgb(255 255 255 / 0.15)))');
 
             var bottomPos = Math.round(iheight) + (Math.round(nextImage) * 2) + 120;
 
@@ -1218,6 +1251,13 @@ export default {
         that.audio_player[music].onended = function() {
             that.audio_player[music].pause();
         };
+    },
+    getUserGender(gender) {
+        if(gender == null || gender == '' || gender == 'male') {
+            return 'tom';
+        } else {
+            return 'thomasina';
+        }
     }
     }
 }

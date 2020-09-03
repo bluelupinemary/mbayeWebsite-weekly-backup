@@ -33,10 +33,12 @@
 						<span>Chat Friend</span>
 						<img :src="'/front/icons/chat-icon.png'" alt="">
 					</a>
-					<p class="friend-name">{{user.first_name}} {{user.last_name}}</p>
-					<p class="friend-address">{{user.address}}</p>
+					<div class="friend-info">
+						<p class="friend-name">{{user.first_name}} {{user.last_name}}</p>
+						<p class="friend-address">{{user.address}}</p>
 
-					<p class="no_of_earthlings">Earthlings: 1,200</p>
+						<p class="no_of_earthlings">Earthlings: {{user.earthlings_count}}</p>
+					</div>
 				</div>
 			</div>
 			<div v-else :id="'round-image-large' + index" :style="randomBoxShadow()" class="friends ani-rolloutUse">
@@ -59,10 +61,12 @@
 						<span>Chat Friend</span>
 						<img :src="'/front/icons/chat-icon.png'" alt="">
 					</a>
-					<p class="friend-name">{{user.first_name}} {{user.last_name}}</p>
-					<p class="friend-address">{{user.address}}</p>
+					<div class="friend-info">
+						<p class="friend-name">{{user.first_name}} {{user.last_name}}</p>
+						<p class="friend-address">{{user.address}}</p>
 
-					<p class="no_of_earthlings">Earthlings: 1,200</p>
+						<p class="no_of_earthlings">Earthlings: {{user.earthlings_count}}</p>
+					</div>
 				</div>
 			</div>
       	</div>

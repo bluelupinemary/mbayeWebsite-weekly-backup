@@ -4,6 +4,49 @@
 <link rel="stylesheet" href="{{ asset('front/CSS/login_style.css') }}">
 <link href="//db.onlinewebfonts.com/c/ee837e8aeaf5d681604ab401337b9046?family=Space+Age" rel="stylesheet"
     type="text/css" />
+
+
+    <style>
+        
+
+        .header{
+            width: 100%;
+            /*background-color: rgba(0, 0, 0, .2);*/
+        }
+        .header ul{
+            text-align: center;
+            background: linear-gradient(90deg, rgba(0, 174, 399, 0) 0%, rgba(0, 174, 399, 0.2) 25%, rgba(0, 174, 399, 0.2) 75%, rgba(0, 174, 399, 0) 100%);
+            box-shadow: 0 0 25px rgba(0, 174, 399, .2), inset 0 0 1px rgba(0, 174, 399, 0.6);
+        }
+        .header ul li{
+            /*list-style: none;*/
+            display: inline-block;
+
+        }
+        .header ul li a{
+            display: block;
+            text-decoration: none;
+            text-transform: uppercase;
+            color:white;
+            font-size: 30px;
+            font-family: 'raleway', sans-serif;
+            letter-spacing: 5px;
+            font-weight: 600;
+            padding: 18px;
+            /*transition: all ease 0.5s;*/
+        }
+        .header ul li a:hover {
+            box-shadow: 0 0 10px rgb(233, 12, 12), inset 0 0 20px rgba(240, 10, 10, 0.6);
+            background: rgb(216, 10, 10);
+            color: rgba(231, 27, 27, 0.7);
+        }
+
+
+
+
+
+
+    </style>
 @endsection
 
 @section('content')
@@ -13,6 +56,40 @@
         <img src="{{ asset('front') }}/images/rotate-screen.gif" alt="">
     </div>
 </div>
+
+<div class="header" style="display:none;">
+    
+
+	<ul>
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>
+          <a href="#">My profile</a>
+        </li>
+        <li>
+          <a href="#">participate</a>
+        </li>
+        <li>
+          <a href="#">blogs</a>
+        </li>
+        <li>
+            <a href="#">guide</a>
+          </li>
+          <li>
+            <a href="#">about us</a>
+          </li>
+          <li>
+            <a href="#">terms</a>
+          </li>
+          <li>
+            <a href="#">Logout</a>
+          </li>
+      </ul>
+            
+                
+</div>
+
 <div class="communicator">
     <div class="main-screen">
         {{-- <button type="button" class="start-btn">Click here to start</button> --}}

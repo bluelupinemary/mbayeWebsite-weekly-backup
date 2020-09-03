@@ -18,7 +18,7 @@
     			@mouseout="hideBlogDetails('round-image-large' + index, blog.id)">
 				<img :src="blog.featured_image" :key="blog.id" id="blog-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, blog.id)"/>
 				
-				<div class="friend-details" style="display: block;" >
+				<div class="friend-details" style="display: flex;" >
                     <p class="blog-title">{{blog.name}}</p>
 					<p class="friend-name">{{blog.owner.first_name}} {{blog.owner.last_name}}</p>
 					<p class="friend-address">{{blog.owner.address}}</p>
@@ -304,7 +304,7 @@ export default {
 			$('.friends').removeClass('zoom-in');
 			$('.friend-details').removeAttr("style");
 			$('#round-image-large0').addClass('zoom-in');
-			$('#round-image-large0 .friend-details').css("display", 'block');
+			$('#round-image-large0 .friend-details').css("display", 'flex');
 			this.declinedRequest = false;
 		},
 		nextPage(page) {

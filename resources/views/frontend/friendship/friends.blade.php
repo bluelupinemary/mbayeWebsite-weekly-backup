@@ -1,6 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('after-styles')
+    <link rel="stylesheet" href="{{asset('front/css/toastr.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/search-friends.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/friends.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/blackhole.css')}}">
@@ -52,9 +53,30 @@
 @endsection
 
 @section('before-scripts')
-	<script src="{{asset('front/JS/blackhole.js')}}"></script>
-    <script>
-    //   blackhole('#blackhole');
-    </script>
+    <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
+    <script src="{{asset('front/JS/toastr.min.js')}}"></script>
+    <script src="{{asset('front/JS/blackhole.js')}}"></script>
+    
+    @if($friend != null)
+        <script>
+            $(document).ready(function() {
+                var url = $('meta[name="url"]').attr('content');
+                var friend = {!! json_encode($friend->toArray()) !!};
+                
+                console.log(friend);
+                toastr.options = {
+                    "closeButton": true,
+                    "timeOut": 10000,
+                    "extendedTimeOut": 1000,
+                };
+
+                if(friend.photo.includes('cropped')) {
+                    friend.photo = 'crop/'+friend.photo;
+                }
+
+                toastr.info('<div class="toastr-custom-image" style="background-image: url('+url+'/storage/profilepicture/'+friend.photo+');"></div><p><strong>'+friend.first_name+' '+friend.last_name+'</strong> become your friend.</p>');
+            });
+        </script>
+    @endif
 @endsection
 

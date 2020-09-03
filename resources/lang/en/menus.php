@@ -81,6 +81,22 @@ return [
             'main'       => 'Blogs',
         ],
 
+        'generalblogs' => [
+            'all'        => 'All GeneralBlog',
+            'create'     => 'Create GeneralBlog',
+            'edit'       => 'Edit GeneralBlog',
+            'management' => 'GeneralBlog Management',
+            'main'       => 'GeneralBlogs',
+        ],
+
+        'designblogs' => [
+            'all'        => 'All DesignBlog',
+            'create'     => 'Create DesignBlog',
+            'edit'       => 'Edit DesignBlog',
+            'management' => 'DesignBlog Management',
+            'main'       => 'DesignBlog',
+        ],
+
         'blogcategories' => [
             'all'        => 'All Blog Categories',
             'create'     => 'Create Blog Category',

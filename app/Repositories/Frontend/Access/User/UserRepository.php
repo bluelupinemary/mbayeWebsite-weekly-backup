@@ -128,14 +128,16 @@ class UserRepository extends BaseRepository
 
         // If users require approval, confirmed is false regardless of account type
         if (config('access.users.requires_approval')) {
-            $user->confirmed = 0; // No confirm e-mail sent, that defeats the purpose of manual approval
+           $user->confirmed = 1; //temporary
+            // $user->confirmed = 0; //orignal one No confirm e-mail sent, that defeats the purpose of manual approval
         } elseif (config('access.users.confirm_email')) { // If user must confirm email
             // If user is from social, already confirmed
             if ($provider) {
                 $user->confirmed = 1; // E-mails are validated through the social platform
             } else {
                 // Otherwise needs confirmation
-                $user->confirmed = 0;
+                // $user->confirmed = 0; //orignal one
+                $user->confirmed = 1;   //for temporary use
                 $confirm = true;
             }
         } else {

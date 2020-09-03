@@ -44,7 +44,7 @@ class LoginController extends Controller
             return route('admin.dashboard');
         }
 
-        return route('frontend.user.dashboard');
+        return route('frontend.participateMbaye');
     }
 
     /**

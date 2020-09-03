@@ -142,7 +142,7 @@ class GeneralBlogsController extends Controller
         $fid = $friends->pluck('id');
         $groups = FriendFriendshipGroups::whereIn('friendship_id',$fsid)->pluck("group_id");
         // dd($groups);
-        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $limit = $request->get('paginate') ? $request->get('paginate') : 5;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
         $sort = 'desc_name';
@@ -152,7 +152,7 @@ class GeneralBlogsController extends Controller
         // dd($general_blogs_private);
         $general_blogs_public = GeneralBlog::doesntHave('privacy')->get();
         // dd(compact('general_blogs_public'));
-        $general_blog_shares = GeneralBlogShare::where('publish_datetime', '>=', Carbon::now()->subDay())->with('blog')->get();
+        $general_blog_shares = GeneralBlogShare::with('blog')->get();
 
         if($request->has('user_id') && $request->user_id != 0) {
             $general_blogs_private = $general_blogs_private->where('created_by',$request->user_id);
@@ -161,43 +161,55 @@ class GeneralBlogsController extends Controller
         } else if($request->has('user_id') && $request->user_id == 0 && $request->type == 'friend') {
             $friends_id = Auth::user()->getFriends()->pluck('id')->toArray();
             
-            $general_blogs = $general_blogs->whereIn('created_by', $friends_id);
+            $general_blogs_private = $general_blogs_private->whereIn('created_by', $friends_id);
+            $general_blogs_public = $general_blogs_public->whereIn('created_by', $friends_id);
             $general_blog_shares = $general_blog_shares->whereIn('created_by', $friends_id);
-        }               
+        }        
         
-        $blogs = $general_blogs_private->merge($general_blogs_public,$general_blog_shares)
-                ->sortByDesc('publish_datetime')
-                ->paginate($limit);
-    //    dd($blogs);
-        
-        foreach($blogs as $blog){
-            if($blog->blog) {
-                if($blog->blog->featured_image == '') {
-                    $blog->blog->featured_image = 'blog-default-featured-image.png';
-                }
-                $blog->blog->owner = $blog->blog->owner;
-                $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
-                $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
-                $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
-                $blog->blog->commentcount  = $blog->blog->comments->count();
-                $blog->blog->most_reaction = $blog->blog->mostReaction();
-                // $blog->blog->name = $blog->caption;
-            } else {
-                $blog->hotcount      = $blog->likes->where('emotion',0)->count();
-                $blog->coolcount     = $blog->likes->where('emotion',1)->count();
-                $blog->naffcount     = $blog->likes->where('emotion',2)->count();
-                $blog->commentcount  = $blog->comments->count();
-                $blog->most_reaction = $blog->mostReaction();
-            }
+        $page = 1; 
+
+        if($request->has('page') && $request->page >= 1) {
+            $page = $request->page;
         }
+        
+        $general_blogs = $general_blogs_private->merge($general_blogs_public);
+        $plus_shared_blogs = $general_blogs->merge($general_blog_shares)->sortByDesc('publish_datetime');
+        $last_page = ceil($plus_shared_blogs->count() / $limit);
+        $total = $plus_shared_blogs->count();
+        $paginated = $plus_shared_blogs->forPage($page, $limit);
+        $to = $paginated->count();
+
+        // dd($plus_shared_blogs);
+        // $sorted = $blogs->sortByDesc('publish_datetime')->paginate($limit);
+        
+        // foreach($sorted as $blog){
+        //     if($blog->blog) {
+        //         if($blog->blog->featured_image == '') {
+        //             $blog->blog->featured_image = 'blog-default-featured-image.png';
+        //         }
+        //         $blog->blog->owner = $blog->blog->owner;
+        //         $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
+        //         $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
+        //         $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
+        //         $blog->blog->commentcount  = $blog->blog->comments->count();
+        //         $blog->blog->most_reaction = $blog->blog->mostReaction();
+        //         // $blog->blog->name = $blog->caption;
+        //     } else {
+        //         $blog->hotcount      = $blog->likes->where('emotion',0)->count();
+        //         $blog->coolcount     = $blog->likes->where('emotion',1)->count();
+        //         $blog->naffcount     = $blog->likes->where('emotion',2)->count();
+        //         $blog->commentcount  = $blog->comments->count();
+        //         $blog->most_reaction = $blog->mostReaction();
+        //     }
+        // }
      
-        return response()->json($blogs);
+        return response()->json(['data' => $paginated->values()->all(), 'current_page' => $page, 'last_page' => $last_page, 'total' => $total, 'to' => $to]);
     }
 
     public function mostNaffed(Request $request)
     {
         $blogs = GeneralBlog::withCount('naffLikes')
-            // ->having('naff_likes_count', '>', 0)
+            ->having('naff_likes_count', '>', 0)
             ->orderBy('naff_likes_count', 'desc')
             ->limit(50)
             ->get();

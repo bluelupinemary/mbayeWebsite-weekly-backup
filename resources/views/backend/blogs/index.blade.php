@@ -25,7 +25,10 @@
                             <th>{{ trans('labels.backend.blogs.table.publish') }}</th>
                             <th>{{ trans('labels.backend.blogs.table.status') }}</th>
                             <th>{{ trans('labels.backend.blogs.table.createdby') }}</th>
+                            <th>{{ trans('labels.backend.blogs.table.email') }}</th>
+                            <th>{{ trans('labels.backend.blogs.table.shares') }}</th>
                             <th>{{ trans('labels.backend.blogs.table.createdat') }}</th>
+                            <th>{{ trans('labels.backend.blogs.table.privacy') }}</th>
                             <th>{{ trans('labels.general.actions') }}</th>
                         </tr>
                     </thead>
@@ -86,7 +89,10 @@
                     {data: 'publish_datetime', name: '{{config('module.blogs.table')}}.publish_datetime'},
                     {data: 'status', name: '{{config('module.blogs.table')}}.status'},
                     {data: 'created_by', name: '{{config('module.blogs.table')}}.created_by'},
+                    {data: 'Email', name: 'email'},
+                    {data: 'shares', name: 'shares'},
                     {data: 'created_at', name: '{{config('module.blogs.table')}}.created_at'},
+                    {data: 'privacy', name: 'privacy'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],
                 order: [[3, "asc"]],
@@ -94,11 +100,11 @@
                 dom: 'lBfrtip',
                 buttons: {
                     buttons: [
-                        { extend: 'copy', className: 'copyButton',  exportOptions: {columns: [ 0, 1, 2, 3, 4 ]  }},
-                        { extend: 'csv', className: 'csvButton',  exportOptions: {columns: [ 0, 1, 2, 3, 4 ]  }},
-                        { extend: 'excel', className: 'excelButton',  exportOptions: {columns: [ 0, 1, 2, 3, 4 ]  }},
-                        { extend: 'pdf', className: 'pdfButton',  exportOptions: {columns: [ 0, 1, 2, 3, 4 ]  }},
-                        { extend: 'print', className: 'printButton',  exportOptions: {columns: [ 0, 1, 2, 3, 4 ]  }}
+                        { extend: 'copy', className: 'copyButton',  exportOptions: {columns: [ 0, 1, 2, 3, 4,5,6,7 ]  }},
+                        { extend: 'csv', className: 'csvButton',  exportOptions: {columns: [ 0, 1, 2, 3, 4,5,6,7 ]  }},
+                        { extend: 'excel', className: 'excelButton',  exportOptions: {columns: [0, 1, 2, 3, 4,5,6,7 ]  }},
+                        { extend: 'pdf', className: 'pdfButton',  exportOptions: {columns: [ 0, 1, 2, 3, 4,5,6,7 ]  }},
+                        { extend: 'print', className: 'printButton',  exportOptions: {columns: [ 0, 1, 2, 3, 4,5,6,7 ]  }}
                     ]
                 },
                 language: {

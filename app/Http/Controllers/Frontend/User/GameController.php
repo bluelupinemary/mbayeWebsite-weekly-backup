@@ -30,6 +30,7 @@ class GameController extends Controller
         $userGender = Auth::user()->getGender();
        // dd($userGender);
         //return User::all();
+        
         return view('frontend.user.instructions',["photo"=>$userPhoto, "gender"=>$userGender]);
     }
 

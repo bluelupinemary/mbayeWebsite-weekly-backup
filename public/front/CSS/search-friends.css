@@ -505,49 +505,53 @@
     display: none;
 }
 
-.friend-name {
+.friend-info {
     position: absolute;
-    top: 63%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    word-break: break-word;
+}
+
+.friend-name {
     font-size: 3vw;
     font-family: 'Courgette';
     font-weight: 550;
     letter-spacing: 5px;
-    width: 90%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
     margin: 0 auto;
     filter: drop-shadow(2px 4px 6px black);
     text-shadow: 2px 4px 6px #000;
     /* border: 1px solid red; */
     text-align: center;
+    line-height: 1;
+    /* justify-self: start; */
+    /* flex: 30%; */
 }
 
 .friend-address {
-    position: absolute;
-    top: 72%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     font-family: 'Courgette';
     font-size: 1.3vw;
-    white-space: nowrap;
     filter: drop-shadow(2px 4px 6px black);
     text-shadow: 2px 4px 6px #000;
     letter-spacing: 1px;
+    line-height: 1;
+    flex: 1;
+    margin: 0 5%;
+    margin-top: 2%;
 }
 
 .no_of_earthlings {
-    position: absolute;
-    bottom: 3%;
-    left: 50%;
-    transform: translate(-50%, 0);
     font-family: 'Courgette';
     font-size: 1.2vw;
     filter: drop-shadow(2px 4px 6px black);
     text-shadow: 2px 4px 6px #000;
     letter-spacing: 1px;
+    margin-bottom: 2%;
 }
 
 /* sweetalert */

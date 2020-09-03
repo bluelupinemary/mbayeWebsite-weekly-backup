@@ -2,18 +2,18 @@
 
 namespace App\Repositories\Backend\GeneralBlogs;
 
-use App\Events\Backend\Blogs\BlogCreated;
-use App\Events\Backend\Blogs\BlogDeleted;
-use App\Events\Backend\Blogs\BlogUpdated;
-use App\Exceptions\GeneralException;
-use App\Models\BlogMapTags\BlogMapTag;
-use App\Models\GeneralBlogs\GeneralBlog;
-use App\Models\BlogTags\BlogTag;
-use App\Repositories\BaseRepository;
 use Carbon\Carbon;
-use DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use App\Exceptions\GeneralException;
+// use App\Models\BlogMapTags\BlogMapTag;
+use App\Repositories\BaseRepository;
+// use App\Models\BlogTags\BlogTag;
+use Illuminate\Support\Facades\Storage;
+use App\Models\GeneralBlogs\GeneralBlog;
+use App\Events\Backend\GeneralBlogs\GeneralBlogCreated;
+use App\Events\Backend\GeneralBlogs\GeneralBlogDeleted;
+use App\Events\Backend\GeneralBlogs\GeneralBlogUpdated;
 
 /**
  * Class BlogsRepository.
@@ -57,36 +57,122 @@ class GeneralBlogsRepository extends BaseRepository
                 config('module.general_blogs.table').'.status',
                 config('module.general_blogs.table').'.created_by',
                 config('module.general_blogs.table').'.created_at',
-               config('access.users_table').'.first_name as user_name',
+                config('access.users_table').'.first_name as first_name',
+                config('access.users_table').'.last_name as last_name',
+                config('access.users_table').'.email as email',
             ]);
     }
 
-
-    /**
-     * Creating Tags.
+        /**
+     * @param array $input
      *
-     * @param array $tags
+     * @throws \App\Exceptions\GeneralException
      *
-     * @return array
+     * @return bool
      */
-    public function createTags($tags)
+    public function create(array $input)
     {
-        //Creating a new array for tags (newly created)
-        $tags_array = [];
+        DB::transaction(function () use ($input) {
+            $input['slug'] = Str::slug($input['name']);
+            $input['publish_datetime'] = Carbon::parse($input['publish_datetime']);
+            $input = $this->uploadImage($input);
+            $input['created_by'] = access()->user()->id;
 
-        foreach ($tags as $tag) {
-            if (is_numeric($tag)) {
-                $tags_array[] = $tag;
-            } else {
-                $newTag = BlogTag::create(['name' => $tag, 'status' => 1, 'created_by' => 1]);
-                $tags_array[] = $newTag->id;
+            if ($blog = GeneralBlog::create($input)) {
+                event(new GeneralBlogCreated($blog));
+
+                return true;
             }
-        }
 
-        return $tags_array;
+            throw new GeneralException(trans('exceptions.backend.blogs.create_error'));
+        });
     }
 
-    
+    /**
+     * Update Blog.
+     *
+     * @param \App\Models\Blogs\Blog $blog
+     * @param array                  $input
+     */
+    public function update(GeneralBlog $blog, array $input)
+    {
+        $input['slug'] = Str::slug($input['name']);
+        $input['publish_datetime'] = Carbon::parse($input['publish_datetime']);
+        $input['updated_by'] = access()->user()->id;
 
-    
+        // Uploading Image
+        if (array_key_exists('featured_image', $input)) {
+            $this->deleteOldFile($blog);
+            $input = $this->uploadImage($input);
+        }
+
+        DB::transaction(function () use ($blog, $input) {
+            if ($blog->update($input)) {
+
+                // Updating associated tag's id in mapper table
+                event(new GeneralBlogUpdated($blog));
+
+                return true;
+            }
+
+            throw new GeneralException(
+                trans('exceptions.backend.blogs.update_error')
+            );
+        });
+    }
+
+    /**
+     * @param \App\Models\Blogs\Blog $blog
+     *
+     * @throws GeneralException
+     *
+     * @return bool
+     */
+    public function delete(GeneralBlog $blog)
+    {
+        DB::transaction(function () use ($blog) {
+            if ($blog->delete()) {
+
+                event(new GeneralBlogDeleted($blog));
+
+                return true;
+            }
+
+            throw new GeneralException(trans('exceptions.backend.blogs.delete_error'));
+        });
+    }
+
+    /**
+     * Upload Image.
+     *
+     * @param array $input
+     *
+     * @return array $input
+     */
+    public function uploadImage($input)
+    {
+        $avatar = $input['featured_image'];
+
+        if (isset($input['featured_image']) && !empty($input['featured_image'])) {
+            $fileName = time().$avatar->getClientOriginalName();
+
+            $this->storage->put($this->upload_path.$fileName, file_get_contents($avatar->getRealPath()));
+
+            $input = array_merge($input, ['featured_image' => $fileName]);
+
+            return $input;
+        }
+    }
+
+    /**
+     * Destroy Old Image.
+     *
+     * @param int $id
+     */
+    public function deleteOldFile($model)
+    {
+        $fileName = $model->featured_image;
+
+        return $this->storage->delete($this->upload_path.$fileName);
+    }
 }

@@ -13,8 +13,8 @@
 		}
 
 		.friends.zoom-in {
-			width: 25vw !important;
-			height: 25vw !important;
+			width: 29vw !important;
+			height: 29vw !important;
 		}
 
 		.add-friend-icon {
@@ -27,6 +27,10 @@
 		
 		.arrow-left {
 			/* transform: scaleX(1); */
+		}
+
+		.no_of_earthlings {
+			margin-bottom: 3%;
 		}
 	</style>
 @endsection

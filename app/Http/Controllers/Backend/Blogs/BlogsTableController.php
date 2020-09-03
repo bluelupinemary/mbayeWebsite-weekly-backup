@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Blogs;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Blogs\ManageBlogsRequest;
+use App\Models\BlogShares\BlogShare;
 use App\Repositories\Backend\Blogs\BlogsRepository;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -29,7 +30,7 @@ class BlogsTableController extends Controller
      */
     public function __invoke(ManageBlogsRequest $request)
     {
-        return Datatables::of($this->blogs->getForDataTable())
+        return Datatables::of($this->blogs->getForDataTable($request->get('trashed')))
             ->escapeColumns(['name'])
             ->addColumn('status', function ($blogs) {
                 return $blogs->status;
@@ -41,7 +42,22 @@ class BlogsTableController extends Controller
                 return $blogs->tags;
             })
             ->addColumn('created_by', function ($blogs) {
-                return $blogs->user_name;
+                return $blogs->first_name. ' '.$blogs->last_name;
+            })
+            ->addColumn('shares', function ($blogs) {
+                return BlogShare::where('blog_id',$blogs->id)->count();
+            })
+            ->addColumn('privacy', function ($blogs) {
+                $p = $blogs->getgroups();
+                if($p == null){
+                    return "No Privacy";
+                }else{
+                    return $p;
+                }
+                
+            })
+            ->addColumn('Email', function ($blogs) {
+                return $blogs->email;
             })
             ->addColumn('created_at', function ($blogs) {
                 return $blogs->created_at->toDateString();

@@ -9,15 +9,16 @@ use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\RedirectResponse;
-use App\Http\Responses\Backend\Blog\EditResponse;
-use App\Http\Responses\Backend\Blog\ShowResponse;
-use App\Http\Responses\Backend\Blog\IndexResponse;
-use App\Http\Responses\Backend\Blog\CreateResponse;
 use App\Repositories\Backend\Blogs\BlogsRepository;
 use App\Http\Requests\Backend\Blogs\ShowBlogsRequest;
+use App\Http\Responses\Backend\Blog\EditBlogResponse;
+use App\Http\Responses\Backend\Blog\ShowBlogResponse;
 use App\Http\Requests\Backend\Blogs\StoreBlogsRequest;
+use App\Http\Responses\Backend\Blog\IndexBlogResponse;
 use App\Http\Requests\Backend\Blogs\ManageBlogsRequest;
 use App\Http\Requests\Backend\Blogs\UpdateBlogsRequest;
+use App\Http\Responses\Backend\Blog\CreateBlogResponse;
+use App\Http\Responses\Backend\Blog\DesignBlogResponse;
 
 /**
  * Class BlogsController.
@@ -54,7 +55,17 @@ class BlogsController extends Controller
      */
     public function index(ManageBlogsRequest $request)
     {
-        return new IndexResponse($this->status);
+        return new IndexBlogResponse($this->status);
+    }
+
+    /**
+     * @param \App\Http\Requests\Backend\Blogs\ManageBlogsRequest $request
+     *
+     * @return \App\Http\Responses\Backend\Blog\IndexResponse
+     */
+    public function designblogs(ManageBlogsRequest $request)
+    {
+        return new DesignBlogResponse($this->status);
     }
 
     /**
@@ -66,7 +77,7 @@ class BlogsController extends Controller
     {
         $blogTags = BlogTag::getSelectData();
 
-        return new CreateResponse($this->status,$blogTags);
+        return new CreateBlogResponse($this->status,$blogTags);
     }
 
     /**
@@ -90,8 +101,8 @@ class BlogsController extends Controller
             'coolcount'          => Like::where('blog_id',$blog->id)->where('emotion',1)->count(),
             'naffcount'          => Like::where('blog_id',$blog->id)->where('emotion',2)->count(),
         ];
-        dd($blog);
-        return new ShowResponse($blog, $this->status, $blogTags,$comments,$emotions);
+        // dd($blog);
+        return new ShowBlogResponse($blog, $this->status, $blogTags,$comments,$emotions);
     }
 
     /**
@@ -104,7 +115,7 @@ class BlogsController extends Controller
     {
         $blogTags = BlogTag::getSelectData();
 
-        return new EditResponse($blog, $this->status, $blogTags);
+        return new EditBlogResponse($blog, $this->status, $blogTags);
     }
 
     /**

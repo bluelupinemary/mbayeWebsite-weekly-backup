@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Models\CompanyProfile\Industry;
 /**
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -79,6 +80,24 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/designPanel','GameController@storeDesignPanel')->name('storeDesignPanel');
         Route::post('/designPanel-screenshot','GameController@storeDesignPanelScreenshot')->name('storeDesignPanelScreenshot');
         Route::get('buildMbaye', 'GameController@showBuildMbayeScene')->name('buildMbaye');
+
+
+        Route::get('/career/companyProfile', function () {
+            $industry = Industry::all();
+            // dd($industry);
+            return view('frontend.user.setup_company_profile',compact('industry'));
+        });
+        
+
+
+        /*
+        * Image Editor
+        */
+        Route::get('/image_editor', 'EditorController@index');
+        Route::get('/image_editor_test', function () {
+            return view('frontend.user.image-editor-test');
+        });
+
         
     });
 //routes for friendship
@@ -125,6 +144,9 @@ Route::group(['namespace' => 'Friendship'], function () {
     });
 
     Route::post('send_contact_email', 'FrontendController@sendContactAdminEmail');
+    // Route::post('/submit', 'DemoFormsubmit@demoSave')->name('save');
+    Route::post('/submit', 'Company\CompanyProfileController@store')->name('save');
+
 
     // Story
     Route::group(['namespace' => 'GeneralBlogs'], function () {
@@ -144,6 +166,9 @@ Route::group(['namespace' => 'Friendship'], function () {
     Route::get('/jobseekers/setup-profile','JobSeekerProfile\JobSeekerProfilesController@index');
 
     Route::get('jobseekers', 'JobSeekerProfile\JobSeekerProfilesController@getJobSeekers');
+
+    // Company Profile
+    Route::resource('company_profile', 'Company\CompanyProfileController');
 });
 
 /*
@@ -185,6 +210,8 @@ Route::get('/search/friends', 'FrontendController@search_friends')->name('search
 
 /* blogs tagwise */
 Route::get('/blogview/tagwise/all', 'FrontendController@blog_tagwise_all')->name('blog_tagwise_all');
+// sliding images with dummy naff count to test out fart naff animation
+Route::get('/blogview/tagwise/all_old', 'FrontendController@all_blogs_tagwise');
 Route::get('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my');
 Route::post('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my_post')->name('blog_tagwise_my');
 Route::get('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend');
@@ -193,7 +220,7 @@ Route::post('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend_
 
 /* blogs for the general blogs */
 Route::get('/blogview/general/all', 'FrontendController@blog_general_all')->name('blog_general');
-Route::get('/blogview/general/all2', 'FrontendController@blog_general_all2');
+// Route::get('/blogview/general/all_old', 'FrontendController@blog_general_all_old');
 Route::get('/blogview/general/my', 'FrontendController@blog_general_my');
 Route::post('/blogview/general/my', 'FrontendController@blog_general_my_post')->name('blog_general_my');
 Route::get('/blogview/general/friend', 'FrontendController@blog_general_friend');

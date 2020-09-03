@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\CompanyProfile\Traits\Relationship;
+namespace App\Models\Company\Traits\Relationship;
 
 use App\Models\CompanyProfile\CompanyProfile;
 

@@ -26,7 +26,7 @@
                             <option selected value="">Status</option>
                             <option value="Draft">Draft</option>
                             <option value="Published">Published</option>
-                            <option value="Unpublished">Unpublished</option>
+                            {{-- <option value="Unpublished">Unpublished</option> --}}
                         </select>
                     </div>
                     <div class="input-group-prepend sort-div">

@@ -23,7 +23,7 @@
         <div>
     </section>
 
-    <newblog-component :user_id="{{$id}}" :tag="'{{$tag}}'" :type="'{{$type}}'"></newblog-component>
+    <newblog-component :user="{{Auth::user()}}" :user_id="{{$id}}" :tag="'{{$tag}}'" :type="'{{$type}}'"></newblog-component>
 
     @if(Auth::user())
     <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">

@@ -9,6 +9,7 @@ use App\Models\BlogTags\BlogTag;
 use App\Models\BlogVideos\BlogVideo;
 use App\Models\BlogDesignPanels\BlogDesignPanel;
 use App\Models\BlogPrivacy\BlogPrivacy;
+use App\Models\BlogShares\BlogShare;
 use Illuminate\Support\Str;
 
 /**
@@ -64,6 +65,10 @@ trait BlogRelationship
         return $this->hasMany(BlogPrivacy::class, 'blog_id')->where('blog_type', 'regular');
     }
 
+    public function share(){
+        return $this->hasMany(BlogShare::class, 'blog_id')->where('blog_type', 'regular');
+    }
+
     // override the toArray function (called by toJson)
     public function toArray() {
         // get the original array to be displayed
@@ -84,12 +89,24 @@ trait BlogRelationship
             $data['featured_image'] = 'blog-default-featured-image.png';
         }
 
+        if($this->featured_image == null) {
+            $data['thumb'] = 'blog/blog-default-featured-image.png';
+        } else {
+            $data['thumb'] = 'blog/'.$this->featured_image;
+        }
+
         if($this->tags) {
             $data['all_tags'] = implode(', ', $this->tags->pluck('name')->toArray());
             $data['tags'] = $this->tags;
         }
 
         $data['owner'] = $this->owner;
+
+        $data['hotcount']      = $this->likes->where('emotion',0)->count();
+        $data['coolcount']     = $this->likes->where('emotion',1)->count();
+        $data['naffcount']     = $this->likes->where('emotion',2)->count();
+        $data['commentcount']  = $this->comments->count();
+        $data['most_reaction'] = $this->mostReaction();
 
         return $data;
     }

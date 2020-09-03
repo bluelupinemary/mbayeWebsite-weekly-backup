@@ -58,6 +58,41 @@ class ModulesTableSeeder extends Seeder
                 'created_by'            => 1,
                 'created_at'            => Carbon::now(),
             ],
+            [
+                'name'                  => trans('menus.backend.blogtags.management'),
+                'url'                   => 'admin.blogtags.index',
+                'view_permission_id'    => 'view-blog-tag',
+                'created_by'            => 1,
+                'created_at'            => Carbon::now(),
+            ],
+            [
+                'name'                  => trans('menus.backend.blog.management'),
+                'url'                   => 'admin.blogs.index',
+                'view_permission_id'    => 'view-blog',
+                'created_by'            => 1,
+                'created_at'            => Carbon::now(),
+            ],
+            [
+                'name'                  => trans('menus.backend.designblogs.management'),
+                'url'                   => 'admin.designblogs',
+                'view_permission_id'    => 'view-blog',
+                'created_by'            => 1,
+                'created_at'            => Carbon::now(),
+            ],
+            [
+                'name'                  => trans('menus.backend.generalblogs.management'),
+                'url'                   => 'admin.generalblogs.index',
+                'view_permission_id'    => 'view-blog',
+                'created_by'            => 1,
+                'created_at'            => Carbon::now(),
+            ],
+            [
+                'name'                  => trans('menus.backend.faqs.management'),
+                'url'                   => 'admin.faqs.index',
+                'view_permission_id'    => 'view-faq',
+                'created_by'            => 1,
+                'created_at'            => Carbon::now(),
+            ],
         ];
 
         DB::table('modules')->insert($modules);

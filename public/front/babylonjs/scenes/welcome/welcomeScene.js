@@ -826,10 +826,7 @@ function init_clone_constellation(name, temp, matlPath,scale, x, y, z){
         temp.rotationQuaternion = new BABYLON.Quaternion(-0.703, 0.010, 0.0256,0.695);
     }else if(name === "Aquarius"){
         temp.rotationQuaternion = new BABYLON.Quaternion(-0.032,-0.710,0.027,0.687);    
-    }
-
-    
-    
+    }  
 
 }//end of init planet function
 

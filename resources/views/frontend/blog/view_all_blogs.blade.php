@@ -24,7 +24,7 @@
                             <option selected value="">Status</option>
                             <option value="Draft">Draft</option>
                             <option value="Published">Published</option>
-                            <option value="Unpublished">Unpublished</option>
+                            {{-- <option value="Unpublished">Unpublished</option> --}}
                         </select>
                     </div>
                     <div class="input-group-prepend sort-div">
@@ -79,6 +79,11 @@
                         </div>
                     </div>
                 @elseif($blog->getTable() == 'blog_shares')
+                    @php
+                        if($blog->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
+                            $blog->blog = $blog->general_blog;
+                        }
+                    @endphp
                     <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
                         <div class="container">
                             <div class="front shared-blog" style="background-image: url({{asset('storage/img/blog/'.$blog->blog->getFeaturedImage())}})">

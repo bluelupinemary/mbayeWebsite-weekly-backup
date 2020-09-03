@@ -38,6 +38,7 @@ class GeneralBlog extends BaseModel
         'publish_datetime',
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
 
     /**

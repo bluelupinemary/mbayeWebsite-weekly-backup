@@ -27,7 +27,7 @@ class BlogsResource extends Resource
             'status'            => $this->status,
             'created_at'        => optional($this->created_at)->toDateString(),
             'created_by'        => (is_null($this->user_name)) ? optional($this->owner)->first_name : $this->user_name,
-            'thumb'             => ($this->featured_image=='') ? '/storage/img/blog/default.png' : '/storage/img/blog/'.$this->featured_image,
+            'thumb'             => ($this->featured_image=='') ? '/storage/img/blog/blog-default-featured-image.png' : '/storage/img/blog/'.$this->featured_image,
             'hotcount'          => Like::where('blog_id',$this->id)->where('emotion',0)->count(),
             'coolcount'          => Like::where('blog_id',$this->id)->where('emotion',1)->count(),
             'naffcount'          => Like::where('blog_id',$this->id)->where('emotion',2)->count(),

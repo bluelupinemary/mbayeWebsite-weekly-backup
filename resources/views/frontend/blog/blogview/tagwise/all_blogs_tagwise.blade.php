@@ -30,7 +30,7 @@
 <section class="container-fluid">
     <div class="div_container " style=""> 
         <div id="overlay"></div>
-    <img  class="img-nouvela"  style="display:none" src="{{ asset('front') }}/images/naff555Votes.png" >
+    <img  class="img-nouvela"   src="{{ asset('front') }}/images/naff555Votes.png" >
     <div>
 </section>
 
@@ -682,7 +682,7 @@ function contentDisplay() {
 
 
             if(images[reln]['naffcount']!==null){
-                nNaff_Count=images[reln]['naffcount'];
+                nNaff_Count=555;
             }
             else
             nNaff_Count=0;

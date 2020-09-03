@@ -23,7 +23,7 @@
         <div>
     </section>
 
-    <designpanelblog-component :user_id="0"></designpanelblog-component>
+    <designpanelblog-component :user="{{Auth::user()}}" :user_id="0"></designpanelblog-component>
 
     @if(Auth::user())
     <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">

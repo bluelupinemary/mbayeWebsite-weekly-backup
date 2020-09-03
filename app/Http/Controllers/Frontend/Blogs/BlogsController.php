@@ -404,10 +404,11 @@ class BlogsController extends Controller
 
     public function fetchBlogs(Request $request)
     {
-        $limit = $request->get('paginate') ? $request->get('paginate') : 21;
+        $limit = $request->get('paginate') ? $request->get('paginate') : 5;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
         $sort = 'desc_name';
+
         $friendships = Auth::user()->getAcceptedFriendships();
         $fsid = $friendships->pluck('id');
         $groups = FriendFriendshipGroups::whereIn('friendship_id',$fsid)->pluck("group_id");
@@ -421,9 +422,9 @@ class BlogsController extends Controller
                     $q->whereIn('group_id', $groups);
                 })->get();
             $public_blogs  = Blog::where('status', 'Published')
-            ->whereHas('tags', function($q) use($tag) {
-                $q->where('tag_id', $tag);
-            })->doesntHave('privacy')->get();
+                ->whereHas('tags', function($q) use($tag) {
+                    $q->where('tag_id', $tag);
+                })->doesntHave('privacy')->get();
             // dd($public_blogs);
         } else {
             $private_blogs = Blog::where('status', 'Published')
@@ -439,7 +440,7 @@ class BlogsController extends Controller
                 })->doesntHave('privacy')->get();
         }
 
-        $blog_shares = BlogShare::whereIn('blog_id', $public_blogs->pluck('id')->toArray())->with('blog')->get();
+        $blog_shares = $this->getSharedBlogs($request->tag);
 
         if($request->has('user_id') && $request->user_id != 0) {
             $public_blogs = $public_blogs->where('created_by', $request->user_id);
@@ -448,65 +449,113 @@ class BlogsController extends Controller
         } else if($request->has('user_id') && $request->user_id == 0 && $request->type == 'friend') {
             $friends_id = Auth::user()->getFriends()->pluck('id')->toArray();
             
-            $blogs = $blogs->whereIn('created_by', $friends_id);
+            $public_blogs = $public_blogs->whereIn('created_by', $friends_id);
+            $private_blogs = $private_blogs->whereIn('created_by', $friends_id);
             $blog_shares = $blog_shares->whereIn('created_by', $friends_id);
         }
-        
-        $blogs = $public_blogs->merge($private_blogs,$blog_shares)
-                ->sortByDesc('publish_datetime')
-                ->paginate($limit);
-        
-        foreach($blogs as $blog){
-            if($blog->blog_type) {
-                if($blog->blog_type == 'App\Models\Blogs\Blog') {
-                    if($blog->blog->featured_image == '') {
-                        $blog->blog->featured_image = '/storage/img/blog/blog-default-featured-image.png';
-                    } else {
-                        $blog->blog->featured_image = '/storage/img/blog/'.$blog->blog->featured_image;
-                    }
 
-                    $blog->blog->owner = $blog->blog->owner;
-                    $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
-                    $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
-                    $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
-                    $blog->blog->commentcount  = $blog->blog->comments->count();
-                    $blog->blog->most_reaction = $blog->blog->mostReaction();
-                    // $blog->blog->name = $blog->caption;
-                } else if($blog->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
-                    $blog->blog = $blog->general_blog;
-                    
-                    if($blog->general_blog->featured_image == '') {
-                        $blog->blog->featured_image = '/storage/img/blog/blog-default-featured-image.png';
-                    } else {
-                        $blog->blog->featured_image = '/storage/img/general_blogs/'.$blog->general_blog->featured_image;
-                    }
+        $page = 1; 
 
-                    $blog->blog->owner = $blog->general_blog->owner;
-                    $blog->blog->hotcount  = $blog->general_blog->likes->where('emotion',0)->count();
-                    $blog->blog->coolcount     = $blog->general_blog->likes->where('emotion',1)->count();
-                    $blog->blog->naffcount     = $blog->general_blog->likes->where('emotion',2)->count();
-                    $blog->blog->commentcount  = $blog->general_blog->comments->count();
-                    $blog->blog->most_reaction = $blog->general_blog->mostReaction();
-                    // $blog->blog->name = $blog->caption;
-                }
-                $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
-                $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
-                $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
-                $blog->blog->commentcount  = $blog->blog->comments->count();
-                $blog->blog->most_reaction = $blog->blog->mostReaction();
-                $blog->blog->name = $blog->caption;
-            } else {
-                if($blog->featured_image == '') {
-                    $blog->featured_image = 'blog-default-featured-image.png';
-                }
-                $blog->hotcount = $blog->likes->where('emotion',0)->count();
-                $blog->coolcount     = $blog->likes->where('emotion',1)->count();
-                $blog->naffcount     = $blog->likes->where('emotion',2)->count();
-                $blog->commentcount  = $blog->comments->count();
-                $blog->most_reaction = $blog->mostReaction();
-            }
+        if($request->has('page') && $request->page >= 1) {
+            $page = $request->page;
         }
+        
+        $blogs = $private_blogs->merge($public_blogs);
+        $plus_shared_blogs = $blogs->merge($blog_shares)->sortByDesc('publish_datetime');
+        $last_page = ceil($plus_shared_blogs->count() / $limit);
+        $total = $plus_shared_blogs->count();
+        $paginated = $plus_shared_blogs->forPage($page, $limit);
+        $to = $paginated->count();
+        
+        // foreach($blogs as $blog){
+        //     if($blog->blog_type) {
+        //         if($blog->blog_type == 'App\Models\Blogs\Blog') {
+        //             if($blog->blog->featured_image == '') {
+        //                 $blog->blog->featured_image = '/storage/img/blog/blog-default-featured-image.png';
+        //             } else {
+        //                 $blog->blog->featured_image = '/storage/img/blog/'.$blog->blog->featured_image;
+        //             }
+
+        //             $blog->blog->owner = $blog->blog->owner;
+        //             $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
+        //             $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
+        //             $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
+        //             $blog->blog->commentcount  = $blog->blog->comments->count();
+        //             $blog->blog->most_reaction = $blog->blog->mostReaction();
+        //             // $blog->blog->name = $blog->caption;
+        //         } else if($blog->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
+        //             $blog->blog = $blog->general_blog;
+                    
+        //             if($blog->general_blog->featured_image == '') {
+        //                 $blog->blog->featured_image = 'blog/blog-default-featured-image.png';
+        //             } else {
+        //                 $blog->blog->featured_image = 'general_blogs/'.$blog->general_blog->featured_image;
+        //             }
+
+        //             $blog->blog->owner = $blog->general_blog->owner;
+        //             $blog->blog->hotcount  = $blog->general_blog->likes->where('emotion',0)->count();
+        //             $blog->blog->coolcount     = $blog->general_blog->likes->where('emotion',1)->count();
+        //             $blog->blog->naffcount     = $blog->general_blog->likes->where('emotion',2)->count();
+        //             $blog->blog->commentcount  = $blog->general_blog->comments->count();
+        //             $blog->blog->most_reaction = $blog->general_blog->mostReaction();
+        //             // $blog->blog->name = $blog->caption;
+        //         }
+        //         $blog->blog->hotcount  = $blog->blog->likes->where('emotion',0)->count();
+        //         $blog->blog->coolcount     = $blog->blog->likes->where('emotion',1)->count();
+        //         $blog->blog->naffcount     = $blog->blog->likes->where('emotion',2)->count();
+        //         $blog->blog->commentcount  = $blog->blog->comments->count();
+        //         $blog->blog->most_reaction = $blog->blog->mostReaction();
+        //         $blog->blog->name = $blog->caption;
+        //     } else {
+        //         if($blog->featured_image == '') {
+        //             $blog->featured_image = 'blog/blog-default-featured-image.png';
+        //         }
+        //         $blog->hotcount = $blog->likes->where('emotion',0)->count();
+        //         $blog->coolcount     = $blog->likes->where('emotion',1)->count();
+        //         $blog->naffcount     = $blog->likes->where('emotion',2)->count();
+        //         $blog->commentcount  = $blog->comments->count();
+        //         $blog->most_reaction = $blog->mostReaction();
+        //     }
+        // }
      
-        return response()->json($blogs);
+        return response()->json(['data' => $paginated->values()->all(), 'current_page' => $page, 'last_page' => $last_page, 'total' => $total, 'to' => $to]);
+    }
+
+    public function getSharedBlogs($tag)
+    {
+        if($tag && $tag != '') {
+            $tag = $this->getTag($tag);
+            $from_general_blog = BlogShare::where('blog_type', 'App\Models\GeneralBlogs\GeneralBlog')
+                ->whereHas('tags', function($q) use($tag) {
+                    $q->where('tag_id', $tag);
+                })
+                ->get();
+
+            $from_reg_blog = BlogShare::where('blog_type', 'App\Models\Blogs\Blog')
+                ->whereHas('blog', function($q) use($tag) {
+                    $q->whereHas('tags', function($query) use($tag) {
+                        $query->where('tag_id', $tag);
+                    });
+                })
+                ->get();
+        } else {
+            $from_general_blog = BlogShare::where('blog_type', 'App\Models\GeneralBlogs\GeneralBlog')
+                ->whereHas('tags', function($q) use($tag) {
+                    $q->whereNotIn('tag_id', [8,9]);
+                })
+                ->get();
+
+            $from_reg_blog = BlogShare::where('blog_type', 'App\Models\Blogs\Blog')
+                ->whereHas('blog', function($q) use($tag) {
+                    $q->whereHas('tags', function($query) use($tag) {
+                        $query->whereNotIn('tag_id', [8,9]);
+                    });
+                })
+                ->get();
+        }
+
+        $share_blogs = $from_general_blog->merge($from_reg_blog);
+
+        return $share_blogs;
     }
 }

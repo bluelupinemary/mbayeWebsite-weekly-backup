@@ -18,7 +18,7 @@
     <div id="loadingScreenDiv" style="">
       
     </div>
-    <div id="firstVideoOverlay" >
+    {{-- <div id="firstVideoOverlay" >
        <p id ="skipVideo">Skip >> </p>
        <br>
        <p id ="hideOverlay">Use Camera >> </p>
@@ -40,13 +40,9 @@
                 <div class="overlayTxt" id="txt12">Kindly take a tour into mbaye.com and join us in this adventure at absolutely no cost.</div>
             </div>
         </div>
-        {{-- <div id="imageOverlayDiv">    
-            <div id="tomHome" class="homeOverlayImage"></div>
-            <div id="emptyDivFiller"></div>
-            <div id="nuvolaHome" class="homeOverlayImage"></div>
-        </div> --}}
-    </div>
-    <div id="placeholderDiv" ></div>
+       
+    </div> 
+    <div id="placeholderDiv" ></div>--}}
 
     <div id="loadingScreenOverlay" >
         <div id="overlayText">Please click anywhere to play the game</div>

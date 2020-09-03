@@ -345,6 +345,10 @@ $('.communicator-buttons .save-button').click(function (e) {
             confirmButtonText: 'Yes, save it!'
         }).then((result) => {
         if (result.value) {
+            $('.main-screen').hide();
+            $('.main-body').fadeIn();
+            $('.main-body .saving').fadeIn();
+
             $.ajax({
                 url: form_url,
                 method: 'post',
@@ -356,16 +360,22 @@ $('.communicator-buttons .save-button').click(function (e) {
                 success: function(data) {
                     console.log(data);
 
-                    Swal.fire({
-                        title: '<span class="success">Success!</span>',
-                        text: data.message,
-                        imageUrl: '../../front/icons/alert-icon.png',
-                        imageWidth: 80,
-                        imageHeight: 80,
-                        imageAlt: 'Mbaye Logo',
-                        width: '30%',
-                        padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
+                    // Swal.fire({
+                    //     title: '<span class="success">Success!</span>',
+                    //     text: data.message,
+                    //     imageUrl: '../../front/icons/alert-icon.png',
+                    //     imageWidth: 80,
+                    //     imageHeight: 80,
+                    //     imageAlt: 'Mbaye Logo',
+                    //     width: '30%',
+                    //     padding: '1rem',
+                    //     background: 'rgba(8, 64, 147, 0.62)'
+                    // });
+
+                    
+                    $('.main-body').fadeOut(function() {
+                        $('.main-body .saving').fadeOut();
+                        $('.main-screen').fadeIn();
                     });
 
                     $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
@@ -381,17 +391,22 @@ $('.communicator-buttons .save-button').click(function (e) {
                             errorString += '<p>' + value + '</p>';
                         });
                     }
-                    
-                    Swal.fire({
-                        imageUrl: '../../front/icons/alert-icon.png',
-                        imageWidth: 80,
-                        imageHeight: 80,
-                        imageAlt: 'Mbaye Logo',
-                        title: title,
-                        html: errorString,
-                        width: '30%',
-                        padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
+
+                    $('.main-body').fadeOut(function() {
+                        $('.main-body .saving').fadeOut();
+                        $('.main-screen').fadeIn();
+
+                        Swal.fire({
+                            imageUrl: '../../front/icons/alert-icon.png',
+                            imageWidth: 80,
+                            imageHeight: 80,
+                            imageAlt: 'Mbaye Logo',
+                            title: title,
+                            html: errorString,
+                            width: '30%',
+                            padding: '1rem',
+                            background: 'rgba(8, 64, 147, 0.62)'
+                        });
                     });
 
                     $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
@@ -401,6 +416,10 @@ $('.communicator-buttons .save-button').click(function (e) {
         })
         
     } else {  // create new blog
+        $('.main-screen').hide();
+        $('.main-body').fadeIn();
+        $('.main-body .saving').fadeIn();
+
         $.ajax({
             url: form_url,
             method: 'post',
@@ -413,16 +432,21 @@ $('.communicator-buttons .save-button').click(function (e) {
                 $form.append('<input type="hidden" name="_method" value="PUT">');
                 $('input[name="blog_id"]').val(data.data.id);
 
-                Swal.fire({
-                    title: '<span class="success">Success!</span>',
-                    text: data.message,
-                    imageUrl: '../../front/icons/alert-icon.png',
-                    imageWidth: 80,
-                    imageHeight: 80,
-                    imageAlt: 'Mbaye Logo',
-                    width: '30%',
-                    padding: '1rem',
-                    background: 'rgba(8, 64, 147, 0.62)'
+                // Swal.fire({
+                //     title: '<span class="success">Success!</span>',
+                //     text: data.message,
+                //     imageUrl: '../../front/icons/alert-icon.png',
+                //     imageWidth: 80,
+                //     imageHeight: 80,
+                //     imageAlt: 'Mbaye Logo',
+                //     width: '30%',
+                //     padding: '1rem',
+                //     background: 'rgba(8, 64, 147, 0.62)'
+                // });
+
+                $('.main-body').fadeOut(function() {
+                    $('.main-body .saving').fadeOut();
+                    $('.main-screen').fadeIn();
                 });
 
                 $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
@@ -438,17 +462,22 @@ $('.communicator-buttons .save-button').click(function (e) {
                         errorString += '<p>' + value + '</p>';
                     });
                 }
-                
-                Swal.fire({
-                    imageUrl: '../../front/icons/alert-icon.png',
-                    imageWidth: 80,
-                    imageHeight: 80,
-                    imageAlt: 'Mbaye Logo',
-                    title: title,
-                    html: errorString,
-                    width: '30%',
-                    padding: '1rem',
-                    background: 'rgba(8, 64, 147, 0.62)'
+
+                $('.main-body').fadeOut(function() {
+                    $('.main-body .saving').fadeOut();
+                    $('.main-screen').fadeIn();
+
+                    Swal.fire({
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        title: title,
+                        html: errorString,
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    });
                 });
 
                 $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
@@ -485,6 +514,9 @@ $('.communicator-buttons .publish-button').click(function (e) {
     post_data.append('attachments', attachments);
     post_data.append('privacy', privacy);
 
+    $('.main-screen').hide();
+    $('.main-body').fadeIn();
+    $('.main-body .prepare').fadeIn();
     // update blog if blog_id is not null
     $.ajax({
         url: form_url,
@@ -495,20 +527,40 @@ $('.communicator-buttons .publish-button').click(function (e) {
         cache: false,
         processData: false,
         success: function(data) {
-            Swal.fire({
-                title: '<span class="success">Success!</span>',
-                text: data.message,
-                imageUrl: '../../front/icons/alert-icon.png',
-                imageWidth: 80,
-                imageHeight: 80,
-                imageAlt: 'Mbaye Logo',
-                width: '30%',
-                padding: '1rem',
-                background: 'rgba(8, 64, 147, 0.62)'
-            }).then((res) => {
-                // window.open(url+'/single_blog/'+data.data.id);
-                window.location.href = url+'/single_blog/'+data.data.id;
+            $('.main-body .prepare').fadeOut();
+            $('.exhaust-flame').addClass('exhaust-flame2');
+            $('.exhaust-fumes').fadeOut(function() {
+
+                $('.rocket-launching').addClass('launch');
+
+                $('.launch').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.rocket-launching').hide();
+                    $('.main-body .success').css('display', 'flex').hide().fadeIn();
+
+                    $('.message.success button').click(function() {
+                        // $('.main-body').fadeOut(function() {
+                        //     $('.main-body .prepare').fadeOut();
+                        //     $('.main-screen').fadeIn();
+                        // });
+                        window.location.href = url+'/single_blog/'+data.data.id;
+                    });
+                });
             });
+
+            // Swal.fire({
+            //     title: '<span class="success">Success!</span>',
+            //     text: data.message,
+            //     imageUrl: '../../front/icons/alert-icon.png',
+            //     imageWidth: 80,
+            //     imageHeight: 80,
+            //     imageAlt: 'Mbaye Logo',
+            //     width: '30%',
+            //     padding: '1rem',
+            //     background: 'rgba(8, 64, 147, 0.62)'
+            // }).then((res) => {
+            //     // window.open(url+'/single_blog/'+data.data.id);
+            //     window.location.href = url+'/single_blog/'+data.data.id;
+            // });
         },
         error: function (request, status, error) {
             var response = JSON.parse(request.responseText);
@@ -521,17 +573,21 @@ $('.communicator-buttons .publish-button').click(function (e) {
                     errorString += '<p>' + value + '</p>';
                 });
             }
-            
-            Swal.fire({
-                imageUrl: '../../front/icons/alert-icon.png',
-                imageWidth: 80,
-                imageHeight: 80,
-                imageAlt: 'Mbaye Logo',
-                title: title,
-                html: errorString,
-                width: '30%',
-                padding: '1rem',
-                background: 'rgba(8, 64, 147, 0.62)'
+
+            $('.main-body').fadeOut(function() {
+                $('.main-body .prepare').fadeOut();
+                $('.main-screen').fadeIn();
+                Swal.fire({
+                    imageUrl: '../../front/icons/alert-icon.png',
+                    imageWidth: 80,
+                    imageHeight: 80,
+                    imageAlt: 'Mbaye Logo',
+                    title: title,
+                    html: errorString,
+                    width: '30%',
+                    padding: '1rem',
+                    background: 'rgba(8, 64, 147, 0.62)'
+                });
             });
 
             $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'auto');
@@ -562,6 +618,9 @@ $('.general-blog-buttons .publish-button').click(function (e) {
     post_data.append('attachments', attachments);
     post_data.append('privacy', privacy);
 
+    $('.main-screen').hide();
+    $('.main-body').fadeIn();
+    $('.main-body .prepare').fadeIn();
     // update blog if blog_id is not null
     $.ajax({
         url: form_url,
@@ -572,21 +631,41 @@ $('.general-blog-buttons .publish-button').click(function (e) {
         cache: false,
         processData: false,
         success: function(data) {
-            Swal.fire({
-                title: '<span class="success">Success!</span>',
-                text: data.message,
-                imageUrl: '../../front/icons/alert-icon.png',
-                imageWidth: 80,
-                imageHeight: 80,
-                imageAlt: 'Mbaye Logo',
-                width: '30%',
-                padding: '1rem',
-                background: 'rgba(8, 64, 147, 0.62)'
-            }).then((res) => {
-                // window.open(url+'/single_blog/'+data.data.id);
-                window.location.href = url+'/single_general_blog/'+data.data.id;
-                // resetGeneralBlogForm();
+            $('.main-body .prepare').fadeOut();
+            $('.exhaust-flame').addClass('exhaust-flame2');
+            $('.exhaust-fumes').fadeOut(function() {
+
+                $('.rocket-launching').addClass('launch');
+
+                $('.launch').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.rocket-launching').hide();
+                    $('.main-body .success').css('display', 'flex').hide().fadeIn();
+
+                    $('.message.success button').click(function() {
+                        // $('.main-body').fadeOut(function() {
+                        //     $('.main-body .prepare').fadeOut();
+                        //     $('.main-screen').fadeIn();
+                        // });
+                        window.location.href = url+'/single_general_blog/'+data.data.id;
+                    });
+                });
             });
+
+            // Swal.fire({
+            //     title: '<span class="success">Success!</span>',
+            //     text: data.message,
+            //     imageUrl: '../../front/icons/alert-icon.png',
+            //     imageWidth: 80,
+            //     imageHeight: 80,
+            //     imageAlt: 'Mbaye Logo',
+            //     width: '30%',
+            //     padding: '1rem',
+            //     background: 'rgba(8, 64, 147, 0.62)'
+            // }).then((res) => {
+            //     // window.open(url+'/single_blog/'+data.data.id);
+            //     window.location.href = url+'/single_general_blog/'+data.data.id;
+            //     // resetGeneralBlogForm();
+            // });
         },
         error: function (request, status, error) {
             var response = JSON.parse(request.responseText);
@@ -600,16 +679,20 @@ $('.general-blog-buttons .publish-button').click(function (e) {
                 });
             }
             
-            Swal.fire({
-                imageUrl: '../../front/icons/alert-icon.png',
-                imageWidth: 80,
-                imageHeight: 80,
-                imageAlt: 'Mbaye Logo',
-                title: title,
-                html: errorString,
-                width: '30%',
-                padding: '1rem',
-                background: 'rgba(8, 64, 147, 0.62)'
+            $('.main-body').fadeOut(function() {
+                $('.main-body .prepare').fadeOut();
+                $('.main-screen').fadeIn();
+                Swal.fire({
+                    imageUrl: '../../front/icons/alert-icon.png',
+                    imageWidth: 80,
+                    imageHeight: 80,
+                    imageAlt: 'Mbaye Logo',
+                    title: title,
+                    html: errorString,
+                    width: '30%',
+                    padding: '1rem',
+                    background: 'rgba(8, 64, 147, 0.62)'
+                });
             });
 
             $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .general-blog-buttons').css('pointer-events', 'auto');
@@ -659,6 +742,10 @@ $('.designs-blog-buttons .save-button').click(function (e) {
             confirmButtonText: 'Yes, save it!'
         }).then((result) => {
         if (result.value) {
+            $('.main-screen').hide();
+            $('.main-body').fadeIn();
+            $('.main-body .saving').fadeIn();
+
             $.ajax({
                 url: form_url,
                 method: 'post',
@@ -670,16 +757,21 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                 success: function(data) {
                     console.log(data);
 
-                    Swal.fire({
-                        title: '<span class="success">Success!</span>',
-                        text: data.message,
-                        imageUrl: '../../front/icons/alert-icon.png',
-                        imageWidth: 80,
-                        imageHeight: 80,
-                        imageAlt: 'Mbaye Logo',
-                        width: '30%',
-                        padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
+                    // Swal.fire({
+                    //     title: '<span class="success">Success!</span>',
+                    //     text: data.message,
+                    //     imageUrl: '../../front/icons/alert-icon.png',
+                    //     imageWidth: 80,
+                    //     imageHeight: 80,
+                    //     imageAlt: 'Mbaye Logo',
+                    //     width: '30%',
+                    //     padding: '1rem',
+                    //     background: 'rgba(8, 64, 147, 0.62)'
+                    // });
+
+                    $('.main-body').fadeOut(function() {
+                        $('.main-body .saving').fadeOut();
+                        $('.main-screen').fadeIn();
                     });
 
                     $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
@@ -696,16 +788,21 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                         });
                     }
                     
-                    Swal.fire({
-                        imageUrl: '../../front/icons/alert-icon.png',
-                        imageWidth: 80,
-                        imageHeight: 80,
-                        imageAlt: 'Mbaye Logo',
-                        title: title,
-                        html: errorString,
-                        width: '30%',
-                        padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
+                    $('.main-body').fadeOut(function() {
+                        $('.main-body .saving').fadeOut();
+                        $('.main-screen').fadeIn();
+
+                        Swal.fire({
+                            imageUrl: '../../front/icons/alert-icon.png',
+                            imageWidth: 80,
+                            imageHeight: 80,
+                            imageAlt: 'Mbaye Logo',
+                            title: title,
+                            html: errorString,
+                            width: '30%',
+                            padding: '1rem',
+                            background: 'rgba(8, 64, 147, 0.62)'
+                        });
                     });
 
                     $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
@@ -715,6 +812,10 @@ $('.designs-blog-buttons .save-button').click(function (e) {
         })
         
     } else {  // create new blog
+        $('.main-screen').hide();
+        $('.main-body').fadeIn();
+        $('.main-body .saving').fadeIn();
+
         $.ajax({
             url: form_url,
             method: 'post',
@@ -727,16 +828,21 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                 // $form.append('<input type="hidden" name="_method" value="PUT">');
                 $('input[name="blog_id"]').val(data.data.id);
 
-                Swal.fire({
-                    title: '<span class="success">Success!</span>',
-                    text: data.message,
-                    imageUrl: '../../front/icons/alert-icon.png',
-                    imageWidth: 80,
-                    imageHeight: 80,
-                    imageAlt: 'Mbaye Logo',
-                    width: '30%',
-                    padding: '1rem',
-                    background: 'rgba(8, 64, 147, 0.62)'
+                // Swal.fire({
+                //     title: '<span class="success">Success!</span>',
+                //     text: data.message,
+                //     imageUrl: '../../front/icons/alert-icon.png',
+                //     imageWidth: 80,
+                //     imageHeight: 80,
+                //     imageAlt: 'Mbaye Logo',
+                //     width: '30%',
+                //     padding: '1rem',
+                //     background: 'rgba(8, 64, 147, 0.62)'
+                // });
+
+                $('.main-body').fadeOut(function() {
+                    $('.main-body .saving').fadeOut();
+                    $('.main-screen').fadeIn();
                 });
 
                 $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
@@ -753,16 +859,21 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                     });
                 }
                 
-                Swal.fire({
-                    imageUrl: '../../front/icons/alert-icon.png',
-                    imageWidth: 80,
-                    imageHeight: 80,
-                    imageAlt: 'Mbaye Logo',
-                    title: title,
-                    html: errorString,
-                    width: '30%',
-                    padding: '1rem',
-                    background: 'rgba(8, 64, 147, 0.62)'
+                $('.main-body').fadeOut(function() {
+                    $('.main-body .saving').fadeOut();
+                    $('.main-screen').fadeIn();
+
+                    Swal.fire({
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        title: title,
+                        html: errorString,
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    });
                 });
 
                 $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
@@ -799,6 +910,9 @@ $('.designs-blog-buttons .publish-button').click(function (e) {
     post_data.append('tags', tags);
     post_data.append('privacy', privacy);
 
+    $('.main-screen').hide();
+    $('.main-body').fadeIn();
+    $('.main-body .prepare').fadeIn();
     // update blog if blog_id is not null
     $.ajax({
         url: form_url,
@@ -809,20 +923,40 @@ $('.designs-blog-buttons .publish-button').click(function (e) {
         cache: false,
         processData: false,
         success: function(data) {
-            Swal.fire({
-                title: '<span class="success">Success!</span>',
-                text: data.message,
-                imageUrl: '../../front/icons/alert-icon.png',
-                imageWidth: 80,
-                imageHeight: 80,
-                imageAlt: 'Mbaye Logo',
-                width: '30%',
-                padding: '1rem',
-                background: 'rgba(8, 64, 147, 0.62)'
-            }).then((res) => {
-                // window.open(url+'/single_blog/'+data.data.id);
-                window.location.href = url+'/single_blog/'+data.data.id;
+            $('.main-body .prepare').fadeOut();
+            $('.exhaust-flame').addClass('exhaust-flame2');
+            $('.exhaust-fumes').fadeOut(function() {
+
+                $('.rocket-launching').addClass('launch');
+
+                $('.launch').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.rocket-launching').hide();
+                    $('.main-body .success').css('display', 'flex').hide().fadeIn();
+
+                    $('.message.success button').click(function() {
+                        // $('.main-body').fadeOut(function() {
+                        //     $('.main-body .prepare').fadeOut();
+                        //     $('.main-screen').fadeIn();
+                        // });
+                        window.location.href = url+'/single_blog/'+data.data.id;
+                    });
+                });
             });
+
+            // Swal.fire({
+            //     title: '<span class="success">Success!</span>',
+            //     text: data.message,
+            //     imageUrl: '../../front/icons/alert-icon.png',
+            //     imageWidth: 80,
+            //     imageHeight: 80,
+            //     imageAlt: 'Mbaye Logo',
+            //     width: '30%',
+            //     padding: '1rem',
+            //     background: 'rgba(8, 64, 147, 0.62)'
+            // }).then((res) => {
+            //     // window.open(url+'/single_blog/'+data.data.id);
+            //     window.location.href = url+'/single_blog/'+data.data.id;
+            // });
         },
         error: function (request, status, error) {
             var response = JSON.parse(request.responseText);
@@ -836,16 +970,20 @@ $('.designs-blog-buttons .publish-button').click(function (e) {
                 });
             }
             
-            Swal.fire({
-                imageUrl: '../../front/icons/alert-icon.png',
-                imageWidth: 80,
-                imageHeight: 80,
-                imageAlt: 'Mbaye Logo',
-                title: title,
-                html: errorString,
-                width: '30%',
-                padding: '1rem',
-                background: 'rgba(8, 64, 147, 0.62)'
+            $('.main-body').fadeOut(function() {
+                $('.main-body .prepare').fadeOut();
+                $('.main-screen').fadeIn();
+                Swal.fire({
+                    imageUrl: '../../front/icons/alert-icon.png',
+                    imageWidth: 80,
+                    imageHeight: 80,
+                    imageAlt: 'Mbaye Logo',
+                    title: title,
+                    html: errorString,
+                    width: '30%',
+                    padding: '1rem',
+                    background: 'rgba(8, 64, 147, 0.62)'
+                });
             });
 
             $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .designs-blog-buttons').css('pointer-events', 'auto');
@@ -1193,6 +1331,44 @@ $('.view-all-general-blogs').click(function(e) {
     e.preventDefault();
 
     checkForm(url+'/stories?type=stories');
+});
+
+$('.create-career-account').click(function(e) {
+    e.preventDefault();
+    $('.career-submenu').fadeToggle();
+
+    if(checkCurrentForm()) {
+        hideCurrentSection();
+        setSectionParam('career_account');
+        showCareerAccountSection();
+    } else {
+        Swal.fire({
+            title: 'Discard Changes',
+            text: 'You have unsaved changes',
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText:
+                'Discard Changes',
+            cancelButtonText:
+                'Cancel',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+        }).then((res) => {
+            if (res.value) {
+                hideCurrentSection();
+                setSectionParam('career_account');
+                showCareerAccountSection();
+            }
+        });
+    }
 });
 
 $('.create-career-blog').click(function(e) {
@@ -2123,6 +2299,18 @@ function showCareerBlogSection()
     $('#main-form input[name="career_tag"]').val(1);
 }
 
+// show career account section
+function showCareerAccountSection()
+{
+    $('.career-account-div').css('display', 'flex');
+}
+
+// hide career account section
+function hideCareerAccountSection()
+{
+    $('.career-account-div').hide();
+}
+
 $('#panel_list').on('change', function (e) {
     var optionSelected = $(this).find("option:selected");
     var flowers = optionSelected.data('flowers');
@@ -2379,7 +2567,7 @@ function setButtonLabel(blog)
     if(blog.status == 'Published' || blog.status == 'Unpublished') {
         $('.save-text').attr('src', url+'/front/images/communicator-buttons/buttons/saveAsDraftBtn.png');
         $('.publish-text').attr('src', url+'/front/images/communicator-buttons/buttons/relaunchBtn.png');
-        $('input[name="save_status"]').val('Unpublished');
+        // $('input[name="save_status"]').val('Unpublished');
     }
 }
 
@@ -2603,6 +2791,8 @@ function hideCurrentSection()
         hideDesignsBlogSection();
     } else if(section == 'email') {
         hideEmailSection();
+    } else if(section == 'career_account') {
+        hideCareerAccountSection();
     } else {
         hideBlogSection();
     }

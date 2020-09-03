@@ -36,10 +36,12 @@
 						<span>Accept Friend Request</span>
 						<i class="fa fa-plus"></i>
 					</a>
-					<p class="friend-name">{{user.first_name}} {{user.last_name}}</p>
-					<p class="friend-address">{{user.address}}</p>
+					<div class="friend-info">
+						<p class="friend-name">{{user.first_name}} {{user.last_name}}</p>
+						<p class="friend-address">{{user.address}}</p>
 
-					<p class="no_of_earthlings">Earthlings: 1,200</p>
+						<p class="no_of_earthlings">Earthlings: {{user.earthlings_count}}</p>
+					</div>
 				</div>
 			</div>
       	</div>

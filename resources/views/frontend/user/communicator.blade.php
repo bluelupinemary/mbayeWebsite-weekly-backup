@@ -47,6 +47,7 @@
                     <div class="submenu career-submenu">
                         <ul>
                             <li><a href="" class="create-career-blog"><i class="fas fa-plus"></i> Create Blog</a></li>
+                            <li><a href="" class="create-career-account"><i class="fas fa-plus"></i> Add Career Account</a></li>
                         </ul>
                     </div>
                 </div>
@@ -187,6 +188,20 @@
                     <div class="custom-privacy flower-list" data-toggle="modal" data-target="#flowerListModal">
                         <button disabled>List Flowers</button>
                     </div>
+                </div>
+                <div class="career-account-div">
+                    <a href="">
+                        <div class="employer-account">
+                            <img src="{{asset('front/icons/employer-icon.png')}}" alt="">
+                            <p>I'm an employer</p>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="jobseeker-account">
+                            <img src="{{asset('front/icons/jobseeker-icon.png')}}" alt="">
+                            <p>I'm an job-seeker</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="home-div">
                     <img src="{{asset('front/images/communicator-buttons/home.png')}}" class="communicator-button home-button" alt="">
@@ -402,7 +417,7 @@
                 <div class="top-buttons">
                     <img src="{{asset('front/images/communicator-buttons/Back.png')}}" class="communicator-button back-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/ExtraButtonA.png')}}" class="communicator-button" alt="">
-                    <img src="{{asset('front/images/communicator-buttons/ExtraButtonB.png')}}" class="communicator-button blogtags-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/viewBlogsBtn.png')}}" class="communicator-button blogtags-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/General.png')}}" class="communicator-button general-button" alt="">
                     <div class="submenu general-submenu">
                         <ul>
@@ -497,6 +512,35 @@
             @trix(\App\Blogs\Blog::class, 'email_content')
             <button type="button" class="exit-email-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
         </div>
+        <div class="main-body">
+            <p class="message prepare">Preparing to Launch</p>
+            <p class="message saving">Saving...</p>
+            <div class="message success">
+                <p>Launch Successful!</p>
+                <button>OK</button>
+            </div>
+            <div class="rocket-launching">
+                <div class="rocket-launching-body">
+                    <div class="body"></div>
+                    <div class="fin fin-left"></div>
+                    <div class="fin fin-right"></div>
+                    <div class="window"></div>
+                </div>
+                <div class="exhaust-flame"></div>
+                <ul class="exhaust-fumes">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+
         <!-- Modal -->
     
     </div>

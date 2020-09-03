@@ -219,6 +219,7 @@
     background: #14244f78;
     border-radius: 3%;
     padding: 2%;
+    overflow-y: auto;
 }
 
 .education{
@@ -226,7 +227,7 @@
     top: 29vh;
     left: 2vw;
     width: 23vw;
-    height: 25vh;
+    height: 28vh;
     /* margin: 0 auto; */
     /* overflow: hidden; */
     display: flex;
@@ -237,6 +238,7 @@
     background: #14244f78;
     border-radius: 3%;
     padding: 2%;
+    overflow-y: auto;
 }
 .contacts{
     position: absolute;
@@ -254,6 +256,7 @@
     background: #14244f78;
     border-radius: 3%;
     padding: 2%;
+    overflow-y: auto;
 }
 .character_refernces{
     position: absolute;
@@ -271,6 +274,7 @@
     background: #14244f78;
     border-radius: 3%;
     padding: 2%;
+    overflow-y: auto;
 }
 .job_description{
     position: absolute;
@@ -288,13 +292,20 @@
     background: #14244f78;
     border-radius: 3%;
     padding: 2%;
+    overflow-y: auto;
 }
 .lbl_titile,.spn_value{
     color:#9e9e9e;
     text-shadow: 0px 0px 3px #000000;
     font-family: 'Nasalization';
-  
+    font-size: 1.3em;
    
+}
+.titile{
+    color:#0ee3ea !important;
+    text-shadow: 0px 0px 3px #000000;
+    font-family: 'Nasalization';
+    font-size: 1.5em;
 }
 
 #left-arrow {
@@ -329,5 +340,45 @@
     position: absolute;
     transform: translate(-1%,420%);
     text-align: center;
-    color: #6a767b;
+    color: #bfd3dc;
 }          
+
+/*
+Animation profile image
+*/
+.ani-rollout_profile{
+ 
+	animation-name: rollout_profile;
+	animation-duration: 3s;
+
+}
+@keyframes rollout_profile {
+  from {
+    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+  }
+
+  to {
+	  transform: scale(0.6);
+  }
+
+}	
+
+/*
+Animation profile image
+*/
+.ani-rollout_profile_back{
+ 
+	animation-name: rollout_profile_back;
+	animation-duration:3s;
+
+}
+@keyframes rollout_profile_back {
+  from {
+    transform: scale(0.6);
+  }
+
+  to {
+	  transform: scale(1);
+  }
+
+}	

@@ -2,6 +2,8 @@
 
 namespace App\Models\Blogs\Traits\Attribute;
 
+use App\Models\BlogPrivacy\BlogPrivacy;
+use App\Models\Friendships\Group;
 use Illuminate\Support\Str;
 use Auth;
 /**
@@ -14,11 +16,32 @@ trait BlogAttribute
      */
     public function getActionButtonsAttribute()
     {
+        if ($this->trashed()) {
+            return '<div class="btn-group action-btn">
+                        '.$this->getRestoreButtonAttribute('btn btn-default btn-flat').'
+                        '.$this->getDeletePermanentlyButtonAttribute('btn btn-default btn-flat').'
+                    </div>';
+        }
         return '<div class="btn-group action-btn">'.
                 $this->getEditButtonAttribute('edit-blog', 'admin.blogs.edit').
                 $this->getDeleteButtonAttribute('delete-blog', 'admin.blogs.destroy').
                 $this->getShowButtonAttribute('delete-blog', 'admin.blogs.show').
                 '</div>';
+    }
+
+    public function getRestoreButtonAttribute($class)
+    {
+        if (access()->allow('delete-user')) {
+            return '<a class="'.$class.'" href="'.route('admin.blog.restore', $this).'" name="restore_blog"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.restore_user').'"></i></a> ';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeletePermanentlyButtonAttribute($class)
+    {
+        return '<a class="'.$class.'" href="'.route('admin.blog.delete-permanently', $this).'" name="delete_blog_perm"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.delete_permanently').'"></i></a> ';
     }
 
     public function isDesignsBlog()
@@ -171,5 +194,25 @@ trait BlogAttribute
         }
         
         return $most;
+    }
+
+    public function getgroups(){
+        $group = $this->privacy->pluck('group_id');
+        $group_names = Group::whereIn('id',$group)->take(2)->pluck('name')->implode(',');
+        $group_count = Group::whereIn('id',$group)->count();
+        $remaining_count = $group_count-2;
+        if($group->count() == 0){
+            $groups = null;
+            return $groups;
+        }
+        else{
+            if($remaining_count > 0){
+            $groups = $group_names." + ".$remaining_count." more ";
+            return $groups;
+        }else{
+            $groups = $group_names;
+            return $groups;
+        }
+        }
     }
 }

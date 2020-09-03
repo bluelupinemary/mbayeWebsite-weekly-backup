@@ -140,7 +140,7 @@ class JobSeekerProfilesController extends Controller
      * Function to save details into education
      */
     public function save_education(Request $request){
-      
+   
         $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
         $id = $JobSeekerProfile->id;
         for($counter = 0; $counter < count($request->start_date); $counter++){
@@ -150,6 +150,7 @@ class JobSeekerProfilesController extends Controller
             $education->start_date = $request->start_date[$counter];
             $education->end_date = $request->end_date[$counter];
             $education->description = $request->description[$counter];
+            $education->education_level = $request->education_level[$counter];
             $education->jobseeker_profile_id = $id;
             $education->created_at = date('Y-m-d H:i:s');
             $education->save();
@@ -261,7 +262,7 @@ public function get_career_details(Request $request){
     $Reference_details= CharacterReferences::where('jobseeker_profile_id', '=', $profile_id)->get();
     $work_experience= WorkExperience::where('jobseeker_profile_id', '=', $profile_id)->get();
     $Education_details= Education::where('jobseeker_profile_id', '=', $profile_id)->get();
-    // dd($Reference_details);
+//  dd($Education_details);
     $resultData=array('User_details'=>$User_details,'JobSeekerProfile_details'=>$JobSeekerProfile_details,'Reference_details'=>$Reference_details,'work_experience'=>$work_experience,'Education_details'=>$Education_details);
     return  $resultData;
     // dd( $User_details);

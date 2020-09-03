@@ -95,28 +95,12 @@ function enable_gizmo(themesh){
 
     homeGizmo = new BABYLON.PositionGizmo(utilLayer);
     homeGizmo2 = new BABYLON.RotationGizmo(utilLayer);
-    // homeGizmo3 = new BABYLON.ScaleGizmo(utilLayer);
-    
-    
     
     utilLayer.utilityLayerScene.autoClearDepthAndStencil = false;
     
     homeGizmo.attachedMesh = themesh;
     homeGizmo.scaleRatio = 2;
     homeGizmo2.attachedMesh = themesh;
-
-    // homeGizmo3.attachedMesh = themesh;
-
-  
-    // homeGizmo.onDragStartObservable.add(function () {
-    //     isGizmoDragging = true;
-    // });
-    // homeGizmo.onDragEndObservable.add(function () {
-    //     isGizmoDragging = false;
-    //     homeGizmo2.attachedMesh = null;
-    //     homeGizmo.attachedMesh = null;
-        
-    // });
 }
 
 

@@ -159,10 +159,11 @@ html, body {
         color:gray;
         font-size: 0.8em;
         width:50%;
+        word-wrap: break-word;
     }
 
     #close-btn{
-        width:1vw;
+        width:1.5vw;
         max-width:100%;
         height:auto; 
         z-index: 1; 
@@ -170,7 +171,7 @@ html, body {
     }
 
     #fullscreen-btn, #minimize-btn{
-        width:1vw;
+        width:1.5vw;
         max-width:100%;
         height:auto; 
         z-index: 1; 
@@ -195,67 +196,67 @@ html, body {
     }
 
     .iframe-loading {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-/* display: none; */
-}
-.lds-ellipsis {
-display: inline-block;
-position: relative;
-width: 80px;
-height: 80px;
-}
-.lds-ellipsis div {
-position: absolute;
-top: 33px;
-width: 13px;
-height: 13px;
-border-radius: 50%;
-background: #0e1a20;
-animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-.lds-ellipsis div:nth-child(1) {
-left: 8px;
-animation: lds-ellipsis1 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(2) {
-left: 8px;
-animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(3) {
-left: 32px;
-animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(4) {
-left: 56px;
-animation: lds-ellipsis3 0.6s infinite;
-}
-@keyframes lds-ellipsis1 {
-0% {
-transform: scale(0);
-}
-100% {
-transform: scale(1);
-}
-}
-@keyframes lds-ellipsis3 {
-0% {
-transform: scale(1);
-}
-100% {
-transform: scale(0);
-}
-}
-@keyframes lds-ellipsis2 {
-0% {
-transform: translate(0, 0);
-}
-100% {
-transform: translate(24px, 0);
-}
-}
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* display: none; */
+    }
+    .lds-ellipsis {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+    .lds-ellipsis div {
+        position: absolute;
+        top: 33px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #0e1a20;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+    .lds-ellipsis div:nth-child(1) {
+        left: 8px;
+        animation: lds-ellipsis1 0.6s infinite;
+    }
+    .lds-ellipsis div:nth-child(2) {
+        left: 8px;
+        animation: lds-ellipsis2 0.6s infinite;
+    }
+    .lds-ellipsis div:nth-child(3) {
+        left: 32px;
+        animation: lds-ellipsis2 0.6s infinite;
+    }
+    .lds-ellipsis div:nth-child(4) {
+        left: 56px;
+        animation: lds-ellipsis3 0.6s infinite;
+    }
+    @keyframes lds-ellipsis1 {
+        0% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    @keyframes lds-ellipsis3 {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(0);
+        }
+    }
+    @keyframes lds-ellipsis2 {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(24px, 0);
+        }
+    }
 
 
 /******** RELATED TO SWEETALERT ***********/
@@ -283,4 +284,27 @@ transform: translate(24px, 0);
     color:#df1613 !important;
     font-size: 1vw !important;
     font-family: 'Nasalization Rg';
+}
+
+
+
+/*extra small and small screens*/
+@media (min-width : 320px) and (max-width : 991px) and (orientation : landscape) {
+    #page-url, #song-url{
+        font-size: 1em;
+        word-wrap: break-word;
+    }
+    #fullscreen-btn, #minimize-btn{
+        width:2vw;
+        max-width:100%;
+    }
+
+    #close-btn{
+        width:2vw;
+    }
+
+    #wikipediaDiv{
+          width: 50vw;
+          height:100vh;
+    }
 }

@@ -6,6 +6,7 @@
 @endsection
 
 @section('content')
+   
     <div>
         <canvas id="canvas"></canvas>
     </div>
@@ -36,6 +37,8 @@
             <img src="{{asset('front')}}/images/rotate-screen.gif" alt="">
         </div>
     </div>
+    <img src="{{asset('storage/profilepicture').'/'.$photo}}" id="userPhoto" alt="Img goes here" style="visibility:hidden;"/>
+    <input type="hidden" id="userGender" value="{{$gender}}"/>
    
 @endsection
 
@@ -43,9 +46,13 @@
     
 
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('front')}}/babylonjs/scenes/participate/participateMaps.js"></script>
+    <script src="{{asset('front')}}/babylonjs/scenes/participate/astronautScene.js"></script>
+    <script src="{{asset('front')}}/babylonjs/scenes/participate/participateCommonJS.js"></script>
     <script src="{{asset('front')}}/babylonjs/scenes/participate/participateScene.js"></script>
     
-    {{-- <script src="{{asset('front')}}/babylonjs/scenes/participate/astronautScene.js"></script> --}}
+    
+    
     {{-- <script src="MbayeJS/030620/AstronautSceneJS.js"></script> 
         <script src="MbayeJS/030620/MainSceneJS.js"></script>  --}}
 

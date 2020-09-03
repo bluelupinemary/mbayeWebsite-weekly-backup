@@ -74,7 +74,7 @@ export default {
     },
     computed: {
         notificationCount () {
-            return this.notifications && this.notifications.length
+            return this.notifications && Object.keys(this.notifications).length;
         }
     },
     methods: {
@@ -85,6 +85,7 @@ export default {
             .then((response) => {
                 this.notifications = response.data;
                 console.log(this.notifications);
+                // console.log('length: '+Object.keys(this.notifications).length);
                 })
             .catch(function (error) {
                 console.log(error);
@@ -102,7 +103,7 @@ export default {
                 } else if(notification.type.includes('FriendRequestNotification')) {
                     window.open('/requests', '_blank');
                 } else if(notification.type.includes('AcceptRequestNotification')) {
-                    window.open('/friends', '_blank');
+                    window.open('/friends?friend_id='+notification.data.user.id, '_blank');
                 } else if(notification.type.includes('GeneralCommentNotification')) {
                     window.open('/single_general_blog/'+notification.data.blog_id, '_blank');
                 } else if(notification.type.includes('CommentNotification')) {

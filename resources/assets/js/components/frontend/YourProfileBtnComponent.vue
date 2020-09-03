@@ -28,7 +28,7 @@ export default {
     },
     computed: {
         notificationCount () {
-            return this.notifications && this.notifications.length
+            return this.notifications && Object.keys(this.notifications).length;
         }
     },
     methods: {

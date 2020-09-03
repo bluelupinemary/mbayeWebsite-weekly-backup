@@ -19,8 +19,8 @@ class CreateBlogPanelDesignTable extends Migration
             $table->integer('blog_id')->unsigned()->default(0);
             $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
 
-            $table->bigInteger('design_id')->unsigned()->default(0);
-            $table->foreign('design_id')->references('id')->on('game_designed_panels')->onDelete('cascade');
+            $table->bigInteger('panel_id')->unsigned()->default(0);
+            $table->foreign('panel_id')->references('id')->on('game_designed_panels')->onDelete('cascade');
 
             $table->integer('user_id')->unsigned()->default(0);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

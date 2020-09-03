@@ -261,7 +261,9 @@
                             <p>{{$comment->body}}</p>
                             </div>
                             <div class="deletebutton">
-                            <a href="{{ url('admin/deletecomment/'.$comment->id) }}" class="btn btn-danger" id="del">delete</a>
+                            <a href="{{ url('admin/deletecomment/'.$comment->id) }}" class="btn btn-danger Delete" id="del" name="Delete" data-method="get" data-trans-button-cancel="Cancle"
+                              data-trans-button-confirm="Confirm"
+                              data-trans-title="Are you sure you want to delete..??" data-action="{{ url('admin/deletecomment/'.$comment->id) }}">Delete</a>
                             </div>
                         </div> 
                         @endforeach

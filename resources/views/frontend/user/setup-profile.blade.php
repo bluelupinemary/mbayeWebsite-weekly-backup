@@ -1,5 +1,5 @@
 @extends('frontend.layouts.profile_layout')
-<meta name="url" content="{{ url('') }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @section('after-styles')
        
 
@@ -14,6 +14,7 @@
 @section('content')  
         <div class="collage-editor">
             <button class="cancel-btn" type="button">Cancel</button>
+            <button class="save-btn" type="button">Save</button>
             
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
@@ -31,8 +32,8 @@
             <div class="sidenav-left">
             <!-- left controls -->
          
-            <div id="main">
-                <span  class="arrow" style="font-size:17px;font-family:Nasalization;cursor:pointer" onclick="openNav()">&#8811;</span>
+            <div id="main"  >
+                <span  class="arrows" style="font-size:17px;font-family:Nasalization;cursor:pointer" onclick="openNav()">&#8811;</span>
               </div>
             </div>
 
@@ -42,10 +43,10 @@
 
             <!-- section for drawing canvas -->
             <div class="canvas">
-                <div class="start-message">
+                <div class="start-message" style="display:none">
                     <p>
                         <label for="startImageLoader" class="custom-file-upload">
-                            <i class="far fa-images"></i> Upload image(s) to start
+                            <i class="far fa-images"></i> Upload Your Image
                         </label>
                     </p>
                     <input type="file" name="image" id="startImageLoader" accept="image/x-png,image/jpeg" multiple>
@@ -277,11 +278,11 @@
                     <div class="modal-body work-modal-body">
                         <div class="work-experience-body main_work_experience_div workDiv_1">
                             <fieldset>
-                                <button type="button"  class="close clone-btn-workexperience"  aria-label="Clone">
-                                    <span aria-hidden="true" class="btn-plus">&#8853;</span>
+                                <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
+                                    <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
                                   </button>
-                                  <button type="button"  class="close remove-btn-workexperience"  aria-label="Clone" onclick="remove_work_experience(this)">
-                                    <span aria-hidden="true" class="btn-plus" >&#8854;</span>
+                                  <button type="button"  class="close remove-btn-workexperience"   title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
+                                    <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                     </button>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 input-group-sm">
@@ -337,7 +338,7 @@
 
                      
                      
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <button type="button" class="close" data-dismiss="modal"   aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                       
@@ -350,34 +351,45 @@
                         <div class="education-body main_education_div div_1">
                            
                             <fieldset>
-                                <button type="button"  class="close clone-btn-education"  aria-label="Clone">
-                                    <span aria-hidden="true" class="btn-plus" >&#8853;</span>
+                                <button type="button"  class="close clone-btn-education  "  title="Add More Education" aria-label="Clone">
+                                    <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
                                   </button>
 
-                                  <button type="button"  class="close remove-btn-education"  aria-label="Clone" onclick="remove(this)">
-                                    <span aria-hidden="true" class="btn-plus" >&#8854;</span>
+                                  <button type="button"  class="close remove-btn-education"  title="Remove Education " aria-label="Clone" onclick="remove(this)">
+                                    <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                     </button>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 input-group-sm">
                                           <label for="StartDate">Start Date<span style="color:red">*</span></label>
-                                          <input type="date" class="form-control" id="StartDate"  name="start_date[]" >
+                                          <input type="date" class="form-control" id="StartDate"  name="start_date[]" required >
                                         </div>
                                         <div class="form-group col-md-6 input-group-sm">
                                           <label for="EndDate">End Date<span style="color:red">*</span></label>
-                                          <input type="date" class="form-control" id="EndDate" name="end_date[]"  >
+                                          <input type="date" class="form-control" id="EndDate" name="end_date[]" required >
                                         </div>
                                       </div>
+                                      <div class="form-group input-group-sm">
+                                        <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
+                                            <select class="form-control" name="education_level[]" required>
+                                                <option value="Primary">Primary</option>
+                                                <option value="Secondary">Secondary</option>
+                                                <option value="Undergraduate">Undergraduate</option>
+                                                <option value="Graduate">Graduate</option>
+                                                <option value="Post-graduate">Post-graduate</option>
+                                            </select>
+                                    </div> 
+
                                         <div class="form-group input-group-sm">
                                             <label for="SchoolName">School Name<span style="color:red">*</span></label>
-                                            <input type="text" class="form-control" id="SchoolName" name="school_name[]"  >
+                                            <input type="text" class="form-control" id="SchoolName" name="school_name[]"  required>
                                         </div>
                                       <div class="form-group input-group-sm">
                                         <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" id="FieldOfStudy"  name="field_of_study[]"  >
+                                        <input type="text" class="form-control" id="FieldOfStudy"  name="field_of_study[]"  required>
                                       </div>
                                       <div class="form-group input-group-sm">
                                         <label for="Description">Description<span style="color:red">*</span></label><br>
-                                        <textarea id="Description" name="description[]" rows="7" cols="70">
+                                        <textarea id="Description" name="description[]" rows="7" cols="72" required>
                                             </textarea>
                                       </div>
                               
@@ -418,11 +430,11 @@
                     <div class="modal-body reference-modal-body">
                        <div class="reference-body  main_reference_div referenceDiv_1">
                          <fieldset> 
-                                <button type="button"  class="close clone-btn-reference"  aria-label="Clone">
-                                    <span aria-hidden="true" class="btn-plus">&#8853;</span>
+                                <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
+                                    <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
                                   </button>
-                                  <button type="button"  class="close remove-btn-reference"  aria-label="Clone" onclick="remove_reference(this)">
-                                    <span aria-hidden="true" class="btn-plus" >&#8854;</span>
+                                  <button type="button"  class="close remove-btn-reference"  aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
+                                    <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                     </button>
                                         <div class="form-group input-group-sm">
                                             <label for="Name"> Name<span style="color:red">*</span></label>
@@ -507,23 +519,23 @@
                                       <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                      Add Current Address
                                       </button>
-                                    </br>
+                                    <br>  <br>
                                       <div class="collapse" id="collapseExample">
                                             <div class="form-group input-group-sm ">
-                                                <label for="pCountry">Present Country</label>
-                                                <select name="country" class="countries "  id="countryId">
-                                                    <option value="" class='dropdown-item'>Select Country</option>
+                                                <label for="country">Present Country</label>
+                                                <select class="countries" name="country" id="countryId" required>&#x25BC;
+                                                    <option value="">Select</option>
                                                 </select>
                                             </div>
                                             <div class="form-group input-group-sm">
-                                                <label for="pCity">Present State</label>
-                                                <select name="state" class="states  " id="stateId">
+                                                <label for="state">Present State</label>
+                                                <select id="stateId" class="states" name="state" required>
                                                     <option value="">Select State</option>
                                                 </select>
                                             </div>
                                             <div class="form-group input-group-sm">
-                                                <label for="pCity">Present City</label>
-                                                <select name="city" class="cities " id="cityId">
+                                                <label for="city">Present City</label>
+                                                <select id="cityId" class="cities" name="city" required>
                                                     <option value="">Select City</option>
                                                 </select>
                                             </div>
@@ -684,6 +696,19 @@
 <script>
     $(document).ready(function() {
         var url = $('meta[name="url"]').attr('content');
+//         let token = document.head.querySelector('meta[name="csrf-token"]');
+// if (token) {
+//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+// } else {
+//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+// }
+
+
+// $.ajaxSetup({
+//     headers: {
+//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     }
+// });
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
         var canvas = document.getElementById("c");
@@ -713,7 +738,7 @@
             save();
         }); 
         
-        
+        $('[data-toggle="tooltip"]').tooltip();
         //function to show DIV of text styles selector when text is selected
         canvas.on('selection:created', function() {
             if(canvas.getActiveObject().get('type')==="i-text"){
@@ -1880,6 +1905,8 @@
         $('.instruction-close-btn').click(function() {
             $('.instructions').fadeOut();
             $('#main').show();
+            $('.start-message').show();
+            
         });
 
         // show instruction text on hover of each box
@@ -1910,8 +1937,9 @@
                  if(count.length>1){
                     $(".work-experience-body:last .clone-btn-workexperience").hide();
                     $(".work-experience-body:last .remove-btn-workexperience").show();
+
                  }
-           
+           $(".work-experience-body:last #start_date").focus().select();
         });
         //work experience save
         $('.work-experience-done').click(function(e) {
@@ -2073,11 +2101,12 @@
                     $(".education-body:last .clone-btn-education").hide();
                     $(".education-body:last .remove-btn-education").show();
                  }
-                 
+                 $(".education-body:last #StartDate").focus().select();    
         });
  
     //education save
     $('.education-done').click(function(e) {
+        
             e.preventDefault();
             var form_url = url+'/save_education';
             var $form = $('form#education-form');
@@ -2085,7 +2114,7 @@
             var post_data = new FormData($form[0]);
             var count = $(".education-body");
             totalDiv=count.length;
-            var alert_status;
+            var alert_status=false;
           
             for(var i=1;i<=totalDiv;i++){
 
@@ -2224,7 +2253,7 @@
                                 $(".reference-body:last .clone-btn-reference").hide();
                                 $(".reference-body:last .remove-btn-reference").show();
                             }
-                          
+                            $(".reference-body:last #Name").focus().select();    
                         
                 });
 

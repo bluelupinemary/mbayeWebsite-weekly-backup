@@ -144,7 +144,7 @@ class FrontendController extends Controller
         $tag = $request['tag'];
         $id = $request['id'];
         $user = Auth::user();
-        if($user)         return view('frontend.blog.all_blogs_tagwise',compact('tag','id'));
+        if($user)         return view('frontend.blog.blogview.tagwise.all_blogs_tagwise',compact('tag','id'));
         return view('frontend.auth.login');
     }
     public function blog(){
@@ -282,8 +282,13 @@ class FrontendController extends Controller
 
     public function participate_mbaye(){
         $user = Auth::user();
-        
-        if($user) return view('frontend.game.participate_mbaye');
+      
+
+        if($user){
+            $userPhoto = Auth::user()->getProfilePicture();
+            $userGender = Auth::user()->getGender();
+            return view('frontend.game.participate_mbaye',["photo"=>$userPhoto, "gender"=>$userGender]);
+        }
         return view('frontend.pages.welcome_mbaye');
     }
 
@@ -315,9 +320,9 @@ class FrontendController extends Controller
         if($user)         return view('frontend.blog.blogview.general.blog_general');
         return view('frontend.auth.login');
     }
-    public function blog_general_all2(){
+    public function blog_general_all_old(){
         $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.general.blog_general2');
+        if($user)         return view('frontend.blog.blogview.general.blog_general_old');
         return view('frontend.auth.login');
     }
    /* For general blogs userwise */
@@ -440,7 +445,8 @@ public function blog_general_friend_post(Request $request){
             $country = $user->country;
             return view('frontend.blog.blogview.jobseekers.profiles',compact('country'));
         } else {
-            return view('frontend.auth.login');
+            $country = "";
+            return view('frontend.blog.blogview.jobseekers.profiles',compact('country'));
         }
     }
   /* For career blogs my */

@@ -23,7 +23,7 @@
         <div>
     </section>
 
-    <newblog-component :user_id="{{$id}}" :tag="'careers'"></newblog-component>
+    <newblog-component :user="{{Auth::user()}}" :user_id="{{$id}}" :tag="'careers'"></newblog-component>
 
     @if(Auth::user())
     <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
@@ -134,7 +134,6 @@
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/JS/hammer.min.js')}}"></script>
     <script src="{{asset('front/JS/circletype.min.js')}}"></script>
-    <script src="{{asset('front/JS/reflection.js')}}"></script>
     <script type="text/javascript">
 
     

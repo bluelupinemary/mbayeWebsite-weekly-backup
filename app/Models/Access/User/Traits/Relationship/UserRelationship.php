@@ -75,7 +75,17 @@ trait UserRelationship
     }
 
     public function featureduser()
-      {
-          return $this->hasOne(FeaturedUser::class,'user_id');
-      }
+    {
+        return $this->hasOne(FeaturedUser::class,'user_id');
+    }
+
+    // override the toArray function (called by toJson)
+    public function toArray() {
+        // get the original array to be displayed
+        $data = parent::toArray();
+
+        $data['earthlings_count'] = $this->getFriends()->count();
+
+        return $data;
+    }
 }

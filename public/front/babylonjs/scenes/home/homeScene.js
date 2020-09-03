@@ -29,7 +29,7 @@ var sun;
 
 //define constants for zoom in/out limits
 const LOWER_RADIUS_VAL = 1;                                         //zoom in limit                       
-const UPPER_RADIUS_VAL = 1500;                                      //zoom out limit
+const UPPER_RADIUS_VAL = 2000;                                      //zoom out limit
 var isHomeCounterReady = false;
 
 let theCurrRadius;
@@ -57,7 +57,11 @@ function createScene(){
     enable_webcamera();
 
     enable_init_webcamera();
+
+    create_solar_texts();
+    create_ruru_texts();
     
+    create_villa_texts();
     return homeScene;
 } //end of create scene function
 
@@ -79,7 +83,7 @@ function create_init_camera(){
     //for the right mouse button panning function; ;0 -no panning, 1 - fastest panning
     camera.panningSensibility = 10; 
     camera.upperBetaLimit = 10;
-    camera.panningDistanceLimit = 1500;
+    camera.panningDistanceLimit = 2000;
     camera.attachControl(canvas,true);
     camera.pinchPrecision = 1;
     homeScene.activeCamera = camera;
@@ -108,12 +112,12 @@ function create_init_light(){
 
 function create_init_skybox(){ 
     var skybox = BABYLON.MeshBuilder.CreateBox("initSkybox", {size:8500.0}, homeScene);
-    // skybox.position.y = -3000;
-     skybox.position.y = -500;
-    skybox.position.z = 1000;
+   
+    skybox.position = new BABYLON.Vector3(942,-500,-1500);
+
     skybox.rotation.y = BABYLON.Tools.ToRadians(-60);
-    skybox.isPickable = false;
-    skybox.checkCollisions = true;
+    // skybox.isPickable = false;
+    skybox.infiniteDistance = true;
     var skyboxMaterial = new BABYLON.StandardMaterial("initSkyboxMaterial", homeScene);
     skyboxMaterial.backFaceCulling = false;
    
@@ -125,12 +129,13 @@ function create_init_skybox(){
         "front/finalSkybox/ny.png",   
         "front/finalSkybox/nz.png",    
     ];
-
+    
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture.CreateFromImages(files, homeScene);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.disableLighting = true;
     skyboxMaterial.specular = new BABYLON.Vector3(0,0,0);
-    skybox.material = skyboxMaterial;   
+    skybox.material = skyboxMaterial;  
+
     skyboxMaterial.freeze();
     skybox.freezeWorldMatrix();
     return skybox;
@@ -330,21 +335,21 @@ let videoHome_obj, videoHome_obj2;
 let theVideoMatl;
 function add_video_to_mesh(vidNo){
     let mat = new BABYLON.StandardMaterial("videoMat", homeScene);
-    if(vidNo == 2){
-        videoTexture.video.pause();
-        videoTexture.currentTime = 0;
-        if(!isVideoSkipped && !isOverlayRemoved){
-            document.getElementById('firstVideoOverlay').remove();
-            document.getElementById('placeholderDiv').remove();
-        }
-        videoTexture = videoTexture2;
-        mat.diffuseTexture = videoTexture;
-        videoHome_obj.material = mat;            //top disc
-        videoHome_obj2.material = mat;           //bottom disc
-    }
+    // if(vidNo == 2){
+    //     videoTexture.video.pause();
+    //     videoTexture.currentTime = 0;
+    //     if(!isVideoSkipped && !isOverlayRemoved){
+    //         document.getElementById('firstVideoOverlay').remove();
+    //         document.getElementById('placeholderDiv').remove();
+    //     }
+    //     videoTexture = videoTexture2;
+    //     mat.diffuseTexture = videoTexture;
+    //     videoHome_obj.material = mat;            //top disc
+    //     videoHome_obj2.material = mat;           //bottom disc
+    // }
     if(!videoTexture){
         videoTexture = new BABYLON.VideoTexture("discVideo1", ["front/videos/homeIntro.webm","front/videos/homeIntro.mp4"], homeScene, false, false);
-        videoTexture2 = new BABYLON.VideoTexture("discVideo2", ["front/videos/homeVideoTrim.webm","front/videos/homeVideoTrim.mp4"], homeScene, false, false);
+        // videoTexture2 = new BABYLON.VideoTexture("discVideo2", ["front/videos/homeVideoTrim.webm","front/videos/homeVideoTrim.mp4"], homeScene, false, false);
         mat.backFaceCulling = false;
         
         videoTexture.invertX = true;
@@ -355,29 +360,29 @@ function add_video_to_mesh(vidNo){
     
         videoTexture.uScale = -1.1;
         videoTexture.vScale = 1.15;
-        videoTexture2.uScale = -1;
+        // videoTexture2.uScale = -1;
         mat.diffuseTexture = videoTexture;
 
         videoHome_obj.material = mat;           //the top disc
         videoHome_obj2.material = mat;          //the bottom disc
-        videoTexture2.video.pause();
+        // videoTexture2.video.pause();
         videoTexture.video.loop = true;
         videoTexture.video.pause();
       
         theVideoMatl = mat;
 
-        let agreeMatl = new BABYLON.StandardMaterial("agreeMatl", homeScene);
-        agreeMatl.diffuseTexture = new BABYLON.Texture("front/textures/home/information.png", homeScene);
-        agreeMatl.diffuseTexture.hasAlpha = true;
-        agreeMatl.backFaceCulling = false;
-        agreeMatl.invertX = true;
-        agreeCameraUseDisc.material = agreeMatl;
+        // let agreeMatl = new BABYLON.StandardMaterial("agreeMatl", homeScene);
+        // agreeMatl.diffuseTexture = new BABYLON.Texture("front/textures/home/information.png", homeScene);
+        // agreeMatl.diffuseTexture.hasAlpha = true;
+        // agreeMatl.backFaceCulling = false;
+        // agreeMatl.invertX = true;
+        // agreeCameraUseDisc.material = agreeMatl;
     }
     
-    if(vidNo==2){ 
-        videoTexture.video.play();
+    // if(vidNo==2){ 
+    //     videoTexture.video.play();
         
-    }
+    // }
     
    
    
@@ -632,13 +637,27 @@ var onOutPlanet =(meshEvent)=>{
 
 
 var onOverSun =(meshEvent)=>{
+    var theMeshID = meshEvent.source.id;
   
-    var theMeshID = meshEvent.source.id 
+    let lbl = document.createElement("span");
+    lbl.setAttribute("id", "sunLbl");
+    var sty = lbl.style;
+    sty.position = "absolute";
+    sty.lineHeight = "1.5em";
+    sty.padding = "0.2%";
+    sty.color = "#efad0c  ";
+    sty.fontFamily = "Courgette-Regular";
+    sty.fontSize = "1.5em";
+    sty.top = meshEvent.pointerY + "px";
+    sty.left = meshEvent.pointerX + "px";
+    sty.cursor = "pointer";
+    
+ 
     if(initWebCamScreen){
         if(theMeshID == "sun"){
             initWebCamScreen.setEnabled(true);
             initWebCamScreen.isVisible = true;  
-            console.log(" cam's position: ",initCamera.position, initWebCamScreen.radius);
+            // console.log(" cam's position: ",initCamera.position, initWebCamScreen.radius);
            
             let camX = initCamera.position.x;
             let camY = initCamera.position.y;
@@ -747,6 +766,11 @@ var onOverSun =(meshEvent)=>{
 
 
             initWebCamScreen.position = new BABYLON.Vector3(x,y,z);
+
+            document.body.appendChild(lbl);
+            lbl.textContent = "All About You";
+
+
         } 
     } 
 };
@@ -759,6 +783,9 @@ var onOutSun =(meshEvent)=>{
         initWebCamScreen.setEnabled(false);
         initWebCamScreen.isVisible = false; 
     }
+    while (document.getElementById("sunLbl")) {
+        document.getElementById("sunLbl").parentNode.removeChild(document.getElementById("sunLbl"));
+    } 
 };
 
 
@@ -780,12 +807,128 @@ function add_action_mgr(thePlanet){
 
 
 
+//######################################################### FUNCTIONS TO CREATE TEXTS BELOW THE HALO #############################################################
+//function to create the text speech of solar
+function create_solar_texts(){
+    //create solar's image
+    let solar = BABYLON.MeshBuilder.CreatePlane("Solar", {width:1100, height: 898}, homeScene);
+    solar.position = new BABYLON.Vector3( 1259,-2571,-537.96);
+    solar.rotationQuaternion = new BABYLON.Quaternion(-0.0610, -0.8762, 0.1403, -0.4562);
 
 
+    var solarMatl = new BABYLON.StandardMaterial("solarMatl", homeScene);
+    solarMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/solarSitting2.png", homeScene);
+    solarMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/solarSitting2.png", homeScene);
+    solarMatl.backFaceCulling = false;
+    solar.material = solarMatl;
+    initLight.includedOnlyMeshes.push(solar);
+//    enable_home_gizmo(solar);
+   
+
+    //create plane for the texts
+    let plane = BABYLON.MeshBuilder.CreatePlane("TextPlane", {width:3000, height: 2000}, homeScene);
+    plane.position = new BABYLON.Vector3(109.97,-2520,-1992);
+    plane.rotationQuaternion = new BABYLON.Quaternion(-0.0659,  -0.8884, 0.1383, -0.4323);
+   
+   
+    let discmatl = new BABYLON.StandardMaterial("planeMatl", homeScene);
+    discmatl.diffuseColor = new BABYLON.Color3(1,0,0);
+    discmatl.backFaceCulling = false;
+    plane.material = discmatl;
+    
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
+
+    //create scrollable viwer for solar's text
+    var sv = new BABYLON.GUI.ScrollViewer();
+    console.log("sv: ",sv);
+    sv.thickness = 0;
+    sv.width = 1;
+    sv.height = 1;
+    sv.barColor = "green";
+
+    sv.thumbLength = 0.1;
+    sv.thumbHeight = 0.1;
+    sv.verticalBar.border = 0;
+    
+
+    sv.onPointerDownObservable.add(function() {
+        initCamera.detachControl(canvas);
+    });
+    sv.onPointerUpObservable.add(function() {
+        initCamera.attachControl(canvas,true);
+    });
+    advancedTexture.addControl(sv);
+
+    //create holder of solar's text image
+    var rc = new BABYLON.GUI.Rectangle();
+    rc.thickness = 0;
+    rc.width = 1;
+    rc.height = 7.3;
+    rc.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    rc.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+   
+    sv.addControl(rc);
+
+    //create the image and add to the rectangle holder
+    var image = new BABYLON.GUI.Image("solarTexts", "front/images3D/homeScene/solarSpeech.png");
+    image.width = 1;
+    image.height = 1;
+    rc.addControl(image);
+}
 
 
+function create_ruru_texts(){
+    //create image of ruru
+    let ruru = BABYLON.MeshBuilder.CreatePlane("Ruru", {width:1000, height: 433}, homeScene);
+    ruru.position = new BABYLON.Vector3( 1019,1679,-1629);
+    ruru.rotationQuaternion = new BABYLON.Quaternion(-0.0112, -0.9151,0.0009, -0.4019);
+    // enable_home_gizmo(ruru);
 
+    var ruruMatl = new BABYLON.StandardMaterial("ruruMatl", homeScene);
+    ruruMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/ruruHome.png", homeScene);
+    ruruMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/ruruHome.png", homeScene);
+    ruruMatl.backFaceCulling = false;
+    ruru.material = ruruMatl;
+    initLight.includedOnlyMeshes.push(ruru);
 
+    let ruruSpeech = BABYLON.MeshBuilder.CreatePlane("RuruSpeech", {width:1542, height: 2000}, homeScene);
+    ruruSpeech.position = new BABYLON.Vector3( 354.12,1699,-2227);
+    ruruSpeech.rotationQuaternion = new BABYLON.Quaternion(0.0094,0.9239,-0.0178,0.3815);
+
+    var ruruSpeechMatl = new BABYLON.StandardMaterial("ruruMatl", homeScene);
+    ruruSpeechMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/ruruText.png", homeScene);
+    ruruSpeechMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/ruruText.png", homeScene);
+    ruruSpeechMatl.backFaceCulling = false;
+    ruruSpeech.material = ruruSpeechMatl;
+    initLight.includedOnlyMeshes.push(ruruSpeech);
+}
+
+function create_villa_texts(){
+    //create image of villa
+    let villa = BABYLON.MeshBuilder.CreatePlane("Villa", {width:964, height: 351}, homeScene);
+    villa.position = new BABYLON.Vector3( -982,-3818,3504);
+    villa.rotationQuaternion = new BABYLON.Quaternion(0.1554, -0.0037,-0.0005, 0.9878);
+
+    // enable_home_gizmo(villa);
+
+    var villaMatl = new BABYLON.StandardMaterial("villaMatl", homeScene);
+    villaMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/villaHome.png", homeScene);
+    villaMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/villaHome.png", homeScene);
+    villaMatl.backFaceCulling = false;
+    villa.material = villaMatl;
+    initLight.includedOnlyMeshes.push(villa);
+
+    let villaSpeech = BABYLON.MeshBuilder.CreatePlane("villaSpeech", {width:2500, height: 1200}, homeScene);
+    villaSpeech.position = new BABYLON.Vector3(  -900,-2979,3362);
+    villaSpeech.rotationQuaternion = new BABYLON.Quaternion(-0.0003,-0.0452,-0.0069,0.9988);
+
+    var villaSpeechMatl = new BABYLON.StandardMaterial("ruruMatl", homeScene);
+    villaSpeechMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/villaText.png", homeScene);
+    villaSpeechMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/villaText.png", homeScene);
+    villaSpeechMatl.backFaceCulling = false;
+    villaSpeech.material = villaSpeechMatl;
+    initLight.includedOnlyMeshes.push(villaSpeech);
+}
 
 
 
@@ -864,7 +1007,7 @@ function add_home_mouse_listener(){
             if(pickinfo.hit){
               
                 let theInitMesh = pickinfo.pickedMesh;
-                console.log("clicked:", theInitMesh.name);
+                console.log("clicked:", theInitMesh.name, theInitMesh.position, theInitMesh.rotationQuaternion);
                 
                 if(theInitMesh.name === "a"){
                     agreeCameraUseDisc.isVisible = false;
@@ -877,25 +1020,21 @@ function add_home_mouse_listener(){
                         isAssignedWebcam = true;
                        
                     },5000);
-
-                }else if(theInitMesh.name === "homeEarth"){
-                    // initCamera.setTarget(theInitMesh);
-                    window.open('participateMbaye',"_self");     
-                }else if(theInitMesh.name === "homeMars"){
-                    window.open('captainMbaye',"_self");     
-                }else if(theInitMesh.name === "testdome_mesh"){
-                    // initCamera.position = new BABYLON.Vector3(0,-800,0);
+                    page_under_development
+                }else if(theInitMesh.name === "homeEarth"){ 
+                    window.location.href = "participateMbaye";   
+                }else if(theInitMesh.name === "homeMercury"){ 
+                    window.location.href = "listusers";   
+                }else if(theInitMesh.name === "homeMars"){    
+                    window.location.href = "captainMbaye";
                 }else if(theInitMesh.name === "homeNeptune"){
-                    // initCamera.setTarget(theInitMesh);
-                    // initCamera.radius = 400;
-                    window.open('visitingMbaye',"_self");
-                }else if(theInitMesh.name === "sun"){
-                    // window.open('http://localhost/mbaye-faith/index.php/home/login',"_self");     
+                    window.location.href = "visitingMbaye";
                 }else if(theInitMesh.name === "homeMoon"){
-                    // window.open('MbayeGamePage.php',"_self");     
-                }
-                else if(theInitMesh.name === "homeUranus"){
-                    window.open('flowersMbaye',"_self");     
+                    window.location.href = "blogview/designed-panel/all";
+                }else if(theInitMesh.name  === "homePluto"){
+                    window.location.href = "blogview/career";
+                }else if(theInitMesh.name === "homeUranus"){
+                    window.location.href = "flowersMbaye";
                 }else if(theInitMesh.name === "homeJupiter"){
                     let cNo = $('#storyChapter').val();
                     $.ajax({
@@ -910,7 +1049,7 @@ function add_home_mouse_listener(){
                     });
                 }
                 if(theInitMesh.name === "homeSun" || theInitMesh.name === "sun"){
-                    window.open('login',"_self");     
+                    window.location.href = "participateMbaye";    
                 }
 
             
@@ -1106,26 +1245,21 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenDiv").remove();
 
     isHomeCounterReady = true;
-    if(videoTexture) videoTexture.video.play();
-    startTime = new Date();
+    
+  
+    if(videoTexture){
+        videoTexture.video.play();
+    }
+   
+    
+   
+    // startTime = new Date();
 
     engine.runRenderLoop(function () {
 
         if(theScene){
             theScene.render();
-            
-            if(startTime && !isIntroDone){
-                // if(videoTexture.video) console.log(videoTexture.video.currentTime);
-                let currTime = new Date();
-                // if((currTime - startTime) > TWO_MIN) {
-                //     add_video_to_mesh(2);
-                //     isIntroDone = true;
-                //  }
-                if(videoTexture.video.currentTime > 246) {
-                        add_video_to_mesh(2);
-                        isIntroDone = true;
-                }
-            }
+     
         }    
     }); 
 }); 
@@ -1141,39 +1275,39 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 
-let isFirstClick = false;
-let isVideoSkipped = false;
+// let isFirstClick = false;
+// let isVideoSkipped = false;
 
-$('#firstVideoOverlay').click(function() {
-    if(!isIntroDone){
-        $(this).hide();
-        if(!isFirstClick){
-                $(".overlayTxt").removeAttr("id");
-                $(".overlayTxt").removeClass( "overlayTxt" ).addClass("glowOverlayTxt");
-                isFirstClick = true;
-        }
-    }
-}); 
+// $('#firstVideoOverlay').click(function() {
+//     if(!isIntroDone){
+//         $(this).hide();
+//         if(!isFirstClick){
+//                 $(".overlayTxt").removeAttr("id");
+//                 $(".overlayTxt").removeClass( "overlayTxt" ).addClass("glowOverlayTxt");
+//                 isFirstClick = true;
+//         }
+//     }
+// }); 
 
-$( '#placeholderDiv').click(function() {
-    if(!isIntroDone){
-        $('#firstVideoOverlay').show();
-    }
-  });
+// $( '#placeholderDiv').click(function() {
+//     if(!isIntroDone){
+//         $('#firstVideoOverlay').show();
+//     }
+//   });
 
-$('#skipVideo').on('click', function(evt){
-    add_video_to_mesh(2);
-    isVideoSkipped = true;
-    document.getElementById('firstVideoOverlay').remove();
-    document.getElementById('placeholderDiv').remove();
-});   
+// $('#skipVideo').on('click', function(evt){
+//     add_video_to_mesh(2);
+//     isVideoSkipped = true;
+//     document.getElementById('firstVideoOverlay').remove();
+//     document.getElementById('placeholderDiv').remove();
+// });   
 
-let isOverlayRemoved = false;
-$('#hideOverlay').on('click', function(evt){
-    document.getElementById('firstVideoOverlay').remove();
-    document.getElementById('placeholderDiv').remove();
-    isOverlayRemoved = true;
-}); 
+// let isOverlayRemoved = false;
+// $('#hideOverlay').on('click', function(evt){
+//     document.getElementById('firstVideoOverlay').remove();
+//     document.getElementById('placeholderDiv').remove();
+//     isOverlayRemoved = true;
+// }); 
 
 let isVideoPlaying = true;
 $(document).keydown(function(event) { 

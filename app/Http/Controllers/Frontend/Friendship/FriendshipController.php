@@ -130,20 +130,25 @@ public function searchuser(Request $request){
 //   else return view ('frontend.friendship.users')->withMessage('No Details found. Try to search again !');
 }
 
-public function listfriends(){
+public function listfriends(Request $request){
     $u = Auth::user();
-    $friendships = $u->getFriends($perPage = 2);;
+    $friendships = $u->getFriends($perPage = 2);
+
+    $friend = null;
+    if($request->has('friend_id') && $request->friend_id != null) {
+        $friend = User::find($request->friend_id);
+    }
     // dd($friendships);
     if(count($friendships)>0){
         // foreach ($friendships as $friendship) {
         //     $users[] = User::find($friendship->sender_id);
         // }
         // dd( compact('users'));
-        return view('frontend.friendship.friends');
+        return view('frontend.friendship.friends', compact('friend'));
         }else{
             // dd("no friend");
             // $users = NUll;
-            return view ('frontend.friendship.friends')->withMessage('No Details found. Try to search again !');
+            return view ('frontend.friendship.friends', compact('friend'))->withMessage('No Details found. Try to search again !');
         }
 }
 

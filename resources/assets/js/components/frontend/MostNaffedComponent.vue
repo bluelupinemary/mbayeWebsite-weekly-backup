@@ -1,18 +1,21 @@
 <template>
     <div class="most-naffed" v-if="most_naffed_blogs.length">
         <span class="title_text">Most Naffed</span>
-        <div class="container-fluid">
+        <!-- <div class="container-fluid"> -->
             <div id="carouselExample" class="carousel slide" data-interval="false">
                 <div class="carousel-inner row w-100 mx-auto" role="listbox">
                     <div v-for="(blog,index) in most_naffed_blogs" :key="index" :class="'carousel-item col-md-4 carousel-'+index+' '+isActive(index)" @click.prevent="viewBlog(blog.id)">
                         <h2 v-if="index==0" class="blog_name" :id="'blog_name_h'+index">Most Naffed!</h2>
-                        <h2 v-else-if="index==1" class="blog_name" :id="'blog_name_h'+index">2nd Most Naffed!</h2>
-                        <h2 v-else-if="index==2" class="blog_name" :id="'blog_name_h'+index">3rd Most Naffed!</h2>
-                        <h2 v-else class="blog_name" :id="'blog_name_h'+index">{{index+1+((current_page-1)*3)}}th Most Naffed!</h2>
+                        <h2 v-else class="blog_name" :id="'blog_name_h'+index">{{getRank(index+1)}} Most Naffed!</h2>
                         <h2 class="naff_count" :id="'blog_name_'+index">
                             <span style="color:#28e9e2 !important">Naff Count: </span> 
                             <span style="color:gold !important">{{blog.naff_likes_count}}</span>
                         </h2>
+                        <div class="slide-overlay">
+                            <p v-if="index==0" class="rank" :id="'rank_'+index">Most naffed!</p>
+                            <p v-else class="rank" :id="'rank_'+index">{{getRank(index+1)}} Most naffed!</p>
+                            <p class="naff-count" :id="'naff_count_'+index">Naff Count: {{blog.naff_likes_count}}</p>
+                        </div>
                         <img :src="'/storage/img/general_blogs/'+blog.featured_image"  id="1" :class="'img-fluid mx-auto d-block img-responsive img-responsive-'+index" @load="layoutCell('img-responsive-'+index, index)">
                     </div>
                     <!-- <div class="carousel-item col-md-3 active">
@@ -41,15 +44,15 @@
                     </div> -->
                 </div>
                 <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-                    <i class="fa fa-chevron-left fa-lg text-muted"></i>
+                    <i class="fa fa-chevron-left fa-lg"></i>
                     <span class="sr-only">Previous</span>
                 </a>
                 <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next" @click="nextSlide">
-                    <i class="fa fa-chevron-right fa-lg text-muted"></i>
+                    <i class="fa fa-chevron-right fa-lg"></i>
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 </template>
 
@@ -104,11 +107,11 @@ export default {
             let that = this;
             axios.get("/fetchmostnaff?page="+that.page)
                 .then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     that.most_naffed_blogs = response.data;
                     // that.current_page = response.data.current_page;
                     // that.last_page = response.data.last_page;
-                    console.log(that.most_naffed_blogs);
+                    // console.log(that.most_naffed_blogs);
 
                     // var i;
                     // for(i = 0; i < that.arrCount.length; i++) {
@@ -203,7 +206,7 @@ export default {
             });
         },
         isActive(num) {
-            console.log('num: ', num);
+            // console.log('num: ', num);
             if(num == this.current_page - 1) {
                 return 'active';
             } else {
@@ -213,6 +216,17 @@ export default {
         viewBlog(id) {
             window.location.href = '/single_general_blog/'+id;
         },
+        getRank(rank) {
+            var rank = rank.toString();
+
+            if(rank.endsWith("2")) {
+                return rank+'nd';
+            } else if(rank.endsWith("3")) {
+                return rank+'rd';
+            } else {
+                return rank+'th';
+            }
+        }
     }
 }
 </script>

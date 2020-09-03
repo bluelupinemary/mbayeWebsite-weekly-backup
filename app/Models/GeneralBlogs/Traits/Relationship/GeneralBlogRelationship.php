@@ -78,6 +78,13 @@ trait GeneralBlogRelationship
 
         $data['owner'] = $this->owner;
 
+        
+        $data['hotcount']      = $this->likes->where('emotion',0)->count();
+        $data['coolcount']     = $this->likes->where('emotion',1)->count();
+        $data['naffcount']     = $this->likes->where('emotion',2)->count();
+        $data['commentcount']  = $this->comments->count();
+        $data['most_reaction'] = $this->mostReaction();
+        
         return $data;
     }
 }

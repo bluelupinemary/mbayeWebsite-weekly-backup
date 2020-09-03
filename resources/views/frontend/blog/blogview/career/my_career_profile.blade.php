@@ -20,11 +20,11 @@
 
 @section('content')
 <div id="page-content">
-    <div id="left-arrow">
-        <span  class="arrow" style="font-size:17px;font-family:Nasalization;cursor:pointer" onclick="view_my_career_posts({{$profile->id}},{{$profile->user_id}})">&#8811;</span>
-      </div>
-      <div id="right-arrow">
-        <span  class="arrow" style="font-size:17px;font-family:Nasalization;cursor:pointer" onclick="hide_details()">&#8810;</span>
+    <div id="left-arrow" onclick="view_my_career_posts({{$profile->id}},{{$profile->user_id}})">
+        <span  class="arrow" style="font-size:17px;font-family:Nasalization;cursor:pointer" >&#8811;</span>
+    </div>
+      <div id="right-arrow" onclick="hide_details()">
+        <span  class="arrow" style="font-size:17px;font-family:Nasalization;cursor:pointer" >&#8810;</span>
       </div>
     <div class="app">
         <div class="bg-div">
@@ -37,9 +37,9 @@
             {{-- <span class="pop-up view-pop-up">View </span>
             <span class="pop-up back-pop-up">Save</span>
             <span class="pop-up collage-pop-up">Call</span> --}}
-            <button class="view" ><img src="{{asset('front/icons/view.png')}}" alt=""></button>
+            <button class="view" onclick="goto_dashboard({{$profile->user_id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
             <button class="save" data-tag="careers"><img src="{{asset('front/icons/save.png')}}" alt=""></button>
-            <button class="call"><img src="{{asset('front/icons/call.png')}}" alt=""></button>
+            <button class="call" onclick="connect_mail({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/call.png')}}" alt=""></button>
             
         </div>
     </div>
@@ -91,28 +91,33 @@
          
 </div>
 <div class="about">
+    <label class="titile">About Me</label><br>
     <label class="lbl_titile">Name : </label> <span class="uname spn_value"></span><br>
     <label class="lbl_titile">DOB : </label> <span class="dob spn_value"></span><br>
     <label class="lbl_titile">Address: </label> <span class="address spn_value"></span><br>
 </div>
 <div class="education">
-    {{-- <label class="lbl_titile">Graduate : </label> <span class=" spn_value"></span><br>
-    <label class="lbl_titile">Tertiary : </label> <span class=" spn_value"></span><br>
-    <label class="lbl_titile">Secondary: </label> <span class=" spn_value"></span><br>
-    <label class="lbl_titile">Primary: </label> <span class=" spn_value"></span><br> --}}
+    <label class="titile">Education</label><br>
+    <label class="lbl_titile">Primary : </label> <span class="primary_ed spn_value"></span><br>
+    <label class="lbl_titile">Secondary : </label> <span class="secondary_ed spn_value"></span><br>
+    <label class="lbl_titile">Undergraduate: </label> <span class="undergraduate_ed spn_value"></span><br>
+    <label class="lbl_titile">Graduate: </label> <span class=" graduate_ed spn_value"></span><br>
+    <label class="lbl_titile">Post-Graduate: </label> <span class=" postgraduate_ed spn_value"></span><br>
 </div>
 <div class="contacts">
+    <label class="titile">Contact</label><br>
     <span class="primary 3 spn_value"></span><br>
     <span class="secondary spn_value"></span><br>
     
 </div>
 <div class="character_refernces">
-    <label class="lbl_titile">Character References</label>
+    
 </div>
 
 
 <div class="job_description">
-   
+    
+
 </div>
 @endsection
 
@@ -138,13 +143,15 @@
             }).mouseleave(function() {
                 $('.planet-buttons span.view-pop-up').hide();
             });
-
-            $('.view').click( function() {
-                     window.location.href = url+'/dashboard';
-        });
+            function goto_dashboard(id)
+                {
+                     window.location.href = url+'/user_dashboard/'+id;
+                 }
 
             
             function hide_details(){
+                $(".bg-div").removeClass("ani-rollout_profile");
+                $(".bg-div").removeClass("ani-rollout_profile_back");
                     $(".about").hide();
                     $(".education").hide();
                     $(".contacts").hide();
@@ -152,12 +159,15 @@
                     $(".job_description").hide();
                     $("#left-arrow").show();
                     $("#right-arrow").hide();
+                    $(".bg-div").addClass("ani-rollout_profile_back");
                     $(".bg-div").css({'transform':'scale(1)'});
                     $(".planet-buttons").css({'transform':'translate(-1%, -4%)'});
             }
 
     function view_my_career_posts(profile_id,user_id){
-
+             $(".bg-div").removeClass("ani-rollout_profile");
+             $(".bg-div").removeClass("ani-rollout_profile_back");
+             $(".bg-div").addClass("ani-rollout_profile");
             var form_url = url+'/get_career_details';
             $(".navigator-div").hide();
             $(".bg-div").css({'transform':'scale(0.6)'});
@@ -197,12 +207,17 @@
                     var arrrReferenceDetails=data['Reference_details'];
                     var arrrWork_experience=data['work_experience'];
                     var arrrEducation_details=data['Education_details'];
-                    
+                    $(".character_refernces").html('');
+                    var str=" <label class='titile'>Character References</label><br>";
+                    $(".character_refernces").append(str);
                     for(var i=0;i<arrrReferenceDetails.length;i++){
-                        var str=" <label class='lbl_titile'>"+arrrReferenceDetails[i]['name'] +"   " +arrrReferenceDetails[i]['email'] +"</label><br>";
-                            $(".character_refernces").append(str);
+                        var str1=" <label class='lbl_titile'>"+arrrReferenceDetails[i]['name'] +"   " +arrrReferenceDetails[i]['email'] +"</label><br>";
+                            $(".character_refernces").append(str1);
                     }
+                    $(".job_description").html('');
 
+                    var str=" <label class='titile'>Job Description</label><br>";
+                    $(".job_description").append(str);
                     for(var i=0;i<arrrWork_experience.length;i++){
                         var StartDate = arrrWork_experience[i]['start_date'];
                         var SDate = new Date(StartDate);
@@ -211,21 +226,30 @@
                         var EndDate = arrrWork_experience[i]['end_date'];
                         var EDate = new Date(EndDate);
                         var Eyear = EDate.getFullYear();
-                        var str=" <label class='lbl_titile'>"+Syear +" - " +Eyear +"</label><br> <label class='lbl_titile'>"+arrrWork_experience[i]['designation']+"</label><br>";
-                            $(".job_description").append(str);
+                         var str1= " <label class='lbl_titile'>"+Syear +" - " +Eyear +"</label><br> <label class='lbl_titile'>"+arrrWork_experience[i]['designation']+"</label><br>";
+                            $(".job_description").append(str1);
                     }
                   
 
                     for(var i=0;i<arrrEducation_details.length;i++){
-                        var StartDate = arrrEducation_details[i]['start_date'];
-                        var SDate = new Date(StartDate);
-                        var Syear = SDate.getFullYear();
+                        var education_level = arrrEducation_details[i]['education_level'];
+                       
+                            if(education_level=='Primary'){
+                                
+                          
+                                $(".primary_ed").html(arrrEducation_details[i].school_name);  }
+                           else if(education_level=='Secondary')
+                                $(".secondary_ed").html(arrrEducation_details[i].school_name);
+                            else if(education_level=='Undergraduate')
+                                $(".undergraduate_ed").html(arrrEducation_details[i].school_name);
+                            else if(education_level=='Graduate')
+                                $(".graduate_ed").html(arrrEducation_details[i].school_name);
+                            else if(education_level=='Post-Graduate')
+                                $(".postgraduate_ed").html(arrrEducation_details[i].school_name);
+                        
 
-                        var EndDate = arrrEducation_details[i]['end_date'];
-                        var EDate = new Date(EndDate);
-                        var Eyear = EDate.getFullYear();
-                        var str=" <label class='lbl_titile'>"+Syear +" - " +Eyear +"</label><br> <label class='lbl_titile'>"+arrrEducation_details[i]['school_name']+"</label><br><label class='lbl_titile'>"+arrrEducation_details[i]['field_of_study']+"</label><br><label class='lbl_titile'>"+arrrEducation_details[i]['description']+"</label><br>";
-                            $(".education").append(str);
+                        // var str=" <label class='lbl_titile'>"+Syear +" - " +Eyear +"</label><br> <label class='lbl_titile'>"+arrrEducation_details[i]['school_name']+"</label><br><label class='lbl_titile'>"+arrrEducation_details[i]['field_of_study']+"</label><br><label class='lbl_titile'>"+arrrEducation_details[i]['description']+"</label><br>";
+                        //     $(".education").append(str);
                     }
                     $(".uname").html(user_name);
                     $(".dob").html(dob);
@@ -239,6 +263,31 @@
             });
         }
 
+    }
+
+
+    function connect_mail(profile_id,user_id){
+        var form_url = url+'/get_career_details';
+        $.ajax({
+                url: form_url,
+                method: 'post',
+                data: { 
+                    profile_id: profile_id,
+                    user_id: user_id,
+                    },
+               dataType: 'json',
+                success: function(data) {
+                  
+
+                    var primary_email_id=data['User_details'].email;
+                   
+                    window.open('mailto:'+primary_email_id+'?subject=test subject');
+                },
+                error: function (request, status, error) {
+                   
+                }
+                });
+        
     }
     </script>
     @endsection

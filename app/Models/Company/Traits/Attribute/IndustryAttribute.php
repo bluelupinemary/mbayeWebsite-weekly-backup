@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\CompanyProfile\Traits\Attribute;
+namespace App\Models\Company\Traits\Attribute;
 
 use Illuminate\Support\Str;
 use Auth;

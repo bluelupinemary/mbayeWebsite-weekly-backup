@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\CompanyProfile;
+namespace App\Models\Company;
 
 use App\Models\BaseModel;
-use App\Models\CompanyProfile\Traits\Attribute\CompanyAttribute;
-use App\Models\CompanyProfile\Traits\Relationship\CompanyRelationship;
+use App\Models\Company\Traits\Attribute\CompanyAttribute;
+use App\Models\Company\Traits\Relationship\CompanyRelationship;
 use App\Models\ModelTrait;
 
 class CompanyProfile extends BaseModel
@@ -18,12 +18,14 @@ class CompanyProfile extends BaseModel
         'id',
         'company_name',
         'company_email',
-        'address',
-        'country',
         'company_phone_number',
         'featured_image',
         'industry_id',
         'owner_id',
+        'address',
+        'country',
+        'state',
+        'city',
     ];
 
     protected $dates = [

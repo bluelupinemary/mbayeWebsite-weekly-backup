@@ -2,18 +2,18 @@
 
 namespace App\Repositories\Backend\Blogs;
 
+use Carbon\Carbon;
+use App\Models\Blogs\Blog;
+use Illuminate\Support\Str;
+use App\Models\BlogTags\BlogTag;
+use Illuminate\Support\Facades\DB;
+use App\Exceptions\GeneralException;
+use App\Repositories\BaseRepository;
+use App\Models\BlogMapTags\BlogMapTag;
+use Illuminate\Support\Facades\Storage;
 use App\Events\Backend\Blogs\BlogCreated;
 use App\Events\Backend\Blogs\BlogDeleted;
 use App\Events\Backend\Blogs\BlogUpdated;
-use App\Exceptions\GeneralException;
-use App\Models\BlogMapTags\BlogMapTag;
-use App\Models\Blogs\Blog;
-use App\Models\BlogTags\BlogTag;
-use App\Repositories\BaseRepository;
-use Carbon\Carbon;
-use DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 /**
  * Class BlogsRepository.
@@ -45,8 +45,9 @@ class BlogsRepository extends BaseRepository
      */
     public function getForDataTable()
     {
+
         return $this->query()
-            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.blogs.table').'.created_by')
+            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.blogs.table').'.created_by')->doesntHave('blog_panel_design')
             ->select([
                 config('module.blogs.table').'.id',
                 config('module.blogs.table').'.name',
@@ -55,7 +56,28 @@ class BlogsRepository extends BaseRepository
                 config('module.blogs.table').'.status',
                 config('module.blogs.table').'.created_by',
                 config('module.blogs.table').'.created_at',
-                config('access.users_table').'.first_name as user_name',
+                config('access.users_table').'.first_name as first_name',
+                config('access.users_table').'.last_name as last_name',
+                config('access.users_table').'.email as email',
+            ]);
+    }
+
+    public function getdesignblog()
+    {
+
+        return $this->query()
+            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.blogs.table').'.created_by')->has('blog_panel_design')
+            ->select([
+                config('module.blogs.table').'.id',
+                config('module.blogs.table').'.name',
+                config('module.blogs.table').'.featured_image',
+                config('module.blogs.table').'.publish_datetime',
+                config('module.blogs.table').'.status',
+                config('module.blogs.table').'.created_by',
+                config('module.blogs.table').'.created_at',
+                config('access.users_table').'.first_name as first_name',
+                config('access.users_table').'.last_name as last_name',
+                config('access.users_table').'.email as email',
             ]);
     }
 
@@ -210,5 +232,42 @@ class BlogsRepository extends BaseRepository
         $fileName = $model->featured_image;
 
         return $this->storage->delete($this->upload_path.$fileName);
+    }
+
+    public function restore($blog)
+    {
+        if (is_null($blog->deleted_at)) {
+            throw new GeneralException(trans('exceptions.backend.access.users.cant_restore'));
+        }
+
+        if ($blog->restore()) {
+            // event(new UserRestored($user));
+
+            return true;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.access.users.restore_error'));
+    }
+
+    /**
+     * @param $user
+     *
+     * @throws GeneralException
+     */
+    public function forceDelete($blog)
+    {
+        if (is_null($blog->deleted_at)) {
+            throw new GeneralException(trans('exceptions.backend.access.users.delete_first'));
+        }
+
+        DB::transaction(function () use ($blog) {
+            if ($blog->forceDelete()) {
+                // event(new UserPermanentlyDeleted($user));
+
+                return true;
+            }
+
+            throw new GeneralException(trans('exceptions.backend.access.users.delete_error'));
+        });
     }
 }

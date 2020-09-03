@@ -2,15 +2,17 @@
 
 namespace App\Repositories\Frontend\CompanyProfile;
 
-use App\Exceptions\GeneralException;
-use App\Models\CompanyProfile\CompanyProfile;
-use App\Models\Access\User\User;
-use App\Repositories\BaseRepository;
-use Carbon\Carbon;
 use DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Image;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+use App\Models\Access\User\User;
+use App\Models\Company\DemoCompany;
+use App\Exceptions\GeneralException;
+use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Company\CompanyProfile;
+// use App\Http\Controllers\Frontend\DemoFormsubmit;
 
 
 class CompanyProfilesRepository extends BaseRepository
@@ -31,7 +33,7 @@ class CompanyProfilesRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'ComapnyProfile'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'career'.DIRECTORY_SEPARATOR.'company'.DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('public');
     }
 
@@ -69,16 +71,33 @@ class CompanyProfilesRepository extends BaseRepository
      */
     public function create(array $input)
     {
-       
+        // dd($input);
+        DB::beginTransaction();
+         $input['featured_image'] = $this->uploadImage($input);
+
+        if ($data = CompanyProfile::create($input)) {
+            DB::commit();
+            return $data;
+        }
     }
 
     /**
      * Update Profile.
      *
      */
-    public function update(ComapnyProfile $profile, array $input)
+    public function update(CompanyProfile $profile, array $input)
     {
-        
+        DB::beginTransaction();
+
+        if(array_key_exists('featured_image', $input)) {
+            $this->deleteOldFile($profile);
+            $input['featured_image'] = $this->uploadImage($input['featured_image']);
+        }
+
+        if ($profile->update($input)) {
+            DB::commit();
+            return $profile;
+        }
     }
 
     
@@ -90,7 +109,7 @@ class CompanyProfilesRepository extends BaseRepository
      *
      * @return bool
      */
-    public function delete(ComapnyProfile $profile)
+    public function delete(CompanyProfile $profile)
     {
        
     }
@@ -107,13 +126,13 @@ class CompanyProfilesRepository extends BaseRepository
         $avatar = $input['featured_image'];
 
         if (isset($input['featured_image']) && !empty($input['featured_image'])) {
-            $fileName = time().$avatar->getClientOriginalName();
+            $fileName =time().$avatar->getClientOriginalName();
 
             $this->storage->put($this->upload_path.$fileName, file_get_contents($avatar->getRealPath()));
 
-            $input = array_merge($input, ['featured_image' => $fileName]);
+            // $input = array_merge($input, ['featured_image' => $fileName]);
 
-            return $input;
+            return $fileName;
         }
     }
 

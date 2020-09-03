@@ -97,7 +97,7 @@
     </div>
     </div>
 
-<generalblog-component></generalblog-component>
+<generalblogold-component></generalblogold-component>
 
 <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
     @if(Auth::user()->gender != null && Auth::user()->gender == 'female')

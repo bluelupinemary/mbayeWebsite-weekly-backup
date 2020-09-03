@@ -2,9 +2,10 @@
 
 namespace App\Models\GeneralBlogs\Traits\Attribute;
 
-use Illuminate\Support\Str;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use App\Models\Friendships\Group;
 
 /**
  * Class GeneralBlogAttribute.
@@ -14,14 +15,15 @@ trait GeneralBlogAttribute
     /**
      * @return string
      */
-   /* public function getActionButtonsAttribute()
+    public function getActionButtonsAttribute()
     {
         return '<div class="btn-group action-btn">'.
-                $this->getEditButtonAttribute('edit-blog', 'admin.blogs.edit').
-                $this->getDeleteButtonAttribute('delete-blog', 'admin.blogs.destroy').
+                $this->getEditButtonAttribute('edit-blog', 'admin.generalblogs.edit').
+                $this->getDeleteButtonAttribute('delete-blog', 'admin.generalblogs.destroy').
+                $this->getShowButtonAttribute('delete-blog', 'admin.generalblogs.show').
                 '</div>';
     }
-*/
+
     public function getContentSummary()
     {
         $excerpt_content = Str::limit(strip_tags(preg_replace('#(<span[^>]*>).*?(</span>)#', '$1$2', $this->content)), 200);
@@ -150,5 +152,25 @@ trait GeneralBlogAttribute
         }
         
         return $most;
+    }
+
+    public function getgroups(){
+        $group = $this->privacy->pluck('group_id');
+        $group_names = Group::whereIn('id',$group)->take(2)->pluck('name')->implode(',');
+        $group_count = Group::whereIn('id',$group)->count();
+        $remaining_count = $group_count-2;
+        if($group->count() == 0){
+            $groups = null;
+            return $groups;
+        }
+        else{
+            if($remaining_count > 0){
+            $groups = $group_names." + ".$remaining_count." more ";
+            return $groups;
+        }else{
+            $groups = $group_names;
+            return $groups;
+        }
+        }
     }
 }

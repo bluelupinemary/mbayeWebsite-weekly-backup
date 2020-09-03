@@ -3,8 +3,8 @@
 namespace App\Models\CompanyProfile;
 
 use App\Models\BaseModel;
-use App\Models\CompanyProfile\Traits\Attribute\IndustryAttribute;
-use App\Models\CompanyProfile\Traits\Relationship\IndustryRelationship;
+use App\Models\Company\Traits\Attribute\IndustryAttribute;
+use App\Models\Company\Traits\Relationship\IndustryRelationship;
 use App\Models\ModelTrait;
 
 class Industry extends BaseModel

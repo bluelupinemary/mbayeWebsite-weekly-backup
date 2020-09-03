@@ -30,7 +30,7 @@
     <div class="origin view">
         <div id="camera" class="view">
             <div id="dolly" class="view">
-                <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler" v-touch:swipe.top="tophandler" v-touch:swipe.down="bottomhandler">
+                <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler">
                     <div v-for="(profile,index) in profiles" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: profiles, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index)">
                         
                         <a class="mover viewflat blog_img" href="#">
@@ -239,12 +239,6 @@ export default {
     },
     righthandler(){
           this.scrollcheck('left');
-    },
-    tophandler(){
-        this.scrollcheck('down');
-    },
-    bottomhandler(){
-        this.scrollcheck('up');
     },
       broadcastcheck(){
           axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+that.country+'&city='+that.city)
@@ -1188,7 +1182,7 @@ export default {
             
             var reflection_pos = (Math.round(nextImage) * 2) + 30;
 
-            $('.'+img_class).closest('.blog_img').attr('style', '-webkit-box-reflect: below '+reflection_pos+'px -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));')
+            $('.'+img_class).closest('.blog_img').attr('style', '-webkit-box-reflect: below '+reflection_pos+'px -webkit-gradient(linear, right top, right bottom, from(rgb(255 255 255 / 0)), to(rgb(255 255 255 / 0.15)))');
 
             var bottomPos = Math.round(iheight) + (Math.round(nextImage) * 2) + 120;
 

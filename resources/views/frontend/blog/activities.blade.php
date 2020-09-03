@@ -35,39 +35,56 @@
         }
 
         .blog-title {
-            position: absolute;
+            /* position: absolute;
             top: 36%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); */
             font-size: 2.5vw;
             font-family: 'Courgette';
             font-weight: 550;
-            letter-spacing: 5px;
+            letter-spacing: 3px;
             width: 90%;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            margin: 0 auto;
+            /* white-space: nowrap; */
+            /* text-overflow: ellipsis; */
+            /* overflow: hidden; */
+            /* margin: 0 auto; */
             filter: drop-shadow(2px 4px 6px black);
             text-shadow: 2px 4px 6px #000;
             /* border: 1px solid red; */
             text-align: center;
+            flex: 50%;
+            vertical-align: middle;
+            align-self: center;
+            justify-self: flex-end;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 1;
         }
 
         .friend-name {
             font-size: 2.5vw;
-            top: 77%;
+            flex: 1;
+            width: 95%;
         }
 
         .friend-address {
-            top: 87%;
             font-size: 1vw;
+            margin: 0 16%;
+            margin-top: 2%;
         }
 
         .friend-details {
-            height: 100%;
+            display: flex;
             width: 100%;
+            height: 100%;
             position: absolute;
+            flex-flow: column;
+            align-items: center;
+            justify-content: space-around;
+            text-align: center;
+            word-break: break-word;
+            display: none;
         }
 
         .friend-details-2 {

@@ -282,7 +282,7 @@ function setup_stage(stageNo){
         $("#firstVideoOverlayText").css({ 'color' : '#efad0c','font-size':'4.2vw'});
         head_obj.isVisible = false;
         head_obj.setEnabled(false);
-        let temp = init_photo(imgArr[0],{w:1200,h:600},{x:-1000,y:0,z:-500},stageNo); 
+        let temp = init_photo(imgArr[0],{w:1200,h:600},{x:1000,y:0,z:-500},stageNo); 
         currStageObjMap.set(temp.name,temp);     
         animateObjectPosition(temp, 20, frameCount, new BABYLON.Vector3(0,0,-500));
         add_delay(temp, 2000, 5000);

@@ -226,11 +226,11 @@ class GeneralBlogsRepository extends BaseRepository
 
         // $user_photo = explode('.', $user->photo);
         $filename = Str::random().'.jpg';
-        while (Storage::exists('public/img/general_blog/'.$filename)) {
+        while (Storage::exists('public/img/general_blogs/'.$filename)) {
             $filename = Str::random().'.jpg';
         }
 
-        Storage::disk('local')->put('public/img/general_blog/'.$filename, $image);
+        Storage::disk('local')->put('public/img/general_blogs/'.$filename, $image);
         
         // compressing image
         // $source= 'storage/img/blog/'.$filename;

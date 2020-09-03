@@ -116,3 +116,34 @@
     transform: translate(34%, -50%);
     width: 8vw;
 }
+
+#toast-container>.toast-info {
+    background-color:rgba(8, 64, 147, 0.78);
+    background-image: none !important;
+    background-size: 18%;
+    background-position: 1% center;
+    box-shadow: 0px 0px 12px #17a2b8;
+    /* color: #f74545; */
+    padding: 4%;
+    width: 22vw;
+    font-size: 1vw;
+}
+
+#toast-container .toast-message {
+    display: flex;
+    align-items: center;
+}
+
+.toast-message p {
+    margin-left: 5%;
+}
+
+#toast-container .toastr-custom-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 4vw;
+    height: 4vw;
+    /* border: 1px solid red; */
+    border-radius: 100px;
+}

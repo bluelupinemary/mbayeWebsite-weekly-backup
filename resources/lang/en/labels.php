@@ -180,8 +180,39 @@ return [
                 'status'    => 'Status',
                 'createdat' => 'Created At',
                 'createdby' => 'Created By',
+                'email'     => 'Email',
+                'shares'     => 'Shares',
+                'privacy'     => 'Privacy',
                 'all'       => 'All',
             ],
+        ],
+
+        'generalblogs' => [
+            'create'     => 'Create GeneralBlog',
+            'edit'       => 'Edit GeneralBlog',
+            'view'       => 'View GeneralBlog',
+            'management' => 'GeneralBlog Management',
+            'title'      => 'GeneralBlogs',
+
+            'table' => [
+                'title'     => 'GeneralBlog',
+                'publish'   => 'PublishDateTime',
+                'status'    => 'Status',
+                'createdat' => 'Created At',
+                'createdby' => 'Created By',
+                'email'     => 'Email',
+                'shares'     => 'Shares',
+                'privacy'     => 'Privacy',
+                'all'       => 'All',
+            ],
+        ],
+
+        'designblogs' => [
+            'create'     => 'Create DesignBlogs',
+            'edit'       => 'Edit DesignBlogs',
+            'view'       => 'View DesignBlogs',
+            'management' => 'DesignBlogs Management',
+            'title'      => 'DesignBlogs',
         ],
 
         'settings' => [

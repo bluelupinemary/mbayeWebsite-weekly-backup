@@ -171,8 +171,7 @@ function load_3D_mesh(){
                 astronaut.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(130),0);
                 if(user_gender === 'female'){
                   astronaut.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(20),BABYLON.Tools.ToRadians(131),0); 
-                  
-                  }
+                }
                 
             }),
       
