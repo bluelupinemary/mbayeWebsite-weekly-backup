@@ -10,17 +10,10 @@ function createAstronautScene(){
 
     astronautScene = new BABYLON.Scene(engine);
     astronautScene.autoClear = false;
-    // autoClearDepthAndStencil = false;
-    // astronautScene.clearColor = new BABYLON.Color3(0.5, 0.8, 0.5);
-        // astronautScene.createDefaultEnvironment();
-    //create the camera
-
+  
     astronautCamera = create_astro_camera();
 
-
-    
     //create the lights
- 
     astronautLight = create_astro_light();
     load_astro_meshes();
     listen_to_astronaut_rotation();
@@ -56,6 +49,7 @@ function create_astro_light(){
 }
 
 var astronautTask;
+var astronautRotateMap = new Map();
 //function to load the world of flowers
 function load_astro_meshes(){
 
@@ -76,33 +70,45 @@ function load_astro_meshes(){
         function (evt) {
 
       }).then(function (result) {
-          for(let i=0;i<result.meshes.length;i++){
-              result.meshes[i].isPickable = true;
-              astronautPartsMap.set(result.meshes[i].name,result.meshes[i])
-              if(result.meshes[i].name === "face"){
-                  theAstroFace = result.meshes[i];
-              }else if(result.meshes[i].name === "helmetFace"){
-                  // console.log("THE HELMET: ", result.meshes[i]);
-                  result.meshes[i].visibility = 0.5;
-              }else if(result.meshes[i].name === "helmet") result.meshes[i].material.backFaceCulling = false;
-              else if(result.meshes[i].name === "Navigator"){
-                 navigator_obj = result.meshes[i];
-                 add_action_mgr(navigator_obj);
-              }else if(result.meshes[i].name === "body"){
-                  astronaut = result.meshes[i];
-                  astronaut_obj = result.meshes[i];
-                  // result.meshes[i].scaling = new BABYLON.Vector3(0.02,0.02,0.02);
-                  result.meshes[i].position = new BABYLON.Vector3(6,0,0);
-              }else if(astronautTextsBtnMap.has(result.meshes[i].name)){
-                  let textMatl = new BABYLON.StandardMaterial("textMatl", astronautScene);
-                  textMatl.diffuseColor = new BABYLON.Color3(1,1,1);
-                  textMatl.emissiveColor = new BABYLON.Color3(1,1,1);
 
-                  if(result.meshes[i].name === "showLabels") textMatl.emissiveColor = BABYLON.Color3.Red();
-                  textMatl.backFaceCulling = false;//Allways show the front and the back of an element
-                  result.meshes[i].material = textMatl;
-              }
-          }
+          result.meshes.forEach(function(mesh){
+            mesh.isPickable = true;
+            
+            astronautPartsMap.set(mesh.name,mesh)
+            add_action_mgr_astrobody(mesh);
+            if(mesh.name === "face"){
+                theAstroFace = mesh;
+            }else if(mesh.name === "helmetFace"){
+                mesh.visibility = 0.5;
+            }else if(mesh.name === "helmet"){
+                mesh.material.backFaceCulling = false;
+            }else if(mesh.name === "helmetStars"){
+                add_action_mgr(mesh);
+            }else if(mesh.name === "Navigator"){
+                navigator_obj = mesh;
+                add_action_mgr(mesh);
+            }else if(astronautChestParts.has(mesh.name)){
+                add_action_mgr(mesh);
+            }else if(mesh.name === "body"){
+                astronautRotateMap.set(mesh.name,mesh);
+                astronaut = mesh;
+                astronaut_obj = mesh;
+                // mesh.scaling = new BABYLON.Vector3(0.02,0.02,0.02);
+                mesh.position = new BABYLON.Vector3(6,0,0);
+            }else if(astronautTextsBtnMap.has(mesh.name)){
+                let textMatl = new BABYLON.StandardMaterial("textMatl", astronautScene);
+                textMatl.diffuseColor = new BABYLON.Color3(1,1,1);
+                textMatl.emissiveColor = new BABYLON.Color3(1,1,1);
+
+                if(mesh.name === "showLabels") textMatl.emissiveColor = BABYLON.Color3.Red();
+                textMatl.backFaceCulling = false;//Allways show the front and the back of an element
+                mesh.material = textMatl;
+            }else if(mesh.name === "BackPack" || mesh.name === "bagWires")  {
+                astronautRotateMap.set(mesh.name,mesh);
+            }
+            
+          });
+        
           astronaut.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(30),BABYLON.Tools.ToRadians(0));
           if(user_gender === 'female') astronaut.rotation.x = BABYLON.Tools.ToRadians(20);
           else{
@@ -112,7 +118,6 @@ function load_astro_meshes(){
       }),
    
   ]).then(() => {
-     
         astronautCamera.alpha = ASTRO_CAMERA_INIT_ALPHA;
         astronautCamera.beta = ASTRO_CAMERA_INIT_BETA;
         astronautCamera.viewport = new BABYLON.Viewport(0,0,1,1);
@@ -138,7 +143,6 @@ function create_face_texture(thePath){
 }
 
 var onOverAstronaut =(meshEvent)=>{
-   
 };
 
 var onOutAstronaut =(meshEvent)=>{
@@ -189,7 +193,6 @@ function listen_to_astronaut_rotation(){
                 var theMeshName = pickInfo.pickedMesh.name;
                 console.log("the mesh clicked: ", theMeshName);
                if(astronautPartsMap.has(theMeshName)){
-                  // console.log("this is trueeeee");
                   if(astronautCamera) astronautCamera.attachControl(canvas,true);
                   if(initCamera) initCamera.detachControl(canvas);
                   isAstronautRightClicked = true;
@@ -208,23 +211,22 @@ function listen_to_astronaut_rotation(){
             //get the pick info if mouse is pressed
             var pickInfo = astronautScene.pick(astronautScene.pointerX, astronautScene.pointerY);
             
+            
             //check if the clicked mesh should be draggable/modified
             if (pickInfo.hit){
                 let theMeshName = pickInfo.pickedMesh.name;
                 // console.log("the mesh clicked: ", theMeshName);
-                if(astronautPartsMap.has(theMeshName)){ 
+                if(astronautRotateMap.has(theMeshName)){ 
                   if(!isAstronautFirstClick){
                       
                   }
                   if(initCamera) initCamera.detachControl(canvas);
                   if(astronautCamera) astronautCamera.detachControl(canvas);
                     let theAstro =  pickInfo.pickedMesh;
-                        //   if(currentPanel && currentPanel === thePanel){
                         astronautArr.currentPos.x = evt.clientX;
                         astronautArr.currentPos.y = evt.clientY;
                         astronautArr.currentRot.x = astronaut_obj.rotation.x;
                         astronautArr.currentRot.y = astronaut_obj.rotation.y;
-                        // console.log("Start the rotation of astronaut here ", astronautArr.currentPos, astronautArr.currentRot);
                         isAstronautClicked = true;
                         isAstronautScalingOn = true;
               }//end of the mesh name
@@ -251,12 +253,11 @@ function listen_to_astronaut_rotation(){
                 
                 isPlanetLabelActive = !isPlanetLabelActive;
                 set_orbit_enability(isPlanetLabelActive);
+                set_constellation_enability(isPlanetLabelActive);
                 var text = astronautPartsMap.get("showLabels");
                 if(isPlanetLabelActive) text.material.emissiveColor = BABYLON.Color3.Red();
                 else text.material.emissiveColor = BABYLON.Color3.White();
-                 
-                
-                
+
               }else if( theMeshName === "btn5" ){
                 //call function from earth scene
                 earth_rotate_earth_with_mbaye();
@@ -269,8 +270,6 @@ function listen_to_astronaut_rotation(){
                  var text = astronautPartsMap.get("designPanels");
                  text.material.emissiveColor = BABYLON.Color3.Red();
                   setTimeout(function(){
-                    // remove_earth_scene_objects();
-                    // currentScene = createDesignScene();
                      window.open('designPanel');  
                   },1000);
               }else if( theMeshName === "btn10" ){
@@ -281,16 +280,6 @@ function listen_to_astronaut_rotation(){
                       // earth_initial_view();
                       text.material.emissiveColor = BABYLON.Color3.White();
                   },1000);
-                  
-              // }
-              // else if( theMeshName === "btn8" ){
-              //    // var text = astronautPartsMap.get("designPanels");
-              //    // text.material.emissiveColor = BABYLON.Color3.Red();
-              //     setTimeout(function(){
-              //       remove_earth_scene_objects();
-              //       currentScene = createScene();
-
-              //     },500);
                   
               }else if( theMeshName === "btn16" ){ //enable position gizmo
                   earth_handle_gizmo(1);
@@ -328,9 +317,10 @@ function listen_to_astronaut_rotation(){
                   setTimeout(function(){ 
                       text.material.emissiveColor = BABYLON.Color3.White();
                   },1000);
+              }else if(theMeshName === "helmetStars") {
+                  let link = wikiMap.get(theMeshName);
+                  if(link) showPage(link);
               }
-              // else if(theMeshName === "helmetText") showWiki("Michael_Collins_(astronaut)");
-              // else if(theMeshName === "helmetStars") showWiki("Michael_Schumacher");
                     
               
 
@@ -456,6 +446,23 @@ function add_action_mgr(thePart){
   );
 }
 
+
+function add_action_mgr_astrobody(thePart){
+  thePart.actionManager = new BABYLON.ActionManager(astronautScene);
+  thePart.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+              BABYLON.ActionManager.OnPointerOverTrigger,
+              onOverAstronaut
+      )
+  );
+  thePart.actionManager.registerAction(
+      new BABYLON.ExecuteCodeAction(
+          BABYLON.ActionManager.OnPointerOutTrigger,
+          onOutAstronaut
+      )
+  );
+}
+
 let origScaling, origColor;
 let partTooltip;
 var onOverPart =(meshEvent)=>{
@@ -465,21 +472,25 @@ var onOverPart =(meshEvent)=>{
     sty.position = "absolute";
     sty.lineHeight = "1.2em";
     sty.padding = "0.2%";
-    sty.color = "#efad0c  ";
+    // sty.color = "#efad0c  ";
+    sty.color = "white";
     sty.fontFamily = "Courgette-Regular";
     sty.fontSize = "1.5em";
-    // sty.backgroundColor = "#0b91c3a3";
-    // sty.opacity = "0.7";
+    sty.backgroundColor = "#0b91c3a3";
+    sty.opacity = "0.7";
     sty.top = astronautScene.pointerY + "px";
     sty.left = (astronautScene.pointerX) + "px";
     sty.cursor = "pointer";
 
-  if(meshEvent.source.name === "Navigator"){
+  if(astronautChestParts.has(meshEvent.source.name)){
+        let val = astronautChestParts.get(meshEvent.source.name);
+        //val[0] - descriptive text on hover, val[1] - url
         hl.addMesh(meshEvent.source, new BABYLON.Color3(0,0.8,0.8));
         document.body.appendChild(partTooltip);
-        partTooltip.textContent = "Communicator";
-        partTooltip.setAttribute("onclick", "window.open('communicator')");
-       
+        partTooltip.textContent = val[0];
+        partTooltip.setAttribute("onclick", "window.open('"+val[1]+"')");
+  }else if(meshEvent.source.name === "helmetStars"){
+        hl.addMesh(meshEvent.source, new BABYLON.Color3(0,0.8,0.8));
   }
 
 
@@ -556,3 +567,4 @@ function listen_to_astronaut_wheelscroll(){
       }, BABYLON.PointerEventTypes.POINTERWHEEL, false);
   }
 }//end of listen to wheel scroll function
+

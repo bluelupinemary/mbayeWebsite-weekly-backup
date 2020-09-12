@@ -82,7 +82,8 @@
                 serverSide: true,
                 ajax: {
                     url: '{{ route("admin.blogs.get") }}',
-                    type: 'post'
+                    type: 'post',
+                    data: {trashed: false},
                 },
                 columns: [
                     {data: 'name', name: '{{config('module.blogs.table')}}.name'},

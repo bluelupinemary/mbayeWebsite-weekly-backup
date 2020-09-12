@@ -81,7 +81,7 @@
                     ajax: {
                         url: '{{ route("admin.access.user.get") }}',
                         type: 'post',
-                        data: {status: false, trashed: true}
+                        data: {trashed: true}
                     },
                     columns: [
                         {data: 'first_name', name: '{{config('access.users_table')}}.first_name'},

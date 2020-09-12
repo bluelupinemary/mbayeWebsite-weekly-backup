@@ -5,11 +5,11 @@
             <div id="camera" class="view">
                 <div id="dolly" class="view">
                     <div id="stack" class="view" v-touch:swipe.left="lefthandler" v-touch:swipe.right="righthandler">
-                        <div v-for="(designs_blog,index) in designs_blogs" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: designs_blogs, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index)">
+                        <div v-for="(designs_blog,index) in designs_blogs" :key="index" :class="'cell fader view original div_img div_img_'+index" :block_no="index" v-for-callback="{key: index, array: designs_blogs, callback: callback}" :style="blockStyle(index)" style="opacity: 0;" @click.prevent="playAudio('div_img_'+index, designs_blog)">
                             
                             <a class="mover viewflat blog_img" href="#">
                                 <input type="hidden" name="audio" :value="designs_blog.audio">
-                                <img :class="'cell_img_'+index" :src="'/storage/img/'+designs_blog.thumb" @load="layoutImageInCell('cell_img_'+index, index)">
+                                <img :class="'cell_img_'+index" :src="'/storage/img/'+designs_blog.thumb" @load="layoutImageInCell('cell_img_'+index, index)" :data-index="index">
                                 
                             </a>
                                 
@@ -252,7 +252,8 @@ export default {
                 'g6': new Audio('../../../front/audio/g6.mp3'),
                 'a6': new Audio('../../../front/audio/a6.mp3'),
                 'b6': new Audio('../../../front/audio/b6.mp3'),
-            }
+            },
+            fart: new Audio('../../../front/audio/fart/fart.mp3'),
         }
     },
     // created() {
@@ -442,6 +443,33 @@ export default {
 
                 that.scrollcheck(that.scroll_type);
             });
+
+            window.addEventListener("orientationchange", function(event) {
+                // Generate a resize event if the device doesn't do it
+                // window.dispatchEvent(new Event("resize"));
+                that.snowstack_init();
+                reloadImageSize();
+                that.updateStack(1);
+            }, false);
+
+            window.addEventListener("resize", function(event) {
+                // Generate a resize event if the device doesn't do it
+                // window.dispatchEvent(new Event("resize"));
+                that.snowstack_init();
+                reloadImageSize();
+                that.updateStack(1);
+            }, false);
+
+            function reloadImageSize()
+            {
+                $(".blog_img img").each(function() {  
+                    var image_class = $(this).attr('class');
+                    var index = $(this).data('index');
+                    that.blockStyleDiv(index);
+                    that.layoutImageInCell(image_class, index);
+                });  
+            }
+
             /* scroll check */
       
             // that.scrollcheck()
@@ -493,6 +521,68 @@ export default {
                 '-o-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
                 'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
             };
+
+            // index++;
+        // }
+        
+        // that.CHEIGHT = Math.round(window.innerHeight / 3.5);
+        // that.CWIDTH  = Math.round(that.CHEIGHT * 300 / 180);
+        // that.CXSPACING = that.CWIDTH + that.CGAP;
+        // that.CYSPACING = that.CHEIGHT + that.CGAP;
+        // var realn = Math.floor(index /2 );
+        
+        // cell.div[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+    },
+    blockStyleDiv(index) {
+        // console.log('index: '+index);
+        let that = this;
+        // var index = 0;
+        // var cell = {};
+        // var realn = that.cellCount;
+        // console.log(realn);
+        // if(index < that.Total_count) {
+            
+            // console.log(realn);
+        // }
+
+            
+            var realn = index;
+            // console.log('realn: '+realn);
+            var x = Math.floor(realn / 2);
+            var y = realn - x * 2;
+
+            // that.currentNum = x;
+            // console.log('blockStyle: ', that.currentNum, that.prevNum)
+            // if(that.currentNum != that.prevNum) {
+            //     that.prevNum = that.currentNum;
+            //     // that.cells.push([]);
+            // }
+            // $('.div_img_'+index).css({
+            //     'width': that.CWIDTH,
+            //     'height': that.CHEIGHT,
+            //     'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            // });
+            $('.div_img_'+index).css({
+                'width': that.CWIDTH,
+                'height': that.CHEIGHT,
+                '-webkit-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                '-moz-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                '-ms-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                '-o-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            })
+            // return {
+            //     'width': that.CWIDTH,
+            //     'height': that.CHEIGHT,
+            //     '-webkit-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+            //     '-moz-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+            //     '-ms-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+            //     '-o-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+            //     'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            // };
 
             // index++;
         // }
@@ -1238,19 +1328,51 @@ export default {
 
         return audio;
     },
-    playAudio(div_class)
+    playAudio(div_class, designs_blog)
     {
         let that = this;
-        var music = $('.'+div_class+' input[name="audio"]').val();
-        // var audio_player = 'audio_player_'+music;
-        that.audio_player[music].pause();
-        that.audio_player[music].currentTime = 0.1;
-        // that.audio_player[music].src = that.url+'/front/audio/'+music+'.mp3';
-        that.audio_player[music].play();
+        // designs_blog.naffcount = 555;
+        if(designs_blog.naffcount >= 555) {
+            that.fart.pause();
+            that.fart.currentTime = 0;
+            // that.audio_player[music].src = that.url+'/front/audio/'+music+'.mp3';
+            that.fart.play();
 
-        that.audio_player[music].onended = function() {
+            // $("#overlay").css({'display':'none'});
+            // $(".img-nouvela").removeClass("ani-rollout_naff");
+            // $(".img-nouvela").css({'display':'block','z-index':'1000'});
+            // $(".img-nouvela").addClass("ani-rollout_naff");
+            // setTimeout(function(){
+            //     $(".img-nouvela").removeClass("ani-rollout_naff");
+            //     $(".img-nouvela").css({'display':'none'});
+            //     $("#overlay").css({'display':'none'});
+            // }, 3000);
+
+            $('.naff-fart-reaction').show();
+            $('.naff-fart-reaction').addClass('animate-naff-fart-reaction');
+            // });
+            
+            $('.naff-fart-reaction').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                $('.naff-fart-reaction').removeClass('animate-naff-fart-reaction');
+                $('.naff-fart-reaction').css('width', '70%');
+
+                that.fart.onended = function() {
+                    $('.naff-fart-reaction').fadeOut();
+                    $('.naff-fart-reaction').css('width', '0');
+                };
+            });
+        } else {
+            var music = $('.'+div_class+' input[name="audio"]').val();
+            // var audio_player = 'audio_player_'+music;
             that.audio_player[music].pause();
-        };
+            that.audio_player[music].currentTime = 0.1;
+            // that.audio_player[music].src = that.url+'/front/audio/'+music+'.mp3';
+            that.audio_player[music].play();
+
+            that.audio_player[music].onended = function() {
+                that.audio_player[music].pause();
+            };
+        }
     },
     getUserGender(gender) {
         if(gender == null || gender == '' || gender == 'male') {

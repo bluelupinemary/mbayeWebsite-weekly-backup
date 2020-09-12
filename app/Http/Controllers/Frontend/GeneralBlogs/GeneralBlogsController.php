@@ -14,16 +14,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Responses\RedirectResponse;
 use App\Models\GeneralBlogs\GeneralBlog;
 use Illuminate\Support\Facades\Notification;
-use App\Http\Responses\Backend\Blog\EditResponse;
-use App\Http\Responses\Backend\Blog\IndexResponse;
 use App\Models\Friendships\FriendFriendshipGroups;
 use App\Models\GeneralBlogShares\GeneralBlogShare;
-use App\Http\Responses\Backend\Blog\CreateResponse;
 use App\Notifications\Frontend\BlogActivityNotification;
+use App\Notifications\Frontend\GeneralBlogShareNotification;
 use App\Notifications\Frontend\GeneralBlogActivityNotification;
 use App\Repositories\Frontend\GeneralBlogs\GeneralBlogsRepository;
-use App\Http\Requests\Backend\GeneralBlogs\StoreGeneralBlogsRequest;
-use App\Http\Requests\Backend\GeneralBlogShares\StoreGeneralBlogSharesRequest;
+// use App\Http\Requests\Backend\GeneralBlogs\StoreGeneralBlogsRequest;
+// use App\Http\Requests\Backend\GeneralBlogShares\StoreGeneralBlogSharesRequest;
 
 /**
  * Class BlogsController.
@@ -245,7 +243,7 @@ class GeneralBlogsController extends Controller
         return view('frontend.blog.single_general_blog', compact('blog', 'tags'));
     }
 
-    public function saveGeneralBlog(StoreGeneralBlogsRequest $request)
+    public function saveGeneralBlog(Request $request)
     {
         if($request->blog_id != '') {
             $blog = GeneralBlog::find($request->blog_id);
@@ -326,12 +324,12 @@ class GeneralBlogsController extends Controller
         return array('status' => 'success', 'message' => 'Blog deleted successfully!');
     }
 
-    public function shareBlog(StoreGeneralBlogSharesRequest $request)
+    public function shareBlog(Request $request)
     {
         if($request->share_as_permanent == '1') {
             $blog = GeneralBlog::find($request->blog_id);
             $tags = $request->tag_ids;
-
+            $user = User::find($blog->created_by)->get();
             $blog_share = new BlogShare();
             $blog_share->caption = $request->share_caption;
             $blog_share->blog_id = $request->blog_id;
@@ -339,19 +337,23 @@ class GeneralBlogsController extends Controller
             $blog_share->created_by = Auth::user()->id;
             $blog_share->publish_datetime = date('Y-m-d H:i:s');
             $blog_share->save();
+            
 
             if (count($tags)) {
                 $blog_share->tags()->sync($tags);
             }
         } else {
+            $blog = GeneralBlog::find($request->blog_id);
+            $user = User::find($blog->created_by)->get();
             $blog_share = new GeneralBlogShare();
             $blog_share->caption = $request->share_caption;
             $blog_share->general_blog_id = $request->blog_id;
             $blog_share->created_by = Auth::user()->id;
             $blog_share->publish_datetime = date('Y-m-d H:i:s');
             $blog_share->save();
+            // Notification::send($user, new GeneralBlogShareNotification($blog_share));
         }
-        
+        Notification::send($user, new GeneralBlogShareNotification($blog_share));
         return array('message' => 'Shared blog successfully!');
     }
 

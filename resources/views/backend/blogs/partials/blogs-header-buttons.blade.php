@@ -13,6 +13,9 @@
     @permission('create-blog')
     <li><a href="{{route('admin.blogs.create')}}"><i class="fa fa-plus"></i> {{trans('menus.backend.blogs.create')}}</a></li>
     @endauth
+    @permission('create-blog')
+    <li><a href="{{route('admin.blogs.deleted')}}"><i class="fa fa-plus"></i> deleted blogs</a></li>
+    @endauth
   </ul>
 </div>
 <div class="clearfix"></div>

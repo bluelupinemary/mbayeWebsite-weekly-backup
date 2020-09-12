@@ -311,6 +311,12 @@ function set_orbit_enability(val){
     }
 }//end of function
 
+function set_constellation_enability(val){
+    for (const [name,star] of starsObjMap.entries()) {
+            star.isPickable = val;
+    }
+}//end of function
+
 function set_solar_orbit_enability(val){
     solarOrbit.isVisible = val;
     solarOrbit.setEnabled(val);
@@ -692,6 +698,28 @@ var isEarthRotating = true;
 function set_earth_animation(val){
     isEarthRotating = val;
 }
+
+function show_alert_box(titleText,path){
+    Swal.fire({
+        title: titleText,
+        imageUrl: '../../front/icons/alert-icon.png',
+        imageWidth: '10vw',
+        imageHeight: 'auto',
+        imageAlt: 'Warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, I\'m sure!',
+        width: '20%',
+        padding: '1rem',
+        background: 'rgba(8, 64, 147, 0.62)',
+    }).then((result) => {
+        if (result.value) {
+            window.open(path); 
+        }
+      });
+}
+
 
 //create the game engine
 var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true },true);

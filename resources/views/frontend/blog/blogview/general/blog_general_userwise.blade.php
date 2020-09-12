@@ -14,13 +14,10 @@
             <img src="{{ asset('front') }}/images/rotate-screen.gif" alt="">
         </div>
     </div>
-    <!-- For nouvela animation -->
-    <section class="container-fluid">
-        <div class="div_container " style=""> 
-            <div id="overlay"></div>
-        <img  class="img-nouvela"  style="display:none" src="{{ asset('front') }}/images/naff555Votes.png" >
-        <div>
-    </section>
+   <!-- For nouvela animation -->
+    <div class="naff-fart-reaction">
+        <img src="{{asset('front/images/naff555Votes.png')}}" alt="">
+    </div>
 
     <generalblog-component :user="{{Auth::user()}}" :user_id="{{$id}}" :type="'{{$type}}'"></generalblog-component>
 

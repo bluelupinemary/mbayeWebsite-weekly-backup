@@ -675,6 +675,12 @@ $('.planet-buttons .collage').mouseenter(function() {
 	$('.planet-buttons span.collage-pop-up').hide();
 });
 
+$('.planet-buttons .view-friend').mouseenter(function() {
+	$('.planet-buttons span.view-friend-pop-up').show();
+}).mouseleave(function() {
+	$('.planet-buttons span.view-friend-pop-up').hide();
+});
+
 // $('.planet-buttons .view').on('click',function() {
 // 	view_blog("general",1);
 // });
@@ -721,4 +727,34 @@ function view_my_career_posts(){
 
 function view_my_designs_blogs(){
 	window.location.href=url_view_my_designs_blog;
+}
+
+/**
+ * Function to redirect to general blogs
+ * @param {tag} tag 
+ * @param {id} id 
+ */
+function view_friend_general_blogs (){
+	window.location.href=url_view_friend_general_blog;
+}
+
+/**
+ * Function to redirect to tagwise blogs
+ * @param {tag} tag 
+ * @param {id} id 
+ */
+function view_friend_blogs_tagwise(tag){
+	window.location.href=url_view_friend_tag_wise_blog+'?tag='+tag;
+}
+
+/**
+ *  Function to redirect to my career posts
+ * @param {id} id 
+ */
+function view_friend_career_posts(){
+	window.location.href=url_view_friend_career_blog;
+}
+
+function view_friend_designs_blogs(){
+	window.location.href=url_view_friend_designs_blog;
 }

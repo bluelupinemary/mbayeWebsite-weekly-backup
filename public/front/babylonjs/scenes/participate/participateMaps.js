@@ -71,7 +71,7 @@ var planetsLinkTextMap = new Map([                                              
     ["uranus",["Politics","blogview/tagwise/all?tag=politics"]],
     ["neptune",["Designs","blogview/designed-panel/all"]],
     ["pluto",["Travel","blogview/tagwise/all?tag=travel"]],
-    ["sun",["All About You","dashboard"]],
+    ["sun",["You, Your Family and Friends","dashboard"]],
 ]);
 
 var planetOrbitsMap = new Map([                                                            //var to keep track of the variety of flowers
@@ -89,6 +89,7 @@ var planetOrbitsMap = new Map([                                                 
     
 ]);
 
+//to be modified
 var constellationsMap = new Map([                                                            //var to keep track of the variety of flowers
     //key, val ; val => [texture name, position,rotationQ, scaling]
     ["Leo",['leo.png',{x:-2877,y:4345,z:1908},{x:-0.553,y:0.438,z:0.438,w:0.553},14]],
@@ -124,9 +125,8 @@ var wikiMap = new Map([                                                         
     ["Taurus","Taurus_(constellation)"],
     ["Virgo","Virgo_(constellation)"],
 
-    
- 
-    
+    //michael's wiki
+    ["helmetStars","Michael_Schumacher"]
 ]);
 
 
@@ -195,4 +195,14 @@ var astronautBtnsMap = new Map([                                                
     ["btn18",null],
     ["btn19",null],
     ["btn20",null],
+]);
+
+
+var astronautChestParts = new Map([
+    ["chest_yellowBtn",["",null]],
+    ["chest_blueBtn",["User Profile","dashboard"]],
+    ["chest_orangeBtn",["Home","/"]],
+    ["chest_purpleBtn",["Instructions","instructions"]],
+    ["chest_redBtn",["",null]],
+    ["Navigator",["Communicator","communicator"]]
 ]);

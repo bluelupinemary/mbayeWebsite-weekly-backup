@@ -1,13 +1,31 @@
 
 <template>
  <section class="container-fluid">
-    <!-- Next and Previous buttons -->
+		<div class="sort-div">
+			<div class="sort-header">
+				<p>Sort</p>
+				<button><i class="fas fa-chevron-circle-down"></i></button>
+			</div>
+			<div class="sort-body">
+				<div class="sort-select">
+					<select name="sort" id="" @change="sortFriends()" v-model="orderBy">
+						<option value="asc-first_name">Ascending Name</option>
+						<option value="desc-first_name">Descending Name</option>
+						<option value="asc-friendship_date">Ascending Date of Friendship</option>
+						<option value="desc-friendship_date">Descending Date of Friendship</option>
+					</select>
+				</div>
+			</div>
+		</div>
+    	<!-- Next and Previous buttons -->
+		<div v-if="last_page > 0">
         <div class="arrow-left" @click="previousPage(page)" v-if="page > 1 && page <= last_page">
             <i class="fas fa-chevron-circle-left"></i>
         </div>
         <div class="arrow-right" @click="nextPage(page)" v-if="page < last_page">
             <i class="fas fa-chevron-circle-right"></i>
         </div>
+		</div>
         <!-- Next and Previous buttons -->
 
         <!-- 5 main images -->
@@ -71,9 +89,13 @@
 			</div>
       	</div>
 		</div>
+		<div v-else-if="last_page == 0" class="no-friend-request">
+			<p>Loading Friends...</p>
+		</div>
 		<div v-else class="no-friend-request">
 			<p>No Friends.</p>
 		</div>
+		
 
 		<div id="search-friends">
             <div id="search-friends-view2">
@@ -100,6 +122,7 @@ export default {
 			userList: [],
 			page: 1,
 			query: "",
+			orderBy: 'asc-first_name',
 			searched: false,
 			cursor: "pointer",
 			next: false,
@@ -165,8 +188,8 @@ export default {
 			.then((response) => {
 				console.log(response);
 				this.users = response.data.data;
-				this.page = response.data.current_page;
-				this.last_page = response.data.last_page;
+				this.page = response.data.pagination.current_page;
+				this.last_page = response.data.pagination.last_page;
 				// alert(response.data);
 			})
 			.catch((error) => {
@@ -175,13 +198,34 @@ export default {
 		},
 		search() {
 			this.page = 1;
-			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${this.page}`)
+			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${this.page}&orderBy=${this.orderBy}`)
 			.then((response) => {
 				console.log(response);
 				this.users = [];
 				this.users = response.data.data;
-				this.page = response.data.current_page;
-				this.last_page = response.data.last_page;
+				this.page = response.data.pagination.current_page;
+				this.last_page = response.data.pagination.last_page;
+				console.log(this.last_page);
+				this.refreshHtml();
+				// alert(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+		},
+		sortFriends() {
+			this.page = 1;
+			this.users = [];
+			this.last_page = 0;
+
+			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${this.page}&orderBy=${this.orderBy}`)
+			.then((response) => {
+				console.log(response);
+				// this.users = [];
+				this.users = response.data.data;
+				this.page = response.data.pagination.current_page;
+				this.last_page = response.data.pagination.last_page;
+				console.log(this.last_page);
 				this.refreshHtml();
 				// alert(response.data);
 			})
@@ -307,7 +351,7 @@ export default {
 			this.declinedRequest = false;
 		},
 		nextPage(page) {
-			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${page + 1}`)
+			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${page + 1}&orderBy=${this.orderBy}`)
 			.then((response) => {
 				// console.log(response);
 				this.page = page + 1;
@@ -321,7 +365,7 @@ export default {
 			})
 		},
 		previousPage(page) {
-			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${page - 1}`)
+			axios.get(`/fetchfriends?perPage=8&search=${this.query}&page=${page - 1}&orderBy=${this.orderBy}`)
 			.then((response) => {
 				// console.log(response);
 				this.page = page - 1;

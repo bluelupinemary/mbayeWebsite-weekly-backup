@@ -3117,6 +3117,16 @@ div.notifications-list::-webkit-scrollbar {
 	filter: drop-shadow(0px 0px 1px #ee2d34);
 }
 
+.planet-buttons button.collage:hover {
+	-webkit-filter: drop-shadow(0px 0px 1px #1ac56c);
+	filter: drop-shadow(0px 0px 1px #1ac56c);
+}
+
+.planet-buttons button.view-friend:hover {
+	-webkit-filter: drop-shadow(0px 0px 1px #bc962c);
+	filter: drop-shadow(0px 0px 1px #bc962c);
+}
+
 .planet-buttons button:focus {
 	outline: 0;
 }
@@ -3146,6 +3156,15 @@ div.notifications-list::-webkit-scrollbar {
 	pointer-events: none;
 }
 
+.planet-buttons button.view-friend {
+	position: absolute;
+	bottom: 2%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #c7a443;
+	pointer-events: none;
+}
+
 .planet-buttons button img {
 	width: 90%;
 	align-self: center;
@@ -3158,6 +3177,10 @@ div.notifications-list::-webkit-scrollbar {
 
 .planet-buttons button.collage img {
 	width: 75%;
+}
+
+.planet-buttons button.view-friend img {
+	width: 70%;
 }
 
 .planet-buttons span.pop-up {
@@ -3211,4 +3234,15 @@ div.notifications-list::-webkit-scrollbar {
 	-moz-transform: translate(-50%, 0%);
 	-ms-transform: translate(-50%, 0%);
 	transform: translate(-50%, 0%);
+}
+
+.planet-buttons span.view-friend-pop-up {
+	width: auto;
+	white-space: nowrap;
+	-webkit-transform: translate(-50%, 0%);
+	-moz-transform: translate(-50%, 0%);
+	-ms-transform: translate(-50%, 0%);
+	transform: translate(-50%, 0%);
+	bottom: -5%;
+	top: unset;
 }

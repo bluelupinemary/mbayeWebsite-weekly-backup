@@ -12,6 +12,7 @@ use App\Models\Friendships\FriendFriendshipGroups;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Repositories\Frontend\Paginate\PaginateRepository;
+use Auth;
 
 
 trait Friendable
@@ -275,9 +276,62 @@ trait Friendable
         return $this->getOrPaginate($this->getFriendsQueryBuilder($groupSlug), $perPage);
     }
 
-    public function getFriendsSearch($perPage = 0, $search = '') 
+    public function getFriendsSearch($perPage = 0, $search = '', $orderBy) 
     {
-        return $this->getOrPaginate($this->getFriendsSearchQueryBuilder($search), $perPage);
+        // return $this->getOrPaginate($this->getFriendsSearchQueryBuilder($search, $orderBy), $perPage);
+        $orderBy = explode('-', $orderBy);
+        $sort_type = $orderBy[0];
+        $sort_field = $orderBy[1];
+
+        $friendships = $this->findFriendships(Status::ACCEPTED)->get(['sender_id', 'recipient_id']);
+        $recipients  = $friendships->pluck('recipient_id')->all();
+        $senders     = $friendships->pluck('sender_id')->all();
+
+        $users =  $this->where('id', '!=', $this->getKey())
+            ->whereIn('id', array_merge($recipients, $senders))
+            ->when($search, function($query, $search) {
+                return  $query->where(function ($q) use ($search) {
+                    return $q->where('username','LIKE','%'.$search.'%')
+                        ->orWhere('email','LIKE','%'.$search.'%')
+                        ->orWhere('first_name','LIKE','%'.$search.'%')
+                        ->orWhere('last_name','LIKE','%'.$search.'%');
+                });
+            })
+            ->when($sort_field, function($query) use($sort_field, $sort_type) {
+                if($sort_field == 'first_name') {
+                    return $query->orderBy($sort_field, $sort_type);
+                }
+            })
+            ->get();
+        $users->each->append('user_friendship');
+    
+        if($sort_field == 'friendship_date') {
+            if($sort_type == 'asc') {
+                $users = $users->sortBy('user_friendship');
+            } else if($sort_type == 'desc') {
+                $users = $users->sortByDesc('user_friendship');
+            }
+        }
+        
+        $users = $users->paginate($perPage);
+        
+        return $users;
+    }
+
+    public function getUserFriendshipAttribute()
+    {
+        $user = Auth::user();
+        $friendship = $this->findFriendships(Status::ACCEPTED)
+                ->where(function ($query) use($user) {
+                    $query->where(function ($q) use($user) {
+                        $q->whereSender($user);
+                    })->orWhere(function ($q) use($user) {
+                        $q->whereRecipient($user);
+                    });
+                })
+                ->first();
+
+        return $friendship->updated_at;
     }
 
     public function getReq($perPage = 0, $groupSlug = '')
@@ -371,7 +425,7 @@ trait Friendable
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    private function findFriendships($status = null, $groupSlug = '')
+    public function findFriendships($status = null, $groupSlug = '')
     {
 
         $query = Friendship::where(function ($query) {

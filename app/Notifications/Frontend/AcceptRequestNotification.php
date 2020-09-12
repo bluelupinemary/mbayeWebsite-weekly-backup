@@ -54,7 +54,7 @@ class AcceptRequestNotification extends Notification implements ShouldQueue
         return [
                 'sender_id' => $this->friendship->sender_id,
                 'recipient_id'   => $this->friendship->recipient_id,
-                'user' => User::where('id',$this->friendship->sender_id)->first(),
+                'user' => User::where('id',$this->friendship->recipient_id)->first(),
                 'message' => 'accepted your friend request'
         ];
     }
@@ -64,7 +64,7 @@ class AcceptRequestNotification extends Notification implements ShouldQueue
         return new BroadcastMessage([
             'sender_id' => $this->friendship->sender_id,
             'recipient_id'   => $this->friendship->recipient_id,
-            'user' => User::where('id',$this->friendship->sender_id)->first(),
+            'user' => User::where('id',$this->friendship->recipient_id)->first(),
             'message' => 'accepted your friend request'
         ]);
     }

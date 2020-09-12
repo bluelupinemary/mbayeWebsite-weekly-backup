@@ -21,12 +21,13 @@ use App\Http\Responses\Backend\Blog\IndexResponse;
 use App\Models\Friendships\FriendFriendshipGroups;
 use App\Http\Responses\Backend\Blog\CreateResponse;
 use App\Repositories\Frontend\Blogs\BlogsRepository;
+use App\Notifications\Frontend\BlogShareNotification;
 use App\Http\Requests\Backend\Blogs\StoreBlogsRequest;
 use App\Http\Requests\Backend\Blogs\ManageBlogsRequest;
 use App\Http\Requests\Backend\Blogs\UpdateBlogsRequest;
+use App\Notifications\Frontend\BlogActivityNotification;
 use App\Http\Requests\Backend\BlogShares\StoreBlogSharesRequest;
 use App\Http\Requests\Backend\DesignsBlogs\StoreDesignsBlogsRequest;
-use App\Notifications\Frontend\BlogActivityNotification;
 
 /**
  * Class BlogsController.
@@ -158,13 +159,13 @@ class BlogsController extends Controller
         // dd($request->all());
         $saved_blog = $this->blog->create($request->except('_token'));
 
-        $user = User::find($request->user_id);
+        // $user = User::find($request->user_id);
 
-        if($user->roles[0]->name == 'User') {
-            return array('status' => 'success', 'message' => 'Blog progress saved!', 'data' => $saved_blog);
-        } else {
-            return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
-        }
+        // if($user->roles[0]->name == 'User') {
+        //     return array('status' => 'success', 'message' => 'Blog progress saved!', 'data' => $saved_blog);
+        // } else {
+        //     return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
+        // }
     }
 
     /**
@@ -327,7 +328,7 @@ class BlogsController extends Controller
     public function shareBlog(StoreBlogSharesRequest $request)
     {
         $blog = Blog::find($request->blog_id);
-
+        $user = User::find($blog->created_by)->get();
         $blog_share = new BlogShare();
         $blog_share->caption = $request->share_caption;
         $blog_share->blog_id = $request->blog_id;
@@ -335,7 +336,7 @@ class BlogsController extends Controller
         $blog_share->created_by = Auth::user()->id;
         $blog_share->publish_datetime = date('Y-m-d H:i:s');
         $blog_share->save();
-
+        Notification::send($user, new BlogShareNotification($blog_share));
         return array('message' => 'Shared blog successfully!');
     }
 

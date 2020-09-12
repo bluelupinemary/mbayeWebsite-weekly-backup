@@ -53,8 +53,7 @@ class BlogsTableController extends Controller
                     return "No Privacy";
                 }else{
                     return $p;
-                }
-                
+                }  
             })
             ->addColumn('Email', function ($blogs) {
                 return $blogs->email;

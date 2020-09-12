@@ -146,6 +146,42 @@
             <i class="fas fa-undo-alt"></i>
         </button>
     </div>
+    <div class="navigator-div-zoomed-in">
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+        <div class="navigator-components">
+            <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut">
+            <div class="tos-div">
+                <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+            </div>
+            <div class="user-photo {{access()->user()->getGender()}}">
+                <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+            </div>
+            {{-- <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button> --}}
+            <div class="navigator-buttons">
+                <div class="column column-1">
+                    <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
+                    <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
+                </div>
+                <div class="column column-2">
+                    <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+                </div>
+                <div class="column column-3">
+                    <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                    <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+                </div>
+            </div>
+            <div class="instructions-div">
+                <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
+            </div>
+            <div class="communicator-div tooltips top">
+                <button class="communicator-button"></button>
+                <span>Communicator</span>
+            </div>
+            <button class="navigator-zoomout-btn">
+                <i class="fas fa-undo-alt"></i>
+            </button>
+        </div>
+    </div>
 </div>
     <div class="ally-dolphin">
         <div class="cloud-message">
@@ -338,39 +374,51 @@
         });
 
         var navigator_zoom = 0;
+        var img_has_loaded = 0;
 
         $('button.navigator-zoomin').click( function() {
             if(!navigator_zoom) {
-                $(this).fadeOut();
-                $('.navigator-div').addClass('animate-navigator-zoomin');
+                if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                    $('.navigator-div').hide();
+                    $('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
+                    // if(!img_has_loaded) {
+                    //     $('.navigator-div-zoomed-in .lds-ellipsis').show();
+                    //     // $('.navigator-div-zoomed-in img.astronaut').on('load', function() {
+                    //         $('.navigator-div-zoomed-in .lds-ellipsis').hide();
+                    //         $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    //         img_has_loaded = !img_has_loaded;
+                    //     });
+                    // } else {
+                        $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    // }
+                } else {
+                    $(this).fadeOut();
+                    $('.navigator-div').addClass('animate-navigator-zoomin');
 
-                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                    $('.navigator-div').removeClass('animate-navigator-zoomin');
-                    $('.navigator-div').addClass('zoomin');
-                });
-            } 
-            // else {
-            //     // $(this).removeClass('navigator-zoomout');
-            //     // $(this).addClass('navigator-zoomin');
-            //     $('.navigator-div').addClass('animate-navigator-zoomout');
-
-            //     $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-            //         $('.navigator-div').removeClass('animate-navigator-zoomout');
-            //         $('.navigator-div').removeClass('zoomin');
-            //     });
-            // }
+                    $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.navigator-div').removeClass('animate-navigator-zoomin');
+                        $('.navigator-div').addClass('zoomin');
+                    });
+                }
+            }
 
             navigator_zoom = !navigator_zoom;
         });
 
         $('.navigator-zoomout-btn').click(function() {
             $('button.navigator-zoomin').fadeIn();
-            $('.navigator-div').addClass('animate-navigator-zoomout');
 
-            $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                $('.navigator-div').removeClass('animate-navigator-zoomout');
-                $('.navigator-div').removeClass('zoomin');
-            });
+            if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                $('.navigator-div').fadeIn();
+                $('.navigator-div-zoomed-in').hide();
+            } else {
+                $('.navigator-div').addClass('animate-navigator-zoomout');
+
+                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.navigator-div').removeClass('animate-navigator-zoomout');
+                    $('.navigator-div').removeClass('zoomin');
+                });
+            }
 
             navigator_zoom = !navigator_zoom;
         });

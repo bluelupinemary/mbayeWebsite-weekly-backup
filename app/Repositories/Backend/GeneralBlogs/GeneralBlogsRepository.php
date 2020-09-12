@@ -63,6 +63,25 @@ class GeneralBlogsRepository extends BaseRepository
             ]);
     }
 
+    public function getdeletedblog()
+    {
+
+        return $this->query()
+        ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.general_blogs.table').'.created_by')->onlyTrashed()
+            ->select([
+                config('module.general_blogs.table').'.id',
+                config('module.general_blogs.table').'.name',
+                config('module.general_blogs.table').'.featured_image',
+                config('module.general_blogs.table').'.publish_datetime',
+                config('module.general_blogs.table').'.status',
+                config('module.general_blogs.table').'.created_by',
+                config('module.general_blogs.table').'.created_at',
+                config('access.users_table').'.first_name as first_name',
+                config('access.users_table').'.last_name as last_name',
+                config('access.users_table').'.email as email',
+            ]);
+    }
+
         /**
      * @param array $input
      *
@@ -174,5 +193,42 @@ class GeneralBlogsRepository extends BaseRepository
         $fileName = $model->featured_image;
 
         return $this->storage->delete($this->upload_path.$fileName);
+    }
+
+    public function restore($blog)
+    {
+        if (is_null($blog->deleted_at)) {
+            // throw new GeneralException(trans('exceptions.backend.access.users.cant_restore'));
+        }
+
+        if ($blog->restore()) {
+            // event(new UserRestored($user));
+
+            return true;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.access.users.restore_error'));
+    }
+
+    /**
+     * @param $user
+     *
+     * @throws GeneralException
+     */
+    public function forceDelete($blog)
+    {
+        if (is_null($blog->deleted_at)) {
+            throw new GeneralException(trans('exceptions.backend.access.users.delete_first'));
+        }
+
+        DB::transaction(function () use ($blog) {
+            if ($blog->forceDelete()) {
+                // event(new UserPermanentlyDeleted($user));
+
+                return true;
+            }
+
+            throw new GeneralException(trans('exceptions.backend.access.users.delete_error'));
+        });
     }
 }

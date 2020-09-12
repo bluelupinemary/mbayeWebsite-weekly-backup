@@ -319,7 +319,7 @@ var onOutPlanet=(meshEvent)=>{
 
     while (document.getElementById("planetLbl")) {
         document.getElementById("planetLbl").parentNode.removeChild(document.getElementById("planetLbl"));
-} 
+    } 
 };
 
 
@@ -490,21 +490,7 @@ function create_planet_orbit(scene){
     }
 }//end of fxn
 
-
-// function init_constellation(stars,name,imgName,pos,rot,scale,scene){
-//     stars.scaling = new BABYLON.Vector3(scale,scale,scale);
-//     stars.position = new BABYLON.Vector3(pos.x,pos.y,pos.z);
-//     stars.rotationQuaternion = new BABYLON.Quaternion(rot.x,rot.y,rot.z,rot.w);
-//     var starsMatl = new BABYLON.StandardMaterial(name+"matl", scene);
-//     starsMatl.diffuseTexture = new BABYLON.Texture(STARS_TEXTURE_PATH+imgName, scene);
-//     starsMatl.diffuseTexture.hasAlpha = true;
-//     stars.material = starsMatl;
-//     stars.material.backFaceCulling = false;
-//     stars.freezeWorldMatrix();
-//     return stars;
-// }
-
-
+let starsObjMap = new Map();
 function init_clone_constellation(name, temp, matlPath,scale, x, y, z,scene){
     temp.position = new BABYLON.Vector3(x,y,z);
     temp.name = name;
@@ -554,6 +540,8 @@ function init_clone_constellation(name, temp, matlPath,scale, x, y, z,scene){
         temp.rotationQuaternion = new BABYLON.Quaternion(-0.032,-0.710,0.027,0.687);    
     }  
 
+    starsObjMap.set(temp.name, temp);
+
 }//end of init planet function
 
 var leoStars,geminiStars;
@@ -584,6 +572,8 @@ function create_constellation_planes(scene){
             onOutPlanetOrbit
         )
     );
+
+    starsObjMap.set(leoStars.name, leoStars);
     //params of clones: name, temp, matlPath,scale, x, y, z
     geminiStars = leoStars.clone();
     init_clone_constellation("Gemini",geminiStars,"front/textures/participate/constellations/gemini.png",14,4227,2823,806,scene);

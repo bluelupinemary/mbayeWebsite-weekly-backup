@@ -39,10 +39,18 @@
     </div>
     <img src="{{asset('storage/profilepicture').'/'.$photo}}" id="userPhoto" alt="Img goes here" style="visibility:hidden;"/>
     <input type="hidden" id="userGender" value="{{$gender}}"/>
+
+    <script>
+        var token = '{{ Session::token() }}';
+        var urlStoreGender = '{{ route('frontend.participateStoreGender') }}';
+      
+       
+    </script>
    
 @endsection
 
 @section('after-scripts')
+
     
 
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>

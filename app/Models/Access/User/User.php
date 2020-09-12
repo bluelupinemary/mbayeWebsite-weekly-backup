@@ -12,6 +12,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Access\User\Traits\UserSendPasswordReset;
 use App\Models\Access\User\Traits\Attribute\UserAttribute;
 use App\Models\Access\User\Traits\Relationship\UserRelationship;
+use App\Models\Friendships\Friendship;
+use App\Models\Friendships\Status;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class User.
@@ -78,6 +81,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $dates = ['deleted_at'];
+    // protected $appends = ['user_friendship'];
 
     /**
      * @param array $attributes
@@ -125,5 +129,30 @@ class User extends Authenticatable
     public function receivesBroadcastNotificationsOn()
     {
         return 'App.User.'.$this->id;
+    }
+
+    public function getUserFriendshipAttribute()
+    {
+        $user = Auth::user();
+        $friendship = Friendship::where(function ($query) {
+                    $query->where(function ($q) {
+                        $q->whereSender($this);
+                    })->orWhere(function ($q) {
+                        $q->whereRecipient($this);
+                    });
+                })
+                ->where(function ($query) use($user) {
+                    $query->where(function ($q) use($user) {
+                        $q->whereSender($user);
+                    })->orWhere(function ($q) use($user) {
+                        $q->whereRecipient($user);
+                    });
+                })
+                ->where('status', Status::ACCEPTED)
+                ->first();
+
+        if($friendship) {
+            return $friendship->updated_at;
+        }
     }
 }

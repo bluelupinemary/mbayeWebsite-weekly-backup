@@ -81,6 +81,27 @@ class BlogsRepository extends BaseRepository
             ]);
     }
 
+    public function getdeletedblog()
+    {
+
+        return $this->query()
+            ->leftjoin(config('access.users_table'), config('access.users_table').'.id', '=', config('module.blogs.table').'.created_by')->onlyTrashed()
+            ->select([
+                config('module.blogs.table').'.id',
+
+
+                config('module.blogs.table').'.name',
+                config('module.blogs.table').'.featured_image',
+                config('module.blogs.table').'.publish_datetime',
+                config('module.blogs.table').'.status',
+                config('module.blogs.table').'.created_by',
+                config('module.blogs.table').'.created_at',
+                config('access.users_table').'.first_name as first_name',
+                config('access.users_table').'.last_name as last_name',
+                config('access.users_table').'.email as email',
+            ]);
+    }
+
     /**
      * @param array $input
      *

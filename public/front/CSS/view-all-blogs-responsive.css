@@ -97,8 +97,242 @@ and (max-width: 1280px) {
 }
 
 /* Ipad */
-@media (max-width : 1024px) {
-    
+@media only screen
+and (max-width : 1024px) {
+    /* Safari navigator zoom in */
+    .navigator-div-zoomed-in {
+        position: fixed;
+        top: unset;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        width: 100%;
+        height: 57vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        /* background: #00000052; */
+        pointer-events: auto;
+        display: none;
+        /* overflow: hidden; */
+    }
+
+    .navigator-div-zoomed-in .tooltips:hover span {
+        display: inline;
+    }
+
+    .navigator-div-zoomed-in .navigator-components {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        align-items: flex-end;
+        width: 100%;
+        height: 100%;
+        display: none;
+    }
+
+    .navigator-div-zoomed-in .astronaut {
+        width: 92%;
+    }
+
+    .navigator-div-zoomed-in .user-photo.male {
+        z-index: -1;
+        width: 26.9vw;
+        height: 23.3vw;
+        -webkit-transform: translate(-70%, -158%);
+        -moz-transform: translate(-70%, -158%);
+        transform: translate(-70%, -158%);
+    }
+
+    .navigator-div-zoomed-in .user-photo img {
+        width: 100%;
+    }
+
+    .navigator-div-zoomed-in .navigator-buttons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-78%, -8%);
+        -moz-transform: translate(-78%, -8%);
+        -ms-transform: translate(-78%, -8%);
+        transform: translate(-78%, -8%);
+        width: 16vw;
+        height: 9.5vw;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    }
+
+    .navigator-div-zoomed-in .navigator-zoom {
+        position: absolute;
+        border: 0;
+        background: #fff0;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-78%, -63%);
+        -moz-transform: translate(-78%, -63%);
+        -ms-transform: translate(-78%, -63%);
+        transform: translate(-78%, -63%);
+        width: 15.5vw;
+        height: 8.5vw;
+        outline: 0;
+        pointer-events: auto;
+        /* border: 1px solid red; */
+        background: #00000070;
+        z-index: 2;
+        border-radius: 9%;
+        display: flex;
+        font-size: 2vw;
+        color: #fff;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .navigator-div-zoomed-in .tos-div {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-69%, 229%);
+        -ms-transform: translate(-69%, 229%);
+        transform: translate(-69%, 229%);
+        width: 6.5vw;
+        height: 5.5vw;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+    .navigator-div-zoomed-in .instructions-div {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-53%, 437%);
+        -moz-transform: translate(-53%, 437%);
+        -ms-transform: translate(-53%, 437%);
+        transform: translate(-53%, 437%);
+        width: 7vw;
+        height: 2vw;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    }
+
+    .navigator-div-zoomed-in .navigator-zoomout-btn {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(306%, 41%);
+        -moz-transform: translate(306%, 41%);
+        -ms-transform: translate(306%, 41%);
+        transform: translate(306%, 41%);
+        width: 7vw;
+        height: 5vw;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        font-size: 3vw;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        color: #509ef3;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .navigator-div-zoomed-in .menu-button {
+        transform: translate(-703%, 60%);
+        width: 5vw;
+        height: 5vw;
+    }
+
+    .navigator-div-zoomed-in .tooltips span {
+        padding: 34%;
+        outline: 0;
+        border: 0;
+        width: 16vw;
+    }
+
+    .navigator-div-zoomed-in .tooltips.top span {
+        width: auto;
+    }
+
+    .navigator-div-zoomed-in .tooltips.left span {
+        -webkit-transform: translate(20%, -50%);
+        -moz-transform: translate(20%, -50%);
+        -ms-transform: translate(20%, -50%);
+        transform: translate(-123%, -50%);
+    }
+
+    .navigator-div-zoomed-in .tooltips.left span:after {
+        right: 0;
+        left: 100%;
+        border-right: 0;
+        border-left: 1em solid #0b91c3a3;
+        margin-top: -1.1vw;
+        border-top: 1.1vw solid transparent;
+        border-bottom: 1.1vw solid transparent;
+    }
+
+    .navigator-div-zoomed-in .tooltips.top span:after {
+        border-left: 1.5vw solid transparent;
+        border-right: 1.5vw solid transparent;
+    }
+
+    .navigator-div-zoomed-in .tooltips.right span:after {
+        margin-top: -1.1vw;
+        border-top: 1.1vw solid transparent;
+        border-bottom: 1.1vw solid transparent;
+    }
+
+    .navigator-div-zoomed-in .communicator-div {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        -webkit-transform: translate(-101%, 86%);
+        -moz-transform: translate(-101%, 86%);
+        -ms-transform: translate(-101%, 86%);
+        transform: translate(-101%, 86%);
+        border: 0;
+        width: 8.2vw;
+        height: 10.5vw;
+        cursor: pointer;
+        /* border-radius: 2px; */
+        /* z-index: 1; */
+        /* padding: 0; */
+        /* background: transparent; */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        /* border: 1px solid red; */
+    }
+
+    .navigator-div-zoomed-in .communicator-div:hover button {
+        -webkit-box-shadow: 0px 0px 9px #17a2b8;
+        box-shadow: 0px 0px 9px #17a2b8;
+    }
+
+    .navigator-div-zoomed-in .communicator-div button {
+        border: 0;
+        background: transparent;
+        transform: skew(20deg, 13deg);
+        width: 100%;
+        height: 100%;
+        border-radius: 17px;
+        padding: 0;
+    }
 }
 
 @media (max-width : 991px)

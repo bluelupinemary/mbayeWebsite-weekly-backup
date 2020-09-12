@@ -1,7 +1,9 @@
 <?php
 
 use Carbon\Carbon;
+use Database\TruncateTable;
 use Illuminate\Database\Seeder;
+use Database\DisableForeignKeys;
 use Illuminate\Support\Facades\DB;
 
 class ProfessionTableSeeder extends Seeder
@@ -13,7 +15,8 @@ class ProfessionTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('professions')->truncate();
+    
+        // DB::table('professions')->truncate();
         $tags = [
             [
                 'profession_name'                  => 'Teacher',

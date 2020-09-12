@@ -161,19 +161,33 @@ public function fetchfriends(Request $request){
         $perPage = 15;
     }
 
-    if($search != '') {
-		$friendships = $u->getFriendsSearch($perPage, $search);
-    } else {
-		$friendships = $u->getFriends($perPage);
-	}
+    $orderBy = 'asc-first_name';
+    if($request->has('orderBy')) {
+        $orderBy = $request->orderBy;
+    }
+
+    // if($search != '') {
+		$friendships = $u->getFriendsSearch($perPage, $search, $orderBy);
+    // } else {
+	// 	$friendships = $u->getFriends($perPage);
+	// }
 
     // dd($friendships);
     if(count($friendships)>0){
-        // foreach ($friendships as $friendship) {
-        //     $users[] = User::find($friendship->sender_id);
+        // if($sort_field == 'first_name') {
+        //     if($sort_type == 'asc') {
+        //         $friendships = $friendships->sortBy('first_name');
+        //     } else {
+        //         $friendships = $friendships->sortByDesc('first_name');
+        //     }
+        // } else if($sort_field == 'frienship_date') {
+        //     if($sort_type == 'asc') {
+        //         $friendships = $friendships->sortBy('user_friendship');
+        //     } else {
+        //         $friendships = $friendships->sortByDesc('user_friendship');
+        //     }
         // }
-        // dd( compact('users'));
-        return response()->json($friendships);
+        return response()->json(['pagination' => $friendships, 'data' => $friendships->values()->all()]);
     } else{
         // dd("no friend");
         return response()->json("no friends");

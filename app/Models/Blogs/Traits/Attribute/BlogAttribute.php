@@ -2,10 +2,10 @@
 
 namespace App\Models\Blogs\Traits\Attribute;
 
-use App\Models\BlogPrivacy\BlogPrivacy;
-use App\Models\Friendships\Group;
 use Illuminate\Support\Str;
-use Auth;
+use App\Models\Friendships\Group;
+use Illuminate\Support\Facades\Auth;
+use App\Models\BlogPrivacy\BlogPrivacy;
 /**
  * Class BlogAttribute.
  */
@@ -16,17 +16,19 @@ trait BlogAttribute
      */
     public function getActionButtonsAttribute()
     {
-        if ($this->trashed()) {
-            return '<div class="btn-group action-btn">
-                        '.$this->getRestoreButtonAttribute('btn btn-default btn-flat').'
-                        '.$this->getDeletePermanentlyButtonAttribute('btn btn-default btn-flat').'
-                    </div>';
-        }
         return '<div class="btn-group action-btn">'.
                 $this->getEditButtonAttribute('edit-blog', 'admin.blogs.edit').
                 $this->getDeleteButtonAttribute('delete-blog', 'admin.blogs.destroy').
                 $this->getShowButtonAttribute('delete-blog', 'admin.blogs.show').
                 '</div>';
+    }
+
+    public function getTrashedButtonsAttribute()
+    {
+            return '<div class="btn-group action-btn">
+                        '.$this->getRestoreButtonAttribute('btn btn-default btn-flat').'
+                        '.$this->getDeletePermanentlyButtonAttribute('btn btn-default btn-flat').'
+                    </div>';
     }
 
     public function getRestoreButtonAttribute($class)

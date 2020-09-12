@@ -42,9 +42,9 @@
                                 <a class="reset-data" href="javascript:void(0)"><i class="fa fa-times"></i></a>
                             </th>
                             <th></th>
-                            <th>
+                            {{-- <th>
                                 {!! Form::select('status', $status, null, ["class" => "search-input-select form-control", "data-column" => 2, "placeholder" => trans('labels.backend.blogs.table.all')]) !!}
-                            </th>
+                            </th> --}}
                             <th></th>
                             <th></th>
                             <th></th>
@@ -67,13 +67,13 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                var dataTable = $('#users-table').dataTable({
+                var dataTable = $('#blogs-table').dataTable({
                     processing: true,
                     serverSide: true,
                     ajax: {
-                        url: '{{ route("admin.blogs.get") }}',
+                        url: '{{ route("admin.deletedblogs.get") }}',
                         type: 'post',
-                        data: {trashed: true}
+                        data: {trashed: true},
                     },
                     columns: [
                     {data: 'name', name: '{{config('module.blogs.table')}}.name'},

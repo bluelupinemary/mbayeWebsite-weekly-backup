@@ -1,6 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Models\CompanyProfile\Industry;
+use App\Models\Access\User\User;
+
 /**
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -84,7 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/career/companyProfile', function () {
             $industry = Industry::all();
-            // dd($industry);
+            // $photo=User::find('photo');
+            // dd($photo);
             return view('frontend.user.setup_company_profile',compact('industry'));
         });
         
@@ -164,7 +167,7 @@ Route::group(['namespace' => 'Friendship'], function () {
 
     //Jobseekers profile
     Route::get('/jobseekers/setup-profile','JobSeekerProfile\JobSeekerProfilesController@index');
-
+    Route::get('/jobseekers/edit-setup-profile/{id}','JobSeekerProfile\JobSeekerProfilesController@edit_profile');
     Route::get('jobseekers', 'JobSeekerProfile\JobSeekerProfilesController@getJobSeekers');
 
     // Company Profile
@@ -194,6 +197,7 @@ Route::get('/captainMbaye', 'FrontendController@captain_mbaye')->name('captainMb
 Route::get('/flowersMbaye', 'FrontendController@flowers_mbaye')->name('flowersMbaye');
 Route::get('/visitingMbaye', 'FrontendController@visiting_mbaye')->name('visitingMbaye');
 Route::get('/participateMbaye', 'FrontendController@participate_mbaye')->name('participateMbaye');
+Route::post('/participateMbaye','FrontendController@participate_store_gender')->name('participateStoreGender');
 Route::get('/feetMbaye', 'FrontendController@feet_mbaye')->name('feetMbaye');
 Route::get('/headMbaye', 'FrontendController@head_mbaye')->name('headMbaye');
 Route::get('/storyMbaye', 'FrontendController@story_mbaye')->name('storyMbaye');

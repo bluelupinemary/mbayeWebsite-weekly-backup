@@ -33,7 +33,19 @@ const UPPER_RADIUS_VAL = 2000;                                      //zoom out l
 var isHomeCounterReady = false;
 
 let theCurrRadius;
+let isViewActive = false;
 
+let charImgMap = new Map([
+    //key, val[position, alpha, beta, radius]
+    
+    ['InitialView',[{x: 0, y: 0, z: 0},2.4706,1.2283, 1400]],
+    ['Ruru',[{x:-971,y:2069, z:319},2.3422,1.4107,0.1]],
+    ['Solar',[{x:-1977,y:-1229, z:1172},2.4532,1.2013,0.1]],
+    ['Ally',[{x:-468,y:1595, z:457},4.2650,1.4635,0.1]],
+    ['William',[{x:654,y:2087, z:660},3.1721,1.5344,0.1]],
+    ['Villa',[{x:-611,y:-2385, z:250},4.7874,1.3864,80]],
+    ['Bruce',[{x:-992,y:-1331, z:-1211},0.06215,1.4707,0.1]]
+]);
 
 
 
@@ -58,10 +70,12 @@ function createScene(){
 
     enable_init_webcamera();
 
-    create_solar_texts();
-    create_ruru_texts();
+    create_characters();
+
+    hl = new BABYLON.HighlightLayer("hl1", homeScene);
+    // create_ruru_texts();
     
-    create_villa_texts();
+    // create_villa_texts();
     return homeScene;
 } //end of create scene function
 
@@ -83,7 +97,7 @@ function create_init_camera(){
     //for the right mouse button panning function; ;0 -no panning, 1 - fastest panning
     camera.panningSensibility = 10; 
     camera.upperBetaLimit = 10;
-    camera.panningDistanceLimit = 2000;
+    camera.panningDistanceLimit = 2500;
     camera.attachControl(canvas,true);
     camera.pinchPrecision = 1;
     homeScene.activeCamera = camera;
@@ -116,7 +130,7 @@ function create_init_skybox(){
     skybox.position = new BABYLON.Vector3(942,-500,-1500);
 
     skybox.rotation.y = BABYLON.Tools.ToRadians(-60);
-    // skybox.isPickable = false;
+    skybox.isPickable = false;
     skybox.infiniteDistance = true;
     var skyboxMaterial = new BABYLON.StandardMaterial("initSkyboxMaterial", homeScene);
     skyboxMaterial.backFaceCulling = false;
@@ -617,21 +631,49 @@ function enable_home_gizmo(themesh){
 }
 
 
-
+let charTooltip;
 var onOverPlanet =(meshEvent)=>{
+    if(charImgMap.has(meshEvent.source.name)){
+            charTooltip = document.createElement("span");
+            charTooltip.setAttribute("id", "charTooltip");
+            var sty = charTooltip.style;
+            sty.position = "absolute";
+            sty.lineHeight = "1.2em";
+            sty.padding = "0.2%";
+            sty.color = "#00BFFF";
+            sty.fontFamily = "Courgette-Regular";
+            sty.fontSize = "1.5em";
+            sty.top = homeScene.pointerY + "px";
+            sty.left = (homeScene.pointerX) + "px";
+            sty.cursor = "pointer";
+
+            document.body.appendChild(charTooltip);
+            if(currCamTarget!= meshEvent.source.name) charTooltip.textContent = "View";
+            else charTooltip.textContent = "Return";
+    }
     origScaling = meshEvent.source.scaling;
     meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.1,origScaling.y*1.1,origScaling.z*1.1);
     if(meshEvent.source.name === "homeVenus"){
         venusInfoTxt.isVisible = true;
     }
+  
+
+    
 };
+
 
 //handles the on mouse out event
 var onOutPlanet =(meshEvent)=>{
+    if(charImgMap.has(meshEvent.source.name)){
+        while (document.getElementById("charTooltip")) {
+            document.getElementById("charTooltip").parentNode.removeChild(document.getElementById("charTooltip"));
+        } 
+    } 
     meshEvent.source.scaling = origScaling;
     venusInfoTxt.isVisible = false;
-    //part of the 3d text on hover on mesh
-    // console.log("out planet");
+    
+   
+    
 };
 
 
@@ -645,7 +687,7 @@ var onOverSun =(meshEvent)=>{
     sty.position = "absolute";
     sty.lineHeight = "1.5em";
     sty.padding = "0.2%";
-    sty.color = "#efad0c  ";
+    sty.color = "#efad0c";
     sty.fontFamily = "Courgette-Regular";
     sty.fontSize = "1.5em";
     sty.top = meshEvent.pointerY + "px";
@@ -809,38 +851,67 @@ function add_action_mgr(thePlanet){
 
 //######################################################### FUNCTIONS TO CREATE TEXTS BELOW THE HALO #############################################################
 //function to create the text speech of solar
-function create_solar_texts(){
+
+function create_characters(){
     //create solar's image
-    let solar = BABYLON.MeshBuilder.CreatePlane("Solar", {width:1100, height: 898}, homeScene);
-    solar.position = new BABYLON.Vector3( 1259,-2571,-537.96);
-    solar.rotationQuaternion = new BABYLON.Quaternion(-0.0610, -0.8762, 0.1403, -0.4562);
+    let solar = init_char_image("Solar","solarSitting2.png",1100,898,{x:1259,y:-2571,z:-537.96},{x:-0.0610, y:-0.8762, z:0.1403, w:-0.4562});
+    init_scrollable_viewer("SolarText","solarText.png",3000,2000,{x:37,y:-2810,z:-1934},{x:-0.0659,  y:-0.8884, z:0.1383, w:-0.4323});
+    add_action_mgr(solar);
 
+    let ruru = init_char_image("Ruru","ruruHome.png",1000,433,{x:1019,y:1679,z:-1629},{x:-0.0112, y:-0.9151, z:0.0009, w:-0.4019});
+    let ruruSpeech = init_char_image("RuruSpeech","ruruText.png",1542,2000,{x:354.12,y:1699,z:-2227},{x:0.0094, y:0.9239, z:-0.0178, w:0.3815});
+    add_action_mgr(ruru);
 
-    var solarMatl = new BABYLON.StandardMaterial("solarMatl", homeScene);
-    solarMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/solarSitting2.png", homeScene);
-    solarMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/solarSitting2.png", homeScene);
-    solarMatl.backFaceCulling = false;
-    solar.material = solarMatl;
-    initLight.includedOnlyMeshes.push(solar);
-//    enable_home_gizmo(solar);
+    let villa = init_char_image("Villa","villaHome.png",964,351,{x:-982,y:-3818,z:3504},{x:0.155, y:-0.0037, z:-0.0005, w:0.9878});
+    let villaSpeech = init_char_image("VillaSpeech","villaText.png",2500,1200,{x:-900,y:-2979,z:3362},{x:-0.0003, y:-0.0452, z:-0.0069, w:0.9988});
+    add_action_mgr(villa);
+
+    let ally = init_char_image("Ally","allyHome.png",809,355,{x: -203, y: 1103, z: 3179},{x: 0.0555, y: -0.0436, z: -0.0791, w: -0.9939});
+    init_scrollable_viewer("AllyText","allyText.png",1500,850,{x:837,y:1237,z:3046},{x:-0.0236,  y:-0.2153, z:0.0032, w:-0.9759});
+    add_action_mgr(ally);
+
+    let bruce = init_char_image("Bruce","bruceHome.png",940,775,{x: -4333, y: -1624, z: -2438},{x: 0.0084, y: 0.8346, z: -0.0251, w: -0.5490});
+    init_scrollable_viewer("BruceText","bruceText.png",1500,850,{x: -3544, y: -1456, z: -1128},{x:-0.0134,  y:0.7164, z:-0.0144, w:-0.6968});
+    add_action_mgr(bruce);
+    
    
+    let william = init_char_image("William","williamHome.png",790,390,{x: 2170, y: 1837, z: 1348},{x: 0.1465, y:-0.4993, z: -0.3724, w: -0.7674});
+    init_scrollable_viewer("WilliamText","williamText.png",1500,850,{x: 2566, y: 1981, z: 464},{x:-0.0046,  y:-0.6962, z:0.0071, w:-0.7173});
+    add_action_mgr(william);
+    // enable_home_gizmo(william);
+}
 
+function init_char_image(name,imgName,w,h,pos,rot){
+    //create solar's image
+    let temp = BABYLON.MeshBuilder.CreatePlane(name, {width:w, height: h}, homeScene);
+    temp.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+    temp.rotationQuaternion = new BABYLON.Quaternion(rot.x,rot.y,rot.z,rot.w);
+    
+    var tempMatl = new BABYLON.StandardMaterial(name+"Matl", homeScene);
+    tempMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/"+imgName, homeScene);
+    tempMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/"+imgName, homeScene);
+    tempMatl.backFaceCulling = false;
+    temp.material = tempMatl;
+    initLight.includedOnlyMeshes.push(temp);
+    
+    return temp;
+}
+
+function init_scrollable_viewer(name,imgName,w,h,pos,rot){
     //create plane for the texts
-    let plane = BABYLON.MeshBuilder.CreatePlane("TextPlane", {width:3000, height: 2000}, homeScene);
-    plane.position = new BABYLON.Vector3(109.97,-2520,-1992);
-    plane.rotationQuaternion = new BABYLON.Quaternion(-0.0659,  -0.8884, 0.1383, -0.4323);
-   
-   
-    let discmatl = new BABYLON.StandardMaterial("planeMatl", homeScene);
+    let plane = BABYLON.MeshBuilder.CreatePlane(name, {width:w, height: h}, homeScene);
+    plane.position = new BABYLON.Vector3(pos.x,pos.y,pos.z);
+    plane.rotationQuaternion = new BABYLON.Quaternion(rot.x,rot.y,rot.z,rot.w);
+
+    let discmatl = new BABYLON.StandardMaterial(name+"Matl", homeScene);
     discmatl.diffuseColor = new BABYLON.Color3(1,0,0);
     discmatl.backFaceCulling = false;
     plane.material = discmatl;
-    
+
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
 
     //create scrollable viwer for solar's text
     var sv = new BABYLON.GUI.ScrollViewer();
-    console.log("sv: ",sv);
     sv.thickness = 0;
     sv.width = 1;
     sv.height = 1;
@@ -849,7 +920,7 @@ function create_solar_texts(){
     sv.thumbLength = 0.1;
     sv.thumbHeight = 0.1;
     sv.verticalBar.border = 0;
-    
+
 
     sv.onPointerDownObservable.add(function() {
         initCamera.detachControl(canvas);
@@ -863,71 +934,19 @@ function create_solar_texts(){
     var rc = new BABYLON.GUI.Rectangle();
     rc.thickness = 0;
     rc.width = 1;
-    rc.height = 7.3;
+    rc.height = 7;
     rc.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     rc.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-   
+    rc.isPickable = false;
+
     sv.addControl(rc);
 
     //create the image and add to the rectangle holder
-    var image = new BABYLON.GUI.Image("solarTexts", "front/images3D/homeScene/solarSpeech.png");
+    var image = new BABYLON.GUI.Image(name+"Img", "front/images3D/homeScene/"+imgName);
     image.width = 1;
     image.height = 1;
     rc.addControl(image);
-}
-
-
-function create_ruru_texts(){
-    //create image of ruru
-    let ruru = BABYLON.MeshBuilder.CreatePlane("Ruru", {width:1000, height: 433}, homeScene);
-    ruru.position = new BABYLON.Vector3( 1019,1679,-1629);
-    ruru.rotationQuaternion = new BABYLON.Quaternion(-0.0112, -0.9151,0.0009, -0.4019);
-    // enable_home_gizmo(ruru);
-
-    var ruruMatl = new BABYLON.StandardMaterial("ruruMatl", homeScene);
-    ruruMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/ruruHome.png", homeScene);
-    ruruMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/ruruHome.png", homeScene);
-    ruruMatl.backFaceCulling = false;
-    ruru.material = ruruMatl;
-    initLight.includedOnlyMeshes.push(ruru);
-
-    let ruruSpeech = BABYLON.MeshBuilder.CreatePlane("RuruSpeech", {width:1542, height: 2000}, homeScene);
-    ruruSpeech.position = new BABYLON.Vector3( 354.12,1699,-2227);
-    ruruSpeech.rotationQuaternion = new BABYLON.Quaternion(0.0094,0.9239,-0.0178,0.3815);
-
-    var ruruSpeechMatl = new BABYLON.StandardMaterial("ruruMatl", homeScene);
-    ruruSpeechMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/ruruText.png", homeScene);
-    ruruSpeechMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/ruruText.png", homeScene);
-    ruruSpeechMatl.backFaceCulling = false;
-    ruruSpeech.material = ruruSpeechMatl;
-    initLight.includedOnlyMeshes.push(ruruSpeech);
-}
-
-function create_villa_texts(){
-    //create image of villa
-    let villa = BABYLON.MeshBuilder.CreatePlane("Villa", {width:964, height: 351}, homeScene);
-    villa.position = new BABYLON.Vector3( -982,-3818,3504);
-    villa.rotationQuaternion = new BABYLON.Quaternion(0.1554, -0.0037,-0.0005, 0.9878);
-
-    // enable_home_gizmo(villa);
-
-    var villaMatl = new BABYLON.StandardMaterial("villaMatl", homeScene);
-    villaMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/villaHome.png", homeScene);
-    villaMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/villaHome.png", homeScene);
-    villaMatl.backFaceCulling = false;
-    villa.material = villaMatl;
-    initLight.includedOnlyMeshes.push(villa);
-
-    let villaSpeech = BABYLON.MeshBuilder.CreatePlane("villaSpeech", {width:2500, height: 1200}, homeScene);
-    villaSpeech.position = new BABYLON.Vector3(  -900,-2979,3362);
-    villaSpeech.rotationQuaternion = new BABYLON.Quaternion(-0.0003,-0.0452,-0.0069,0.9988);
-
-    var villaSpeechMatl = new BABYLON.StandardMaterial("ruruMatl", homeScene);
-    villaSpeechMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/villaText.png", homeScene);
-    villaSpeechMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/villaText.png", homeScene);
-    villaSpeechMatl.backFaceCulling = false;
-    villaSpeech.material = villaSpeechMatl;
-    initLight.includedOnlyMeshes.push(villaSpeech);
+    return plane;
 }
 
 
@@ -999,7 +1018,6 @@ let currCamTarget;
 let cnt = 0;
 function add_home_mouse_listener(){
         var onPointerDownInit = function (evt) {
-            
             if(homeScene) var pickinfo = homeScene.pick(homeScene.pointerX, homeScene.pointerY);
             else return;
           
@@ -1008,6 +1026,7 @@ function add_home_mouse_listener(){
               
                 let theInitMesh = pickinfo.pickedMesh;
                 console.log("clicked:", theInitMesh.name, theInitMesh.position, theInitMesh.rotationQuaternion);
+                console.log("camera:", initCamera.position, initCamera.alpha, initCamera.beta , initCamera.radius);
                 
                 if(theInitMesh.name === "a"){
                     agreeCameraUseDisc.isVisible = false;
@@ -1051,6 +1070,28 @@ function add_home_mouse_listener(){
                 if(theInitMesh.name === "homeSun" || theInitMesh.name === "sun"){
                     window.location.href = "participateMbaye";    
                 }
+                
+                if(charImgMap.has(theInitMesh.name) && evt.button === 0){          //if a character is clicked, zoom in to it
+                    //if the the camera is currently focused on the character
+                    let val;
+                    //if the current character target is not the current char selected
+                    if(currCamTarget != theInitMesh.name){
+                        val = charImgMap.get(theInitMesh.name);
+                        currCamTarget = theInitMesh.name;
+                        isViewActive = true;
+                    }else{ //if it is the same character
+                        val = charImgMap.get("InitialView");
+                        currCamTarget = null;
+                        isViewActive = false;
+                    }
+                    let pos = val[0];
+                    
+                    initCamera.setTarget(new BABYLON.Vector3(pos.x,pos.y,pos.z));
+                    initCamera.alpha = val[1];
+                    initCamera.beta = val[2];
+                    initCamera.radius = val[3];
+                   
+                }
 
             
            }
@@ -1080,149 +1121,6 @@ function add_home_mouse_listener(){
         };
     
 }//end of listen to mouse function
-
-
-
-
-
-/* HALO ASTEROID BELT */
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-var nb = 50;       //number of particles
-var grey = 0.0;
-var alpha = Math.PI;
-function create_home_asteroid_belt(){
-
-
-    var url = "textures/asteroid/rock.jpg";
-    var mat = new BABYLON.StandardMaterial("mat1", homeScene);
-    var texture = new BABYLON.Texture(url, homeScene);
-    mat.diffuseTexture = texture;
-    mat.backFaceCulling = false;
-
-     // var pl = new BABYLON.PointLight("pl", new BABYLON.Vector3(0, 0, 0), homeScene);
-     //  pl.diffuse = new BABYLON.Color3(1, 1, 1);
-     //  pl.specular = new BABYLON.Color3(0.1, 0.1, 0.12);
-     //  pl.intensity = 0.75;
-     //  // Particle system creation : immutable
-     //  // ====================================
-     //  var SPS = new BABYLON.SolidParticleSystem('SPS', homeScene, {updatable: false});
-      
-     //  SPS.addShape(sphere, 500, {positionFunction: myPositionFunction, vertexFunction: myVertexFunction});
-     //  sphere.dispose();   // dispose the model
-     //  var mesh = SPS.buildMesh();
-     //  mesh.material = mat;
-   
-
-    
-    // var rock = BABYLON.Mesh.CreateSphere("s", 0.5, 16, homeScene);
-    // var rock_material = new BABYLON.StandardMaterial("rock_material", homeScene);
-    // rock_material.diffuseTexture = new BABYLON.Texture("textures/asteroid/rock.jpg", homeScene);
-    // rock_material.diffuseTexture.uScale = 16;
-    // rock_material.diffuseTexture.vScale = 16;
-    // rock_material.backFaceCulling = false;
-
-    var mat = new BABYLON.StandardMaterial("mat1", homeScene);
-    var texture = new BABYLON.Texture("textures/asteroid/rock2.jpg", homeScene);
-    mat.diffuseTexture = texture;
-    mat.backFaceCulling = false;
-
-    // SPS creation : Immutable {updatable: false}
-    var SPS = new BABYLON.SolidParticleSystem('SPS', homeScene, { updatable: false });
-    var sphere = BABYLON.MeshBuilder.CreateSphere("s", {diameter: 0.5, segments: 8}, homeScene);
-    SPS.addShape(sphere, nb, { positionFunction: myPositionFunction, vertexFunction: myVertexFunction });
-    
-    sphere.dispose();
-    var mesh = SPS.buildMesh();
-    mesh.material = mat;
-    // SPS.mesh.material = rock.material;
-    SPS.mesh.rotation.y = 90;
-    SPS.mesh.rotation.x = Math.PI / 2;
-
-    
-
-    var t = 0.0;
-    var k = 0.0;
-    var a=0.0;
-    var b=0.0;
-     var alpha = Math.PI;
-    homeScene.registerBeforeRender(function () {
-        SPS.mesh.rotation.z = t / 50;
-
-         // SPS.mesh.position.addInPlace(new BABYLON.Vector3(Math.sin(alpha)*1, 0, Math.cos(alpha)*5));
-         // alpha += 0.005;
-        t += 0.5;
-        // SPS.mesh.position.y = Math.sin(k) * 1;
-         // SPS.mesh.position.x = Math.sin(a) * 1;
-          // SPS.mesh.position.y = Math.sin(k) * 1;
-        k -= 0.03;
-        a -= 10;
-        b -= 0;
-    });
-   
-//       homeScene.beforeRender = function () {
-//         SPS.mesh.position = new BABYLON.Vector3(300*Math.sin(alpha),80, 800*Math.cos(alpha));
-//         SPS.mesh.rotation.y += .03;
-//         // console.log(SPS.mesh.position);
-//         // moon.position = planet.position;
-//         // moon.rotation.y -= .1;
-        
-//         // moon.position = new BABYLON.Vector3(5 * Math.sin(alpha-.8), moon.parent.position.y, 5 * Math.cos(alpha-.8));
-                
-//         alpha += 0.009;
-                
-//         // spin
-// //      planet.rotate(BABYLON.Axis.Y, 0.05, BABYLON.Space.WORLD);
-// //      planet.rotate(BABYLON.Axis.Y, 0.05, BABYLON.Space.LOCAL);
-// //      moon.rotate(BABYLON.Axis.Y, -0.05, BABYLON.Space.LOCAL);
-//     };
-
-}
-
-  var myVertexFunction = function (particle, vertex, i) {
-        // vertex.x *= (Math.random() + 1) / getRandomInt(5, 7);
-        // vertex.y *= (Math.random() + 1) / getRandomInt(5, 7);
-        // vertex.z *= (Math.random() + 1) / getRandomInt(5, 7);
-          vertex.x *= (Math.random() + 0.7);
-          vertex.y *= (Math.random() + 0.7);
-          vertex.z *= (Math.random() + 0.7);
-    };
-
-    var myPositionFunction = function (particle, i, s) {
-       
-        var TWO_PI = Math.PI * 2;
-        var angle =  TWO_PI/ nb;
-         var angle2 =  Math.PI * 4;
-        var x, y;
-
-         // SPS.mesh.position = new BABYLON.Vector3(500 * Math.sin(alpha),0, 1000 * Math.cos(alpha));
-         x = getRandomInt(400, 500) * Math.sin(angle * i);
-        z = getRandomInt(600, 700) * Math.cos(angle * i);
-        // x = getRandomInt(90, 100) * 10*Math.sin(angle * i);
-        // z = getRandomInt(90, 100) * 0.9*Math.cos(angle * i);
-
-        // // // // x = Math.random(500) * Math.sin(angle * 50);
-        // // // // z = Math.random(500) * Math.cos(angle * 100);
-
-        particle.position.x = x;
-        particle.position.y = z;
-        // // particle.position.z = (Math.random() - 1.5*5) * 7*5;
-        // // particle.position.z = (Math.random() - 1.5) * 7;
-        particle.position.z = (Math.random() - 1.5) *100;
-
-        particle.scale.x = getRandomInt(5*2, 35*3) / 10*3;
-        particle.scale.y = getRandomInt(5*2, 35*3) / 10*3;
-        particle.scale.z = getRandomInt(5*2, 35*3) / 10*3;
-
-        particle.rotation.x = Math.random() * 3.15;
-        particle.rotation.y = Math.random() * 3.15;
-        particle.rotation.z = Math.random() * 1.5;
-
-        grey = 1.0 - Math.random() * 0.3;
-        particle.color = BABYLON.Color3.White();
-    };
 
 
 

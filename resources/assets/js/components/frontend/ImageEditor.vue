@@ -1,7 +1,9 @@
 <template>
+   
      <div class="collage-editor">
-            <button class="cancel-btn" type="button">Cancel</button>
+            <button class="cancel-btn" id="cancel-btn" type="button">Cancel</button>
             <div class="canvas">
+                <!-- Overlay for start message "upload images to start"-->
                 <div class="start-message">
                     <p>
                         <label for="startImageLoader" class="custom-file-upload">
@@ -10,24 +12,28 @@
                     </p>
                     <input type="file" name="image" id="startImageLoader" accept="image/x-png,image/jpeg" multiple>
                 </div>
+                 <!-- canvas portion of the image editor-->
                 <canvas id="c"></canvas>
             </div>
            
              <div class="controls">
-                <button id="undo" class="undo" disabled><label for="" title="Undo"><i class="fas fa-undo"></i></label></button>
-                <button id="redo" class="redo" disabled><label for="" title="Redo"><i class="fas fa-redo"></i></label></button>
-                <button id="clear_canvas" class="clear_canvas" disabled><label for="" title="Reset"><i class="fas fa-retweet"></i></label></button>     
-                <button class="zoom-in"><label for="" title="Zoom In"><i class="fas fa-search-plus"></i></label></button>
-                <button class="zoom-out"><label for="" title="Zoom Out"><i class="fas fa-search-minus"></i></label></button>
-                <button class="original-size"><label for="" title="100%"><i class="fas fa-expand-arrows-alt"></i></label></button>
-                <button id="add_shapes" class="add_shapes"><label title="Add Shapes"><i class="fas fa-shapes"></i></label></button>
-                <button id="add_text" class="add_text"><label for="" title="Add Text"><i class="fas fa-font"></i></label></button>
-                <button class="upload"><label for="imgLoader" class="custom-file-upload" title="Upload image(s)"><i class="far fa-images"></i></label></button>
-                <button id="selCrop" class="crop"><label for="" title="Crop"><i class="fa fa-crop"></i></label></button>  
-                <button class="remove_object"><label for="" title="Delete"><i class="far fa-trash-alt"></i></label></button>  
-                <!-- <input type="file" name="image" id="imgLoader" accept="image/x-png,image/jpeg" multiple> -->
-                <button class="save" disabled><label for="" title="Save"><i class="fas fa-save"></i></label></button>
-                <button class="download" disabled><label for="" title="Download"><i class="fas fa-download"></i></label></button>                       
+                <button id="undo" class="undo" disabled data-toggle="tooltip" data-placement="top" title="Undo"><i class="fas fa-undo"></i></button>
+                <button id="redo" class="redo" disabled data-toggle="tooltip" data-placement="top" title="Redo"><i class="fas fa-redo"></i></button>
+                <button id="clear_canvas" class="clear_canvas" disabled data-toggle="tooltip" data-placement="top" title="Reset"><i class="fas fa-retweet"></i></button>     
+                <button class="zoom-in" title="Zoom In" data-toggle="tooltip" data-placement="top"><i class="fas fa-search-plus"></i></button>
+                <button class="zoom-out" data-toggle="tooltip" data-placement="top" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+                <button class="original-size" data-toggle="tooltip" data-placement="top" title="100%"><i class="fas fa-expand-arrows-alt"></i></button>
+                <button class="bring-forward" data-toggle="tooltip" data-placement="top" title="Bring Forward"></button>
+                <button class="send-backward" data-toggle="tooltip" data-placement="top" title="Send Backward"></button>
+                <button id="add_shapes" class="add_shapes" data-toggle="tooltip" data-placement="top" title="Add Shapes"><i class="fas fa-shapes"></i></button>
+                <button id="add_text" class="add_text" data-toggle="tooltip" data-placement="top" title="Add Text"><i class="fas fa-font"></i></button>
+                <button data-toggle="tooltip" data-placement="top" title="Upload image(s)"><label for="imgLoader" class="custom-file-upload">
+                    <i class="far fa-images"></i></label>
+                </button>
+                <input type="file" name="image" id="imgLoader" accept="image/x-png,image/jpeg" multiple>
+                <button class="remove_object" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></button>  
+                <button class="save" id="saveImg" disabled data-toggle="tooltip" data-placement="top" title="Save"><i class="fas fa-save"></i></button>
+                <button class="download" disabled data-toggle="tooltip" data-placement="top" title="Download"><i class="fas fa-download"></i></button>                       
                 
             </div>
             <!--end of the canvas toolbar-->
@@ -182,24 +188,25 @@
             <div id="text-styles" class="text-styles" style="display:none;">
                 <div id='text-option-box' style="overflow-y: visible;overflow-x:hidden">
                     <div style="width: 100%;position: relative;">
+                        <label for="addTxtBtn" title="">
+                            <button id="addTxtBtn" class="btn btn-success">Add Text</button>
+                        </label>
+                    </div>
+                    <div style="width: 100%;position: relative;">
                         <input type="color" id="text-color" name="text-color"/><br/>
                         Color
                     </div>
-
                     <div class="font-picker">
-                        <input id="font-picker" type="text"/><br/>
+                        <input id="font-picker" type="text">
                         Font Style
                     </div>
                 </div>
             </div> <!--end of text styles div-->
 
-            <!-- 
-            <div id="crop-options" class="crop-options-styles" style="display:none">
-                <span id="close_crop-options" class="close">&times;</span> 
-            </div>  -->
-
-            <!--Instructions overlay
-            <div class="instructions">
+            
+           
+            <!--Instructions overlay -->
+            <div class="instructions" id="instructionsDiv">
                 <span class="instruction-close-btn"><i class="far fa-times-circle"></i></span>
                 <div class="instruction instruction-1" data-text-div="instruction-text-1"></div>
                 <div class="instruction instruction-2" data-text-div="instruction-text-2"></div>
@@ -216,51 +223,32 @@
 
             <div class="help">
                 <a class=""><i class="fa fa-question-circle icon-help" aria-hidden="true"></i></a>
-            </div>-->
+            </div>
     </div>
 
 </template>
-
 <script>
-
 
 export default {
     props: {
-        // edit_blog: Number
     },
     components: {
-        // 'tui-image-editor': ImageEditor
     },
     data() {
-        // return {
-        //     useDefaultUI: true,
-        //     options: { // for tui-image-editor component's "options" prop
-        //         imageSize: {oldWidth: 300, oldHeight: 300, newWidth: 400, newHeight: 400},
-        //         selectionStyle: {
-        //             cornerSize: 20,
-        //             rotatingPointOffset: 70
-        //         },
-        //         includeUI: {
-        //             initMenu: 'text',
-        //             imageSize: {oldWidth: 200, oldHeight: 200, newWidth: 200, newHeight: 200}
-        //         },
-        //         cssMaxWidth: 700,
-        //         cssMaxHeight: 500
-        //     }
-        // };
+        
+       return {
+            temp:{},
+           
+        }
     },
     methods: {
-        // onTextEditing(pos) {
-        //     console.log('editing text');
-        // }
+       
     },
     mounted() {
 
-         var $this = this;
-        console.log("i am loaded", $this);
-        $('button.cancel-btn').click(function() {
-                    window.location.href = url+'/image_editor_test';
-        });
+ 
+
+        var $this = this;
 
         var url = $('meta[name="url"]').attr('content');
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -284,8 +272,64 @@ export default {
         );
         fabric.Object.prototype.objectCaching = false;
 
+        
+
+
+        var featured_image_src;
+        //load the image when the user selects from the page where the component is used
+        document.querySelector("#featured-image-preview").addEventListener('load', function() {
+            if(isNewImg){
+                    featured_image_src = document.querySelector("#featured-image-preview").getAttribute("src");
+                    canvasOperations.loadFromUrl();
+            }
+            
+        });
+
+       
+
+        
+
+        var canvasOperations = {
+            loadFromUrl : function(){
+                if(imagesMap.size > 0){
+                     canvas.clear();
+                     imagesMap.clear();
+                     addFeaturedImage();
+                }else{
+                    addFeaturedImage();
+                }
+            }
+        }
+
+        function addFeaturedImage(){
+            //create the image here
+            var imgObj = new Image();
+            imgObj.src = featured_image_src;
+            imgObj.onload = function () {
+                var image = new fabric.Image(imgObj);
+                
+                image.set({
+                    left: 0, 
+                    top: 0, 
+                    angle: 0, 
+                    borderColor: '#d6d6d6',
+                    cornerColor: '#d6d6d6',
+                    cornerSize: 10,
+                    transparentCorners: false,
+                    name:"img"+(imagesMap.size+1),                          
+                });
+                image.scaleToWidth(canvas.getWidth()/6);
+                canvas.add(image).centerObject(image);
+                imagesMap.set(image.name,image);
+                canvas.renderAll();
+                save();
+            }
+        }
+
+
+
         // save initial state
-        save();
+        // save();
         $("#main").hide();
         // register event listener for user's actions
         canvas.on('object:modified', function() {
@@ -459,10 +503,7 @@ export default {
 
             }
         }
-        $(".remove-btn-education").hide();
-        $(".remove-btn-workexperience").hide();
-        $(".remove-btn-reference").hide();
-        
+      
         /*FUNCTIONS RELATED TO THE EDITOR TOOLBAR*/
         //function to hide DIV of shape, text, crop divs of toolbar when x icon is clicked
         $(".toolbar-close").on('click',function(){
@@ -493,24 +534,31 @@ export default {
             isTextDivOpen = !isTextDivOpen;
         });
 
+         $("#addTxtBtn").on('click',function(){
+             add_text();
+        });
+
 
          //if any of the shape is selected
         $("#circle, #triangle, #square, #rectangle, #diamond, #parallelogram, #ellipse, #trapezoid, #star, #pentagon, #hexagon, #heptagon,#octagon,#nonagon,#decagon,#bevel,#heart, #rabbet,#point,#message").on("click", function() {
             addShape(this.id);
         });
-                 //FUNCTIONS RELATED TO THE TOOLBAR
-        $("#add_text").on("click", function(e) {
-            add_text();
-        }); 
+        
 
          // undo and redo buttons
         $('#undo').click(function() {
+            $("#shape-select").hide();
+            $("#text-styles").hide();
             replay(undo, redo, '#redo', this);
         });
         $('#redo').click(function() {
+            $("#shape-select").hide();
+            $("#text-styles").hide();
             replay(redo, undo, '#undo', this);
         })
         $('#clear_canvas').click(function() {
+            $("#shape-select").hide();
+            $("#text-styles").hide();
             Swal.fire({
                 text: "Are you sure you want to reset the canvas?",
                 imageUrl: '../../front/icons/alert-icon.png',
@@ -538,11 +586,15 @@ export default {
           //ZOOM IN / ZOOM OUT ICON IS CLICKED
         var scale = 1;
         $('.zoom-in').click(function() {
+            $("#shape-select").hide();
+            $("#text-styles").hide();
             scale += 0.2;
             $('.canvas-container').css('transform', 'scale('+scale+')');
         });
 
         $('.zoom-out').click(function() {
+            $("#shape-select").hide();
+            $("#text-styles").hide();
             console.log(scale);
             if(scale <= 0.2) {
                 scale = 0.2;
@@ -554,19 +606,24 @@ export default {
         });
         
         $('.original-size').click(function() {
+            $("#shape-select").hide();
+            $("#text-styles").hide();
             scale = 1;
             $('.canvas-container').css('transform', 'scale('+scale+')');
         });
 
         //if download icon is clicked
         $(".download").on("click", function(e) {
-                downloadImage();
+            $("#shape-select").hide();
+            $("#text-styles").hide();
+            downloadImage();
         });
 
 
 
         //function to upload images to the editor
-        document.getElementById('imgLoader').onchange = function handleImage(e) {
+        //document.getElementById('imgLoader').onchange = function handleImage(e) {
+        document.querySelector('#imgLoader').onchange = function handleImage(e) {
             $('.start-message').hide();
             var files = this.files;
 
@@ -607,6 +664,8 @@ export default {
 
         //function when removing objects
         $('.remove_object').click(function() {
+            $("#shape-select").hide();
+            $("#text-styles").hide();
             delete_object();
         });
 
@@ -616,6 +675,22 @@ export default {
             }
         });
 
+
+        $('.bring-forward').click(function() {
+            $("#shape-select").hide();
+            $("#text-styles").hide();
+            var currentObject = canvas.getActiveObject();
+            canvas.bringToFront(currentObject);
+        });
+
+        $('.send-backward').click(function() {
+            $("#shape-select").hide();
+            $("#text-styles").hide();
+            var currentObject = canvas.getActiveObject()
+            canvas.sendToBack(currentObject);
+        });
+
+        
         //delete the current object selected
         function delete_object(){
             let theObj = canvas.getActiveObject();
@@ -669,7 +744,7 @@ export default {
             redo = [];
             $('#redo').prop('disabled', true);
             // initial call won't have a state
-            if (state) {
+            if(state) {
                 undo.push(state);
                 $('#undo').prop('disabled', false);
                 $('#clear_canvas').prop('disabled', false);
@@ -720,23 +795,22 @@ export default {
         //function to add text
         var text;
         function add_text() { 
-        $('.start-message').hide();
             text = new fabric.IText('Click here to edit text', { 
-            fontFamily: 'Calibri',
-            left: 100, 
-            top: 100,
-            fill: '#FFFFFF', 
-            cache: false,
-            borderColor: '#d6d6d6',
-            cornerColor: '#d6d6d6',
-            name:"text"+(textMap.size+1),   
-        });
+                fontFamily: 'Calibri',
+                left: 100, 
+                top: 100,
+                fill: '#FFFFFF', 
+                cache: false,
+                borderColor: '#d6d6d6',
+                cornerColor: '#d6d6d6',
+                name:"text"+(textMap.size+1),   
+            });
             text.scaleToWidth(canvas.getWidth()/5);
             canvas.add(text);
             canvas.setActiveObject(text); 
             canvas.renderAll();
             textMap.set(text.name,text);
-        }
+        }//eof function
 
         //if the text created is clicked
        canvas.on("text:editing:entered", function (e) {
@@ -761,7 +835,7 @@ export default {
             } 
         }); 
 
-        //function to change the font style
+        // function to change the font style
         function applyFont(font) {
             console.log('You selected font: ' + font);
 
@@ -781,12 +855,13 @@ export default {
                 canvas.renderAll();
             }
         }
-
        
-
-        $('#font-picker').fontselect().on('change', function() {
-            applyFont(this.value);
+        $('#font-picker').on('change',function(){
+            let theFont = $('#font-picker').val();
+            applyFont(theFont);
+           
         });
+
 
         
         //function to change the font color
@@ -799,10 +874,6 @@ export default {
             }
 
         });
-
-
-
-
 
 
         //function to add shapes
@@ -1356,81 +1427,19 @@ export default {
 
       
         // SAVE ICON IS CLICKED
-        $(".save").click(function(){
-            Swal.fire({
-                html: "Are you sure you want to save the changes made to the entry? <br><br> This will overwrite your previous career profile image.",
-                imageUrl: '../../front/icons/alert-icon.png',
-                imageWidth: 80,
-                imageHeight: 80,
-                imageAlt: 'Mbaye Logo',
-                width: '30%',
-                padding: '1rem',
-                background: 'rgba(8, 64, 147, 0.62)',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, save it!'
-            }).then((result) => {
-            if (result.value) {
-                canvas.discardActiveObject();
-                // canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
-                canvas.renderAll();
+        $("#saveImg").click(function(){
+            var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            document.querySelector("#featured-image-preview").src = image;
+            
+            document.querySelector('#imageEditorModal').style.display = 'none';
+            $('#page-content').show();        
 
-                $("#c").get(0).toBlob(function(blob){
-                    var user_id = '{{Auth::user()->id}}';
-                    var data = new FormData();
-                    data.append('file', blob);
-                    data.append('user_id', user_id);
-
-                    $.ajax({
-                        type: "POST",
-                        url: url+'/api/save-careerprofile',
-                        data: data,
-                        contentType: false,
-                        processData: false,
-                        success: function(res) {
-                            Swal.fire({
-                                title: '<span class="success">Success!</span>',
-                                text: 'Your Career Profile image was successfully saved!',
-                                imageUrl: '../../front/icons/alert-icon.png',
-                                imageWidth: 80,
-                                imageHeight: 80,
-                                imageAlt: 'Mbaye Logo',
-                                width: '30%',
-                                padding: '1rem',
-                                background: 'rgba(8, 64, 147, 0.62)'
-                            }).then((res) => {
-                              //  window.location.href = url+'/dashboard';
-                            });
-                        }
-                    });
-                });
-            }
-            });
-            // canvas.setBackgroundColor('#3e3e3e', canvas.renderAll.bind(canvas));
+            isNewImg = false;
         }); 
 
-
-
-        //TOOLTIP POSITION FOR THE ICONS
-        $( document ).tooltip({
-            position: {
-                my: "center bottom-20",
-                at: "center top",
-                using: function( position, feedback ) {
-                $( this ).css( position );
-                $( "<div>" )
-                    .addClass( "arrow" )
-                    .addClass( feedback.vertical )
-                    .addClass( feedback.horizontal )
-                    .appendTo( this );
-                }
-            }
-        }); 
-
-        //REDIRECT TO DASHBOARD IF CANCEL BUTTON IS CLICKED
-        $('button.cancel-btn').click(function() {
-            window.location.href = url+'/dashboard';
+        $("#cancel-btn").on('click', function() {
+            document.querySelector('#imageEditorModal').style.display = 'none';
+            $('#page-content').show();           
         });
 
 
@@ -1457,10 +1466,6 @@ export default {
             link.dispatchEvent(click); 
 
         }
-
-
-    
-
         /*FUNCTIONS RELATED TO THE INSTRUCTIONS OVERLAY*/
         // show instruction overlay
         $('.help a').click(function () {
@@ -1492,315 +1497,6 @@ export default {
 </script>
 
 <style scoped>
-           .controls {
-                position: fixed;
-                bottom: 0;
-                left: 50%;
-                transform: translate(-50%, 0);
-                display: flex;
-                /* border: 1px solid red; */
-                width: 50%;
-                margin: 0 auto;
-                /* margin-top: 1%; */
-                justify-content: center;
-                align-items: center;
-            }
-
-            .controls button {
-                width: 5vw;
-                height: 4vw;
-                font-size: 1.3vw;
-                background: #161616;
-                color: #fff;
-                border: 0;
-                padding: 0;
-                /* font-weight: bold; */
-                /* border: 1px solid red; */
-                padding: 0%;
-            }
-
-
-            .controls button:focus {
-                outline: 0;
-            }
-
-            .controls button:disabled {
-                color: #3a3a3a
-            }
-
-            .collage-editor .canvas {
-                position: absolute;
-                top: 10vh;
-                left: 5vw;
-               /* transform: translate(-50%, -50%); */
-                width: 90vw;
-                height: 80vh;
-                margin: 0 auto;
-                overflow: hidden;
-              /*  border: 5px solid #3e3e3e; */
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                scrollbar-width: thin;
-                scrollbar-color: #047999 #c1d7e491;
-                border: 1px solid #d6d6d6;
-            }
-
-            .collage-editor .canvas-container {
-                position: absolute !important;
-                width: 90vw;
-                height: 80vh;
-                /* top: 50%;
-                left: 50%; */
-                transform: scale(1);
-                /* background: #3e3e3e; */
-                /* width: 80vw !important;
-                height: 80vh !important; */
-            }
-
-            .start-message {
-                position: absolute;
-                /* top: 50%; */
-                /* left: 50%; */
-                /* transform: translate(-50%, -50%); */
-                color: #c5c5c5;
-                font-size: 2vw;
-                text-transform: uppercase;
-                font-weight: bold;
-                width: 100%;
-                height: 100%;
-                display: none;
-                justify-content: center;
-                align-items: center;
-                background: #3e3e3e;
-                z-index: 1;
-                display: none;
-            }
-
-            .cancel-btn {
-                position: absolute;
-                left: 2%;
-                top: 2%;
-                width: 7vw;
-                height: 3vw;
-                padding: 0;
-                line-height: 1em;
-                outline: none;
-                border-radius: 20px;
-                border: 1px solid #ddd;
-                font-family: 'Noto Sans', sans-serif;
-                font-size: 12px;
-                font-weight: bold;
-                cursor: pointer;
-                vertical-align: middle;
-                letter-spacing: 0.3px;
-                text-align: center;
-            }
-
-            /* toolbar buttons */
-            
-            .close {
-                position: fixed;
-                right: 2%;
-                color: #aaaaaa;
-                font-size: 20px;
-                font-weight: bold;
-                margin: 0 auto;
-            } 
-
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-            .undo:hover, .undo:focus, 
-            .redo:hover, .redo:focus,
-            .clear_canvas:hover, .clear_canvas:focus,
-            .zoom-in:hover, .zoom-in:focus,
-            .zoom-out:hover, .zoom-out:focus,
-            .original-size:hover, .original-size:focus,
-            .add_shapes:hover, .add_shapes:focus,
-            .add_text:hover, .add_text:focus,
-            .remove_object:hover, .remove_object:focus,
-            .upload:hover, .upload:focus,
-            .save:hover, .save:focus,
-            .download:hover, .download:focus,
-            .crop:hover, .crop:focus,
-            .clear-highlight:hover, .clear-highlight:focus,
-            .shapes-icon:hover, .shapes-icon:focus {
-                color: #17a2b8;
-                text-decoration: none;
-                cursor: pointer;
-            }
-            .clear-highlight {
-                position: fixed;
-                right: 14%;
-                color: #fff;
-                font-size: 16px;
-                margin: 0 auto;
-            }
-            .shapes-icon {
-                fill:#fff;
-            }
-            #shapes-box::-webkit-scrollbar,#shape-color-box::-webkit-scrollbar{
-                width: 0.6em;
-                background: #c1d7e491;
-            }
-            #shapes-box::-webkit-scrollbar-thumb,#shape-color-box::-webkit-scrollbar-thumb {
-                background: #047999;
-            }
-
-            #shapes-box{
-                scrollbar-width: thin;
-                scrollbar-color: #047999 #c1d7e491;
-                width:59%;
-                height:100%;
-                display: flex;
-                flex-wrap:wrap;
-                overflow-y:auto;
-                overflow-x:hidden;
-                justify-content: center;
-            }
-         
-             #shape-color-box{
-                padding-top: 5%;
-                position:relative;
-                border-right: 0.5px solid gray;
-                width: 37%;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .strokeWidthContainer {
-                  width: 70%;
-            }
-
-            .strokeSlider {
-              -webkit-appearance: none;
-              width: 60%;
-              height: 1vh;
-              background: #d3d3d3;
-              outline: none;
-              opacity: 0.7;
-              -webkit-transition: .2s;
-              transition: opacity .2s;
-            }
-
-            .strokeSlider:hover {
-              opacity: 1;
-            }
-
-            .strokeSlider::-webkit-slider-thumb {
-              -webkit-appearance: none;
-              appearance: none;
-              width: 1vw;
-              height: 1vw;
-              background: #4CAF50;
-              cursor: pointer;
-              border-radius: 50%;
-            }
-
-            .strokeSlider::-moz-range-thumb {
-              width: 1vw;
-              height: 1vw;
-              background: #4CAF50;
-              cursor: pointer;
-              border-radius: 50%;
-            }
-            .shape-select {
-                display: flex;
-                position: fixed;
-                background: #161616;
-                bottom: 8vh;
-                left: 40vw;
-                width: 25vw;
-                height: 10vw;
-                margin: 0 auto;
-                padding: 0.3vw;
-                align-items: center;
-                color: #fff;
-            }
-
-            .shape-select button {
-                width: 4vw;
-                height: 4vw;
-                font-size: 1.3vw;
-                border: 0;
-                background: transparent;
-                color: #fff;                
-            }
-
-            .shape-select button.focus,
-            .shape-select button:focus {
-                outline: 0;
-                box-shadow: none!important;
-            }
-
-
-             .text-styles {
-                position: fixed;
-                background: #161616;
-                bottom: 8vh;
-                left: 60vw;
-                transform: translate(-50%, 0);
-                width: 23vw;
-                height: 25vh;
-                margin: 0 auto;
-                padding: 0.3vw;
-                justify-content: center;
-                align-items: center;
-                color: #fff;
-            }
-
-            .text-styles table {
-                padding: 0.7vw;
-            }
-
-            .text-styles td {
-                padding-bottom: 0.4vw;
-            }
-
-             #text-option-box{
-                padding-top:5%;
-                position:relative;
-                width: 90%;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                text-align: center;
-            } 
-
-            .font-select .fs-search input{
-                font-size: 1vw;
-                padding:2%;
-            }
-
-            .font-select > span {
-                height: 1.8vw;
-                line-height: 1.5vw;
-                padding: 1% 3% 1% 3%;
-            }
-
-            .font-select .fs-drop {
-                top: 103%;
-            }
-
-            .font-select .fs-results{
-                max-height: 10vh;
-            }
-
-            .font-select .fs-results li {
-                line-height: 0.3vw;
-                padding: 7%;
-                margin: 0;
-                list-style: none;
-                font-size: 1vw;
-            }
-
 
 
 

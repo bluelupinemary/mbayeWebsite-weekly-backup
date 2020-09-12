@@ -292,6 +292,24 @@ class FrontendController extends Controller
         return view('frontend.pages.welcome_mbaye');
     }
 
+    public function participate_store_gender(Request $req){
+        $user = Auth::user();
+        dd($req);
+            // $saved_contact = $this->contact->create($req->except('_token'));
+
+    
+            // if($saved_contact) {
+            //     return array('status' => 'success', 'message' => 'Game progress saved successfully!', 'data' => "");
+            // }else{
+            //     return array('status' => 'failed', 'message' => 'Error in saving the game progress!', 'data' => "");
+            // }
+        
+    
+    }
+
+
+
+
     public function feet_mbaye(){
         return view('frontend.game.feet_mbaye');
     }

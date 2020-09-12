@@ -24,6 +24,8 @@ class CreateCompanyProfilesTable extends Migration
             $table->integer('owner_id')->unsigned()->index('company_owner_id_foreign');
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->timestamps();
+            // $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            // $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 

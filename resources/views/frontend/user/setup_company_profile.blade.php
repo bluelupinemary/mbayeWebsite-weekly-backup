@@ -3,6 +3,23 @@
 @section('before-styles')
     <style>
     </style>
+<style>
+    
+</style>
+<style>
+.error {
+    color: red;
+    font-weight: 400;
+    display: block;
+    padding: 6px 0;
+    font-size: 14px;
+}
+
+.form-control.error{
+    border:1px solid red !important;
+    padding: .375rem .75rem;
+}
+</style>
 
    
 @endsection
@@ -14,37 +31,49 @@
     <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
-    <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
-    <!-- <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}"> -->
-    <!-- <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}">
-    <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}"> -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="{{ asset('front/CSS/company-profile-astranaut.css') }}">
+    <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}"> 
+     {{-- <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}"> --}}
+    {{-- <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}">  --}}
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> --}}
        
 @endsection
 
 @section('content')
 <div id="page-content">
-    <div class="container">
+    <div id="container">
             <div class="screen"><br/><br/>
 
                     <div class="row">
                             <div class="column1">
-                            <form action="{{ route('frontend.save') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="user-upload-img">
-                                        <label for="file">
-                                        <img src="{{asset('front/images/image-add.png')}}"  id="outputImage" alt="input image" class="inox">
+                                <form action="{{ route('frontend.save') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="user-upload-img" id="userImageUpload" >
                                         
-                                        </label>
-                                        
-                                        <input id="file"  onchange="loadFile(event)" type="file" name="featured_image">
-                                </div>
-                                <!-- <div class="user-upload-img" style="display-none" onclick="myFunction()"></div> -->
-                                {{-- <div class="image-edit">
-                                    <div class="form-btn" id="image-edit-div">
-                                        <button type="submit" id="img-edit" class="img-edit-button">Edit Photo</button>
+                                            <label for="file">
+                                            <img src="{{asset('front/images/image-add.png')}}"  id="outputImage"  alt="input image" class="inox img-resize">
+                                            <div class="middle" id="middle">
+                                                <div class="text">Edit Featured Image</div>
+                                              </div>
+                                            </label>
+                                            
+                                            
+                                            <input id="file"  onchange="loadFile(event)"   type="file" name="featured_image" style=" min-width: 100%;
+                                            min-height: 100%;">
+                                            
+
                                     </div>
-                                </div> --}}
+                                    <small class="error">{{ $errors->first('featured_image') }}</small>
+                                    {{-- ----------------------------------Image Edit Code------------------------------------- --}}
+                                    {{-- <div class="user-upload-img"></div> --}}
+                                        <div class="image-edit">
+                                            <div class="form-btn" id="image-edit-div">
+                                                <button type="submit"  id="img-edit" class="img-edit-button">Edit Photo</button>
+                                            </div>
+                                        </div>
+                                
+                                    
+                                {{-- ----------------------------------END---------------------------------------------------- --}}
                             </div>
                             <!-- ---------------------Form code start-------------------------------------------- -->
 
@@ -52,14 +81,24 @@
                                  <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;">Set Up Company Profile</h2></div>
                                  <div class="form">
                                     
-                                            <div>
+                                            <div class="input-fields">
                                                 <label for="Cname">Company Name :<span style="color:red">*</span></label>
                                                 <input type="text" id="company_name" name="company_name" required>
                                             </div><br/>
                                             <div>
                                                 <label for="Cadd">Company Email :<span style="color:red">*</span></label>
-                                                <input type="text" id="company_email" name="company_email" required>
-                                            </div><br/>
+                                                <input type="email" class="form-control {{ $errors->has('company_email') ? 'error' : '' }}" id="company_email" name="company_email" required>
+                                                {{-- @if ($errors->has('company_email'))
+                                                <div class="error">
+                                                    {{ 'Email is already taken' }}
+                                                </div>
+                                                @endif --}}
+                                                <small class="error">{{ $errors->first('company_email') }}</small>
+                    
+                                               
+                                            </div>
+                                            
+                                            <br/>
                                             <div>
                                                 <label for="country">Company Address :<span style="color:red">*</span></label>
                                                 <input type="text" id="company_address" name="address" required>
@@ -68,31 +107,39 @@
                                             <div class="row">
                                                     <div class="col-md-4">
                                                         <label for="country">Country :<span style="color:red">*</span></label>
-                                                        <select class="countries" name="country" id="countryId" required>&#x25BC;
-                                                            <option value="">Select</option>
+                                                        <select class="countries" name="country" id="countryId"  required>&#x25BC;
+                                                            <option value="" selected disabled>Select</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="state">State :<span style="color:red">*</span></label>
                                                         <select id="stateId" class="states" name="state" required>
-                                                            <option value="">Select State</option>
+                                                            <option value="" selected disabled>Select State</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="city">City :<span style="color:red">*</span></label>
                                                         <select id="cityId" class="cities" name="city" required>
-                                                            <option value="">Select City</option>
+                                                            <option value="" selected disabled>Select City</option>
                                                         </select>
                                                     </div>
                                             </div><br/>
                                                     <div class="mobile-no">
                                                             <label for="mobile">Mobile :<span style="color:red">*</span></label>
-                                                            <input type="text" id="mob_no" name="company_phone_number" required>
-                                                    </div><br/>
+                                                            <input type="number" class="form-control {{ $errors->has('company_phone_number') ? 'error' : '' }}" id="mob_no" name="company_phone_number" required>
+                                                            <small class="error">{{ $errors->first('company_phone_number') }}</small>
+
+                                                    </div>
+                                                    {{-- @if ($errors->has('company_phone_number'))
+                                                    <div class="error">
+                                                        {{ 'Enter valid mobile number' }}
+                                                    </div>
+                                                    @endif --}}
+                                                    <br/>
                                                         <div class="industry">
                                                             <label for="industry">Industry :<span style="color:red">*</span></label>
-                                                            <select id="industry" name="industry_id" required>&#x25BC;
-                                                                <option value="public">industry</option>
+                                                            <select id="industry" class="" name="industry_id" required>&#x25BC;
+                                                                <option value="public" selected disabled>Select industry</option>
                                                                 @foreach($industry as $industry)
                                                                 <option value="{{$industry->id}}">{{$industry->industry_name}}</option>
                                                                 @endforeach
@@ -100,7 +147,7 @@
                                                         </div>
                                                         <input type="hidden" name="owner_id" value="{{Auth::user()->id}}">
                                             <div class="form-btn">
-                                                <button type="submit" class="button-done">Submit</button>
+                                                <button type="submit"  class="button-done">Submit</button>
                                             </div>
                                         
                                         </form>
@@ -109,64 +156,81 @@
                             <!-- ---------------------Form code End-------------------------------------------- -->
 
                     </div>
-                    <div class="row">
-                        <div class="column3">
+                    {{-- <div class="row">--}}
+                        <div class="column3"> 
                             <!-- ---------------------astronaut code start-------------------------------------------- -->
-                            <div class="astro-div navigator-div  tom " style="display:flex; visibility:visible">
-                                <img src="{{asset('front/images/astronut/Tom_blog.png')}}" alt="" class="astro">
-                                <div class="toss-div">
-                                    <button class="toss-btn tooltips right" style="pointer-events:auto;">
+                            <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+                                @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+                                <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}"  class="img_astro"  alt="">
+                                <div class="tos-div thomasina">
+                                    <button class="tos-btn tooltips right">
+                                        <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt="">
+                                        <span class="tooltiptext">Terms of Services</span></button>
+                                </div>
+                                @else
+                                <img src="{{ asset('front/images/astronut/Tom_blog.png') }}" alt=""class="img_astro" alt="">
+                                <div class="tos-div">
+                                    <button class="tos-btn tooltips right">
                                         <img  class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt="">
-                                        <span class="tooltiptext">Terms of Services</span>
-                                    </button>
+                                        <span class="tooltiptext">Terms of Services</span></button>
                                 </div>
-                                <div class="user-photo male">
-                                    <img src=""/>
+                                @endif
+                                
+                                <div class="user-photo {{access()->user()->getGender()}}">
+                                    <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
                                 </div>
-                                <div class="navigator-buttons" style="pointer-events:auto;">
+                               
+                                <div class="navigator-buttons">
                                     <div class="column column-1">
-                                        <button class="music-btn tooltips left"><img class="btn_pointer" src="{{asset('front/images/astronut/navigator-buttons/musicBtn.png')}}" alt="" style="pointer-events:auto;">
+                                        <button class="music-btn tooltips left"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt="">
                                             <span class="tooltiptext">Music on/off</span></button>
-                                        <button class="home-btn tooltips left"><img class="btn_pointer" src="{{asset('front/images/astronut/navigator-buttons/homeBtn.png')}}" alt="">
+                                        <button class="home-btn tooltips left"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt="">
                                             <span class="tooltiptext">Home</span></button>
                                     </div>
                                     <div class="column column-2">
-                                        <button class="editphoto-btn tooltips top"><img class="btn_pointer" src="{{asset('front/images/astronut/navigator-buttons/greenButtons.png')}}" alt=""><span class="">Edit Profile Photo</span></button>
+                                        <button class="editphoto-btn tooltips top"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
                                     </div>
                                     <div class="column column-3">
                                         <button class="tooltips right ">
-                                        <img class="btn_pointer" src="{{asset('front/images/astronut/navigator-buttons/freeBtn.png')}}" alt=""></button>
+                                         <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
                                         <button class="profile-btn tooltips right">
-                                            <img class="btn_pointer" src="{{asset('front/images/astronut/navigator-buttons/profileBtn.png')}}" alt="">
-                                            <span class="tooltiptext">User Profile</span>
-                                        </button>
+                                            <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt="">
+                                            <span class="tooltiptext">User Profile</span></button>
                                     </div>
                                 </div>
-                                <button class="zoom-btn zoom-in"><i class="fas fa-search-plus"></i></button>
-                                <div class="instructions-div btn_pointer tooltips right" style="pointer-events:auto">
+                             <button class="zoom-btn zoom-in "><i class="fas fa-search-plus"></i>
+                                    {{-- <span>Zoom Out</span> --}}
+                                
+                            </button>
+                                 <!-- <button class="navigator-zoom navigator-zoomin"></button>-->
+                                <div class="instructions-div btn_pointer tooltips right">
                                     <button class="instructions-btn tooltips right">
-                                        <img class="btn_pointer" src="{{asset('front/images/astronut/navigator-buttons/instructionsBtn.png')}}" alt="">
-                                        <span class="tooltiptext">Instructions</span>
-                                    </button>
+                                        <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt="">
+                                        <span class="tooltiptext">Instructions</span></button>
                                 </div>
+                                <button class="communicator-div tooltips top btn_pointer @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom   @else  tomasina @endif" >
+                                  
+                                </button>
                                 <div class="communicator-div tooltips right" style="pointer-events: auto;">
-                                {{-- <div class="comm-btn  top btn_pointer" style="pointer-events:auto;"> --}}
-                                    <span class="communicator-span    tooltips_span tooltiptext" style="display:none;">Communicator</span>
-                                {{-- </div> --}}
-                                <button class="communicator-button"></button>
+                                    <span >Communicator</span>
+                                    <button class="communicator-button"></button>
                                 </div>
-
-                                <button class="music-volume-div tooltips top btn_pointer" style="pointer-events:auto;">
+                                <button class="music-volume-div tooltips top btn_pointer">
                                     <span>Music Volume Up/Down</span>
                                 </button>
-                                <button class="navigator-zoomout-btn">
+                               <button class="navigator-zoomout-btn">
                                     <i class="fas fa-undo-alt"></i>
+                                    {{-- <span>Zoom Out</span> --}}
                                 </button>
+                                {{-- <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                                    <span>Zoom Out</span>
+                                    <i class="fas fa-undo-alt"></i>
+                                </button> --}}
                             </div>
                             <!-- ---------------------astronaut code End-------------------------------------------- -->
 
-                        </div>
-                    </div>
+                         </div>
+                    {{--</div> --}}
             </div>
     </div>
 </div>
@@ -186,23 +250,8 @@
 <script src="{{asset('front/system-google-font-picker/jquery.fontselect.js')}}"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="//geodata.solutions/includes/countrystatecity.js"></script>
-<script>
-var loadFile = function(event) {
-	var image = document.getElementById('outputImage');
-	image.src = URL.createObjectURL(event.target.files[0]);
-};
 
-</script>
-{{-- <script>
-    function myFunction() {
-   var x = document.getElementById("img-edit");
-   if (x.style.display === "none") {
-    x.style.display = "block";
-   } else {
-     x.style.display = "none";
-   }
-}
-</script> --}}
+
 <script type="text/javascript">
 
     
@@ -933,5 +982,41 @@ function largest(hot_count,cool_count,naff_count,i)
            
     </script>
 
+
+<script>
+    
+    var loadFile = function(event) {
+        var image = document.getElementById('outputImage');
+        image.src = URL.createObjectURL(event.target.files[0]);
+       
+        if (typeof image != 'undefined'){
+            var a = document.getElementById('middle');
+            a.style.display = "block";
+        }
+        // else{
+        //     a.style.display = "none";
+        // }
+        
+        if (typeof image != 'undefined') 
+        {
+        var x = document.getElementById("img-edit");
+        x.style.display = "block";
+
+        }
+          
+    };
+</script>
+{{-- <script type="text/javascript">
+    
+    $('.column1 img').each(function(){
+        if ($(this).width()/$(this).height() >= 1) {
+            $(this).addClass('landscape');
+        } else {
+            $(this).addClass('portrait');
+        }
+    });
+
+     
+    </script> --}}
 
 @endsection

@@ -8,13 +8,15 @@
         <link href='https://fonts.googleapis.com/css?family=Hammersmith One|Pacifico|Anton|Sigmar One|Righteous|VT323|Quicksand|Inconsolata' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
         <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
+        {{-- <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
+        <script src="{{asset('front/JS/fabric.min.js')}}"></script> --}}
         <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
         <link rel="stylesheet" href="{{asset('front/CSS/jobseeker-profile.css')}}">
 @endsection
 @section('content')  
         <div class="collage-editor">
             <button class="cancel-btn" type="button">Cancel</button>
-            <button class="save-btn" type="button">Save</button>
+            <button class="save-btn " type="button">Save</button>
             
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
@@ -632,9 +634,12 @@
                                 <fieldset>
                                    
                                         <div class="form-row">
-                                            <div class="form-group col-md-10 input-group-sm">
+                                            <div class="form-group col-md-12 input-group-sm">
                                               <label for="Profession">Profession<span style="color:red">*</span></label>
                                               <input type="text" class="form-control" id="Profession"  name="Profession" >
+                                              <button type="button"  class="dropdown-btn" >
+                                                <span aria-hidden="true" class="btn-down"><i class="fas fa-angle-down"></i></span>
+                                              </button>
                                               {{-- <li class="dropdown">
                                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                                    aria-haspopup="true" aria-expanded="false">Dropdown
@@ -654,7 +659,7 @@
                                           <div class="form-row"> 
                                           <div class="form-group col-md-10 input-group-sm">
                                             <label for="skills">Skills<span style="color:red">*</span></label>
-                                            <textarea id="skills" name="skills" rows="7" cols="60">
+                                            <textarea id="skills" name="skills" rows="7" cols="72">
                                             </textarea>
                                      
                                           </div>  
@@ -696,19 +701,7 @@
 <script>
     $(document).ready(function() {
         var url = $('meta[name="url"]').attr('content');
-//         let token = document.head.querySelector('meta[name="csrf-token"]');
-// if (token) {
-//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-// } else {
-//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-// }
-
-
-// $.ajaxSetup({
-//     headers: {
-//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//     }
-// });
+//    
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
         var canvas = document.getElementById("c");
@@ -1003,9 +996,10 @@
 
         //function to upload images to the editor
         document.getElementById('imgLoader').onchange = function handleImage(e) {
+      
             $('.start-message').hide();
             var files = this.files;
-
+          
             //for each image selected by the user from the local dir
             for (var i = 0, f; f = files[i]; i++) {
                 var reader = new FileReader();
@@ -1038,7 +1032,56 @@
             }//end of for each image selected
         }//end of when image loader is selected
 
+        document.getElementById('startImageLoader').onchange = function handleImage(e) {
+                    // console.log(e);
+               
+                    $('.start-message').hide();
+                    var files = this.files;
 
+                    for (var i = 0, f; f = files[i]; i++) {
+
+                        var reader = new FileReader();
+                        reader.onload = function (event) {
+                            var imgObj = new Image();
+                            imgObj.src = event.target.result;
+                            imgObj.onload = function () {
+                                // start fabricJS stuff
+                                
+                                var image = new fabric.Image(imgObj);
+                                // image.set({
+                                //     left: 250,
+                                //     top: 250,
+                                //     // angle: 20,
+                                //     padding: 10,
+                                //     cornersize: 10
+                                //     width: 110,
+                                // });
+                                image.set({
+                                    left: 0, 
+                                    top: 0, 
+                                    angle: 0, 
+                                    // scaleX: 0.1, 
+                                    // scaleY: 0.1,
+                                    borderColor: '#d6d6d6',
+                                    cornerColor: '#d6d6d6',
+                                    cornerSize: 10,
+                                    transparentCorners: false,
+                                    // lockUniScaling: true
+                                });
+                                //image.scale(getRandomNum(0.1, 0.25)).setCoords();
+                                image.scaleToWidth(canvas.getWidth()/4);
+                                // image.scaleToHeight(canvas.getHeight());
+                                canvas.add(image).centerObject(image);
+                                // image.setCoords();
+                                canvas.renderAll();
+                                save();
+                                // end fabricJS stuff
+                            }
+                            
+                        }
+                        reader.readAsDataURL(f);
+                    }
+                }
 
 
         //function when removing objects
@@ -1844,7 +1887,31 @@
             // canvas.setBackgroundColor('#3e3e3e', canvas.renderAll.bind(canvas));
         }); 
 
-
+        /**
+         * save job seeker profile image
+         * 
+         * */
+        $(".save-btn").click(function(){
+            var object_count = canvas.getObjects().length;
+            if(object_count < 1) { 
+             
+                Swal.fire({
+                            imageUrl: '../../front/icons/alert-icon.png',
+                            imageWidth: 80,
+                            imageHeight: 80,
+                            imageAlt: 'Mbaye Logo',
+                            title: 'Error!',
+                            html: 'Please Upload Image(s)',
+                            width: '30%',
+                            padding: '1rem',
+                            background: 'rgba(8, 64, 147, 0.62)'
+                        });
+      
+            }
+            else{
+                $(".save").click();
+            }
+        });
 
         //TOOLTIP POSITION FOR THE ICONS
         $( document ).tooltip({
@@ -2567,6 +2634,11 @@
                   var value = $(this).text();
                   $('#Profession').val(value);
                   $('#profession_list').html("");
+              });
+
+              $(".dropdown-btn").click(function() {
+                $('#Profession').val(" ");
+                $( "#Profession" ).keyup();
               });
        
     });

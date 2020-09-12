@@ -82,8 +82,11 @@ class BlogsRepository extends BaseRepository
         $input['slug'] = Str::slug($input['name']);
         $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
         $input['created_by'] = $input['user_id'];
-        if(isset($input['shareable'])){
+        if(isset($input['privacy'])){
             $input['shareable'] = 0;
+        }
+        else{
+            $input['shareable'] = 1;
         }
         if($input['edited_featured_image']) {
             $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
@@ -144,7 +147,12 @@ class BlogsRepository extends BaseRepository
         }
         
         $input['updated_by'] = access()->user()->id;
-
+        if(isset($input['privacy'])){
+            $input['shareable'] = 0;
+        }
+        else{
+            $input['shareable'] = 1;
+        }
         // Uploading Image
         if($input['edited_featured_image']) {
             $this->deleteOldFile($blog);
@@ -449,7 +457,12 @@ class BlogsRepository extends BaseRepository
         $input['slug'] = Str::slug($input['name']);
         $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
         $input['created_by'] = $input['user_id'];
-
+        if(isset($input['privacy'])){
+            $input['shareable'] = 0;
+        }
+        else{
+            $input['shareable'] = 1;
+        }
         if($input['edited_featured_image']) {
             $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
         } else if(array_key_exists('featured_image', $input)) {
@@ -510,7 +523,12 @@ class BlogsRepository extends BaseRepository
         }
         
         $input['updated_by'] = access()->user()->id;
-
+        if(isset($input['privacy'])){
+            $input['shareable'] = 0;
+        }
+        else{
+            $input['shareable'] = 1;
+        }
         // Uploading Image
         if($input['edited_featured_image']) {
             $this->deleteOldFile($blog);

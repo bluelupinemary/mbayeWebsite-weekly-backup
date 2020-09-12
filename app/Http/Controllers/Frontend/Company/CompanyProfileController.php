@@ -9,6 +9,7 @@ use App\Models\Access\User\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\Backend\CompanyProfile\StoreCompanyProfileRequest;
 use App\Repositories\Frontend\CompanyProfile\CompanyProfilesRepository;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Auth;
 
 class CompanyProfileController extends Controller
@@ -55,9 +56,13 @@ class CompanyProfileController extends Controller
     public function store(StoreCompanyProfileRequest $request)
     {
         // dd($request);
+        
         $request->owner_id = Auth::user()->id;
-
+        // dd($request);
+        
+        
         $saved_company_profile = $this->company_profile->create($request->except('_token'));
+        
 
         $user = User::find($request->owner_id);
 

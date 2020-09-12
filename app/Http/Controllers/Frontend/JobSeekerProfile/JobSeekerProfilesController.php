@@ -199,7 +199,8 @@ class JobSeekerProfilesController extends Controller
             if($request->ajax()) {
               
                 $data = Profession::where('profession_name', 'LIKE', $request->profession.'%')
-                    ->get();
+                ->orderBy('profession_name', 'asc')     
+                ->get();
                
                 $output = '';
                
@@ -254,7 +255,7 @@ public function show_my_profile($id)
 }
 
 public function get_career_details(Request $request){
-    // dd($request->all());
+
     $profile_id= $request->profile_id;
     $user_id= $request->user_id;
     $User_details = User::find($user_id);
@@ -268,4 +269,13 @@ public function get_career_details(Request $request){
     // dd( $User_details);
     
 }
+
+public function edit_profile(Request $request)
+{
+   
+  $user = Auth::user();
+  $profile = JobSeekerProfile::find($user->id);
+  return view('frontend.user.edit-setup-profile',compact('user','profile'));
+}
+
     }

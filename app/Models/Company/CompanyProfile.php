@@ -6,6 +6,8 @@ use App\Models\BaseModel;
 use App\Models\Company\Traits\Attribute\CompanyAttribute;
 use App\Models\Company\Traits\Relationship\CompanyRelationship;
 use App\Models\ModelTrait;
+use App\Models\Access\User\User;
+
 
 class CompanyProfile extends BaseModel
 {

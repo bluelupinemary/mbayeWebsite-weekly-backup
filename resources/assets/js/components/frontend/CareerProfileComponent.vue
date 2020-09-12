@@ -35,7 +35,7 @@
                         
                         <a class="mover viewflat blog_img" href="#">
                             <input type="hidden" name="audio" :value="profile.audio">
-                            <img :class="'cell_img_'+index" :src="image_storage+'/'+profile.featured_image" @load="layoutImageInCell('cell_img_'+index, index)">
+                            <img :class="'cell_img_'+index" :src="image_storage+'/'+profile.featured_image" @load="layoutImageInCell('cell_img_'+index, index)" :data-index="index">
                         </a>
                             
                         <div class="overlay">
@@ -337,6 +337,33 @@ export default {
 
                 that.scrollcheck(that.scroll_type);
             });
+
+            window.addEventListener("orientationchange", function(event) {
+                // Generate a resize event if the device doesn't do it
+                // window.dispatchEvent(new Event("resize"));
+                that.snowstack_init();
+                reloadImageSize();
+                that.updateStack(1);
+            }, false);
+
+            window.addEventListener("resize", function(event) {
+                // Generate a resize event if the device doesn't do it
+                // window.dispatchEvent(new Event("resize"));
+                that.snowstack_init();
+                reloadImageSize();
+                that.updateStack(1);
+            }, false);
+
+            function reloadImageSize()
+            {
+                $(".blog_img img").each(function() {  
+                    var image_class = $(this).attr('class');
+                    var index = $(this).data('index');
+                    that.blockStyleDiv(index);
+                    that.layoutImageInCell(image_class, index);
+                });  
+            }
+
             /* scroll check */
       
             // that.scrollcheck()
@@ -502,6 +529,68 @@ export default {
                 '-o-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
                 'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
             };
+
+            // index++;
+        // }
+        
+        // that.CHEIGHT = Math.round(window.innerHeight / 3.5);
+        // that.CWIDTH  = Math.round(that.CHEIGHT * 300 / 180);
+        // that.CXSPACING = that.CWIDTH + that.CGAP;
+        // that.CYSPACING = that.CHEIGHT + that.CGAP;
+        // var realn = Math.floor(index /2 );
+        
+        // cell.div[0].style.webkitTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.MozTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.msTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+        // cell.div[0].style.OTransform = that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0);
+    },
+    blockStyleDiv(index) {
+        // console.log('index: '+index);
+        let that = this;
+        // var index = 0;
+        // var cell = {};
+        // var realn = that.cellCount;
+        // console.log(realn);
+        // if(index < that.Total_count) {
+            
+            // console.log(realn);
+        // }
+
+            
+            var realn = index;
+            // console.log('realn: '+realn);
+            var x = Math.floor(realn / 2);
+            var y = realn - x * 2;
+
+            // that.currentNum = x;
+            // console.log('blockStyle: ', that.currentNum, that.prevNum)
+            // if(that.currentNum != that.prevNum) {
+            //     that.prevNum = that.currentNum;
+            //     // that.cells.push([]);
+            // }
+            // $('.div_img_'+index).css({
+            //     'width': that.CWIDTH,
+            //     'height': that.CHEIGHT,
+            //     'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            // });
+            $('.div_img_'+index).css({
+                'width': that.CWIDTH,
+                'height': that.CHEIGHT,
+                '-webkit-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                '-moz-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                '-ms-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                '-o-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+                'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            })
+            // return {
+            //     'width': that.CWIDTH,
+            //     'height': that.CHEIGHT,
+            //     '-webkit-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+            //     '-moz-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+            //     '-ms-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+            //     '-o-transform': that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0),
+            //     'transform' : that.translate3d(x * that.CXSPACING, y * that.CYSPACING, 0)
+            // };
 
             // index++;
         // }

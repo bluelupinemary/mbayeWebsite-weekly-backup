@@ -1171,14 +1171,14 @@ textarea {
    z-index:1000000!important;
 }
 #profession_list{
-position: absolute;
+    position: absolute;
     left: 0;
     right: 0;
     top: 34%;
-    transform: translate(8%, -2%);
+    transform: translate(7%, -2%);
     display: flex;
     border: 0px solid blue;
-    width: 75%;
+    width: 89.5%;
     z-index: 100;
 }
     #profession_list ul  li{
@@ -1188,17 +1188,21 @@ position: absolute;
         /* padding: 0; */
         text-align: left;
         padding-left: 5%;
-        color:#25636d;
+        color:#17a2b8;
     }
 
     .list-group,.list-group-item{
         width: 100%;
     }
+    .list-group{
+        height: 13vw;
+        overflow-y: auto;
+    }
     .list-group-item:hover{
-        background-color: #17a2b8;
+        background-color:#b5b5b5;
     }
     .list-group-item{
-        color:#25636d;
+        color:#17a2b8;
     }
     
 .arrow {
@@ -1235,4 +1239,35 @@ position: absolute;
     padding: 10%;
     outline: 0;
     border: 0;
+}
+.clone-btn-education{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(1640%,-1412%);
+}
+.clone-btn-workexperience{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(1520%,-1164%);
+
+}
+.clone-btn-reference{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(1606%,-848%);
+}
+.btn-down{
+    color: #00dcff;
+    font-size: 0.9em;
+}
+.dropdown-btn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(1533%,2%);
+    width: 1.5vw;
+    height: 1.9vw;
 }

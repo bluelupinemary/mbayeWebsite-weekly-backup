@@ -32,12 +32,9 @@
         </div>
     </div>
     <!-- For nouvela animation -->
-    <section class="container-fluid">
-        <div class="div_container " style=""> 
-            <div id="overlay"></div>
-        <img  class="img-nouvela"  style="display:none" src="{{ asset('front') }}/images/naff555Votes.png" >
-        <div>
-    </section>
+    <div class="naff-fart-reaction">
+        <img src="{{asset('front/images/naff555Votes.png')}}" alt="">
+    </div>
     
     <most-naffed></most-naffed>
 

@@ -23,6 +23,28 @@ trait GeneralBlogAttribute
                 $this->getShowButtonAttribute('delete-blog', 'admin.generalblogs.show').
                 '</div>';
     }
+    public function getTrashedButtonsAttribute()
+    {
+            return '<div class="btn-group action-btn">
+                        '.$this->getRestoreButtonAttribute('btn btn-default btn-flat').'
+                        '.$this->getDeletePermanentlyButtonAttribute('btn btn-default btn-flat').'
+                    </div>';
+    }
+
+    public function getRestoreButtonAttribute($class)
+    {
+        if (access()->allow('delete-user')) {
+            return '<a class="'.$class.'" href="'.route('admin.generalblog.restore', $this).'" name="restore_blog"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.restore_user').'"></i></a> ';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeletePermanentlyButtonAttribute($class)
+    {
+        return '<a class="'.$class.'" href="'.route('admin.generalblog.delete-permanently', $this).'" name="delete_blog_perm"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.delete_permanently').'"></i></a> ';
+    }
 
     public function getContentSummary()
     {

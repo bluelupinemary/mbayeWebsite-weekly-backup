@@ -190,13 +190,13 @@
                     </div>
                 </div>
                 <div class="career-account-div">
-                    <a href="">
+                    <a href="{{url('/career/companyProfile')}}">
                         <div class="employer-account">
                             <img src="{{asset('front/icons/employer-icon.png')}}" alt="">
                             <p>I'm an employer</p>
                         </div>
                     </a>
-                    <a href="">
+                    <a href="{{url('/jobseekers/setup-profile')}}">
                         <div class="jobseeker-account">
                             <img src="{{asset('front/icons/jobseeker-icon.png')}}" alt="">
                             <p>I'm an job-seeker</p>
@@ -294,7 +294,7 @@
                     <img src="{{asset('front/images/communicator-buttons/buttons/termsBtn.png')}}" class="communicator-button tos-button" alt="">
                 </div>
                 <div class="music-player">
-                    <canvas id="canvas"></canvas>
+                    {{-- <canvas id="canvas"></canvas>
                     <div id="bars">
                         <div class="bar bar-animated"></div>
                         <div class="bar bar-animated"></div>
@@ -319,18 +319,18 @@
                         <div class="bar bar-animated"></div>
                         <div class="bar bar-animated"></div>
                         <div class="bar bar-animated"></div>
-                    </div>
+                    </div> --}}
 
                     <span class="close-btn"><i class="far fa-times-circle"></i></span>
-                    <div class="music-desc">
+                    {{-- <div class="music-desc">
                         <p class="music-title">Music title</p>
                         <p class="music-singer">Singer here</p>
-                    </div>
+                    </div> --}}
 
-                    <button class="music-button play-button"><i class="fas fa-play"></i></button>
-                    <button class="music-button pause-button"><i class="fas fa-pause"></i></button>
+                    {{-- <button class="music-button play-button"><i class="fas fa-play"></i></button>
+                    <button class="music-button pause-button"><i class="fas fa-pause"></i></button> --}}
 
-                    <div class="volume-progress">
+                    {{-- <div class="volume-progress">
                         <div class="progress progress-vertical">
                             <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -343,7 +343,7 @@
                         <li data-src="{{asset('front/images/audio/BlueMoonNatKingCole.mp3')}}" data-songtitle="Blue Moon" data-artist="Nat King Cole"></li>
                         <li data-src="{{asset('front/images/audio/Bruce Springsteen - I\'m on Fire.mp3')}}" data-songtitle="I'm on Fire" data-artist="Bruce Springsteen"></li>
                         <li data-src="{{asset('front/images/audio/Don McLean - Vincent ( Starry, Starry Night).mp3')}}" data-songtitle="Vincent ( Starry, Starry Night)" data-artist="Don McLean"></li>
-                    </ul>
+                    </ul> --}}
                 </div>
                 <div class="music-knobs-colors next-colors">
                     <div class="slick-carousel colors-slider next-colors-slider">
@@ -433,7 +433,7 @@
                             <li><a href="{{url('/blogview/tagwise/friend?tag=films')}}" class=""><img src="{{asset('front/images/planets/Venus.png')}}" alt=""><span>-</span><span class="tag-name">Films</span></a></li>
                             <li><a href="{{url('/blogview/general/friend')}}" class=""><img src="{{asset('front/images/planets/Jupiter.png')}}" alt=""><span>-</span><span class="tag-name">General</span></a></li>
                             <li><a href="{{url('/blogview/tagwise/friend?tag=music')}}" class=""><img src="{{asset('front/images/planets/Saturn.png')}}" class="" alt=""><span>-</span><span class="tag-name">Music</span></a></li>
-                            <li><a href="{{url('/blogview/tagwise/friend?tag=mountain_and_seas')}}" class=""><img src="{{asset('front/images/planets/Mars.png')}}" alt=""><span>-</span><span class="tag-name">Our Mountains and Seas</span></a></li>
+                            <li><a href="{{url('/blogview/tagwise/friend?tag=mountains_and_seas')}}" class=""><img src="{{asset('front/images/planets/Mars.png')}}" alt=""><span>-</span><span class="tag-name">Our Mountains and Seas</span></a></li>
                             <li><a href="{{url('/blogview/tagwise/friend?tag=politics')}}" class=""><img src="{{asset('front/images/planets/Uranus.png')}}" alt=""><span>-</span><span class="tag-name">Politics</span></a></li>
                             <li><a href="{{url('/blogview/tagwise/friend?tag=sports')}}" class=""><img src="{{asset('front/images/planets/Moon-w.png')}}" alt=""><span>-</span><span class="tag-name">Sports</span></a></li>
                             <li><a href="{{url('/blogview/tagwise/friend?tag=travel')}}" class=""><img src="{{asset('front/images/planets/Pluto.png')}}" alt=""><span>-</span><span class="tag-name">Travel</span></a></li>
@@ -667,6 +667,7 @@
         });
     </script>
     @endif
-
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
     <script src="{{asset('front/JS/communicator.js')}}"></script>
+    <script src="{{asset('front/JS/music_player.js')}}"></script>
 @endsection

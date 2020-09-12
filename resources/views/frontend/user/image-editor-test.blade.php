@@ -7,29 +7,18 @@
             left:2vw;
             top:20vw;
         }
-        
-        .modal.image-editor-modal {
+
+        .image-editor-modal {
             padding-right: 0 !important;
+            background:url('../../images/skybox_bg1.jpg');
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            display: none;
         }
-
-        .modal.image-editor-modal .modal-dialog {
-            max-width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .modal.image-editor-modal .modal-content {
-            height: 100%;
-            border-radius: 0;
-        }
-        .modal-body {
-            background-image: url(../../front/images/skybox_bg1.jpg);
-            max-width: 100%;
-            background-position: 50% 50%;
-            background-size:cover;
-        }
-
+    
 
     </style>
 
@@ -37,14 +26,18 @@
     <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
-    <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
     <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
-    <script src="{{asset('front/system-google-font-picker/jquery.fontselect.js')}}"></script>
+    <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>  
+    <script src="{{asset('front/JS/popper.min.js')}}"></script>
+    <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
+    <script src="{{asset('front/JS/jquery.fontselect.js')}}"></script>
+   
+   
 @endsection
 
 @section('after-styles')
-
-
+    <link rel="stylesheet" href="{{asset('front/CSS/image-editor.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/jquery.fontselect.css')}}"/>
 @endsection
 
 @section('content')
@@ -57,19 +50,21 @@
                                 <div class="column1">
                                     <div class="user-upload-img">
                                             <label for="file">
-                                            <img src="{{asset('front/images/image-add.png')}}" id="output" alt="input image" class="inox" width=100%>
+
+                                            <!--changed img id from output to featured-image-preview-->
+                                            <img src="{{asset('front/images/image-add.png')}}" id="featured-image-preview" alt="input image" class="inox" width=100%>
                                             <p class="img-description">Edit Featured Image.</p>
                                             </label>
                                             
                                             <input id="file"  onchange="loadFile(event)" type="file" />
-                                        
+                                            
                                     </div>
                                 
                                 </div>
-                                <button class="edit_image" id="edit_uploaded_image" data-toggle="modal" data-target="#imageEditorModal"  data-backdrop="false">
+                                <button class="edit_image" id="edit_uploaded_image">
                                         Edit Image
                                 </button>
-                                
+                                 
                                 <!-- ---------------------Form code start-------------------------------------------- -->
 
                                 <div class="column2">
@@ -132,7 +127,7 @@
                         <div class="row">
                             <div class="column3">
                                 <!-- ---------------------astronaut code start-------------------------------------------- -->
-                                <div class="astro-div navigator-div  tom " style="display:flex; visibility:visible">
+                                <div class="astro-div navigator-div  tom " style="display:flex; visibility:visible;">
                                     <img src="{{asset('front/images/astronut/Tom_blog.png')}}" alt="" class="astro">
                                     <div class="toss-div">
                                         <button class="toss-btn tooltips right" style="pointer-events:auto;">
@@ -187,57 +182,284 @@
                                 <!-- ---------------------astronaut code End-------------------------------------------- -->
 
 
-                                <!------------------------start of editor modal-------------------------------------------->
-                                <div class="modal image-editor-modal" id="imageEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                        
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <imageeditor-component></imageeditor-component>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!----------------------------------------------------------------------------------------->
 
                             </div>
                         </div>
                 </div>
         </div>
     </div>
+    <!----------------------------------------DIV FOR THE IMAGE EDITOR------------------------------------------>
+    <div class="image-editor-modal" id="imageEditorModal">
+       <imageeditor-component ></imageeditor-component>
+    </div>
+    <!----------------------------------------DIV FOR THE IMAGE EDITOR------------------------------------------>
+
+
 </div> <!--end of app-->
 @endsection
 @section('after-scripts')
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
-<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
-<script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
-<script src="{{asset('front/JS/jquery-ui.js')}}"></script>
+<script src="{{asset('front/JS/jquery.fontselect.js')}}"></script>
 <script src="{{asset('front/JS/popper.min.js')}}"></script>
-
+<script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
+{{-- <script src="{{asset('front/JS/jquery-ui.js')}}"></script> --}}
 <script src="{{asset('front/JS/fabric.min.js')}}"></script>
 <script src="{{asset('front/JS/FileSaver.js')}}"></script>      
 <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>        
 <script src="{{asset('front/JS/gaTrackingJSFiddle.js')}}"></script>     
 <script src="{{asset('front/JS/lodash.min.js')}}"></script>
-<script src="{{asset('front/system-google-font-picker/jquery.fontselect.js')}}"></script>
-
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="//geodata.solutions/includes/countrystatecity.js"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+{{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+
 <script>
+let oldFeaturedImg;
+let isNewImg = true;
 var loadFile = function(event) {
-	var image = document.getElementById('output');
-	image.src = URL.createObjectURL(event.target.files[0]);
+    //changed output to featured-image-preview
+    var image = document.getElementById('featured-image-preview');
+    image.src = URL.createObjectURL(event.target.files[0]);
+    
+    if(oldFeaturedImg != image.src){
+        oldFeaturedImg = image.src;
+        isNewImg = true;
+        console.log("image is new in first page");
+    }
 };
 
 
 
-
-//additionals
+// -------------------------- ADDED FUNCTIONS FOR THE IMAGE EDITOR -------------------------//
 $('#edit_uploaded_image').on('click', function(){
-    $('.astro-div').hide();
-
+    $("#imageEditorModal").css("display","block");
+    $('#page-content').hide();
 });
+
+$('#font-picker').fontselect({
+  fonts: [
+    "Aclonica",
+    "Allan",
+    "Annie+Use+Your+Telescope",
+    "Anonymous+Pro",
+    "Allerta+Stencil",
+    "Allerta",
+    "Amaranth",
+    "Anton",
+    "Architects+Daughter",
+    "Arimo",
+    "Artifika",
+    "Arvo",
+    "Asset",
+    "Astloch",
+    "Bangers",
+    "Bentham",
+    "Bevan",
+    "Bigshot+One",
+    "Bowlby+One",
+    "Bowlby+One+SC",
+    "Brawler",
+    "Buda:300",
+    "Cabin",
+    "Calligraffitti",
+    "Candal",
+    "Cantarell",
+    "Cardo",
+    "Carter One",
+    "Caudex",
+    "Cedarville+Cursive",
+    "Cherry+Cream+Soda",
+    "Chewy",
+    "Coda",
+    "Coming+Soon",
+    "Copse",
+    "Corben:700",
+    "Cousine",
+    "Covered+By+Your+Grace",
+    "Crafty+Girls",
+    "Crimson+Text",
+    "Crushed",
+    "Cuprum",
+    "Damion",
+    "Dancing+Script",
+    "Dawning+of+a+New+Day",
+    "Didact+Gothic",
+    "Droid+Sans",
+    "Droid+Sans+Mono",
+    "Droid+Serif",
+    "EB+Garamond",
+    "Expletus+Sans",
+    "Fontdiner+Swanky",
+    "Forum",
+    "Francois+One",
+    "Geo",
+    "Give+You+Glory",
+    "Goblin+One",
+    "Goudy+Bookletter+1911",
+    "Gravitas+One",
+    "Gruppo",
+    "Hammersmith+One",
+    "Holtwood+One+SC",
+    "Homemade+Apple",
+    "Inconsolata",
+    "Indie+Flower",
+    "IM+Fell+DW+Pica",
+    "IM+Fell+DW+Pica+SC",
+    "IM+Fell+Double+Pica",
+    "IM+Fell+Double+Pica+SC",
+    "IM+Fell+English",
+    "IM+Fell+English+SC",
+    "IM+Fell+French+Canon",
+    "IM+Fell+French+Canon+SC",
+    "IM+Fell+Great+Primer",
+    "IM+Fell+Great+Primer+SC",
+    "Irish+Grover",
+    "Irish+Growler",
+    "Istok+Web",
+    "Josefin+Sans",
+    "Josefin+Slab",
+    "Judson",
+    "Jura",
+    "Jura:500",
+    "Jura:600",
+    "Just+Another+Hand",
+    "Just+Me+Again+Down+Here",
+    "Kameron",
+    "Kenia",
+    "Kranky",
+    "Kreon",
+    "Kristi",
+    "La+Belle+Aurore",
+    "Lato:100",
+    "Lato:100italic",
+    "Lato:300", 
+    "Lato",
+    "Lato:bold",  
+    "Lato:900",
+    "League+Script",
+    "Lekton",  
+    "Limelight",  
+    "Lobster",
+    "Lobster Two",
+    "Lora",
+    "Love+Ya+Like+A+Sister",
+    "Loved+by+the+King",
+    "Luckiest+Guy",
+    "Maiden+Orange",
+    "Mako",
+    "Maven+Pro",
+    "Maven+Pro:500",
+    "Maven+Pro:700",
+    "Maven+Pro:900",
+    "Meddon",
+    "MedievalSharp",
+    "Megrim",
+    "Merriweather",
+    "Metrophobic",
+    "Michroma",
+    "Miltonian Tattoo",
+    "Miltonian",
+    "Modern Antiqua",
+    "Monofett",
+    "Molengo",
+    "Mountains of Christmas",
+    "Muli:300", 
+    "Muli", 
+    "Neucha",
+    "Neuton",
+    "News+Cycle",
+    "Nixie+One",
+    "Nobile",
+    "Nova+Cut",
+    "Nova+Flat",
+    "Nova+Mono",
+    "Nova+Oval",
+    "Nova+Round",
+    "Nova+Script",
+    "Nova+Slim",
+    "Nova+Square",
+    "Nunito:light",
+    "Nunito",
+    "OFL+Sorts+Mill+Goudy+TT",
+    "Old+Standard+TT",
+    "Open+Sans:300",
+    "Open+Sans",
+    "Open+Sans:600",
+    "Open+Sans:800",
+    "Open+Sans+Condensed:300",
+    "Orbitron",
+    "Orbitron:500",
+    "Orbitron:700",
+    "Orbitron:900",
+    "Oswald",
+    "Over+the+Rainbow",
+    "Reenie+Beanie",
+    "Pacifico",
+    "Patrick+Hand",
+    "Paytone+One", 
+    "Permanent+Marker",
+    "Philosopher",
+    "Play",
+    "Playfair+Display",
+    "Podkova",
+    "PT+Sans",
+    "PT+Sans+Narrow",
+    "PT+Sans+Narrow:regular,bold",
+    "PT+Serif",
+    "PT+Serif Caption",
+    "Puritan",
+    "Quattrocento",
+    "Quattrocento+Sans",
+    "Radley",
+    "Raleway:100",
+    "Redressed",
+    "Rock+Salt",
+    "Rokkitt",
+    "Ruslan+Display",
+    "Schoolbell",
+    "Shadows+Into+Light",
+    "Shanti",
+    "Sigmar+One",
+    "Six+Caps",
+    "Slackey",
+    "Smythe",
+    "Sniglet:800",
+    "Special+Elite",
+    "Stardos+Stencil",
+    "Sue+Ellen+Francisco",
+    "Sunshiney",
+    "Swanky+and+Moo+Moo",
+    "Syncopate",
+    "Tangerine",
+    "Tenor+Sans",
+    "Terminal+Dosis+Light",
+    "The+Girl+Next+Door",
+    "Tinos",
+    "Ubuntu",
+    "Ultra",
+    "Unkempt",
+    "UnifrakturCook:bold",
+    "UnifrakturMaguntia",
+    "Varela",
+    "Varela Round",
+    "Vibur",
+    "Vollkorn",
+    "VT323",
+    "Waiting+for+the+Sunrise",
+    "Wallpoet",
+    "Walter+Turncoat",
+    "Wire+One",
+    "Yanone+Kaffeesatz",
+    "Yanone+Kaffeesatz:300",
+    "Yanone+Kaffeesatz:400",
+    "Yanone+Kaffeesatz:700",
+    "Yeseva+One",
+    "Zeyada"
+  ]
+});
+
+// -------------------------- END OF  FUNCTIONS FOR THE IMAGE EDITOR -------------------------//
+
+
+
 
 </script>
 <script type="text/javascript">
@@ -245,395 +467,7 @@ $('#edit_uploaded_image').on('click', function(){
     
     var url = $('meta[name="url"]').attr('content');
     var ClickCount=0;
-//     var arrCount = [
-//      {
-//         'id': '1', 'name': '1', 'thumb': '/storage/img/general_blogs/1591438745workshop.jpg', 'naffcount': '250' 
-		
-//     },
-//     {
-//         'id': '16', 'name': '2', 'thumb': '/storage/img/general_blogs/1587448424a1.jpg', 'naffcount': '200' 
-		
-//     },
-//     {
-//         'id': '2', 'name': '3', 'thumb': '/storage/img/general_blogs/1591438556a2.jpg', 'naffcount': '190' 
-		
-//     },
 
-//     {
-//         'id': '4', 'name': '4', 'thumb': '/storage/img/general_blogs/1587381503a8.jpg', 'naffcount': '186' 
-		
-//     },
-//   {
-//         'id': '5', 'name': '5', 'thumb': '/storage/img/general_blogs/1590997811a12.JPG', 'naffcount': '175' 
-		
-//     },
-//     {
-//         'id': '6', 'name': '6', 'thumb': '/storage/img/general_blogs/1591438590a1.jpg', 'naffcount': '165' 
-		
-//     },
-//      {
-//         'id': '7', 'name': '7', 'thumb': '/storage/img/general_blogs/1591438711a12.jpg', 'naffcount': '150' 
-		
-//     },
-//     {
-//         'id': '8', 'name': '8', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '140' 
-		
-//     },
-//     {
-//         'id': '9', 'name': '9', 'thumb': '/storage/img/general_blogs/1591017337a27.jpg', 'naffcount': '115' 
-		
-//     },
-//     {
-//         'id': '10', 'name': '10', 'thumb': '/storage/img/general_blogs/1591017196a24.jpg', 'naffcount': '112' 
-		
-//     },
-//     {
-//         'id': '11', 'name': '11', 'thumb': '/storage/img/general_blogs/1591001910a9.jpg', 'naffcount': '111' 
-		
-//     },
-//     {
-//         'id': '12', 'name': '12', 'thumb': '/storage/img/general_blogs/1590996475a15.jpg', 'naffcount': '107' 
-		
-//     },
-//     {
-//         'id': '13', 'name': '13', 'thumb': '/storage/img/general_blogs/1590992683a20.jpg', 'naffcount': '105' 
-		
-//     },
-//     {
-//         'id': '14', 'name': '14', 'thumb': '/storage/img/general_blogs/1590993113a27.jpg', 'naffcount': '100' 
-		
-//     },
-//     {
-//         'id': '15', 'name': '8', 'thumb': '/storage/img/general_blogs/1590837335hotwire.jpg', 'naffcount': '90' 
-		
-//     },
-//     {
-//         'id': '16', 'name': '16', 'thumb': '/storage/img/general_blogs/1589437214a2.jpg', 'naffcount': '89' 
-		
-//     },
-//     {
-//         'id': '17', 'name': '17', 'thumb': '/storage/img/general_blogs/1589280324a30.jpg', 'naffcount': '88' 
-		
-//     },
-//     {
-//         'id': '18', 'name': '18', 'thumb': '/storage/img/general_blogs/15892020981585466954a21.jpg', 'naffcount': '87' 
-		
-//     },
-//     {
-//         'id': '19', 'name': '19', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '86' 
-		
-//     },
-//     {
-//         'id': '20', 'name': '20', 'thumb': '/storage/img/general_blogs/15891789751585467010a28.png', 'naffcount': '85' 
-		
-//     },
-//     {
-//         'id': '21', 'name': '21', 'thumb': '/storage/img/general_blogs/15874496301584960852a27.jpg', 'naffcount': '84' 
-		
-//     },
-//     {
-//         'id': '22', 'name': '22', 'thumb': '/storage/img/general_blogs/1587448424a1.jpg', 'naffcount': '83' 
-		
-//     },
-//     {
-//         'id': '23', 'name': '23', 'thumb': '/storage/img/general_blogs/1587448536a5.jpg', 'naffcount': '82' 
-		
-//     },
-//     {
-//         'id': '24', 'name': '24', 'thumb': '/storage/img/general_blogs/1587448424a1.jpg', 'naffcount': '81' 
-		
-//     },
-//     {
-//         'id': '25', 'name': '25', 'thumb': '/storage/img/general_blogs/1587448329a26.jpg', 'naffcount': '80' 
-		
-//     },
-//     {
-//         'id': '26', 'name': '26', 'thumb': '/storage/img/general_blogs/1587447873a8.jpg', 'naffcount': '79' 
-		
-//     },
-//     {
-//         'id': '27', 'name': '27', 'thumb': '/storage/img/general_blogs/1587447896a9.jpg', 'naffcount': '78' 
-		
-//     },
-//     {
-//         'id': '28', 'name': '28', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '77' 
-		
-//     },
-//     {
-//         'id': '29', 'name': '29', 'thumb': '/storage/img/general_blogs/1587447820a47.jpg', 'naffcount': '76' 
-		
-//     },
-//     {
-//         'id': '30', 'name': '30', 'thumb': '/storage/img/general_blogs/15873817156.jpg', 'naffcount': '75' 
-		
-//     },
-//     {
-//         'id': '31', 'name': '31', 'thumb': '/storage/img/general_blogs/1587381592a25.jpg', 'naffcount': '74' 
-		
-//     },
-//     {
-//         'id': '32', 'name': '32', 'thumb': '/storage/img/general_blogs/1587381749WGKM8334.jpg', 'naffcount': '73' 
-		
-//     },
-//     {
-//         'id': '33', 'name': '33', 'thumb': '/storage/img/general_blogs/15873818711.jpg', 'naffcount': '72' 
-		
-//     },
-//     {
-//         'id': '34', 'name': '34', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '70' 
-		
-//     },
-//     {
-//         'id': '35', 'name': '35', 'thumb': '/storage/img/general_blogs/1587381672NMYK0151.jpg', 'naffcount': '68' 
-		
-//     },
-//     {
-//         'id': '36', 'name': '36', 'thumb': '/storage/img/general_blogs/15873817372.jpg', 'naffcount': '66' 
-		
-//     },
-//     {
-//         'id': '37', 'name': '37', 'thumb': '/storage/img/general_blogs/1587382112a33.jpg', 'naffcount': '65' 
-		
-//     },
-//     {
-//         'id': '38', 'name': '38', 'thumb': '/storage/img/general_blogs/1587382648a5.jpg', 'naffcount': '55' 
-		
-//     },
-//     {
-//         'id': '39', 'name': '39', 'thumb': '/storage/img/general_blogs/1587381556a9.jpg', 'naffcount': '45' 
-		
-//     },
-//     {
-//         'id': '40', 'name': '40', 'thumb': '/storage/img/general_blogs/default.png', 'naffcount': '40' 
-		
-//     },
-//     {
-//         'id': '41', 'name': '41', 'thumb': '/storage/img/general_blogs/1587381503a8.jpg', 'naffcount': '37' 
-		
-//     },
-//     {
-//         'id': '42', 'name': '42', 'thumb': '/storage/img/general_blogs/1591017222a51.jpg', 'naffcount': '36' 
-		
-//     },
-//     {
-//         'id': '43', 'name': '43', 'thumb': '/storage/img/general_blogs/1591438728a11.jpg', 'naffcount': '35' 
-		
-//     },
-//     {
-//         'id': '44', 'name': '44', 'thumb': '/storage/img/general_blogs/1591017337a27.jpg', 'naffcount': '25' 
-		
-//     },
-//     {
-//         'id': '45', 'name': '45', 'thumb': '/storage/img/general_blogs/1587387430a33.jpg', 'naffcount': '15' 
-		
-//     },
-//     {
-//         'id': '46', 'name': '46', 'thumb': '/storage/img/general_blogs/15873829561.jpg', 'naffcount': '13' 
-		
-//     },
-//     {
-//         'id': '47', 'name': '47', 'thumb': '/storage/img/general_blogs/1587386094Museum (4).jpg', 'naffcount': '9' 
-		
-//     },
-//     {
-//         'id': '48', 'name': '48', 'thumb': '/storage/img/general_blogs/1587448424a1.jpg', 'naffcount': '8' 
-		
-//     },
-//     {
-//         'id': '49', 'name': '49', 'thumb': '/storage/img/general_blogs/1587381592a25.jpg', 'naffcount': '7' 
-		
-//     },
-//     {
-//         'id': '50', 'name': '50', 'thumb': '/storage/img/general_blogs/1591438590a1.jpg', 'naffcount': '5' 
-		
-//     },
-//     ];
-    
- 
-// $(document).ready(function() {
-//     $('.main-naff').css('opacity', '1');
-
-
-// $("#1").attr("src",arrCount[ClickCount].thumb);
-// $("#2").attr("src",arrCount[ClickCount+1].thumb);
-// $("#3").attr("src",arrCount[ClickCount+2].thumb);
-
-// $("#1").attr("blog_id",arrCount[ClickCount].id);
-// $("#2").attr("blog_id",arrCount[ClickCount+1].id);
-// $("#3").attr("blog_id",arrCount[ClickCount+2].id);
-
-
-
-// $('#1').attr('onClick','viewBlog('+arrCount[ClickCount].id+')');
-// $('#2').attr('onClick','viewBlog('+arrCount[ClickCount+1].id+')');
-// $('#3').attr('onClick','viewBlog('+arrCount[ClickCount+2].id+')');
-
-// // $("#blog_name_first").html("Naff Count:"+arrCount[ClickCount].naffcount);
-// // $("#blog_name_second").html("Naff Count:"+arrCount[ClickCount+1].naffcount);
-// // $("#blog_name_third").html("Naff Count:"+arrCount[ClickCount+2].naffcount);
-// $("#blog_name_first").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount].naffcount+'</span>');
-// $("#blog_name_second").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount+1].naffcount+'</span>');
-// $("#blog_name_third").html('<span style="color:#28e9e2 !important">'+"Naff Count:"+'</span>'+'<span style="color:gold !important">'+arrCount[ClickCount+2].naffcount+'</span>');
-
-
-//     var elem = document.documentElement;
-// function openFullscreen() {
-//     if (elem.mozRequestFullScreen) {  /* Firefox */
-//     elem.mozRequestFullScreen(); 
-//     contentDisplay();
-//   } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-//     elem.webkitRequestFullscreen();
-//     contentDisplay();
-//   } else if (elem.msRequestFullscreen) { /* IE/Edge */
-//     elem.msRequestFullscreen();
-//     contentDisplay();
-//   }
-//   else if (elem.requestFullscreen) {
-//     elem.requestFullscreen();
-//     contentDisplay();
-//   } 
-//   else{
-//   //alert("iphone")
-//     contentDisplay();
-//   }
-
-// }
-// if(window.innerWidth < 991 ){
-// $(document).ready(()=>{
-//     Swal.fire({
-//             imageUrl: '../../front/icons/alert-icon.png',
-//             imageWidth: 80,
-//             imageHeight: 80,
-//             html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
-//             padding: '15px',
-//             background: 'rgba(8, 64, 147, 0.62)',
-//             allowOutsideClick: false
-//         }).then((result) => {
-//             if (result.value) {
-//                 openFullscreen()
-//             }
-//         });
-//     });
-// }
-// else  contentDisplay();
-
-// function contentDisplay() { 
-//       setTimeout(function(){
-//         $(".astro-div").css({'display':'flex'}); 
-//         $(".page").css({'visibility':'visible'});
-//         $(".astro-div").css({'visibility':'visible'});
-//       // $(".most-naffed").css({'visibility':'visible'});
-            
-            
-//         $(".page").addClass('animate-zoomIn-arm');
-  
-//         $('.page').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){ 
-//    $(".page").removeClass('animate-zoomIn-arm');
-//     $(".page").addClass('zoomIn-arm');
-//    });
-
-//         }, 1000
-// );
-//     }
-// });
-// function go_to_next(){
-//     var next = document.getElementById( "next_no" ).value;
-//     var prev = document.getElementById( "prev_no" ).value;
-//     var middle = document.getElementById( "middle_no" ).value;
-//     var first=parseInt(prev)+parseInt(3);
-//     var second=parseInt(middle)+parseInt(3);
-//     var third=parseInt(next)+parseInt(3);
-//     if(first >= arrCount.length)
-//         {
-//             first = 0;
-//             second = first+1;
-//             third =second+1;
-//         }
-//         if(second >= arrCount.length)
-//         {
-//             second = 0;
-//             third =second+1;
-//         }
-//         if(third >= arrCount.length)
-//         {
-//             third = 0;
-//         }
-
-// $("#1").attr("src",arrCount[first].thumb);
-// $("#2").attr("src",arrCount[second].thumb);
-// $("#3").attr("src",arrCount[third].thumb);
-
-// $("#1").attr("blog_id",arrCount[first].id);
-// $("#2").attr("blog_id",arrCount[second].id);
-// $("#3").attr("blog_id",arrCount[third].id);
-
-// $('#1').attr('onClick','viewBlog('+arrCount[first].id+')');
-// $('#2').attr('onClick','viewBlog('+arrCount[second].id+')');
-// $('#3').attr('onClick','viewBlog('+arrCount[third].id+')');
-
-
-// document.getElementById("next_no").value = third;
-// document.getElementById("prev_no").value = first;
-// document.getElementById("middle_no").value = second;
-// $("#blog_name_first").text("Naff Count:"+arrCount[first].naffcount);
-// $("#blog_name_second").text("Naff Count:"+arrCount[second].naffcount);
-// $("#blog_name_third").text("Naff Count:"+arrCount[third].naffcount);
-
-// $("#blog_name_h1").text((parseInt(first)+parseInt(1))+"th Most naffed!");
-// $("#blog_name_h2").text((parseInt(second)+parseInt(1))+"th Most naffed!");
-// $("#blog_name_h3").text((parseInt(third)+parseInt(1))+"th Most naffed!");
-
-// // Planet name circle style
-// }
-// function go_to_previous(){
-//     var next = document.getElementById( "next_no" ).value;
-//     var prev = document.getElementById( "prev_no" ).value;
-//     var middle = document.getElementById( "middle_no" ).value;
-
-
-//    var first=parseInt(prev)-parseInt(3);
-//    var second=parseInt(middle)-parseInt(3);
-//    var third=parseInt(next)-parseInt(3);
-
-//    if(first <= -1)
-//         {
-//             first = parseInt(arrCount.length)-parseInt(3);
-//             second =parseInt(arrCount.length)-parseInt(2);
-//             third =parseInt(arrCount.length)-parseInt(1);
-//         }
-//         if(second <= -1)
-//         {
-//             second = parseInt(arrCount.length)-parseInt(3);
-//             third =parseInt(arrCount.length)-parseInt(2);
-//         }
-//         if(third <= -1)
-//         {
-//             third =parseInt(arrCount.length)-parseInt(3);
-//         }
-
-// $("#1").attr("src",arrCount[first].thumb);
-// $("#2").attr("src",arrCount[second].thumb);
-// $("#3").attr("src",arrCount[third].thumb);
-
-
-// $("#1").attr("blog_id",arrCount[first].id);
-// $("#2").attr("blog_id",arrCount[second].id);
-// $("#3").attr("blog_id",arrCount[third].id);
-
-// $('#1').attr('onClick','viewBlog('+arrCount[first].id+')');
-// $('#2').attr('onClick','viewBlog('+arrCount[second].id+')');
-// $('#3').attr('onClick','viewBlog('+arrCount[third].id+')');
-
-// document.getElementById("next_no").value = third;
-// document.getElementById("prev_no").value = first;
-// document.getElementById("middle_no").value = second;
-
-// $("#blog_name_first").html("Naff Count:"+arrCount[first].naffcount);
-// $("#blog_name_second").html("Naff Count:"+arrCount[second].naffcount);
-// $("#blog_name_third").html("Naff Count:"+arrCount[third].naffcount);
-// // Planet name circle style
-
-// }
 
     (function () {
     
@@ -966,7 +800,8 @@ function largest(hot_count,cool_count,naff_count,i)
         $('.communicator-span').css('display', 'none');
     }
 });
- 
+
+
            
     </script>
 

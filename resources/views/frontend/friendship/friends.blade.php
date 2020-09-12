@@ -78,5 +78,13 @@
             });
         </script>
     @endif
+
+    <script>
+        $(document).ready(function() {
+            $('.sort-header').click(function() {
+                $('.sort-body').toggle('slow');
+            });
+        });
+    </script>
 @endsection
 

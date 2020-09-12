@@ -32,7 +32,7 @@
                 style='background-image: url("{{ asset('storage/career/employee/'.$profile->featured_image) }}")'>
                 </div>
             </div>
-
+     @if(Auth::user()->id != $profile->user_id)
         <div class="planet-buttons">
             {{-- <span class="pop-up view-pop-up">View </span>
             <span class="pop-up back-pop-up">Save</span>
@@ -42,27 +42,69 @@
             <button class="call" onclick="connect_mail({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/call.png')}}" alt=""></button>
             
         </div>
+    @endif
+    @if(Auth::user()->id == $profile->user_id)
+    <div class="edit-buttons">
+        <button class="edit" onclick="edit_profile({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/edit.png')}}" alt=""></button>
+        
+    </div>
+    @endif   
     </div>
 </div>
     
-    <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
-        @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
-            <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
-            class="astronaut-body">
-            <div class="tos-div thomasina">
-                <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
-            </div>
-        @else
-            <img src="{{ asset('front/images/astronut/tom-navigator.png') }}" alt=""
-            class="astronaut-body">
-            <div class="tos-div">
-                <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
-            </div>
-        @endif
+<div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+    @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+        <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
+        class="astronaut-body">
+        <div class="tos-div thomasina">
+            <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+        </div>
+    @else
+        <img src="{{ asset('front/images/astronut/tom-navigator.png') }}" alt=""
+        class="astronaut-body">
+        <div class="tos-div">
+            <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+        </div>
+    @endif
+    <div class="user-photo {{access()->user()->getGender()}}">
+        <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+    </div>
+    <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button>
+    <div class="navigator-buttons">
+        <div class="column column-1">
+            <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
+            <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
+        </div>
+        <div class="column column-2">
+            <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+        </div>
+        <div class="column column-3">
+            <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+            <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+        </div>
+    </div>
+    <div class="instructions-div">
+        <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
+    </div>
+    <div class="communicator-div tooltips top">
+        <button class="communicator-button"></button>
+        <span>Communicator</span>
+    </div>
+    <button class="navigator-zoomout-btn">
+        <i class="fas fa-undo-alt"></i>
+    </button>
+</div>
+<div class="navigator-div-zoomed-in">
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    <div class="navigator-components">
+        <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut">
+        <div class="tos-div">
+            <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+        </div>
         <div class="user-photo {{access()->user()->getGender()}}">
             <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
         </div>
-        <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button>
+        {{-- <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button> --}}
         <div class="navigator-buttons">
             <div class="column column-1">
                 <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
@@ -86,7 +128,7 @@
         <button class="navigator-zoomout-btn">
             <i class="fas fa-undo-alt"></i>
         </button>
-       
+    </div>
 </div>
          
 </div>
@@ -130,7 +172,7 @@
     <script src="{{ asset('js/share.js') }}"></script>
     <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.0/moment.min.js"></script>
     <script>
         var url = $('meta[name="url"]').attr('content');
        
@@ -201,6 +243,9 @@
 
                     var user_name=data['User_details'].first_name+' '+data['User_details'].last_name;
                     var dob=data['User_details'].dob;
+
+                    var date = new Date(dob);
+                    dob=moment(date).format('MMMM D Y');
                     var address=data['User_details'].address;
                     var primary_contact=data['User_details'].mobile_number;
                     var secondary_contact=data['JobSeekerProfile_details'].secondary_mobile_number;
@@ -289,5 +334,100 @@
                 });
         
     }
+    var navigator_zoom = 0;
+        var img_has_loaded = 0;
+        $('button.navigator-zoomin').click( function() {
+            if(!navigator_zoom) {
+                if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                    $('.navigator-div').hide();
+                    $('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
+                    // if(!img_has_loaded) {
+                    //     $('.navigator-div-zoomed-in .lds-ellipsis').show();
+                    //     $('.navigator-div-zoomed-in .astronaut').on('load', function() {
+                    //         $('.navigator-div-zoomed-in .lds-ellipsis').hide();
+                    //         $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    //         img_has_loaded = !img_has_loaded;
+                    //     });
+                    // } else {
+                        $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    // }
+                } else {
+                    $(this).fadeOut();
+                    $('.navigator-div').addClass('animate-navigator-zoomin');
+
+                    $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.navigator-div').removeClass('animate-navigator-zoomin');
+                        $('.navigator-div').addClass('zoomin');
+                    });
+                }
+            }
+
+            navigator_zoom = !navigator_zoom;
+        });
+
+        $('.navigator-zoomout-btn').click(function() {
+            $('button.navigator-zoomin').fadeIn();
+
+            if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                $('.navigator-div').fadeIn();
+                $('.navigator-div-zoomed-in').hide();
+            } else {
+                $('.navigator-div').addClass('animate-navigator-zoomout');
+
+                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.navigator-div').removeClass('animate-navigator-zoomout');
+                    $('.navigator-div').removeClass('zoomin');
+                });
+            }
+
+            navigator_zoom = !navigator_zoom;
+        });
+
+        // navigator buttons
+        $('.communicator-div').click( function() {
+            window.location.href = url+'/communicator';
+        });
+
+        $('.home-btn').click( function() {
+            window.location.href = url;
+        });
+
+        $('.profile-btn').click( function() {
+            window.location.href = url+'/dashboard';
+        });
+
+        $('.instructions-btn, .tos-btn').click( function() {
+            window.location.href = url+'/page_under_development';
+        });
+
+        $('.editphoto-btn').click( function() {
+            window.location.href = url+'/profile/edit-photo';
+        });
+
+
+        function edit_profile(profile_id,user_id)
+                {
+                     window.location.href = url+'/jobseekers/edit-setup-profile/'+profile_id;
+                 }
+
+        $('#left-arrow').on('click', function() {
+    if ($('.about').css('opacity') == 0) $('.about').css('opacity', 1);
+    else $('.about').css('opacity', 0);
+
+    if ($('.education').css('opacity') == 0) $('.education').css('opacity', 1);
+    else $('.education').css('opacity', 0);
+
+    if ($('.contacts').css('opacity') == 0) $('.contacts').css('opacity', 1);
+    else $('.contacts').css('opacity', 0);
+
+    if ($('.character_refernces').css('opacity') == 0) $('.character_refernces').css('opacity', 1);
+    else $('.character_refernces').css('opacity', 0);
+
+    if ($('.job_description').css('opacity') == 0) $('.job_description').css('opacity', 1);
+    else $('.job_description').css('opacity', 0);
+
+
+   
+});
     </script>
     @endsection
