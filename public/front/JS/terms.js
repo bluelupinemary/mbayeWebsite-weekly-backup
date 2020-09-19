@@ -2,6 +2,7 @@ var message;
 var err_message;
 var terms_labels = [ "TERMS OF SERVICES", "COPYRIGHT CLAIMS" ,"PRIVACY POLICY", "SRA"];
 var url = $('meta[name="url"]').attr('content');
+var index=0;
 // for showing message to turn to landscape 
   testOrientation();
 window.addEventListener("orientationchange", function(event) {
@@ -17,6 +18,60 @@ $(document).ready(function() {
     $(".terms_and_conditions").css({"display":'block'});
     $(".head-div .title").html('TERMS OF SERVICES')
    
+
+      
+    var elem = document.documentElement;
+    function openFullscreen() {
+        if (elem.mozRequestFullScreen) {  /* Firefox */
+        elem.mozRequestFullScreen(); 
+        contentDisplay();
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+        contentDisplay();
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+        contentDisplay();
+      }
+      else if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+        contentDisplay();
+      } 
+      else{
+      //alert("iphone")
+        contentDisplay();
+      }
+    
+    }
+    if(window.innerWidth < 991 ){
+    $(document).ready(()=>{
+        Swal.fire({
+                imageUrl: '../../front/icons/alert-icon.png',
+                imageWidth: 100,
+                imageHeight: 100,
+                html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+                padding: '15px',
+                background: 'rgba(8, 64, 147, 0.62)',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.value) {
+                    openFullscreen()
+                }
+            });
+        });
+    }
+    else  contentDisplay();
+    
+    function contentDisplay() { 
+            setTimeout(function(){
+              $(".page").css({'visibility':'visible'});
+              $(".page").addClass('animate-zoomIn-arm');
+              $('.page').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){ 
+              $(".page").removeClass('animate-zoomIn-arm');
+              $(".page").addClass('zoomIn-arm');
+              });
+              }, 1000
+              );
+        }
     // Write all the labels 
  
     var label_Prev=terms_labels[terms_labels.length-1];
@@ -26,11 +81,42 @@ $(document).ready(function() {
   });
 
 $(".prev" ).click(function(){ 
-    prev();
+    prev_terms();
 });
 $(".next" ).click(function(){
-    next();
+    next_terms();
 });
+
+function next_terms() {
+  var len=terms_labels.length;
+   index=index+1;
+   if(index==terms_labels.length)
+     index=0;
+  var previous = terms_labels[(index+len-1)%len];
+var next = terms_labels[(index+1)%len];
+var current = terms_labels[index];
+  $('.next_label').html(next);
+  $('.prev_label').html(previous);
+  change_page(current);
+ 
+}
+
+function prev_terms() {
+  var len=terms_labels.length;
+   index=index-1;
+   console.log("index"+index)
+   if(index==terms_labels.length)
+     index=0;
+  else if(index<0)
+     index=terms_labels.length-1;
+
+  var previous = terms_labels[(index+len-1)%len];
+var next = terms_labels[(index+1)%len];
+var current = terms_labels[index];
+  $('.next_label').html(next);
+  $('.prev_label').html(previous);
+  change_page(current);
+}
 function prev(){
         var prev_val = document.getElementById( "prev_no" ).value; 
         var prev = document.getElementById( "no" ).value;
@@ -48,7 +134,8 @@ function prev(){
          
         document.getElementById( "prev_no" ).value = prev_val;
         var label=terms_labels[prev_val-1];
-        
+        console.log(terms_labels);
+        console.log("prev_val"+prev_val)
         $('.prev_label').html(label);
         document.getElementById( "no" ).value = prev;
         var type= terms_labels[prev]; 
@@ -67,15 +154,21 @@ function next(){
         {
           next_val = 0;
         }
+        console.log(terms_labels);
+        console.log("next_val"+next_val)
         document.getElementById( "next_no" ).value = next_val;
         var label=terms_labels[next_val];
         var prev_val=next-1;
+        console.log("next"+next)
+        console.log("prev_val"+prev_val)
         if(prev_val<= -1)
           prev_val=terms_labels.length-1;
-
+        // else if(prev_val==0)
+        //   prev_val=terms_labels.length
+        console.log("prev_val"+prev_val)
         var label_previous=terms_labels[prev_val]; 
 
-
+        console.log(label_previous)
         $('.next_label').html(label);
         $('.prev_label').html(label_previous);
         document.getElementById( "no" ).value = next;
@@ -83,8 +176,8 @@ function next(){
         change_page(type);
 }
 
-$('.home-button').click(function() {
-  window.location.href = "{{URL::to('')}}"
+$('.home-div').click(function() {
+  window.location.href = url;
 });
 
 $('.back-button').click(function() {
@@ -158,11 +251,11 @@ function testOrientation() {
 $('.start-div').click( function() {
     $(this).hide();
     
-    $(".astronautarm-img").addClass('animate-zoomIn-arm');
+    // $(".astronautarm-img").addClass('animate-zoomIn-arm');
 
     $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
         $(".astronautarm-img").removeClass('animate-zoomIn-arm');
-        $(".astronautarm-img").addClass('zoomIn-arm');
+        // $(".astronautarm-img").addClass('zoomIn-arm');
         // $(".blog-btn").delay(1000).animate({opacity:1},100);
         $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a').css('pointer-events', 'auto');
         $('.blog-btn').addClass('active');
@@ -201,6 +294,41 @@ $('button.fullscreen').toggle(
     }
 );
 
+function next_terms_full() {
+  var len=terms_labels.length;
+   index=index+1;
+   if(index==terms_labels.length)
+     index=0;
+  var previous = terms_labels[(index+len-1)%len];
+var next = terms_labels[(index+1)%len];
+var current = terms_labels[index];
+  $('.next_label_full ').html(next);
+  $('.prev_label_full ').html(previous);
+  $('.next_label').html(next);
+  $('.prev_label').html(previous);
+  change_page_for_full(current);
+  change_page(current);
+ 
+}
+
+function prev_terms_full() {
+  var len=terms_labels.length;
+   index=index-1;
+   if(index==terms_labels.length)
+     index=0;
+  else if(index<0)
+     index=terms_labels.length-1;
+
+  var previous = terms_labels[(index+len-1)%len];
+var next = terms_labels[(index+1)%len];
+var current = terms_labels[index];
+  $('.next_label_full ').html(next);
+  $('.prev_label_full ').html(previous);
+  $('.next_label').html(next);
+  $('.prev_label').html(previous);
+  change_page_for_full(current);
+  change_page(current);
+}
 function change_page_for_full(type){
   $(".terms_and_conditions_full").css({"display":'none'});
   $(".privacy_policy_full").css({"display":'none'});

@@ -152,7 +152,6 @@ function load_3D_mesh(){
                 rfoot_obj = result.meshes[0];
                 rfoot_obj.checkCollisions = true;
                 rfoot_meshes = result.meshes;
-               f
               
 
                 result.meshes.forEach(function(m) {

@@ -50,10 +50,11 @@
                         <div class="container">
                             <div class="front" style="background-image: url({{asset('storage/img/blog/'.$blog->getFeaturedImage())}})">
                                 <div class="inner">
-                                    <p class="blog-name">{{$blog->name}}</p>
-                                    <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
                                     <span class="blog-status {{($blog->status == 'Published' ? 'published' : 'draft')}}">{{$blog->status}}</span>
-                                    <span>
+                                    <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
+                                    
+                                    <p class="blog-name">{{$blog->name}}</p>
+                                    <span  class="blog-tags">
                                         <ul class="tags">
                                             @foreach($blog->getFirstTwoTags() as $tag)
                                                 <li class="tag"><i class="fas fa-tag"></i> {{$tag->name}}</li>
@@ -82,16 +83,20 @@
                     @php
                         if($blog->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
                             $blog->blog = $blog->general_blog;
+                            $img_storage = 'storage/img/general_blogs/';
+                        } else {
+                            $img_storage = 'storage/img/blog/';
                         }
                     @endphp
                     <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
                         <div class="container">
-                            <div class="front shared-blog" style="background-image: url({{asset('storage/img/blog/'.$blog->blog->getFeaturedImage())}})">
+                            <div class="front shared-blog" style="background-image: url({{asset($img_storage.''.$blog->blog->getFeaturedImage())}})">
                                 <div class="inner">
-                                    <p class="blog-name">{{$blog->blog->name}}</p>
-                                    <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
                                     <span class="blog-status shared">Shared</span>
-                                    <span>
+                                    <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
+                                    
+                                    <p class="blog-name">{{$blog->blog->name}}</p>
+                                    <span class="blog-tags">
                                         <ul class="tags">
                                             @foreach($blog->getFirstTwoTags() as $tag)
                                                 <li class="tag"><i class="fas fa-tag"></i> {{$tag->name}}</li>

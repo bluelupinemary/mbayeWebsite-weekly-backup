@@ -1,5 +1,5 @@
 .blog-buttons {
-    bottom: -50%;
+    /* bottom: -50%; */
 }
 
 .nearly-expired {
@@ -29,6 +29,6 @@
 }
 
 .front .inner .blog-date, .front .inner .blog-status {
-    top: -55%;
+    /* top: -55%; */
 }
 

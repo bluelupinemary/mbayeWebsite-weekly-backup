@@ -15,6 +15,7 @@ use App\Models\Access\User\Traits\Relationship\UserRelationship;
 use App\Models\Friendships\Friendship;
 use App\Models\Friendships\Status;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 /**
  * Class User.
@@ -155,4 +156,10 @@ class User extends Authenticatable
             return $friendship->updated_at;
         }
     }
+    
+            public function getAgeAttribute()
+        {
+            return Carbon::parse($this->attributes['dob'])->age;
+        }
+
 }

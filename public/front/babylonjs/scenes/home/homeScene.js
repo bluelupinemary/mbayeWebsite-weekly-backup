@@ -29,22 +29,25 @@ var sun;
 
 //define constants for zoom in/out limits
 const LOWER_RADIUS_VAL = 1;                                         //zoom in limit                       
-const UPPER_RADIUS_VAL = 2000;                                      //zoom out limit
-var isHomeCounterReady = false;
+const UPPER_RADIUS_VAL = 3000;                                      //zoom out limit
+var isHomeReady = false;
 
 let theCurrRadius;
 let isViewActive = false;
 
 let charImgMap = new Map([
     //key, val[position, alpha, beta, radius]
-    
+
     ['InitialView',[{x: 0, y: 0, z: 0},2.4706,1.2283, 1400]],
     ['Ruru',[{x:-971,y:2069, z:319},2.3422,1.4107,0.1]],
     ['Solar',[{x:-1977,y:-1229, z:1172},2.4532,1.2013,0.1]],
-    ['Ally',[{x:-468,y:1595, z:457},4.2650,1.4635,0.1]],
+    ['Ally',[{x:-224,y:1385, z:1049},4.2803,1.4711,0.1]],
     ['William',[{x:654,y:2087, z:660},3.1721,1.5344,0.1]],
     ['Villa',[{x:-611,y:-2385, z:250},4.7874,1.3864,80]],
-    ['Bruce',[{x:-992,y:-1331, z:-1211},0.06215,1.4707,0.1]]
+    ['Bruce',[{x:-992,y:-1331, z:-1211},0.06215,1.4707,0.1]],
+    ['Trevor',[{x:-2094,y:1452, z:-1350},1.0995,1.5559,0.1]],
+    ['Manny',[{x:2390,y:-763, z:529},4.387,1.5818,0.1]],
+
 ]);
 
 
@@ -97,10 +100,11 @@ function create_init_camera(){
     //for the right mouse button panning function; ;0 -no panning, 1 - fastest panning
     camera.panningSensibility = 10; 
     camera.upperBetaLimit = 10;
-    camera.panningDistanceLimit = 2500;
+    camera.panningDistanceLimit = 3000;
     camera.attachControl(canvas,true);
     camera.pinchPrecision = 1;
     homeScene.activeCamera = camera;
+    camera.maxZ = 20000;
     return camera;
 }//end of create camera function
                    
@@ -125,7 +129,7 @@ function create_init_light(){
 }//end of create earth light function
 
 function create_init_skybox(){ 
-    var skybox = BABYLON.MeshBuilder.CreateBox("initSkybox", {size:8500.0}, homeScene);
+    var skybox = BABYLON.MeshBuilder.CreateBox("initSkybox", {size:15000.0}, homeScene);
    
     skybox.position = new BABYLON.Vector3(942,-500,-1500);
 
@@ -156,37 +160,6 @@ function create_init_skybox(){
 
 }//end of create skybox function
 
-function create_vr_scene(){ 
-    var skybox = BABYLON.MeshBuilder.CreateBox("designSkybox", {size:200.0}, homeScene);
-            skybox.backFaceCulling = false;
-            skybox.isPickable = false;
-
-            skybox.position = new BABYLON.Vector3(0,-300,0);
-            skybox.scaling = new BABYLON.Vector3(1,1,-1);
-
-            var skyboxMatl = new BABYLON.StandardMaterial("skyboxMatl", homeScene);
-            // skyboxMatl.backFaceCulling = false;
-
-              var files = [   
-              "finalSkybox/vr/px.jpg",   
-              "finalSkybox/vr/py.jpg",   
-              "finalSkybox/vr/pz.jpg",   
-              "finalSkybox/vr/nx.jpg",              
-              "finalSkybox/vr/ny.jpg",   
-              "finalSkybox/vr/nz.jpg",    
-              ];
-
-
-            skyboxMatl.reflectionTexture = new BABYLON.CubeTexture.CreateFromImages(files, homeScene);
-            skyboxMatl.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-            skyboxMatl.disableLighting = true;
-            skyboxMatl.specular = new BABYLON.Vector3(0,0,0);
-            skybox.material = skyboxMatl;
-    // skyboxMaterial.freeze();
-    // skybox.freezeWorldMatrix();
-    // enable_home_gizmo(skybox);
-
-}//end of create skybox function
 
 var mbayeInit_object;
 var mbayeInitTask;
@@ -384,22 +357,11 @@ function add_video_to_mesh(vidNo){
         videoTexture.video.pause();
       
         theVideoMatl = mat;
-
-        // let agreeMatl = new BABYLON.StandardMaterial("agreeMatl", homeScene);
-        // agreeMatl.diffuseTexture = new BABYLON.Texture("front/textures/home/information.png", homeScene);
-        // agreeMatl.diffuseTexture.hasAlpha = true;
-        // agreeMatl.backFaceCulling = false;
-        // agreeMatl.invertX = true;
-        // agreeCameraUseDisc.material = agreeMatl;
     }
-    
-    // if(vidNo==2){ 
-    //     videoTexture.video.play();
-        
-    // }
-    
-   
-   
+
+    // videoTexture.video.play();
+
+
    
 }
 
@@ -643,8 +605,8 @@ var onOverPlanet =(meshEvent)=>{
             sty.color = "#00BFFF";
             sty.fontFamily = "Courgette-Regular";
             sty.fontSize = "1.5em";
-            sty.top = homeScene.pointerY + "px";
-            sty.left = (homeScene.pointerX) + "px";
+            sty.top = (homeScene.pointerY - 50) + "px";
+            sty.left = (homeScene.pointerX +50) + "px";
             sty.cursor = "pointer";
 
             document.body.appendChild(charTooltip);
@@ -655,10 +617,7 @@ var onOverPlanet =(meshEvent)=>{
     meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.1,origScaling.y*1.1,origScaling.z*1.1);
     if(meshEvent.source.name === "homeVenus"){
         venusInfoTxt.isVisible = true;
-    }
-  
-
-    
+    } 
 };
 
 
@@ -671,9 +630,7 @@ var onOutPlanet =(meshEvent)=>{
     } 
     meshEvent.source.scaling = origScaling;
     venusInfoTxt.isVisible = false;
-    
-   
-    
+  
 };
 
 
@@ -878,7 +835,16 @@ function create_characters(){
     let william = init_char_image("William","williamHome.png",790,390,{x: 2170, y: 1837, z: 1348},{x: 0.1465, y:-0.4993, z: -0.3724, w: -0.7674});
     init_scrollable_viewer("WilliamText","williamText.png",1500,850,{x: 2566, y: 1981, z: 464},{x:-0.0046,  y:-0.6962, z:0.0071, w:-0.7173});
     add_action_mgr(william);
-    // enable_home_gizmo(william);
+
+    let trevor = init_char_image("Trevor","trevorHome.png",334,646,{x: -2268, y: 1500, z: -3050},{x:-0.0083, y:0.9959, z:-0.0414, w: -0.0674});
+    init_scrollable_viewer("TrevorText","trevorText.png",1500,850,{x: -3003, y: 1396, z: -2762},{x: -0.0018, y:0.9719, z:-0.0066, w: -0.2328});
+    add_action_mgr(trevor);
+    
+    let manny = init_char_image("Manny","mannyHome.png",566,714,{x: 2157, y: -609, z: 2277},{x: -0.0111, y: -0.0485, z: 0.0164, w: 0.9976});
+    init_scrollable_viewer("MannyText","mannyText.png",1500,850,{x: 3026, y: -794, z: 2032},{x:0.0068,  y:-0.1676, z:-0.0032, w:-0.9851});
+    add_action_mgr(manny);
+   
+    
 }
 
 function init_char_image(name,imgName,w,h,pos,rot){
@@ -917,9 +883,10 @@ function init_scrollable_viewer(name,imgName,w,h,pos,rot){
     sv.height = 1;
     sv.barColor = "green";
 
-    sv.thumbLength = 0.1;
+    sv.thumbLength = 0.3;
     sv.thumbHeight = 0.1;
     sv.verticalBar.border = 0;
+    sv.barSize = 40;
 
 
     sv.onPointerDownObservable.add(function() {
@@ -934,7 +901,10 @@ function init_scrollable_viewer(name,imgName,w,h,pos,rot){
     var rc = new BABYLON.GUI.Rectangle();
     rc.thickness = 0;
     rc.width = 1;
-    rc.height = 7;
+    
+    if(name === "TrevorText") rc.height = 15;
+    else if(name === "MannyText") rc.height = 18;
+    else rc.height = 7;
     rc.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     rc.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
     rc.isPickable = false;
@@ -949,9 +919,6 @@ function init_scrollable_viewer(name,imgName,w,h,pos,rot){
     return plane;
 }
 
-
-
-    
 
 
 
@@ -1025,25 +992,16 @@ function add_home_mouse_listener(){
             if(pickinfo.hit){
               
                 let theInitMesh = pickinfo.pickedMesh;
-                console.log("clicked:", theInitMesh.name, theInitMesh.position, theInitMesh.rotationQuaternion);
+                console.log("clicked:", theInitMesh, theInitMesh.position, theInitMesh.rotationQuaternion);
                 console.log("camera:", initCamera.position, initCamera.alpha, initCamera.beta , initCamera.radius);
                 
-                if(theInitMesh.name === "a"){
-                    agreeCameraUseDisc.isVisible = false;
-                    initCamera.attachControl(canvas,true);
-                    setTimeout(function(){
-                         videoTexture.video.play();
-                    },1000);
+                if(theInitMesh.name === "top" ) videoTexture.video.play();
 
-                    setTimeout(function(){
-                        isAssignedWebcam = true;
-                       
-                    },5000);
-                    page_under_development
-                }else if(theInitMesh.name === "homeEarth"){ 
+
+                if(theInitMesh.name === "homeEarth"){ 
                     window.location.href = "participateMbaye";   
                 }else if(theInitMesh.name === "homeMercury"){ 
-                    window.location.href = "listusers";   
+                    window.location.href = "blogviewMembers";   
                 }else if(theInitMesh.name === "homeMars"){    
                     window.location.href = "captainMbaye";
                 }else if(theInitMesh.name === "homeNeptune"){
@@ -1091,7 +1049,7 @@ function add_home_mouse_listener(){
                     initCamera.beta = val[2];
                     initCamera.radius = val[3];
                    
-                }
+                }//end of if hit is true
 
             
            }
@@ -1124,9 +1082,6 @@ function add_home_mouse_listener(){
 
 
 
-
-   
-
             //create the game engine
 var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true },true);
 //create the scene
@@ -1141,22 +1096,23 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
     document.getElementById("loadingScreenDiv").remove();
+    // document.getElementById("loadingScreenOverlay").style.display = "block";
 
-    isHomeCounterReady = true;
-    
-  
-    if(videoTexture){
-        videoTexture.video.play();
-    }
-   
-    
+    isHomeReady = true;
    
     // startTime = new Date();
+    if(videoTexture){
+        videoTexture.video.play();
+        // setTimeout(function(){
+        //     videoTexture.video.muted = false;
+        // },200);
+    }
 
     engine.runRenderLoop(function () {
-
+        
         if(theScene){
             theScene.render();
+            
      
         }    
     }); 
@@ -1173,42 +1129,18 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 
-// let isFirstClick = false;
-// let isVideoSkipped = false;
+let isFirstClick = false;
+let isVideoSkipped = false;
 
-// $('#firstVideoOverlay').click(function() {
-//     if(!isIntroDone){
-//         $(this).hide();
-//         if(!isFirstClick){
-//                 $(".overlayTxt").removeAttr("id");
-//                 $(".overlayTxt").removeClass( "overlayTxt" ).addClass("glowOverlayTxt");
-//                 isFirstClick = true;
-//         }
-//     }
-// }); 
-
-// $( '#placeholderDiv').click(function() {
-//     if(!isIntroDone){
-//         $('#firstVideoOverlay').show();
-//     }
-//   });
-
-// $('#skipVideo').on('click', function(evt){
-//     add_video_to_mesh(2);
-//     isVideoSkipped = true;
-//     document.getElementById('firstVideoOverlay').remove();
-//     document.getElementById('placeholderDiv').remove();
-// });   
-
-// let isOverlayRemoved = false;
-// $('#hideOverlay').on('click', function(evt){
-//     document.getElementById('firstVideoOverlay').remove();
-//     document.getElementById('placeholderDiv').remove();
-//     isOverlayRemoved = true;
-// }); 
+$('#loadingScreenOverlay').on('click',function() {
+    if(videoTexture && isHomeReady){
+        $(this).hide();
+        videoTexture.video.play();
+    }
+}); 
 
 let isVideoPlaying = true;
-$(document).keydown(function(event) { 
+$(document).on('keydown',function(event) { 
   
     if(event.key===" "){
         console.log('You pressed down space'); 
@@ -1227,3 +1159,48 @@ $(document).keydown(function(event) {
     }
 }); 
 
+
+/*======================================================== TEST THE DEVICE'S ORIENTATION =====================================================*/
+testOrientation();
+
+window.addEventListener("orientationchange", function(event) {
+    testOrientation();
+}, false); 
+
+window.addEventListener("resize", function(event) {
+    testOrientation();
+}, false);
+
+
+function testOrientation() {
+    document.getElementById('block_land').style.display = (screen.width > screen.height) ? 'none' : 'block';
+
+    //above condition is not working sometimes then this condition will work
+    if (window.innerHeight < window.innerWidth) {
+        document.getElementById('block_land').style.display = 'none';
+    } else {
+        document.getElementById('block_land').style.display = 'block';
+    }
+}
+
+
+/*======================================================== CHECK IF FULLSCREEN FEATURE IS ACTIVATABLE =====================================================*/
+var elem = document.documentElement;
+function openFullscreen() {
+    if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+    }else if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    }
+}
+
+$('#fullscreenIcon').on('click',function(){
+    openFullscreen();
+    $(this).hide();
+});
+
+console.log(elem);

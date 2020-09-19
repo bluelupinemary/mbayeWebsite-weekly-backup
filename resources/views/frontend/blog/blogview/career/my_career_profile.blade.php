@@ -140,7 +140,7 @@
 </div>
 <div class="education">
     <label class="titile">Education</label><br>
-    <label class="lbl_titile">Primary : </label> <span class="primary_ed spn_value"></span><br>
+    <label class="lbl_titile">Primary : </label><span class="primary_ed spn_value"></span><br>
     <label class="lbl_titile">Secondary : </label> <span class="secondary_ed spn_value"></span><br>
     <label class="lbl_titile">Undergraduate: </label> <span class="undergraduate_ed spn_value"></span><br>
     <label class="lbl_titile">Graduate: </label> <span class=" graduate_ed spn_value"></span><br>
@@ -245,7 +245,7 @@
                     var dob=data['User_details'].dob;
 
                     var date = new Date(dob);
-                    dob=moment(date).format('MMMM D Y');
+                    dob=moment(date).format('MMMM-D-Y');
                     var address=data['User_details'].address;
                     var primary_contact=data['User_details'].mobile_number;
                     var secondary_contact=data['JobSeekerProfile_details'].secondary_mobile_number;

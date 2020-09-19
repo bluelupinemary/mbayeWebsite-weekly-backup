@@ -3,19 +3,11 @@
      <div class="collage-editor">
             <button class="cancel-btn" id="cancel-btn" type="button">Cancel</button>
             <div class="canvas">
-                <!-- Overlay for start message "upload images to start"-->
-                <div class="start-message">
-                    <p>
-                        <label for="startImageLoader" class="custom-file-upload">
-                            <i class="far fa-images"></i> Upload image(s) to start
-                        </label>
-                    </p>
-                    <input type="file" name="image" id="startImageLoader" accept="image/x-png,image/jpeg" multiple>
-                </div>
                  <!-- canvas portion of the image editor-->
                 <canvas id="c"></canvas>
             </div>
-           
+
+            <!--The toolbar of the image editor-->
              <div class="controls">
                 <button id="undo" class="undo" disabled data-toggle="tooltip" data-placement="top" title="Undo"><i class="fas fa-undo"></i></button>
                 <button id="redo" class="redo" disabled data-toggle="tooltip" data-placement="top" title="Redo"><i class="fas fa-redo"></i></button>
@@ -25,15 +17,17 @@
                 <button class="original-size" data-toggle="tooltip" data-placement="top" title="100%"><i class="fas fa-expand-arrows-alt"></i></button>
                 <button class="bring-forward" data-toggle="tooltip" data-placement="top" title="Bring Forward"></button>
                 <button class="send-backward" data-toggle="tooltip" data-placement="top" title="Send Backward"></button>
-                <button id="add_shapes" class="add_shapes" data-toggle="tooltip" data-placement="top" title="Add Shapes"><i class="fas fa-shapes"></i></button>
-                <button id="add_text" class="add_text" data-toggle="tooltip" data-placement="top" title="Add Text"><i class="fas fa-font"></i></button>
+                <button id="add_shapes" class="add_shapes" data-toggle="tooltip" data-placement="top" title="Shapes Tool"><i class="fas fa-shapes"></i></button>
+                <button id="add_text" class="add_text" data-toggle="tooltip" data-placement="top" title="Texts Tool"><i class="fas fa-font"></i></button>
                 <button data-toggle="tooltip" data-placement="top" title="Upload image(s)"><label for="imgLoader" class="custom-file-upload">
                     <i class="far fa-images"></i></label>
                 </button>
                 <input type="file" name="image" id="imgLoader" accept="image/x-png,image/jpeg" multiple>
+                <button id="cropImage" class="cropImage" data-target="#cropperModal" data-toggle="modal"><i class="fa fa-crop" data-toggle="tooltip" data-placement="top" title="Crop"></i></button> 
                 <button class="remove_object" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></button>  
                 <button class="save" id="saveImg" disabled data-toggle="tooltip" data-placement="top" title="Save"><i class="fas fa-save"></i></button>
-                <button class="download" disabled data-toggle="tooltip" data-placement="top" title="Download"><i class="fas fa-download"></i></button>                       
+                <button class="download" disabled data-toggle="tooltip" data-placement="top" title="Download"><i class="fas fa-download"></i></button>
+                <button id="open_tuiEditor" class="open_tuiEditor" data-toggle="tooltip" data-placement="top" title="Open in 2nd Editor"><i class="fas fa-link"></i></button>                       
                 
             </div>
             <!--end of the canvas toolbar-->
@@ -197,7 +191,7 @@
                         Color
                     </div>
                     <div class="font-picker">
-                        <input id="font-picker" type="text">
+                        <input id="font-picker" type="text"><br/>
                         Font Style
                     </div>
                 </div>
@@ -208,14 +202,10 @@
             <!--Instructions overlay -->
             <div class="instructions" id="instructionsDiv">
                 <span class="instruction-close-btn"><i class="far fa-times-circle"></i></span>
-                <div class="instruction instruction-1" data-text-div="instruction-text-1"></div>
-                <div class="instruction instruction-2" data-text-div="instruction-text-2"></div>
                 <div class="instruction instruction-3" data-text-div="instruction-text-3"></div>
                 <div class="instruction instruction-4" data-text-div="instruction-text-4"></div>
                 <div class="instruction instruction-5" data-text-div="instruction-text-5"></div>
 
-                <div class="instruction-text instruction-text-1">Left controls</div>
-                <div class="instruction-text instruction-text-2">Right controls</div>
                 <div class="instruction-text instruction-text-3">Canvas controls</div>
                 <div class="instruction-text instruction-text-4">Canvas</div>
                 <div class="instruction-text instruction-text-5">Cancel</div>
@@ -224,13 +214,41 @@
             <div class="help">
                 <a class=""><i class="fa fa-question-circle icon-help" aria-hidden="true"></i></a>
             </div>
+            <!--End of Instructions overlay-->
+
+
+            <!--Start of image cropper modal-->
+                 <!-- Modal -->
+            <div class="modal" id="cropperModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Cropper</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="img-container">
+                        <img id="cropperImage" src="" alt="Picture">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <button type="button" id="saveCroppedImg" data-dismiss="modal" class="btn btn-success">Save</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of cropper-->
     </div>
 
 </template>
-<script>
 
+<script>
 export default {
     props: {
+        edit_blog: Number
     },
     components: {
     },
@@ -245,10 +263,7 @@ export default {
        
     },
     mounted() {
-
- 
-
-        var $this = this;
+        
 
         var url = $('meta[name="url"]').attr('content');
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -258,6 +273,9 @@ export default {
         let imagesMap = new Map();              //data structure for the images added
         let shapesMap = new Map();              //data structure for the shapes added
         let textMap = new Map();                //data structure for the texts added
+        let imgCnt = 0;
+        let shapeCnt = 0;
+        let textCnt = 0;
  
         
         /*===========================FUNCTIONS RELATED TO THE EDITOR=======================================*/
@@ -274,21 +292,17 @@ export default {
 
         
 
-
-        var featured_image_src;
         //load the image when the user selects from the page where the component is used
-        document.querySelector("#featured-image-preview").addEventListener('load', function() {
+        var featured_image_src;
+        document.querySelector("#featured-image-previewimg").addEventListener('load', function() {
+            //only load the image to the canvas if the user has chosen a new image
             if(isNewImg){
-                    featured_image_src = document.querySelector("#featured-image-preview").getAttribute("src");
-                    canvasOperations.loadFromUrl();
+                featured_image_src = document.querySelector("#featured-image-previewimg").getAttribute("src");
+                canvasOperations.loadFromUrl();
             }
             
         });
-
-       
-
-        
-
+        //function to clear the canvas if new image is loaded
         var canvasOperations = {
             loadFromUrl : function(){
                 if(imagesMap.size > 0){
@@ -300,7 +314,7 @@ export default {
                 }
             }
         }
-
+        //function to add the featured image from the page component to the canvas
         function addFeaturedImage(){
             //create the image here
             var imgObj = new Image();
@@ -316,9 +330,9 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false,
-                    name:"img"+(imagesMap.size+1),                          
+                    name:"img"+(imgCnt++),                          
                 });
-                image.scaleToWidth(canvas.getWidth()/6);
+                image.scaleToWidth(canvas.getWidth()/4);
                 canvas.add(image).centerObject(image);
                 imagesMap.set(image.name,image);
                 canvas.renderAll();
@@ -327,10 +341,7 @@ export default {
         }
 
 
-
-        // save initial state
-        // save();
-        $("#main").hide();
+        //=========================================FUNCTIONS RELATED TO MOUSE EVENTS==========================================
         // register event listener for user's actions
         canvas.on('object:modified', function() {
             save();
@@ -340,7 +351,7 @@ export default {
         //function to show DIV of text styles selector when text is selected
         canvas.on('selection:created', function() {
             if(canvas.getActiveObject().get('type')==="i-text"){
-                $("#text-styles").show();
+                $("#text-styles").hide();
                 $("#shape-select").hide();
                 $("#crop-options").hide();
             }
@@ -355,29 +366,28 @@ export default {
         
         //setup mouse events functions
         canvas.on({
-        'object:moving': onMoving,
-        'object:scaling': onScaling,
-        'object:rotating': onRotating,
-        'mouse:down': onSelected,
+            'object:moving': onMoving,
+            'object:scaling': onScaling,
+            'object:rotating': onRotating,
+            'mouse:down': onSelected,
         });  
 
 
-        //FUNCTIONS RELATED TO MOUSE EVENTS
+        
         let lastShapeSelected;
         let lastImgIntersected;
 
         //function to check if image intersects with shape and the image is in front of the shape
         function checkIntersectionWithShape(theImg){
-        // if(theImg.globalCompositeOperation === 'source-atop') theImg.set({globalCompositeOperation:'source-over'});
+        //check if the image intersects with any shape in the shapesMap
             for(const [key,val] of shapesMap.entries()){
                 if(theImg.intersectsWithObject(val)){
-                //if the image is in front of  a shape, set the image atop
-
-                theImg.set({globalCompositeOperation:'source-atop'});
-                return true;
-                 }
+                    //if the image is in front of  a shape, set the image atop
+                    theImg.set({globalCompositeOperation:'source-atop'});
+                    return true;
+                }
             }
-        return false;
+            return false;
         }
 
         //function to check if image intersects with shape and the image is at the back of the shape
@@ -385,14 +395,14 @@ export default {
         function checkIntersectionWithImg(theShape){
             for(const [key,val] of imagesMap.entries()){
                 if(theShape.intersectsWithObject(val)){
-                //if the shape is in front of the image
-                //set the image as active object
-                canvas.setActiveObject(val);        
-                val.set({globalCompositeOperation:'source-atop'});
-                theImgUnderShape = val;
-                return true;
+                    //if the shape is in front of the image
+                    //set the image as active object
+                    canvas.setActiveObject(val);        
+                    val.set({globalCompositeOperation:'source-atop'});
+                    theImgUnderShape = val;
+                    return true;
                 }else{
-               
+                    //else the shape is not intersecting with any image
                 }
             }  
         return false;
@@ -400,116 +410,119 @@ export default {
 
         //function to check if image intersects with text and the image is at the back of the text
         function checkIntersectionWithText(theTxt){
-        // if(theImg.globalCompositeOperation === 'source-atop') theImg.set({globalCompositeOperation:'source-over'});
             for(const [key,val] of imagesMap.entries()){
                 if(theTxt.intersectsWithObject(val)){
-                //if the image is in front of  a shape, set the image atop
-                canvas.bringToFront(theTxt);
+                    //if the image is in front of  a shape, set the image atop
+                    canvas.bringToFront(theTxt);
                 return true;
                 }
             }
-        return false;
+            return false;
         }
 
-        //function to check if image intersects with shape and the image is at the back of the shape
+        //function to check if text intersects with image
         let theTextUnderImg;
         function checkIntersectionWithBackText(theImg){
             for(const [key,val] of textMap.entries()){
                 if(theImg.intersectsWithObject(val)){
-                //if the shape is in front of the image    
-                canvas.bringToFront(val);
-                theTextUnderImg = val;
-                return true;
+                    //if the shape is in front of the image    
+                    canvas.bringToFront(val);
+                    theTextUnderImg = val;
+                    return true;
                 }else{
 
                 }
             }  
-        return false;
+            return false;
         }
+
+
+
 
         //function to check if object is on scaling
         function onScaling(options){
             //def scaling here
         }
 
-        //function to check if the image is not in front of any shape
+        //function that handles mouse movement event
         var isIntersecting = false;
         var objSelected;
         function onMoving(options){
             options.target.setCoords();
-
             //if the current selected is an image
             if(imagesMap.has(options.target.name)){
+                //check if image intersects with shape
                 let temp = checkIntersectionWithShape(options.target);
-                    //if the image is not in front of any shape
-                    if(!temp) options.target.set({globalCompositeOperation:'source-over'});
-                    
-                let temp_1 = checkIntersectionWithBackText(options.target);
-                    if(!temp_1){
-                    if(theTextUnderImg){
-                    canvas.bringToFront(theTextUnderImg);
-                    }
-                    }
-                }
+                //if the image is not in front of any shape ,set position as sourc over
+                if(!temp) options.target.set({globalCompositeOperation:'source-over'});
                 
-            else if(shapesMap.has(options.target.name)){
-                let temp = checkIntersectionWithImg(options.target);
-                    if(!temp){
-                    if(theImgUnderShape){
-                    theImgUnderShape.set({globalCompositeOperation:'source-over'});
-                    }
+                //check if text intersects with any image or shape
+                let temp_1 = checkIntersectionWithBackText(options.target);
+                //if text is not intersecting
+                if(!temp_1){
+                    if(theTextUnderImg){
+                        //bring the text to front
+                        canvas.bringToFront(theTextUnderImg);
                     }
                 }
-
-            //if the current selected is a text
-            else if(textMap.has(options.target.name)){
-                let temp = checkIntersectionWithText(options.target);
-                    //if the image is not in front of any shape
-                   
-                }  
+            //if the current moving object is a shape
+            }else if(shapesMap.has(options.target.name)){
+                //check if shape intersects with any image
+                let temp = checkIntersectionWithImg(options.target);
+                    //if the shape is not intersecting any image
+                    if(!temp){
+                        //if the image is under a shape
+                        if(theImgUnderShape){
+                            //set the image's position to source over
+                            theImgUnderShape.set({globalCompositeOperation:'source-over'});
+                        }
+                    }
+            }
         }
 
         //function to check if object is on rotating
         function onRotating(options){
         }
 
+        //if the no object is under the cursor on mouse click
         canvas.on('selection:cleared', function() {
-            // canvas.requestRenderAll();
-            // currShapeSelected = null;
             if(currTextSelected) currTextSelected = null;
             if(currShapeSelected) currShapeSelected = null;
         });
 
-        //function to check if object is on selected
+        //function to check if object is selected
         let currShapeSelected, currTextSelected;
         function onSelected(options){
+            //if there's an object under the pointer
             if(options.target){
-                
-
+                //if the object selected is a shape
                 if(shapesMap.has(options.target.name)){
+                    //set the stroke and color fill of the stroke slider components in the shape div
                     let width = Math.ceil(options.target.strokeWidth/2);
                     strokeVal.innerHTML = width+"";
                     strokeSlider.value = width+"";
                     shapeFill.value = options.target.fill;
                     shapeStroke.value = options.target.stroke;
-                    
-                    
                     currShapeSelected = options.target;
+                //if the current object selected is a text
                 }else if(textMap.has(options.target.name)){
                     currTextSelected = options.target;
                 }
-
+                //set the current select object to var
                 objSelected = options.target;
 
             }
         }
       
-        /*FUNCTIONS RELATED TO THE EDITOR TOOLBAR*/
-        //function to hide DIV of shape, text, crop divs of toolbar when x icon is clicked
-        $(".toolbar-close").on('click',function(){
-            $(this).parent().hide();
+        /*========================================FUNCTIONS RELATED TO THE EDITOR TOOLBAR================================*/
+        $("#open_tuiEditor").on('click',function(){
+            var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            document.querySelector("#featured-image-previewimg").src = image;
+            $("#tuiEditorModal").show();
+            $("#imageEditorModal").hide();
         });
-       
+
+        //toolbar toggle function for the shapes div
         let isShapeDivOpen = false;
         $("#add_shapes").on('click',function(){
             if(!isShapeDivOpen){
@@ -518,10 +531,10 @@ export default {
             }else{
                 $("#shape-select").hide();
             }
-
             isShapeDivOpen = !isShapeDivOpen;
         });
 
+        //toolbar toggle function for the text div
         let isTextDivOpen = false;
         $("#add_text").on('click',function(){
             if(!isTextDivOpen){
@@ -534,31 +547,38 @@ export default {
             isTextDivOpen = !isTextDivOpen;
         });
 
-         $("#addTxtBtn").on('click',function(){
+        //if the ADD TEXT button from text div is clicked
+        $("#addTxtBtn").on('click',function(){
              add_text();
         });
 
 
-         //if any of the shape is selected
+         //if any of the shape is selected, add the shape
         $("#circle, #triangle, #square, #rectangle, #diamond, #parallelogram, #ellipse, #trapezoid, #star, #pentagon, #hexagon, #heptagon,#octagon,#nonagon,#decagon,#bevel,#heart, #rabbet,#point,#message").on("click", function() {
             addShape(this.id);
         });
         
 
-         // undo and redo buttons
+        //if undo button is clicked, hide text and shape div if they are open and return canvas to previous state
         $('#undo').click(function() {
             $("#shape-select").hide();
             $("#text-styles").hide();
             replay(undo, redo, '#redo', this);
         });
+
+        //if redo button is clicked, hide text and shape div if they are open and return canvas to forward state
         $('#redo').click(function() {
             $("#shape-select").hide();
             $("#text-styles").hide();
             replay(redo, undo, '#undo', this);
         })
+
+        //if clear canvas button is clicked, hide text and shape div if they are open and remove all objects from canvas
         $('#clear_canvas').click(function() {
             $("#shape-select").hide();
             $("#text-styles").hide();
+
+            //ask the user if they really want to clear the canvas
             Swal.fire({
                 text: "Are you sure you want to reset the canvas?",
                 imageUrl: '../../front/icons/alert-icon.png',
@@ -583,7 +603,7 @@ export default {
             });
         });
 
-          //ZOOM IN / ZOOM OUT ICON IS CLICKED
+        //if zoom in button is clicked, hide text and shape div if they are open and zoom in the canvas 20% closer
         var scale = 1;
         $('.zoom-in').click(function() {
             $("#shape-select").hide();
@@ -592,19 +612,19 @@ export default {
             $('.canvas-container').css('transform', 'scale('+scale+')');
         });
 
+        //if zoom in button is clicked, hide text and shape div if they are open and zoom in the canvas 20% farther
         $('.zoom-out').click(function() {
             $("#shape-select").hide();
             $("#text-styles").hide();
-            console.log(scale);
             if(scale <= 0.2) {
                 scale = 0.2;
             } else if (scale > 0) {
                 scale -= 0.2;
             }
-            
             $('.canvas-container').css('transform', 'scale('+scale+')');
         });
         
+        //if 100% button is clicked, hide text and shape div if they are open and return canvas to original scale
         $('.original-size').click(function() {
             $("#shape-select").hide();
             $("#text-styles").hide();
@@ -612,7 +632,7 @@ export default {
             $('.canvas-container').css('transform', 'scale('+scale+')');
         });
 
-        //if download icon is clicked
+        //if download button is clicked, hide text and shape div if they are open and download the image to local dir
         $(".download").on("click", function(e) {
             $("#shape-select").hide();
             $("#text-styles").hide();
@@ -622,7 +642,6 @@ export default {
 
 
         //function to upload images to the editor
-        //document.getElementById('imgLoader').onchange = function handleImage(e) {
         document.querySelector('#imgLoader').onchange = function handleImage(e) {
             $('.start-message').hide();
             var files = this.files;
@@ -637,7 +656,6 @@ export default {
                         // start fabricJS stuff
                         
                         var image = new fabric.Image(imgObj);
-                     
                         image.set({
                             left: 0, 
                             top: 0, 
@@ -646,9 +664,9 @@ export default {
                             cornerColor: '#d6d6d6',
                             cornerSize: 10,
                             transparentCorners: false,
-                            name:"img"+(imagesMap.size+1),                          
+                            name:"img"+(imgCnt++),                          
                         });
-                        image.scaleToWidth(canvas.getWidth()/6);
+                        image.scaleToWidth(canvas.getWidth()/3);
                         canvas.add(image).centerObject(image);
                         imagesMap.set(image.name,image);
                         canvas.renderAll();
@@ -660,34 +678,38 @@ export default {
         }//end of when image loader is selected
 
 
-
-
-        //function when removing objects
+        //function when removing/deleting objects from the canvas
         $('.remove_object').click(function() {
             $("#shape-select").hide();
             $("#text-styles").hide();
             delete_object();
         });
 
+        //if delete button is pressed from keyboard
         $('body').keyup(function(e){
             if(e.keyCode == 46) {       
                 delete_object();
             }
         });
 
-
+        //if bring forward button is clicked, put the current object selected forward
         $('.bring-forward').click(function() {
             $("#shape-select").hide();
             $("#text-styles").hide();
             var currentObject = canvas.getActiveObject();
             canvas.bringToFront(currentObject);
+            canvas.renderAll();
+            save();
         });
 
+        //if bring forward button is clicked, put the current object selected forward
         $('.send-backward').click(function() {
             $("#shape-select").hide();
             $("#text-styles").hide();
             var currentObject = canvas.getActiveObject()
             canvas.sendToBack(currentObject);
+            canvas.renderAll();
+            save();
         });
 
         
@@ -699,24 +721,31 @@ export default {
                 theObj._objects.forEach(function(obj){
                     if(imagesMap.has(obj.name)){
                         imagesMap.delete(obj.name);
+                        imgCnt--;
                     }else if(shapesMap.has(obj.name)){
                         shapesMap.delete(obj.name);
+                        shapeCnt--;
                     }else if(textMap.has(obj.name)){
                         textMap.delete(obj.name);
+                        textCnt--;
                     }
                     canvas.remove(obj);
                     canvas.discardActiveObject().renderAll();
                     countObjects();
                     save();
+
                 });
             //only 1 object is selected
             }else{
                 if(imagesMap.has(theObj.name)){
                     imagesMap.delete(theObj.name);
+                    imgCnt--;
                 }else if(shapesMap.has(theObj.name)){
                     shapesMap.delete(theObj.name);
+                    shapeCnt--;
                 }else if(textMap.has(theObj.name)){
                     textMap.delete(theObj.name);
+                    textCnt--;
                 }
                 canvas.remove(theObj);
                 canvas.discardActiveObject().renderAll();
@@ -783,14 +812,6 @@ export default {
         }
 
        
-
-
-       
-
-
-
-
-
         //FUNCTIONS RELATED TO TEXTS
         //function to add text
         var text;
@@ -803,7 +824,7 @@ export default {
                 cache: false,
                 borderColor: '#d6d6d6',
                 cornerColor: '#d6d6d6',
-                name:"text"+(textMap.size+1),   
+                name:"text"+(textCnt++),   
             });
             text.scaleToWidth(canvas.getWidth()/5);
             canvas.add(text);
@@ -813,7 +834,7 @@ export default {
         }//eof function
 
         //if the text created is clicked
-       canvas.on("text:editing:entered", function (e) {
+        canvas.on("text:editing:entered", function (e) {
         var obj = canvas.getActiveObject();
             if(obj.text === 'Click here to edit text'){
                 obj.text = "";
@@ -835,10 +856,8 @@ export default {
             } 
         }); 
 
-        // function to change the font style
+        //function to change the font style
         function applyFont(font) {
-            console.log('You selected font: ' + font);
-
             // Replace + signs with spaces for css
             font = font.replace(/\+/g, ' ');
 
@@ -856,13 +875,12 @@ export default {
             }
         }
        
+       //function to change the font style
         $('#font-picker').on('change',function(){
             let theFont = $('#font-picker').val();
             applyFont(theFont);
            
         });
-
-
         
         //function to change the font color
         $('#text-color').on('input',function(){
@@ -888,7 +906,7 @@ export default {
                     top: 175,
                     borderColor: '#d6d6d6',
                     cornerColor: '#d6d6d6',
-                    name:"shape"+(shapesMap.size+1),  
+                    name:"shape"+(shapeCnt++),  
                 });  
             }else if(shape==='triangle'){
                 var theShape = new fabric.Triangle({
@@ -901,7 +919,7 @@ export default {
                     fill: '#DDD',
                     borderColor: '#d6d6d6',
                     cornerColor: '#d6d6d6',
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
                 });
 
             }else if(shape==='square'){
@@ -915,7 +933,7 @@ export default {
                     fill: '#DDD',
                     borderColor: '#d6d6d6',
                     cornerColor: '#d6d6d6',
-                    name:"shape"+(shapesMap.size+1), 
+                    name:"shape"+(shapeCnt++), 
                 });
             }else if(shape==='rectangle'){
                 var theShape = new fabric.Rect({
@@ -928,7 +946,7 @@ export default {
                     fill: '#DDD',
                     borderColor: '#d6d6d6',
                     cornerColor: '#d6d6d6',
-                    name:"shape"+(shapesMap.size+1), 
+                    name:"shape"+(shapeCnt++), 
                 });
             }else if(shape==='diamond'){
                 var theShape = new fabric.Polygon([
@@ -951,7 +969,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),         
+                    name:"shape"+(shapeCnt++),         
                 });
 
             }else if(shape==='parallelogram'){
@@ -975,7 +993,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
 
@@ -996,7 +1014,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),  
+                    name:"shape"+(shapeCnt++),  
                 }); 
             }else if(shape==='trapezoid'){
                 var theShape = new fabric.Polygon([
@@ -1019,7 +1037,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='star'){
@@ -1049,7 +1067,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='pentagon'){
@@ -1074,7 +1092,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='hexagon'){
@@ -1100,7 +1118,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='heptagon'){
@@ -1127,7 +1145,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='octagon'){
@@ -1155,7 +1173,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='nonagon'){
@@ -1184,7 +1202,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='decagon'){
@@ -1214,7 +1232,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='bevel'){
@@ -1242,7 +1260,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='heart'){
@@ -1270,7 +1288,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false,
-                    name:"shape"+(shapesMap.size+1),     
+                    name:"shape"+(shapeCnt++),     
                 });
                     
             }else if(shape==='rabbet'){
@@ -1302,7 +1320,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='point'){
@@ -1327,7 +1345,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
 
@@ -1354,7 +1372,7 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }else if(shape==='message'){
@@ -1381,11 +1399,11 @@ export default {
                     cornerColor: '#d6d6d6',
                     cornerSize: 10,
                     transparentCorners: false, 
-                    name:"shape"+(shapesMap.size+1),    
+                    name:"shape"+(shapeCnt++),    
 
                 });
             }
-                canvas.add(theShape);
+                canvas.add(theShape).centerObject(theShape);
                 canvas.sendToBack(theShape);
                 canvas.renderAll();
                 save();
@@ -1429,7 +1447,7 @@ export default {
         // SAVE ICON IS CLICKED
         $("#saveImg").click(function(){
             var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            document.querySelector("#featured-image-preview").src = image;
+            document.querySelector("#featured-image-previewimg").src = image;
             
             document.querySelector('#imageEditorModal').style.display = 'none';
             $('#page-content').show();        
@@ -1491,13 +1509,88 @@ export default {
                 $('.'+text_div).hide();
             }
         );
+
+
+        var cropBoxData;
+        var canvasData;
+        var cropper;
+        var theImgBeingCropped;
+        $('#cropImage').on('click',function() {
+            let theObj = canvas.getActiveObject();
+            if(imagesMap.has(theObj.name)){
+                var image = theObj.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                theImgBeingCropped = theObj;
+                document.querySelector("#cropperImage").src = image;
+                
+            }
+            
+        }); //end of cropImage btn
+
+        $('#saveCroppedImg').on('click',function() {
+            if(cropper){ 
+                let cropperCanvas = cropper.getCroppedCanvas();
+                let theImg = cropperCanvas.toDataURL();
+                replaceWithCroppedImage(theImg);
+            }
+        }); //end of saveImg btn
+
+
+        $('#cropperModal').on('shown.bs.modal', function () {
+            var theImage = document.getElementById('cropperImage');
+            
+            cropper = new Cropper(theImage, {
+                    autoCropArea: 0.5,
+                    ready: function () {
+                        //Should set crop box data first here
+                        cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
+                    }
+                    });
+            });
+
+        $('#cropperModal').on('hidden.bs.modal', function () {
+            cropBoxData = cropper.getCropBoxData();
+            canvasData = cropper.getCanvasData();
+            cropper.destroy();
+        });
+
+        function replaceWithCroppedImage(image_src){
+            //create the image here
+           
+            var imgObj = new Image();
+            imgObj.src = image_src;
+            imgObj.onload = function () {
+                var image = new fabric.Image(imgObj);
+                
+                image.set({
+                    left: 0, 
+                    top: 0, 
+                    angle: 0, 
+                    borderColor: '#d6d6d6',
+                    cornerColor: '#d6d6d6',
+                    cornerSize: 10,
+                    transparentCorners: false,
+                    name:"img"+(imgCnt++),                       
+                });
+                canvas.add(image).centerObject(image);
+                imagesMap.set(image.name,image);
+                canvas.renderAll();
+                save();
+            }
+
+           
+
+            delete_object();
+
+            
+        }
+
+
         
     }//end of mount
 }
 </script>
 
 <style scoped>
-
 
 
             

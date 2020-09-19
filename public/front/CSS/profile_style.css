@@ -1,4 +1,55 @@
 
+.div_container{
+  display:none;
+}
+
+.swal2-popup {
+  box-shadow: 0px 0px 20px #17a2b8;
+  /* width: 27vw !important; */
+  padding: 1vw !important;
+}
+/* 
+.swal2-image {
+  width: 6vw !important;
+  height: 6vw !important;
+  margin: 1.25vh auto !important;
+} */
+
+.swal2-title {
+  font-family: 'Nasalization';
+  font-size: 1.5vw !important;
+  color: #df1613 !important;
+}
+
+.swal2-content {
+  color: #17a2b8 !important;
+  font-size: 1.1vw !important;
+  font-family: 'Nasalization';
+}
+
+.swal2-title span.success {
+  color: #25d365 !important;
+}
+
+.swal2-styled {
+  font-size: 1.3vw !important;
+  padding: 0.5vw 2vw !important;
+}
+
+.swal2-actions {
+  margin: 1.25vw auto 0 !important;
+}
+.swal2-popup {
+  box-shadow: 0px 0px 20px #17a2b8;
+  /* width: 27vw !important;
+  padding: 1vw !important; */
+}
+
+.swal2-html-container {
+  color: #17a2b8 !important;
+  font-size: 1.1vw !important;
+  font-family: 'Nasalization';
+}
 
 #block_land{
   position: absolute;
@@ -40,14 +91,17 @@
   height:100vh;
   border:0px solid white;
   overflow: auto;
+  
   margin:auto;
 }
 .img_sun,.img_sun2{
   position:absolute;
-  width:61%;
-  height:100vh;
-  overflow: hidden;
-  left:23%;
+  width: 57vw;
+  height: auto;
+  /* overflow: hidden; */
+  left: 50%;
+  top: 50%;
+  transform: translate(-46%,-50%);
   display: block;
 
 }
@@ -55,7 +109,7 @@
 Animation for sun
 */
 .ani-rollout_earth{
- 
+ position: absolute;
 	animation-name: rollOut_earth;
 	animation-duration: 5s;
 
@@ -65,23 +119,24 @@ Animation for sun
    
     top: 1%;
     left: 80%;
-    height:0%;
     width:0%;
-    transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+    
 	
   }
 
   to {
- 
-    top: 1%;
-    left: 23%;
-    height:100vh;
-    width:61%;
-	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+    width: 57vw;
+    left: 50%;
+    top: 50%;
+    transform: translate(-46%,-50%);
+	 
 	
   }
-
 }	
+  
+
+
+
 .text_part1{
   height: 98vh;
   position: absolute;
@@ -92,12 +147,12 @@ Animation for sun
   display:none;
  }
  .next_button_ag{
-  width: 2.5%;
+  width: 2vw;
   position: absolute;
   font-family: auto;
   left: 50%;
-  /*top: 50%;*/
-  transform: translate(120%,2300%);
+  top: 50%;
+  transform: translate(90%,1197%);
   z-index: 12;
   display:none;
 }
@@ -111,12 +166,12 @@ Animation for sun
    display:none;
  }
  .prev_button_ag{
-  width: 2.5%;
-  position: absolute;
-  font-family: auto;
-  left: 50%;
- /* top: 50%;*/
- transform: translate(120%,2300%);
+  width: 2vw;
+    position: absolute;
+    font-family: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(90%,1245%);
   z-index: 12;
   display:none;
  
@@ -128,12 +183,12 @@ Animation for sun
     border-color: rgb(103, 58, 183);
     position: absolute;
     z-index: 12;
-    width: 7%;
+    width: 4vw;
     height: 5vh;
     font-size: x-small;
     left: 50%;
-  /*  top: 50%;*/
-  transform: translate(9%,1720%);
+    top: 50%;
+    transform: translate(31%,1232%);
     display:none;
 }
 
@@ -174,7 +229,8 @@ Animation for sun
   width:56%;
   height:auto;
   overflow: hidden;
-  left:23%;
+  left: 21%;
+  top: 2%;
   display: block;
 
 }
@@ -192,7 +248,6 @@ Animation for sun
    
     top: 1%;
     left: 80%;
-   
     width:0%;
     transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
 	
@@ -200,15 +255,15 @@ Animation for sun
 
   to {
  
-    top: 1%;
-    left: 23%;
-  
+    left: 21%;
+    top: 2%;
     width:56%;
 	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
 	
   }
 
 }	
+
 .text_part1{
   height: auto;
   position: absolute;
@@ -221,7 +276,9 @@ Animation for sun
   width: 2.5%;
   position: absolute;
   font-family: auto;
-  transform: translate(2026%,2070%);
+  left: 50%;
+  top: 50%;
+  transform: translate(-28%,928%);
   z-index: 12;
    display:none;
 }
@@ -240,7 +297,9 @@ Animation for sun
   width: 2.5%;
   position: absolute;
   font-family: auto;
-  transform: translate(2016%,2100%);
+  left: 50%;
+  top: 50%;
+  transform: translate(-55%,956%);
   z-index: 12;
    display:none;
  
@@ -251,7 +310,9 @@ Animation for sun
   width: 4%;
   position: absolute;
   font-family: auto;
-  transform: translate(1244%,2775%);
+  left: 50%;
+    top: 50%;
+    transform: translate(-61%,1298%);
   z-index: 12;
     display:none;
 }
@@ -275,10 +336,11 @@ Animation for sun
 }
 .img_sun,.img_sun2{
   position: absolute;
- width:56%;
-  height:auto;
-  overflow: hidden;
-  left: 23%;
+  width: 44vw;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-51%,-50%);
   display: block;
   
 }
@@ -297,7 +359,6 @@ Animation for sun
     top: 1%;
     left: 80%;
     width:0%;
-  
     transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
 	
   }
@@ -306,13 +367,15 @@ Animation for sun
 
     top: 1%;
     left: 23%;
-    width:54%;
-   
-	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+    width:44vw;
+    left: 50%;
+    top: 50%;
+    transform: translate(-51%,-50%);
 	
   }
 
 }	
+ 
 .text_part1{
   height: auto;
   position: absolute;
@@ -323,10 +386,12 @@ Animation for sun
   display:none;
  }
  .next_button_ag{
-  width: 2.5%;
+  width: 2vw;
   position: absolute;
   font-family: auto;
-  transform: translate(2000%, 2079%);
+  left: 50%;
+  top: 50%;
+  transform: translate(-21%, 931%);
   z-index: 12;
    display:none;
 }
@@ -342,10 +407,13 @@ Animation for sun
    display:none;
  }
  .prev_button_ag{
-  width: 2.5%;
+  width: 2vw;
   position: absolute;
   font-family: auto;
-  transform: translate(2000%, 2079%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-21%, 955%);
+  z-index: 12;
   z-index: 12;
    display:none;
  
@@ -353,8 +421,14 @@ Animation for sun
 
 
 .btn_agree{
-  width: 3.5%; position: absolute; font-family: auto; transform: translate(1398%, 3160%); z-index: 12;
-   display:none;
+  width: 3vw;
+  position: absolute;
+  font-family: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-31%, 1299%);
+  z-index: 12;
+     display:none;
 }
 
 /*-----------------*/
@@ -375,10 +449,12 @@ Animation for sun
 .img_sun,.img_sun2{
  /*max-width:50%;*/
  position:absolute;
- width:77%;
-  height:auto;
-  overflow: hidden;
-  left: 10%;
+ width: 56vw;
+ height: auto;
+ /* overflow: hidden; */
+ left: 50%;
+ top: 50%;
+ transform: translate(-51%,-49%);
   display: block;
 
 }
@@ -406,9 +482,10 @@ Animation for sun
 
     top: 1%;
     left: 10%;
-    width:77%;
-   
-	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+    width: 56vw;
+    left: 50%;
+    top: 50%;
+    transform: translate(-51%,-49%);
 	
   }
 
@@ -423,14 +500,13 @@ Animation for sun
   display:none;
  }
  .next_button_ag{
-  width: 2.5%;
-  position: absolute;
-  font-family: auto;
-  /*left: 48%;
-  top: 92%;*/
-  left: 50%;
-   
-  transform: translate(-60%,2885%);
+  width: 2vw;
+    position: absolute;
+    font-family: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(10%,1259%);
+    z-index: 12;
   z-index: 12;
    display:none;
 }
@@ -446,24 +522,24 @@ Animation for sun
    display:none;
  }
  .prev_button_ag{
-  width: 2.5%;
+  width: 2vw;
   position: absolute;
   font-family: auto;
- /* left: 48%;
-  top: 94%;*/
   left: 50%;
- 
-  transform: translate(-60%,2885%);
+  top: 50%;
+  transform: translate(10%,1259%);
   z-index: 12;
    display:none;
  
 }
 
 .btn_agree{
-  width: 4.5%;
+  width: 3.5vw;
   position: absolute;
   font-family: auto;
-  transform: translate(1044%, 3398%);
+  left: 50%;
+  top: 50%;
+  transform: translate(-15%, 1459%);
    display:none;
 }
 
@@ -486,10 +562,12 @@ Animation for sun
 
 .img_sun,.img_sun2{
   position:absolute;
-  width: 57%;
+  width:47vw;
   height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-52%, -50%);
   overflow: hidden;
-  left: 22%;
   display: block;
 
 }
@@ -506,7 +584,7 @@ Animation for sun
   from {
     
     top: 1%;
-    left: 80%;
+    left: 100%;
     width:0%;
    
     transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
@@ -515,11 +593,11 @@ Animation for sun
 
   to {
 
-    top: 1%;
-    left: 23%;
-    width:58%;
-   
-	  transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+    left: 50%;
+    top: 50%;
+    transform: translate(-52%, -50%);
+    width:47vw;
+	 
 	
   }
 
@@ -534,10 +612,12 @@ Animation for sun
 display:none;
  }
  .next_button_ag{
-  width: 2.5%;
+  width: 2vw;
   position: absolute;
   font-family: auto;
-  transform: translate(2000%, 2079%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-54%, 977%);
   z-index: 12;
    display:none;
 }
@@ -553,10 +633,12 @@ display:none;
    display:none;
  }
  .prev_button_ag{
-  width: 2.5%;
+  width: 2vw;
   position: absolute;
   font-family: auto;
-  transform: translate(1976%, 2119%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-70%, 1037%);
   z-index: 12;
    display:none;
  
@@ -571,8 +653,10 @@ display:none;
    
    position: absolute;
    font-family: auto;
-   width: 4.5%;
-   transform: translate(1066%,2521%);
+   width: 2.5vw;
+   left: 50%;
+   top: 50%;
+   transform: translate(-52%,1678%);
    display: none;
    
 }

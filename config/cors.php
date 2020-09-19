@@ -39,6 +39,15 @@ return [
             'Authorization',
            ' X-Requested-With'
         ],
+        'Access-Control-Allow-Headers' => [
+            'Content-Type',
+            'X-Auth-Token',
+            'Origin',
+            'x-xsrf-token',
+            'x-csrf-token',
+            'Authorization',
+           ' X-Requested-With'
+        ],
 
          'expose_headers' => [
             'Cache-Control',

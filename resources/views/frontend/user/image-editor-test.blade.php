@@ -8,7 +8,7 @@
             top:20vw;
         }
 
-        .image-editor-modal {
+        .image-editor-modal{
             padding-right: 0 !important;
             background:url('../../images/skybox_bg1.jpg');
             position: absolute;
@@ -18,19 +18,334 @@
             top: 0;
             display: none;
         }
-    
+        .tui-editor-modal{
+            display: none;
+        }
+
+
+        /*!
+ * Cropper.js v1.5.9
+ * https://fengyuanchen.github.io/cropperjs
+ *
+ * Copyright 2015-present Chen Fengyuan
+ * Released under the MIT license
+ *
+ * Date: 2020-09-10T13:16:21.689Z
+ */
+
+.cropper-container {
+  direction: ltr;
+  font-size: 0;
+  line-height: 0;
+  position: relative;
+  -ms-touch-action: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.cropper-container img {
+  display: block;
+  height: 100%;
+  image-orientation: 0deg;
+  max-height: none !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  width: 100%;
+}
+
+.cropper-wrap-box,
+.cropper-canvas,
+.cropper-drag-box,
+.cropper-crop-box,
+.cropper-modal {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.cropper-wrap-box,
+.cropper-canvas {
+  overflow: hidden;
+}
+
+.cropper-drag-box {
+  background-color: #fff;
+  opacity: 0;
+}
+
+.cropper-modal {
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.cropper-view-box {
+  display: block;
+  height: 100%;
+  outline: 1px solid #39f;
+  outline-color: rgba(51, 153, 255, 0.75);
+  overflow: hidden;
+  width: 100%;
+}
+
+.cropper-dashed {
+  border: 0 dashed #eee;
+  display: block;
+  opacity: 0.5;
+  position: absolute;
+}
+
+.cropper-dashed.dashed-h {
+  border-bottom-width: 1px;
+  border-top-width: 1px;
+  height: calc(100% / 3);
+  left: 0;
+  top: calc(100% / 3);
+  width: 100%;
+}
+
+.cropper-dashed.dashed-v {
+  border-left-width: 1px;
+  border-right-width: 1px;
+  height: 100%;
+  left: calc(100% / 3);
+  top: 0;
+  width: calc(100% / 3);
+}
+
+.cropper-center {
+  display: block;
+  height: 0;
+  left: 50%;
+  opacity: 0.75;
+  position: absolute;
+  top: 50%;
+  width: 0;
+}
+
+.cropper-center::before,
+.cropper-center::after {
+  background-color: #eee;
+  content: ' ';
+  display: block;
+  position: absolute;
+}
+
+.cropper-center::before {
+  height: 1px;
+  left: -3px;
+  top: 0;
+  width: 7px;
+}
+
+.cropper-center::after {
+  height: 7px;
+  left: 0;
+  top: -3px;
+  width: 1px;
+}
+
+.cropper-face,
+.cropper-line,
+.cropper-point {
+  display: block;
+  height: 100%;
+  opacity: 0.1;
+  position: absolute;
+  width: 100%;
+}
+
+.cropper-face {
+  background-color: #fff;
+  left: 0;
+  top: 0;
+}
+
+.cropper-line {
+  background-color: #39f;
+}
+
+.cropper-line.line-e {
+  cursor: ew-resize;
+  right: -3px;
+  top: 0;
+  width: 5px;
+}
+
+.cropper-line.line-n {
+  cursor: ns-resize;
+  height: 5px;
+  left: 0;
+  top: -3px;
+}
+
+.cropper-line.line-w {
+  cursor: ew-resize;
+  left: -3px;
+  top: 0;
+  width: 5px;
+}
+
+.cropper-line.line-s {
+  bottom: -3px;
+  cursor: ns-resize;
+  height: 5px;
+  left: 0;
+}
+
+.cropper-point {
+  background-color: #39f;
+  height: 5px;
+  opacity: 0.75;
+  width: 5px;
+}
+
+.cropper-point.point-e {
+  cursor: ew-resize;
+  margin-top: -3px;
+  right: -3px;
+  top: 50%;
+}
+
+.cropper-point.point-n {
+  cursor: ns-resize;
+  left: 50%;
+  margin-left: -3px;
+  top: -3px;
+}
+
+.cropper-point.point-w {
+  cursor: ew-resize;
+  left: -3px;
+  margin-top: -3px;
+  top: 50%;
+}
+
+.cropper-point.point-s {
+  bottom: -3px;
+  cursor: s-resize;
+  left: 50%;
+  margin-left: -3px;
+}
+
+.cropper-point.point-ne {
+  cursor: nesw-resize;
+  right: -3px;
+  top: -3px;
+}
+
+.cropper-point.point-nw {
+  cursor: nwse-resize;
+  left: -3px;
+  top: -3px;
+}
+
+.cropper-point.point-sw {
+  bottom: -3px;
+  cursor: nesw-resize;
+  left: -3px;
+}
+
+.cropper-point.point-se {
+  bottom: -3px;
+  cursor: nwse-resize;
+  height: 20px;
+  opacity: 1;
+  right: -3px;
+  width: 20px;
+}
+
+@media (min-width: 768px) {
+  .cropper-point.point-se {
+    height: 15px;
+    width: 15px;
+  }
+}
+
+@media (min-width: 992px) {
+  .cropper-point.point-se {
+    height: 10px;
+    width: 10px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .cropper-point.point-se {
+    height: 5px;
+    opacity: 0.75;
+    width: 5px;
+  }
+}
+
+.cropper-point.point-se::before {
+  background-color: #39f;
+  bottom: -50%;
+  content: ' ';
+  display: block;
+  height: 200%;
+  opacity: 0;
+  position: absolute;
+  right: -50%;
+  width: 200%;
+}
+
+.cropper-invisible {
+  opacity: 0;
+}
+
+.cropper-bg {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');
+}
+
+.cropper-hide {
+  display: block;
+  height: 0;
+  position: absolute;
+  width: 0;
+}
+
+.cropper-hidden {
+  display: none !important;
+}
+
+.cropper-move {
+  cursor: move;
+}
+
+.cropper-crop {
+  cursor: crosshair;
+}
+
+.cropper-disabled .cropper-drag-box,
+.cropper-disabled .cropper-face,
+.cropper-disabled .cropper-line,
+.cropper-disabled .cropper-point {
+  cursor: not-allowed;
+}
+
+.img-container img {
+      max-width: 100%;
+      width:100%;
+    }
 
     </style>
 
     <link rel="stylesheet" type="text/css" href="{{asset('front/CSS/company-profile.css')}}"/>
     <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('front/CSS/cropper.min.css') }}">
     <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
     <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>  
     <script src="{{asset('front/JS/popper.min.js')}}"></script>
     <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery.fontselect.js')}}"></script>
+    <script src="{{asset('front/JS/cropper.js')}}"></script>
    
    
 @endsection
@@ -51,13 +366,13 @@
                                     <div class="user-upload-img">
                                             <label for="file">
 
-                                            <!--changed img id from output to featured-image-preview-->
-                                            <img src="{{asset('front/images/image-add.png')}}" id="featured-image-preview" alt="input image" class="inox" width=100%>
+                                            <!--changed img id from output to featured-image-previewimg-->
+                                            <img src="{{asset('front/images/image-add.jpg')}}" id="featured-image-previewimg" alt="input image" class="inox" width=100%>
                                             <p class="img-description">Edit Featured Image.</p>
                                             </label>
                                             
                                             <input id="file"  onchange="loadFile(event)" type="file" />
-                                            
+                                            <input type="hidden" name="edited_featured_image" id="edited_featured_image">
                                     </div>
                                 
                                 </div>
@@ -188,11 +503,19 @@
                 </div>
         </div>
     </div>
-    <!----------------------------------------DIV FOR THE IMAGE EDITOR------------------------------------------>
+
+
+    <!----------------------------------------DIV FOR THE IMAGE EDITOR 1------------------------------------------>
     <div class="image-editor-modal" id="imageEditorModal">
-       <imageeditor-component ></imageeditor-component>
+       <imageeditor-component :edit_blog="1"></imageeditor-component>
     </div>
-    <!----------------------------------------DIV FOR THE IMAGE EDITOR------------------------------------------>
+    <!----------------------------------------END OF DIV FOR THE IMAGE EDITOR 1------------------------------------------>
+
+    <!----------------------------------------DIV FOR THE TUI IMAGE EDITOR 2------------------------------------------>
+    <div class="tui-editor-modal" id="tuiEditorModal">
+        <tuieditor-component></tuieditor-component>
+    </div>
+     <!---------------------------------------END OF DIV FOR THE TUI IMAGE EDITOR 2------------------------------------------>
 
 
 </div> <!--end of app-->
@@ -201,7 +524,6 @@
 <script src="{{asset('front/JS/jquery.fontselect.js')}}"></script>
 <script src="{{asset('front/JS/popper.min.js')}}"></script>
 <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
-{{-- <script src="{{asset('front/JS/jquery-ui.js')}}"></script> --}}
 <script src="{{asset('front/JS/fabric.min.js')}}"></script>
 <script src="{{asset('front/JS/FileSaver.js')}}"></script>      
 <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>        
@@ -209,31 +531,33 @@
 <script src="{{asset('front/JS/lodash.min.js')}}"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="//geodata.solutions/includes/countrystatecity.js"></script>
-{{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 
 <script>
 let oldFeaturedImg;
 let isNewImg = true;
 var loadFile = function(event) {
-    //changed output to featured-image-preview
-    var image = document.getElementById('featured-image-preview');
+    //changed output to featured-image-previewimg
+    var image = document.getElementById('featured-image-previewimg');
     image.src = URL.createObjectURL(event.target.files[0]);
     
     if(oldFeaturedImg != image.src){
         oldFeaturedImg = image.src;
         isNewImg = true;
-        console.log("image is new in first page");
     }
 };
 
 
 
 // -------------------------- ADDED FUNCTIONS FOR THE IMAGE EDITOR -------------------------//
+
+//function called with edit image button is clicked
 $('#edit_uploaded_image').on('click', function(){
     $("#imageEditorModal").css("display","block");
     $('#page-content').hide();
 });
 
+
+//font selection for the font picker in the editor's toolbar
 $('#font-picker').fontselect({
   fonts: [
     "Aclonica",
@@ -457,6 +781,11 @@ $('#font-picker').fontselect({
 });
 
 // -------------------------- END OF  FUNCTIONS FOR THE IMAGE EDITOR -------------------------//
+
+
+
+
+
 
 
 

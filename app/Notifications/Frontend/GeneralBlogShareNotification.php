@@ -3,6 +3,7 @@
 namespace App\Notifications\Frontend;
 
 use App\Models\BlogShares\BlogShare;
+use App\Models\GeneralBlogShares\GeneralBlogShare;
 use Illuminate\Bus\Queueable;
 use App\Models\Comment\GeneralComment;
 use App\Models\GeneralBlogs\GeneralBlog;
@@ -23,7 +24,7 @@ class GeneralBlogShareNotification extends Notification implements ShouldQueue
 
     private $blog_share;
 
-    public function __construct(BlogShare $blog_share)
+    public function __construct(GeneralBlogShare $blog_share)
     {
         $this->blog_share = $blog_share;
     }
@@ -54,7 +55,7 @@ class GeneralBlogShareNotification extends Notification implements ShouldQueue
     {
         return [
                 'blog' => $this->blog_share,
-                'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->general_blog->name.'" story',
+                'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->blog->name.'" story',
         ];
     }
 
@@ -62,7 +63,7 @@ class GeneralBlogShareNotification extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'blog' => $this->blog_share,
-            'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->general_blog->name.'" story',
+            'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->blog->name.'" story',
         ]);
     }
     public function broadcastType()

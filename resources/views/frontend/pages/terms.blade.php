@@ -1,11 +1,15 @@
+<meta name="url" content="{{ url('') }}">
 @extends('frontend.layouts.profile_layout')
 @section('before-styles')
-<link rel="stylesheet" href="{{ asset('front/CSS/terms.css') }}">
-<link rel="stylesheet" href="{{asset('front/fontawesome/css/all.css')}}">
-    <style>
-    </style>
+<style>
+</style>
 @endsection
+
+   
+
 @section('after-styles')
+<link rel="stylesheet" href="{{asset('front/fontawesome/css/all.css')}}">
+<link rel="stylesheet" href="{{ asset('front/CSS/terms.css') }}">
 @endsection
 
 @section('content')
@@ -15,11 +19,12 @@
       <img src="{{ asset('front') }}/images/rotate-screen.gif" alt="">
   </div>
 </div>
-<div id="page-content">
+<div class="app">
+</div>
+<div id="page-content" class="page">
     <div class="communicator">
         <div class="main-screen">
             <div class="astronautarm-img">
-               
                 <div class="main-form form_content">
                    
                        <button type="button" class="fullscreen" Title="Full screen">
@@ -28,8 +33,8 @@
                         </button>
                   
 
-                    <div class="home-div ">
-                      <input type="hidden" id="myurl" url="{{url('/login')}}" />
+                    <div class="home-div">
+                      <input type="hidden" id="myurl" url="{{url('/dashboard')}}" />
                       <img src="{{asset('front/images/communicator-buttons/buttons/homeBtn.png')}}" class="communicator-button back-button" alt="">
                     </div>
                     <div class="back-div">
@@ -37,7 +42,7 @@
                       <img src="{{asset('front/images/communicator-buttons/buttons/backBtn.png')}}" class="communicator-button back-button" alt="">
                   </div>
              
-                    <div class="communicator-buttons">
+                    <div class="tos-div">
                       <img src="{{asset('front/images/communicator-buttons/buttons/termsBtn.png')}}" class="communicator-button terms-button" alt="">
                     </div>
 
@@ -1170,8 +1175,8 @@
             
           </div>
           <div class="slide-div_full">
-            <p class="next_full communicator-button" onclick="next_full()">></p>
-            <p class="prev_full communicator-button" onclick="prev_full()"><</p>
+            <p class="next_full communicator-button" onclick="next_terms_full()">></p>
+            <p class="prev_full communicator-button" onclick="prev_terms_full()"><</p>
             <input type="hidden" id="prev_no" value="4">
             <input type="hidden" id="next_no" value="1">
             <input type="hidden" id="no" value="0">

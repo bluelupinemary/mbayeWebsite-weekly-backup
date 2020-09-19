@@ -18,6 +18,7 @@ use App\Models\JobSeekerProfile\CharacterReferences;
 use App\Repositories\Frontend\JobSeekerProfile\JobSeekerProfilesRepository;
 
 
+
 /**
  * Class profileController.
  */
@@ -45,7 +46,7 @@ class JobSeekerProfilesController extends Controller
     public function saveJobSeekerProfile(Request $request)
     {
         //dd("ok");
-        //dd($request->all());
+        dd($request->all());
         $user = User::find($request->user_id);
         $file = $request->file;
         $contents = file_get_contents($file);
@@ -177,7 +178,7 @@ class JobSeekerProfilesController extends Controller
         }
     }
     public function save_contact_details(Request $request){
-     
+        
         $contact = new JobSeekerProfile();
         $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
         $secondary_email = $JobSeekerProfile->secondary_email;
@@ -185,11 +186,13 @@ class JobSeekerProfilesController extends Controller
         $contact->secondary_email  = $request->secondary_email ;
         $contact->secondary_mobile_number =  $request->secondary_mobile_number ;
        
-        if($secondary_email=='' ||$secondary_mobile_number=='')
+        if($secondary_email=='' ||$secondary_mobile_number==''){
                 $contact->save();
-        else
+        }
+        else{
 
                $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('secondary_email' => $request->secondary_email,'secondary_mobile_number' => $request->secondary_mobile_number));
+            }
     }
 
 
@@ -246,7 +249,33 @@ class JobSeekerProfilesController extends Controller
 
     }
 
-    
+    /**
+     * Function to save aboutme deatils
+     */
+    public function save_aboutme_details(Request $request){
+        // dd($request->all());
+        $aboutme = new JobSeekerProfile();
+        $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
+        $present_country = $JobSeekerProfile->present_country;
+        $state = $JobSeekerProfile->state;
+        $present_city = $JobSeekerProfile->present_city;
+        $present_address = $JobSeekerProfile->present_address;
+        $aboutme->present_country  = $request->present_country ;
+        $aboutme->state =  $request->state ;
+        $aboutme->present_city  = $request->present_city ;
+        $aboutme->present_address =  $request->present_address ;
+       
+        if($present_country=='' ||$state=='' ||$present_city=='' ||$present_address==''){
+                $contact->save();
+        }
+        else{
+
+               $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('present_country' => $request->present_country,'state' => $request->state,'present_city' => $request->present_city,'present_address' => $request->present_address));
+        }
+    }
+
+
+
 public function show_my_profile($id)
 {
     $profile = JobSeekerProfile::find($id);
@@ -276,6 +305,7 @@ public function edit_profile(Request $request)
   $user = Auth::user();
   $profile = JobSeekerProfile::find($user->id);
   return view('frontend.user.edit-setup-profile',compact('user','profile'));
+  
 }
 
     }

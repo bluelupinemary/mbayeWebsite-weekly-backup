@@ -68,6 +68,8 @@ class FrontendController extends Controller
         if($user)         return view('frontend.blog.index');
         return view('frontend.auth.login');
     }
+
+
     public function blog_tagwise_all(Request $request)
     {
         if($request->has('tag') && $request->tag != '') {
@@ -509,4 +511,12 @@ public function blog_career_friend(Request $request) {
         return view('frontend.auth.login');
     }
 }
+
+
+//dummy pages
+public function blogviewMembers(){
+    $gender = 'trevor';
+    return view('frontend.blog.blogview.dummy_blogview',compact('gender'));
+}
+
 }

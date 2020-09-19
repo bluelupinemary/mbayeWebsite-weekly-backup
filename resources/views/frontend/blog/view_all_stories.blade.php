@@ -24,9 +24,8 @@
                     <div class="input-group-prepend status-div">
                         <select class="custom-select" id="inputGroupSelect02" name="status">
                             <option selected value="">Status</option>
-                            <option value="Draft">Draft</option>
                             <option value="Published">Published</option>
-                            {{-- <option value="Unpublished">Unpublished</option> --}}
+                            <option value="Shared">Shared</option>
                         </select>
                     </div>
                     <div class="input-group-prepend sort-div">
@@ -52,10 +51,10 @@
                     <div class="container">
                         <div class="front @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/general_blogs/'.$blog->getFeaturedImage())}})">
                             <div class="inner">
-                                <p class="blog-name">{{$blog->name}}</p>
-                                <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
                                 <span class="blog-status {{($blog->status == 'Published' ? 'published' : 'draft')}}">{{$blog->status}}</span>
+                                <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
                                 
+                                <p class="blog-name">{{$blog->name}}</p>
                                 <multicount-component :blog_id="{!! json_encode($blog->id) !!}"></multicount-component>
                             </div>
                             {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
@@ -76,10 +75,10 @@
                     <div class="container">
                         <div class="front shared-blog @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/general_blogs/'.$blog->blog->getFeaturedImage())}})">
                             <div class="inner">
-                                <p class="blog-name">{{$blog->blog->name}}</p>
-                                <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
                                 <span class="blog-status shared">Shared</span>
+                                <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
                                 
+                                <p class="blog-name">{{$blog->blog->name}}</p>
                                 <multicount-component :blog_id="{!! json_encode($blog->blog->id) !!}"></multicount-component>
                             </div>
                             {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
@@ -121,7 +120,10 @@
         <div class="user-photo {{access()->user()->getGender()}}">
             <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
         </div>
-        <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button>
+        <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+            <span>Zoom In</span>
+            <i class="fas fa-search-plus"></i>
+        </button>
         <div class="navigator-buttons">
             <div class="column column-1">
                 <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
@@ -142,7 +144,8 @@
             <button class="communicator-button"></button>
             <span>Communicator</span>
         </div>
-        <button class="navigator-zoomout-btn">
+        <button class="navigator-zoomout-btn tooltips zoom-in-out">
+            <span>Zoom Out</span>
             <i class="fas fa-undo-alt"></i>
         </button>
     </div>
@@ -177,7 +180,8 @@
                 <button class="communicator-button"></button>
                 <span>Communicator</span>
             </div>
-            <button class="navigator-zoomout-btn">
+            <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                <span>Zoom Out</span>
                 <i class="fas fa-undo-alt"></i>
             </button>
         </div>
@@ -212,8 +216,8 @@
         $('.ally-dolphin .dolphin').attr('src', "{{asset('front/images/Ally2.png')}}");
         toastr.options = {
             "closeButton": true,
-            "timeOut": 5000,
-            "extendedTimeOut": 1000,
+            "timeOut": 10000,
+            "extendedTimeOut": 10000,
         }
         
         $(document).ready(function() {
@@ -312,7 +316,7 @@
                 imageWidth: 80,
                 imageHeight: 80,
                 imageAlt: 'Mbaye Logo',
-                width: '30%',
+                // width: '30%',
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.78)',
                 showCancelButton: true,
@@ -335,7 +339,7 @@
                         imageWidth: 80,
                         imageHeight: 80,
                         imageAlt: 'Mbaye Logo',
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.78)'
                     }).then((res) => {
@@ -363,7 +367,7 @@
                             imageAlt: 'Mbaye Logo',
                             title: title,
                             html: errorString,
-                            width: '30%',
+                            // width: '30%',
                             padding: '1rem',
                             background: 'rgba(8, 64, 147, 0.78)'
                         });
@@ -436,8 +440,12 @@
             window.location.href = url+'/dashboard';
         });
 
-        $('.instructions-btn, .tos-btn').click( function() {
-            window.location.href = url+'/page_under_development';
+        $('.instructions-btn').click( function() {
+            window.location.href = url+'/instructions';
+        });
+
+        $('.tos-btn').click( function() {
+            window.location.href = url+'/terms';
         });
 
         $('.editphoto-btn').click( function() {

@@ -86,8 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/career/companyProfile', function () {
             $industry = Industry::all();
-            // $photo=User::find('photo');
-            // dd($photo);
+            
             return view('frontend.user.setup_company_profile',compact('industry'));
         });
         
@@ -263,10 +262,16 @@ Route::post('save_work_experience', 'JobSeekerProfile\JobSeekerProfilesControlle
 Route::post('save_education', 'JobSeekerProfile\JobSeekerProfilesController@save_education');
 Route::post('save_character_references', 'JobSeekerProfile\JobSeekerProfilesController@save_character_references');
 Route::post('save_contact_details', 'JobSeekerProfile\JobSeekerProfilesController@save_contact_details');
+Route::post('save_aboutme_details', 'JobSeekerProfile\JobSeekerProfilesController@save_aboutme_details');
 Route::post('save_professional_details', 'JobSeekerProfile\JobSeekerProfilesController@save_professional_details');
 Route::get('search', 'JobSeekerProfile\JobSeekerProfilesController@search');
 Route::post('get_career_details', 'JobSeekerProfile\JobSeekerProfilesController@get_career_details');
 
+
+
+//dummy pages
 Route::get('/sample_page', function() {
     return view('frontend/user/sample-page');
 });
+
+Route::get('/blogviewMembers', 'FrontendController@blogviewMembers')->name('blogviewMembers');

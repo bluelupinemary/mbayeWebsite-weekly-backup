@@ -333,6 +333,10 @@ and (max-width : 1024px) {
         border-radius: 17px;
         padding: 0;
     }
+
+    .navigator-div-zoomed-in .tooltips.tooltips.zoom-in-out span {
+        font-size: 0.5em;
+    }
 }
 
 @media (max-width : 991px)
@@ -358,7 +362,7 @@ and (orientation : landscape) {
     }
 
     .inner {
-        padding: 2rem 0;
+        padding: 0.5rem 0;
     }
 
     .tags {
@@ -508,9 +512,24 @@ and (orientation : landscape) {
 }
 
 @media (min-width : 411px) 
-and (max-width : 823px)
+and (max-width : 896px)
 and (orientation : landscape) {
+    .search-input-fields {
+        flex-flow: row;
+    }
 
+    .blog-search {
+        margin-bottom: 3%;
+    }
+
+    .blog-search input {
+        flex: auto;
+        width: 45%;
+    }
+
+    .status-div, .sort-div {
+        flex: 25%;
+    }
 }
 
 /* Iphone X */
@@ -523,15 +542,93 @@ and (orientation : landscape) {
 @media (min-width : 414px) 
 and (max-width : 736px)
 and (orientation : landscape) {
+    .search-form {
+        width: 66%;
+    }
 
+    /* .search-input-fields {
+        flex-flow: row;
+    }
+
+    .blog-search {
+        margin-bottom: 3%;
+    }
+
+    .blog-search input {
+        flex: auto;
+        width: 45%;
+    }
+
+    .status-div, .sort-div {
+        flex: 100%;
+    } */
 }
 
 /* Iphone 6/7/8 */
 @media (min-width : 375px) 
-and (max-width : 667px)
+and (max-width : 670px) 
 and (orientation : landscape) {
     .wrapper {
         width: 100%;
+    }
+
+    .search-form {
+        width: 60% !important;
+    }
+
+    .blog-search {
+        margin-top: 22%;
+        margin-bottom: 12%;
+    }
+
+    .search-form {
+        flex-flow: column;
+    }
+
+    .search-input-fields {
+        flex-wrap: wrap;
+        flex: 100%;
+    }
+
+    .blog-search input {
+        flex: 100%;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid #6c757de8;
+        border-radius: .25rem .25rem 0 0;
+    }
+
+    .blog-search .status-div {
+        border-right: 0;
+    }
+
+    .input-group-prepend {
+        margin-right: 0;
+    }
+
+    .blog-search .search-btn {
+        margin-left: 0px;
+    }
+
+    .blog-search .sort-div select {
+        border-radius: 0;
+    }
+
+    .status-div, .sort-div {
+        flex: 50%;
+    }
+
+    .front .inner .blog-date {
+        font-size: 0.80rem;
+    }
+}
+
+/* Galaxy S9+ */
+@media (min-width : 360px) 
+and (max-width : 740px) 
+and (orientation : landscape) {
+    .search-form {
+        width: 66%;
     }
 }
 
@@ -550,4 +647,42 @@ and (orientation : landscape) {
     .wrapper {
         width: 100%;
     }
+
+    /* .blog-search {
+        margin-top: 25%;
+        margin-bottom: 12%;
+    }
+
+    .search-form {
+        flex-flow: column;
+    }
+
+    .search-input-fields {
+        flex-wrap: wrap;
+        flex: 100%;
+    }
+
+    .blog-search input {
+        flex: 50%;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid #6c757de8;
+        border-radius: .25rem .25rem 0 0;
+    }
+
+    .blog-search .status-div {
+        border-right: 0;
+    }
+
+    .input-group-prepend {
+        margin-right: 0;
+    }
+
+    .blog-search .search-btn {
+        margin-left: 0px;
+    }
+
+    .blog-search .sort-div select {
+        border-radius: 0;
+    } */
 }

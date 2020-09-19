@@ -336,7 +336,7 @@ $('.communicator-buttons .save-button').click(function (e) {
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)',
             showCancelButton: true,
@@ -403,7 +403,7 @@ $('.communicator-buttons .save-button').click(function (e) {
                             imageAlt: 'Mbaye Logo',
                             title: title,
                             html: errorString,
-                            width: '30%',
+                            // width: '30%',
                             padding: '1rem',
                             background: 'rgba(8, 64, 147, 0.62)'
                         });
@@ -474,8 +474,8 @@ $('.communicator-buttons .save-button').click(function (e) {
                         imageAlt: 'Mbaye Logo',
                         title: title,
                         html: errorString,
-                        width: '30%',
-                        padding: '1rem',
+                        // width: '30%',
+                        padding: '15px',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
                 });

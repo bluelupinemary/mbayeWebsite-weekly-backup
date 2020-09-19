@@ -1,5 +1,5 @@
-@extends('frontend.layouts.profile_layout')
-<meta name="csrf-token" content="{{ csrf_token() }}">
+@extends('frontend.layouts.career_setup-profile_layout')
+{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 @section('after-styles')
        
 
@@ -22,7 +22,7 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
             <h3 class="heading_setup">Setup Profile</h3>
             <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
-            <a href="" class="profession" data-toggle="modal" data-target="#">Profession And Skills</a>
+            <a href="" class="profession" data-toggle="modal" data-target="" onclick="get_professional_details({{$profile->id}},{{$profile->user_id}})">Profession And Skills</a>
             <a href="" class="education" data-toggle="modal" data-target="#EducationModal">Education</a>
             <a href="" class="work-experience" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
             <a href="" class="contacts" data-toggle="modal" data-target="#ContactModal">Contact</a>
@@ -701,7 +701,7 @@
 <script>
     $(document).ready(function() {
         var url = $('meta[name="url"]').attr('content');
-        var profile_id='<? {{$profile->id}}';
+    
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
         var canvas = document.getElementById("c");
@@ -2642,28 +2642,28 @@
               });
        
 
-              $('.profession').click(function(e) {
-                 e.preventDefault();
+            //   $('.profession').click(function(e) {
+            //      e.preventDefault();
 
-                 var form_url = url+'/get_career_details';
-                    $.ajax({
-                    url: form_url,
-                    method: 'post',
-                    data: { 
-                        profile_id: profile_id,
-                        user_id: user_id,
-                        },
-                    dataType: 'json',
-                success: function(data) {
+            //      var form_url = url+'/get_career_details';
+            //         $.ajax({
+            //         url: form_url,
+            //         method: 'post',
+            //         data: { 
+            //             // profile_id: profile_id,
+            //             // user_id: user_id,
+            //             },
+            //         dataType: 'json',
+            //     success: function(data) {
                   
 
-                },
-                error: function (request, status, error) {
+            //     },
+            //     error: function (request, status, error) {
                    
-                }
-                });
+            //     }
+            //     });
 
-             });
+            //  });
     });
                 function openNav()
                  {
@@ -2686,6 +2686,27 @@
                 }
                 function remove_reference(e){
                     $(e).closest('.reference-body').remove();
+                }
+
+                function get_professional_details(profile_id,user_id){
+                    var url = $('meta[name="url"]').attr('content');
+                    var form_url = url+'/get_career_details';
+                    $.ajax({
+                    url: form_url,
+                    method: 'post',
+                    data: { 
+                        profile_id: profile_id,
+                        user_id: user_id,
+                        },
+                    dataType: 'json',
+                success: function(data) {
+                  
+
+                },
+                error: function (request, status, error) {
+                   
+                }
+                });
                 }
 </script>
 @endsection

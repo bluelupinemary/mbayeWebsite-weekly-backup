@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Models\Friendships\FriendFriendshipGroups;
 use App\Models\GeneralBlogShares\GeneralBlogShare;
 use App\Notifications\Frontend\BlogActivityNotification;
+use App\Notifications\Frontend\BlogShareNotification;
 use App\Notifications\Frontend\GeneralBlogShareNotification;
 use App\Notifications\Frontend\GeneralBlogActivityNotification;
 use App\Repositories\Frontend\GeneralBlogs\GeneralBlogsRepository;
@@ -86,44 +87,50 @@ class GeneralBlogsController extends Controller
             })
             ->get();
 
-        if($status == 'Draft' || $status == 'Unpublished') {
-            $shared_stories = [];
-        } else {
-            $shared_stories = GeneralBlogShare::where('created_by', Auth::user()->id)
-                ->where('publish_datetime', '>=', Carbon::now()->subDay())
-                ->whereHas('blog', function($q) use ($search, $sort, $status){
-                    $q->when($search, function ($query, $search) {
-                        return $query->where(function ($q) use ($search) {
-                            $q->where('name', 'like', '%'.$search.'%')
-                            ->orWhere('content', 'like', '%'.$search.'%');
-                        });
+        
+        $shared_stories = GeneralBlogShare::where('created_by', Auth::user()->id)
+            ->where('publish_datetime', '>=', Carbon::now()->subDay())
+            ->whereHas('blog', function($q) use ($search, $sort, $status){
+                $q->when($search, function ($query, $search) {
+                    return $query->where(function ($q) use ($search) {
+                        $q->where('name', 'like', '%'.$search.'%')
+                        ->orWhere('content', 'like', '%'.$search.'%');
                     });
-                })
-                ->with('blog')
-                ->get();
+                });
+            })
+            ->with('blog')
+            ->get();
+        
+
+        if($status == '') {
+            $blogs = $stories->merge($shared_stories);
+        } else if($status == 'Published') {
+            $blogs = $stories;
+        } else if($status == 'Shared') {
+            $blogs = $shared_stories;
         }
 
-        $blogs = $stories->merge($shared_stories)
-            ->when($sort, function ($query, $sort) {
-                if($sort == 'asc_publisheddate') {
-                    $query = $query->whereNotNull('publish_datetime')
-                        ->sortBy('publish_datetime');
-                } else if($sort == 'desc_publisheddate') {
-                    $query = $query->whereNotNull('publish_datetime')
-                        ->sortByDesc('publish_datetime');
-                }
-                return  $query;
-            })
-            ->when(!$sort, function ($query, $sort) {
-                return $query->sortByDesc('publish_datetime');
-            })
-            ->paginate(9);
+        $blogs = $blogs->when($sort, function ($query, $sort) {
+            if($sort == 'asc_publisheddate') {
+                $query = $query->whereNotNull('publish_datetime')
+                    ->sortBy('publish_datetime');
+            } else if($sort == 'desc_publisheddate') {
+                $query = $query->whereNotNull('publish_datetime')
+                    ->sortByDesc('publish_datetime');
+            }
+            return  $query;
+        })
+        ->when(!$sort, function ($query, $sort) {
+            return $query->sortByDesc('publish_datetime');
+        })
+        ->paginate(9);
+        
 
-        $alert = false;
+        // $alert = false;
 
-        if(!$request->has(['search', 'sort', 'status'])) {
+        // if(!$request->has(['search', 'sort', 'status'])) {
             $alert = $this->hasExpiringStories($blogs);
-        }
+        // }
 
         // dd($alert);
         return view('frontend.blog.view_all_stories', compact('blogs', 'alert'));
@@ -342,6 +349,8 @@ class GeneralBlogsController extends Controller
             if (count($tags)) {
                 $blog_share->tags()->sync($tags);
             }
+
+            Notification::send($user, new BlogShareNotification($blog_share));
         } else {
             $blog = GeneralBlog::find($request->blog_id);
             $user = User::find($blog->created_by)->get();
@@ -351,9 +360,10 @@ class GeneralBlogsController extends Controller
             $blog_share->created_by = Auth::user()->id;
             $blog_share->publish_datetime = date('Y-m-d H:i:s');
             $blog_share->save();
-            // Notification::send($user, new GeneralBlogShareNotification($blog_share));
+
+            Notification::send($user, new GeneralBlogShareNotification($blog_share));
         }
-        Notification::send($user, new GeneralBlogShareNotification($blog_share));
+        
         return array('message' => 'Shared blog successfully!');
     }
 

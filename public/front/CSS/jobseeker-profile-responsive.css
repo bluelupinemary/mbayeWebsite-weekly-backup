@@ -1,0 +1,782 @@
+
+@media only screen  and (max-width:1024px){
+    .sidenav {
+        display: flex;
+        flex-direction: column;
+        width: 0;
+        position: fixed;
+        z-index: 10;
+        top: 18%;
+        left: 0;
+        background-color: #111;
+        overflow: hidden !important;
+        transition: 0.5s;
+    }
+    
+    .sidenav .closebtn {
+        position: absolute;
+        top: 55%;
+        left: 12%;
+        transform: translate(152%,-58%);
+        font-size: 17px;
+        color: gold;
+        font-family: Nasalization;
+    }
+    
+    .sidenav a {
+        padding: 30px 8px 2px 16px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        font-family: Nasalization;
+    }
+    .slider {
+        height: 43vw;
+        width: 2%;
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: 47%;
+        transform: translate(-2503%,-50%);
+        background: black;
+    }
+    .arrows {
+        /* font-size: 17px;
+        font-family: Nasalization;
+        cursor: pointer; */
+        left: 20%;
+        top: -13%;
+        position: absolute;
+        transform: translate(-1%,245%);
+        text-align: center;
+    }
+    #main {
+        transition: margin-left .5s;
+        border: 0px solid white;
+        position: absolute;
+        left: 20%;
+        top: 95%;
+        height: 57%;
+        width: 24%;
+        transform: translate(94%,-40%);
+        /* background: black; */
+    }
+}
+
+@media only screen  and (min-height:1024px){
+    .sidenav {
+        display: flex;
+        flex-direction: column;
+        width: 0;
+        position: fixed;
+        z-index: 10;
+        top: 18%;
+        left: 0;
+        background-color: #111;
+        overflow: hidden !important;
+        transition: 0.5s;
+    }
+    
+    .sidenav .closebtn {
+        position: absolute;
+        top: 52%;
+        left: 32%;
+        transform: translate(152%,-58%);
+        font-size: 17px;
+        color: gold;
+        font-family: Nasalization;
+    }
+    
+    .sidenav a {
+        padding: 30px 8px 23px 16px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        font-family: Nasalization;
+    }
+    .slider {
+        height: 43vw;
+        width: 2%;
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: 47%;
+        transform: translate(-2503%,-50%);
+        background: black;
+    }
+    .arrows {
+        /* font-size: 17px;
+        font-family: Nasalization;
+        cursor: pointer; */
+        left: 20%;
+        top: -13%;
+        position: absolute;
+        transform: translate(-1%,245%);
+        text-align: center;
+    }
+    #main {
+        transition: margin-left .5s;
+        border: 0px solid white;
+        position: absolute;
+        left: 20%;
+        top: 95%;
+        height: 57%;
+        width: 24%;
+        transform: translate(94%,-40%);
+        /* background: black; */
+    }
+    .modal .modal-content {
+        border: 0;
+        background-color: transparent;
+        /* box-shadow: 0px 0px 20px #17a2b842; */
+        flex-wrap: nowrap !important;
+        top: 137px;
+        position: absolute;
+        /* height:100%; */
+        /* object-fit: contain; */
+        /* width: 50vw; */
+    }
+    .education-modal-body{
+        height: 31vw;
+        overflow-y:auto;
+    }
+    .contact-body{
+        height: 31vw;
+        overflow-y:auto;
+    }
+    .profession-body{
+        height: 31vw;
+        overflow-y:auto;
+    }
+    .aboutme-body{
+        height: 31vw;
+        /* overflow-y: auto; */
+        /* display: flex; */
+        /* background-size: cover; */
+        /* margin-top: 8%; */
+    }
+    .work-modal-body{
+        height: 31vw;
+        overflow-y: auto;
+    }
+    .form-row>.col, .form-row>[class*=col-] {
+        padding-right: 5px;
+        padding-left: 5px;
+        font-size: 1.5rem !important;
+    }
+    .input-group-sm>.input-group-append>select.btn:not([size]):not([multiple]), .input-group-sm>.input-group-append>select.input-group-text:not([size]):not([multiple]), .input-group-sm>.input-group-prepend>select.btn:not([size]):not([multiple]), .input-group-sm>.input-group-prepend>select.input-group-text:not([size]):not([multiple]), .input-group-sm>select.form-control:not([size]):not([multiple]), select.form-control-sm:not([size]):not([multiple]) {
+        height: calc(1.8125rem + 2px);
+        font-size: 1.3rem !important;
+    }
+}
+
+@media only screen and (max-width:824px){
+    .work-experience-body fieldset, .education-body fieldset, .reference-body fieldset, .aboutme-body fieldset, .contact-body fieldset, .profession-body fieldset {
+        border: 1px solid #fff;
+        
+        border-radius: 10px;
+        padding: 4% 4% 4% 4%;
+        width: 50vw;
+        /* display: flex; */
+        overflow-y: scroll;
+    }
+    .education-modal-body{
+        height: 25vw;
+        overflow-y:auto;
+    }
+    .contact-body{
+        height: 15vw;
+        overflow-y:auto;
+    }
+    .profession-body{
+        height: 15vw;
+        overflow-y:auto;
+    }
+    .aboutme-body{
+        height: 12vw;
+        /* overflow-y: auto; */
+        /* display: flex; */
+        /* background-size: cover; */
+        /* margin-top: 8%; */
+    }
+    .work-modal-body{
+        height: 25vw;
+        overflow-y: auto;
+    }
+    .modal .modal-content {
+        border: 0;
+        background-color: transparent;
+        /* box-shadow: 0px 0px 20px #17a2b842; */
+        flex-wrap: nowrap !important;
+        top: 31px;
+        height: 70vh !important;
+        position: absolute;
+        /* height:100%; */
+        /* object-fit: contain; */
+        /* width: 50vw; */
+    }
+    .form-row>.col, .form-row>[class*=col-] {
+        padding-right: 5px;
+        padding-left: 5px;
+        font-size: 1rem !important;
+    }
+    .input-group-sm>.input-group-append>select.btn:not([size]):not([multiple]), .input-group-sm>.input-group-append>select.input-group-text:not([size]):not([multiple]), .input-group-sm>.input-group-prepend>select.btn:not([size]):not([multiple]), .input-group-sm>.input-group-prepend>select.input-group-text:not([size]):not([multiple]), .input-group-sm>select.form-control:not([size]):not([multiple]), select.form-control-sm:not([size]):not([multiple]) {
+        height: calc(1.8125rem + 2px);
+        font-size: 1.3rem !important;
+    }
+    .slider {
+        height: 30vw;
+        width: 2%;
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: 48%;
+        transform: translate(-2503%,-50%);
+        background: black;
+    }
+    .heading_setup {
+        color: gold;
+        transition: 0.3s;
+        font-family: Nasalization;
+        text-align: center;
+        font-size: 1rem;
+    }
+    .sidenav {
+        display: flex;
+        flex-direction: column;
+        width: 0;
+        position: fixed;
+        z-index: 10;
+        top: 18%;
+        left: 0;
+        height: 65vh;
+        background-color: #111;
+        overflow: hidden !important;
+        transition: 0.5s;
+    }
+    .sidenav a {
+        padding: 9px 8px 2px 8px;
+        text-decoration: none;
+        font-size: 10px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        font-family: Nasalization;
+    }
+    .sidenav .closebtn {
+        position: absolute;
+        top: 55%;
+        left: 15%;
+        transform: translate(152%,-58%);
+        font-size: 17px;
+        color: gold;
+        font-family: Nasalization;
+    }
+    #main {
+        transition: margin-left .5s;
+        border: 0px solid white;
+        position: absolute;
+        left: 20%;
+        top: 49%;
+        height: 57%;
+        width: 24%;
+        transform: translate(94%,-40%);
+        
+    }
+    .form-row{
+        display: flex;
+        max-height: 100%;
+    }
+
+    
+    .form-row{
+        height: auto;
+        display: flex;
+    }
+    
+    .reference-modal-body{
+        height: 25vw;
+        overflow-y: auto;
+    }
+}
+
+@media only screen and (max-width:812px){
+    .work-experience-body fieldset, .education-body fieldset, .reference-body fieldset, .aboutme-body fieldset, .contact-body fieldset, .profession-body fieldset {
+        border: 1px solid #fff;
+        
+        border-radius: 10px;
+        padding: 4% 4% 4% 4%;
+        width: 50vw;
+        /* display: flex; */
+        overflow-y: scroll;
+    }
+    .form-control-sm, .input-group-sm>.form-control, .input-group-sm>.input-group-append>.btn, .input-group-sm>.input-group-append>.input-group-text, .input-group-sm>.input-group-prepend>.btn, .input-group-sm>.input-group-prepend>.input-group-text {
+        padding: .25rem .25rem;
+        font-size: .875rem;
+        line-height: 0.5;
+        border-radius: .2rem;
+    }
+    .modal .modal-content {
+        border: 0;
+        background-color: transparent;
+        /* box-shadow: 0px 0px 20px #17a2b842; */
+        flex-wrap: nowrap !important;
+        top: 31px;
+        height: 70vh !important;
+        position: absolute;
+        /* width: 50vw; */
+    }
+    .form-row{
+        display: flex;
+        max-height: 100%;
+    }
+
+    .education-modal-body{
+        height: 25vw;
+        overflow-y:auto;
+    }
+    .contact-body{
+        height: 15vw;
+        overflow-y:auto;
+    }
+    .profession-body{
+        height: 15vw;
+        overflow-y:auto;
+    }
+    .aboutme-body{
+        height: 12vw;
+        /* overflow-y: auto; */
+        /* display: flex; */
+        /* background-size: cover; */
+        /* margin-top: 8%; */
+    }
+    .work-modal-body{
+        height: 25vw;
+        overflow-y: auto;
+    }
+    .form-row{
+        height: auto;
+        display: flex;
+    }
+    
+    .reference-modal-body{
+        height: 25vw;
+        overflow-y: auto;
+    }
+    .sidenav {
+        display: flex;
+        flex-direction: column;
+        width: 0;
+        position: fixed;
+        z-index: 10;
+        top: 18%;
+        left: 0;
+        background-color: #111;
+        overflow: hidden !important;
+        transition: 0.5s;
+    }
+    
+    .sidenav .closebtn {
+        position: absolute;
+        top: 57%;
+        left: -10%;
+        transform: translate(152%,-58%);
+        font-size: 17px;
+        color: gold;
+        font-family: Nasalization;
+    }
+    
+    .sidenav a {
+        padding: 10px 8px 2px 16px;
+        text-decoration: none;
+        font-size: 0.5rem;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        font-family: Nasalization;
+    }
+    .heading_setup{
+        color: gold;
+        /* background-color: white; */
+        transition: 0.3s;
+        font-family: Nasalization;
+        text-align: center;
+        font-size: 0.7rem;
+    }
+    .slider {
+        height: 27vw;
+        width: 2%;
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: 47%;
+        transform: translate(-2503%,-50%);
+        background: black;
+    }
+    .arrows {
+        /* font-size: 17px;
+        font-family: Nasalization;
+        cursor: pointer; */
+        left: 20%;
+        top: -13%;
+        position: absolute;
+        transform: translate(-1%,245%);
+        text-align: center;
+    }
+    #main {
+        transition: margin-left .5s;
+        border: 0px solid white;
+        position: absolute;
+        left: 20%;
+        top: 46%;
+        height: 57%;
+        width: 24%;
+        transform: translate(94%,-40%);
+        /* background: black;*/
+    }
+    .work-experience-body, .education-body, .reference-body, .aboutme-body, .profession-body, .contact-body {
+        color: #fff;
+        font-size: 0.6em;
+        /* width: 45vw; */
+        margin-left: 7%;
+    }
+    .modal-header{
+        padding: 2px;
+    }
+}
+@media only screen and (max-width:736px){
+    .sidenav .closebtn {
+        position: absolute;
+        top: 57%;
+        left: -21%;
+        transform: translate(152%,-58%);
+        font-size: 17px;
+        color: gold;
+        font-family: Nasalization;
+    }
+
+    .work-experience-body fieldset, .education-body fieldset, .reference-body fieldset, .aboutme-body fieldset, .contact-body fieldset, .profession-body fieldset {
+        border: 1px solid #fff;
+        
+        border-radius: 10px;
+        padding: 4% 4% 4% 4%;
+        width: 50vw;
+        /* display: flex; */
+        overflow-y: scroll;
+    }
+    .form-control-sm, .input-group-sm>.form-control, .input-group-sm>.input-group-append>.btn, .input-group-sm>.input-group-append>.input-group-text, .input-group-sm>.input-group-prepend>.btn, .input-group-sm>.input-group-prepend>.input-group-text {
+        padding: .25rem .25rem;
+        font-size: .875rem;
+        line-height: 0.5;
+        border-radius: .2rem;
+    }
+    .modal .modal-content {
+        border: 0;
+        background-color: transparent;
+        /* box-shadow: 0px 0px 20px #17a2b842; */
+        flex-wrap: nowrap !important;
+        top: 31px;
+        height: 70vh !important;
+        position: absolute;
+        /* width: 50vw; */
+    }
+    .form-row{
+        display: flex;
+        max-height: 100%;
+    }
+
+    .education-modal-body{
+        height: 25vw;
+        overflow-y:auto;
+    }
+    .contact-body{
+        height: 23vw;
+        overflow-y:auto;
+    }
+    .profession-body{
+        height: 23vw;
+        overflow-y:auto;
+    }
+    .aboutme-body{
+        height: 23vw;
+        /* overflow-y: auto; */
+        /* display: flex; */
+        /* background-size: cover; */
+        /* margin-top: 8%; */
+    }
+    .work-modal-body{
+        height: 25vw;
+        overflow-y: auto;
+    }
+    .form-row{
+        height: auto;
+        display: flex;
+    }
+
+    .modal-body {
+        position: relative;
+        padding: 1rem;
+        flex:1 !important;
+    }
+    .btn {
+       
+        line-height: 1rem !important;
+       
+    }
+}
+
+@media only screen and (max-width:668px) {
+    .work-experience-body fieldset, .education-body fieldset, .reference-body fieldset, .aboutme-body fieldset, .contact-body fieldset, .profession-body fieldset {
+        border: 1px solid #fff;
+        
+        border-radius: 10px;
+        padding: 4% 4% 8% 4%;
+        width: 50vw;
+        /* display: flex; */
+        /* overflow-y: scroll; */
+    }
+    .form-control-sm, .input-group-sm>.form-control, .input-group-sm>.input-group-append>.btn, .input-group-sm>.input-group-append>.input-group-text, .input-group-sm>.input-group-prepend>.btn, .input-group-sm>.input-group-prepend>.input-group-text {
+        padding: .25rem .25rem;
+        font-size: .875rem;
+        line-height: 0.5;
+        border-radius: .2rem;
+    }
+    .modal .modal-content {
+        border: 0;
+        background-color: transparent;
+        /* box-shadow: 0px 0px 20px #17a2b842; */
+        flex-wrap: nowrap !important;
+        top: 31px;
+        height: 70vh !important;
+        position: absolute;
+        /* width: 50vw; */
+    }
+    .form-row{
+        display: flex;
+        max-height: 100%;
+    }
+
+    .education-modal-body{
+        height: 18vw;
+        overflow-y:auto;
+    }
+    .contact-body{
+        height: 18vw;
+        overflow-y:auto;
+    }
+    .profession-body{
+        height: 23vw;
+        overflow-y:auto;
+    }
+    .aboutme-body{
+        height: 18vw;
+        /* overflow-y: auto; */
+        /* display: flex; */
+        /* background-size: cover; */
+        /* margin-top: 8%; */
+    }
+    .work-modal-body{
+        height: 25vw;
+        overflow-y: auto;
+    }
+    .form-row{
+        height: auto;
+        display: flex;
+    }
+
+    .modal-body {
+        position: relative;
+        padding: 1rem;
+        flex:1 !important;
+    }
+    .btn {
+       
+        line-height: 0.5rem !important;
+       
+    }
+    .slider {
+        height: 32vw;
+        width: 2%;
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: 47%;
+        transform: translate(-2503%,-50%);
+        background: black;
+    }
+    .sidenav .closebtn {
+        position: absolute;
+        top: 54%;
+        left: 10%;
+        transform: translate(152%,-58%);
+        font-size: 17px;
+        color: gold;
+        font-family: Nasalization;
+    }
+    .heading_setup {
+        color: gold;
+        /* background-color: white; */
+        transition: 0.3s;
+        font-family: Nasalization;
+        text-align: center;
+        font-size: 0.6rem;
+    }
+    .sidenav a {
+        padding: 12px 8px 2px 4px;
+        text-decoration: none;
+        font-size: 0.4rem;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        font-family: Nasalization;
+    }
+}
+
+
+@media only screen and (max-height:320px){
+    .sidenav a {
+        padding: 3px 8px 2px 6px;
+        text-decoration: none;
+        font-size: 6px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        font-family: Nasalization;
+        height: 33vh;
+    }
+    .slider {
+        height: 34vw;
+        width: 2%;
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: 52%;
+        transform: translate(-2503%,-50%);
+        background: black;
+    }
+    .sidenav {
+        display: flex;
+        flex-direction: column;
+        /* width: 0; */
+        position: fixed;
+        z-index: 10;
+        top: 18%;
+        left: 0;
+        height: 66vh;
+        background-color: #111;
+        overflow: hidden !important;
+        transition: 0.5s;
+    }
+    .sidenav .closebtn {
+        position: absolute;
+        top: 82%;
+        left: -16%;
+        transform: translate(152%,-58%);
+        font-size: 17px;
+        color: gold;
+        font-family: Nasalization;
+    }
+    .modal .modal-content {
+        border: 0;
+        background-color: transparent;
+        /* box-shadow: 0px 0px 20px #17a2b842; */
+        flex-wrap: nowrap !important;
+        top: 31px;
+        height: 70vh !important;
+        position: absolute;
+        /* width: 50vw; */
+        left: 32%;
+    }
+    .work-experience-body fieldset, .education-body fieldset, .reference-body fieldset, .aboutme-body fieldset, .contact-body fieldset, .profession-body fieldset {
+        border: 1px solid #fff;
+        border-radius: 10px;
+        padding: 5% 4% 8% 4%;
+        width: 50vw;
+        /* display: flex; */
+        /* overflow-y: scroll; */
+    }
+    .form-control-sm, .input-group-sm>.form-control, .input-group-sm>.input-group-append>.btn, .input-group-sm>.input-group-append>.input-group-text, .input-group-sm>.input-group-prepend>.btn, .input-group-sm>.input-group-prepend>.input-group-text {
+        padding: .25rem .25rem;
+        font-size: 8px;
+        line-height: 1.5;
+        border-radius: .2rem;
+    }
+    .work-experience-body, .education-body, .reference-body, .aboutme-body, .profession-body, .contact-body {
+        color: #fff;
+        font-size: 0.6em;
+        /* width: 45vw; */
+        margin-left: 3%;
+    }
+    .form-row{
+        display: flex;
+        max-height: 100%;
+    }
+
+    .education-modal-body{
+        height: 25vw;
+        overflow-y:auto;
+    }
+    .contact-body{
+        height: 23vw;
+        overflow-y:auto;
+    }
+    .profession-body{
+        height: 19vw;
+        overflow-y:auto;
+    }
+    .aboutme-body{
+        height: 19vw;
+        overflow-y: auto;
+        /* display: flex; */
+        /* background-size: cover; */
+        /* margin-top: 8%; */
+    }
+    .work-modal-body{
+        height: 25vw;
+        overflow-y: auto;
+    }
+    .form-row{
+        height: auto;
+        display: flex;
+    }
+
+    .modal-body {
+        position: relative;
+        padding: 1rem;
+        flex:1 !important;
+    }
+    .btn {
+       
+        line-height: 0.8rem !important;
+       
+    }
+    #main {
+        transition: margin-left .5s;
+        border: 0px solid white;
+        position: absolute;
+        left: 12%;
+        top: 46%;
+        height: 57%;
+        width: 24%;
+        transform: translate(94%,-40%);
+        /* background: black; */
+    }
+    .clone-btn-education,.clone-btn-workexperience,.clone-btn-reference {
+        position: absolute;
+        /* top: 10%; */
+        left: 86%;
+        display: flex;
+        /* transform: translate(1640%,-1282%); */
+    }
+}
+
+
+
+
+
+
+

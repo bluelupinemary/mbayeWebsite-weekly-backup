@@ -5,6 +5,7 @@ namespace App\Notifications\Frontend;
 use App\Models\Blogs\Blog;
 use Illuminate\Bus\Queueable;
 use App\Models\BlogShares\BlogShare;
+use App\Models\GeneralBlogShares\GeneralBlogShare;
 use App\Models\Comment\GeneralComment;
 use App\Models\GeneralBlogs\GeneralBlog;
 use Illuminate\Notifications\Notification;
@@ -53,18 +54,35 @@ class BlogShareNotification extends Notification implements ShouldQueue
 
     public function toDatabase($notifiable)
     {
-        return [
+        $data = [];
+        if($this->blog_share->blog_type == 'App\Models\Blogs\Blog') {
+            $data = [
                 'blog' => $this->blog_share,
                 'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->blog->name.'" blog',
-        ];
+            ];
+        } else if($this->blog_share->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
+            $data = [
+                'blog' => $this->blog_share,
+                'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->general_blog->name.'" blog',
+            ];
+        }
+        return $data;
     }
 
     public function toBroadcast($notifiable)
     {
-        return new BroadcastMessage([
-            'blog' => $this->blog_share,
-            'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->blog->name.'" blog',
-        ]);
+        if($this->blog_share->blog_type == 'App\Models\Blogs\Blog') {
+            return new BroadcastMessage([
+                'blog' => $this->blog_share,
+                'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->blog->name.'" blog',
+            ]);
+        } else if($this->blog_share->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
+            return new BroadcastMessage([
+                'blog' => $this->blog_share,
+                'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->general_blog->name.'" blog',
+            ]);
+        }
+        
     }
     public function broadcastType()
     {

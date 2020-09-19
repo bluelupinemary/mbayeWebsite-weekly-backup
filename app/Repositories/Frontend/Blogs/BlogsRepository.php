@@ -255,7 +255,13 @@ class BlogsRepository extends BaseRepository
         $avatar = $featured_image;
 
         if (isset($featured_image) && !empty($featured_image)) {
-            $fileName = time().$avatar->getClientOriginalName();
+            $exploaded_name = explode('.', $avatar->getClientOriginalName());
+
+            $fileName = Str::random().'.'.$exploaded_name[1];
+            while (Storage::exists('public/img/blog/'.$fileName)) {
+                $fileName = Str::random().'.'.$exploaded_name[1];
+            }
+
             $source=$featured_image;
             //compressing
             $quality=60;//0-9

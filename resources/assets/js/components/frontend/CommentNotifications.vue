@@ -111,7 +111,11 @@ export default {
                 } else if(notification.type.includes('GeneralBlogShareNotification')) {
                     window.open('/single_general_blog/'+notification.data.blog.blog_id, '_blank');
                 } else if(notification.type.includes('BlogShareNotification')) {
-                    window.open('/single_blog/'+notification.data.blog.blog_id, '_blank');
+                    if(notification.data.blog.blog_type.includes('GeneralBlog')) {
+                        window.open('/single_general_blog/'+notification.data.blog.blog_id, '_blank');
+                    } else if(notification.data.blog.blog_type.includes('Blog')) {
+                        window.open('/single_blog/'+notification.data.blog.blog_id, '_blank');
+                    }
                 }
 
                 this.getnotifications();

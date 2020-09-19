@@ -20,6 +20,10 @@ class JobSeekerProfile extends BaseModel
         'featured_image',
         'objective',
         'skills',
+        'present_address',
+        'present_city',
+        'state',
+        'present_country',
         'user_id',
         'profession_id',
     ];

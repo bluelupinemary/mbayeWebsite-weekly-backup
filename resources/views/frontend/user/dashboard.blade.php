@@ -577,6 +577,7 @@
     </div>
 
     <!--astronaut img div-->
+    <div class="app">
     <div  class="astronaut-img-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif" id="draggable" class="ui-widget-content slide_10"> 
         <h2 class="planet_name" id="edit-photo">Edit Photo</h2>
 
@@ -622,13 +623,65 @@
             <span>Communicator</span>
             <button class="communicator-button"></button>
         </div>
-        <div class="app">
             <commentnotification-component :user="{{ Auth::user() }}"></commentnotification-component>
-        </div>
         <button class="navigator-zoomout-btn tooltips zoom-in-out">
             <span>Zoom Out</span>
             <i class="fas fa-undo-alt"></i>
         </button>
+    </div>
+    <div class="navigator-div-zoomed-in @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+        {{-- <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> --}}
+        <div class="navigator-components">
+            @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+                <img class="astronaut-img {{access()->user()->getGender()}}" src="{{ asset('front/images/astronut/Thomasina_blog.png') }}" alt=""
+                class="astronaut-body">
+                <div class="tos-div thomasina">
+                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                </div>
+            @else
+                <img class="astronaut-img {{access()->user()->getGender()}}" src="{{ asset('front/images/astronut/Tom_blog.png') }}" alt=""
+                class="astronaut-body">
+                <div class="tos-div">
+                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                </div>
+            @endif
+
+            <a href="{{url('profile/edit-photo')}}" class="profilepicture">
+                <img  id="user-photo" class="{{access()->user()->getGender()}}" src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+            </a> 
+
+            {{-- <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+                <span>Zoom In</span>
+                <i class="fas fa-search-plus"></i>
+            </button> --}}
+            <div class="navigator-buttons">
+                <div class="column column-1">
+                    <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
+                    <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
+                </div>
+                <div class="column column-2">
+                    <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+                </div>
+                <div class="column column-3">
+                    <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                    <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+                </div>
+            </div>
+            <div class="instructions-div">
+                <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
+            </div>
+            <div class="communicator-div tooltips right">
+                <span>Communicator</span>
+                <button class="communicator-button"></button>
+            </div>
+            <commentnotification-component :user="{{ Auth::user() }}"></commentnotification-component>
+            
+            <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                <span>Zoom Out</span>
+                <i class="fas fa-undo-alt"></i>
+            </button>
+        </div>
+    </div>
     </div>
     <!--end of astronaut img div-->
 </div>
@@ -659,5 +712,6 @@
     <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
     
     <script src="{{asset('front/JS/jquery.mobile-1.4.5.min.js')}}"></script>
+    <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/JS/dashboard.js')}}"></script>
 @endsection

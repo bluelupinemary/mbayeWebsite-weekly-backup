@@ -50,7 +50,6 @@ html, body {
     z-index:6000;
 }
 
-
 #loadingScreenOverlay {
     position: fixed;
     display: none;
@@ -284,6 +283,8 @@ html, body {
 }
 
 
+
+
 @keyframes leftFadeIn {
   0% {
     position: relative;
@@ -302,4 +303,37 @@ html, body {
     40% {
         text-shadow: -2px 1px 25px #cea22a;
     }
+  }
+
+
+  #messageDiv{
+    width: 40vw;
+    height: 5vw;
+    text-align: left;
+    padding-left: 1vw;
+    color: #eba534;
+    text-shadow: 2px 0px 10px black;
+    position: fixed;
+    bottom: 0;
+    font-size: 1.5em;
+    font-family: 'Courgette-Regular';
+    pointer-events: none;
+    display: block;
+}
+
+  @media screen and (max-width:992px){
+        #messageDiv{
+            width: 50vw;
+            height: 7vw;
+            text-align: left;
+            padding-left: 1vw;
+            color: #eba534;
+            text-shadow: 2px 0px 10px black;
+            position: fixed;
+            bottom: 0;
+            font-size: 0.7em;
+            font-family: 'Courgette-Regular';
+            pointer-events: none;
+            display: block;
+        }
   }

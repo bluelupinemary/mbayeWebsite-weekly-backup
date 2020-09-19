@@ -30,6 +30,16 @@
 @endsection
 
 @section('after-scripts')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
+    <script src="{{asset('front/JS/musicplay.js')}}" type="text/jscript"></script>
+    <script src="{{asset('front/JS/music-wave.js')}}"></script>
+    {{-- <script src="{{asset('trix/trix.js')}}"></script> --}}
+    <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
+    <script src="{{asset('front/slick/slick.min.js')}}"></script>
+    
   <script>
       // for showing message to turn to landscape 
       testOrientation();
@@ -57,13 +67,61 @@
     $(".text_part1").removeClass("ani-rollout_text");
 
   $(document).ready(function () {
-        $('.img_sun').css({'display':'block'});
+
+
+    var elem = document.documentElement;
+    function openFullscreen() {
+        if (elem.mozRequestFullScreen) {  /* Firefox */
+        elem.mozRequestFullScreen(); 
+        contentDisplay();
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+        contentDisplay();
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+        contentDisplay();
+      }
+      else if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+        contentDisplay();
+      } 
+      else{
+      //alert("iphone")
+        contentDisplay();
+      }
+    
+    }
+    if(window.innerWidth < 991 ){
+    $(document).ready(()=>{
+        Swal.fire({
+                imageUrl: '../../front/icons/alert-icon.png',
+                imageWidth: 100,
+                imageHeight: 100,
+                html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+                padding: '15px',
+                background: 'rgba(8, 64, 147, 0.62)',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.value) {
+                    openFullscreen()
+                }
+            });
+        });
+    }
+    else  contentDisplay();
+    
+    function contentDisplay() { 
+      
+      $('.div_container').css({'display':'block'});
+      $('.img_sun').css({'display':'block'});
         $('.img_sun2').css({'display':'none'});
         $(".img_sun").addClass("ani-rollout_earth");
             setTimeout(function () {
               $('.next_button_ag').css({'display':'block'}); 
             //  $('.text_part1').css({'display':'block'});
         }, 5000);
+        }
+        
 });
 	/**
   Function for changing page next next page of the agreement  */
@@ -89,7 +147,7 @@ Function for changing to previous page of agreement */
       }
 
 function fun_agree(){
-window.location.href = "{{URL::to('register')}}"
+window.location.href = "{{URL::to('/dashboard')}}"
 }
 
 

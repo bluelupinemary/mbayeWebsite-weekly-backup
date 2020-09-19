@@ -64,6 +64,7 @@ Vue.component('most-naffed', require('../components/frontend/MostNaffedComponent
 Vue.component('your-profile-btn', require('../components/frontend/YourProfileBtnComponent.vue').default);
 
 Vue.component('imageeditor-component', require('../components/frontend/ImageEditor.vue').default);
+Vue.component('tuieditor-component', require('../components/frontend/TuiImageEditor.vue').default);
 const app = new Vue({
     el: '.app',
 });

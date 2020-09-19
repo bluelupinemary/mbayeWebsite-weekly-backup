@@ -987,25 +987,25 @@ button.fullscreen:hover span {
 
 .swal2-popup {
     box-shadow: 0px 0px 20px #17a2b8;
-    width: 27vw !important;
-    padding: 1vw !important;
+    /* width: 27vw !important;
+    padding: 1vw !important; */
 }
 
 .swal2-image {
-    width: 6vw !important;
-    height: 6vw !important;
+    /* width: 6vw !important;
+    height: 6vw !important; */
     margin: 1.25vh auto !important;
 }
 
 .swal2-title {
     font-family: 'Nasalization';
-    font-size: 1.5vw !important;
+    /* font-size: 1.5vw !important; */
     color: #df1613 !important;
 }
 
 .swal2-content {
     color: #17a2b8 !important;
-    font-size: 1.1vw !important;
+    /* font-size: 1.1vw !important; */
     font-family: 'Nasalization';
 }
 
@@ -1014,8 +1014,8 @@ button.fullscreen:hover span {
 }
 
 .swal2-styled {
-    font-size: 1.3vw !important;
-    padding: 0.5vw 2vw !important;
+    /* font-size: 1.3vw !important;
+    padding: 0.5vw 2vw !important; */
 }
 
 .swal2-actions {

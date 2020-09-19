@@ -334,7 +334,7 @@
                                 <div class="owner-name">{{$blog->owner->first_name.' '.$blog->owner->last_name}}</div>
                             </div>
                              {{-- <img class="card-img-top" src="" alt="Card image cap"> --}}
-                            <div class="card-body" style="background-image: url({{ asset('storage/img/blog/'.$blog->featured_image) }});">
+                            <div class="card-body" style="background-image: url({{ asset('storage/img/general_blogs/'.$blog->featured_image) }});">
                             </div>
                             <div class="card-footer">
                                 <div class="blog-share-title">{{$blog->name}}</div>
