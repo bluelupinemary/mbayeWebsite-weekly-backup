@@ -9,6 +9,7 @@ use App\Models\ModelTrait;
 use App\Models\Access\User\User;
 
 
+
 class CompanyProfile extends BaseModel
 {
     use ModelTrait,

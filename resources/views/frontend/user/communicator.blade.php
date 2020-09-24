@@ -67,7 +67,7 @@
                                 </table>
                             </div>
                         </div>
-                        <input type="file" name="featured_image" accept="image/x-png,image/jpeg" id="featured_image">
+                        <input type="file" name="featured_image" accept=".jpg,.jpeg,.png" id="featured_image">
                         <input type="hidden" name="edited_featured_image">
                         <input type="checkbox" name="films_tag" id="films_tag" value="0" data-id="1">
                         <input type="checkbox" name="sports_tag" id="sports_tag" value="0" data-id="2">
@@ -98,7 +98,7 @@
                 <div class="email-form">
                     <form action="{{url('/send_contact_email')}}" method="post" id="email-form">
                         @csrf
-                        <select name="subject" id="" class="form-control">
+                        <select name="subject" id="">
                             <option value="" disabled selected>Subject</option>
                             <option value="Report Page Issues">Report Page Issues</option>
                             <option value="Report Game Bugs">Report Game Bugs</option>
@@ -135,7 +135,7 @@
                                 </table>
                             </div>
                         </div>
-                        <input type="file" name="featured_image" accept="image/x-png,image/jpeg" id="general_blog_featured_image">
+                        <input type="file" name="featured_image" accept=".jpg,.jpeg,.png" id="general_blog_featured_image">
                         <input type="hidden" name="edited_featured_image">
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <input type="hidden" name="blog_id">
@@ -159,7 +159,7 @@
                     <form method="POST" action="{{url('publish_designs_blog')}}" id="designs-blog-form" enctype="multipart/form-data">
                         @csrf
                         <input type="text" name="name" class="form-control" placeholder="TITLE" autocomplete="off">
-                        <select name="panel_id" class="form-control" id="panel_list">
+                        <select name="panel_id" id="panel_list">
                             <option value="" disabled selected>Panel Number</option>
                             @foreach (Auth::user()->getPanels() as $panel)
                                 <option value="{{$panel->id}}" data-flowers="{{$panel->flowers_used}}" data-screenshot="{{$panel->screenshot}}">{{$panel->panel_number}}</option>
@@ -293,57 +293,64 @@
                 <div class="tos-div">
                     <img src="{{asset('front/images/communicator-buttons/buttons/termsBtn.png')}}" class="communicator-button tos-button" alt="">
                 </div>
+                {{-- <div class="youtube-player-controls-mobile">
+                    <button><img id="youtube-icon" src="{{asset('front/images/communicator-buttons/pause-btn.png')}}" /></button>
+                    <button><img id="fullscreen-icon"src="{{asset('front/images/communicator-buttons/fullscreen-btn.png')}}" /></button>
+                </div> --}}
                 <div class="music-player">
-                    {{-- <canvas id="canvas"></canvas>
-                    <div id="bars">
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                        <div class="bar bar-animated"></div>
-                    </div> --}}
+                    <div class="video-container">
+                        {{-- <canvas id="canvas"></canvas>
+                        <div id="bars">
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                            <div class="bar bar-animated"></div>
+                        </div> --}}
+                        <span class="close-btn"><i class="far fa-times-circle"></i></span>
+                        {{-- <div class="music-desc">
+                            <p class="music-title">Music title</p>
+                            <p class="music-singer">Singer here</p>
+                        </div> --}}
 
-                    <span class="close-btn"><i class="far fa-times-circle"></i></span>
-                    {{-- <div class="music-desc">
-                        <p class="music-title">Music title</p>
-                        <p class="music-singer">Singer here</p>
-                    </div> --}}
+                        {{-- <button class="music-button play-button"><i class="fas fa-play"></i></button>
+                        <button class="music-button pause-button"><i class="fas fa-pause"></i></button> --}}
 
-                    {{-- <button class="music-button play-button"><i class="fas fa-play"></i></button>
-                    <button class="music-button pause-button"><i class="fas fa-pause"></i></button> --}}
-
-                    {{-- <div class="volume-progress">
-                        <div class="progress progress-vertical">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                        {{-- <div class="volume-progress">
+                            <div class="progress progress-vertical">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="mute-music"><i class="fas fa-volume-up"></i></span>
                         </div>
-                        <span class="mute-music"><i class="fas fa-volume-up"></i></span>
-                    </div>
-                    
-                    <audio id="music_player" preload="auto"></audio>
+                        
+                        <audio id="music_player" preload="auto"></audio>
 
-                    <ul class="playlist">
-                        <li data-src="{{asset('front/images/audio/BlueMoonNatKingCole.mp3')}}" data-songtitle="Blue Moon" data-artist="Nat King Cole"></li>
-                        <li data-src="{{asset('front/images/audio/Bruce Springsteen - I\'m on Fire.mp3')}}" data-songtitle="I'm on Fire" data-artist="Bruce Springsteen"></li>
-                        <li data-src="{{asset('front/images/audio/Don McLean - Vincent ( Starry, Starry Night).mp3')}}" data-songtitle="Vincent ( Starry, Starry Night)" data-artist="Don McLean"></li>
-                    </ul> --}}
+                        <ul class="playlist">
+                            <li data-src="{{asset('front/images/audio/BlueMoonNatKingCole.mp3')}}" data-songtitle="Blue Moon" data-artist="Nat King Cole"></li>
+                            <li data-src="{{asset('front/images/audio/Bruce Springsteen - I\'m on Fire.mp3')}}" data-songtitle="I'm on Fire" data-artist="Bruce Springsteen"></li>
+                            <li data-src="{{asset('front/images/audio/Don McLean - Vincent ( Starry, Starry Night).mp3')}}" data-songtitle="Vincent ( Starry, Starry Night)" data-artist="Don McLean"></li>
+                        </ul> --}}
+                    </div>
+                    <button class="custom-play-pause-btn"><img id="youtube-icon" src="{{asset('front/images/communicator-buttons/pause-btn.png')}}" /></button>
+                    <button class="custom-fullscreen-btn"><img id="fullscreen-icon"src="{{asset('front/images/communicator-buttons/fullscreen-btn.png')}}" /></button>
                 </div>
                 <div class="music-knobs-colors next-colors">
                     <div class="slick-carousel colors-slider next-colors-slider">
@@ -457,6 +464,9 @@
                     <div class="instruction instruction-7" data-text-div="instruction-text-7"></div>
                     <div class="instruction instruction-8" data-text-div="instruction-text-8"></div>
                     <div class="instruction instruction-9" data-text-div="instruction-text-9"></div>
+                    <div class="instruction instruction-10" data-text-div="instruction-text-10"></div>
+                    <div class="instruction instruction-11" data-text-div="instruction-text-11"></div>
+                    <div class="instruction instruction-12" data-text-div="instruction-text-12"></div>
     
                     <div class="instruction-text instruction-text-1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
                     <div class="instruction-text instruction-text-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
@@ -467,6 +477,9 @@
                     <div class="instruction-text instruction-text-7">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
                     <div class="instruction-text instruction-text-8">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
                     <div class="instruction-text instruction-text-9">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                    <div class="instruction-text instruction-text-10">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                    <div class="instruction-text instruction-text-11">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                    <div class="instruction-text instruction-text-12">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
                 </div>
             </div>
             <div class="start-div">

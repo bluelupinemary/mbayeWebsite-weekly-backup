@@ -143,7 +143,7 @@
 
 /* toolbar buttons */
 
-.close {
+/* .close {
     position: fixed;
     right: 2%;
     color: #aaaaaa;
@@ -157,7 +157,7 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
-}
+} */
 
 .undo:hover, .undo:focus, 
 .custom-file-upload:hover, .custom-file-upload.focus,

@@ -39,15 +39,26 @@ let charImgMap = new Map([
     //key, val[position, alpha, beta, radius]
 
     ['InitialView',[{x: 0, y: 0, z: 0},2.4706,1.2283, 1400]],
-    ['Ruru',[{x:-971,y:2069, z:319},2.3422,1.4107,0.1]],
-    ['Solar',[{x:-1977,y:-1229, z:1172},2.4532,1.2013,0.1]],
-    ['Ally',[{x:-224,y:1385, z:1049},4.2803,1.4711,0.1]],
-    ['William',[{x:654,y:2087, z:660},3.1721,1.5344,0.1]],
-    ['Villa',[{x:-611,y:-2385, z:250},4.7874,1.3864,80]],
-    ['Bruce',[{x:-992,y:-1331, z:-1211},0.06215,1.4707,0.1]],
-    ['Trevor',[{x:-2094,y:1452, z:-1350},1.0995,1.5559,0.1]],
-    ['Manny',[{x:2390,y:-763, z:529},4.387,1.5818,0.1]],
+    //['Ruru',[{x:-971,y:2069, z:319},2.3422,1.4107,0.1]],
+    ['Ruru',[{x:463,y:3988, z:-1858},2.3873,1.5126,0.1]],
+  
+    ['Solar',[{x:-1581,y:-2052, z:-83},2.4736,1.2661,100]],
 
+    // ['Ally',[{x:-224,y:1385, z:1049},4.2803,1.4711,0.1]],
+    ['Ally',[{x:-834,y:1781, z:4093},4.4214,1.4373,30]],
+    //['William',[{x:654,y:2087, z:660},3.1721,1.5344,0.1]],
+    ['William',[{x:2810,y:3902, z:1922},3.1701,1.5520,0.1]],
+
+    // ['Villa',[{x:-611,y:-2385, z:250},4.7874,1.3864,80]],
+    ['Villa',[{x:-885,y:-4200, z:4160}, 4.8796,1.4463,0.1]],
+    //['Bruce',[{x:-992,y:-1331, z:-1211},0.06215,1.4707,0.1]],
+    ['Bruce',[{x:-5617,y:-856, z:-1729},6.549,1.4465,0.1]],
+
+    //['Trevor',[{x:-2094,y:1452, z:-1350},1.0995,1.5559,0.1]],
+    ['Trevor',[{x:-3140,y:1746, z:-3836},1.0788,1.5568,30]],
+
+    // ['Manny',[{x:2390,y:-763, z:529},4.387,1.5818,0.1]],
+    ['Manny',[{x:3237,y:-696, z:3860},4.3098,1.5425,0.1]],
 ]);
 
 
@@ -68,13 +79,15 @@ function createScene(){
     create_home_labels();
    
     add_home_mouse_listener();
-
-    enable_webcamera();
+    // enable_webcamera();
+   
 
     enable_init_webcamera();
 
     create_characters();
 
+    create_video_functions();
+    homeScene.collisionsEnabled = true;
     hl = new BABYLON.HighlightLayer("hl1", homeScene);
     // create_ruru_texts();
     
@@ -100,11 +113,12 @@ function create_init_camera(){
     //for the right mouse button panning function; ;0 -no panning, 1 - fastest panning
     camera.panningSensibility = 10; 
     camera.upperBetaLimit = 10;
-    camera.panningDistanceLimit = 3000;
+    camera.panningDistanceLimit = 6000;
     camera.attachControl(canvas,true);
     camera.pinchPrecision = 1;
     homeScene.activeCamera = camera;
-    camera.maxZ = 20000;
+    camera.maxZ = 25000;
+    camera.checkCollisions = true;
     return camera;
 }//end of create camera function
                    
@@ -129,7 +143,7 @@ function create_init_light(){
 }//end of create earth light function
 
 function create_init_skybox(){ 
-    var skybox = BABYLON.MeshBuilder.CreateBox("initSkybox", {size:15000.0}, homeScene);
+    var skybox = BABYLON.MeshBuilder.CreateBox("initSkybox", {size:20000.0}, homeScene);
    
     skybox.position = new BABYLON.Vector3(942,-500,-1500);
 
@@ -153,7 +167,7 @@ function create_init_skybox(){
     skyboxMaterial.disableLighting = true;
     skyboxMaterial.specular = new BABYLON.Vector3(0,0,0);
     skybox.material = skyboxMaterial;  
-
+    skybox.checkCollisions = true;
     skyboxMaterial.freeze();
     skybox.freezeWorldMatrix();
     return skybox;
@@ -185,8 +199,10 @@ function load_home_meshes(){
                     for(var i=0;i<result.meshes.length;i++){
                         if(result.meshes[i].name === "top"){
                             videoHome_obj = result.meshes[i];
+                            add_action_mgr(videoHome_obj);
                         }else if(result.meshes[i].name === "bot"){
                             videoHome_obj2 = result.meshes[i];
+                            videoHome_obj2.isPickable = false;
                         }
                     }
                   
@@ -200,8 +216,18 @@ function load_home_meshes(){
 
                     //result.meshes[3].position = new BABYLON.Vector3( -127, -64,-124);
                     // {x: .63145374998968, y: -7.822672727941687, z: -68.04359296575824}
-                    result.meshes[3].position = new BABYLON.Vector3( -54, -10,-68);
-                    result.meshes[3].rotationQuaternion = new BABYLON.Quaternion( 0.0437,0.8910,0.0985,-0.4409);
+                   
+                    // result.meshes[3].position = new BABYLON.Vector3( -54, -10,-68);
+                    // result.meshes[3].rotationQuaternion = new BABYLON.Quaternion( 0.0437,0.8910,0.0985,-0.4409);
+
+                    let browser = testBrowser();
+                    if(browser === 'Safari'){
+                        result.meshes[3].position = new BABYLON.Vector3(-41.27, 37.91,-58.68);
+                        result.meshes[3].rotationQuaternion = new BABYLON.Quaternion(0.8909,-0.0453,-0.4411,-0.0977);
+                    }else{
+                        result.meshes[3].position = new BABYLON.Vector3( -54, -10,-68);
+                        result.meshes[3].rotationQuaternion = new BABYLON.Quaternion( 0.0437,0.8910,0.0985,-0.4409);
+                    }
         })
 
     ]).then(() => {
@@ -273,7 +299,7 @@ function init_planet_label(name,matlPath,h,w,x,y,z){
     plane.position = new BABYLON.Vector3(x,y,z);
     
     let planeMatl = new BABYLON.StandardMaterial("labelMal", homeScene);
-    // planeMatl.diffuseColor = BABYLON.Color3.Red();
+
     planeMatl.diffuseTexture = new BABYLON.Texture(matlPath, homeScene);
     planeMatl.opacityTexture = new BABYLON.Texture(matlPath, homeScene);
     planeMatl.alpha = 0.9;
@@ -315,53 +341,119 @@ function init_planet_label(name,matlPath,h,w,x,y,z){
     return plane;
 }
 
+//======================================= INITIALIZE VIDEO FUNCTIONS ICONS ============================================================
+
+function create_video_functions(){
+   
+    let play = init_music_icon("playIcon", "playMusic.png", 100,100,{x:-142,y:-40,z:95},{x: -0.3377, y: 0.5646, z: 0.7043, w: 0.2660});
+    let pause = init_music_icon("pauseIcon", "pauseMusic.png", 100,100,{x:-142,y:-39,z:95},{x: -0.3377, y: 0.5646, z: 0.7043, w: 0.2660});
+    // enable_home_gizmo(play);
+}
+
+
+function init_music_icon(name,imgName,w,h,pos,rot){
+    let temp = BABYLON.MeshBuilder.CreatePlane(name, {width:w, height: h}, homeScene);
+    temp.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+    temp.rotationQuaternion = new BABYLON.Quaternion(rot.x,rot.y,rot.z,rot.w);
+    temp.isVisible = false;
+
+    var tempMatl = new BABYLON.StandardMaterial(name+"Matl", homeScene);
+    tempMatl.diffuseTexture = new BABYLON.Texture("front/images3D/"+imgName, homeScene);
+    tempMatl.opacityTexture = new BABYLON.Texture("front/images3D/"+imgName, homeScene);
+    tempMatl.backFaceCulling = false;
+    temp.material = tempMatl;
+    initLight.includedOnlyMeshes.push(temp);
+    
+    return temp;
+}
+
+//======================================= END OF INITIALIZE VIDEO FXNS ICONS =====================================================
+
 
 let videoTexture;
 let videoTexture2;
+let discvideoTexture;
 let videoHome_obj, videoHome_obj2;
 let theVideoMatl;
 function add_video_to_mesh(vidNo){
     let mat = new BABYLON.StandardMaterial("videoMat", homeScene);
-    // if(vidNo == 2){
-    //     videoTexture.video.pause();
-    //     videoTexture.currentTime = 0;
-    //     if(!isVideoSkipped && !isOverlayRemoved){
-    //         document.getElementById('firstVideoOverlay').remove();
-    //         document.getElementById('placeholderDiv').remove();
-    //     }
-    //     videoTexture = videoTexture2;
-    //     mat.diffuseTexture = videoTexture;
-    //     videoHome_obj.material = mat;            //top disc
-    //     videoHome_obj2.material = mat;           //bottom disc
-    // }
-    if(!videoTexture){
-        videoTexture = new BABYLON.VideoTexture("discVideo1", ["front/videos/homeIntro.webm","front/videos/homeIntro.mp4"], homeScene, false, false);
-        // videoTexture2 = new BABYLON.VideoTexture("discVideo2", ["front/videos/homeVideoTrim.webm","front/videos/homeVideoTrim.mp4"], homeScene, false, false);
+   
+    if(!discvideoTexture){
+        discvideoTexture = new BABYLON.VideoTexture("discVideo1", ["front/videos/homeIntro.webm","front/videos/homeIntro.mp4"], homeScene, false, false);
         mat.backFaceCulling = false;
         
-        videoTexture.invertX = true;
+        let browser = testBrowser();
+        if(browser === 'Safari'){
+            //for safari
+            discvideoTexture.uOffset = 0;
+            discvideoTexture.vOffset = 0.020;
+            discvideoTexture.uScale = 1.030;
+            discvideoTexture.vScale = 2.510;
+            discvideoTexture.uAng = 1.078;
+        }else{
+            discvideoTexture.uOffset = 0.04;
+            discvideoTexture.vOffset = 0.14;
+            discvideoTexture.uScale = -1.1;
+            discvideoTexture.vScale = 1.15;
+        }
         
-        videoTexture.uOffset = 0.04;
-        videoTexture.vOffset = 0.14;
 
-    
-        videoTexture.uScale = -1.1;
-        videoTexture.vScale = 1.15;
-        // videoTexture2.uScale = -1;
-        mat.diffuseTexture = videoTexture;
 
+
+        mat.diffuseTexture = discvideoTexture;
         videoHome_obj.material = mat;           //the top disc
         videoHome_obj2.material = mat;          //the bottom disc
         // videoTexture2.video.pause();
-        videoTexture.video.loop = true;
-        videoTexture.video.pause();
+        discvideoTexture.video.loop = true;
+        discvideoTexture.video.pause();
       
         theVideoMatl = mat;
     }
 
-    // videoTexture.video.play();
+	// var planeOpts = {
+    //     height: 300, 
+    //     width: 400
+    // };
+    // var ANote0Video = BABYLON.MeshBuilder.CreatePlane("plane", planeOpts, homeScene);
+    // ANote0Video.position = new BABYLON.Vector3(0,300,0);
+    // ANote0Video.rotation.y = -0.9;
+    // var ANote0VideoMat = new BABYLON.StandardMaterial("m", homeScene);
+    
+    // ANote0VideoVidTex = new BABYLON.VideoTexture("vidtex","front/videos/homeIntro.mp4", homeScene);
+   
+    // ANote0VideoMat.roughness = 1;
+    // ANote0VideoMat.emissiveColor = new BABYLON.Color3.White();
+    // // ANote0Video.material = ANote0VideoMat;
+    // ANote0VideoMat.backFaceCulling = false;
+
+    // // ANote0VideoVidTex.invertX = true;  
+        
+    // // ANote0VideoVidTex.uOffset = 0.04;
+    // // ANote0VideoVidTex.vOffset = 0.14;
 
 
+    // // ANote0VideoVidTex.uScale = -1.1;
+    // // ANote0VideoVidTex.vScale = 1.15;
+
+    // ANote0VideoMat.diffuseTexture = ANote0VideoVidTex;
+    // videoHome_obj.material = ANote0VideoMat;
+
+    // ANote0VideoVidTex.video.loop = true;
+    // ANote0VideoVidTex.video.pause();
+
+
+
+
+    // homeScene.onPointerObservable.add(function(evt){
+    //     if(evt.pickInfo.pickedMesh === ANote0Video){
+    //         //console.log("picked");
+    //             if(ANote0VideoVidTex.video.paused)
+    //                 ANote0VideoVidTex.video.play();
+    //             else
+    //                 ANote0VideoVidTex.video.pause();
+    //             console.log(ANote0VideoVidTex.video.paused?"paused":"playing");
+    //     }
+    // }, BABYLON.PointerEventTypes.POINTERPICK);
    
 }
 
@@ -408,6 +500,7 @@ let planetAxis = new BABYLON.Vector3(0,4,0);
 let redAngle = -0.01;   
 let yellowAngle = -0.02;
 let grayAngle = 0.005;
+let sunOrigTexture;
 function create_home_planets(){
     //create the sun
 
@@ -542,6 +635,7 @@ function create_home_planets(){
     });
 } // end of create_planets function
 
+let planetsMap = new Map();
 //function that instantiates a planet
 function init_planet(name,material_name,texture_path,normal_texture_path,x_pos,y_pos,z_pos,radius){
     let temp = BABYLON.Mesh.CreateSphere(name, 30, radius, homeScene);
@@ -551,6 +645,10 @@ function init_planet(name,material_name,texture_path,normal_texture_path,x_pos,y
     temp_material.bumpTexture = new BABYLON.Texture(normal_texture_path,homeScene);
     temp_material.specularColor = new BABYLON.Color3(0,0,0);
     temp.material = temp_material;
+
+    planetsMap.set(temp.name);
+
+    if(name === "sun") sunOrigTexture = temp_material.diffuseTexture;
 
     return temp;
 }//end of init planet function
@@ -576,6 +674,8 @@ function init_clone_planet(temp,material_name,texture_path,normal_texture_path,x
          temp.rotationQuaternion =  new BABYLON.Quaternion(-0.0111,0.0016,-0.1497,0.9886);
     }
 
+    planetsMap.set(temp.name);
+
 }//end of init planet function
 
 let homeGizmo;
@@ -596,25 +696,36 @@ function enable_home_gizmo(themesh){
 let charTooltip;
 var onOverPlanet =(meshEvent)=>{
     if(charImgMap.has(meshEvent.source.name)){
-            charTooltip = document.createElement("span");
-            charTooltip.setAttribute("id", "charTooltip");
-            var sty = charTooltip.style;
-            sty.position = "absolute";
-            sty.lineHeight = "1.2em";
-            sty.padding = "0.2%";
-            sty.color = "#00BFFF";
-            sty.fontFamily = "Courgette-Regular";
-            sty.fontSize = "1.5em";
-            sty.top = (homeScene.pointerY - 50) + "px";
-            sty.left = (homeScene.pointerX +50) + "px";
-            sty.cursor = "pointer";
+        charTooltip = document.createElement("span");
+        charTooltip.setAttribute("id", "charTooltip");
+        var sty = charTooltip.style;
+        sty.position = "absolute";
+        sty.lineHeight = "1.2em";
+        sty.padding = "0.2%";
+        sty.color = "#00BFFF";
+        sty.fontFamily = "Courgette-Regular";
+        sty.fontSize = "1.5em";
+        sty.top = (homeScene.pointerY - 50) + "px";
+        sty.left = (homeScene.pointerX +50) + "px";
+        sty.cursor = "pointer";
 
-            document.body.appendChild(charTooltip);
-            if(currCamTarget!= meshEvent.source.name) charTooltip.textContent = "View";
-            else charTooltip.textContent = "Return";
+        document.body.appendChild(charTooltip);
+        if(currCamTarget!= meshEvent.source.name) charTooltip.textContent = "View";
+        else charTooltip.textContent = "Return";
+
+        origScaling = meshEvent.source.scaling;
+        meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.1,origScaling.y*1.1,origScaling.z*1.1);
+
+    }else if(planetsMap.has(meshEvent.source.name)){
+        origScaling = meshEvent.source.scaling;
+        meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.1,origScaling.y*1.1,origScaling.z*1.1);
+ 
+    }else if(meshEvent.source.name === "top"){
+        if(isVideoPlaying) homeScene.getMeshByName("pauseIcon").isVisible = true;
+        else homeScene.getMeshByName("playIcon").isVisible = true;
     }
-    origScaling = meshEvent.source.scaling;
-    meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.1,origScaling.y*1.1,origScaling.z*1.1);
+
+    
     if(meshEvent.source.name === "homeVenus"){
         venusInfoTxt.isVisible = true;
     } 
@@ -626,10 +737,17 @@ var onOutPlanet =(meshEvent)=>{
     if(charImgMap.has(meshEvent.source.name)){
         while (document.getElementById("charTooltip")) {
             document.getElementById("charTooltip").parentNode.removeChild(document.getElementById("charTooltip"));
-        } 
-    } 
-    meshEvent.source.scaling = origScaling;
-    venusInfoTxt.isVisible = false;
+        }
+        meshEvent.source.scaling = origScaling;
+        venusInfoTxt.isVisible = false; 
+    }else if(planetsMap.has(meshEvent.source.name)){
+        meshEvent.source.scaling = origScaling;
+        venusInfoTxt.isVisible = false;
+    }
+    
+    homeScene.getMeshByName("pauseIcon").isVisible = false;
+    homeScene.getMeshByName("playIcon").isVisible = false;
+    
   
 };
 
@@ -654,117 +772,9 @@ var onOverSun =(meshEvent)=>{
  
     if(initWebCamScreen){
         if(theMeshID == "sun"){
-            initWebCamScreen.setEnabled(true);
-            initWebCamScreen.isVisible = true;  
-            // console.log(" cam's position: ",initCamera.position, initWebCamScreen.radius);
            
-            let camX = initCamera.position.x;
-            let camY = initCamera.position.y;
-            let camZ = initCamera.position.z;
-            let x = 3536;
-            let y = 461;
-            let z = -648;
-
-            if(camX< 850 && camX >=-900){
-            	if(camZ > 0){
-                   x = 3538;
-                   z = -634;
-                }
-            }else if(camX <-900 && camX >= -1000){
-            	if(camZ > 0) x = 3550;
-                else{
-                   x = 3615;
-                   z = -710;
-                }
-            }else if(camX<-1000 && camX>=-1050){ //from -1000 to -1050
-                if(camZ > 0) x = 3560;
-                else{
-                   x = 3609;
-                   z = -715;
-                }
-            }else if(camX<-1050 && camX>=-1110){
-                
-                if(camZ > 0) x = 3550;
-                else{
-                    x = 3525;
-                    z = -709;
-                }
-            }else if(camX<-1110 && camX>=-1120){
-                if(camZ > 0) x = 3550;
-                else{
-                    x = 3500;
-                    z =  -709;
-                }
-            }else if( camX<-1120 && camX>=-1130){
-                if(camZ > 0) x = 3500;
-                else{
-                    x = 3618;
-                    z = -713;
-                }
-            }else if( camX<-1130 && camX>=-1140){
-                if(camZ > 0) x = 3500;
-                else{
-                    x = 3622;
-                    z =  -712;
-                }
-            }else if( camX<-1140 && camX>=-1160){
-                if(camZ > 0) x = 3500;
-                else{
-                    x = 3487;
-                    z = -703;
-                }
-            }else if( camX<-1160 && camX>=-1180){
-                if(camZ > 0) x = 3500;
-                else{                 
-                    x = 3550;
-                    z = -685;
-                }
-            }else if( camX < -1180 && camX>=-1245){
-                if(camZ > 0) x = 3450;
-                else{
-                    x = 3527;
-                    z = -696;
-                }
-            }else if( camX < -1245 && camX>=-1270){
-                if(camZ > 0) x = 3530;
-                else{
-                   x = 3621; 
-                   z = -697;
-                }
-            }else if( camX < -1270 && camX>=-1300){
-                if(camZ > 0) x = 3530;
-                else{
-                    x = 3633;
-                    z = -699;
-                }
-            }else if(camX < -1300 && camX >= -1350){
-                if(camZ > 0) x = 3400;
-                else{
-                    x = 3528;
-                    z = -688;
-                }
-                 
-            }else if(camX < -1350 && camX >= -1400){
-                if(camZ > 0) x = 3530;
-                else{
-                    x = 3529;
-                    z = -683;
-                }
-            }
-
-            if(camY>0 && camY <= 250) y = 450;
-            else if(camY>-300 && camY <= 0) y = 425;
-            else if(camY>-450 && camY <= -300) y = 420;
-            else if(camY>-550 && camY <= -450) y = 415;
-            else if(camY>-650 && camY <= -550) y = 409;
-            else if(camY>-700 && camY <= -650) y = 409;
-            // else if() y = 
-
-            else if(camY>-750 && camY <= -700) y = 405;
-            else if(camY>-900 && camY <= -750) y = 400;
-
-
-            initWebCamScreen.position = new BABYLON.Vector3(x,y,z);
+            homeSun.material.diffuseTexture = initVideo;
+            
 
             document.body.appendChild(lbl);
             lbl.textContent = "All About You";
@@ -777,11 +787,12 @@ var onOverSun =(meshEvent)=>{
 //handles the on mouse out event
 var onOutSun =(meshEvent)=>{
     //part of the 3d text on hover on mesh
-    if(initWebCamScreen){
-        initWebCamScreen.scaling = new BABYLON.Vector3(1,1,1);
-        initWebCamScreen.setEnabled(false);
-        initWebCamScreen.isVisible = false; 
-    }
+    // if(initWebCamScreen){
+    //     initWebCamScreen.scaling = new BABYLON.Vector3(1,1,1);
+    //     initWebCamScreen.setEnabled(false);
+    //     initWebCamScreen.isVisible = false; 
+    // }
+    homeSun.material.diffuseTexture = sunOrigTexture;
     while (document.getElementById("sunLbl")) {
         document.getElementById("sunLbl").parentNode.removeChild(document.getElementById("sunLbl"));
     } 
@@ -811,38 +822,52 @@ function add_action_mgr(thePlanet){
 
 function create_characters(){
     //create solar's image
-    let solar = init_char_image("Solar","solarSitting2.png",1100,898,{x:1259,y:-2571,z:-537.96},{x:-0.0610, y:-0.8762, z:0.1403, w:-0.4562});
+    let solar = init_char_image("Solar","solarSitting2.png",1100,898,{x:1315,y:-2825,z:-315.96},{x:-0.0610, y:-0.8762, z:0.1403, w:-0.4562});
     init_scrollable_viewer("SolarText","solarText.png",3000,2000,{x:37,y:-2810,z:-1934},{x:-0.0659,  y:-0.8884, z:0.1383, w:-0.4323});
     add_action_mgr(solar);
 
-    let ruru = init_char_image("Ruru","ruruHome.png",1000,433,{x:1019,y:1679,z:-1629},{x:-0.0112, y:-0.9151, z:0.0009, w:-0.4019});
-    let ruruSpeech = init_char_image("RuruSpeech","ruruText.png",1542,2000,{x:354.12,y:1699,z:-2227},{x:0.0094, y:0.9239, z:-0.0178, w:0.3815});
+  
+    let ruru = init_char_image("Ruru","ruruHome.png",1000,433,{x:2136,y:3857,z:-2348},{x:-0.0112, y:-0.9151, z:0.0009, w:-0.4019});
+    // let ruruSpeech = init_char_image("RuruSpeech","ruruText.png",1542,2000,{x:354.12,y:1699,z:-2227},{x:0.0094, y:0.9239, z:-0.0178, w:0.3815});
+    init_scrollable_viewer("RuruText","ruruText.png",1542,1000,{x:1265,y:3912,z:-3125},{x:0.0089, y:0.9193, z:-0.0253, w:0.3919});
+   
     add_action_mgr(ruru);
 
-    let villa = init_char_image("Villa","villaHome.png",964,351,{x:-982,y:-3818,z:3504},{x:0.155, y:-0.0037, z:-0.0005, w:0.9878});
-    let villaSpeech = init_char_image("VillaSpeech","villaText.png",2500,1200,{x:-900,y:-2979,z:3362},{x:-0.0003, y:-0.0452, z:-0.0069, w:0.9988});
+
+    let villa = init_char_image("Villa","villaHome.png",964,351,{x:-1200,y:-5142,z:6251},{x:0.1672, y:-0.0551, z:-0.0130, w:0.9841});
+    init_char_image("VillaSpeech","villaText.png",2500,1200,{x:-1172,y:-4203,z:6173},{x:0.01112, y:-0.0890, z:-0.0003, w:0.9958});
     add_action_mgr(villa);
 
-    let ally = init_char_image("Ally","allyHome.png",809,355,{x: -203, y: 1103, z: 3179},{x: 0.0555, y: -0.0436, z: -0.0791, w: -0.9939});
-    init_scrollable_viewer("AllyText","allyText.png",1500,850,{x:837,y:1237,z:3046},{x:-0.0236,  y:-0.2153, z:0.0032, w:-0.9759});
+   
+    let ally = init_char_image("Ally","allyHome.png",809,355,{x: -1191, y: 1514, z: 5634},{x: -0.0241, y: -0.1397, z: -0, w: -0.9894});
+    let sv = init_scrollable_viewer("AllyText","allyText.png",1500,850,{x:-318,y:1611,z:5172},{x:-0.0623,  y:-0.1487, z:0.0079, w:-0.9864});
     add_action_mgr(ally);
 
-    let bruce = init_char_image("Bruce","bruceHome.png",940,775,{x: -4333, y: -1624, z: -2438},{x: 0.0084, y: 0.8346, z: -0.0251, w: -0.5490});
-    init_scrollable_viewer("BruceText","bruceText.png",1500,850,{x: -3544, y: -1456, z: -1128},{x:-0.0134,  y:0.7164, z:-0.0144, w:-0.6968});
+    // enable_home_gizmo(ally);
+    // enable_home_gizmo(sv);
+
+    let bruce = init_char_image("Bruce","bruceHome.png",940,775,{x: -7261, y: -1196, z: -3329},{x: 0.0041, y: 0.9142, z: -0.0261, w: -0.4026});
+    init_scrollable_viewer("BruceText","bruceText.png",1500,850,{x: -6938, y: -1022, z: -1801},{x:-0.0320,  y:0.7894, z:-0.0425, w:-0.6108});
+
     add_action_mgr(bruce);
+
     
-   
-    let william = init_char_image("William","williamHome.png",790,390,{x: 2170, y: 1837, z: 1348},{x: 0.1465, y:-0.4993, z: -0.3724, w: -0.7674});
-    init_scrollable_viewer("WilliamText","williamText.png",1500,850,{x: 2566, y: 1981, z: 464},{x:-0.0046,  y:-0.6962, z:0.0071, w:-0.7173});
+    let william = init_char_image("William","williamHome.png",790,390,{x: 4100, y: 3899, z: 2750},{x:-0.2367, y:-0.6905, z:-0.2064, w: -0.6500});
+    init_scrollable_viewer("WilliamText","williamText.png",1500,850,{x: 3981, y: 3882, z: 1757},{x:-0.0082,  y:-0.6961, z:0.0033, w:-0.7173});
     add_action_mgr(william);
 
-    let trevor = init_char_image("Trevor","trevorHome.png",334,646,{x: -2268, y: 1500, z: -3050},{x:-0.0083, y:0.9959, z:-0.0414, w: -0.0674});
-    init_scrollable_viewer("TrevorText","trevorText.png",1500,850,{x: -3003, y: 1396, z: -2762},{x: -0.0018, y:0.9719, z:-0.0066, w: -0.2328});
+   
+
+
+    let trevor = init_char_image("Trevor","trevorHome.png",334,646,{x: -3072, y: 1720, z: -5227},{x:-0.0083, y:0.9959, z:-0.0414, w: -0.0674});
+    init_scrollable_viewer("TrevorText","trevorText.png",1500,850,{x: -3745, y: 1732, z: -4736},{x: -0.0016, y:0.9671, z:-0.0066, w: -0.2518});
     add_action_mgr(trevor);
     
-    let manny = init_char_image("Manny","mannyHome.png",566,714,{x: 2157, y: -609, z: 2277},{x: -0.0111, y: -0.0485, z: 0.0164, w: 0.9976});
-    init_scrollable_viewer("MannyText","mannyText.png",1500,850,{x: 3026, y: -794, z: 2032},{x:0.0068,  y:-0.1676, z:-0.0032, w:-0.9851});
+   
+    let manny = init_char_image("Manny","mannyHome.png",566,714,{x: 3181, y: -755, z: 5436},{x: -0.0345, y: -0.0750, z: 0.0148, w: 0.9954});
+    init_scrollable_viewer("MannyText","mannyText.png",1500,850,{x: 4143, y: -745, z: 5165},{x:0.0068,  y:-0.1934, z:-0.0030, w:-0.9803});
     add_action_mgr(manny);
+   
    
     
 }
@@ -902,8 +927,11 @@ function init_scrollable_viewer(name,imgName,w,h,pos,rot){
     rc.thickness = 0;
     rc.width = 1;
     
-    if(name === "TrevorText") rc.height = 15;
-    else if(name === "MannyText") rc.height = 18;
+    if(name === "TrevorText") rc.height = 17;
+    else if(name === "MannyText") rc.height = 21;
+    else if(name === "RuruText") rc.height = 4;
+    else if(name === "SolarText") rc.height = 9;
+    else if(name === "BruceText") rc.height = 9;
     else rc.height = 7;
     rc.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     rc.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
@@ -935,7 +963,7 @@ function enable_init_webcamera(){
     initWebCamScreen.isPickable = false;
     initWebCamScreen22 = BABYLON.MeshBuilder.CreateDisc("initWebCamScreen22", {radius:110, tessellation: 0}, homeScene);
     initWebCamScreen22.position = new BABYLON.Vector3(3536,461,-648);
-   
+    if(homeSun) initWebCamScreen.setParent(homeSun);
     initLight.includedOnlyMeshes.push(initWebCamScreen);
     initLight.includedOnlyMeshes.push(initWebCamScreen22);
 
@@ -963,7 +991,6 @@ function enable_init_webcamera(){
         videoMaterial2.diffuseTexture = initVideo;
         // console.log("init video",initVideo);
     }, { maxWidth: 256, maxHeight: 256 });
-    // console.log(initVideo);
     // When there is a video stream (!=undefined),
     // check if it's ready          (readyState == 4),
     // before applying videoMaterial to avoid the Chrome console warning.
@@ -992,11 +1019,8 @@ function add_home_mouse_listener(){
             if(pickinfo.hit){
               
                 let theInitMesh = pickinfo.pickedMesh;
-                console.log("clicked:", theInitMesh, theInitMesh.position, theInitMesh.rotationQuaternion);
-                console.log("camera:", initCamera.position, initCamera.alpha, initCamera.beta , initCamera.radius);
                 
-                if(theInitMesh.name === "top" ) videoTexture.video.play();
-
+        
 
                 if(theInitMesh.name === "homeEarth"){ 
                     window.location.href = "participateMbaye";   
@@ -1051,6 +1075,14 @@ function add_home_mouse_listener(){
                    
                 }//end of if hit is true
 
+                
+                //this is the music playlist
+                if(theInitMesh.name === "pauseIcon"){
+                    toggle_video_icons("pause");
+                }else if(theInitMesh.name === "playIcon"){
+                    toggle_video_icons("play");
+                }
+
             
            }
            
@@ -1061,7 +1093,7 @@ function add_home_mouse_listener(){
         }//end of on pointer up function
 
         var onPointerMoveInit = function (evt) {
-          
+
         }//end of on pointer move function
 
         canvas.addEventListener("pointerdown", onPointerDownInit, false);
@@ -1096,13 +1128,20 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
     document.getElementById("loadingScreenDiv").remove();
+    
     // document.getElementById("loadingScreenOverlay").style.display = "block";
 
     isHomeReady = true;
    
-    // startTime = new Date();
-    if(videoTexture){
-        videoTexture.video.play();
+    startTime = new Date();
+    // if(ANote0VideoVidTex){
+    //     ANote0VideoVidTex.video.play();
+    //     // setTimeout(function(){
+    //     //     videoTexture.video.muted = false;
+    //     // },200);
+    // }
+    if(discvideoTexture){
+        discvideoTexture.video.play();
         // setTimeout(function(){
         //     videoTexture.video.muted = false;
         // },200);
@@ -1143,21 +1182,27 @@ let isVideoPlaying = true;
 $(document).on('keydown',function(event) { 
   
     if(event.key===" "){
-        console.log('You pressed down space'); 
-        if(videoTexture.video){
-            if(isVideoPlaying){ 
-                videoTexture.video.pause();
-                isVideoPlaying = false;
-            }
-            else{
-                
-                videoTexture.video.play();
-                isVideoPlaying = true;
-            }
+        if(discvideoTexture.video){
+            if(isVideoPlaying) toggle_video_icons("pause");
+            else toggle_video_icons("play");
         }
         
     }
 }); 
+
+function toggle_video_icons(type){
+    if(type === "play"){
+        discvideoTexture.video.play();
+        homeScene.getMeshByName("pauseIcon").isVisible = true;
+        homeScene.getMeshByName("playIcon").isVisible = false;
+        isVideoPlaying = true;
+    }else if(type === "pause"){
+        discvideoTexture.video.pause();
+        homeScene.getMeshByName("pauseIcon").isVisible = false;
+        homeScene.getMeshByName("playIcon").isVisible = true;
+        isVideoPlaying = false;
+    }
+}
 
 
 /*======================================================== TEST THE DEVICE'S ORIENTATION =====================================================*/
@@ -1173,7 +1218,7 @@ window.addEventListener("resize", function(event) {
 
 
 function testOrientation() {
-    document.getElementById('block_land').style.display = (screen.width > screen.height) ? 'none' : 'block';
+    // document.getElementById('block_land').style.display = (screen.width > screen.height) ? 'none' : 'block';
 
     //above condition is not working sometimes then this condition will work
     if (window.innerHeight < window.innerWidth) {
@@ -1182,6 +1227,7 @@ function testOrientation() {
         document.getElementById('block_land').style.display = 'block';
     }
 }
+
 
 
 /*======================================================== CHECK IF FULLSCREEN FEATURE IS ACTIVATABLE =====================================================*/
@@ -1203,4 +1249,23 @@ $('#fullscreenIcon').on('click',function(){
     $(this).hide();
 });
 
-console.log(elem);
+
+
+
+/*======================================================== CHECK THE BROWSWER BEING USED =====================================================*/
+// testBrowser();
+function testBrowser() { 
+    if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ){
+       return 'Opera';
+    }else if(navigator.userAgent.indexOf("Chrome") != -1 ){
+        return 'Chrome';
+    }else if(navigator.userAgent.indexOf("Safari") != -1){
+        return 'Safari';
+    }else if(navigator.userAgent.indexOf("Firefox") != -1 ){
+        return 'Firefox';
+    }else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )){
+        return 'IE'; 
+    }else{
+        return 'unknown';
+    }
+}

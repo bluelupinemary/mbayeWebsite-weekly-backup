@@ -87,11 +87,53 @@ and (max-width: 1280px) {
 and (max-width : 853px)
 and (orientation : landscape) {
     .trix-editor trix-toolbar {
-        display: none;
+        /* display: none; */
+    }
+
+    trix-toolbar .trix-button-group {
+        border-radius: 1px;
+    }
+
+    trix-toolbar .trix-button-group:not(:first-child) {
+        margin-left: 0%;
     }
 
     .trix-editor trix-editor {
-        height: 9vw;
+        height: 6vw;
+    }
+
+    .tui-image-editor-header-logo button, .tui-image-editor-container .tui-image-editor-header-buttons button, .tui-image-editor-container .tui-image-editor-header-buttons div {
+        width: 80px !important;
+    }
+
+    .tui-image-editor-container .tui-image-editor-submenu {
+        padding: 1% 0;
+        height: 0 !important;
+    }
+
+    .tui-image-editor-container.bottom .tui-image-editor-submenu > div {
+        padding-bottom: 0px !important;
+    }
+
+    .tui-image-editor-container .svg_ic-submenu, .tui-image-editor-container .svg_ic-menu {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    .music-player {
+        /* overflow-y: scroll; */
+    }
+
+    .video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
+
+    .video-container iframe, .video-container object, .video-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; } */
+
+    /* .youtube-player-controls-mobile {
+        display: flex;
+    } */
+
+    .custom-play-pause-btn, .custom-fullscreen-btn {
+        /* display: block; */
     }
 }
 
@@ -201,4 +243,9 @@ and (orientation : landscape) {
         top: 37%;
         width: 20vw;
     } */
+
+    .modal.show .modal-dialog {
+        width: 80%;
+        margin: 0 auto;
+    }
 }

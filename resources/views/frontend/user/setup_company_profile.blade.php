@@ -1,4 +1,4 @@
-@extends('frontend.layouts.profile_layout')
+@extends('frontend.layouts.career_setup-profile_layout')
 
 @section('before-styles')
 
@@ -39,7 +39,9 @@
 @endsection
 
 @section('content')
-<div class="app">
+
+
+
     <div id="page-content">
         <div id="container">
             <div class="screen"><br/><br/>
@@ -47,7 +49,7 @@
                     <div class="row">
                             <div class="" style="padding-left:5vw;">
                                 
-                                <form action="{{ route('frontend.save') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('frontend.saveCompanyProfile') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="user-upload-img" id="userImageUpload" >
 
@@ -57,11 +59,12 @@
                                             <img src=""  id="featured-image-previewimg"  alt="input image" style=" width: 100%; display:none;">
                                            
                                             <div class="middle" id="middle">
-                                                <div id="middleText">Upload Featured Image</div>
+                                                <div id="middleText" style="font-size: 1rem">Upload Featured Image</div>
                                             </div>
                                             </label>
                                             {{-- <button type="button" class="" id="edit_uploaded_image" style="">Edit Image</button>  --}}
-                                            <i id="edit_uploaded_image" class="far fa-image" style="color:#16aedc;"></i>
+                                            <i id="edit_uploaded_image" class="far fa-image btn_pointer  tooltips right" style="color:#16aedc;"> <span style="display:none;font-size:0.8rem; width:6vw;padding:10%; transform: translate(-49%, -209%);" >Edit photo</span></i>
+                                           
                                             {{-- <button class="btn" id="edit_uploaded_image"> --}}
                                             <input id="file"  onchange="loadFile(event)"  type="file" name="featured_image" style=" min-width: 100%;
                                             min-height: 100%;">
@@ -150,7 +153,7 @@
                                                         <div class="industry">
                                                             <label for="industry">Industry :<span style="color:red">*</span></label>
                                                             <select id="industry" class="" name="industry_id" required>&#x25BC;
-                                                                <option value="public" selected disabled>Select industry</option>
+                                                                <option value="select" selected disabled>Select industry</option>
                                                                 @foreach($industry as $industry)
                                                                 <option value="{{$industry->id}}">{{$industry->industry_name}}</option>
                                                                 @endforeach
@@ -160,10 +163,11 @@
                                             <div class="form-btn">
                                                 <button type="submit"  class="button-done">Submit</button>
                                             </div>
-                                        
                                         </form>
+                                        
                                 </div>
                             </div>
+                       
                             <!-- ---------------------Form code End-------------------------------------------- -->
 
                     </div>
@@ -209,7 +213,7 @@
                                             <span class="tooltiptext">User Profile</span></button>
                                     </div>
                                 </div>
-                             <button class="zoom-btn zoom-in "><i class="fas fa-search-plus"></i>
+                             <button class="zoom-btn zoom-in" ><i class="fas fa-search-plus"></i>
                                     {{-- <span>Zoom Out</span> --}}
                                 
                             </button>
@@ -245,7 +249,9 @@
             </div>
         </div>
     </div>
+    
 
+<div class="app">
     <!----------------------------------------DIV FOR THE IMAGE EDITOR 1------------------------------------------>
     <div class="image-editor-modal" id="imageEditorModal">
         <imageeditor-component :edit_blog="1"></imageeditor-component>
@@ -264,11 +270,13 @@
 
 
 
+
 @endsection
 @section('after-scripts')
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
 <script src="{{asset('front/JS/jquery.fontselect.js')}}"></script>
-<script src="{{asset('front/JS/popper.min.js')}}"></script>
-<script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
+{{-- <script src="{{asset('front/JS/popper.min.js')}}"></script>
+<script src="{{asset('front/JS/bootstrap.min.js')}}"></script> --}}
 <script src="{{asset('front/JS/fabric.min.js')}}"></script>
 <script src="{{asset('front/JS/FileSaver.js')}}"></script>      
 <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>        
@@ -277,9 +285,115 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="//geodata.solutions/includes/countrystatecity.js"></script>
 
+ 
+    
 
 <script type="text/javascript">
+    var url = $('meta[name="url"]').attr('content');
+        var ClickCount=0;
+    
+        
+    // Show title on hover
+
+    
+            $('.communicator-div').click( function() {
+                window.location.href = url+'/communicator';
+            });
+
+            $('.home-btn').click( function() {
+            
+                window.location.href = url;
+            });
+
+            $('.profile-btn').click( function() {
+                window.location.href = url+'/dashboard';
+            });
+
+            $('.instructions-btn').click( function() {
+                window.location.href = url+'/page_under_development';
+            });
+            $('.editphoto-btn').click( function() {
+                window.location.href = url+'/profile/edit-photo';
+            });
+            $('.music-btn').click( function() {
+            //   window.location.href = url+'/profile/edit-photo';
+            var audio =  document.getElementById('1');
+            audio.play();
+            });
+        
+        
+        var astronaut_zoom = 0;
+
+
+            var navigator_zoom = 0;
+            $('button.zoom-btn').click( function() { 
+            
+                if(!navigator_zoom) {
+                    $('.zoom-btn').hide();
+                    $('.navigator-buttons').css('pointer-events', 'auto');
+                    $('.communicator-div').css('pointer-events', 'auto');
+                    $('.instruction-div').css('pointer-events', 'auto');
+                    $('.toss-div').css('pointer-events', 'auto');
+                    $('.btn_pointer').css('pointer-events', 'auto');
+                    $('.navigator-div').addClass('animate-navigator-zoomin');
+                    
+
+                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.navigator-div').removeClass('animate-navigator-zoomin');
+                        $('.navigator-div').addClass('zoomin');
+                        $('.zoom-btn').hide();
+                    });
+                } else {
+                
+                }
+
+                navigator_zoom = !navigator_zoom;
+            });
+            //Zoom out animation
+            $('.navigator-zoomout-btn').click(function() {
+                $('.navigator-div').addClass('animate-navigator-zoomout');
+
+                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.navigator-div').removeClass('animate-navigator-zoomout');
+                    $('.navigator-div').removeClass('zoomin');
+                    $('.zoom-btn').show();
+                    
+                });
+
+                navigator_zoom = !navigator_zoom;
+            });
+
+
+            function removeAstronautAnimation()
+            {
+                clearInterval(animation_interval);
+                // $('.reaction-div').css('transition', 'none');
+            }
+            $(".tos-div").click(function(){
+                    window.location.href = "{{URL::to('/terms')}}"
+                        
+                    });
+
+
+            $(".communicator-div").on({
+                mouseenter: function () {
+                    $('.communicator-span').css('display', 'block');
+                },
+                mouseleave: function () {
+                    $('.communicator-span').css('display', 'none');
+                }
+            });
+            $(".zoom-in").on({
+         mouseenter: function () {
+            $('.zoom-in span').css('display', 'block');
+        },
+        mouseleave: function () {
+            $('.zoom-in span').css('display', 'none');
+            }
+    });
     /*-----------------------PART OF THE IMAGE EDITOR-------------------------*/
+
+
     let oldFeaturedImg;
     let isNewImg = true;
     var loadFile = function(event) {
@@ -300,6 +414,17 @@
             isNewImg = true;
         }
     };
+
+
+    $(".fa-image").on({
+         mouseenter: function () {
+            $('.fa-image span').css('display', 'block');
+        },
+        mouseleave: function () {
+            $('.fa-image span').css('display', 'none');
+            }
+
+    });
 
 
 // -------------------------- ADDED FUNCTIONS FOR THE IMAGE EDITOR -------------------------//

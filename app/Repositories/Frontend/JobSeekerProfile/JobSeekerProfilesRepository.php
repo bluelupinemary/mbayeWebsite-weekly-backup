@@ -74,6 +74,7 @@ class JobSeekerProfilesRepository extends BaseRepository
     {
        
     }
+    
 
     /**
      * Update Profile.

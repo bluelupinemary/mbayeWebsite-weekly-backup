@@ -328,7 +328,7 @@ class BlogsController extends Controller
     public function shareBlog(StoreBlogSharesRequest $request)
     {
         $blog = Blog::find($request->blog_id);
-        $user = User::find($blog->created_by)->get();
+        $user = User::where('id',$blog->created_by)->first();
         $blog_share = new BlogShare();
         $blog_share->caption = $request->share_caption;
         $blog_share->blog_id = $request->blog_id;

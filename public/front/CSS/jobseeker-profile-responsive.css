@@ -1,11 +1,73 @@
-
-@media only screen  and (max-width:1024px){
+/* @media only screen  and (min-width:1030px){
     .sidenav {
         display: flex;
         flex-direction: column;
         width: 0;
         position: fixed;
         z-index: 10;
+        top: 18%;
+        left: 0;
+        background-color: #111;
+        overflow: hidden !important;
+        transition: 0.5s;
+    }
+    
+    .sidenav .closebtn {
+        position: absolute;
+        top: 55%;
+        left: 40%;
+        transform: translate(152%,-58%);
+        font-size: 17px;
+        color: gold;
+        font-family: Nasalization;
+    }
+    
+    .sidenav a {
+        padding: 30px 8px 2px 16px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        font-family: Nasalization;
+    }
+    .slider {
+        height: 28vw;
+        width: 2%;
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: 47%;
+        transform: translate(-2503%,-50%);
+        background: black;
+    }
+    .arrows {
+        
+        left: 20%;
+        top: -13%;
+        position: absolute;
+        transform: translate(-1%,245%);
+        text-align: center;
+    }
+    #main {
+        transition: margin-left .5s;
+        border: 0px solid white;
+        position: absolute;
+        left: 20%;
+        top: 95%;
+        height: 57%;
+        width: 24%;
+        transform: translate(94%,-40%);
+        /* background: black; */
+    /* }
+}  */
+@media only screen  and (max-width:1024px){
+    .sidenav {
+        display: flex;
+        flex-direction: column;
+        width: 0;
+        position: fixed;
+        z-index: 100;
         top: 18%;
         left: 0;
         background-color: #111;
@@ -71,7 +133,7 @@
         flex-direction: column;
         width: 0;
         position: fixed;
-        z-index: 10;
+        z-index: 100;
         top: 18%;
         left: 0;
         background-color: #111;
@@ -250,7 +312,7 @@
         flex-direction: column;
         width: 0;
         position: fixed;
-        z-index: 10;
+        z-index: 100;
         top: 18%;
         left: 0;
         height: 65vh;
@@ -372,7 +434,7 @@
         flex-direction: column;
         width: 0;
         position: fixed;
-        z-index: 10;
+        z-index: 100;
         top: 18%;
         left: 0;
         background-color: #111;
@@ -663,7 +725,7 @@
         flex-direction: column;
         /* width: 0; */
         position: fixed;
-        z-index: 10;
+        z-index: 100;
         top: 18%;
         left: 0;
         height: 66vh;

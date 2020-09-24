@@ -96,6 +96,20 @@ body {
 	transform: translate(-80%, -351%) rotate(-4deg);
 }
 
+.profile-picture-overlay {
+	cursor: pointer;
+	position: absolute;
+	z-index: 5000;
+	border-radius: 21% 21% 35% 35%;
+	top: 50%;
+	left: 50%;
+	width: 14.2vw;
+	height: 11.5vw;
+	-webkit-transform: translate(-73%, -90%) rotate(-3deg);
+	-moz-transform: translate(-73%, -90%) rotate(-3deg);
+	transform: translate(-73%, -90%) rotate(-3deg);
+}
+
 #user-photo.male {
 	height: 2.7vw;
 	-webkit-transform: translate(-81%, -324%) rotate(-4deg);
@@ -3047,7 +3061,7 @@ div.notifications-list::-webkit-scrollbar {
 }
 
 .zoomin .notifications-list li:not(:last-child) {
-	border-bottom: 0.2px solid #1c3c41;
+	border-bottom: 1px solid #1c3c41;
 }
 
 /* .zoomin .notifications-div .notifications-count {
@@ -3066,8 +3080,20 @@ div.notifications-list::-webkit-scrollbar {
 } */
 
 .zoomin #edit-photo {
-	/* transform: translate(-39%, -684%) rotate(28deg); */
-	font-size: 6px;
+	-webkit-transform: translate(-73%, -352%) rotate(-28deg);
+	-moz-transform: translate(-73%, -352%) rotate(-28deg);
+	transform: translate(-73%, -352%) rotate(-28deg);
+	font-size: 4px;
+}
+
+.navigator-div-zoomed-in .edit-photo {
+	width: 21vw;
+	height: 3vw;
+	top: 50%;
+	-webkit-transform: translate(-100%, -600%) rotate(-23deg);
+	-moz-transform: translate(-100%, -600%) rotate(-23deg);
+	transform: translate(-100%, -600%) rotate(-23deg);
+	font-size: 20px;
 }
 
 #container {

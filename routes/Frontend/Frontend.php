@@ -147,7 +147,7 @@ Route::group(['namespace' => 'Friendship'], function () {
 
     Route::post('send_contact_email', 'FrontendController@sendContactAdminEmail');
     // Route::post('/submit', 'DemoFormsubmit@demoSave')->name('save');
-    Route::post('/submit', 'Company\CompanyProfileController@store')->name('save');
+    Route::post('/submit', 'Company\CompanyProfileController@store')->name('saveCompanyProfile');
 
 
     // Story
@@ -165,6 +165,11 @@ Route::group(['namespace' => 'Friendship'], function () {
     Route::get('/search_friends', 'Friendship\FriendshipController@searchuser')->name('search');
 
     //Jobseekers profile
+    // Route::get('/jobseekers/setup-profile', function () {
+    //     $profession = Profession::all();
+        
+    //     return view('frontend.user.setup_profile',compact('profession'));
+    // });
     Route::get('/jobseekers/setup-profile','JobSeekerProfile\JobSeekerProfilesController@index');
     Route::get('/jobseekers/edit-setup-profile/{id}','JobSeekerProfile\JobSeekerProfilesController@edit_profile');
     Route::get('jobseekers', 'JobSeekerProfile\JobSeekerProfilesController@getJobSeekers');
@@ -273,5 +278,7 @@ Route::post('get_career_details', 'JobSeekerProfile\JobSeekerProfilesController@
 Route::get('/sample_page', function() {
     return view('frontend/user/sample-page');
 });
-
 Route::get('/blogviewMembers', 'FrontendController@blogviewMembers')->name('blogviewMembers');
+
+//for testing
+Route::get('/user-confirmation', 'FrontendController@userConfirmation')->name('userConfirmation');

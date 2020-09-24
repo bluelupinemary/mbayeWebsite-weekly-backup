@@ -13,6 +13,7 @@
 @endsection
 
 @section('content')
+<div class="app"></div>
     <div id="block_land">
         <div class="content">
             <h1 class="text-glow">Turn your device in landscape mode.</h1>
@@ -55,9 +56,10 @@
                         <input type="hidden" id="myurl" url="{{url('/login')}}" />
                         <img src="{{asset('front/images/communicator-buttons/buttons/backBtn.png')}}" class="communicator-button back-button" alt="">
                     </div>
-                    <div class="communicator-buttons">
-                      <img src="{{asset('front/images/communicator-buttons/buttons/termsBtn.png')}}" class="communicator-button terms-button p_terms" alt="">
-                    </div>
+                    
+                    <div class="tos-div">
+                        <img src="{{asset('front/images/communicator-buttons/buttons/termsBtn.png')}}" class="communicator-button terms-button" alt="">
+                      </div>
 
                         {{ Form::open(['route' => 'frontend.auth.password.email', 'class' => 'form-horizontal']) }}
 
@@ -87,11 +89,12 @@
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
 @endsection
 @section('after-scripts')
+<script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script>
         var message;
         var err_message;
         var url = $('meta[name="url"]').attr('content');
-        console.log(url)
+        // console.log(url)
         // for showing message to turn to landscape
           testOrientation();
         window.addEventListener("orientationchange", function(event) {
@@ -116,7 +119,62 @@
         }
           $(document).ready(function () {
             $('.home-div,.back-div').css('pointer-events', 'auto');
+            //Full Screen.
+            var elem = document.documentElement;
+            function openFullscreen() {
+                if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+                contentDisplay();
+                } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                    elem.webkitRequestFullscreen();
+                    contentDisplay();
+                } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                    elem.msRequestFullscreen();
+                    contentDisplay();
+                }
+                else if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                    contentDisplay();
+                } 
+            }
 
+            if(window.innerWidth < 991 ){
+            $(document).ready(()=>{
+                Swal.fire({
+                    imageUrl: '../../front/icons/alert-icon.png',
+                    imageWidth: 80,
+                    imageHeight: 80,
+                    html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+                    padding: '15px',
+                    background: 'rgba(8, 64, 147, 0.62)',
+                    allowOutsideClick: false
+                }).then((result) => {
+                    // if (result.value) {
+                        openFullscreen()
+                    // }
+                });
+            });
+        }
+        else  contentDisplay();
+
+        
+        function contentDisplay() {
+            console.og
+            setTimeout(function(){
+                //$(".astronautarm-img").show();
+                $(".astronautarm-img").css('display','block');
+                $(".astronautarm-img").addClass('animate-arm');
+                
+                $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                $(".astronautarm-img").removeClass('animate-zoomIn-arm');
+                $(".astronautarm-img").addClass('animate-zoomIn-arm');
+                $(".astronautarm-img").addClass('zoomIn-arm');
+               
+            });
+                    }, 1000
+            );
+          
+        }
         });
 
         $('.home-button').click(function() {

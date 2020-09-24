@@ -1,3 +1,16 @@
+@media (min-width:2560px) {
+    .zoomin #edit-photo {
+        font-size: 8px;
+    }
+}
+
+@media (min-width:1680px)
+and (max-width: 1920px) {
+    .zoomin #edit-photo {
+        font-size: 6px;
+    }
+}
+
 /* Ipad Pro */
 @media (max-width: 1366px) 
 and (min-width: 1024px)
@@ -130,8 +143,8 @@ and (min-width: 1024px)
         transform: scale(1.8);
     }
 
-    #edit-photo {
-        /* transform: translate(-75%, -343%) rotate(-28deg); */
+    .edit-photo {
+        display: none;
     }
 
     .navigator-div.zoomin {
@@ -249,7 +262,7 @@ and (min-width: 1024px)
         }
     }
 
-    .navigator-div.zoomin .tooltips span {
+    .navigator-div.zoomin .navigator-buttons .tooltips span, .navigator-div.zoomin .communicator-div.tooltips span {
         display: block;
         white-space: nowrap;
         width: auto;
@@ -366,8 +379,8 @@ and (min-width: 1024px)
         transform: translate(-49%, -239%);
     }
 
-    .communicator-div button {
-        border-radius: 1px;
+    .zoomin .communicator-div button, .navigator-div-zoomed-in .communicator-div button {
+        border-radius: 2px;
         -webkit-box-shadow: 0px 0px 3px #17a2b8;
         box-shadow: 0px 0px 3px #17a2b8;
     }
@@ -693,7 +706,7 @@ and (min-width: 1024px)
         font-size: 14px;
     }
 
-    .navigator-div-zoomed-in .tooltips span {
+    .navigator-div-zoomed-in .navigator-buttons .tooltips span, .navigator-div-zoomed-in .communicator-div.tooltips span {
         display: block;
         font-size: 14px;
         padding: 13% 25%;

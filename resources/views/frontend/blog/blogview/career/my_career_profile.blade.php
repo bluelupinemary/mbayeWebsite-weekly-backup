@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="{{ asset('front/CSS/my_career_profile.css') }}">
 @endsection
 
+
 @section('after-styles')
 {{-- @trixassets --}}
 @endsection
@@ -136,20 +137,22 @@
     <label class="titile">About Me</label><br>
     <label class="lbl_titile">Name : </label> <span class="uname spn_value"></span><br>
     <label class="lbl_titile">DOB : </label> <span class="dob spn_value"></span><br>
-    <label class="lbl_titile">Address: </label> <span class="address spn_value"></span><br>
+    <label class="lbl_titile">Address : </label> <span class="address spn_value" ></span><br>
 </div>
 <div class="education">
-    <label class="titile">Education</label><br>
-    <label class="lbl_titile">Primary : </label><span class="primary_ed spn_value"></span><br>
+     <label class="titile">Education</label><br>
+    {{--<label class="lbl_titile">Primary : </label><span class="primary_ed spn_value"></span><br>
     <label class="lbl_titile">Secondary : </label> <span class="secondary_ed spn_value"></span><br>
     <label class="lbl_titile">Undergraduate: </label> <span class="undergraduate_ed spn_value"></span><br>
     <label class="lbl_titile">Graduate: </label> <span class=" graduate_ed spn_value"></span><br>
-    <label class="lbl_titile">Post-Graduate: </label> <span class=" postgraduate_ed spn_value"></span><br>
+    <label class="lbl_titile">Post-Graduate: </label> <span class=" postgraduate_ed spn_value"></span><br> --}}
 </div>
 <div class="contacts">
     <label class="titile">Contact</label><br>
-    <span class="primary 3 spn_value"></span><br>
-    <span class="secondary spn_value"></span><br>
+    <label class="lbl_titile">Primary : </label>&nbsp;<span class="primary  spn_value"></span><br>
+    <label class="lbl_titile">Secondary : </label>&nbsp;<span class="secondary spn_value"></span><br>
+    {{-- <span class="primary 3 spn_value"></span><br>
+    <span class="secondary spn_value"></span><br> --}}
     
 </div>
 <div class="character_refernces">
@@ -256,8 +259,11 @@
                     var str=" <label class='titile'>Character References</label><br>";
                     $(".character_refernces").append(str);
                     for(var i=0;i<arrrReferenceDetails.length;i++){
-                        var str1=" <label class='lbl_titile'>"+arrrReferenceDetails[i]['name'] +"   " +arrrReferenceDetails[i]['email'] +"</label><br>";
+                        var str1= " <label class='lbl_titile'>Name :</label>"+"&nbsp;" + "<span class='spn_value'>"+arrrReferenceDetails[i]['name']+"</span><br><label class='lbl_titile'>Email :</label>"+"&nbsp;" + "<span class='spn_value'>"+arrrReferenceDetails[i]['email']+"</span><br>" + "<hr class='line-break'>";
+                        // var str1=" <label class='lbl_titile'>Name : "+arrrReferenceDetails[i]['name'] +"</label><br/>";
+                        // var str2=" <label class='lbl_titile'>Email : "+arrrReferenceDetails[i]['email'] +"</label><br/>";
                             $(".character_refernces").append(str1);
+                            // $(".character_refernces").append(str2);
                     }
                     $(".job_description").html('');
 
@@ -266,13 +272,15 @@
                     for(var i=0;i<arrrWork_experience.length;i++){
                         var StartDate = arrrWork_experience[i]['start_date'];
                         var SDate = new Date(StartDate);
-                        var Syear = SDate.getFullYear();
+                        var Syear =moment(StartDate).format('MMM-Y');
 
                         var EndDate = arrrWork_experience[i]['end_date'];
                         var EDate = new Date(EndDate);
-                        var Eyear = EDate.getFullYear();
-                         var str1= " <label class='lbl_titile'>"+Syear +" - " +Eyear +"</label><br> <label class='lbl_titile'>"+arrrWork_experience[i]['designation']+"</label><br>";
-                            $(".job_description").append(str1);
+                        var Eyear = moment(EndDate).format('MMM-Y');
+                        //  var str1= " <label class='lbl_titile'>Year :</label>" +"&nbsp;" + "<span class='spn_value'>"  +Syear +" - " +Eyear +"</span><br> <label class='lbl_titile'>Company :</label>"+"&nbsp;" + "<span class='spn_value'>"+arrrWork_experience[i]['company_name']+"</span><br><label class='lbl_titile'>Designation :</label>" +"&nbsp;"+ "<span class='spn_value'>" +arrrWork_experience[i]['designation']+"</span><br><label class='lbl_titile'>Role :</label>" +"&nbsp;"+ "<span class='spn_value'>" +arrrWork_experience[i]['role']+"</span><br>" + "<hr class='line-break'>";
+                        //     $(".job_description").append(str1);
+                        var str1= " <label class='lbl_sub_title'>" +arrrWork_experience[i]['designation'] +"</label><br><label class='spn_value' style='text-transform:uppercase;'>" +arrrWork_experience[i]['company_name'] +"</label><br><label class='job-dates'>" +Syear +" to " +Eyear + "</label><br><label class='role-responsibilty'>" +arrrWork_experience[i]['role'] +"</label><br>"  + "<hr class='line-break'>";
+                        $(".job_description").append(str1);
                     }
                   
 
@@ -292,7 +300,8 @@
                             else if(education_level=='Post-Graduate')
                                 $(".postgraduate_ed").html(arrrEducation_details[i].school_name);
                         
-
+                            var str= " <label class='lbl_titile'>Year :</label>" +"&nbsp;" + "<span class='spn_value'>"  +Syear +" - " +Eyear +"</span><br> <label class='lbl_titile'>Level of Education :</label>"+"&nbsp;" + "<span class='spn_value'>"+arrrEducation_details[i]['education_level']+"</span><br><label class='lbl_titile'>School :</label>" +"&nbsp;"+ "<span class='spn_value'>" +arrrEducation_details[i]['school_name']+"</span><br><label class='lbl_titile'>Field of study :</label>" +"&nbsp;"+ "<span class='spn_value'>" +arrrEducation_details[i]['field_of_study']+"</span><br>" + "<hr class='line-break'>";
+                                $(".education").append(str);
                         // var str=" <label class='lbl_titile'>"+Syear +" - " +Eyear +"</label><br> <label class='lbl_titile'>"+arrrEducation_details[i]['school_name']+"</label><br><label class='lbl_titile'>"+arrrEducation_details[i]['field_of_study']+"</label><br><label class='lbl_titile'>"+arrrEducation_details[i]['description']+"</label><br>";
                         //     $(".education").append(str);
                     }

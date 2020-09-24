@@ -143,6 +143,19 @@
                 right: 10px;
                 top: 18px;
             }
+            .image-editor-modal{
+                padding-right: 0 !important;
+                /* background:url('../../images/skybox_bg1.jpg'); */
+                position: absolute;
+                width: 100vw;
+                height: 100vh;
+                left: 0;
+                top: 0;
+                /* display: none; */
+            }
+            .tui-editor-modal{
+                display: none;
+            }
 
             .content {
                 text-align: center;
@@ -202,7 +215,7 @@
                 top: 10vh;
                 left: 10vw;
                /* transform: translate(-50%, -50%); */
-                width: 80vw;
+                width: 85vw;
                 height: 80vh;
                 margin: 0 auto;
                 overflow: hidden;
@@ -294,6 +307,7 @@
                 left: 50%;
                 margin-left: -35px;
                 bottom: -16px;
+                
             }
             .arrow.top {
                 top: -16px;
@@ -703,139 +717,9 @@
                 color: #fff;
             }
 
-            .instructions {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                width: 100%;
-                height: 100vh;
-                background: #00000094;
-                display: absolute;
-            }
+            
 
-            .instruction:hover {
-                border: 1px solid green;
-            }
-
-            .instruction {
-                border: 1px solid red;
-                position: absolute;
-            }
-
-            /* Left controls */
-            .instruction-1 {
-                transform: translate(0.45vw, 21.35vh);
-                width: 3vw;
-                height: 40vh;
-            }
-
-            /* Right controls */
-            .instruction-2 {
-                transform: translate(96.55vw, 21.35vh);
-                width: 3vw;
-                height: 40vh;
-            }
-
-            /* Canvas controls */
-            .instruction-3 {
-                transform: translate(24.95vw, 91.5vh);
-                width: 50vw;
-                height: 8vh;
-            }
-
-            /* Canvas */
-            .instruction-4 {
-                transform: translate(4.75vw, 9.5vh);
-                width: 90.5vw;
-                height: 81vh;
-            }
-
-            /* Cancel button */
-            .instruction-5 {
-                transform: translate(1.75vw, 1.35vh);
-                width: 7.5vw;
-                height: 7vh;
-            }
-
-            .instruction-close-btn {
-                position: absolute;
-                /* right: 1%; */
-                transform: translate(98vw, 9vh);
-                font-size: 1.75vw;
-                color: #df1613;
-                cursor: pointer;
-            }
-
-            .instruction-text {
-                color: #fff;
-                font-family: 'Nasalization';
-                font-size: 1vw;
-                position: absolute;                
-                display: none;
-            }
-
-            /* Left controls instructions */
-            .instruction-text-1 {
-                transform: translate(0.45vw, 21.35vh);
-            }
-
-            /* Right controls instructions */
-            .instruction-text-2 {
-                transform: translate(92.45vw, 21.35vh);
-            }
-
-            /* Canvas controls instructions */
-            .instruction-text-3 {
-                transform: translate(24.95vw, 91.5vh);
-            }
-
-            /* Canvas instructions */
-            .instruction-text-4 {
-                transform: translate(10.65vw, 13vh);
-            }
-
-             /* Cancel button instructions */
-            .instruction-text-5 {
-                transform: translate(1.75vw, 1.6vh);
-            }
-
-            #shapes-box::-webkit-scrollbar,#shape-color-box::-webkit-scrollbar{
-                width: 0.6em;
-                background: #c1d7e491;
-            }
-            #shapes-box::-webkit-scrollbar-thumb,#shape-color-box::-webkit-scrollbar-thumb {
-                background: #047999;
-            }
-
-            #shapes-box{
-                scrollbar-width: thin;
-                scrollbar-color: #047999 #c1d7e491;
-                width:59%;
-                height:100%;
-                display: flex;
-                flex-wrap:wrap;
-                overflow-y:auto;
-                overflow-x:hidden;
-                justify-content: center;
-            }
-            #close_shapes{
-                position:absolute;
-                color:white;
-                right:0;
-                top:0;
-            }
-             #shape-color-box{
-                padding-top: 5%;
-                position:relative;
-                border-right: 0.5px solid gray;
-                width: 37%;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                text-align: center;
-            }
-
+           
             .strokeWidthContainer {
                   width: 70%;
             }
@@ -964,7 +848,7 @@
                 height: 58vh;
                 width: 0;
                 position: fixed;
-                z-index: 10;
+                z-index: 100;
                 top: 21%;
                 left: 0;
                 background-color: #111;
@@ -1009,6 +893,7 @@
 .modal .close {
     color: #fff;
 }
+
 
 .modal .btn-secondary {
     background-color: #3e3e3e;
@@ -1185,7 +1070,7 @@
     border: 1px solid #fff;
     /* margin-top: 3%; */
     border-radius: 10px;
-    padding: 4% 4% 4% 4%;
+    padding: 4% 4% 6% 4%;
     width:50vw;
     display: flex;
     /* overflow-y: scroll; */
@@ -1230,7 +1115,8 @@
 .btn-remove{
     color: #ff0000;
     font-size: 0.9em;
-    /* float: right !important; */
+    float: right !important;
+    margin-left: 46vw;
 }
 .education-modal-body{
     height: 25vw;
@@ -1336,14 +1222,14 @@
     border: 0;
 }
 .clone-btn-education{
-    position: absolute;
+    position: absolute !important;
     /* top: 10%; */
     left: 89%;
     display: flex;
     /* transform: translate(1640%,-1282%); */
 }
 .clone-btn-workexperience{
-    position: absolute;
+    position: absolute !important;
     /* top: 10%; */
     left: 89%;
     display: flex;
@@ -1351,7 +1237,7 @@
 
 }
 .clone-btn-reference{
-    position: absolute;
+    position: absolute !important;
     /* top: 10%; */
     left: 89%;
     display: flex;

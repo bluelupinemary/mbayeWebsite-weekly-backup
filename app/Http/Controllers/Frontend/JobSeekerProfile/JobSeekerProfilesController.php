@@ -18,7 +18,6 @@ use App\Models\JobSeekerProfile\CharacterReferences;
 use App\Repositories\Frontend\JobSeekerProfile\JobSeekerProfilesRepository;
 
 
-
 /**
  * Class profileController.
  */
@@ -46,7 +45,7 @@ class JobSeekerProfilesController extends Controller
     public function saveJobSeekerProfile(Request $request)
     {
         //dd("ok");
-        dd($request->all());
+        //dd($request->all());
         $user = User::find($request->user_id);
         $file = $request->file;
         $contents = file_get_contents($file);
@@ -178,7 +177,7 @@ class JobSeekerProfilesController extends Controller
         }
     }
     public function save_contact_details(Request $request){
-        
+     
         $contact = new JobSeekerProfile();
         $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
         $secondary_email = $JobSeekerProfile->secondary_email;
@@ -186,13 +185,11 @@ class JobSeekerProfilesController extends Controller
         $contact->secondary_email  = $request->secondary_email ;
         $contact->secondary_mobile_number =  $request->secondary_mobile_number ;
        
-        if($secondary_email=='' ||$secondary_mobile_number==''){
+        if($secondary_email=='' ||$secondary_mobile_number=='')
                 $contact->save();
-        }
-        else{
+        else
 
                $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('secondary_email' => $request->secondary_email,'secondary_mobile_number' => $request->secondary_mobile_number));
-            }
     }
 
 
@@ -230,23 +227,16 @@ class JobSeekerProfilesController extends Controller
      * Function to save_professional_details
      */
     public function save_professional_details(Request $request){
-     
-     
-    
-            $id =    Auth::user()->id;
-            $Profession_id = Profession::where('profession_name',$request->Profession)->first();
-            $profession_id=$Profession_id['id'];
-            $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
-            $skills = $JobSeekerProfile->skills;
-            $Profession = new JobSeekerProfile();
-            $Profession->skills = $request->skills;
-            $Profession->profession_id = $profession_id;
-            // if($skills=='')
-            //     $Profession->save();
-            //  else
 
-             $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('skills' => $request->skills,'profession_id' => $profession_id));
-
+           
+            $JobSeekerProfile = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
+            if($JobSeekerProfile != ''){
+                $JobSeekerProfile->update(['profession_id'=>$request['profession_id'],'skills'=>$request['skills']]);
+            }
+            
+            else{
+                $JobSeekerProfile->insert(['profession_id'=>$request['profession_id'],'skills'=>$request['skills']]);
+            }
     }
 
     /**
@@ -254,8 +244,9 @@ class JobSeekerProfilesController extends Controller
      */
     public function save_aboutme_details(Request $request){
         // dd($request->all());
-        $aboutme = new JobSeekerProfile();
-        $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
+        $aboutme = new JobSeekerProfile;
+        $JobSeekerProfile = JobSeekerProfile::where(Auth::user()->id);
+        // dd($JobSeekerProfile);
         $present_country = $JobSeekerProfile->present_country;
         $state = $JobSeekerProfile->state;
         $present_city = $JobSeekerProfile->present_city;
@@ -264,18 +255,26 @@ class JobSeekerProfilesController extends Controller
         $aboutme->state =  $request->state ;
         $aboutme->present_city  = $request->present_city ;
         $aboutme->present_address =  $request->present_address ;
-       
-        if($present_country=='' ||$state=='' ||$present_city=='' ||$present_address==''){
-                $contact->save();
+        $aboutme->save();
+        if($present_country=='NULL' ||$state=='NULL' ||$present_city=='NULL' ||$present_address=='NULL'){
+                $aboutme->save();
         }
         else{
+            
+                $aboutme = JobSeekerProfile::where('user_id', Auth::user()->id)->update(array('present_country' => $request->present_country,'state' => $request->state,'present_city' => $request->present_city,'present_address' => $request->present_address));
+        
 
-               $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('present_country' => $request->present_country,'state' => $request->state,'present_city' => $request->present_city,'present_address' => $request->present_address));
+            //    $affectedRows = JobSeekerProfile::where('id', '=', Auth::user()->id)->update(array('present_country' => $request->present_country,'state' => $request->state,'present_city' => $request->present_city,'present_address' => $request->present_address));
         }
     }
 
+     
+     
 
+    
+           
 
+    
 public function show_my_profile($id)
 {
     $profile = JobSeekerProfile::find($id);
@@ -298,14 +297,4 @@ public function get_career_details(Request $request){
     // dd( $User_details);
     
 }
-
-public function edit_profile(Request $request)
-{
-   
-  $user = Auth::user();
-  $profile = JobSeekerProfile::find($user->id);
-  return view('frontend.user.edit-setup-profile',compact('user','profile'));
-  
-}
-
     }

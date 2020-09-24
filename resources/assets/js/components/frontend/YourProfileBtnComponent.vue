@@ -1,5 +1,5 @@
 <template>
-    <div style="position: relative;">
+    <div class="your-profile-div">
         <span v-if="notificationCount" class="notification-count">{{notificationCount}}</span>
 	    <img :src="'/front/images/communicator-buttons/buttons/yourProfileBtn.png'" :class="'communicator-button your-profile-button '+hasNotification(notificationCount)" @click="viewDashboard()" alt="">
     </div>

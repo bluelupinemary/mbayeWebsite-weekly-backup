@@ -207,7 +207,7 @@ var videos = [
 ];
 var current_video = 0;
 var current_volume = 100;
-var player;
+var player, iframe;
 
 
 // next slider initialization
@@ -321,17 +321,19 @@ $('.slick-carousel-1').bind('wheel', function(e){
 
 // scroll volume slider to adjust volume
 $('.slick-carousel-2').bind('wheel', function(e){
+    console.log(e.originalEvent.deltaY);
     if(enable_mousewheel) {
         if(e.originalEvent.deltaY < 0) {
-            //scroll down
-            $volumeSlider.slick('slickPrev')
-            $volumeColorSlider.slick('slickPrev')
-            volumeDown();
-        }else {
             //scroll up
             $volumeSlider.slick('slickNext')
             $volumeColorSlider.slick('slickNext')
             volumeUp();
+            
+        }else {
+            //scroll down
+            $volumeSlider.slick('slickPrev')
+            $volumeColorSlider.slick('slickPrev')
+            volumeDown();
         }
     
         //prevent page fom scrolling
@@ -387,6 +389,14 @@ $('.close-btn').click(function() {
     } else {
         $('.featured-image-div.all-blog').show();
     }
+});
+
+$('#youtube-icon').click(function() {
+    toggleAudio();
+});
+
+$('#fullscreen-icon').click(function() {
+    playFullscreen();
 });
 
 // // play music
@@ -459,7 +469,7 @@ $('.close-btn').click(function() {
 // play video
 function playVideo()
 {
-    $('.music-player').show();
+    $('.music-player').css('display', 'block');
     $('.featured-image-div').hide();
     playAudio();
 }
@@ -467,7 +477,7 @@ function playVideo()
 // show music player
 function showMusicPlayer()
 {
-    $('.music-player').show();
+    $('.music-player').css('display', 'block');
     $('.featured-image-div').hide();
 }
 
@@ -557,7 +567,7 @@ function volumeUp()
     if(volume > maxValue) {
         volume = maxValue;
     } else {
-        volume += 5;
+        volume += 10;
     }
 
     current_volume = volume;
@@ -578,7 +588,7 @@ function volumeDown()
     if(volume < minValue) {
         volume = minValue;
     } else {
-        volume -= 5;
+        volume -= 10;
     }
 
     current_volume = volume;
@@ -602,6 +612,10 @@ function playAudio() {
     var video_id = video.id;
     var start = video.start;
     var video_player = 'youtube-player';
+    // var ctrlq = document.querySelector(".music-player");
+    // ctrlq.innerHTML = '<img id="youtube-icon" src="https://i.imgur.com/IDzX9gL.png"/><div id="youtube-player"></div>';
+    // ctrlq.style.cssText = 'cursor:pointer;cursor:hand;';
+    // ctrlq.onclick = toggleAudio;
     $('.music-player').append('<div id="youtube-player"></div>')
     // player.pauseVideo();
     player = new YT.Player(video_player, {
@@ -624,35 +638,49 @@ function playAudio() {
     });
 }
 
-// function togglePlayButton(play) {    
-//     document.getElementById("youtube-icon").src = play ? "https://i.imgur.com/IDzX9gL.png" : "https://i.imgur.com/quyUPXN.png";
-// }
+function togglePlayButton(play) {    
+    document.getElementById("youtube-icon").src = play ? url+"/front/images/communicator-buttons/pause-btn.png" : url+"/front/images/communicator-buttons/play-btn.png";
+}
 
-// function toggleAudio() {
-//     if ( player.getPlayerState() == 1 || player.getPlayerState() == 3 ) {
-//         player.pauseVideo(); 
-//         togglePlayButton(false);
-//     } else if ( player.getPlayerState() == 0) {
-//         // play next video
-//     } else {
-//         player.playVideo(); 
-//         togglePlayButton(true);
-//     } 
-// } 
+function toggleAudio() {
+    if ( player.getPlayerState() == 1 || player.getPlayerState() == 3 ) {
+        player.pauseVideo(); 
+        togglePlayButton(false);
+    } else if ( player.getPlayerState() == 0) {
+        // play next video
+    } else {
+        player.playVideo(); 
+        togglePlayButton(true);
+    } 
+
+    // document.getElementById("youtube-audio").style.display = "block";
+    // togglePlayButton(player.getPlayerState() !== 5);
+} 
 
 function onPlayerReady(event) {
     // player.setPlaybackQuality("small");
     // event.target.pauseVideo(); 
     event.target.setVolume(current_volume);
     event.target.playVideo();
+    iframe = $('#youtube-player');
     // document.getElementById("youtube-audio").style.display = "block";
-    // togglePlayButton(player.getPlayerState() !== 5);
+    togglePlayButton(player.getPlayerState() !== 5);
 }
 
 function onPlayerStateChange(event) {
     if (event.data === 0) {
-        // togglePlayButton(false); 
+        togglePlayButton(false); 
         // play next video
+    }
+}
+
+function playFullscreen (){
+    player.playVideo();//won't work on mobile
+    
+    var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
+    alert(requestFullScreen);
+    if (requestFullScreen) {
+      requestFullScreen.bind(iframe)();
     }
 }
 // End setup music player

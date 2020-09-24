@@ -333,6 +333,7 @@
       width:100%;
     }
 
+
     </style>
 
     <link rel="stylesheet" type="text/css" href="{{asset('front/CSS/company-profile.css')}}"/>
@@ -376,7 +377,12 @@
                                     </div>
                                 
                                 </div>
-                                <button class="edit_image" id="edit_uploaded_image">
+                                <button class="edit_image" id="edit_uploaded_image" style="    left: 3vw;
+                                          display: block;
+                                          width: 8vw;
+                                          height: 7vh;
+                                          position: absolute;
+                                          top: 40vh; color:white;background-color:black;font-size:1em;">
                                         Edit Image
                                 </button>
                                  
@@ -507,7 +513,7 @@
 
     <!----------------------------------------DIV FOR THE IMAGE EDITOR 1------------------------------------------>
     <div class="image-editor-modal" id="imageEditorModal">
-       <imageeditor-component :edit_blog="1"></imageeditor-component>
+       <testingeditor-component :edit_blog="1"></testingeditor-component>
     </div>
     <!----------------------------------------END OF DIV FOR THE IMAGE EDITOR 1------------------------------------------>
 

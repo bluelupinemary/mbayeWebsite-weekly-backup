@@ -41,7 +41,7 @@ class StoreCompanyProfileRequest extends FormRequest
     {
         return [
             'company_email.regex' => 'Enter valid email',
-            'company_email.unique' => 'Email is already taken',
+            'company_email.unique' => 'Email is already taken. Try Different',
             'company_phone_number.regex' => 'Invalid Number',
             'featured_image.required' => 'Input image here'
         ];

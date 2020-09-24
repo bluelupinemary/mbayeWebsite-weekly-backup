@@ -1,20 +1,17 @@
 @extends('frontend.layouts.app')
 
-
 @section('before-styles')
 
-
-
+<link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/register_style.css') }}">
 
     <style>
-
     </style>
 @endsection
 
 @section('content')
     <div  id="block_land"  >
-
+<div class="app"></div>
         <div class="content">
             <h1 class="text-glow">Turn your device in landscape mode.</h1>
             <div><img src="{{ asset('front') }}/images/rotate-screen.gif" alt=""></div>
@@ -23,6 +20,7 @@
     <div class="flex" >
     <section class="container-fluid" style="height:100vh">
         <div class="sub_container" style="border:0px solid white">
+         <div class="page">
           <div id="overlay"></div>
                   @if(session('success'))
                       <script>
@@ -30,21 +28,20 @@
                         document.getElementById("overlay").style.display = "block";
                           $(document).ready(function(){
 
-                  if(sweetMessage){
-                        Swal.fire({
-                            imageUrl: '../front/icons/alert-icon.png',
-                            imageWidth: 80,
-                            imageHeight: 80,
-                            imageAlt: 'Mbaye Logo',
-                            title: "<span id='success'>Congratulations!</span>",
-                            html: sweetMessage,
-                            width: '30%',
-                            padding: '1rem',
-                            background: 'rgba(8, 64, 147, 0.62)'
-                                  });
-                                }
-    }
-    );
+                            if(sweetMessage){
+                                  Swal.fire({
+                                      imageUrl: '../front/icons/alert-icon.png',
+                                      imageWidth: 80,
+                                      imageHeight: 80,
+                                      imageAlt: 'Mbaye Logo',
+                                      title: "<span id='success'>Congratulations!</span>",
+                                      html: sweetMessage,
+                                      width: '30%',
+                                      padding: '1rem',
+                                      background: 'rgba(8, 64, 147, 0.62)'
+                                            });
+                                          }
+                      });
                     </script>
 
                        <div class="sucess_msg " >
@@ -53,10 +50,10 @@
                         </div>
                         <span class="alert-success">
                           <h2 style="color:#09b523">Congratulations!</h2>
-                            <p style="width: 39vw; color: #ffffff">{{ session('success') }}</p>
+                            <p style="font-size:1.1vw ; color: #ffffff;font-family:Nasalization">{{ session('success') }}</p>
 
                         </span>
-                      <input type="button"  style="position: absolute; left: 45%;background:#f00000;color: #faf5f5;top: 82% ; border: hidden; border-radius: 8px;width: 6vw;height: 3vw" value="OK" class="navbar-toggle collapsed"onclick="redirectToHome()"/>
+                      <input type="button"  style="position: absolute; left: 45%;background:#f00000;color: #faf5f5;top: 82% ; border: hidden; border-radius: 8px;width: 6vw;height: 3vw" value="OK" class="navbar-toggle collapsed"onclick="redirectToLogin()"/>
 
                       </div>
                   @endif
@@ -502,7 +499,7 @@
                       </div>
 
                       <div class="col-lg-8 col-xl-8  col-sm-7 col-md-7 col-6  border1" >
-                        <input type="email" class="form-control lbl_text mb-3 " id="Email" value="{{ old('email') }}" required name="email"/>
+                        <input type="email" class="form-control lbl_text mb-3 " id="Email" value="{{ old('email') }}"  onchange="validateEmail()" required name="email"/>
                       </div>
                   </div>
               </div>
@@ -514,7 +511,7 @@
                       </div>
 
                       <div class="col-lg-8 col-xl-8 col-sm-7 col-md-7 col-6  border1" >
-                          <input type="number" class="form-control lbl_text" type="number" id="mob_no" value="{{ old('mobile_number') }}" required name="mobile_number"/>
+                          <input type="number" class="form-control lbl_text" id="mob_no" value="{{ old('mobile_number') }}" required name="mobile_number"/>
                       </div>
                   </div>
               </div>
@@ -537,7 +534,11 @@
                               <option value="" disable selected>Select Organization Type</option>
                               <option value="School">School</option>
                               <option value="Club">Club</option>
-                              <option value="Other">Other</option>
+                              <option value="Company">Company</option>
+                              <option value="Non-profit Organization"> Non-profit Organization</option>
+                              <option value="International Organization">International Organization</option>
+                              <option value="Group">Group</option>
+                              <option value="Individual">Individual</option>
                           </select>
                       </div>
                   </div>
@@ -585,6 +586,10 @@
 
                       <div class="col-lg-8 col-xl-8 col-sm-7  col-md-7 col-6 border1" >
                           <input type="password" class="form-control lbl_text"  id="password" value="{{ old('password') }}" required name="password"/>
+                          <span  class="btn-showpassword" onclick="showpassword()" >
+                            <i class="eye fas fa-eye"></i>
+                            <i class="eye_slash fas fa-eye-slash"></i>
+                          </span>
                       </div>
                   </div>
               </div>
@@ -626,7 +631,7 @@
 
           <!------Occupation --------->
 
-          <label for="occupation" class="lbl_occupation col_white lbl_text">Occupation:</label>
+          <label for="occupation" class="lbl_occupation col_white lbl_text">Occupation:<span style="color:red">*</span></label>
 
           <img  id='cloud' class="occupation" src="{{ asset('front') }}/images/cloud_occupation_1.png"   />
 
@@ -1042,7 +1047,7 @@
 
 
 
-
+</div>
 <!---model ends -->
         </div>
     </section>
@@ -1060,6 +1065,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
     <script src="{{ asset('front') }}/JS/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('front/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('front') }}/JS/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
         <!-- Webcam.min.js -->
     <!--------------------------------------- For camera--------------------------------------------->
 
@@ -1103,6 +1111,87 @@
 
 //Get old selected gender, country, organization type;
         $(document).ready(function() {
+          var url = $('meta[name="url"]').attr('content');
+          // $("#date").datepicker({
+          //   constrainInput:"true",
+          //   dateFormat:"mm/dd/yy"
+          // });
+
+
+          var maskConfig = {
+                leapday: "29-02-",
+                separator: "/",
+                showMaskOnHover: false,
+                showMaskOnFocus: false,
+                placeholder: "__/__/____"
+          }
+
+          // $('#date').inputmask('mm/dd/yyyy',maskConfig);
+          $(".datepicker").css({'display':'none'});
+
+        //   $('#date').on('change', function() {
+        //     if(this.value){
+        //       $(this).attr('data-date', moment(this.value, 'MM/DD/YYYY').format($(this).attr('data-dateformat')));
+        //     } else{
+        //       $(this).attr('data-date', '');
+        //     }
+
+        // });
+
+          var elem = document.documentElement;
+        function openFullscreen()
+         {
+            if (elem.mozRequestFullScreen) {  /* Firefox */
+            elem.mozRequestFullScreen(); 
+            contentDisplay();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                elem.webkitRequestFullscreen();
+                contentDisplay();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+                contentDisplay();
+            }
+            else if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+                contentDisplay();
+            } 
+            else{ 
+                contentDisplay();
+            }
+
+        }
+if(window.innerWidth < 991 ){
+$(document).ready(()=>{
+    Swal.fire({
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+            padding: '15px',
+            background: 'rgba(8, 64, 147, 0.62)',
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.value) {
+                openFullscreen()
+            }
+        });
+    });
+}
+else  contentDisplay();
+
+function contentDisplay() { 
+  
+  
+  setTimeout(function(){
+        $(".sub_container").show();  
+        $(".sub_container").addClass('animate-zoomIn-arm');
+        $('.sub_container').on("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+          function(){ 
+            //  $(".sub_container").removeClass('animate-zoomIn-armanimate-zoomIn-arm');
+            //  $(".sub_container").addClass('zoomIn-arm');
+                  });
+                 }, 1000 );
+}
         const genderOldValue = '{{ old('gender') }}';
         const countryOldValue = '{{ old('country') }}';
         const orgtypeOldValue = '{{ old('org_type') }}';
@@ -1264,6 +1353,7 @@ document.getElementById('my_camera').innerHTML =
     // Date time picker change value
     $('#date').change(function(){
     $(this).attr('value', $('#date').val());
+    $("#age").val(' ');
 });
 //combo box  value setting
 //loadSelect_for_country(country);
@@ -1409,19 +1499,18 @@ if(org!='')
                   } );
 
                 }
-
+             
             //Function for age calculation
             function calculate_age()
             {
               $("#sname").removeAttr('required');
               $("#sid").removeAttr('required');
+              $("#age").val(' ');
               //DATE validation
-            var dob=$("#date").val();
-            var zordiac=check_zordiac(dob); // Checking zordiac signs
+              var dob=$("#date").val();
 
                 //$('.img_2').css({'display':'none'});
                 $('.img_1').css({'display':'block'});
-
                 $(".text_Aquaris ").removeClass("ani-rollouttext_Aquaris");
                 $('.text_Aquaris').css({'display':'none'});
                 $('.aq_normal').css({'filter': 'none'});
@@ -1458,6 +1547,9 @@ if(org!='')
                 $(".text_Capricorn ").removeClass("ani-rollouttext_Capricorn");
                 $('.text_Capricorn').css({'display':'none'});
                 $('.cp_normal').css({'filter': 'none'});
+
+                
+                var zordiac=check_zordiac(dob); // Checking zordiac signs
 
             if(dob!=''){
                 if(zordiac=='Aquarius')
@@ -1544,29 +1636,36 @@ if(org!='')
                 if(dat_Validation==true)
                  {
                      var dob=$("#date").val();
-                     d1=new Date(dob);
-                     d2 = new Date();
-                      var diff = d2.getTime() - d1.getTime();
-                      age= Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-                      if(age<0)
-                        age=0;
-                      $("#age").val(age);
+                     $("#age").val(' ');
+                    if(dob!=''){
+                        d1=new Date(dob);
+                        d2 = new Date();
+                          var diff = d2.getTime() - d1.getTime();
+                          age= Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
 
-                      if(age<18)
-                      {
-                       $(".sponser_name").show();
-                       $(".sponser_hide").show();
-                       document.getElementById("sname").required = true;
-                       document.getElementById("sid").required = true;
+                          if( Number.isNaN(age)==true){
+                            age='';
+                          }
+                            
+                          if(age<0)
+                            age=0;
+                          $("#age").val(age);
 
-                       }
-                      else{
-                        $(".sponser_name").hide();
-                        $(".sponser_hide").hide();
-                        $("#sname").removeAttr('required');
-                        $("#sid").removeAttr('required');
-                      }
+                          if(age<18)
+                          {
+                          $(".sponser_name").show();
+                          $(".sponser_hide").show();
+                          document.getElementById("sname").required = true;
+                          document.getElementById("sid").required = true;
 
+                          }
+                          else{
+                            $(".sponser_name").hide();
+                            $(".sponser_hide").hide();
+                            $("#sname").removeAttr('required');
+                            $("#sid").removeAttr('required');
+                          }
+                        }
                 }
                 else{
                   alert("Invalid DOB!");
@@ -1587,19 +1686,20 @@ if(org!='')
                 var month   = parseInt(parts[1], 10); //month
                 var year    = parseInt(parts[0], 10); //year
                 var zordiac='';
-
+                // alert(month)
 
                 if(dob!='')
                 {
                   if(month==1){
-                            if(day>=20 && day<=31)
+                          if(day>=21 && day<=31)
                             {
                               zordiac='Aquarius';
                             }
-                            else if(day>=1 && day<=19)
+                            else if(day>=1 && day<=20)
                             {
                               zordiac='Capricorn';
                             }
+                           
                   }
                   else if(month==2){
                           if(day>=19 && day<=31)
@@ -1622,37 +1722,37 @@ if(org!='')
                             }
                   }
                   else if(month==4){
-                          if(day>=20 && day<=31)
+                          if(day>=21 && day<=31)
                             {
                               zordiac='Taurus';
                             }
-                            else if(day>=1 && day<=19)
+                            else if(day>=1 && day<=20)
                             {
                               zordiac='Aries';
                             }
                   }
                   else if(month==5){
-                          if(day>=21 && day<=31)
+                          if(day>=22 && day<=31)
                             {
                               zordiac='Gemini';
                             }
-                            else if(day>=1 && day<=20)
+                            else if(day>=1 && day<=21)
                             {
                               zordiac='Taurus';
                             }
                   }
                   else if(month==6){
-                          if(day>=21 && day<=31)
+                          if(day>=22 && day<=31)
                             {
                               zordiac='Cancer';
                             }
-                            else if(day>=1 && day<=20)
+                            else if(day>=1 && day<=21)
                             {
                               zordiac='Gemini';
                             }
                   }
                   else if(month==7){
-                          if(day>=23 && day<=31)
+                          if(day>=24 && day<=31)
                             {
                               zordiac='Leo';
                             }
@@ -1662,11 +1762,11 @@ if(org!='')
                             }
                   }
                   else if(month==8){
-                          if(day>=23 && day<=31)
+                          if(day>=24 && day<=31)
                             {
                               zordiac='Virgo';
                             }
-                            else if(day>=1 && day<=22)
+                            else if(day>=1 && day<=23)
                             {
                               zordiac='Leo';
                             }
@@ -1686,7 +1786,7 @@ if(org!='')
                             {
                               zordiac='Scorpio';
                             }
-                            else if(day>=1 && day<=22)
+                            else if(day>=1 && day<=23)
                             {
                               zordiac='Libra';
                             }
@@ -1768,6 +1868,29 @@ if(org!='')
             return result;
             }
 
+            /**
+            Function to validate email address
+            */
+            function validateEmail() {
+                  var email=$("#Email").val(); 
+                  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                  var blnValidate=re.test(String(email).toLowerCase());
+                  
+                  if(blnValidate==false){
+                        Swal.fire({
+                                  imageUrl: '../front/icons/alert-icon.png',
+                                  imageWidth: 80,
+                                  imageHeight: 80,
+                                  imageAlt: 'Mbaye Logo',
+                                  title: "<span id='error'>Error!</span>",
+                                  html: 'Please Enter Valid Email Id',
+                                  width: '30%',
+                                  padding: '1rem',
+                                  background: 'rgba(8, 64, 147, 0.62)'
+                                        });
+                  }
+
+                }
 
             /* Reset camera option */
 
@@ -1894,9 +2017,14 @@ if(org!='')
                 /*
                 Function to redirect to home page after registration  save sucess
                 */
-            function redirectToHome(){
-
+               function redirectToHome(){
                   window.location = "{{route('frontend.index')}}";
+                }
+                 /*
+                Function to redirect to login  page after registration  save sucess
+                */
+                function redirectToLogin(){
+                  window.location.href = url+'/login';
                 }
                 /**
                 Function to validate form
@@ -1952,8 +2080,22 @@ if(org!='')
                 }
             }
 
-
-
+            /**
+            Function to show password
+            */
+            function showpassword(){
+              var password = document.getElementById("password");
+                if (password.type === "password") {
+                  password.type = "text";
+                  $(".eye").hide();
+                  $(".eye_slash").show();
+               
+                } else {
+                  password.type = "password";
+                  $(".eye_slash").hide();
+                  $(".eye").show(); 
+                }
+            }
 
               $(document).ready(function(){
                   if({{count($errors) }} > 0)

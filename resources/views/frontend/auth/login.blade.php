@@ -50,6 +50,7 @@
 @endsection
 
 @section('content')
+<div class="app"></div>
 <div id="block_land">
     <div class="content">
         <h1 class="text-glow">Turn your device in landscape mode.</h1>
@@ -133,6 +134,10 @@
 
                     <div class="col-5">
                         <input class="input-box" type="password" id="password" name="password" />
+                        <span  class="btn-showpassword" onclick="showpassword()" >
+                            <i class="eye fas fa-eye"></i>
+                            <i class="eye_slash fas fa-eye-slash"></i>
+                          </span>
                     </div>
                 </div>
 
@@ -200,8 +205,8 @@
         var elem = document.documentElement;
         function openFullscreen() {
             if (elem.mozRequestFullScreen) { /* Firefox */
-            elem.mozRequestFullScreen();
-            contentDisplay();
+                elem.mozRequestFullScreen();
+                contentDisplay();
             } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
                 elem.webkitRequestFullscreen();
                 contentDisplay();
@@ -209,10 +214,13 @@
                 elem.msRequestFullscreen();
                 contentDisplay();
             }
-            else if (elem.requestFullscreen) {
+            else if (elem.requestFullscreen) { 
                 elem.requestFullscreen();
                 contentDisplay();
             } 
+            else{
+                contentDisplay();
+            }
         }
 
         if(window.innerWidth < 991 ){
@@ -240,8 +248,8 @@
                 $(".astronautarm-img").show();
                 $(".astronautarm-img").addClass('animate-arm');
                 $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                $(".astronautarm-img").removeClass('animate-arm');
-            });
+                    $(".astronautarm-img").removeClass('animate-arm');
+                });
                     }, 1000
             );
         }
@@ -264,7 +272,7 @@
                 // ....................................
 
 
-                $('.main-form').submit(function() 
+        $('.main-form').submit(function() 
         {
             if ($.trim($("#email").val()) === "" || $.trim($("#password").val()) === ""){
                 Swal.fire({
@@ -312,7 +320,24 @@
                 sweetMessage = errorMessage[0][0];
             }
             }
+            
                     if(sweetMessage){
+                        var msg=sweetMessage.split(".");
+                        if(msg[0]=="Too many login attempts"){
+
+                            Swal.fire({
+                                imageUrl: '../front/icons/alert-icon.png',
+                                imageWidth: 80,
+                                imageHeight: 80,
+                                imageAlt: 'Mbaye Logo',
+                                title: "<span id='error'>Authentication Failed!</span>",
+                                html: 'Did you forget your password? Please click forgot password to recover your account.',
+                                width: '30%',
+                                padding: '1rem',
+                                background: 'rgba(8, 64, 147, 0.62)'
+                                    });
+                                        }
+                        else{
                             Swal.fire({
                                 imageUrl: '../front/icons/alert-icon.png',
                                 imageWidth: 80,
@@ -324,8 +349,32 @@
                                 padding: '1rem',
                                 background: 'rgba(8, 64, 147, 0.62)'
                                     });
+                             }
                                     }
         }
     );
+            /*
+            * Function to redirect to terms and confitions page
+            */
+            $(".terms-div").click(function(){
+                  window.location.href = "{{URL::to('/terms')}}"
+                });
+
+        /**
+            Function to show password
+            */
+            function showpassword(){
+              var password = document.getElementById("password");
+                if (password.type === "password") {
+                  password.type = "text";
+                  $(".eye").hide();
+                  $(".eye_slash").show();
+               
+                } else {
+                  password.type = "password";
+                  $(".eye_slash").hide();
+                  $(".eye").show(); 
+                }
+            }
 </script>
 @endsection

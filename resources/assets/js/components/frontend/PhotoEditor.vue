@@ -27,24 +27,32 @@ export default {
         return {
             useDefaultUI: true,
             options: { // for tui-image-editor component's "options" prop
-                imageSize: {oldWidth: 300, oldHeight: 300, newWidth: 400, newHeight: 400},
+                imageSize: {oldWidth: 200, oldHeight: 200, newWidth: 200, newHeight: 200},
                 selectionStyle: {
-                    cornerSize: 20,
+                    cornerSize: 5,
                     rotatingPointOffset: 70
                 },
                 includeUI: {
                     initMenu: 'text',
-                    imageSize: {oldWidth: 200, oldHeight: 200, newWidth: 200, newHeight: 200}
+                    imageSize: {oldWidth: 200, oldHeight: 200, newWidth: 200, newHeight: 200},
+                    uiSize: {
+                        width: '100%',
+                        height: '100%'
+                    },
                 },
-                cssMaxWidth: 700,
-                cssMaxHeight: 500
+                cssMaxWidth: (window.innerWidth < 991 && window.innerHeight < 991 ? (screen.width < screen.height ? screen.height : screen.width) : 500),
+                cssMaxHeight: (window.innerWidth < 991 && window.innerHeight < 991 ? (screen.width < screen.height ? (screen.width - 135) : (screen.height - 135)) : 500)
             }
         };
     },
     methods: {
         onTextEditing(pos) {
             console.log('editing text');
-        }
+        },
+        // onMouseDown() {
+        //     console.log('mousedown');
+        //     // $('.tui-image-editor-main .tui-image-editor-submenu').hide();
+        // },
     },
     mounted() {
         var $this = this;
@@ -111,6 +119,24 @@ export default {
                 $this.$refs.tuiImageEditor.invoke('ui.activeMenuEvent');
                 $('.edit_image').removeAttr('disabled');
             }
+        });
+
+        $('.tui-image-editor-wrap').on('mousedown, touchstart', function() {
+            $('.tui-image-editor-main .tui-image-editor-submenu').hide();
+        });
+
+        $('.tui-image-editor-wrap').on('mouseup, touchend', function() {
+            $('.tui-image-editor-main .tui-image-editor-submenu').css('display', 'table');
+        });
+
+        $(".tui-image-editor-menu").on('click', 'li', function() {
+            if($(this).hasClass('active')) {
+                $('.tui-image-editor-submenu-style').css('background-color', '#1e1e1e');
+                
+            } else {
+                $('.tui-image-editor-submenu-style').css('background-color', 'transparent');
+            }
+            
         });
     }
 }

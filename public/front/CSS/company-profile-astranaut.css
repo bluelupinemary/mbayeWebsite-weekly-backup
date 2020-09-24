@@ -251,12 +251,14 @@
         -ms-transform: translate(27%, -23%) scale(1.5);
         transform: translate(27%, -23%) scale(1.5);
 }
+
 .astro-div.animate-navigator-zoomin {
     -webkit-animation: navigatorAnimateZoomIn 1s linear; 
     -moz-animation: navigatorAnimateZoomIn 1s linear;
     -o-animation: navigatorAnimateZoomIn 1s linear;
     animation: navigatorAnimateZoomIn 1s linear;
 }
+
 
 @-webkit-keyframes navigatorAnimateZoomIn {
     0% {
@@ -514,7 +516,7 @@ outline: 0;
 }
 
 .navigator-div .tooltips span {
-    font-size: 0.2vw;
+    font-size: 1vw;
     width: 2vw;
     padding: 30%;
     border-radius: 1px;
@@ -661,8 +663,8 @@ outline: 0;
     transform: translate(360%, 202%) skew(16deg, 10deg);
 } 
 .navigator-div .tooltips span {
-    font-size: 0.3rem;
-    width: 6vw;
+    font-size: 0.6rem;
+    width: 7vw;
     padding: 30%;
     border-radius: 1px;
     -webkit-transform: translate(-123%, -50%);
@@ -822,10 +824,10 @@ outline: 0;
     line-height: 1em;
     text-align: center;
     display:none;
-    border-radius: 12px;
+    border-radius: 2px;
     -webkit-box-shadow: 0px 3px 4px #000000;
      box-shadow: 0px 3px 4px #000000;
-    font-size: 0.9em;
+    font-size: 1em;
     word-wrap: break-word;
     padding: 10%;
     outline: 0;
@@ -882,9 +884,14 @@ outline: 0;
     text-shadow: 0px 0px 3px #000000;
     font-family: 'Nasalization';
     background: #0b91c3a3;
-    line-height: 1em;
+    
     text-align: center;
     display: none;
+
+
+
+
+    
     border-radius: 12px;
     -webkit-box-shadow: 0px 3px 4px #000000;
     box-shadow: 0px 3px 4px #000000;
@@ -2909,3 +2916,100 @@ div.cell.reflection2 img
     box-shadow: 0px 1px 4px #000000;
     text-align: center;
 } */
+@media only screen and (max-width: 813px){
+    .column1 {
+        position:relative;
+        float: left;
+        /* min-width: 100%; */
+        width: 30vw;
+        /* max-width: 100%; */
+        /* max-height: 100%; */
+        height: 100%;
+        padding: 20px;
+        /* background-color: #0825453b; */
+        background-size: contain;
+        background-repeat: no-repeat;
+        /* border-radius: 20px; */
+        margin-left: 49px;
+        margin-top: -6%;
+        overflow: hidden;
+        /* position: relative; */
+        object-fit: contain;
+        -webkit-columns: 2 200px;
+        -moz-columns: 2 200px;
+        columns: 2 200px;
+        -webkit-column-gap: 4em;
+        -moz-column-gap: 4em;
+    }
+   
+    .zoom-btn {
+        position: absolute;
+        top: 53%;
+        left: 49%;
+        -webkit-transform: translate(-78%, 105%);
+        -moz-transform: translate(-78%, 105%);
+        -ms-transform: translate(-78%, 105%);
+        transform: translate(-78%, 105%);
+        background: black;
+        border: 0;
+        color: #fff;
+        width: 5.4vw;
+        height: 3.2vw;
+        font-size: 1vw;
+        z-index: 1000000;
+        border-radius: 3px;
+        opacity: 0.7;
+        display: block;
+        cursor: pointer;
+        pointer-events: auto;
+        justify-content: center;
+    }
+    .instructions-div {
+        position: absolute;
+        top: 53%;
+        left: 52%;
+        -webkit-transform: translate(-52%, 512%);
+        -moz-transform: translate(-52%, 512%);
+        -ms-transform: translate(-52%, 512%);
+        transform: translate(-52%, 512%);
+        width: 2vw;
+        height: 1.2vw;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    }
+    .astro-div.tom .navigator-zoomout-btn {
+        right: 0px;
+        left: unset;
+        /* -webkit-transform: translate(-739%, 586%);
+        -moz-transform: translate(-739%, 586%);
+        -ms-transform: translate(-739%, 586%); */
+        transform: translate(-542%, 573%);
+    }
+
+.button-done{
+    float:right;
+    color: #fff;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    width: 8vw !important;
+    height: auto;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #3085d6;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    overflow:visible;
+    cursor: pointer;
+     }
+    }

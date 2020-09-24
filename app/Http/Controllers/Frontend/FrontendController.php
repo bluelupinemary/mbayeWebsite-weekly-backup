@@ -519,4 +519,8 @@ public function blogviewMembers(){
     return view('frontend.blog.blogview.dummy_blogview',compact('gender'));
 }
 
+public function userConfirmation(){
+    return view('emails.user-confirmation');
+}
+
 }

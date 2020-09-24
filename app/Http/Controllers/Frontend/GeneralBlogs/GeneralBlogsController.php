@@ -336,7 +336,7 @@ class GeneralBlogsController extends Controller
         if($request->share_as_permanent == '1') {
             $blog = GeneralBlog::find($request->blog_id);
             $tags = $request->tag_ids;
-            $user = User::find($blog->created_by)->get();
+            $user = User::find($blog->created_by)->first();
             $blog_share = new BlogShare();
             $blog_share->caption = $request->share_caption;
             $blog_share->blog_id = $request->blog_id;

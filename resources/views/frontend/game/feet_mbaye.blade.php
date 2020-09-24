@@ -39,6 +39,27 @@
         width:100%;
         height:100%;
     }
+    .modelArrow{    
+      display:none; 
+      position: absolute;
+      font-size: 3em;
+      border: none;
+      color: #16aedc;
+      cursor: pointer;
+      z-index:1;
+      padding:1vw;
+    }
+
+    #leftArrow{
+      bottom:0;
+      left:0;
+    }
+
+    #rightArrow{     
+      bottom:0;
+      right:0;
+    }
+  
   </style>
 @endsection
 
@@ -59,9 +80,11 @@
     </div>
 
     <div id="flowerModelDiv">
-      <img id="close-btn"  src="{{asset('front')}}/images3D/close-btn.png" data-toggle="tooltip" title="Close" align="right"/>
-      <img id="fullscreen-btn" src="{{asset('front')}}/images3D/fullscreen-btn.png" data-toggle="tooltip" title="Fullscreen" align="right" /> 
-      <model-viewer id="flowerViewer"  preload poster="{{asset('front')}}/images3D/Flower3DBG.png"  camera-target="0m 0m 0m" max-field-of-view="300%" src="" alt="A 3D model here" skybox-image="{{asset('front')}}/images3D/Flower3DBG.png" environment-image="{{asset('front')}}/images3D/lightroom.hdr" min-field-of-view ="1deg" exposure="0.8" camera-controls interaction-prompt="none"></model-viewer>
+        <img id="close-btn"  src="{{asset('front')}}/images3D/close-btn.png" data-toggle="tooltip" title="Close" align="right"/>
+        <img id="fullscreen-btn" src="{{asset('front')}}/images3D/fullscreen-btn.png" data-toggle="tooltip" title="Fullscreen" align="right" /> 
+        <i id="leftArrow" class="modelArrow fas fa-chevron-circle-left"></i>
+        <i id="rightArrow" class="modelArrow fas fa-chevron-circle-right"></i>
+        <model-viewer id="flowerViewer"  preload poster="{{asset('front')}}/images3D/Flower3DBG.png"  camera-target="0m 0m 0m" max-field-of-view="300%" src="" alt="A 3D model here" skybox-image="{{asset('front')}}/images3D/Flower3DBG.png" environment-image="{{asset('front')}}/images3D/lightroom.hdr" min-field-of-view ="1deg" exposure="0.8" camera-controls interaction-prompt="none"></model-viewer>
     </div>
  
     

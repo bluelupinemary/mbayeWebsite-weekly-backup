@@ -32,7 +32,7 @@
   /* border: 1px solid green; */
   object-fit: cover;
   z-index: -1;
-  display: flex;
+  display: none;
 }
 
 .astronaut-arm {
@@ -251,7 +251,7 @@
 
 .form-control
 {
-  border1:0px solid white;
+  border:0px solid white;
 }
 
 .txt_email{
@@ -269,11 +269,10 @@
   /* #17a2b8;*/
 
   border: 0;
-
-  font-size: 0.9vw;
+  font-size:0.6em;
   /*text-shadow: 0px 0px 8px #343a40;*/
   height: 2vw;
-  border-radius: 3px;
+  border-radius: 2px;
   width: 100%;
   padding: 2%;
   /*font-family: 'Nasalization';*/
@@ -443,7 +442,7 @@
   -moz-transform: translate3d(-1px, 1px, 0px);
   transform: translate3d(-1px, 1px, 0px);
 }
-
+/* 
 .swal2-popup {
   box-shadow: 0px 0px 20px #17a2b8;
   width: 27vw !important;
@@ -479,7 +478,7 @@
 
 .swal2-actions {
   margin: 1.25vw auto 0 !important;
-}
+} */
 
 .btn-success{
 margin-right: 0.5vw;
@@ -617,8 +616,210 @@ margin-left: 0.5vw;
   width: 51%;
   margin-right: 2%;
 }
+.swal2-popup {
+  box-shadow: 0px 0px 20px #17a2b8;
+  /* width: 27vw !important; */
+  padding: 1vw !important;
+}
+/* 
+.swal2-image {
+  width: 6vw !important;
+  height: 6vw !important;
+  margin: 1.25vh auto !important;
+} */
+
+.swal2-title {
+  font-family: 'Nasalization';
+  font-size: 1.5vw !important;
+  color: #df1613 !important;
+}
+
+.swal2-content {
+  color: #17a2b8 !important;
+  font-size: 1.1vw !important;
+  font-family: 'Nasalization';
+}
+
+.swal2-title span.success {
+  color: #25d365 !important;
+}
+
+.swal2-styled {
+  font-size: 1.3vw !important;
+  padding: 0.5vw 2vw !important;
+}
+
+.swal2-actions {
+  margin: 1.25vw auto 0 !important;
+}
+.swal2-popup {
+  box-shadow: 0px 0px 20px #17a2b8;
+  /* width: 27vw !important;
+  padding: 1vw !important; */
+}
+
+.swal2-html-container {
+  color: #17a2b8 !important;
+  font-size: 1.1vw !important;
+  font-family: 'Nasalization';
+}
 
 
+.astronaut-arm {
+  max-width: 100%;
+  /* max-height: 100%; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  /* bottom: 0; */
+  z-index: -1;
+  display: none;
+}
+
+.animate-arm {
+  -webkit-transition: 1000s;
+  -moz-transition: 1000s;
+  -o-transition: 1000s;
+  transition: 1000s;
+  -webkit-animation: showArm 1s linear; /* Safari 4+ */
+  -moz-animation: showArm 1s linear; /* Fx 5+ */
+  -o-animation: showArm 1s linear; /* Opera 12+ */
+  animation: showArm 1s linear;
+}
+
+@-webkit-keyframes showArm {
+  0% {
+      -webkit-transform: translate(-150%, -50%);
+      -moz-transform: translate(-150%, -50%);
+      transform: translate(-150%, -50%);
+  }
+
+  100% {
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+  }
+}
+
+@-moz-keyframes showArm {
+  0% {
+      -webkit-transform: translate(-150%, -50%);
+      -moz-transform: translate(-150%, -50%);
+      transform: translate(-150%, -50%);
+  }
+
+  100% {
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+  }
+}
+
+@-o-keyframes showArm {
+  0% {
+      -webkit-transform: translate(-150%, -50%);
+      -moz-transform: translate(-150%, -50%);
+      transform: translate(-150%, -50%);
+  }
+
+  100% {
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes showArm {
+  0% {
+      -webkit-transform: translate(-150%, -50%);
+      -moz-transform: translate(-150%, -50%);
+      transform: translate(-150%, -50%);
+  }
+
+  100% {
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+  }
+}
+
+.animate-zoomIn-arm {
+  -webkit-animation: zoomInArm 1s linear; /* Safari 4+ */
+  -moz-animation: zoomInArm 1s linear; /* Fx 5+ */ 
+  -o-animation: zoomInArm 1s linear; /* Opera 12+ */
+  animation: zoomInArm 1s linear;
+}
+
+.zoomIn-arm {
+  -webkit-transform: translate(-36%, -50%) scale(1.3);
+  -moz-transform: translate(-36%, -50%) scale(1.3);
+  -o-transform: translate(-36%, -50%) scale(1.3);
+  transform: translate(-36%, -50%) scale(1.3);
+}
+
+@-webkit-keyframes zoomInArm {
+  100% {
+      -webkit-transform: translate(-36%, -50%) scale(1.3);
+      -moz-transform: translate(-36%, -50%) scale(1.3);
+       transform: translate(-36%, -50%) scale(1.3);
+      -webkit-transition: -webkit-transform 1s ease-in;
+      -moz-transition: -moz-transform 1s ease-in;
+      -o-transition: transform 1s ease-in;
+      transition: transform 1s ease-in;
+  }
+}
+@-moz-keyframes zoomInArm {
+  100% {
+      -webkit-transform: translate(-36%, -50%) scale(1.3);
+      -moz-transform: translate(-36%, -50%) scale(1.3);
+       transform: translate(-36%, -50%) scale(1.3);
+      -webkit-transition: -webkit-transform 1s ease-in;
+      -moz-transition: -moz-transform 1s ease-in;
+      -o-transition: transform 1s ease-in;
+      transition: transform 1s ease-in;
+  }
+}
+@-o-keyframes zoomInArm {
+  100% {
+      -webkit-transform: translate(-36%, -50%) scale(1.3);
+      -moz-transform: translate(-36%, -50%) scale(1.3);
+      transform: translate(-36%, -50%) scale(1.3);
+      -webkit-transition: -webkit-transform 1s ease-in;
+      -moz-transition: -moz-transform 1s ease-in;
+      -o-transition: transform 1s ease-in;
+      transition: transform 1s ease-in;
+  }
+}
+
+@keyframes zoomInArm {
+  100% {
+      /* top: 8%;
+      left: 20%; */
+      -webkit-transform: translate(-36%, -50%) scale(1.3);
+      -moz-transform: translate(-36%, -50%) scale(1.3);
+      transform: translate(-36%, -50%) scale(1.3);
+      -webkit-transition: -webkit-transform 1s ease-in;
+      -moz-transition: -moz-transform 1s ease-in;
+      -o-transition: transform 1s ease-in;
+      transition: transform 1s ease-in;
+  }
+}
+.tos-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(2315%, -248%);
+  width: 1vw;
+  height: 3.8vw;
+  pointer-events: none;
+}
+
+.tos-div img {
+  width: 100%;
+}
 /*---------------------------------------------------------------------------------*/
 /*// Extra small devices (portrait phones, less than 576px)*/
 /*---------------------------------------------------------------------------------*/

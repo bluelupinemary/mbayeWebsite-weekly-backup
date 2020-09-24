@@ -56,8 +56,8 @@ class RegisterController extends Controller
         if (config('access.users.confirm_email') || config('access.users.requires_approval')) {
             $user = $this->user->create($request->all());
               event(new UserRegistered($user));
-              return redirect()->route('frontend.auth.login'); //temporary
-            //   return redirect()->back()->with('success', 'Registration completed. We have sent an activation link to your email address . Please verify your account.');
+            //   return redirect()->route('frontend.auth.login'); //temporary
+              return redirect()->back()->with('success', 'Registration completed. We have sent an activation link to your email address . Please verify your account.');
            
         } else {
             access()->login($this->user->create($request->all()));

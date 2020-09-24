@@ -6,6 +6,7 @@ use App\Models\BaseModel;
 use App\Models\JobSeekerProfile\Traits\Attribute\ProfessionAttribute;
 use App\Models\JobSeekerProfile\Traits\Relationship\ProfessionRelationship;
 use App\Models\ModelTrait;
+use App\Models\Access\User\User;
 
 class Profession extends BaseModel
 {

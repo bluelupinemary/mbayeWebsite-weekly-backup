@@ -753,7 +753,7 @@ let rFootFlowersMap = new Map(
         ["16Pasque",[{x: 37.33471652636927, y: 20, z: 18.69163656578392},'f']],
         ["18QueenElizabethRose",[{x: -33.752487388893364, y: -21.065101936985677, z: -5.31421064586989},'f']],
         
-        ["19MorningGlory",[{x: -12.218737985113963, y: -24.252131071879788, z: 59.39231331015696},'b','2A' ]],
+        ["19MorningGlory",[{x: -12.218737985113963, y: -24.252131071879788, z: 59.39231331015696},'b','2A']],
         ["1Protea",[{x: 35.78904549173415, y: -25.220313414052782, z: 9.664936766181826},'l','2A' ]],
         ["21Malva",[{x: 18.829490128689907, y: 4.941670077957067, z: 25.357056668013414},'r','2A' ]],
         ["22Cuckoo",[ {x: 52.006400581389286, y: -4.042785078981595, z: 43.760657215651335},'f','2A' ]],
@@ -828,6 +828,101 @@ let rFootFlowersMap = new Map(
         
     ]
 );
+
+let rFoot3DFlowersMap = new Map(
+    [                                                       
+        ["10Poppy",['10A']],
+        ["11ArnicaMontana",['11A']],
+        ["115PlumBlossom",['115A','115B','115C']],
+        ["122BayahibeRose",['122A']],
+        ["123Hibiscus",['123B']],
+       
+        ["138Paeony",['138A','138B']],
+        ["12Buttercup",['12A']],
+        ["13PinkCampion",['13A']],
+        
+        ["14IxiaVersicolor",['14A']],
+        ["15Iris",['15A']],
+        //["17AfricanDaisy",['15A']],
+        ["16Pasque",['16A']],
+        ["18QueenElizabethRose",['18A']],
+        
+        ["19MorningGlory",['19A']],
+        ["1Protea",['1A','1B']],
+        ["21Malva",['21A','21B']],
+        ["22Cuckoo",['22A']],
+        ["23WesternColumbine",['23A']],
+        
+        ["24Harebell",['24A']],
+        ["25PilosellaAurantiaca",['25A']],
+        ["26ChileanBellflower",['26A']],
+        ["28Petunia",['28A']],
+        ["2Sunflower",['2A','2B']],
+
+        ["30Pansy",['30A']],
+        ["33YulanMagnolia",['33A']],
+        ["34Tormentil",['34A']],
+        ["35SpringGentian",['35A']],
+        ["36Foxglove",['36A']],
+
+        ["37Snapdragon",['37A']],
+        ["38Anthurium",['38A']],
+        ["39Amaryllis",['39A']],
+        ["3ArumLily",['3A','3B']],
+        ["40BlueWaterLily",['40A']],
+       
+        ["43ArabianJasmine",['43B']],
+        ["44IrisAlbicans",['44A']],
+        ["45Euphorbia",['45A']],
+        ["46WesternWallflower",['46A']],
+        ["47Plumeria",['47A']],
+       
+        ["48Fuchsia",['48A']],
+        ["49BoatOrchid",['49A']],
+        ["4ColoradoBlueColumbine",['4A']],
+        ["52Hollyhocks",['52A']],
+        ["53Rose",['53A','53C','53D','53E']],
+        ["54GardeniaThunbergia",['54A','54B']],
+
+        ["55BlueEyedGrass",['55A']],
+        ["56Trillium",['56A']],
+        ["59WhiteLotus",['59B','59C','59D','59E']],
+        ["5AlpineColumbine",['5A']],
+        ["60VeronicaChamaedrys",['60A']],
+        ["61WildBluePhlox",['61A']],
+
+        ["62FirePink",['62A']],
+        ["63Clivia",['63A']],
+        ["64Laelia",['64A']],
+        ["65MicheliaFigo",['65A']],
+        ["66Fritillaries",['66A']],
+
+        ["67PeruvianLily",['67A']],
+        ["68MexicanMarigold",['68A']],
+        ["69GeraniumCalifornicum",['69A']],
+        ["6BlackEyedSusan",['6A']],
+        ["70NarcissusPoeticus",['70A']],
+
+        ["71NarcissusLongispathus",['71A']],
+        ["72Aster",['72A']],
+        ["73Strelitzia",['73A']],
+        ["74Poinsettia",['74A']],
+        ["75HydrangeaMacrophylla",['75A']],
+
+        ["77SweetPea",['77A']],
+        ["78Camellia",['78A']],
+        ["79Freesia",['79A']],
+        ["7Daylily",['7A','7B']],
+        ["81LeopardFlower",['81A']],
+
+        ["87BlackOrchid",['87A']],
+        ["88DevilsClaw",['88A']],
+        ["8Chickweed",['8A']],
+        ["9Damiana",['9A']],
+        
+    ]
+);
+
 
 
 

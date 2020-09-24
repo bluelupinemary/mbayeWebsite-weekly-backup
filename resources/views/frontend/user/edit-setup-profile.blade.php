@@ -1,5 +1,4 @@
 @extends('frontend.layouts.career_setup-profile_layout')
-{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 @section('after-styles')
        
 
@@ -12,8 +11,10 @@
         <script src="{{asset('front/JS/fabric.min.js')}}"></script> --}}
         <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
         <link rel="stylesheet" href="{{asset('front/CSS/jobseeker-profile.css')}}">
+        <link rel="stylesheet" href="{{asset('front/CSS/jobseeker-profile-responsive.css')}}">
 @endsection
-@section('content')  
+@section('content')
+<div id="page-content">  
         <div class="collage-editor">
             <button class="cancel-btn" type="button">Cancel</button>
             <button class="save-btn " type="button">Save</button>
@@ -22,12 +23,13 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
             <h3 class="heading_setup">Setup Profile</h3>
             <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
-            <a href="" class="profession" data-toggle="modal" data-target="" onclick="get_professional_details({{$profile->id}},{{$profile->user_id}})">Profession And Skills</a>
+            <a href="" class="profession" data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
             <a href="" class="education" data-toggle="modal" data-target="#EducationModal">Education</a>
             <a href="" class="work-experience" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
             <a href="" class="contacts" data-toggle="modal" data-target="#ContactModal">Contact</a>
             <a href="" class="reference" data-toggle="modal" data-target="#CharacterReferencesModal">Character References</a>
            
+            
         </div>  
             <div class="slider">
             </div>
@@ -266,6 +268,7 @@
                 <a class=""><i class="fa fa-question-circle icon-help" aria-hidden="true"></i></a>
             </div>
         <form method="POST" action="{{url('save_work_experience')}}" id="work-experience-form"  enctype="multipart/form-data">
+            @csrf
              <div class="modal" id="WorkExperienceModal"  class="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="form-block"> <div class="modal-dialog  modal-lg" role="document">
                   <div class="modal-content">
@@ -280,9 +283,7 @@
                     <div class="modal-body work-modal-body">
                         <div class="work-experience-body main_work_experience_div workDiv_1">
                             <fieldset>
-                                <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
-                                    <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
-                                  </button>
+                               
                                   <button type="button"  class="close remove-btn-workexperience"   title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
                                     <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                     </button>
@@ -316,6 +317,9 @@
                                         <label for="Address">Address<span style="color:red">*</span></label>
                                         <input type="text" class="form-control" id="Address" name="address[]" placeholder="">
                                       </div>
+                                      <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
+                                        <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                      </button>
                             </fieldset>
                         </div>
                     </div>
@@ -331,6 +335,7 @@
 
 
         <form method="POST" action="{{url('save_education')}}" id="education-form" enctype="multipart/form-data">
+            @csrf
             <div class="modal" id="EducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="education_form-block"> 
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -353,48 +358,56 @@
                         <div class="education-body main_education_div div_1">
                            
                             <fieldset>
-                                <button type="button"  class="close clone-btn-education  "  title="Add More Education" aria-label="Clone">
+                                {{-- <button type="button"  class="close clone-btn-education  "  title="Add More Education" aria-label="Clone">
                                     <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
-                                  </button>
+                                  </button> --}}
 
                                   <button type="button"  class="close remove-btn-education"  title="Remove Education " aria-label="Clone" onclick="remove(this)">
                                     <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                     </button>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6 input-group-sm">
-                                          <label for="StartDate">Start Date<span style="color:red">*</span></label>
-                                          <input type="date" class="form-control" id="StartDate"  name="start_date[]" required >
-                                        </div>
-                                        <div class="form-group col-md-6 input-group-sm">
-                                          <label for="EndDate">End Date<span style="color:red">*</span></label>
-                                          <input type="date" class="form-control" id="EndDate" name="end_date[]" required >
-                                        </div>
-                                      </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
-                                            <select class="form-control" name="education_level[]" required>
-                                                <option value="Primary">Primary</option>
-                                                <option value="Secondary">Secondary</option>
-                                                <option value="Undergraduate">Undergraduate</option>
-                                                <option value="Graduate">Graduate</option>
-                                                <option value="Post-graduate">Post-graduate</option>
-                                            </select>
-                                    </div> 
-
-                                        <div class="form-group input-group-sm">
+                                        <div class="form-group col-md-12 input-group-sm">
+                                            <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
+                                                <select class="form-control" name="education_level[]" id="education_dropdown" required>
+                                                    <option value="Select" selected disabled>Select</option>
+                                                    <option value="Doctrate">Doctrate</option>
+                                                    <option value="Post-graduate">Post-graduate</option>
+                                                    <option value="Undergraduate">Undergraduate</option>
+                                                    <option value="Intermediate">Intermediate</option>
+                                                    <option value="Secondary">Secondary</option>
+                                                </select>
+                                        </div> 
+                                        <div class="form-group col-md-12 input-group-sm">
                                             <label for="SchoolName">School Name<span style="color:red">*</span></label>
                                             <input type="text" class="form-control" id="SchoolName" name="school_name[]"  required>
                                         </div>
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
                                         <input type="text" class="form-control" id="FieldOfStudy"  name="field_of_study[]"  required>
                                       </div>
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="Description">Description<span style="color:red">*</span></label><br>
-                                        <textarea id="Description" name="description[]" rows="7" cols="72" required>
+                                        <textarea id="Description" name="description[]" required>
                                             </textarea>
                                       </div>
-                              
+                                        <div class="form-group col-md-4 input-group-sm">
+                                          <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
+                                          <input type="date" class="form-control" id="StartDate"  name="start_date[]" required >
+                                        </div>
+                                        <div class="form-group col-md-4 input-group-sm">
+                                         
+                                        </div>
+                                        <div class="form-group col-md-4 input-group-sm">
+                                            <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                            <input type="date" class="form-control" id="EndDate" name="end_date[]" required >
+                                          </div>
+                                      </div>
+                                      
+
+                                       
+                                      <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
+                                        <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
+                                      </button>
                             </fieldset>
                         </div>  
              
@@ -413,6 +426,7 @@
 
 
          <form method="POST" action="" id="reference-form"  enctype="multipart/form-data">
+            @csrf
               <div class="modal" id="CharacterReferencesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="reference_form-block ">
                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -432,9 +446,7 @@
                     <div class="modal-body reference-modal-body">
                        <div class="reference-body  main_reference_div referenceDiv_1">
                          <fieldset> 
-                                <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
-                                    <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
-                                  </button>
+                                
                                   <button type="button"  class="close remove-btn-reference"  aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
                                     <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                     </button>
@@ -454,7 +466,9 @@
                                         <label for="Designation">Designation<span style="color:red">*</span></label>
                                         <input type="text" class="form-control" id="Designation"  name="designation[]" placeholder="">
                                       </div>
-                            
+                                      <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
+                                        <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                      </button>
                             </fieldset>
                         </div>
                     </div>
@@ -470,7 +484,7 @@
        </form>  
 
 
-
+       
               <div class="modal" id="AboutMeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
                   <div class="modal-content">
@@ -480,77 +494,80 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <div class="app" style="display: none;">
+                    {{-- <div class="app" style="display: none;">
                       
-                    </div>
+                    </div> --}}
                     <div class="modal-body">
                         <div class="aboutme-body">
                             <fieldset>
                                 <form action="" id="aboutme-form">
-                                   
-                                        <div class="form-group input-group-sm">
+                                @csrf
+                                <div class="form-row">
+                                    
+                                        <div class="form-group col-md-12 input-group-sm">
                                             <label for="fName"> First Name</label>
                                             <input type="text"  class="form-control disabled_field" id="fName" disabled value="{{ $user->first_name }}">
                                         </div>
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="lName">Last Name</label>
                                         <input type="text" class="form-control disabled_field" id="lName" disabled value="{{ $user->last_name }}">
                                       </div>
                                       
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="dob">Date Of Birth</label>
                                         <input type="text" class="form-control disabled_field" id="dob" disabled value="{{ $user->dob }}">
                                       </div>
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="age">Age</label>
                                         <input type="text" class="form-control disabled_field" id="age" disabled value="{{ $user->age }}">
                                       </div>
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="gender">Gender</label>
                                         <input type="text" class="form-control disabled_field" id="gender" disabled value="{{ $user->gender }}">
                                       </div>
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="Address"> Registered Address</label>
                                         <input type="text" class="form-control disabled_field" id="my_Address" disabled value="{{ $user->address }}">
                                       </div>
-                                       <div class="form-group input-group-sm">
+                                       <div class="form-group col-md-12 input-group-sm">
                                         <label for="Country">Country</label>
                                         <input type="text" class="form-control disabled_field" id="Country" disabled value="{{ $user->country }}">
                                       </div>
-
+                                      <div class="form-group col-md-12 input-group-sm">
                                       <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                      Add Current Address
                                       </button>
+                                      </div>
                                     <br>  <br>
                                       <div class="collapse" id="collapseExample">
-                                            <div class="form-group input-group-sm ">
+                                            <div class="form-group col-md-12 input-group-sm ">
                                                 <label for="country">Present Country</label>
-                                                <select class="countries" name="country" id="countryId" required>&#x25BC;
+                                                <select class="countries" name="present_country" id="countryId" required>&#x25BC;
                                                     <option value="">Select</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group input-group-sm">
+                                            <div class="form-group col-md-12 input-group-sm">
                                                 <label for="state">Present State</label>
                                                 <select id="stateId" class="states" name="state" required>
                                                     <option value="">Select State</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group input-group-sm">
+                                            <div class="form-group col-md-12 input-group-sm">
                                                 <label for="city">Present City</label>
-                                                <select id="cityId" class="cities" name="city" required>
+                                                <select id="cityId" class="cities" name="present_city" required>
                                                     <option value="">Select City</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group input-group-sm">
+                                            <div class="form-group col-md-12 input-group-sm">
                                                 <label for="pAddress">Present Address</label>
-                                                <input type="text" class="form-control" id="pAddress" >
+                                                <input type="text" class="form-control" name="present_address" id="pAddress" >
                                             </div>
                                       </div>
                                      
                                       
                                       
-                                     
-                                </form>
+                                    </div>    
+                                
                             </fieldset>
                             
                             
@@ -563,6 +580,10 @@
                   </div>
                 </div>
               </div>
+            </form>
+
+              <form action="" id="contact-form">
+                @csrf
               <div class="modal" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content">
@@ -578,26 +599,25 @@
                     <div class="modal-body">
                         <div class="contact-body">
                             <fieldset>
-                                <form action="" id="contact-form">
-                                   
-                                        <div class="form-group input-group-sm">
+                                
+                                <div class="form-row">
+                                        <div class="form-group col-md-12 input-group-sm">
                                             <label for="pEmail"> Primary Email</label>
                                             <input type="text"  class="form-control disabled_field" id="pEmail" name="email" disabled value="{{ $user->email }}" >
                                         </div>
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="pMobNumber">Primary Mobile Number</label>
                                         <input type="text" class="form-control disabled_field" id="pMobNumber" name="mobile_number" disabled value="{{ $user->mobile_number }}" >
                                       </div>
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="sEmail">Secondary Email</label>
                                         <input type="email" class="form-control" id="sEmail" name="secondary_email" >
                                       </div>
-                                      <div class="form-group input-group-sm">
+                                      <div class="form-group col-md-12 input-group-sm">
                                         <label for="sMobNumber">Secondary  Mobile Number</label>
                                         <input type="text" class="form-control" id="sMobNumber" name="secondary_mobile_number" >
                                       </div>
-                                     
-                                </form>
+                                </div>
                             </fieldset>
                             
                             
@@ -609,10 +629,11 @@
                   </div>
                 </div>
               </div>
-
+            
+        </form>
 
     
-              <form method="POST" action="" id="profession-form" enctype="multipart/form-data">
+              
                 <div class="modal" id="ProfessionSkillModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                   <div class="profession_form-block"> 
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -627,39 +648,35 @@
                           </button>
                           
                         </div>
-                        <div class="app" style="display: none;">
-                        </div>
+                        {{-- <div class="app" style="display: none;">
+                        </div> --}}
                         <div class="modal-body ">
-                            <div class="profession-body">
+                            <div class="profession-body" id="Profession-body">
+                                <form method="POST" action="" id="profession-form" enctype="multipart/form-data">
+                                    @csrf
                                 <fieldset>
                                    
                                         <div class="form-row">
                                             <div class="form-group col-md-12 input-group-sm">
                                               <label for="Profession">Profession<span style="color:red">*</span></label>
-                                              <input type="text" class="form-control" id="Profession"  name="Profession" >
+                                              <select id="Profession" class="form-control" name="profession_id" required>&#x25BC;
+                                                    <option value="public" selected disabled>Select</option>
+                                                    @foreach($profession as $profession)
+                                                    <option value="{{$profession->id}}" id="hhh">{{$profession->profession_name}}</option>
+                                                    @endforeach
+                                               </select>
+                                              {{-- <input type="text" class="form-control" id="Profession"  name="Profession" >
                                               <button type="button"  class="dropdown-btn" >
                                                 <span aria-hidden="true" class="btn-down"><i class="fas fa-angle-down"></i></span>
-                                              </button>
-                                              {{-- <li class="dropdown">
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                                   aria-haspopup="true" aria-expanded="false">Dropdown
-                                                    <span class="caret"></span></a>
-                                                <ul class="dropdown-menu">
-                                                    <li>@foreach($profession ?? '' as $profession)
-                                                            <a href="{{URL::route('home',$profession ?? ''->id)}}">
-                                                                <option value="{{$profession ?? ''->id}}">{{ $profession ?? ''->profession_name }}</option>
-                                                            </a>
-                                                        @endforeach
-                                                    </li>
-                                                </ul>
-                                            </li> --}}
+                                              </button> --}}
+                                              
                                         </div>
                                         <div id="profession_list"></div>      
                                           </div>
                                           <div class="form-row"> 
-                                          <div class="form-group col-md-10 input-group-sm">
+                                          <div class="form-group col-md-12 input-group-sm">
                                             <label for="skills">Skills<span style="color:red">*</span></label>
-                                            <textarea id="skills" name="skills" rows="7" cols="72">
+                                            <textarea id="skills" name="skills">
                                             </textarea>
                                      
                                           </div>  
@@ -680,6 +697,7 @@
                   </div>
                 </div>
              </form>
+</div>
 @endsection
 @section('after-scripts')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
@@ -697,11 +715,25 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="//geodata.solutions/includes/countrystatecity.js"></script>
 
+<script>
+    $(function() {
+  // choose target dropdown
+  var select = $('#Profession');
+  select.html(select.find('option').sort(function(x, y) {
+    // to change to descending order switch "<" for ">"
+    return $(x).text() > $(y).text() ? 1 : -1;
+  }));
+
+  // select default item after sorting (first item)
+//   $('#Profession').get(0).selectedIndex = 0;
+document.getElementById("Profession").selectedIndex = "52";
+});
+</script>
 
 <script>
     $(document).ready(function() {
         var url = $('meta[name="url"]').attr('content');
-    
+//    
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
         var canvas = document.getElementById("c");
@@ -2117,6 +2149,8 @@
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
+                        $('#WorkExperienceModal').modal('hide');
+                        $('#ContactModal').modal('show');
                         // window.open(url+'/single_blog/'+data.data.id);
                         //window.location.href = url+'/single_general_blog/'+data.data.id;
                         // resetGeneralBlogForm();
@@ -2155,21 +2189,38 @@
         $('.clone-btn-education').click(function(e) {
                     e.preventDefault();
                 //    $(".remove-btn-education").hide();
+                
                     var $form = $('form#education-form');
                     var newel = $('.education-body:last').clone();
                     $(newel).insertAfter(".education-body:last");
                     var new_ele = $('.education-body:last');
                     new_ele.find('input').val("");
+                    // new_ele.find('education_level').val("this.value").remove();
                     var count = $(".education-body");
                     new_ele.removeClass('div_'+(count.length-1))
                     new_ele.addClass('div_'+count.length)
-                  
+                    // document.getElementById("remove-btn-education").style.cssFloat = "right";
                  if(count.length>1){
                     $(".education-body:last .clone-btn-education").hide();
                     $(".education-body:last .remove-btn-education").show();
                  }
                  $(".education-body:last #StartDate").focus().select();    
         });
+        // var $dropdown1 = $("select[name='education_level']");
+        // var $dropdown2 = $("select[name='dropdown2']");
+
+        // $dropdown1.change(function() {
+        // $dropdown1.children().show();
+        // var selectedItem = $($dropdown1).val();
+        // if (selectedItem != "")
+        //     $('select[name="dropdown"] option[value="' + selectedItem + '"]').hide();
+        // });
+        // $dropdown1.change(function() {
+        // $dropdown1.children().show();
+        // var selectedItem = $($dropdown1).val();
+        // if (selectedItem != "")
+        //     $('select[name="dropdown1"] option[value="' + selectedItem + '"]').hide();
+        // });
  
     //education save
     $('.education-done').click(function(e) {
@@ -2219,6 +2270,7 @@
                      $("form#education-form .div_"+i+" #Description").focus();
                 }
             }
+            
             
     if(alert_status) {
         Swal.fire({
@@ -2270,6 +2322,8 @@
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
+                        $('#EducationModal').modal('hide');
+                        $('#WorkExperienceModal').modal('show');
                         // window.open(url+'/single_blog/'+data.data.id);
                         //window.location.href = url+'/single_general_blog/'+data.data.id;
                         // resetGeneralBlogForm();
@@ -2454,6 +2508,48 @@
             var form_url = url+'/save_contact_details';
             var $form = $('form#contact-form');
             var post_data = new FormData($form[0]);
+            var alert_status;
+                    var secondary_email = $("form#contact-form #sEmail").val();
+                    var secondary_mobNumber = $("form#contact-form #sMobNumber").val();
+                
+                    if(secondary_email==''){
+                        alert_status = true;
+                        message = 'Secondary Email is required';
+                        $("form#contact-form  #sEmail").focus();
+                    }
+                    if(secondary_mobNumber==''){
+                        alert_status = true;
+                        message = 'Secondary Mobile Number is required';
+                        $("form#contact-form  #sEmail").focus();
+                    }
+                    if(alert_status) {
+                    Swal.fire({
+                        title: 'Discard Changes',
+                        text: message,
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)',
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        focusConfirm: true,
+                        confirmButtonText:
+                            'Discard Changes',
+                        cancelButtonText:
+                            'Cancel',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                    }).then((res) => {
+                        if (res.value) {
+                            if(action) {
+                                window.location.href = action;
+                            }
+                        }
+                    });
+                } else {
            
             $.ajax({
                 url: form_url,
@@ -2475,6 +2571,9 @@
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
+                        $('#ContactModal').modal('hide');
+                        $('#CharacterReferencesModal').modal('show');
+                        
                         // window.open(url+'/single_blog/'+data.data.id);
                         //window.location.href = url+'/single_general_blog/'+data.data.id;
                         // resetGeneralBlogForm();
@@ -2505,8 +2604,130 @@
                     });
                 }
             });
-                    
+                }    
                 }); 
+
+                //About me save
+                $('.aboutme-done').click(function(e) {
+                    
+                    e.preventDefault();
+                    var form_url = url+'/save_aboutme_details';
+                    // alert(form_url);
+                    var $form = $('form#aboutme-form');
+                    var post_data = new FormData($form[0]);
+                    var alert_status;
+                    var present_address = $("form#aboutme-form #pAddress").val();
+                    
+                
+                    if(present_address==''){
+                        alert_status = true;
+                        message = 'Present address is required';
+                        $("form#aboutme-form  #pAddress").focus();
+                    }
+                    if(alert_status) {
+                    Swal.fire({
+                        title: 'Discard Changes',
+                        text: message,
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)',
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        focusConfirm: true,
+                        confirmButtonText:
+                            'Discard Changes',
+                        cancelButtonText:
+                            'Cancel',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                    }).then((res) => {
+                        if (res.value) {
+                            if(action) {
+                                window.location.href = action;
+                            }
+                        }
+                    });
+                } else {
+                   
+                
+                    $.ajax({
+                        url: form_url,
+                        method: 'post',
+                        data:post_data,
+                          
+                        // dataType: 'JSON',
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function(data) {
+                            Swal.fire({
+                                title: '<span class="success">Success!</span>',
+                                text: data.message,
+                                imageUrl: '../../front/icons/alert-icon.png',
+                                imageWidth: 80,
+                                imageHeight: 80,
+                                imageAlt: 'Mbaye Logo',
+                                width: '30%',
+                                padding: '1rem',
+                                background: 'rgba(8, 64, 147, 0.62)'
+                            }).then((res) => {
+                                if (res.value) {
+                                    // document.getElementByClassName("profession").click;
+                                    $('#AboutMeModal').modal('hide');
+                                    // $('#ProfessionSkillModal').show();
+                                    $("#ProfessionSkillModal").modal('show');
+                        }
+                                
+                                // $('#Profession-body').parent().parent().show();
+                                // document.getElementById("aboutme-body").innerHTML = "hide";
+                                // document.getElementById("Profession-body").innerHTML = "show";
+                                 
+                               
+                                 
+                                
+                                
+                                // window.open(url+'/single_blog/'+data.data.id);
+                                // window.location.href = url+'/single_general_blog/'+data.data.id;
+                                // resetGeneralBlogForm();
+                                
+
+                            });
+                        },
+                        error: function (request, status, error) {
+                            var response = JSON.parse(request.responseText);
+                            var errorString = '';
+                            var title = 'Error!';
+
+                            if(response.errors) {
+                                title = 'Error in processing request...';
+                                $.each( response.errors, function( key, value) {
+                                    errorString += '<p>' + value + '</p>';
+                                });
+                            }
+                            
+                            Swal.fire({
+                                imageUrl: '../../front/icons/alert-icon.png',
+                                imageWidth: 80,
+                                imageHeight: 80,
+                                imageAlt: 'Mbaye Logo',
+                                title: title,
+                                html: errorString,
+                                width: '30%',
+                                padding: '1rem',
+                                background: 'rgba(8, 64, 147, 0.62)'
+                            });
+                        }
+                    });
+                }
+                            
+                        }); 
+                
+    
+                //About me end
 
                //Character reference save
         $('.profession-done').click(function(e) {
@@ -2581,6 +2802,8 @@
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
+                        $('#ProfessionSkillModal').modal('hide');
+                        $('#EducationModal').modal('show');
                         // window.open(url+'/single_blog/'+data.data.id);
                         //window.location.href = url+'/single_general_blog/'+data.data.id;
                         // resetGeneralBlogForm();
@@ -2641,34 +2864,11 @@
                 $( "#Profession" ).keyup();
               });
        
-
-            //   $('.profession').click(function(e) {
-            //      e.preventDefault();
-
-            //      var form_url = url+'/get_career_details';
-            //         $.ajax({
-            //         url: form_url,
-            //         method: 'post',
-            //         data: { 
-            //             // profile_id: profile_id,
-            //             // user_id: user_id,
-            //             },
-            //         dataType: 'json',
-            //     success: function(data) {
-                  
-
-            //     },
-            //     error: function (request, status, error) {
-                   
-            //     }
-            //     });
-
-            //  });
     });
                 function openNav()
                  {
-                document.getElementById("mySidenav").style.width = "17vw";
-                document.getElementById("main").style.marginLeft = "250px";
+                document.getElementById("mySidenav").style.width = "10vw";
+                // document.getElementById("main").style.marginLeft = "250px";
                 document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
                 }
 
@@ -2687,26 +2887,8 @@
                 function remove_reference(e){
                     $(e).closest('.reference-body').remove();
                 }
-
-                function get_professional_details(profile_id,user_id){
-                    var url = $('meta[name="url"]').attr('content');
-                    var form_url = url+'/get_career_details';
-                    $.ajax({
-                    url: form_url,
-                    method: 'post',
-                    data: { 
-                        profile_id: profile_id,
-                        user_id: user_id,
-                        },
-                    dataType: 'json',
-                success: function(data) {
-                  
-
-                },
-                error: function (request, status, error) {
-                   
-                }
-                });
-                }
+                // $('.close').on('click',function(){
+                //     alert('hhh');
+                // })
 </script>
 @endsection

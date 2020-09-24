@@ -13,9 +13,9 @@
 				</li>
 			</ul>
 		</div>
-		<button class="earth-holo tooltips top">
+		<button class="earth-holo tooltips top" :disabled="notificationCount < 1">
 			<span>View Notifications</span>
-			<p class="notifications-count">{{notificationCount}}</p>
+			<p v-if="notificationCount > 0" class="notifications-count">{{notificationCount}}</p>
 			<img src="/front/images/notification-hologram/earthHolo.png" alt="">
 		</button>
 		<img src="/front/images/notification-hologram/hologram.png" alt="" class="hologram">

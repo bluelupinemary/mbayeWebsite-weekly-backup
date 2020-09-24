@@ -12,6 +12,8 @@ use App\Http\Utilities\NotificationIos;
 use App\Http\Utilities\PushNotification;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Models\Access\User\User;
+// use Illuminate\Support\Facades\Auth;
 
 /**
  * Class LoginController.
@@ -76,11 +78,17 @@ class LoginController extends Controller
             return $this->sendLoginResponse($request);
         }
 
+        
+
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
+        
         $this->incrementLoginAttempts($request);
-        return redirect()->back()->withErrors('You did not sign-in correctly or your account is temporarily disabled');
+// dd($this->sendFailedLoginResponse($request));
+        return $this->sendFailedLoginResponse($request);
+        // dd( $this->incrementLoginAttempts($request));
+        // return redirect()->back()->withErrors('You did not sign-in correctly or your account is temporarily disabled');
     }
 
     /**
@@ -93,6 +101,16 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+
+       /**
+        * Checking user account is verified or not, if not redirect back
+        */
+        if ($user->confirmed==0) {
+            access()->logout();
+            return redirect()->back()->withErrors('This account is not yet verified. Please check your email to verify your account.');
+   
+        }
+
         /*
          * Check to see if the users account is confirmed and active
          */
@@ -106,7 +124,23 @@ class LoginController extends Controller
             throw new GeneralException(trans('exceptions.frontend.auth.deactivated'));
         }
 
+        
+
         event(new UserLoggedIn($user));
+
+       
+        // dd("sd".$user->already_login);
+        if ($user->already_login==0) {
+            $affectedRows = User::where('id', '=',$user->id)->update(array('already_login' => 1));
+           
+            return  redirect()->route('frontend.initial-agreement');
+            // return route('frontend.dashboard');
+           
+        }
+        else{
+          
+            return  redirect()->route('frontend.participateMbaye'); 
+        }
         /*
         // Push notification implementation
 

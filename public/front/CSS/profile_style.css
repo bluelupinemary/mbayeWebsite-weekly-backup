@@ -119,8 +119,8 @@ Animation for sun
    
     top: 1%;
     left: 80%;
-    width:0%;
-    
+    width:0vw;
+    transform: translate(-6%,-50%);
 	
   }
 
@@ -228,7 +228,7 @@ Animation for sun
  position:absolute;
   width:56%;
   height:auto;
-  overflow: hidden;
+  /* overflow: hidden; */
   left: 21%;
   top: 2%;
   display: block;
@@ -567,7 +567,7 @@ Animation for sun
   left: 50%;
   top: 50%;
   transform: translate(-52%, -50%);
-  overflow: hidden;
+  /* overflow: hidden; */
   display: block;
 
 }

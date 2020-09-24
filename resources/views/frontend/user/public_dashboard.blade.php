@@ -2,8 +2,9 @@
 <meta name="url" content="{{ url('') }}">
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
-    <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/jquery.mobile-1.4.5.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}">
     <style>
@@ -16,7 +17,21 @@
         }
 
         .planet-buttons button.collage {
-            display: non
+            display: none;
+        }
+
+        /* Tablets */
+        @media (max-width: 1024px) {
+            .navigator-div.zoomin .tooltips span, .navigator-div-zoomed-in .tooltips span {
+                display: none !important;
+            }
+            .navigator-div.zoomin .tooltips.zoom-in-out span, .navigator-div-zoomed-in .tooltips.zoom-in-out span {
+                display: block !important;
+            }
+
+            .communicator-div button {
+                box-shadow: 0px 0px 0px #17a2b8 !important;
+            }
         }
     </style>
 
@@ -535,10 +550,10 @@
 
         <!-- Animated Rocket -->
         <div class="logout-area">
-            <a href="{{ url('/logout') }}">
+            <a onclick="history.back();">
             <div class="rocket">
                 <div class="rocket-body">
-                    <h2 class="animated">LOGOUT</h2>
+                    <h2 class="animated">BACK</h2>
                 <div class="fin-top"></div>
                 <div class="fin-bottom"></div>
                 <div class="faya"></div>
@@ -560,6 +575,7 @@
     </div>
 
     <!--astronaut img div-->
+    <div class="app"></div>
     <div  class="astronaut-img-div navigator-div @if($user->gender == null || $user->gender == 'male') tom @endif" id="draggable" class="ui-widget-content slide_10"> 
         <h2 class="planet_name" id="edit-photo">Edit Photo</h2>
 
@@ -605,27 +621,66 @@
             <span>Communicator</span>
             <button class="communicator-button"></button>
         </div>
-        <div class="notifications-div">
-            <div class="notifications-list">
-                <ul>
-                    <li><a href="#">Grace <img src="{{asset('front/icons/naffPicked.png')}}" alt="" class="naff"> your blog Lorem Ipsum is simply dummy text .</a></li>
-                    <li><a href="#">Ali <img src="{{asset('front/icons/cool300.png')}}" alt=""> your blog.</a></li>
-                    <li><a href="#">Abdul <img src="{{asset('front/icons/hotNew.png')}}" alt=""> your blog.</a></li>
-                    <li><a href="#">Vishnu <img src="{{asset('front/icons/commentsNew.png')}}" alt="" class="comment"> your blog Lorem Ipsum is simply dummy text .</a></li>
-                    <li><a href="#">Juliet <img src="{{asset('front/icons/hotNew.png')}}" alt=""> your blog.</a></li>
-                </ul>
-            </div>
-            <button class="earth-holo tooltips top">
-                <span>View Notifications</span>
-                <p class="notifications-count">23</p>
-                <img src="{{asset('front/images/notification-hologram/earthHolo.png')}}" alt="">
-            </button>
-            <img src="{{asset('front/images/notification-hologram/hologram.png')}}" alt="" class="hologram">
-        </div>
         <button class="navigator-zoomout-btn tooltips zoom-in-out">
             <span>Zoom Out</span>
             <i class="fas fa-undo-alt"></i>
         </button>
+    </div>
+    <div class="navigator-div-zoomed-in @if($user->gender == null || $user->gender == 'male') tom @endif">
+        {{-- <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> --}}
+        <h2 class="planet_name edit-photo" id="zoomedin-edit-photo">Edit Photo</h2>
+
+        <div class="navigator-components">
+            @if($user->gender != null && $user->gender == 'female')
+                <img class="astronaut-img {{$user->getGender()}}" src="{{ asset('front/images/astronut/Thomasina_blog.png') }}" alt=""
+                class="astronaut-body">
+                <div class="tos-div thomasina">
+                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                </div>
+            @else
+                <img class="astronaut-img {{$user->getGender()}}" src="{{ asset('front/images/astronut/Tom_blog.png') }}" alt=""
+                class="astronaut-body">
+                <div class="tos-div">
+                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                </div>
+            @endif
+
+            <a href="{{url('profile/edit-photo')}}" class="profilepicture">
+                <img  id="user-photo" class="{{$user->getGender()}}" src="{{asset('storage/profilepicture/'.$user->getProfilePicture())}}"/>
+            </a> 
+            <div class="profile-picture-overlay">
+
+            </div>
+
+            {{-- <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+                <span>Zoom In</span>
+                <i class="fas fa-search-plus"></i>
+            </button> --}}
+            <div class="navigator-buttons">
+                <div class="column column-1">
+                    <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
+                    <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
+                </div>
+                <div class="column column-2">
+                    <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+                </div>
+                <div class="column column-3">
+                    <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
+                    <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+                </div>
+            </div>
+            <div class="instructions-div">
+                <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
+            </div>
+            <div class="communicator-div tooltips right">
+                <span>Communicator</span>
+                <button class="communicator-button"></button>
+            </div>
+            <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                <span>Zoom Out</span>
+                <i class="fas fa-undo-alt"></i>
+            </button>
+        </div>
     </div>
     <!--end of astronaut img div-->
 </div>
@@ -646,6 +701,7 @@
 <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
 
 <script src="{{asset('front/JS/jquery.mobile-1.4.5.min.js')}}"></script>
+<script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
 <script src="{{asset('front/JS/dashboard.js')}}"></script>
 <script>
     var url_view_general_blog = '{{ route('frontend.blog_general_friend') }}';

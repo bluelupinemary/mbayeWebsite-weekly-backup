@@ -152,7 +152,6 @@ function load_3D_mesh(){
                 rfoot_obj = result.meshes[0];
                 rfoot_obj.checkCollisions = true;
                 rfoot_meshes = result.meshes;
-              
 
                 result.meshes.forEach(function(m) {
                     m.isPickable = true;
@@ -165,7 +164,6 @@ function load_3D_mesh(){
         setup_music_player();
 
         for(const [key,val] of marblePhotos.entries()){
-          // console.log(val);
           init_flower_photo(key,val[0],val[1],val[2]);
         }
 
@@ -220,7 +218,8 @@ function enable_gizmo(themesh){
 //############################################# HANDLE USER'S INTERACTION #############################################//
 let isPlane2Selected = false;
 let isLaunchEnabled = false;
-let currFlower;
+let currFlower;     //the current floating flower clicked
+let currFootFlower;  //the current foot flower clicked
 function add_mouse_listener(){
   var onPointerDownVisit = function (evt) {
       if(scene) var pickinfo = scene.pick(scene.pointerX, scene.pointerY);
@@ -236,16 +235,19 @@ function add_mouse_listener(){
           //   enable_gizmo(theMesh);
           // }
           console.log("the mesh clicked: ", theMesh,theMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
-          console.log("camera: ", footCamera.position, footCamera.alpha, footCamera.beta, footCamera.radius);
+          // console.log("camera: ", footCamera.position, footCamera.alpha, footCamera.beta, footCamera.radius);
           // console.log("parent of mesh: ", theMesh.parent);
         
           if(rFootFlowersMap.has(theMesh.name)){
               if(theMesh.parent){
                   //this is the flower on the foot
-                if( litFlowersMap.has(theMesh)){
-                    let val = rFootFlowersMap.get(theMesh.name);
-
-                    showFlowerModelDiv(val[2]);     //pass the 3d flower name from the mapping
+                if(litFlowersMap.has(theMesh)){
+                    currFootFlower = theMesh.name;
+                    let val = rFoot3DFlowersMap.get(theMesh.name);
+                   
+                    if(val.length > 1) $('.modelArrow').css('display','block');
+                    else $('.modelArrow').css('display','none');
+                    showFlowerModelDiv(val[0]);     //pass the 3d flower name from the mapping
                 }
 
               }else{
@@ -761,11 +763,13 @@ function set_gallery_visible(isSet){
 $('#musicVideoDiv #close-btn').on("click", function (e) {
     // $('#flowerModelDiv').hide();
     document.getElementById("musicVideoDiv").style.visibility = "hidden";
+    
  });
 
  $('#flowerModelDiv #close-btn').on("click", function (e) {
   // $('#flowerModelDiv').hide();
   document.getElementById("flowerModelDiv").style.visibility = "hidden";
+  $('.modelArrow').css('display','none');
 });
 
 let isFlowerFullscreen = false;
@@ -790,8 +794,43 @@ $('#flowerModelDiv #fullscreen-btn').on("click", function (e) {
    }
 });
 
+
+let modelCount = 0;
+$('#flowerModelDiv #rightArrow').on("click", function(e){
+   
+    let val = rFoot3DFlowersMap.get(currFootFlower);
+    let len = val.length;
+    
+    if(modelCount < len-1){
+        modelCount++;
+        showFlowerModelDiv(val[modelCount]);
+    }else{
+       modelCount = 0;
+       showFlowerModelDiv(val[modelCount]);
+    }
+    
+    console.log(modelCount);
+});
+
+$('#flowerModelDiv #leftArrow').on("click", function(e){
+    console.log("left arrow");
+    modelCount--;
+    let val = rFoot3DFlowersMap.get(currFootFlower);
+    let len = val.length;
+    
+    if(modelCount < 0){
+        modelCount = len-1;
+        showFlowerModelDiv(val[modelCount]);
+    }else{
+      showFlowerModelDiv(val[modelCount]);
+    }
+
+    console.log(modelCount);
+
+});
+
  function showFlowerModelDiv(theFlowerName){
+   console.log("this is called",theFlowerName);
   document.getElementById("flowerViewer").src = "front/objects/flowersMbayeScene/flowers3D/"+theFlowerName+".glb";
   document.getElementById("flowerModelDiv").style.visibility = "visible";
-  // $('#flowerModelDiv').show();
 }//end of showCharDescDiv function

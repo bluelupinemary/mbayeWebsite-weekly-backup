@@ -579,7 +579,7 @@
     <!--astronaut img div-->
     <div class="app">
     <div  class="astronaut-img-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif" id="draggable" class="ui-widget-content slide_10"> 
-        <h2 class="planet_name" id="edit-photo">Edit Photo</h2>
+        <h2 class="planet_name edit-photo" id="edit-photo">Edit Photo</h2>
 
         @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
             <img class="astronaut-img {{access()->user()->getGender()}}" src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
@@ -612,8 +612,8 @@
                 <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
             </div>
             <div class="column column-3">
-                <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
-                <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+                <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
+                <button class="zoomout-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">Zoom Out</span></button>
             </div>
         </div>
         <div class="instructions-div">
@@ -624,13 +624,15 @@
             <button class="communicator-button"></button>
         </div>
             <commentnotification-component :user="{{ Auth::user() }}"></commentnotification-component>
-        <button class="navigator-zoomout-btn tooltips zoom-in-out">
+        {{-- <button class="navigator-zoomout-btn tooltips zoom-in-out">
             <span>Zoom Out</span>
             <i class="fas fa-undo-alt"></i>
-        </button>
+        </button> --}}
     </div>
     <div class="navigator-div-zoomed-in @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
         {{-- <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> --}}
+        <h2 class="planet_name edit-photo" id="zoomedin-edit-photo">Edit Photo</h2>
+
         <div class="navigator-components">
             @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
                 <img class="astronaut-img {{access()->user()->getGender()}}" src="{{ asset('front/images/astronut/Thomasina_blog.png') }}" alt=""
@@ -649,6 +651,9 @@
             <a href="{{url('profile/edit-photo')}}" class="profilepicture">
                 <img  id="user-photo" class="{{access()->user()->getGender()}}" src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
             </a> 
+            <div class="profile-picture-overlay">
+
+            </div>
 
             {{-- <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
                 <span>Zoom In</span>
@@ -663,8 +668,8 @@
                     <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
                 </div>
                 <div class="column column-3">
-                    <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
-                    <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+                    <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
+                    <button class="zoomout-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">Zoom Out</span></button>
                 </div>
             </div>
             <div class="instructions-div">
@@ -676,10 +681,10 @@
             </div>
             <commentnotification-component :user="{{ Auth::user() }}"></commentnotification-component>
             
-            <button class="navigator-zoomout-btn tooltips zoom-in-out">
+            {{-- <button class="navigator-zoomout-btn tooltips zoom-in-out">
                 <span>Zoom Out</span>
                 <i class="fas fa-undo-alt"></i>
-            </button>
+            </button> --}}
         </div>
     </div>
     </div>

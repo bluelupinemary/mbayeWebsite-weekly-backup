@@ -65,6 +65,10 @@ Vue.component('your-profile-btn', require('../components/frontend/YourProfileBtn
 
 Vue.component('imageeditor-component', require('../components/frontend/ImageEditor.vue').default);
 Vue.component('tuieditor-component', require('../components/frontend/TuiImageEditor.vue').default);
+
+//dummy
+Vue.component('testingeditor-component', require('../components/frontend/TestingImageEditor.vue').default);
+
 const app = new Vue({
     el: '.app',
 });
