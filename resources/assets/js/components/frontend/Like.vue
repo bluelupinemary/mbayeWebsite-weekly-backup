@@ -23,11 +23,14 @@
         <div class="reaction-popup">
             <div>
                 <button>
-                    <img src="" alt="">
+                    <img src="/front/icons/hotNew.png" alt="" class="hotIcon">
+                    <img src="/front/icons/cool300.png" alt="" class="coolIcon">
+                    <img src="/front/icons/naffPicked.png" alt="" class="naffIcon">
                 </button>
-                <p v-if="useremotion == 'hot'">{{this.hotcount}}</p>
-                <p v-else-if="useremotion == 'cool'">{{this.coolcount}}</p>
-                <p v-else>{{this.naffcount}}</p>
+                <p v-if="useremotion == 'hot' && hotcount > 0">{{this.hotcount}}</p>
+                <p v-else-if="useremotion == 'cool' && coolcount > 0">{{this.coolcount}}</p>
+                <p v-else-if="useremotion == 'naff' && naffcount > 0">{{this.naffcount}}</p>
+                <p v-else style="opacity: 0;">0</p>
             </div>
         </div>
     </div>
@@ -111,6 +114,7 @@ import EventBus from '../../frontend/event-bus';
             return array;
         },
         emotion: function (emotion_id){
+            var that = this;
             axios.post('/api/blogs/'+this.blog_id+'/emotions', {
             user_id: this.user.id,
             emotion: emotion_id,
@@ -124,25 +128,30 @@ import EventBus from '../../frontend/event-bus';
                     if(emotion) {
                         // console.log(response);
 
-                        $('.reaction-popup img').attr('src', emotion.img);
-                        $('.reaction-popup img').removeClass('hotIcon');
-                        $('.reaction-popup img').removeClass('coolIcon');
-                        
-                        if(emotion.emotion == 'cool') {
-                            $('.reaction-popup img').addClass('coolIcon');
-                        } else if(emotion.emotion == 'hot') {
-                            $('.reaction-popup img').addClass('hotIcon');
+                        // $('.reaction-popup img').attr('src', emotion.img);
+                        // $('.reaction-popup img').removeClass('hotIcon');
+                        // $('.reaction-popup img').removeClass('coolIcon');
+                        $('.reaction-popup img').hide();
+                        if(emotion.emotion == 'hot') {
+                            $('.reaction-popup img.hotIcon').show();
+                        } else if(emotion.emotion == 'cool') {
+                            $('.reaction-popup img.coolIcon').show();
+                        } else if(emotion.emotion == 'naff') {
+                            $('.reaction-popup img.naffIcon').show();
                         }
 
                         if(emotion.emotion == 'naff' && response.data.naff_fart_status) {
                             animateNaffFartReaction();
                         } else {
                             //$('.reaction-popup img').on('load', function() {
-                                $('.reaction-popup').fadeIn('slow', function() {
-                                    $('.reaction-popup button').click();
-                                    $('.reaction-popup').delay(1000).fadeOut('slow');
-                                    $('.reaction-popup button').click();
-                                });
+                                // if((emotion.emotion == 'cool' && that.coolcount > 0) || (emotion.emotion == 'hot' && that.hotcount > 0) || (emotion.emotion == 'naff' && that.naffcount > 0)) {
+                                    $('.reaction-popup').fadeIn('slow', function() {
+                                        $('.reaction-popup button').click();
+                                        $('.reaction-popup').delay(1000).fadeOut('slow');
+                                        $('.reaction-popup button').click();
+                                    });
+                                // }
+                                
                             //}); 
                         }
                     }

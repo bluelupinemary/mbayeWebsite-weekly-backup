@@ -18,6 +18,8 @@ Route::post('/notify','Frontend\Notify\NotifyController@getnotifications');
 Route::post('/blog_activities','Frontend\Notify\NotifyController@getBlogActivities');
 Route::post('/countcomments','Frontend\Comment\CommentController@countcomment');
 Route::post('/countemotions','Frontend\Like\LikeController@countemotions');
+Route::get('/countblogshare/{id}','Frontend\Like\LikeController@countblogshare');
+
 Route::post('/userreaction','Frontend\Like\LikeController@getUserReaction');
 Route::post('/blogs/{blog}/emotions','Frontend\Like\LikeController@setemotion');
 Route::get('/blogs/{blog}/comments', 'Frontend\Comment\CommentController@index');
@@ -27,6 +29,7 @@ Route::post('/save-careerprofile', 'Frontend\JobSeekerProfile\JobSeekerProfilesC
 
 
 //general blog emotions and comments
+Route::get('/countgeneralblogshare/{id}','Frontend\Like\LikeController@countgeneralblogshare');
 Route::get('/generalblogpost/{blog}', 'Frontend\Comment\GeneralCommentController@blogpost');
 Route::post('/countgeneralcomments','Frontend\Comment\GeneralCommentController@countcomment');
 Route::post('/countgeneralemotions','Frontend\Like\GeneralLikeController@countemotions');

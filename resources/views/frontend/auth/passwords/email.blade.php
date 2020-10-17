@@ -1,7 +1,8 @@
 @extends('frontend.layouts.app')
 
 @section('before-styles')
-<link rel="stylesheet" href="{{ asset('front/CSS/reset_style.css') }}">
+<link rel="stylesheet" href="{{ asset('front/CSS/account_recovery.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('front/CSS/reset_style.css') }}"> --}}
     <style>
       .border1{
           border1:1px solid white;
@@ -35,14 +36,14 @@
 
 
     <script>
-         var err_message=  ' {!! implode('', $errors->all())!!}';
+         var err_message=  " {!! implode('', $errors->all())!!}";
         /*<!--  {!! implode('', $errors->all('<div class="errror">:message</div>')) !!}--*/
         </script>
     @endif
     <div class="communicator">
         <div class="main-screen">
             <div class="astronautarm-img">
-                <div class="main-form form_content">
+                <div class=" form_content">
                     <div class="home-div">
                         <img src="{{asset('front/images/communicator-buttons/buttons/homeBtn.png')}}" class="communicator-button home-button" alt="">
                     </div>
@@ -60,8 +61,8 @@
                     <div class="tos-div">
                         <img src="{{asset('front/images/communicator-buttons/buttons/termsBtn.png')}}" class="communicator-button terms-button" alt="">
                       </div>
-
-                        {{ Form::open(['route' => 'frontend.auth.password.email', 'class' => 'form-horizontal']) }}
+                      <div class="main-form flex-left text-left d-flex align-center float-sm-left">  
+                        {{ Form::open(['route' => 'frontend.auth.password.email', 'class' => 'form-horizontal', 'id' => 'main-form']) }}
 
                                 <div class="form-group" >
 
@@ -81,6 +82,7 @@
                                     </div>
                                 </div>
                         {{ Form::close() }}
+                      </div>
                 </div>
 
 @endsection
@@ -157,24 +159,25 @@
         }
         else  contentDisplay();
 
-        
         function contentDisplay() {
-            console.og
             setTimeout(function(){
-                //$(".astronautarm-img").show();
-                $(".astronautarm-img").css('display','block');
+                $(".astronautarm-img").show();
                 $(".astronautarm-img").addClass('animate-arm');
-                
                 $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                $(".astronautarm-img").removeClass('animate-zoomIn-arm');
-                $(".astronautarm-img").addClass('animate-zoomIn-arm');
-                $(".astronautarm-img").addClass('zoomIn-arm');
-               
-            });
+                    $(".astronautarm-img").removeClass('animate-arm');
+                });
                     }, 1000
             );
-          
         }
+        
+        $('.main-form').on('click', ()=> { 
+            $(".astronautarm-img").addClass('animate-zoomIn-arm');
+            $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+            $(".astronautarm-img").removeClass('animate-zoomIn-arm');
+            $(".astronautarm-img").addClass('zoomIn-arm');
+            });
+        })
+        
         });
 
         $('.home-button').click(function() {

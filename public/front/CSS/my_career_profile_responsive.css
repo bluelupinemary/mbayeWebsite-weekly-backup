@@ -1,0 +1,549 @@
+/* ipads */
+@media only screen 
+and (min-device-width : 1024px) 
+and (max-device-width : 1366px) 
+and (orientation : landscape){
+    .navigator-div-zoomed-in .astronaut {
+        width: 60%;
+        /* transform: translate(36%, 11%); */
+        transform: translate(15%, 44%);
+    }
+    .navigator-div-zoomed-in {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* transform: translate(-50%, -27%); */
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        pointer-events: auto;
+        display: none;
+        overflow: hidden;
+    }
+    .navigator-div-zoomed-in .user-photo.male {
+        z-index: 1;
+        width: 17.9vw !important;
+        height: 14.3vw !important;
+        transform: translate(-18%, -51%) !important;
+    }
+    .navigator-div-zoomed-in .navigator-zoomout-btn {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        transform: translate(317%, 386%) !important;
+        width: 7vw;
+        height: 5vw;
+        display: flex;
+        font-size: 3vw;
+        align-items: center;
+        justify-content: center;
+        color: #509ef3;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+    .navigator-div-zoomed-in .navigator-buttons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(1%, 196%);
+        width: 11.5vw;
+        height: 8.5vw;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .tos-div {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        transform: translate(142%, 769%);
+        width: 4.5vw;
+        height: 3.5vw;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .instructions-div {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        transform: translate(123%, 1193%);
+        width: 5vw;
+        height: 2vw;
+        display: flex;
+    }
+
+    .navigator-div-zoomed-in .tooltips.left span {
+        transform: translate(-127%, -50%);
+        display: block;
+        font-size: 0.8rem;
+    }
+    .navigator-div-zoomed-in .tooltips.right span {
+        font-size: 0.8rem;
+      }
+      .navigator-div-zoomed-in .tooltips.top span {
+        font-size: 0.8rem;
+      }
+    .navigator-div-zoomed-in .music-btn.tooltips span {
+        width: 11vw;
+        white-space: unset;
+        transform: translate(-118%, -67%);
+    }
+    .navigator-div-zoomed-in .tooltips span {
+        padding: 34%;
+        outline: 0;
+        border: 0;
+        display: block;
+    }
+    .navigator-div-zoomed-in .tooltips.left span:after {
+        right: 0;
+        left: 100%;
+        border-right: 0;
+        border-left: 1em solid #0b91c3a3;
+        margin-top: -1.1vw;
+        border-top: 1.1vw solid transparent;
+        border-bottom: 1.1vw solid transparent;
+    }
+    
+    .navigator-div-zoomed-in .tooltips.top span:after {
+        border-left: 1.5vw solid transparent;
+        border-right: 1.5vw solid transparent;
+    }
+    
+    .navigator-div-zoomed-in .tooltips.right span:after {
+        margin-top: -1.1vw;
+        border-top: 1.1vw solid transparent;
+        border-bottom: 1.1vw solid transparent;
+    }
+    .navigator-div-zoomed-in .communicator-div {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(346px, 242px);
+        border: 0;
+        width: 5.2vw;
+        height: 10.5vw;
+        cursor: pointer;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .instructions-div .tooltips span {
+       display: none;
+       
+    }
+    .navigator-div-zoomed-in .tos-div .tooltips span {
+        display: none;
+        
+     }
+     .titile {
+        color: #0ee3ea !important;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 1.2rem;
+    }
+    .lbl_titile {
+        color: #FFD700;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.875rem;
+    }
+    .spn_value {
+        color: #bfd3dc;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.7rem;
+    }
+    .job-dates {
+        color: #bfd3dc;
+        /* color: #6F6F6F; */
+        text-shadow: 0px 0px 3px #000000;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 0.875rem;
+    }
+    .role-responsibilty {
+        color: #bfd3dc;
+        /* color: #6F6F6F; */
+        text-shadow: 0px 0px 3px #000000;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 0.9rem;
+        text-align: justify-all;
+    }
+    .lbl_sub_title {
+        color: #FFD700;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.875rem;
+    }
+}
+@media only screen 
+and (min-device-width : 1364px) 
+and (max-device-width : 1366px) 
+and (orientation : landscape){
+    .navigator-div-zoomed-in .communicator-div {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(420px, 320px);
+        border: 0;
+        width: 5.2vw;
+        height: 10.5vw;
+        cursor: pointer;
+        display: flex;
+    }
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1023px) 
+and (orientation : landscape) {
+    .navigator-div-zoomed-in .astronaut {
+        width: 50%;
+        transform: translate(36%, 11%);
+    }
+    .navigator-div-zoomed-in {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        pointer-events: auto;
+        display: none;
+        overflow: hidden;
+    }
+    .navigator-div-zoomed-in .navigator-zoomout-btn {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        transform: translate(486%, 194%) !important;
+        width: 6vw;
+        height: 5vw;
+        display: flex;
+        font-size: 2vw;
+        align-items: center;
+        justify-content: center;
+        color: #509ef3;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+    .navigator-div-zoomed-in .user-photo.male {
+        z-index: 1;
+        width: 14.9vw !important;
+        height: 11.8vw !important;
+        transform: translate(52%, -99%) !important;
+    }
+    .navigator-div-zoomed-in .navigator-buttons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(155%, 156%);
+        width: 7.5vw;
+        height: 5.5vw;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .tos-div {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        transform: translate(446%, 597%);
+        width: 3.5vw;
+        height: 2.7vw;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .instructions-div {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        transform: translate(542%, 1176%);
+        width: 3vw;
+        height: 1.2vw;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .tooltips.left span {
+        transform: translate(-127%, -50%);
+        display: block;
+        font-size: 0.7rem;
+    }
+    .navigator-div-zoomed-in .music-btn.tooltips span {
+        width: 16vw;
+        white-space: unset;
+        transform: translate(-118%, -72%);
+    }
+    .navigator-div-zoomed-in .tooltips span {
+        padding: 26%;
+        outline: 0;
+        border: 0;
+        display: block;
+    }
+    .navigator-div-zoomed-in .communicator-div {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(311px, 115px);
+        border: 0;
+        width: 5.2vw;
+        height: 10.5vw;
+        cursor: pointer;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .instructions-div .tooltips span {
+       display: none;
+    }
+    .navigator-div-zoomed-in .tos-div .tooltips span {
+        display: none;
+     }
+     .navigator-div-zoomed-in .tooltips.right span {
+      transform: translate(22%, -50%);
+        font-size: 0.7rem;
+    }
+    .navigator-div-zoomed-in .tooltips.top span {
+        transform: translate(-49%, -237%);
+        font-size: 0.7rem;
+    }
+    .arrow {
+        font-size: 17px;
+        font-family: Nasalization;
+        cursor: pointer;
+        left: 20%;
+        top: 20%;
+        position: absolute;
+        transform: translate(-1%,175%);
+        text-align: center;
+        color: #bfd3dc;
+    }
+    .titile {
+        color: #0ee3ea !important;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 1rem;
+    }
+    .lbl_titile {
+        color: #FFD700;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.875rem;
+    }
+    .spn_value {
+        color: #bfd3dc;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.7rem;
+    }
+    .job-dates {
+        color: #bfd3dc;
+        /* color: #6F6F6F; */
+        text-shadow: 0px 0px 3px #000000;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 0.7rem;
+    }
+    .role-responsibilty {
+        color: #bfd3dc;
+        /* color: #6F6F6F; */
+        text-shadow: 0px 0px 3px #000000;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 0.9rem;
+        text-align: justify-all;
+    }
+    .lbl_sub_title {
+        color: #FFD700;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.7rem;
+    }
+}
+@media only screen 
+and (min-device-width : 568px) 
+and (max-device-width : 736px) 
+and (orientation : landscape) {
+    .navigator-div-zoomed-in .astronaut {
+        width: 50%;
+        transform: translate(36%, 30%);
+    }
+    .navigator-div-zoomed-in {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        pointer-events: auto;
+        display: none;
+        overflow: hidden;
+    }
+    .navigator-div-zoomed-in .navigator-zoomout-btn {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        transform: translate(486%, 253%) !important;
+        width: 6vw;
+        height: 5vw;
+        display: flex;
+        font-size: 2vw;
+        align-items: center;
+        justify-content: center;
+        color: #509ef3;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+    .navigator-div-zoomed-in .tos-div {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        transform: translate(446%, 714%);
+        width: 3.5vw;
+        height: 2.7vw;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .navigator-buttons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(155%, 174%);
+        width: 7.5vw;
+        height: 6.5vw;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .instructions-div {
+        position: absolute;
+        /* border: 1px solid red; */
+        top: 50%;
+        left: 50%;
+        transform: translate(542%, 1426%);
+        width: 3vw;
+        height: 1.2vw;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .user-photo.male {
+        z-index: 1;
+        width: 14.9vw !important;
+        height: 11.8vw !important;
+        transform: translate(52%, -75%) !important;
+    }
+    .navigator-div-zoomed-in .tooltips.left span {
+        transform: translate(-127%, -50%);
+        display: block;
+        font-size: 0.5rem;
+    }
+    .navigator-div-zoomed-in .music-btn.tooltips span {
+        width: 16vw;
+        white-space: unset;
+        transform: translate(-118%, -72%);
+    }
+    .navigator-div-zoomed-in .tooltips span {
+        padding: 26%;
+        outline: 0;
+        border: 0;
+        display: block;
+    }
+    .navigator-div-zoomed-in .communicator-div {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(275px, 123px);
+        border: 0;
+        width: 5.2vw;
+        height: 10.5vw;
+        cursor: pointer;
+        display: flex;
+    }
+    .navigator-div-zoomed-in .instructions-div .tooltips span {
+       display: none;
+    }
+    .navigator-div-zoomed-in .tos-div .tooltips span {
+        display: none;
+     }
+     .navigator-div-zoomed-in .tooltips.right span {
+      transform: translate(22%, -50%);
+        font-size: 0.5rem;
+    }
+    .navigator-div-zoomed-in .tooltips.top span {
+        transform: translate(-49%, -237%);
+        font-size: 0.5rem;
+    }
+    .arrow {
+        font-size: 17px;
+        font-family: Nasalization;
+        cursor: pointer;
+        left: 20%;
+        top: 20%;
+        position: absolute;
+        transform: translate(-1%,175%);
+        text-align: center;
+        color: #bfd3dc;
+    }
+    .titile {
+        color: #0ee3ea !important;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.7rem;
+    }
+    .lbl_titile {
+        color: #FFD700;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.6em;
+    }
+    .spn_value {
+        color: #bfd3dc;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.5em;
+    }
+    .job-dates {
+        color: #bfd3dc;
+        /* color: #6F6F6F; */
+        text-shadow: 0px 0px 3px #000000;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 0.6rem;
+    }
+    .role-responsibilty {
+        color: #bfd3dc;
+        /* color: #6F6F6F; */
+        text-shadow: 0px 0px 3px #000000;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 0.7rem;
+        text-align: justify-all;
+    }
+    .lbl_sub_title {
+        color: #FFD700;
+        text-shadow: 0px 0px 3px #000000;
+        font-family: 'Nasalization';
+        font-size: 0.6rem;
+    }
+}    
+@media only screen 
+and (min-device-width : 566px) 
+and (max-device-width : 569px) 
+and (orientation : landscape) {
+    .navigator-div-zoomed-in .communicator-div {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(230px, 100px) !important;
+        border: 0;
+        width: 5.2vw;
+        height: 10.5vw;
+        cursor: pointer;
+        display: flex;
+    }
+}

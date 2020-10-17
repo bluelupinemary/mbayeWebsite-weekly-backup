@@ -31,7 +31,7 @@ mix.sass('resources/assets/sass/frontend/app.scss', 'public/css/frontend.css')
         'public/js/select2/select2.css',
         'public/css/bootstrap.min.css',
         'public/css/custom-style.css',
-        'public/css/loader.css',
+        // 'public/css/loader.css',
         'public/css/bootstrap-datetimepicker.min.css',
         'client/build/client-modules.min.css',
     ], 'public/css/backend-custom.css')
@@ -43,6 +43,8 @@ mix.sass('resources/assets/sass/frontend/app.scss', 'public/css/frontend.css')
         'client/build/client-modules.min.js',
         // 'public/front/JS/bootstrap.min.js',
     ], 'public/js/frontend.js')
+    .js('resources/js/app.js', 'public/js')
+   .sass('resources/sass/app.scss', 'public/css')
     .js([
         'resources/assets/js/backend/app.js',
         'resources/assets/js/plugin/sweetalert/sweetalert.min.js',

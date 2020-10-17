@@ -8,6 +8,8 @@ use App\Http\Requests\Frontend\Auth\RegisterRequest;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use DB;
 use Validator;
 
 /**
@@ -65,6 +67,23 @@ class RegisterController extends Controller
            // return redirect()->back()->with('error', '');
            
             return redirect($this->redirectPath());
+        }
+    }
+    public function validateEmail(Request $request)
+    {
+        $user = DB::table('users')->where('email', $request->email)->first();
+        if ($user) 
+        {
+            return response()->json([
+                    'status' => 'exist',
+                    'message' => 'email is already in database'
+                ], 200); 
+        }else
+        {
+            return response()->json([
+                    'status' => 'not-exist',
+                    'message' => 'email is not present in database'
+                ], 200);   
         }
     }
 }

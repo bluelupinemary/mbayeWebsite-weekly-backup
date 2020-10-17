@@ -475,7 +475,7 @@ $('.communicator-buttons .save-button').click(function (e) {
                         title: title,
                         html: errorString,
                         // width: '30%',
-                        padding: '15px',
+                        padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
                 });
@@ -584,7 +584,7 @@ $('.communicator-buttons .publish-button').click(function (e) {
                     imageAlt: 'Mbaye Logo',
                     title: title,
                     html: errorString,
-                    width: '30%',
+                    // width: '30%',
                     padding: '1rem',
                     background: 'rgba(8, 64, 147, 0.62)'
                 });
@@ -689,7 +689,7 @@ $('.general-blog-buttons .publish-button').click(function (e) {
                     imageAlt: 'Mbaye Logo',
                     title: title,
                     html: errorString,
-                    width: '30%',
+                    // width: '30%',
                     padding: '1rem',
                     background: 'rgba(8, 64, 147, 0.62)'
                 });
@@ -733,7 +733,7 @@ $('.designs-blog-buttons .save-button').click(function (e) {
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)',
             showCancelButton: true,
@@ -799,7 +799,7 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                             imageAlt: 'Mbaye Logo',
                             title: title,
                             html: errorString,
-                            width: '30%',
+                            // width: '30%',
                             padding: '1rem',
                             background: 'rgba(8, 64, 147, 0.62)'
                         });
@@ -870,7 +870,7 @@ $('.designs-blog-buttons .save-button').click(function (e) {
                         imageAlt: 'Mbaye Logo',
                         title: title,
                         html: errorString,
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
@@ -980,7 +980,7 @@ $('.designs-blog-buttons .publish-button').click(function (e) {
                     imageAlt: 'Mbaye Logo',
                     title: title,
                     html: errorString,
-                    width: '30%',
+                    // width: '30%',
                     padding: '1rem',
                     background: 'rgba(8, 64, 147, 0.62)'
                 });
@@ -1019,7 +1019,7 @@ $("#featured_image").change(function (event) {
             imageAlt: 'Mbaye Logo',
             title: '',
             html: '<p>Allowed file size exceeded. (Max. 5 MB)</p>',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)'
         });
@@ -1040,7 +1040,7 @@ $("#general_blog_featured_image").change(function (event) {
             imageAlt: 'Mbaye Logo',
             title: '',
             html: '<p>Allowed file size exceeded. (Max. 5 MB)</p>',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)'
         });
@@ -1077,7 +1077,7 @@ $('.video-insert-btn').click(function(e) {
             imageAlt: 'Mbaye Logo',
             title: '',
             html: 'Invalid link.',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)'
         });
@@ -1091,6 +1091,10 @@ $('.video-links-list table').on('click', '.remove-btn', function() {
 
 // show fullscreen trix editor
 $('.main-form .trix-editor .fullscreen span').click(function() {
+
+    window.removeEventListener("orientationchange", testOrientation, false);
+    window.removeEventListener("resize", testOrientation, false);
+
     var editor = '.text-editor-fullview.blog-content';
     if (document.querySelector('.text-editor-fullview.blog-content .trix-button--icon-text-color') == null) {
         trixTextColorButton(editor);
@@ -1118,17 +1122,110 @@ $('.main-form .trix-editor .fullscreen span').click(function() {
     }
 
     $(editor+' trix-editor').html($('.main-form .trix-editor trix-editor').html());
-    $(editor).fadeIn();
+    $(editor+' input[name="fullscreen_name"]').val($('.main-form input[name="name"]').val());
+    $(editor).css('display', 'flex').hide().fadeIn();
 });
+
+function showBlogFullscreen() {
+    window.removeEventListener("orientationchange", testOrientation, false);
+    window.removeEventListener("resize", testOrientation, false);
+
+    var editor = '.text-editor-fullview.blog-content';
+    if (document.querySelector('.text-editor-fullview.blog-content .trix-button--icon-text-color') == null) {
+        trixTextColorButton(editor);
+    }
+
+    var fullscreen_blog_pk = new Piklor(".fullscreen-blog-color-picker", colors, {
+        open: ".text-editor-fullview.blog-content .trix-button--icon-text-color",
+        style: { display: 'flex'},
+        // autoclose: false,
+        closeOnBlur: true
+    });
+
+    fullscreen_blog_pk.colorChosen(function (col) {
+        setForegroundColor(col, editor);
+    });
+
+    if (document.querySelector(editor+' .font-select') == null) {
+        $(editor+' #font-picker').fontselect({
+            searchable: false,
+        })
+        .on('change', function() {
+            applyFont(this.value, editor);
+            $(editor+' .font-picker').hide();
+        });
+    }
+
+    $(editor+' trix-editor').html($('.main-form .trix-editor trix-editor').html());
+    $(editor+' input[name="fullscreen_name"]').val($('.main-form input[name="name"]').val());
+    $(editor).css('display', 'flex').hide().fadeIn();
+}
+
+var isFullScreenEditor = false;
+if(isSmallDevice() || isMobile()) {
+    // regular blog & career blog
+    $('#main-form input[name="name"]').on('focus', function() {
+        if(!isWindowFullscreen()) {
+            // alert();
+            openFullscreen();
+        }
+        showBlogFullscreen();
+    });
+
+    document.querySelector('.main-form trix-editor').addEventListener("click", function(event) {
+        showBlogFullscreen();
+    });
+
+    // general blog
+    $('#general-blog-form input[name="name"]').on('focus', function() {
+        showGeneralBlogFullscreen();
+    });
+
+    document.querySelector('.general-blog-form trix-editor').addEventListener("click", function(event) {
+        showGeneralBlogFullscreen();
+    });
+
+    // designs blog
+    $('#designs-blog-form input[name="name"]').on('focus', function() {
+        showDesignsBlogFullscreen();
+    });
+
+    document.querySelector('.designs-blog-form trix-editor').addEventListener("click", function(event) {
+        showDesignsBlogFullscreen();
+    });
+
+    // email
+    document.querySelector('.email-form trix-editor').addEventListener("click", function(event) {
+        showEmailFullscreen();
+    });
+}
+
+function isWindowFullscreen() {
+    if (document.fullscreenElement) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 // hide fullscreen trix editor
 $('.exit-fullscreen').click(function() {
+    testOrientation();
+    window.addEventListener("orientationchange", testOrientation, false);
+    window.addEventListener("resize", testOrientation, false);
+
+    $('.main-form input[name="name"]').val($('.text-editor-fullview.blog-content input[name="fullscreen_name"]').val());
     $('.main-form .trix-editor trix-editor').html($('.text-editor-fullview.blog-content trix-editor').html());
-    $('.text-editor-fullview.blog-content').fadeOut();
+    
+    $('.text-editor-fullview.blog-content').css('display', 'none');
 });
 
 // show fullscreen email trix editor
 $('.email-form .trix-editor .fullscreen span').click(function() {
+
+    window.removeEventListener("orientationchange", testOrientation, false);
+    window.removeEventListener("resize", testOrientation, false);
+
     var editor = '.text-editor-fullview.email-content';
     if (document.querySelector('.text-editor-fullview.email-content .trix-button--icon-text-color') == null) {
         trixTextColorButton(editor);
@@ -1156,17 +1253,58 @@ $('.email-form .trix-editor .fullscreen span').click(function() {
     }
 
     $(editor+' trix-editor').html($('.email-form .trix-editor trix-editor').html());
-    $(editor).fadeIn();
+    $(editor).css('display', 'flex').hide().fadeIn();
 });
+
+function showEmailFullscreen() {
+    window.removeEventListener("orientationchange", testOrientation, false);
+    window.removeEventListener("resize", testOrientation, false);
+
+    var editor = '.text-editor-fullview.email-content';
+    if (document.querySelector('.text-editor-fullview.email-content .trix-button--icon-text-color') == null) {
+        trixTextColorButton(editor);
+    }
+
+    var fullscreen_email_pk = new Piklor(".fullscreen-email-color-picker", colors, {
+        open: ".text-editor-fullview.email-content .trix-button--icon-text-color",
+        style: { display: 'flex'},
+        // autoclose: false,
+        closeOnBlur: true
+    });
+
+    fullscreen_email_pk.colorChosen(function (col) {
+        setForegroundColor(col, editor);
+    });
+
+    if (document.querySelector(editor+' .font-select') == null) {
+        $(editor+' #font-picker').fontselect({
+            searchable: false,
+        })
+        .on('change', function() {
+            applyFont(this.value, editor);
+            $(editor+' .font-picker').hide();
+        });
+    }
+
+    $(editor+' trix-editor').html($('.email-form .trix-editor trix-editor').html());
+    $(editor).css('display', 'flex').hide().fadeIn();
+}
 
 // hide fullscreen email trix editor
 $('.exit-email-fullscreen').click(function() {
+    testOrientation();
+    window.addEventListener("orientationchange", testOrientation, false);
+    window.addEventListener("resize", testOrientation, false);
+
     $('.email-form .trix-editor trix-editor').html($('.text-editor-fullview.email-content trix-editor').html());
-    $('.text-editor-fullview.email-content').fadeOut();
+    $('.text-editor-fullview.email-content').css('display', 'none');
 });
 
 // show fullscreen general blog trix editor
 $('.general-blog-form .trix-editor .fullscreen span').click(function() {
+    window.removeEventListener("orientationchange", testOrientation, false);
+    window.removeEventListener("resize", testOrientation, false);
+
     var editor = '.text-editor-fullview.general-blog-content';
     if (document.querySelector(editor+' .trix-button--icon-text-color') == null) {
         trixTextColorButton(editor);
@@ -1194,17 +1332,62 @@ $('.general-blog-form .trix-editor .fullscreen span').click(function() {
     }
 
     $(editor+' trix-editor').html($('.general-blog-form .trix-editor trix-editor').html());
-    $(editor).fadeIn();
+    $(editor+' input[name="fullscreen_name"]').val($('.general-blog-form input[name="name"]').val());
+    $(editor).css('display', 'flex').hide().fadeIn();
 });
+
+function showGeneralBlogFullscreen() {
+    window.removeEventListener("orientationchange", testOrientation, false);
+    window.removeEventListener("resize", testOrientation, false);
+
+    var editor = '.text-editor-fullview.general-blog-content';
+    if (document.querySelector(editor+' .trix-button--icon-text-color') == null) {
+        trixTextColorButton(editor);
+    }
+
+    var fullscreen_genblog_pk = new Piklor(".fullscreen-genblog-color-picker", colors, {
+        open: editor+" .trix-button--icon-text-color",
+        style: { display: 'flex'},
+        // autoclose: false,
+        closeOnBlur: true
+    });
+
+    fullscreen_genblog_pk.colorChosen(function (col) {
+        setForegroundColor(col, editor);
+    });
+
+    if (document.querySelector(editor+' .font-select') == null) {
+        $(editor+' #font-picker').fontselect({
+            searchable: false,
+        })
+        .on('change', function() {
+            applyFont(this.value, editor);
+            $(editor+' .font-picker').hide();
+        });
+    }
+
+    $(editor+' trix-editor').html($('.general-blog-form .trix-editor trix-editor').html());
+    $(editor+' input[name="fullscreen_name"]').val($('.general-blog-form input[name="name"]').val());
+    $(editor).css('display', 'flex').hide().fadeIn();
+}
 
 // hide fullscreen email trix editor
 $('.exit-general-blog-fullscreen').click(function() {
+    testOrientation();
+    window.addEventListener("orientationchange", testOrientation, false);
+    window.addEventListener("resize", testOrientation, false);
+
+    $('.general-blog-form input[name="name"]').val($('.text-editor-fullview.general-blog-content input[name="fullscreen_name"]').val());
     $('.general-blog-form .trix-editor trix-editor').html($('.text-editor-fullview.general-blog-content trix-editor').html());
-    $('.text-editor-fullview.general-blog-content').fadeOut();
+    
+    $('.text-editor-fullview.general-blog-content').css('display', 'none');
 });
 
 // show fullscreen designs blog trix editor
 $('.designs-blog-form .trix-editor .fullscreen span').click(function() {
+    window.removeEventListener("orientationchange", testOrientation, false);
+    window.removeEventListener("resize", testOrientation, false);
+
     var editor = '.text-editor-fullview.designs-blog-content';
     if (document.querySelector(editor+' .trix-button--icon-text-color') == null) {
         trixTextColorButton(editor);
@@ -1232,13 +1415,54 @@ $('.designs-blog-form .trix-editor .fullscreen span').click(function() {
     }
 
     $(editor+' trix-editor').html($('.designs-blog-form .trix-editor trix-editor').html());
-    $(editor).fadeIn();
+    $(editor+' input[name="fullscreen_name"]').val($('.designs-blog-form input[name="name"]').val());
+    $(editor).css('display', 'flex').hide().fadeIn();
 });
+
+function showDesignsBlogFullscreen() {
+    window.removeEventListener("orientationchange", testOrientation, false);
+    window.removeEventListener("resize", testOrientation, false);
+
+    var editor = '.text-editor-fullview.designs-blog-content';
+    if (document.querySelector(editor+' .trix-button--icon-text-color') == null) {
+        trixTextColorButton(editor);
+    }
+
+    var fullscreen_designsblog_pk = new Piklor(".fullscreen-designs-blog-color-picker", colors, {
+        open: editor+" .trix-button--icon-text-color",
+        style: { display: 'flex'},
+        // autoclose: false,
+        closeOnBlur: true
+    });
+
+    fullscreen_designsblog_pk.colorChosen(function (col) {
+        setForegroundColor(col, editor);
+    });
+
+    if (document.querySelector(editor+' .font-select') == null) {
+        $(editor+' #font-picker').fontselect({
+            searchable: false,
+        })
+        .on('change', function() {
+            applyFont(this.value, editor);
+            $(editor+' .font-picker').hide();
+        });
+    }
+
+    $(editor+' trix-editor').html($('.designs-blog-form .trix-editor trix-editor').html());
+    $(editor+' input[name="fullscreen_name"]').val($('.designs-blog-form input[name="name"]').val());
+    $(editor).css('display', 'flex').hide().fadeIn();
+}
 
 // hide fullscreen designs blog trix editor
 $('.exit-designs-blog-fullscreen').click(function() {
+    testOrientation();
+    window.addEventListener("orientationchange", testOrientation, false);
+    window.addEventListener("resize", testOrientation, false);
+
+    $('.designs-blog-form input[name="name"]').val($('.text-editor-fullview.designs-blog-content input[name="fullscreen_name"]').val());
     $('.designs-blog-form .trix-editor trix-editor').html($('.text-editor-fullview.designs-blog-content trix-editor').html());
-    $('.text-editor-fullview.designs-blog-content').fadeOut();
+    $('.text-editor-fullview.designs-blog-content').css('display', 'none');
 });
 
 // hide/show blog submenu
@@ -1264,6 +1488,16 @@ $('.blogtags-button').click(function() {
 $('.careers-btn').click(function() {
     $('.submenu').not('.career-submenu').hide();
     $('.career-submenu').fadeToggle();
+});
+
+$('.yourstars-btn').click(function() {
+    $('.submenu').not('.your-stars-submenu').hide();
+    $('.your-stars-submenu').fadeToggle();
+});
+
+$('.connect-btn').click(function() {
+    $('.submenu').not('.connects-submenu').hide();
+    $('.connects-submenu').fadeToggle();
 });
 
 // hide/show fullscreen button
@@ -1299,7 +1533,7 @@ $('.create-blog').click(function(e) {
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)',
             showCloseButton: true,
@@ -1349,7 +1583,7 @@ $('.create-career-account').click(function(e) {
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)',
             showCloseButton: true,
@@ -1387,7 +1621,7 @@ $('.create-career-blog').click(function(e) {
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)',
             showCloseButton: true,
@@ -1407,6 +1641,30 @@ $('.create-career-blog').click(function(e) {
             }
         });
     }
+});
+
+$('.list-friends').click(function(e) {
+    e.preventDefault();
+
+    checkForm(url+'/friends');
+});
+
+$('.friends-activities').click(function(e) {
+    e.preventDefault();
+
+    checkForm(url+'/earthlings_activities');
+});
+
+$('.send-friend-requests').click(function(e) {
+    e.preventDefault();
+
+    checkForm(url+'/listusers');
+});
+
+$('.accept-friend-requests').click(function(e) {
+    e.preventDefault();
+
+    checkForm(url+'/requests');
 });
 
 // hide/show remove featured image button
@@ -1440,7 +1698,7 @@ $('.email-button').click( function() {
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)',
             showCloseButton: true,
@@ -1497,7 +1755,7 @@ $('.email-send').click(function (e) {
                 imageWidth: 80,
                 imageHeight: 80,
                 imageAlt: 'Mbaye Logo',
-                width: '30%',
+                // width: '30%',
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.62)'
             }).then((res) => {
@@ -1525,7 +1783,7 @@ $('.email-send').click(function (e) {
                 imageAlt: 'Mbaye Logo',
                 title: title,
                 html: errorString,
-                width: '30%',
+                // width: '30%',
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.62)'
             });
@@ -1551,7 +1809,7 @@ $('.create-general-blog').click( function(e) {
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)',
             showCloseButton: true,
@@ -1587,7 +1845,7 @@ $('.designs-button').click( function() {
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)',
             showCloseButton: true,
@@ -2055,7 +2313,7 @@ $('.instruction').hover(
 );
 
 // redirect buttons to under development page
-$('.yourstars-btn, .connect-btn, .chat-button').click(function() {
+$('.chat-button').click(function() {
     checkForm(url+'/page_under_development');
 });
 
@@ -2070,6 +2328,15 @@ $('.tos-button').click(function() {
 $('.back-button').click(function() {
     window.history.back();
 });
+
+// $('.view-company-profile').click(function() {
+//     var redirect = $(this).data('url');
+//     checkForm(redirect);
+// });
+
+// $('.view-jobseeker-profile').click(function() {
+//     checkForm(url+'/my_career_profile');
+// });
 
 // $(document).delegate("[data-trix-color]","click",function(){
 
@@ -2112,7 +2379,7 @@ addEventListener("trix-file-accept", function(event) {
             imageAlt: 'Mbaye Logo',
             title: '',
             html: failed_content,
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)'
         });
@@ -2316,12 +2583,35 @@ $('#panel_list').on('change', function (e) {
     var flowers = optionSelected.data('flowers');
     var screenshot = optionSelected.data('screenshot');
 
-    listFlowers(flowers);
-    $('.designs-blog-form .flower-list button').prop('disabled', false);
-    $('.designs-blog .edit_image').removeAttr('disabled');
-    $('.designs-blog-form #designs_blog_featured_image').val(screenshot);
-    $('.designs-blog .featured-image-text').css('opacity', '0');
-    $('.featured-image-div.designs-blog #featured-image-previewimg').attr('src', url+'/storage/designPanel/screenshots/'+screenshot);
+    if(screenshot != '') {
+        listFlowers(flowers);
+        $('.designs-blog-form .flower-list button').prop('disabled', false);
+        $('.designs-blog .edit_image').removeAttr('disabled');
+        $('.designs-blog-form #designs_blog_featured_image').val(screenshot);
+        $('.designs-blog .featured-image-text').css('opacity', '0');
+        $('.featured-image-div.designs-blog #featured-image-previewimg').attr('src', url+'/storage/saveState/designPanel/screenshots/'+screenshot);
+    } else {
+        $('.flower-list-div').empty();
+        $('.designs-blog-form .flower-list button').prop('disabled', true);
+        $('.designs-blog .edit_image').attr('disabled', true);
+        $('.designs-blog-form #designs_blog_featured_image').val('');
+        $('.designs-blog .featured-image-text').css('opacity', '1');
+        $('.featured-image-div.designs-blog #featured-image-previewimg').attr('src', '');
+        $('#panel_list').val('');
+
+        Swal.fire({
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            title: 'Error!',
+            html: 'It seems that you have not saved any screenshot for this panel yet. Please go to <a href="'+url+'/designPanel" style="color: #e6a40f;">design a panel</a> to take a screen shot.',
+            // width: '30%',
+            padding: '15px',
+            background: 'rgba(8, 64, 147, 0.62)'
+        });
+    }
+    
 });
 
 var flower_list = {
@@ -2675,7 +2965,7 @@ function checkForm(action = null)
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)',
             showCloseButton: true,
@@ -2796,4 +3086,17 @@ function hideCurrentSection()
     } else {
         hideBlogSection();
     }
+}
+
+function isMobile() {
+	try{ document.createEvent("TouchEvent"); return true; }
+	catch(e){ return false; }
+}
+
+function isSmallDevice() {
+	if(window.innerWidth <= 1024) {
+		return true;
+	} else {
+		return false;
+	}
 }

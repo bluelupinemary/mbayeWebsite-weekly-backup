@@ -16,6 +16,8 @@
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
+<link rel="stylesheet" href="{{asset('front/CSS/ldbtn.min.css')}}">
+<link rel="stylesheet" href="{{asset('front/CSS/loading.min.css')}}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog-responsive.css') }}">
 @endsection
@@ -67,7 +69,7 @@
                                 <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                 <div class="button-details">
                                     <p class="button-title">Share</p>
-                                    <p class="button-number">300k</p>
+                                    <blogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></blogsharecount-component>
                                 </div>
                             </div>
                             @if(!$blog->isDesignsBlog())
@@ -143,7 +145,7 @@
                                     <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Share</span><span class="abbr">Share</span></p>
-                                        <p class="button-number">300k</p>
+                                        <blogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></blogsharecount-component>
                                     </div>
                                 </div>
                             </div>
@@ -198,14 +200,14 @@
                     @endif
                 </div>
                 <div id="app">
-                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}">
+                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="reguler">
                     </comment-component>
                     <button class="blog-btn blog-minimize"><i class="fas fa-arrow-up"></i></button>
                 </div>
             </div>
         </div>
         
-    <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" :is_design="'{{$blog->isDesignsBlog()}}'"></like-component>
+    <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" :is_design="'{{$blog->isDesignsBlog()}}'" blog_type="reguler"></like-component>
         <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
             @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
                 <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
@@ -223,7 +225,10 @@
             <div class="user-photo {{access()->user()->getGender()}}">
                 <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
             </div>
-            <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button>
+            <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+                <span>Zoom In</span>
+                <i class="fas fa-search-plus"></i>
+            </button>
             <div class="navigator-buttons">
                 <div class="column column-1">
                     <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
@@ -233,7 +238,7 @@
                     <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
                 </div>
                 <div class="column column-3">
-                    <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                    <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
                     <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
                 </div>
             </div>
@@ -244,7 +249,8 @@
                 <button class="communicator-button"></button>
                 <span>Communicator</span>
             </div>
-            <button class="navigator-zoomout-btn">
+            <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                <span>Zoom Out</span>
                 <i class="fas fa-undo-alt"></i>
             </button>
             @if($blog->shareable == 1)
@@ -266,10 +272,15 @@
             </div>
             @endif
         </div>
-        <div class="navigator-div-zoomed-in">
+        <div class="navigator-div-zoomed-in @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
             <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
             <div class="navigator-components">
-                <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut">
+                @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+                    <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}" alt=""
+                    class="astronaut-body">
+                @else
+                    <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut-body">
+                @endif
                 <div class="tos-div">
                     <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
                 </div>
@@ -286,7 +297,7 @@
                         <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
                     </div>
                     <div class="column column-3">
-                        <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                        <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
                         <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
                     </div>
                 </div>
@@ -297,7 +308,8 @@
                     <button class="communicator-button"></button>
                     <span>Communicator</span>
                 </div>
-                <button class="navigator-zoomout-btn">
+                <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                    <span>Zoom Out</span>
                     <i class="fas fa-undo-alt"></i>
                 </button>
                 @if($blog->shareable == 1)
@@ -319,14 +331,11 @@
         </div>
     </div>
 
-    <div class="modal" id="shareBlogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal" id="shareBlogModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h6 class="modal-title" id="exampleModalLongTitle">Share Blog</h6>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
                 <form action="" id="share-blog-form">
@@ -354,7 +363,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id="share-blog-btn" form="share-blog-form">Share Now</button>
+                {{-- <button type="button" class="btn btn-primary btn-lg " id="load1" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order">Submit Order</button> --}}
+                <button type="submit" class="btn btn-primary ld-ext-left" id="share-blog-btn" form="share-blog-form"><div class="ld ld-ring ld-spin"></div> <span class="text">Share Now</span></button>
             </div>
           </div>
         </div>
@@ -940,8 +950,12 @@
             window.location.href = url+'/dashboard';
         });
 
-        $('.instructions-btn, .tos-btn').click( function() {
-            window.location.href = url+'/page_under_development';
+        $('.instructions-btn').click( function() {
+            window.location.href = url+'/instructions';
+        });
+
+        $('.tos-btn').click( function() {
+            window.location.href = url+'/terms';
         });
 
         $('.editphoto-btn').click( function() {
@@ -1135,11 +1149,17 @@
         $('#share-blog-btn').click(function(e) {
             e.preventDefault();
 
+            // disable form and add loading to button
+            $('#share-blog-form textarea').attr('readonly', true);
+            $('#shareBlogModal button').prop('disabled', true);
+            $(this).addClass('running');
+            $('#share-blog-btn .text').html('Sharing Post');
+            
             var form_url = url+'/share_blog';
             var $form = $('form#share-blog-form');
-
+            
             var post_data = new FormData($form[0]);
-
+            console.log(post_data);
             $.ajax({
                 url: form_url,
                 method: 'post',
@@ -1150,7 +1170,13 @@
                 processData: false,
                 success: function(data) {
                     console.log(data);
+                    $('#share-blog-form textarea').attr('readonly', false);
+                    $('#shareBlogModal button').prop('disabled', false);
+                    $('#share-blog-btn').removeClass('running');
+                    $('#share-blog-btn .text').html('Share Now');
+
                     $('#shareBlogModal').modal('hide');
+                    
                     Swal.fire({
                         title: '<span class="success">Success!</span>',
                         text: data.message,
@@ -1158,9 +1184,11 @@
                         imageWidth: 80,
                         imageHeight: 80,
                         imageAlt: 'Mbaye Logo',
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
+                    }).then((res) => {
+                        window.open(url+'/shared_blog/'+data.blog_share.id, '_blank'); 
                     });
                 },
                 error: function (request, status, error) {
@@ -1183,10 +1211,15 @@
                         imageAlt: 'Mbaye Logo',
                         title: title,
                         html: errorString,
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
+                        $('#share-blog-form textarea').attr('readonly', false);
+                        $('#shareBlogModal button').prop('disabled', false);
+                        $('#share-blog-btn').removeClass('running');
+                        $('#share-blog-btn .text').html('Share Now');
+
                         $('#shareBlogModal').modal('show');
                     });
                 }

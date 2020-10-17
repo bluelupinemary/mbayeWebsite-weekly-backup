@@ -77,6 +77,7 @@ class BlogShare extends Model
 
         if($this->publish_datetime) {
             $data['formatted_date'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y h:i A');
+            $data['formatted_time'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y');
         }
 
         if($this->blog_type == 'App\Models\Blogs\Blog') {

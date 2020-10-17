@@ -19,7 +19,7 @@ html, body {
     position:absolute;
     width:100vw;
     height:100vh;
-    background:url('../../images/loadingScreenV5.png');
+    background:url('../../images3D/gameLoadingScreen.jpg');
     color:white;
     text-align:left;
     font-size:2vw;
@@ -127,7 +127,7 @@ html, body {
     /***********RELATED TO WIKIPEDIA DIV****************/
 
     #wikipediaDiv{
-        background-color: white; 
+        background-color: black; 
         visibility: hidden;
          position: absolute;
           top:0;
@@ -135,11 +135,12 @@ html, body {
           width: 35vw;
           height:100vh;
           border: 2px solid gray;
+        
          
     }
     
     #flowersWikipediaDiv, #carpetsWikipediaDiv{
-        background-color: white; 
+        background-color: black; 
         visibility: hidden;
          position: absolute;
           top:0;
@@ -157,31 +158,51 @@ html, body {
 
     #page-url, #song-url{
         color:gray;
-        font-size: 0.8em;
         width:50%;
         word-wrap: break-word;
+        width:80%;
+        font-size:1em;
+        overflow-wrap: break-word;
     }
 
     #close-btn{
-        width:1.5vw;
         max-width:100%;
         height:auto; 
         z-index: 1; 
-        padding-right:1%;
+        width:2vw;
+        padding-top:5%;
+        padding-right:3%;
     }
 
     #fullscreen-btn, #minimize-btn{
-        width:1.5vw;
         max-width:100%;
         height:auto; 
         z-index: 1; 
-        padding-right:1%;
+        width:2vw;
+        padding-right:10%;
+        padding-top:5%;
     }
 
     #wikiPage,#carpetsWikiPage{
         overflow:auto;
         width:100%;
         height: 100%;
+        max-height: 95%;
+    }
+
+    #wikiHeader{
+        position:relative;
+        width:100%;
+        display:flex;
+        height:5vh;
+    }
+
+    #wikiButtons{
+        position: relative;
+        display:flex;
+        height:85%;
+        margin-left:auto; 
+        margin-right:0;
     }
 
     .bg-image {
@@ -287,24 +308,106 @@ html, body {
 }
 
 
+#fullscreenIcon{
+    position:absolute;  
+    top:0;
+    right:0;
+ }
+ #fullscreenImg{
+     width:5vh;
+     height:auto;
+ }
+ #fullscreenImg:hover, #fullscreen-btn:hover, #minimize-btn:hover, #close-btn:hover, .music-close-btn:hover{
+     filter: drop-shadow(0px 0px 4px white);
+ }
+ 
+
+
+ 
+#inOurEyesDiv::-webkit-scrollbar{
+    width: 0.6em;
+    background: #c1d7e491;
+}
+
+#inOurEyesDiv::-webkit-scrollbar-thumb {
+    background: #047999;
+}
+
+#inOurEyesDiv{
+    scrollbar-width: thin;
+    scrollbar-color: #047999 #c1d7e491;
+    justify-content: center;
+    color: #e9ba29;
+    position: absolute;
+    font-family: 'Courgette-Regular' !important;
+    font-size: 2.5vw;
+    text-align: center;
+}
+
+
+/*Trevor's popup alert when the user has clicked the planet in mobile*/
+.trevor-popup-class{
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: auto 100% !important;
+    height:7vh !important;
+    background: #0d65801f !important;
+    pointer-events: none;
+}
+/*related to sweetalert box*/
+.swal2-popup {
+    box-shadow: 0px 0px 8px #17a2b8;
+    width: 30vw !important;
+    padding: 1vw !important;
+}
+.swal2-title{
+    color:#17a2b8 !important;
+    text-shadow: -1px 0px black;
+    font-size: 1vw !important;
+    font-family: 'Nasalization Rg';
+}
+.swal2-content{
+    color:#c13939 !important;
+    font-size: 1vw !important;
+    font-family: 'Nasalization Rg';
+}
+.swal2-confirm, .swal2-cancel {
+    font-size: 0.8vw !important;
+    font-family: 'Nasalization Rg';
+}
+.error-title-class{
+    color:#df1613 !important;
+    font-size: 1vw !important;
+    font-family: 'Nasalization Rg';
+}
+
+
+.musicPlayer{
+    /* display:none; */
+    width:20vw;
+    height: 20vh;
+    position: absolute;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+
 
 /*extra small and small screens*/
-@media (min-width : 320px) and (max-width : 991px) and (orientation : landscape) {
-    #page-url, #song-url{
-        font-size: 1em;
-        word-wrap: break-word;
-    }
-    #fullscreen-btn, #minimize-btn{
-        width:2vw;
-        max-width:100%;
-    }
-
-    #close-btn{
-        width:2vw;
-    }
-
+@media (min-width : 320px) and (max-width : 1024px) and (orientation : landscape) {
     #wikipediaDiv{
           width: 50vw;
           height:100vh;
     }
+
+    #wikiHeader{
+        position:relative;
+        width:100%;
+        display:flex;
+        height:8vh;
+    }
+    #close-btn, #fullscreen-btn, #minimize-btn{
+        width:3vw;
+    }
 }
+
+

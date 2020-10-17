@@ -157,9 +157,9 @@ class User extends Authenticatable
         }
     }
     
-            public function getAgeAttribute()
-        {
-            return Carbon::parse($this->attributes['dob'])->age;
-        }
+    public function getAgeAttribute()
+    {
+        return Carbon::parse($this->attributes['dob'])->age;
+    }
 
 }

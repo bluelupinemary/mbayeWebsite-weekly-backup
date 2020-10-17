@@ -2,11 +2,20 @@
 
 @section('before-styles')
 @trixassets
+@if($blog->type == "reguler")
 <meta property="og:image" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+@else
+<meta property="og:image" content="{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}">
+@endif
+
 <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($blog->summary), 20, '...') }}">
 <meta property="og:url" content="{{ url('') }}">
 <meta property="og:title" content="{{ $blog->name }}">
+@if($blog->type == "reguler")
 <meta name="twitter:card" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+@else
+<meta name="twitter:card" content="{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}">
+@endif
 <meta property="og:type" content="website" /> <meta property="og:image:width" content="720" />
 <meta property="og:image:height" content="720" />
 
@@ -16,6 +25,8 @@
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
+<link rel="stylesheet" href="{{asset('front/CSS/ldbtn.min.css')}}">
+<link rel="stylesheet" href="{{asset('front/CSS/loading.min.css')}}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog-responsive.css') }}">
 <style>
@@ -25,14 +36,15 @@
 
     .blog-status {
         font-size: 0.8em;
-        padding: 0 1%;
+        padding: 0 3%;
         border-radius: 100px;
         font-weight: 550;
         background: #0f9d58;
         color: #fff;
-        position: absolute;
+        align-self: flex-end;
+        /* position: absolute;
         right: 1%;
-        top: 3%;
+        top: 3%; */
     }
 
     .owner-names {
@@ -48,6 +60,11 @@
         background: #189358;
         color: #fff;
     }
+
+    .blog-content {
+        display: flex;
+        flex-flow: column;
+    }
 </style>
 @endsection
 
@@ -62,11 +79,15 @@
             <div class="blog-heading">
                 <div class="blog" data-blogid="{{ $blog->id }}"></div>
                 <div class="blog-details-1">
+                    @if($blog->type == "reguler")
                     <div class="blog-featured-img"
                         style='background-image: url("{{ asset('storage/img/blog/'.$blog->featured_image) }}")'>
-                        {{-- <img src="{{asset('storage/img/blog/'.$blog->featured_image) }}"
-                        alt="" class="featured_image"> --}}
                     </div>
+                    @else
+                    <div class="blog-featured-img"
+                        style='background-image: url("{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}")'>
+                    </div>
+                    @endif
                     <div class="blog-dates-reactions">
                         <div class="blog-dates">
                             <p class="day">
@@ -84,43 +105,63 @@
                                 <img src="{{ asset('front/icons/hotNew.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Hot</p>
+                                    @if($blog->type == "reguler")
                                     <hotcount-component></hotcount-component>
+                                    @else
+                                    <generalhotcount-component></generalhotcount-component>
+                                    @endif
                                 </div>
                             </div>
                             <div class="button-div coolIcon">
                                 <img src="{{ asset('front/icons/coolIcon.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Cool</p>
+                                    @if($blog->type == "reguler")
                                     <coolcount-component></coolcount-component>
+                                    @else
+                                    <generalcoolcount-component></generalcoolcount-component>
+                                    @endif                                   
                                 </div>
                             </div>
                             <div class="button-div shareIcon">
                                 <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                 <div class="button-details">
                                     <p class="button-title">Share</p>
-                                    <p class="button-number">300k</p>
+                                    @if($blog->type == "reguler")
+                                    <blogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></blogsharecount-component>
+                                    @else
+                                    <generalblogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></generalblogsharecount-component>
+                                    @endif                                  
                                 </div>
                             </div>
                             <div class="button-div naffIcon">
                                 <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Naff</p>
+                                    @if($blog->type == "reguler")
                                     <naffcount-component></naffcount-component>
+                                    @else
+                                    <generalnaffcount-component></generalnaffcount-component>
+                                    @endif                                   
                                 </div>
                             </div>
                             <div class="button-div commentIcon">
                                 <img src="{{ asset('front/icons/commentsNew.png') }}" alt="" width="40">
                                 <div class="button-details">
                                     <p class="button-title">Declarations</p>
+                                    @if($blog->type == "reguler")
                                     <commentcount-component></commentcount-component>
+                                    @else
+                                    <generalcommentcount-component></generalcommentcount-component>
+                                    @endif                                   
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="blog-details">
-                    <h4 class="blog-title">{{ $blog->name }}</h4>
                     <span class="blog-status">Shared</span>
+                    <h4 class="blog-title">{{ $blog->name }}</h4>
                     <div class="blog-tags">
                         <ul class="tags">
                             @foreach($tags as $tag)
@@ -145,38 +186,57 @@
                                     <img src="{{ asset('front/icons/hotNew.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Hot</span><span class="abbr">Hot</span></p>
+                                        @if($blog->type == "reguler")
                                         <hotcount-component></hotcount-component>
+                                        @else
+                                        <generalhotcount-component></generalhotcount-component>
+                                        @endif                                      
                                     </div>
                                 </div>
                                 <div class="button-div coolIcon">
                                     <img src="{{ asset('front/icons/coolIcon.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Cool</span><span class="abbr">Cool</span></p>
+                                        @if($blog->type == "reguler")
                                         <coolcount-component></coolcount-component>
+                                        @else
+                                        <generalcoolcount-component></generalcoolcount-component>
+                                        @endif                                           
                                     </div>
                                 </div>
                                 <div class="button-div naffIcon">
                                     <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Naff</span><span class="abbr">Naff</span></p>
+                                        @if($blog->type == "reguler")
                                         <naffcount-component></naffcount-component>
+                                        @else
+                                        <generalnaffcount-component></generalnaffcount-component>
+                                        @endif
                                     </div>
                                 </div>
-                            </div>
-        
+                            </div>        
                             <div class="right">
                                 <div class="button-div commentIcon">
                                     <img src="{{ asset('front/icons/commentsNew.png') }}" alt="" width="40">
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Declarations</span><span class="abbr">Declar.</span></p>
+                                        @if($blog->type == "reguler")
                                         <commentcount-component></commentcount-component>
+                                        @else
+                                        <generalcommentcount-component></generalcommentcount-component>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="button-div shareIcon">
                                     <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Share</span><span class="abbr">Share</span></p>
-                                        <p class="button-number">300k</p>
+                                        @if($blog->type == "reguler")
+                                        <blogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></blogsharecount-component>
+                                        @else
+                                        <generalblogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></generalblogsharecount-component>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +246,13 @@
                 <button class="blog-btn blog-fullview" title="See full blog"><i class="fas fa-arrow-down"></i></button>
             </div>
             <div class="blog-body">
+                <div class="caption">
+                    <span class="blog-owner shared-by">Shared by: {{ $shared_blog->owner->first_name.' '.$shared_blog->owner->last_name }}</span>
+                    {{$shared_blog->caption}}
+                </div>
                 <div class="blog-content">
+                    <h2>Content</h2>
+                    <span class="blog-owner">Owned by: {{ $blog->owner->first_name.' '.$blog->owner->last_name }}</span>
                     <div class="trix-content">
                         {!! nl2br($blog->content) !!}
                     </div>
@@ -231,14 +297,21 @@
                     @endif
                 </div>
                 <div id="app">
-                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}">
+                    @if($blog->type == "reguler")
+                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="reguler">
                     </comment-component>
+                    @else
+                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="general">
+                    @endif
                     <button class="blog-btn blog-minimize"><i class="fas fa-arrow-up"></i></button>
                 </div>
             </div>
         </div>
-        
-        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}"></like-component>
+        @if($blog->type == "reguler")
+        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="reguler"></like-component>
+        @else
+        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="general"></like-component>
+        @endif
         <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
             @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
                 <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
@@ -256,7 +329,10 @@
             <div class="user-photo {{access()->user()->getGender()}}">
                 <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
             </div>
-            <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button>
+            <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+                <span>Zoom In</span>
+                <i class="fas fa-search-plus"></i>
+            </button>
             <div class="navigator-buttons">
                 <div class="column column-1">
                     <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
@@ -266,7 +342,7 @@
                     <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
                 </div>
                 <div class="column column-3">
-                    <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                    <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
                     <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
                 </div>
             </div>
@@ -277,9 +353,11 @@
                 <button class="communicator-button"></button>
                 <span>Communicator</span>
             </div>
-            <button class="navigator-zoomout-btn">
+            <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                <span>Zoom Out</span>
                 <i class="fas fa-undo-alt"></i>
             </button>
+            @if($blog->shareable == 1)
             @php
                 $share_links = Share::currentPage(null, [], '', '')
                     ->facebook()
@@ -287,7 +365,6 @@
                     ->linkedin('Extra linkedin summary can be passed here')
                     ->whatsapp();
             @endphp
-            
             <div class="menu-button">
                 <img src="{{asset('front/icons/share.png')}}" alt="">
                 {{-- <a href="#"><i class="zmdi zmdi-twitter"></i></a>
@@ -297,6 +374,60 @@
                 {!! $share_links !!}
                 <a href="#" class="internal-share tooltips top" data-toggle="modal" data-target="#shareBlogModal"><span class="">Repost this blog</span><img src="{{asset('front/icons/alert-icon.png')}}" alt=""></a>
             </div>
+            @endif
+        </div>
+        <div class="navigator-div-zoomed-in @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+            <div class="navigator-components">
+                @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+                    <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}" alt=""
+                    class="astronaut-body">
+                @else
+                    <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut-body">
+                @endif
+                <div class="tos-div">
+                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                </div>
+                <div class="user-photo {{access()->user()->getGender()}}">
+                    <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+                </div>
+                {{-- <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button> --}}
+                <div class="navigator-buttons">
+                    <div class="column column-1">
+                        <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
+                        <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
+                    </div>
+                    <div class="column column-2">
+                        <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+                    </div>
+                    <div class="column column-3">
+                        <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
+                        <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+                    </div>
+                </div>
+                <div class="instructions-div">
+                    <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
+                </div>
+                <div class="communicator-div tooltips top">
+                    <button class="communicator-button"></button>
+                    <span>Communicator</span>
+                </div>
+                <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                    <span>Zoom Out</span>
+                    <i class="fas fa-undo-alt"></i>
+                </button>
+                @if($blog->shareable == 1)
+                <div class="menu-button">
+                    <img src="{{asset('front/icons/share.png')}}" alt="">
+                    {{-- <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                    <a href="#"><i class="zmdi zmdi-google-plus"></i></a>
+                    <a href="#"><i class="zmdi zmdi-codepen"></i>   </a>
+                    <a href="#"><i class="zmdi zmdi-codepen"></i>   </a> --}}
+                    {!! $share_links !!}
+                    <a href="#" class="internal-share tooltips top" data-toggle="modal" data-target="#shareBlogModal"><span class="">Repost this blog</span><img src="{{asset('front/icons/alert-icon.png')}}" alt=""></a>
+                </div>
+                @endif
+            </div>
         </div>
         <div class="naff-fart-reaction">
             <audio id="fart-audio" src="{{asset('front/sound-effects/fart.mp3')}}" preload="auto"></audio>
@@ -304,20 +435,20 @@
         </div>
     </div>
 
-    <div class="modal" id="shareBlogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal" id="shareBlogModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h6 class="modal-title" id="exampleModalLongTitle">Share Blog</h6>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
                 <form action="" id="share-blog-form">
                     @csrf
                     <textarea name="share_caption" id="" cols="30" rows="3" placeholder="Enter caption here..."></textarea>
                     <input type="hidden" name="blog_id" value="{{$blog->id}}">
+                    @if($shared_blog->blog_type == 'App\Models\GeneralBlogs\GeneralBlog')
+                    <input type="hidden" name="shared_id" value="{{$shared_blog->id}}">
+                    @endif
                     <div class="blog-share-preview">
                         <div class="card">
                             <div class="card-header">
@@ -327,7 +458,11 @@
                                 <div class="owner-name">{{$blog->owner->first_name.' '.$blog->owner->last_name}}</div>
                             </div>
                              {{-- <img class="card-img-top" src="" alt="Card image cap"> --}}
-                            <div class="card-body" style="background-image: url({{ asset('storage/img/blog/'.$blog->featured_image) }});">
+                             @if($blog->type == "reguler")
+                             <div class="card-body" style="background-image: url({{ asset('storage/img/blog/'.$blog->featured_image) }});">
+                             @else
+                             <div class="card-body" style="background-image: url({{ asset('storage/img/general_blogs/'.$blog->featured_image) }});">
+                             @endif
                             </div>
                             <div class="card-footer">
                                 <div class="blog-share-title">{{$blog->name}}</div>
@@ -339,7 +474,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id="share-blog-btn" form="share-blog-form">Share Now</button>
+                <button type="button" class="btn btn-primary ld-ext-left" id="share-blog-btn" form="share-blog-form"><div class="ld ld-ring ld-spin"></div> <span class="text">Share Now</span></button>
             </div>
           </div>
         </div>
@@ -835,36 +970,46 @@
 
         $('button.navigator-zoomin').click( function() {
             if(!navigator_zoom) {
-                $(this).fadeOut();
-                $('.navigator-div').addClass('animate-navigator-zoomin');
+                if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                    $('.navigator-div').hide();
+                    $('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
+                    // if(!img_has_loaded) {
+                    //     $('.navigator-div-zoomed-in .lds-ellipsis').show();
+                    //     $('.navigator-div-zoomed-in .astronaut').on('load', function() {
+                    //         $('.navigator-div-zoomed-in .lds-ellipsis').hide();
+                    //         $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    //         img_has_loaded = !img_has_loaded;
+                    //     });
+                    // } else {
+                        $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    // }
+                } else {
+                    $(this).fadeOut();
+                    $('.navigator-div').addClass('animate-navigator-zoomin');
 
-                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                    $('.navigator-div').removeClass('animate-navigator-zoomin');
-                    $('.navigator-div').addClass('zoomin');
-                });
-            } 
-            // else {
-            //     // $(this).removeClass('navigator-zoomout');
-            //     // $(this).addClass('navigator-zoomin');
-            //     $('.navigator-div').addClass('animate-navigator-zoomout');
-
-            //     $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-            //         $('.navigator-div').removeClass('animate-navigator-zoomout');
-            //         $('.navigator-div').removeClass('zoomin');
-            //     });
-            // }
+                    $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.navigator-div').removeClass('animate-navigator-zoomin');
+                        $('.navigator-div').addClass('zoomin');
+                    });
+                }
+            }
 
             navigator_zoom = !navigator_zoom;
         });
 
         $('.navigator-zoomout-btn').click(function() {
             $('button.navigator-zoomin').fadeIn();
-            $('.navigator-div').addClass('animate-navigator-zoomout');
+            if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                $('.navigator-div').fadeIn();
+                $('.navigator-div-zoomed-in').hide();
+            } else {
+                $('.navigator-div').addClass('animate-navigator-zoomout');
 
-            $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                $('.navigator-div').removeClass('animate-navigator-zoomout');
-                $('.navigator-div').removeClass('zoomin');
-            });
+                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.navigator-div').removeClass('animate-navigator-zoomout');
+                    $('.navigator-div').removeClass('zoomin');
+                });
+            }
 
             navigator_zoom = !navigator_zoom;
         });
@@ -1110,7 +1255,14 @@
         $('#share-blog-btn').click(function(e) {
             e.preventDefault();
 
-            var form_url = url+'/share_blog';
+            // disable form and add loading to button
+            $('#share-blog-form textarea').attr('readonly', true);
+            // $('#share-blog-form #toggle-event').attr('disabled', true);
+            $('#shareBlogModal button').prop('disabled', true);
+            $(this).addClass('running');
+            $('#share-blog-btn .text').html('Sharing Post');
+
+            var form_url = url+''+blog.share_route;
             var $form = $('form#share-blog-form');
 
             var post_data = new FormData($form[0]);
@@ -1125,6 +1277,12 @@
                 processData: false,
                 success: function(data) {
                     console.log(data);
+                    $('#share-blog-form textarea').attr('readonly', false);
+                    // $('#share-blog-form #toggle-event').attr('disabled', false);
+                    $('#shareBlogModal button').prop('disabled', false);
+                    $('#share-blog-btn').removeClass('running');
+                    $('#share-blog-btn .text').html('Share Now');
+
                     $('#shareBlogModal').modal('hide');
                     Swal.fire({
                         title: '<span class="success">Success!</span>',
@@ -1133,9 +1291,11 @@
                         imageWidth: 80,
                         imageHeight: 80,
                         imageAlt: 'Mbaye Logo',
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
+                    }).then((res) => {
+                        window.open(url+'/shared_blog/'+data.blog_share.id, '_blank'); 
                     });
                 },
                 error: function (request, status, error) {
@@ -1158,10 +1318,16 @@
                         imageAlt: 'Mbaye Logo',
                         title: title,
                         html: errorString,
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
+                        $('#share-blog-form textarea').attr('readonly', false);
+                        $('#share-blog-form #toggle-event').attr('disabled', false);
+                        $('#shareBlogModal button').prop('disabled', false);
+                        $('#share-blog-btn').removeClass('running');
+                        $('#share-blog-btn .text').html('Share Now');
+
                         $('#shareBlogModal').modal('show');
                     });
                 }

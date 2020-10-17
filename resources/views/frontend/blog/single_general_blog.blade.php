@@ -15,6 +15,8 @@
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/bootstrap-toggle.min.css') }}">
+<link rel="stylesheet" href="{{asset('front/CSS/ldbtn.min.css')}}">
+<link rel="stylesheet" href="{{asset('front/CSS/loading.min.css')}}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog-responsive.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('trix/trix.css')}}">
@@ -68,7 +70,7 @@
                                 <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                 <div class="button-details">
                                     <p class="button-title">Share</p>
-                                    <p class="button-number">300k</p>
+                                    <generalblogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></generalblogsharecount-component>
                                 </div>
                             </div>
                             <div class="button-div naffIcon">
@@ -134,7 +136,7 @@
                                     <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Share</span><span class="abbr">Share</span></p>
-                                        <p class="button-number">300k</p>
+                                        <generalblogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></generalblogsharecount-component>
                                     </div>
                                 </div>
                             </div>
@@ -172,14 +174,14 @@
                     @endif
                 </div>
                 <div id="app">
-                    <generalcomment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}">
-                    </generalcomment-component>
+                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="general">
+                    </comment-component>
                     <button class="blog-btn blog-minimize"><i class="fas fa-arrow-up"></i></button>
                 </div>
             </div>
         </div>
         
-        <generallike-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}"></generallike-component>
+        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="general"></like-component>
         <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
             @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
                 <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
@@ -197,7 +199,10 @@
             <div class="user-photo {{access()->user()->getGender()}}">
                 <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
             </div>
-            <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button>
+            <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+                <span>Zoom In</span>
+                <i class="fas fa-search-plus"></i>
+            </button>
             <div class="navigator-buttons">
                 <div class="column column-1">
                     <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
@@ -207,7 +212,7 @@
                     <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
                 </div>
                 <div class="column column-3">
-                    <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                    <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
                     <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
                 </div>
             </div>
@@ -218,7 +223,8 @@
                 <button class="communicator-button"></button>
                 <span>Communicator</span>
             </div>
-            <button class="navigator-zoomout-btn">
+            <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                <span>Zoom Out</span>
                 <i class="fas fa-undo-alt"></i>
             </button>
             @if($blog->shareable == 1)
@@ -229,7 +235,6 @@
                     ->linkedin('Extra linkedin summary can be passed here')
                     ->whatsapp();
             @endphp
-            
             <div class="menu-button">
                 <img src="{{asset('front/icons/share.png')}}" alt="">
                 {{-- <a href="#"><i class="zmdi zmdi-twitter"></i></a>
@@ -241,10 +246,15 @@
             </div>
             @endif
         </div>
-        <div class="navigator-div-zoomed-in">
+        <div class="navigator-div-zoomed-in @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
             <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
             <div class="navigator-components">
-                <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut">
+                @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+                    <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}" alt=""
+                    class="astronaut-body">
+                @else
+                    <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut-body">
+                @endif
                 <div class="tos-div">
                     <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
                 </div>
@@ -261,7 +271,7 @@
                         <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
                     </div>
                     <div class="column column-3">
-                        <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                        <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
                         <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
                     </div>
                 </div>
@@ -272,7 +282,8 @@
                     <button class="communicator-button"></button>
                     <span>Communicator</span>
                 </div>
-                <button class="navigator-zoomout-btn">
+                <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                    <span>Zoom Out</span>
                     <i class="fas fa-undo-alt"></i>
                 </button>
                 @if($blog->shareable == 1)
@@ -294,14 +305,11 @@
         </div>
     </div>
 
-    <div class="modal" id="shareBlogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal" id="shareBlogModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h6 class="modal-title" id="exampleModalLongTitle">Share Story</h6>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
                 <form action="" id="share-blog-form">
@@ -346,7 +354,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id="share-blog-btn" form="share-blog-form">Share Now</button>
+                <button type="button" class="btn btn-primary ld-ext-left" id="share-blog-btn" form="share-blog-form"><div class="ld ld-ring ld-spin"></div> <span class="text">Share Now</span></button>
             </div>
           </div>
         </div>
@@ -920,8 +928,12 @@
             window.location.href = url+'/dashboard';
         });
 
-        $('.instructions-btn, .tos-btn').click( function() {
-            window.location.href = url+'/page_under_development';
+        $('.instructions-btn').click( function() {
+            window.location.href = url+'/instructions';
+        });
+
+        $('.tos-btn').click( function() {
+            window.location.href = url+'/terms';
         });
 
         $('.editphoto-btn').click( function() {
@@ -1115,6 +1127,13 @@
         $('#share-blog-btn').click(function(e) {
             e.preventDefault();
 
+            // disable form and add loading to button
+            $('#share-blog-form textarea').attr('readonly', true);
+            $('#share-blog-form #toggle-event').attr('disabled', true);
+            $('#shareBlogModal button').prop('disabled', true);
+            $(this).addClass('running');
+            $('#share-blog-btn .text').html('Sharing Post');
+
             var form_url = url+'/share_story';
             var $form = $('form#share-blog-form');
 
@@ -1130,6 +1149,12 @@
                 processData: false,
                 success: function(data) {
                     console.log(data);
+                    $('#share-blog-form textarea').attr('readonly', false);
+                    $('#share-blog-form #toggle-event').attr('disabled', false);
+                    $('#shareBlogModal button').prop('disabled', false);
+                    $('#share-blog-btn').removeClass('running');
+                    $('#share-blog-btn .text').html('Share Now');
+
                     $('#shareBlogModal').modal('hide');
                     Swal.fire({
                         title: '<span class="success">Success!</span>',
@@ -1138,9 +1163,11 @@
                         imageWidth: 80,
                         imageHeight: 80,
                         imageAlt: 'Mbaye Logo',
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
+                    }).then((res) => {
+                        window.open(url+'/shared_story/'+data.blog_share.id, '_blank'); 
                     });
                 },
                 error: function (request, status, error) {
@@ -1163,10 +1190,16 @@
                         imageAlt: 'Mbaye Logo',
                         title: title,
                         html: errorString,
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
+                        $('#share-blog-form textarea').attr('readonly', false);
+                        $('#share-blog-form #toggle-event').attr('disabled', false);
+                        $('#shareBlogModal button').prop('disabled', false);
+                        $('#share-blog-btn').removeClass('running');
+                        $('#share-blog-btn .text').html('Share Now');
+
                         $('#shareBlogModal').modal('show');
                     });
                 }

@@ -13,6 +13,7 @@
 @endsection
 
 @section('content')
+<div id="app"></div>
     <div id="block_land">
         <div class="content">
             <h1 class="text-glow">Turn your device in landscape mode.</h1>
@@ -30,7 +31,7 @@
         {{ session('status') }}
     </div>
     @endif
-    
+
     <div class="communicator">
         <div class="main-screen">
             <div class="astronautarm-img">
@@ -127,6 +128,7 @@
         }
           $(document).ready(function () {
             $('.home-div,.back-div').css('pointer-events', 'auto');
+            $('.astronautarm-img').css('display', 'block');
 
         });
         $('.home-button').click(function() {
@@ -136,20 +138,20 @@
             window.location.href = "{{ URL::previous() }}"
         });
         
-      /*  if(message)
-                {
-                    Swal.fire({
-                                title: '<span class="success">Success!</span>',
-                                text:message,
-                                imageUrl: '../../front/icons/alert-icon.png',
-                                imageWidth: 80,
-                                imageHeight: 80,
-                                imageAlt: 'Mbaye Logo',
-                                width: '30%',
-                                padding: '1rem',
-                                background: 'rgba(8, 64, 147, 0.62)'
-                            });
-                }*/
+    //   /*  if(message)
+    //             {
+    //                 Swal.fire({
+    //                             title: '<span class="success">Success!</span>',
+    //                             text:message,
+    //                             imageUrl: '../../front/icons/alert-icon.png',
+    //                             imageWidth: 80,
+    //                             imageHeight: 80,
+    //                             imageAlt: 'Mbaye Logo',
+    //                             width: '30%',
+    //                             padding: '1rem',
+    //                             background: 'rgba(8, 64, 147, 0.62)'
+    //                         });
+    //             }*/
 
                 if(err_message)
                 {

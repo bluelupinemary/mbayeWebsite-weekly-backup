@@ -8,6 +8,7 @@ use App\Models\Access\User\User;
 use App\Models\UserCollage\UserCollage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 /**
  * Class DashboardController.
@@ -25,6 +26,21 @@ class DashboardController extends Controller
     public function viewUserDashboard($user_id)
     {
         $user = User::find($user_id);
+        $sender = Auth::user();
+
+        if ($sender->hasSentFriendRequestTo($user)) {
+            $user->has_sent = 1;
+        } else {
+            $user->has_sent = 0;
+        }
+
+        if($sender->isFriendWith($user)) {
+            $user->is_friend = 1;
+        } else {
+            $user->is_friend = 0;
+        }
+
+        // dd($user);
 
         if($user) {
             return view('frontend.user.public_dashboard', compact('user'));

@@ -2,15 +2,17 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\CompanyProfile\Industry;
 use App\Models\Access\User\User;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
-
+// Route::get('/professionsdata', 'DemoFormsubmit@demoSave')->name('save');
 Route::get('/', 'FrontendController@index')->name('index');
 Route::post('/get/states', 'FrontendController@getStates')->name('get.states');
 Route::post('/get/cities', 'FrontendController@getCities')->name('get.cities');
+ 
 
 /*
  * These frontend controllers require the user to be logged in
@@ -84,11 +86,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('buildMbaye', 'GameController@showBuildMbayeScene')->name('buildMbaye');
 
 
-        Route::get('/career/companyProfile', function () {
-            $industry = Industry::all();
+        // Route::get('/company/setup-profile', function () {
+        //     $industry = Industry::all();
             
-            return view('frontend.user.setup_company_profile',compact('industry'));
-        });
+        //     return view('frontend.user.setup_company_profile',compact('industry'));
+        // });
         
 
 
@@ -128,6 +130,20 @@ Route::group(['namespace' => 'Friendship'], function () {
 
     
 //end friendshiproutes
+
+//routes for Chat
+Route::group(['namespace' => 'Message'], function () {
+    Route::get('/groupchat', 'MessagesController@index');
+    Route::get('/privatechat', 'MessagesController@private');
+    Route::get('/users', 'MessagesController@fetchUsers');
+    Route::get('/chatgroups', 'MessagesController@fetchgroups');
+    Route::post('/savechatgroup', 'MessagesController@savegroup');
+    Route::get('/getmessages/{id}', 'MessagesController@fetchMessages');
+    Route::get('/getprivate_messages/{user}', 'MessagesController@fetchprivateMessages');
+    Route::post('/sendmessages/{id}', 'MessagesController@sendMessage');
+    Route::post('/sendprivate-messages/{user}', 'MessagesController@sendprivateMessage');
+});
+//End chat
     Route::group(['namespace' => 'Blogs'], function () {
         Route::resource('blogs', 'BlogsController');
         // Route::get('stories', 'BlogsController@stories');
@@ -136,8 +152,11 @@ Route::group(['namespace' => 'Friendship'], function () {
         Route::post('publish_blog', 'BlogsController@publishBlog');
         Route::post('publish_design_blog', 'BlogsController@publishDesignBlog');
         Route::post('share_blog', 'BlogsController@shareBlog');
+        Route::post('share_general_blog', 'BlogsController@shareGeneralBlog');
         Route::get('/earthlings_activities', 'BlogsController@earthlingsActivities');
         Route::get('/fetchblogs', 'BlogsController@fetchLatestBlogs');
+        Route::post('/getblogs', 'BlogsController@getblogs')->name('getblogs');
+        Route::post('/getediturl/{blog}', 'BlogsController@getediturl')->name('geturl');
         // Route::get('/fetchAllBlogs', 'BlogsController@fetchBlogs');
     });
 
@@ -146,8 +165,9 @@ Route::group(['namespace' => 'Friendship'], function () {
     });
 
     Route::post('send_contact_email', 'FrontendController@sendContactAdminEmail');
-    // Route::post('/submit', 'DemoFormsubmit@demoSave')->name('save');
-    Route::post('/submit', 'Company\CompanyProfileController@store')->name('saveCompanyProfile');
+    
+    // Route::post('/submit', 'Company\CompanyProfileController@store')->name('saveCompanyProfile');
+    // Route::post('/update', 'Company\CompanyProfileController@update')->name('updateCompanyProfile');
 
 
     // Story
@@ -160,6 +180,7 @@ Route::group(['namespace' => 'Friendship'], function () {
         Route::resource('general_blogs', 'GeneralBlogsController');
         Route::post('share_story', 'GeneralBlogsController@shareBlog');
         Route::get('/shared_story/{id}', 'GeneralBlogsController@sharedStory');
+        Route::post('/getgeneralblogs', 'GeneralBlogsController@getgeneralblogs')->name('getgeneralblogs');
     });
 
     Route::get('/search_friends', 'Friendship\FriendshipController@searchuser')->name('search');
@@ -171,11 +192,13 @@ Route::group(['namespace' => 'Friendship'], function () {
     //     return view('frontend.user.setup_profile',compact('profession'));
     // });
     Route::get('/jobseekers/setup-profile','JobSeekerProfile\JobSeekerProfilesController@index');
-    Route::get('/jobseekers/edit-setup-profile/{id}','JobSeekerProfile\JobSeekerProfilesController@edit_profile');
+    Route::get('/jobseekers/edit-setup-profile/','JobSeekerProfile\JobSeekerProfilesController@edit_profile');
     Route::get('jobseekers', 'JobSeekerProfile\JobSeekerProfilesController@getJobSeekers');
 
     // Company Profile
     Route::resource('company_profile', 'Company\CompanyProfileController');
+    Route::get('/company/setup-profile', 'Company\CompanyProfileController@index');
+    Route::get('/company/setup-profile/{id}', 'Company\CompanyProfileController@edit');
 });
 
 /*
@@ -265,9 +288,11 @@ Route::group(['namespace' => 'Blogs'], function () {
 
 Route::post('save_work_experience', 'JobSeekerProfile\JobSeekerProfilesController@save_work_experience');
 Route::post('save_education', 'JobSeekerProfile\JobSeekerProfilesController@save_education');
+Route::post('update_education', 'JobSeekerProfile\JobSeekerProfilesController@update_education_details');
 Route::post('save_character_references', 'JobSeekerProfile\JobSeekerProfilesController@save_character_references');
 Route::post('save_contact_details', 'JobSeekerProfile\JobSeekerProfilesController@save_contact_details');
 Route::post('save_aboutme_details', 'JobSeekerProfile\JobSeekerProfilesController@save_aboutme_details');
+Route::post('update_aboutme_details', 'JobSeekerProfile\JobSeekerProfilesController@update_aboutme_details');
 Route::post('save_professional_details', 'JobSeekerProfile\JobSeekerProfilesController@save_professional_details');
 Route::get('search', 'JobSeekerProfile\JobSeekerProfilesController@search');
 Route::post('get_career_details', 'JobSeekerProfile\JobSeekerProfilesController@get_career_details');

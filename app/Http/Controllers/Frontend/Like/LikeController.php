@@ -10,9 +10,11 @@ use App\Models\Comment\Comment;
 use App\Models\Access\User\User;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\BlogShares\BlogShare;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Notification;
+use App\Models\GeneralBlogShares\GeneralBlogShare;
 use App\Notifications\Frontend\ReactionNotification;
 
 class LikeController extends Controller
@@ -52,7 +54,7 @@ class LikeController extends Controller
               ]);
               // return $like;
           }
-          broadcast(new NewEmotion($like))->toOthers();
+          broadcast(new NewEmotion($like));
           
           Notification::send($author, new ReactionNotification($like));
           return array('status'=>'like', 'data'=>$like, 'naff_fart_status' => $blog->getNaffFartStatus());
@@ -86,5 +88,18 @@ class LikeController extends Controller
         $cool = Like::where('blog_id',$blog_id)->where('emotion',1)->count();
         $naff = Like::where('blog_id',$blog_id)->where('emotion',2)->count();
         return array('hot'=> $hot, 'cool'=>$cool, 'naff'=>$naff);
+    }
+
+    public function countblogshare($id){
+        // dd("reached");
+        $sharecount = BlogShare::where('blog_id',$id)->where('blog_type','App\Models\Blogs\Blog')->count();
+        return $sharecount;
+    }
+
+    public function countgeneralblogshare($id){
+        // dd($id);
+        $generalsharecount = GeneralBlogShare::where('general_blog_id',$id)->count();
+        $regulersharecount = Blogshare::where('blog_id',$id)->where('blog_type','App\Models\GeneralBlogs\GeneralBlog')->count();
+        return $sharecount = $generalsharecount+$regulersharecount;
     }
 }

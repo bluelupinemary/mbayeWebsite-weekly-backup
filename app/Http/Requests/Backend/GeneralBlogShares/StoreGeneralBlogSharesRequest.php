@@ -28,6 +28,7 @@ class StoreGeneralBlogSharesRequest extends Request
     {
         return [
             'share_caption'        => 'required',
+            'blog_id'              => 'required',
             'share_as_permanent'   => 'required',
             'tag_ids'              => 'required_if:share_as_permanent,"1"',
         ];

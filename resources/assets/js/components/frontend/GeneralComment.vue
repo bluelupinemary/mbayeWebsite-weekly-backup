@@ -29,10 +29,22 @@
                 <div class="blog-comments-thread">
                     <!-- <div id="new_c"></div> -->
                         <div class="blog-comment" v-for="(comment,index) in comments" :key="index">
-                            <div class="user-picture">
-                                <img :src="'/storage/profilepicture/'+comment.user.photo" alt="" class="user-photo">
-                                <div class="user-title"><div class="title">Mjr Thomasina</div> <div class="user-name" style="padding: 3% 5%;">{{comment.user.username}}</div></div>
+                            <div class="user-picture" @mouseover="showName()" @mouseleave="hideName()">
+                                <div class="user-image">
+                                    <img v-if="comment.user.gender == 'female'" src="/front/icons/comment-female.png" alt="" class="astro">
+                                    <img v-else src="/front/icons/comment-male.png" alt="" class="astro">
+
+                                    <img v-if="comment.user.photo" :src="'/storage/profilepicture/'+comment.user.photo" alt="" class="user-photo">
+                                    <img v-else :src="'/storage/profilepicture/default.png'" alt="" class="user-photo">
+                                </div>
+                                <div class="user-title" @dblclick="viewCommentOwner(comment.user.id)">
+                                    <div class="username">
+                                        <div v-if="comment.user.gender == 'female'" class="title">Mjr Thomasina</div> 
+                                        <div v-else class="title">Mjr Tom</div> 
+                                        <div class="user-name">{{comment.user.first_name+' '+comment.user.last_name}}</div>
+                                    </div>
                                     <p class="comment-date">{{comment.created_at}}</p>
+                                </div>
                             </div>
                             <div class="message">
                                 <p>{{ comment.body }}</p>
@@ -55,7 +67,7 @@ import EventBus from '../../frontend/event-bus';
                 comments: {},
                 commentBox: '',
                 commentcount:'',
-        }
+            }
       },
       mounted() {
         this.getComments();
@@ -102,6 +114,36 @@ import EventBus from '../../frontend/event-bus';
             console.log(error);
           });
         },
+        showName() {
+            var target = $(event.target);
+            // var element = target.find('.title').;
+
+            target.find('.title').css({
+                    'opacity': '1',
+                    'width': '100%',
+                    'flex' : 'auto'
+                });
+            // console.log(target.querySelector('.title'));
+            // target.find('.title').toggle({ direction: "right" }, 1000)
+            // $(this).find('.title').toggle({ direction: "right" }, 1000);
+            // target.querySelector('.title').toggle({ direction: "right" }, 1000);
+        },
+        hideName() {
+            var target = $(event.target);
+
+            target.find('.title').css({
+                'opacity': '0',
+                'width': '0%',
+                'flex' : 'unset'
+            });
+        },
+        viewCommentOwner(user_id) {
+            if(user_id == this.user.id) {
+                window.location.href = '/dashboard';
+            } else {
+                window.location.href = '/user_dashboard/'+user_id;
+            }
+        }
       }
     }
 </script>

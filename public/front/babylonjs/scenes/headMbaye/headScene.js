@@ -3,7 +3,7 @@ let canvas;
 let engine;
 let theAstroFace;
 let DISC_CAM_INIT_POS = {x:2.83, y:0.44,z:580.01};
-let footCamera;
+let headCamera;
 let cameraInitState = {position:null,a:null,b:null,r:null,upperA:null, lowerA:null, upperB:null, lowerB:null,upperR:null, lowerR:null,angularY:null};
 let astroInitState = {x:0,y:0,z:0};
 let hl,flowerColor;
@@ -22,7 +22,7 @@ let createContactScene = function(){
     load_3D_mesh();
     load_orig_flowers();
     create_skybox();
-    footCamera = create_camera();
+    headCamera = create_camera();
     create_light();
     // create_contacts_gui();
     
@@ -43,17 +43,16 @@ function create_camera(){
 
     camera.fovMode = BABYLON.Camera.FOVMODE_HORIZONTAL_FIXED;
     camera.fov = 1.4;
-    // camera.ellipsoid = new BABYLON.Vector3(10,10,10);
-
     camera.upperAlphaLimit = 1000;                  //up down tilt upper limit
     camera.lowerRadiusLimit = 40;                    //zoom in limit
-    camera.upperRadiusLimit = 500;                 //zoom out limit
+    camera.upperRadiusLimit = 200;                 //zoom out limit
     camera.wheelPrecision = 3;                      //wheel scroll speed; lower number faster
-    camera.panningSensibility = 500;               //movment of camera when right mouse is clicked; lower number, faster
+    camera.panningSensibility = 300;               //movment of camera when right mouse is clicked; lower number, faster
     camera.target = new BABYLON.Vector3(0,0,0);     //focus the camera on 0,0,0
-    camera.panningDistanceLimit = 1500;             //maximum allowable movement via right mouse button
+    camera.panningDistanceLimit = 70;             //maximum allowable movement via right mouse button
     camera.pinchPrecision = 1;
     camera.radius = 100;
+    camera.maxZ = 280000;
    
     camera.alpha =  2.8985;
     camera.beta = 1.5703;
@@ -68,13 +67,6 @@ function create_camera(){
     cameraInitState.a = camera.alpha;
     cameraInitState.b = camera.beta;
     cameraInitState.r = camera.radius;
-    // cameraInitState.upperA = camera.upperAlphaLimit;
-    // cameraInitState.lowerA = camera.lowerAlphaLimit;
-    // cameraInitState.upperB = camera.upperBetaLimit;
-    // cameraInitState.lowerB = camera.lowerBetaLimit;
-    // cameraInitState.upperR = camera.upperRadiusLimit;
-    // cameraInitState.lowerR = camera.lowerRadiusLimit;
-    // cameraInitState.angularY = camera.angularSensibilityY;
 
     return camera;
 }//end of create camera function
@@ -94,9 +86,8 @@ function create_light(){
 //############################################# CREATE THE SCENE'S SKYBOX #############################################//
 //function to create the scene's skybox
 function create_skybox(){ 
-    let skybox = BABYLON.MeshBuilder.CreateBox("contactSkybox", {size:8500.0}, scene);
-    skybox.position.y = 100;
-    skybox.position.z = 1000;
+    let skybox = BABYLON.MeshBuilder.CreateBox("contactSkybox", {size:25000.0}, scene);
+    skybox.position = new BABYLON.Vector3(942,-500,-1500);
     skybox.rotation.y = BABYLON.Tools.ToRadians(-60);
     skybox.isPickable = false;
     skybox.checkCollisions = true;
@@ -186,7 +177,6 @@ function load_3D_mesh(){
                     }else if(m.name === "HeadCover"){
                         m.visibility = 0.7;
                     }else{
-                      console.log(m.name);
                         //the part is a flower of the panel
                         let mtl = new BABYLON.StandardMaterial("pbr", scene);
                         m.material.transparencyMode = 0;
@@ -202,20 +192,7 @@ function load_3D_mesh(){
       ]).then(() => {
         add_mouse_listener();
         setup_music_player();
-
-        // for(const [key,val] of marblePhotos.entries()){
-        //   // console.log(val);
-        //   init_flower_photo(key,val[0],val[1],val[2]);
-        // }
-
-        // init_foot_label();
-        // init_foot_heart_label();
-        // add_action_mgr(rfoot_obj);
-
        
-      
-
-          
     });
 }//end of load design meshes
 
@@ -271,7 +248,7 @@ function add_mouse_listener(){
 
           // console.log("parent of mesh: ", theMesh.parent);
           if(headFlowersMap.has(theMesh.name)){
-            console.log("flower ", theMesh.name," is clicked.");
+            // console.log("flower ", theMesh.name," is clicked.");
             get_head_mesh(theMesh.name);
            
 
@@ -309,16 +286,6 @@ function add_mouse_listener(){
   canvas.addEventListener("pointerdown", onPointerDownVisit, false);
   canvas.addEventListener("pointerup", onPointerUpVisit, false);
   canvas.addEventListener("pointermove", onPointerMoveVisit, false);
-
-  // canvas.addEventListener("dblclick", function (e) {
-  //     var pickInfo = scene.pick(scene.pointerX, scene.pointerY);
-  //     if (pickInfo.hit) {
-  //       // console.log(pickInfo);
-  //       let theMesh = pickInfo.pickedMesh;
-     
-       
-  //     }	   
-	// });
 
 
   //remove the text span on dispose
@@ -394,22 +361,22 @@ let focusTimer;
 //focus on the flower
 function set_camera_specs(camAngle){
     if(camAngle === "init"){
-        footCamera.position = cameraInitState.position;
-        footCamera.alpha = cameraInitState.a;
-        footCamera.beta = cameraInitState.b;
-        footCamera.radius = cameraInitState.r;
+        headCamera.position = cameraInitState.position;
+        headCamera.alpha = cameraInitState.a;
+        headCamera.beta = cameraInitState.b;
+        headCamera.radius = cameraInitState.r;
     }else{
     // if(theMesh.name == "10Poppy"){
-      if(camAngle == "b") footCamera.position = new BABYLON.Vector3(127.24,-4.45,-11.36);
-      else if(camAngle == "f") footCamera.position = new BABYLON.Vector3(-60.752,10,7.05);
+      if(camAngle == "b") headCamera.position = new BABYLON.Vector3(127.24,-4.45,-11.36);
+      else if(camAngle == "f") headCamera.position = new BABYLON.Vector3(-60.752,10,7.05);
 
       let val = cameraAngleMap.get(camAngle);
-      footCamera.alpha = val[0].a;
-      footCamera.beta = val[0].b;
+      headCamera.alpha = val[0].a;
+      headCamera.beta = val[0].b;
     // }
 
-    // footCamera.focusOn([theMesh], true);
-      footCamera.radius = 115;
+    // headCamera.focusOn([theMesh], true);
+      headCamera.radius = 115;
     }
    
 
@@ -552,12 +519,9 @@ let origScaling, origColor;
 let flowerLbl;
 let footMatl;
 var onOverFlower =(meshEvent)=>{
-  // console.log(meshEvent.source.name);
- 
-    //floating flowers
+      //floating flowers
       origScaling = meshEvent.source.scaling;
       meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.4,origScaling.y*1.4,origScaling.z*1.4);
-      // hl.addMesh(meshEvent.source, new BABYLON.Color3(1,1,0.8));
       let a = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
       let b = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
       let c = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
@@ -567,54 +531,43 @@ var onOverFlower =(meshEvent)=>{
       flowerLbl.setAttribute("id", "flowerLbl");
       var sty = flowerLbl.style;
       sty.position = "absolute";
-      sty.lineHeight = "1.2em";
-      sty.padding = "0.5%";
-      sty.color = "#00BFFF  ";
-      //
+      sty.color = "#00BFFF";
       sty.fontFamily = "Courgette-Regular";
-      // sty.backgroundColor = "#0b91c3a3";
-      // sty.opacity = "0.7";
-      sty.fontSize = "1vw";
-      sty.top = (scene.pointerY-50) + "px";
-      sty.left = (scene.pointerX+10) + "px";
+      sty.top = (scene.pointerY) + "px";
+      sty.left = (scene.pointerX+20) + "px";
       sty.cursor = "pointer";
+      sty.textShadow = "2px 0px 5px black"; 
+      
+      if(isMobile() || isSmallDevice()) sty.fontSize = "1.7em";
+      else sty.fontSize = "2em";
       
       let theName =  meshEvent.meshUnderPointer.name;
       document.body.appendChild(flowerLbl);
       flowerLbl.textContent = flowerName.get(theName);
- 
- 
-  
 };
 
 //handles the on mouse out event
 var onOutFlower =(meshEvent)=>{
  
     if(meshEvent.source.parent == null) {
-      if(meshEvent.source == rfoot_obj){
-        //the foot
-      }else if(meshEvent.source == foot_plane){
-        foot_heart_label.isVisible = false;
-      }else{
-        //floating flowers
-        meshEvent.source.scaling = origScaling;
-        hl.removeMesh(meshEvent.source);
-      }
+        if(meshEvent.source == rfoot_obj){
+          //the foot
+        }else if(meshEvent.source == foot_plane){
+          foot_heart_label.isVisible = false;
+        }else{
+          //floating flowers
+          meshEvent.source.scaling = origScaling;
+          hl.removeMesh(meshEvent.source);
+        }
      
     }else{
-      //flowers on the foot
-        // meshEvent.source.material.emissiveColor = new BABYLON. Color3(0.7,0.5,0);
+        //flowers on the foot
         meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,0,0.5);
     }
   
-
-   
-    
-  
-  
-  while (document.getElementById("flowerLbl")) {
-    document.getElementById("flowerLbl").parentNode.removeChild(document.getElementById("flowerLbl"));
-  }   
+    while (document.getElementById("flowerLbl")) {
+      document.getElementById("flowerLbl").parentNode.removeChild(document.getElementById("flowerLbl"));
+    }   
 };
 
 
@@ -668,26 +621,43 @@ function set_gallery_visible(isSet){
 
 
 
-  //function that will render the scene on loop
-  var scene = createContactScene();
-    
-  scene.executeWhenReady(function () {    
+//function that will render the scene on loop
+var theScene = createContactScene();
+  
+theScene.executeWhenReady(function () {    
     document.getElementById("loadingScreenDiv").style.display = "none";
     document.getElementById("loadingScreenPercent").style.display = "none";
     document.getElementById("loadingScreenOverlay").style.display = "block";
+    testFullscreen();
+
+    //scene optimizer
+    var options = new BABYLON.SceneOptimizerOptions();
+    options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
+    var optimizer = new BABYLON.SceneOptimizer(theScene, options);
+
+    //if the current screen is a mobile/tablet device
+    if(isSmallDevice() || isMobile()){
+        alert_fullscreen();
+    }
+
     engine.runRenderLoop(function(){
-      if(scene){
-          scene.render();
-      //    console.log(insCamera.position, insCamera.alpha, insCamera.beta);
+      if(theScene){
+          theScene.render();
       }
-      
-  
     });//end of renderloop
 
-    window.addEventListener("resize", function () {
-      engine.resize();
-    });
-  });
+});
+
+// window resize handler
+window.addEventListener("resize", function () {
+    engine.resize();
+    testOrientation();
+    testFullscreen();
+});
+
+$( document ).ready(function() {
+  testOrientation();
+});
 
 
 
@@ -745,41 +715,41 @@ function set_gallery_visible(isSet){
 
 
   /*################################################### END OF SETUP YOUTUBE PLAYER FUNCTION ############################################## */
-
-
-
-
-
 $('#musicVideoDiv #close-btn').on("click", function (e) {
     // $('#flowerModelDiv').hide();
     document.getElementById("musicVideoDiv").style.visibility = "hidden";
  });
 
- $('#flowerModelDiv #close-btn').on("click", function (e) {
-  // $('#flowerModelDiv').hide();
-  document.getElementById("flowerModelDiv").style.visibility = "hidden";
-});
 
 let isFlowerFullscreen = false;
-$('#flowerModelDiv #fullscreen-btn').on("click", function (e) {
+let divSize = {w:null, h:null};
+$('#musicVideoDivHeader #fullscreen-btn, #musicVideoDivHeader #minimize-btn').on("click", function (e) {
    if(!isFlowerFullscreen){
-       $('#flowerModelDiv').css({ 
+      divSize.w = $('#musicVideoDiv').width();
+      divSize.h = $('#musicVideoDiv').height();
+       $('#musicVideoDiv #player').css({ 
            width :'100vw',
-           height: "100vh",
-           left: '0' 
+           height: '100vh'
        });
-       $("#flowerModelDiv #fullscreen-btn").attr("src", "front/images3D/minimize-btn.png")
-       isFlowerFullscreen = true;
+       $("#musicVideoDivHeader #fullscreen-btn").hide();
+       $("#musicVideoDivHeader #minimize-btn").show();
    }else{
-       $('#flowerModelDiv').css({ 
-           width:'20vw',
-           height:'12vw',
-           bottom:'0vw',
-           left:'0vw'
-       });
-       $("#flowerModelDiv #fullscreen-btn").attr("src", "front/images3D/fullscreen-btn.png")
-       isFlowerFullscreen = false;
+        if(isMobile() || isSmallDevice()){
+          $('#musicVideoDiv #player').css({ 
+            width: '30vw',
+            height: '18vw'
+          });
+        }else{
+          $('#musicVideoDiv #player').css({ 
+              width: '20vw',
+              height: '12vw'
+          });
+        }
+       
+       $("#musicVideoDivHeader #fullscreen-btn").show();
+       $("#musicVideoDivHeader #minimize-btn").hide();
    }
+   isFlowerFullscreen = !isFlowerFullscreen;
 });
 
  function showFlowerModelDiv(theFlowerName){

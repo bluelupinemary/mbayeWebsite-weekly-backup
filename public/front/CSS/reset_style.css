@@ -186,7 +186,7 @@
 
 .txt_email_div .txt_email{
   text-align: center;
-  font-family: 'Space Age';
+  /* font-family: 'Space Age'; */
   color: #17a2b8;
   font-size: 1.2vw;
   vertical-align: middle;
@@ -275,7 +275,7 @@
   border-radius: 2px;
   width: 100%;
   padding: 2%;
-  /*font-family: 'Nasalization';*/
+  font-family: 'Nasalization';
 }
 .btn-info {
   background-color: #24bad2fa !important;

@@ -294,10 +294,10 @@ function setup_stage(stageNo){
          let imgs = [];
          let initdelay = 1000;
          for(i=0;i<imgArr.length;i++){
-             let temp = init_photo(imgArr[i],{w:200,h:200},pos[i],stageNo);
+            let temp = init_photo(imgArr[i],{w:200,h:200},pos[i],stageNo);
             imgs.push(temp);
             hl.addMesh(temp, new BABYLON.Color3(0,0.5,0.5));
-             currStageObjMap.set(temp.name, temp);
+            currStageObjMap.set(temp.name, temp);
          }//end of for loop
 
     }else if(stageNo === 58){                                      

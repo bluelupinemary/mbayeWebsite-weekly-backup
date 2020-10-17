@@ -7,9 +7,9 @@ import EventBus from '../../frontend/event-bus';
 export default {
     data:function() {
             return{
-                hotcount: '',
-                coolcount: '',
-                naffcount: '',
+                hotcount: '0',
+                coolcount: '0',
+                naffcount: '0',
         }
       },
      methods: {

@@ -14,9 +14,9 @@
 		<div v-if="blogs.length" >
       	<div v-for="(blog,index) in blogs" class="main-friends" :key="index">
 			<div v-if="index == 0" :id="'round-image-large' + index" :style="randomBoxShadow()" class="friends ani-rolloutUse zoom-in" 
-                @mouseover="showBlogDetails('round-image-large' + index, blog.id)"
-    			@mouseout="hideBlogDetails('round-image-large' + index, blog.id)">
-				<img :src="blog.featured_image" :key="blog.id" id="blog-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, blog.id)"/>
+                @mouseover="showBlogDetails('round-image-large' + index, blog.notification_id)"
+    			@mouseout="hideBlogDetails('round-image-large' + index, blog.notification_id)">
+				<img :src="blog.featured_image" :key="blog.id" id="blog-img" data-toggle="modal" data-target="#exampleModalCenter" @click="handleImgClick('round-image-large' + index, blog.notification_id)"/>
 				
 				<div class="friend-details" style="display: flex;" >
                     <p class="blog-title">{{blog.name}}</p>
@@ -97,7 +97,7 @@ export default {
 			selectedblog: {},
 			activeClass:"hide",
             declinedRequest: false,
-            currentID: 0
+            currentID: ''
         }
     },
 	mounted () {
@@ -121,7 +121,7 @@ export default {
                 user_id: this.user.id,
             })
 			.then((response) => {
-                // console.log(response.data.data);
+                // console.log(response);
 				// that.blogs = response.data;
 				that.page = response.data.current_page;
 				that.last_page = response.data.last_page;
@@ -129,27 +129,31 @@ export default {
 				var i = 0;
 				that.blogs = [];
 				$.each(response.data.data, function(index, value) {
-					that.$set(that.blogs, index, value.data.blog);
+					that.$set(that.blogs, i, value.data.blog);
 
 					if(value.type.includes('GeneralBlogActivityNotification')) {
-						if(that.blogs[index].featured_image != null) {
-							that.blogs[index].featured_image = '/storage/img/general_blogs/'+that.blogs[index].featured_image;
+						if(that.blogs[i].featured_image != null) {
+							that.blogs[i].featured_image = '/storage/img/general_blogs/'+that.blogs[i].featured_image;
 						} else {
-							that.blogs[index].featured_image = '/storage/img/general_blogs/blog-default-featured-image.png';
+							that.blogs[i].featured_image = '/storage/img/general_blogs/blog-default-featured-image.png';
 						}
 					} else if(value.type.includes('BlogActivityNotification')) {
-						if(that.blogs[index].featured_image != null) {
-							that.blogs[index].featured_image = '/storage/img/blog/'+that.blogs[index].featured_image;
+						if(that.blogs[i].featured_image != null) {
+							that.blogs[i].featured_image = '/storage/img/blog/'+that.blogs[i].featured_image;
 						} else {
-							that.blogs[index].featured_image = '/storage/img/blog/blog-default-featured-image.png';
+							that.blogs[i].featured_image = '/storage/img/blog/blog-default-featured-image.png';
 						}
 					}
 
-					that.blogs[index].notification_id = value.id;
-					that.blogs[index].notification_type = value.type;
+					that.blogs[i].notification_id = value.id;
+					that.blogs[i].notification_type = value.type;
+
+					i+=1;
 				});
+
+				// console.log(that.blogs);
 				// console.log(that.currentID);
-				that.currentID = that.blogs[0].id;
+				that.currentID = that.blogs[0].notification_id;
 			})
 			.catch((error) => {
 				console.log(error);
@@ -342,7 +346,7 @@ export default {
 					i++;
 				});
 				// console.log(that.blogs);
-				that.currentID = that.blogs[0].id;
+				that.currentID = that.blogs[0].notification_id;
 				that.refreshHtml();
 			})
 			.catch((error) => {
@@ -384,7 +388,7 @@ export default {
 					i++;
 				});
 				// console.log(that.blogs);
-				that.currentID = that.blogs[0].id;
+				that.currentID = that.blogs[0].notification_id;
 				that.refreshHtml();
 			})
 			.catch((error) => {
@@ -392,6 +396,7 @@ export default {
 			})
         },
 		showBlogDetails(div_id, id) {
+			console.log(id, this.currentID);
             if(this.currentID == id) {
                 $('#'+div_id+' .friend-details').hide();
                 $('#'+div_id+' .friend-details-2').css('display', 'flex');

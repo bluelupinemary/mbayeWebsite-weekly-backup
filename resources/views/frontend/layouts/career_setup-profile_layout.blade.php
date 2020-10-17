@@ -20,7 +20,7 @@
 
         <!-- Styles -->
         @yield('before-styles')
-
+        
         <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
         {{-- @langrtl

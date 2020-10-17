@@ -22,18 +22,23 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
     /*
      * These routes require no user to be logged in
      */
+
     Route::group(['middleware' => 'guest'], function () {
         // Authentication Routes
         Route::get('login', 'LoginController@showLoginForm')->name('login');
+        // Route::post('login', 'LoginController@login')->name('login');
         Route::post('login', 'LoginController@login')->name('login');
+
 
         // Socialite Routes
         Route::get('login/{provider}', 'SocialLoginController@login')->name('social.login');
+
 
         // Registration Routes
         if (config('access.users.registration')) {
             Route::get('register', 'RegisterController@showRegistrationForm')->name('register');
             Route::post('register', 'RegisterController@register')->name('register');
+            Route::post('validateemail', 'RegisterController@validateEmail')->name('validateemail');
         }
 
         // Confirm Account Routes

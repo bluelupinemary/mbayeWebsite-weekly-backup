@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Game\UserPanelFlowers;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\Frontend\Pages\PagesRepository;
+use ImageResize;
 
 
 /**
@@ -457,6 +458,7 @@ public function blog_general_friend_post(Request $request){
             return view('frontend.blog.blogview.designed-panel.designed_panels',compact('id'));
        
     }
+    
 
      /* For all users jobseeker */
      public function jobseeker_profiles(Request $request){
@@ -520,7 +522,7 @@ public function blogviewMembers(){
 }
 
 public function userConfirmation(){
-    return view('emails.user-confirmation');
+    return view('emails.reset-password');
 }
 
 }

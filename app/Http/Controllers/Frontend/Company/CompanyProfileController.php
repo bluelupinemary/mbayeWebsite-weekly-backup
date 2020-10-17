@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Frontend\Company;
 
+use Auth;
+use Illuminate\Http\Request;
+use App\Models\Access\User\User;
 use App\Http\Controllers\Controller;
 use App\Models\Company\CompanyProfile;
-use App\Models\Company\Industry;
-use App\Models\Access\User\User;
-use Illuminate\Http\Request;
-use App\Http\Requests\Backend\CompanyProfile\StoreCompanyProfileRequest;
-use App\Repositories\Frontend\CompanyProfile\CompanyProfilesRepository;
+use App\Models\CompanyProfile\Industry;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Auth;
+use App\Http\Requests\Backend\CompanyProfile\StoreCompanyRequest;
+use App\Repositories\Frontend\CompanyProfile\CompanyProfilesRepository;
+// use App\Http\Requests\Backend\CompanyProfile\StoreCompanyProfileRequest;
+use App\Http\Requests\Backend\CompanyProfile\UpdateCompanyProfileRequest;
+
 
 class CompanyProfileController extends Controller
 {
@@ -27,15 +30,27 @@ class CompanyProfileController extends Controller
         $this->company_profile = $company_profile;
     }
 
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        // dd(JobSeekerProfile::find(1)->charref);
+        //   $user = Auth::user();
+        $user = CompanyProfile::where('owner_id',Auth::user()->id)->first();
+        //   dd($user);
+        $industry = Industry::all();
+        if ($user === null) {
+            return view('frontend.user.setup_company_profile',compact('user','industry'));
+            //
+        }
+        else{
+            return redirect('dashboard')->with('status', 'Profile updated!');
+        }
+    }   
 
     /**
      * Show the form for creating a new resource.
@@ -53,9 +68,9 @@ class CompanyProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCompanyProfileRequest $request)
+    public function store(StoreCompanyRequest $request)
     {
-        // dd($request);
+        
         
         $request->owner_id = Auth::user()->id;
         // dd($request);
@@ -65,13 +80,14 @@ class CompanyProfileController extends Controller
         
 
         $user = User::find($request->owner_id);
-
-        if($user->roles[0]->name == 'User') {
-            return redirect('career/companyProfile')->with('status', 'Profile updated!');
-            // return array('status' => 'success', 'message' => 'Company profile saved!', 'data' => $saved_company_profile);
-        } else {
-            // return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
-        }
+        return redirect('communicator')->with('status', 'Profile updated!');
+        // if($user->roles[0]->name == 'User') {
+        //     dd('PPPP');
+        //     return redirect('communicator')->with('status', 'Profile updated!');
+        //     // return array('status' => 'success', 'message' => 'Company profile saved!', 'data' => $saved_company_profile);
+        // } else {
+        //     // return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
+        // }
     }
 
     /**
@@ -95,9 +111,16 @@ class CompanyProfileController extends Controller
      */
     public function edit($id)
     {
+        // dd($id);
+        $company_profile = CompanyProfile::where('owner_id',$id)->first();
+        $industry = Industry::all();
+        // dd(compact('company_profile','industry'));
         //
+        return view('frontend.user.setup_company_profile',compact('company_profile','industry'));
     }
 
+
+    
     /**
      * Update the specified resource in storage.
      *
@@ -105,15 +128,24 @@ class CompanyProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCompanyProfileRequest $request, $id)
+    public function update(UpdateCompanyProfileRequest $request,CompanyProfile $company_profile)
     {
-        $company_profile = CompanyProfile::find($id);
+        // dd($request->all());
+        // dd($company_profile);
+        // $company_profile = CompanyProfile::where('owner_id',Auth::user()->id)->first();
+        // if($company_profile != ''){
+        //     // $company_profile->update(['company_name'=>$request['company_name'],'company_email'=>$request['company_email'],'company_phone_number'=>$request['company_phone_number'],'featured_image'=>$request['featured_image'],'industry_id'=>$request['industry_id'],'state'=>$request['state'],'city'=>$request['city'],'address'=>$request['address'],'country'=>$request['country']]);
+        //     $company_profile->update($request->all());
+        
+        // }
+        $company_profile = CompanyProfile::where('owner_id',Auth::user()->id)->first();
+        
         $saved_company_profile = $this->company_profile->update($company_profile, $request->except('_token'));
-
+        // dd('jj');
         $user = User::find($request->owner_id);
 
         if($user->roles[0]->name == 'User') {
-            return array('status' => 'success', 'message' => 'Company profile updated!', 'data' => $saved_company_profile);
+            return redirect('communicator')->with('status', 'Profile updated!');
         } else {
             // return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
         }

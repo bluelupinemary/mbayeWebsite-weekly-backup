@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Models\GeneralBlogs\Traits\Relationship;
+use Illuminate\Support\Str;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
-use App\Models\GeneralBlogVideos\GeneralBlogVideo;
 use App\Models\Like\GeneralLike;
 use App\Models\Comment\GeneralComment;
 use App\Models\BlogPrivacy\BlogPrivacy;
-use Illuminate\Support\Str;
+use App\Models\GeneralBlogShares\GeneralBlogShare;
+use App\Models\GeneralBlogVideos\GeneralBlogVideo;
 
 /**
  * Class GeneralBlogRelationship.
@@ -52,6 +53,10 @@ trait GeneralBlogRelationship
         return $this->hasMany(BlogPrivacy::class, 'blog_id')->where('blog_type', 'general');
     }
 
+    public function share(){
+        return $this->hasMany(GeneralBlogShare::class, 'general_blog_id');
+    }
+
     // override the toArray function (called by toJson)
     public function toArray() {
         // get the original array to be displayed
@@ -66,6 +71,7 @@ trait GeneralBlogRelationship
 
         if($this->publish_datetime) {
             $data['formatted_date'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y h:i A');
+            $data['formatted_time'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y');
         }
 
         if($this->featured_image == null) {
@@ -83,8 +89,10 @@ trait GeneralBlogRelationship
         $data['coolcount']     = $this->likes->where('emotion',1)->count();
         $data['naffcount']     = $this->likes->where('emotion',2)->count();
         $data['commentcount']  = $this->comments->count();
+        $data['sharecount']  = $this->share->count();
         $data['most_reaction'] = $this->mostReaction();
-        
+        $data['editurl'] = url('/communicator?action=edit_general_blog&blog_id='.$this->id.'&section=general_blog');
+        $data['nearexpire'] = $this->isNearlyExpired();
         return $data;
     }
 }

@@ -46,8 +46,8 @@ height: 50px;
                         <div class="tab-content">
                             <!-- Start of Discussions -->
                             <div id="discussions" class="tab-pane fade in active show">
-                                <figure class="setting"><img class="avatar-xl" src="img/avatars/avatar-male-1.jpg" alt="avatar"></figure>
-                                <span class="logo"><img src="img/logo.png" alt=""></span>
+                                <figure class="setting"><img class="avatar-xl" src="front/images/chat/avatars/avatar-male-1.jpg" alt="avatar"></figure>
+                                <span class="logo"><img src="front/images/chat/logo.png" alt=""></span>
                                 <div class="search">
                                     <form class="form-inline position-relative">
                                         <input type="search" class="form-control" id="conversations" placeholder="Search for conversations...">
@@ -65,7 +65,7 @@ height: 50px;
                                     <div class="list-group" id="chats" role="tablist">
                                         <div v-for="friend in users" :key="friend.id">
                                         <a href="#" v-if="activeFriend==friend.id" class="filterDiscussions all unread single active" id="list-chat-list" @click="activeFriend=friend.id" data-toggle="list" role="tab">
-                                            <img class="avatar-md" src="img/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
+                                            <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
 
                                             <div v-if="onlineFriends.find(user=>user.id===friend.id)" class="status online"></div>
                                             <div v-else class="status offline"></div>
@@ -86,7 +86,7 @@ height: 50px;
                                             </div>
                                         </a>
                                         <a href="#" v-else class="filterDiscussions all unread single" id="list-chat-list" @click="activeFriend=friend.id" data-toggle="list" role="tab">
-                                            <img class="avatar-md" src="img/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
+                                            <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
 
                                             <div v-if="onlineFriends.find(user=>user.id===friend.id)" class="status online"></div>
                                             <div v-else class="status offline"></div>
@@ -170,7 +170,7 @@ height: 50px;
                                     </div>
                                     <div v-for="(message, index) in allMessages" :key="index">
                                         <div v-if="user.id===message.user.id" class="message" >
-                                            <img class="avatar-md" src="img/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
+                                            <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
                                             <div v-if="message.message" class="text-main">
                                                 <div class="text-group">
                                                     <div class="text">
@@ -194,7 +194,7 @@ height: 50px;
                                             </div>
                                         </div>
                                         <div v-else-if="user.id!==message.user.id" class="message me" >
-                                            <img class="avatar-md" src="img/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
+                                            <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
                                             <div v-if="message.message" class="text-main">
                                                 <div class="text-group me">
                                                     <div class="text me">
@@ -219,7 +219,7 @@ height: 50px;
                                         </div>
                                     </div>
                                     <div v-if="typingFriend != null" class="message" >
-											<img class="avatar-md" src="img/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
+											<img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
 											<div class="text-main">
 												<div class="text-group">
 													<div class="text typing">

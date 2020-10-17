@@ -27,18 +27,17 @@ class RegisterRequest extends Request
      */
     public function rules()
     {
-    
+        // echo "<pre>";print_r($_POST);die();        
         return [
             'first_name'           => 'required|max:255',
             'last_name'            => 'required|max:255',
             'dob'                  => 'date_format:Y-m-d|before:today',
-            'age'                  => 'required',
             'gender'               => 'required',
             'id_number'            => 'required',
             'occupation'           => 'required',
             'email'                => ['required', 'email', 'max:255', Rule::unique('users')],
             'photo'                => 'required',
-            'username'             => ['required', Rule::unique('users')],
+            // 'username'             => ['required', Rule::unique('users')],
             'password'             => 'required|min:8|regex:"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"',
            // 'is_term_accept'       => 'required',
             'g-recaptcha-response' => 'required_if:captcha_status,true|captcha',

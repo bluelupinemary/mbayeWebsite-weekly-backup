@@ -163,9 +163,9 @@
                                     <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                     </button>
                                     <div class="form-row">
-                                        <div class="form-group col-md-12 input-group-sm">
+                                        <div class="form-group col-md-12 input-group-sm" id="education_dropdown">
                                             <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
-                                                <select class="form-control" name="education_level[]" id="education_dropdown" required>
+                                                <select class="form-control" name="education_level[]" id="xyz"  required>
                                                     <option value="Select" selected disabled>Select</option>
                                                     <option value="Doctrate">Doctrate</option>
                                                     <option value="Post-graduate">Post-graduate</option>
@@ -210,7 +210,7 @@
              
                     </div>
               
-        <div class="education-clone"></div>
+                    <div class="education-clone"></div>
                     <div class="modal-footer">
                      <input type="submit"  class="btn btn-primary education-done" value="Done" id="submit_education"/>
                     </div>
@@ -361,7 +361,7 @@
                                             </div>
                                       </div>
                                      
-                                      <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                      {{-- <input type="hidden" name="user_id" value="{{Auth::user()->id}}"> --}}
                                       
                                     </div>    
                                 
@@ -813,10 +813,11 @@ document.getElementById("Profession").selectedIndex = "52";
     }
                     
      });
-
+     
         // clone-btn-education
-        $('.clone-btn-education').click(function(e) {
-                    e.preventDefault();
+        $('.clone-btn-education').click(function(e){
+            e.preventDefault();
+            // alert('jjkkk');
                 //    $(".remove-btn-education").hide();
                 
                     var $form = $('form#education-form');
@@ -824,7 +825,6 @@ document.getElementById("Profession").selectedIndex = "52";
                     $(newel).insertAfter(".education-body:last");
                     var new_ele = $('.education-body:last');
                     new_ele.find('input').val("");
-                    // new_ele.find('education_level').val("this.value").remove();
                     var count = $(".education-body");
                     new_ele.removeClass('div_'+(count.length-1))
                     new_ele.addClass('div_'+count.length)
@@ -833,8 +833,10 @@ document.getElementById("Profession").selectedIndex = "52";
                     $(".education-body:last .clone-btn-education").hide();
                     $(".education-body:last .remove-btn-education").show();
                  }
-                 $(".education-body:last #StartDate").focus().select();    
+                 $(".education-body:last #StartDate").focus().select();  
+                 
         });
+        
         // var $dropdown1 = $("select[name='education_level']");
         // var $dropdown2 = $("select[name='dropdown2']");
 
@@ -1751,7 +1753,9 @@ document.getElementById("Profession").selectedIndex = "52";
     ]
     });
 // -------------------------- END OF  FUNCTIONS FOR THE IMAGE EDITOR -------------------------//
-
+// $("#education_dropdown").change(function() {
+//     $("select option").prop("disabled", false);
+// )};
 
 </script>
 @endsection

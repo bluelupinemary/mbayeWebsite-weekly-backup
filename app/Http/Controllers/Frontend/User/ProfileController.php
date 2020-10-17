@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\User;
 use App\Models\Blogs\Blog;
 use Illuminate\Http\Request;
 use App\Models\Access\User\User;
+use App\Models\Company\CompanyProfile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;

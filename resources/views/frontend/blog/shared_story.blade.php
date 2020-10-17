@@ -1,11 +1,11 @@
 @extends('frontend.layouts.profile_layout')
 
 @section('before-styles')
-<meta property="og:image" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+<meta property="og:image" content="{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}">
 <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($blog->summary), 20, '...') }}">
 <meta property="og:url" content="{{ url('') }}">
 <meta property="og:title" content="{{ $blog->name }}">
-<meta name="twitter:card" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+<meta name="twitter:card" content="{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}">
 <meta property="og:type" content="website" /> <meta property="og:image:width" content="720" />
 <meta property="og:image:height" content="720" />
 
@@ -15,6 +15,8 @@
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/bootstrap-toggle.min.css') }}">
+<link rel="stylesheet" href="{{asset('front/CSS/ldbtn.min.css')}}">
+<link rel="stylesheet" href="{{asset('front/CSS/loading.min.css')}}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog-responsive.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('trix/trix.css')}}">
@@ -26,14 +28,15 @@
 
     .blog-status {
         font-size: 0.8em;
-        padding: 0 1%;
+        padding: 0 3%;
         border-radius: 100px;
         font-weight: 550;
         background: #0f9d58;
         color: #fff;
-        position: absolute;
+        align-self: flex-end;
+        /* position: absolute;
         right: 1%;
-        top: 3%;
+        top: 3%; */
     }
 
     .owner-names {
@@ -48,6 +51,11 @@
     .shared-by {
         background: #189358;
         color: #fff;
+    }
+
+    .blog-content {
+        display: flex;
+        flex-flow: column;
     }
 </style>
 @endsection
@@ -64,7 +72,7 @@
                 <div class="blog" data-blogid="{{ $blog->id }}"></div>
                 <div class="blog-details-1">
                     <div class="blog-featured-img"
-                        style='background-image: url("{{ asset('storage/img/blog/'.$blog->featured_image) }}")'>
+                        style='background-image: url("{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}")'>
                         {{-- <img src="{{asset('storage/img/blog/'.$blog->featured_image) }}"
                         alt="" class="featured_image"> --}}
                     </div>
@@ -85,43 +93,43 @@
                                 <img src="{{ asset('front/icons/hotNew.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Hot</p>
-                                    <hotcount-component></hotcount-component>
+                                    <generalhotcount-component></generalhotcount-component>
                                 </div>
                             </div>
                             <div class="button-div coolIcon">
                                 <img src="{{ asset('front/icons/coolIcon.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Cool</p>
-                                    <coolcount-component></coolcount-component>
+                                    <generalcoolcount-component></generalcoolcount-component>
                                 </div>
                             </div>
                             <div class="button-div shareIcon">
                                 <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                 <div class="button-details">
                                     <p class="button-title">Share</p>
-                                    <p class="button-number">300k</p>
+                                    <generalblogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></generalblogsharecount-component>
                                 </div>
                             </div>
                             <div class="button-div naffIcon">
                                 <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Naff</p>
-                                    <naffcount-component></naffcount-component>
+                                    <generalnaffcount-component></generalnaffcount-component>
                                 </div>
                             </div>
                             <div class="button-div commentIcon">
                                 <img src="{{ asset('front/icons/commentsNew.png') }}" alt="" width="40">
                                 <div class="button-details">
                                     <p class="button-title">Declarations</p>
-                                    <commentcount-component></commentcount-component>
+                                    <generalcommentcount-component></generalcommentcount-component>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="blog-details">
-                    <h4 class="blog-title">{{ $blog->name }}</h4>
                     <span class="blog-status">Shared</span>
+                    <h4 class="blog-title">{{ $blog->name }}</h4>
                    
                     <div class="owner-names">
                         <span
@@ -140,21 +148,21 @@
                                     <img src="{{ asset('front/icons/hotNew.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Hot</span><span class="abbr">Hot</span></p>
-                                        <hotcount-component></hotcount-component>
+                                        <generalhotcount-component></generalhotcount-component>
                                     </div>
                                 </div>
                                 <div class="button-div coolIcon">
                                     <img src="{{ asset('front/icons/coolIcon.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Cool</span><span class="abbr">Cool</span></p>
-                                        <coolcount-component></coolcount-component>
+                                        <generalcoolcount-component></generalcoolcount-component>
                                     </div>
                                 </div>
                                 <div class="button-div naffIcon">
                                     <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Naff</span><span class="abbr">Naff</span></p>
-                                        <naffcount-component></naffcount-component>
+                                        <generalnaffcount-component></generalnaffcount-component>
                                     </div>
                                 </div>
                             </div>
@@ -164,14 +172,14 @@
                                     <img src="{{ asset('front/icons/commentsNew.png') }}" alt="" width="40">
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Declarations</span><span class="abbr">Declar.</span></p>
-                                        <commentcount-component></commentcount-component>
+                                        <generalcommentcount-component></generalcommentcount-component>
                                     </div>
                                 </div>
                                 <div class="button-div shareIcon">
                                     <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Share</span><span class="abbr">Share</span></p>
-                                        <p class="button-number">300k</p>
+                                        <generalblogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></generalblogsharecount-component>
                                     </div>
                                 </div>
                             </div>
@@ -181,7 +189,13 @@
                 <button class="blog-btn blog-fullview" title="See full blog"><i class="fas fa-arrow-down"></i></button>
             </div>
             <div class="blog-body">
+                <div class="caption">
+                    <span class="blog-owner shared-by">Shared by: {{ $shared_blog->owner->first_name.' '.$shared_blog->owner->last_name }}</span>
+                    {{$shared_blog->caption}}
+                </div>
                 <div class="blog-content">
+                    <h2>Content</h2>
+                    <span class="blog-owner">Owned by: {{ $blog->owner->first_name.' '.$blog->owner->last_name }}</span>
                     <div class="trix-content">
                         {!! nl2br($blog->content) !!}
                     </div>
@@ -209,14 +223,14 @@
                     @endif
                 </div>
                 <div id="app">
-                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}">
+                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="general">
                     </comment-component>
                     <button class="blog-btn blog-minimize"><i class="fas fa-arrow-up"></i></button>
                 </div>
             </div>
         </div>
         
-        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}"></like-component>
+        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="general"></like-component>
         <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
             @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
                 <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
@@ -234,7 +248,10 @@
             <div class="user-photo {{access()->user()->getGender()}}">
                 <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
             </div>
-            <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button>
+            <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+                <span>Zoom In</span>
+                <i class="fas fa-search-plus"></i>
+            </button>
             <div class="navigator-buttons">
                 <div class="column column-1">
                     <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
@@ -244,7 +261,7 @@
                     <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
                 </div>
                 <div class="column column-3">
-                    <button class="tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                    <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
                     <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
                 </div>
             </div>
@@ -255,10 +272,11 @@
                 <button class="communicator-button"></button>
                 <span>Communicator</span>
             </div>
-            <button class="navigator-zoomout-btn">
+            <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                <span>Zoom Out</span>
                 <i class="fas fa-undo-alt"></i>
             </button>
-
+            @if($blog->shareable == 1)
             @php
                 $share_links = Share::currentPage(null, [], '', '')
                     ->facebook()
@@ -266,7 +284,6 @@
                     ->linkedin('Extra linkedin summary can be passed here')
                     ->whatsapp();
             @endphp
-            
             <div class="menu-button">
                 <img src="{{asset('front/icons/share.png')}}" alt="">
                 {{-- <a href="#"><i class="zmdi zmdi-twitter"></i></a>
@@ -276,6 +293,60 @@
                 {!! $share_links !!}
                 <a href="#" class="internal-share tooltips top" data-toggle="modal" data-target="#shareBlogModal"><span class="">Repost this blog</span><img src="{{asset('front/icons/alert-icon.png')}}" alt=""></a>
             </div>
+            @endif
+        </div>
+        <div class="navigator-div-zoomed-in @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+            <div class="navigator-components">
+                @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+                    <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}" alt=""
+                    class="astronaut-body">
+                @else
+                    <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut-body">
+                @endif
+                <div class="tos-div">
+                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                </div>
+                <div class="user-photo {{access()->user()->getGender()}}">
+                    <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+                </div>
+                {{-- <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button> --}}
+                <div class="navigator-buttons">
+                    <div class="column column-1">
+                        <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
+                        <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
+                    </div>
+                    <div class="column column-2">
+                        <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+                    </div>
+                    <div class="column column-3">
+                        <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
+                        <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+                    </div>
+                </div>
+                <div class="instructions-div">
+                    <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
+                </div>
+                <div class="communicator-div tooltips top">
+                    <button class="communicator-button"></button>
+                    <span>Communicator</span>
+                </div>
+                <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                    <span>Zoom Out</span>
+                    <i class="fas fa-undo-alt"></i>
+                </button>
+                @if($blog->shareable == 1)
+                <div class="menu-button">
+                    <img src="{{asset('front/icons/share.png')}}" alt="">
+                    {{-- <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                    <a href="#"><i class="zmdi zmdi-google-plus"></i></a>
+                    <a href="#"><i class="zmdi zmdi-codepen"></i>   </a>
+                    <a href="#"><i class="zmdi zmdi-codepen"></i>   </a> --}}
+                    {!! $share_links !!}
+                    <a href="#" class="internal-share tooltips top" data-toggle="modal" data-target="#shareBlogModal"><span class="">Repost this blog</span><img src="{{asset('front/icons/alert-icon.png')}}" alt=""></a>
+                </div>
+                @endif
+            </div>
         </div>
         <div class="naff-fart-reaction">
             <audio id="fart-audio" src="{{asset('front/sound-effects/fart.mp3')}}" preload="auto"></audio>
@@ -283,14 +354,11 @@
         </div>
     </div>
 
-    <div class="modal" id="shareBlogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal" id="shareBlogModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h6 class="modal-title" id="exampleModalLongTitle">Share Story</h6>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
                 <form action="" id="share-blog-form">
@@ -323,7 +391,7 @@
                                 <div class="owner-name">{{$blog->owner->first_name.' '.$blog->owner->last_name}}</div>
                             </div>
                              {{-- <img class="card-img-top" src="" alt="Card image cap"> --}}
-                            <div class="card-body" style="background-image: url({{ asset('storage/img/blog/'.$blog->featured_image) }});">
+                            <div class="card-body" style="background-image: url({{ asset('storage/img/general_blogs/'.$blog->featured_image) }});">
                             </div>
                             <div class="card-footer">
                                 <div class="blog-share-title">{{$blog->name}}</div>
@@ -335,7 +403,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id="share-blog-btn" form="share-blog-form">Share Now</button>
+                <button type="button" class="btn btn-primary ld-ext-left" id="share-blog-btn" form="share-blog-form"><div class="ld ld-ring ld-spin"></div> <span class="text">Share Now</span></button>
             </div>
           </div>
         </div>
@@ -818,36 +886,46 @@
 
         $('button.navigator-zoomin').click( function() {
             if(!navigator_zoom) {
-                $(this).fadeOut();
-                $('.navigator-div').addClass('animate-navigator-zoomin');
+                if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                    $('.navigator-div').hide();
+                    $('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
+                    // if(!img_has_loaded) {
+                    //     $('.navigator-div-zoomed-in .lds-ellipsis').show();
+                    //     $('.navigator-div-zoomed-in .astronaut').on('load', function() {
+                    //         $('.navigator-div-zoomed-in .lds-ellipsis').hide();
+                    //         $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    //         img_has_loaded = !img_has_loaded;
+                    //     });
+                    // } else {
+                        $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    // }
+                } else {
+                    $(this).fadeOut();
+                    $('.navigator-div').addClass('animate-navigator-zoomin');
 
-                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                    $('.navigator-div').removeClass('animate-navigator-zoomin');
-                    $('.navigator-div').addClass('zoomin');
-                });
-            } 
-            // else {
-            //     // $(this).removeClass('navigator-zoomout');
-            //     // $(this).addClass('navigator-zoomin');
-            //     $('.navigator-div').addClass('animate-navigator-zoomout');
-
-            //     $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-            //         $('.navigator-div').removeClass('animate-navigator-zoomout');
-            //         $('.navigator-div').removeClass('zoomin');
-            //     });
-            // }
+                    $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.navigator-div').removeClass('animate-navigator-zoomin');
+                        $('.navigator-div').addClass('zoomin');
+                    });
+                }
+            }
 
             navigator_zoom = !navigator_zoom;
         });
 
         $('.navigator-zoomout-btn').click(function() {
             $('button.navigator-zoomin').fadeIn();
-            $('.navigator-div').addClass('animate-navigator-zoomout');
+            if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                $('.navigator-div').fadeIn();
+                $('.navigator-div-zoomed-in').hide();
+            } else {
+                $('.navigator-div').addClass('animate-navigator-zoomout');
 
-            $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                $('.navigator-div').removeClass('animate-navigator-zoomout');
-                $('.navigator-div').removeClass('zoomin');
-            });
+                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.navigator-div').removeClass('animate-navigator-zoomout');
+                    $('.navigator-div').removeClass('zoomin');
+                });
+            }
 
             navigator_zoom = !navigator_zoom;
         });
@@ -1093,6 +1171,13 @@
         $('#share-blog-btn').click(function(e) {
             e.preventDefault();
 
+            // disable form and add loading to button
+            $('#share-blog-form textarea').attr('readonly', true);
+            $('#share-blog-form #toggle-event').attr('disabled', true);
+            $('#shareBlogModal button').prop('disabled', true);
+            $(this).addClass('running');
+            $('#share-blog-btn .text').html('Sharing Post');
+
             var form_url = url+'/share_story';
             var $form = $('form#share-blog-form');
 
@@ -1108,6 +1193,12 @@
                 processData: false,
                 success: function(data) {
                     console.log(data);
+                    $('#share-blog-form textarea').attr('readonly', false);
+                    $('#share-blog-form #toggle-event').attr('disabled', false);
+                    $('#shareBlogModal button').prop('disabled', false);
+                    $('#share-blog-btn').removeClass('running');
+                    $('#share-blog-btn .text').html('Share Now');
+
                     $('#shareBlogModal').modal('hide');
                     Swal.fire({
                         title: '<span class="success">Success!</span>',
@@ -1116,9 +1207,16 @@
                         imageWidth: 80,
                         imageHeight: 80,
                         imageAlt: 'Mbaye Logo',
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
+                    }).then((res) => {
+                        if(data.permanent == '1') {
+                            window.open(url+'/shared_blog/'+data.blog_share.id, '_blank'); 
+                        } else {
+                            window.open(url+'/shared_story/'+data.blog_share.id, '_blank'); 
+                        }
+                        
                     });
                 },
                 error: function (request, status, error) {
@@ -1141,10 +1239,16 @@
                         imageAlt: 'Mbaye Logo',
                         title: title,
                         html: errorString,
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
+                        $('#share-blog-form textarea').attr('readonly', false);
+                        $('#share-blog-form #toggle-event').attr('disabled', false);
+                        $('#shareBlogModal button').prop('disabled', false);
+                        $('#share-blog-btn').removeClass('running');
+                        $('#share-blog-btn .text').html('Share Now');
+
                         $('#shareBlogModal').modal('show');
                     });
                 }

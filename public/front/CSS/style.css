@@ -903,6 +903,7 @@ header{
         align-items: center;
         background-size: cover;
         background-attachment: fixed;
+        user-select: none;
 
   }
   .mbaye_reg{

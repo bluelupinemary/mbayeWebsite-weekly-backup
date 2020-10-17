@@ -71,6 +71,7 @@ function create_init_camera(){
     camera.upperBetaLimit = 10;
     camera.panningDistanceLimit = 1500;
     camera.attachControl(canvas,true);
+    camera.maxZ = 280000;
     initScene.activeCamera = camera;
 
     return camera;
@@ -78,7 +79,7 @@ function create_init_camera(){
                    
 //function that creates scene's hemispheric light
 function create_init_light(){
-    var light = new BABYLON.HemisphericLight("hemiLight",  new BABYLON.Vector3(-10,10,-10), initScene);
+    var light = new BABYLON.HemisphericLight("hemiLight",  new BABYLON.Vector3(-10,10,10), initScene);
     light.radius = 300;
     light.specular = new BABYLON.Color3(0,0,0);
     light.diffuse = new BABYLON.Color3(1,1,1);
@@ -89,13 +90,14 @@ function create_init_light(){
 }//end of create earth light function
 
 function create_init_skybox(){ 
-    var skybox = BABYLON.MeshBuilder.CreateBox("initSkybox", {size:9000.0}, initScene);
-    skybox.position.y = 100;
-    skybox.position.z = 1000;
+    var skybox = BABYLON.MeshBuilder.CreateBox("initSkybox", {size:25000.0}, initScene);
+    skybox.position = new BABYLON.Vector3(942,-500,-1500);
+
     skybox.rotation.y = BABYLON.Tools.ToRadians(-60);
     skybox.isPickable = false;
+    skybox.infiniteDistance = true;
     skybox.checkCollisions = true;
-    var skyboxMaterial = new BABYLON.StandardMaterial("initSkyboxMaterial", initScene);
+    var skyboxMaterial = new BABYLON.StandardMaterial("captSkyboxMaterial", initScene);
     skyboxMaterial.backFaceCulling = false;
    
     var files = [   
@@ -149,7 +151,7 @@ function load_init_meshes(){
                     pbr.emissiveColor = new BABYLON.Color3(0,0,0);
                     pbr.metallic = 1;
                     pbr.metallicF0Factor = 0.50;
-                    pbr.roughness = 0.15;
+                    pbr.roughness = 0.08;
                     pbr.microSurface = 1; 
                 }else if(m.name === "R_EYEAventurine_primitive1" || m.name === "L_EYEAventurine_primitive1" ){
                     m.material.albedoColor = new BABYLON.Color3(0.01,0.2,0.07);
@@ -170,28 +172,28 @@ function load_init_meshes(){
           mermaidHead.material.glossiness = 2;
           mermaidHead.material.roughness = 0.2;
         }),
-         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", initScene).then(function (result) {
+        //  BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", initScene).then(function (result) {
           
-          result.meshes[0].scaling = new BABYLON.Vector3(20,20,-20);
-          result.meshes[0].position = new BABYLON.Vector3(-568.34,260.86,678.33);
-          result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.1162,0.5704,0.0147,-0.8129);
+        //   result.meshes[0].scaling = new BABYLON.Vector3(25,25,-25);
+        //   result.meshes[0].position = new BABYLON.Vector3(-568.34,260.86,678.33);
+        //   result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.1162,0.5704,0.0147,-0.8129);
 
-          nuvolaSpeechCloud = result.meshes[0];
+        //   nuvolaSpeechCloud = result.meshes[0];
 
-          // console.log(result.meshes);
-          // result.meshes[1].isPickable = true;
+        //   // console.log(result.meshes);
+        //   // result.meshes[1].isPickable = true;
           
-        }),
-         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/cloud/", "nuvolaParticipate1.glb", initScene).then(function (result) {
-          // console.log("Ruru Speech: ", result.meshes);
-          result.meshes[0].scaling = new BABYLON.Vector3(40,40,-40);
-          result.meshes[0].position = new BABYLON.Vector3(-566.16,262.82, 679.201);
-          result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0888,0.6065,0.0013,-0.7899);
+        // }),
+        //  BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/cloud/", "nuvolaParticipate1.glb", initScene).then(function (result) {
+        //   // console.log("Ruru Speech: ", result.meshes);
+        //   result.meshes[0].scaling = new BABYLON.Vector3(50,50,-50);
+        //   result.meshes[0].position = new BABYLON.Vector3(-566.16,262.82, 679.201);
+        //   result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0888,0.6065,0.0013,-0.7899);
 
-          result.meshes[0].isPickable = true;
-          nuvolaSpeech = result.meshes[0];
-          // enable_home_gizmo2(nuvolaSpeech);
-        }),
+        //   result.meshes[0].isPickable = true;
+        //   nuvolaSpeech = result.meshes[0];
+        //   // enable_home_gizmo2(nuvolaSpeech);
+        // }),
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/earth/", "earth122319.babylon", initScene, 
                 function (evt) {
                     // onProgress
@@ -243,25 +245,22 @@ function load_init_meshes(){
                 initEarth_object = result.meshes[9];      
           }),
     ]).then(() => {
-         mermaidHead.setParent(mermaidTail_object);
-          mermaidHair.setParent(mermaidTail_object);
-          mermaidTail_object.position = new BABYLON.Vector3( -551.84,219.14,709.45);
-          mermaidTail_object.rotationQuaternion = new BABYLON.Quaternion(-0.0946,-0.8844,0.1707,-0.4235);
-          mermaidTail_object.scaling = new BABYLON.Vector3(0.15,0.15,0.15);
+        // nuvolaSpeech.setParent(nuvolaSpeechCloud);
+        mermaidHead.setParent(mermaidTail_object);
+        mermaidHair.setParent(mermaidTail_object);
+        mermaidTail_object.position = new BABYLON.Vector3( -551.84,219.14,709.45);
+        mermaidTail_object.rotationQuaternion = new BABYLON.Quaternion(-0.0946,-0.8844,0.1707,-0.4235);
+        mermaidTail_object.scaling = new BABYLON.Vector3(0.15,0.15,0.15);
 
-
-        // enable_home_gizmo2(mermaidTail_object);
-
-
-          // mermaidTail_object.isVisible = false;
-          // mermaidTail_object.setEnabled(false);
-          mermaidTail_object.isPickable = true;
-        // setTimeout(function(){
-            initCamera.target = new BABYLON.Vector3(0,0,0);
-            initCamera.radius = 1360;
-            mbayeInit_object.isPickable = true;
-            
-        // },1000);
+        mermaidTail_object.isPickable = true;
+    // setTimeout(function(){
+        initCamera.target = new BABYLON.Vector3(0,0,0);
+        initCamera.radius = 1360;
+        mbayeInit_object.isPickable = true;
+        
+        nuvolaSpeech =  create_speech("nuvolaSpeech", "front/images3D/participateScene/nuvolaNonmember.png",78 , 110, 1, -566, 278, 684);
+        // enable_home_gizmo2(nuvolaSpeech);
+    // },1000);
        
     });
 }//end of function load meshes
@@ -310,18 +309,22 @@ var planetAxis = new BABYLON.Vector3(0,4,0);
 var redAngle = 0.01;   
 var yellowAngle = 0.02;
 var grayAngle = -0.01;
+let sunOrigTexture;
+let sunGlowLayer;
 function create_init_planets(){
     //create the sun
     initSun = init_planet("sun","sunMatl","front/textures/home/planets/sun.jpg","front/textures/home/planets/sunnormal.jpg",-78,319,-2097,250);
     //add glow effect to the sun
-    var gl = new BABYLON.GlowLayer("glow", initScene);
-    gl.customEmissiveColorSelector = function(mesh, subMesh, material, result) {
+    sunGlowLayer = new BABYLON.GlowLayer("glow", initScene);
+    sunGlowLayer.customEmissiveColorSelector = function(mesh, subMesh, material, result) {
         if (mesh.name === "sun") {
             result.set(235, 192, 52, 0.2);
         }else {
             result.set(0, 0, 0, 0);
         }
     }
+
+   
 
     initMercury = initSun.clone("mercury");
     init_clone_planet(initMercury,"mercuryMatl","front/textures/home/planets/mercury.jpg","front/textures/home/planets/mercurynormal.jpg", -442,226,-1428,0.32);
@@ -362,11 +365,11 @@ function create_init_planets(){
     initSun.actionManager = new BABYLON.ActionManager(initScene);
     initSun.actionManager.registerAction(
           new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
-          onOverSunInit)
+          onOverSun)
     );
     initSun.actionManager.registerAction(
           new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOutTrigger,
-           onOutSunInit)
+           onOutSun)
     );
 
 
@@ -414,7 +417,8 @@ function init_planet(name,material_name,texture_path,normal_texture_path,x_pos,y
     temp.material.freeze();
     temp.convertToUnIndexedMesh();
 
-    
+    if(name === "sun")  sunOrigTexture = temp.material.diffuseTexture;
+
     return temp;
 }//end of init planet function
 
@@ -443,85 +447,93 @@ function init_clone_planet(temp,material_name,texture_path,normal_texture_path,x
 }//end of init planet function
 
 
-var initWebCamScreen;
-var onOverSunInit =(meshEvent)=>{
+
+var onOverSun =(meshEvent)=>{
     var theMeshID = meshEvent.source.id;
+  
+    let lbl = document.createElement("span");
+    lbl.setAttribute("id", "sunLbl");
+    var sty = lbl.style;
+    sty.position = "absolute";
+    sty.lineHeight = "1.5em";
+    sty.padding = "0.2%";
+    sty.color = "#efad0c";
+    sty.fontFamily = "Courgette-Regular";
+    sty.fontSize = "1.5em";
+    sty.top = meshEvent.pointerY + "px";
+    sty.left = meshEvent.pointerX + "px";
+    sty.cursor = "pointer";
+    
+ 
     if(initWebCamScreen){
         if(theMeshID == "sun"){
-            initWebCamScreen.setEnabled(true);
-            initWebCamScreen.isVisible = true;  
-            // console.log(" earth cam's position: ",earthCamera.position);
-            let camX = initCamera.position.x;
-            let camY = initCamera.position.y;
-            let x = -122;
-            let y = 323;
-            let z = -1960;
-             if( camX<-700 && camX>=-900) x = -110;
-            else if( camX<-500 && camX>=-700) x = -105;
-            else if( camX<-300 && camX>=-500) x = -90;
-            else if(camX<100 && camX>=-300) x = -80;
-            else if(camX<300 && camX>=100) x = -70;
-            else if(camX<700 && camX>=300) x = -55;
-            else if(camX<900 && camX>=700) x = -40;
-            else if(camX<1000 && camX>=900) x = -30;
-            else if(camX>=1000) x = -25;
-            //else initWebCamScreen.position = new BABYLON.Vector3(-122,320,-1960);   //the initial position
+           
+            // initSun.material.diffuseTexture = initVideo;
+            initSun.material.diffuseTexture = initVideo;
+            sunGlowLayer.intensity = 0;
 
-            if(camY>700 && camY <= 1000) y = 335;
-            else if(camY>500 && camY <= 700) y = 330;
-            else if(camY>300 && camY <= 500) y = 323;
-            else if(camY>0 && camY <= 300) y = 310;
-            else if(camY>-200 && camY <= 0) y = 300;
-            else if(camY>-500 && camY <= -200) y = 290;
-            else if(camY>-700 && camY <= -500) y = 280;
-            else if(camY>-900 && camY <= -700) y = 270;
-            else if(camY>-1100 && camY <= -900) y = 260; 
-            else if(camY>-1300 && camY <= -1100) y = 250    ;   
-            initWebCamScreen.position = new BABYLON.Vector3(x,y,z);
+            document.body.appendChild(lbl);
+            lbl.textContent = "All About You";
+
+
         } 
     } 
 };
 
 //handles the on mouse out event
-var onOutSunInit =(meshEvent)=>{
-    //part of the 3d text on hover on mesh
-    if(initWebCamScreen){
-        initWebCamScreen.setEnabled(false);
-        initWebCamScreen.isVisible = false; 
-    }
-    
-    
+var onOutSun =(meshEvent)=>{
+    if(!isMobile()) initSun.material.diffuseTexture = sunOrigTexture;
+    while (document.getElementById("sunLbl")) {
+        document.getElementById("sunLbl").parentNode.removeChild(document.getElementById("sunLbl"));
+    } 
+    sunGlowLayer.intensity = 1;
 };
 
-
-var initVideo;    
+let initVideo;  
+let initWebCamScreen,initWebCamScreen22;  
 function enable_init_webcamera(){
+    // console.log("this is called");
     var isAssigned = false; // Is the Webcam stream assigned to material?
 
     initWebCamScreen = BABYLON.MeshBuilder.CreateDisc("initWebCamScreen", {radius:110, tessellation: 0}, initScene);
+    initWebCamScreen.position = new BABYLON.Vector3(3536,461,-648);
+    initWebCamScreen.isPickable = false;
+    initWebCamScreen22 = BABYLON.MeshBuilder.CreateDisc("initWebCamScreen22", {radius:110, tessellation: 0}, initScene);
+    initWebCamScreen22.position = new BABYLON.Vector3(3536,461,-648);
+    if(initSun) initWebCamScreen.setParent(initSun);
+    // initLight.includedOnlyMeshes.push(initWebCamScreen);
+    // initLight.includedOnlyMeshes.push(initWebCamScreen22);
 
-    initWebCamScreen.rotationQuaternion = new BABYLON.Quaternion(0.023,0.990,-0.002,0.009);
+    initWebCamScreen.rotationQuaternion = new BABYLON.Quaternion(0,-0.6424,0,0.7663);
+    initWebCamScreen22.rotationQuaternion = new BABYLON.Quaternion(0,-0.6424,0,0.7663);
     initWebCamScreen.setEnabled(false);
     initWebCamScreen.isVisible = false;
+    initWebCamScreen22.setEnabled(false);
+    initWebCamScreen22.isVisible = false;
   
-    var videoMaterial = new BABYLON.StandardMaterial("initWebCamScreenTexture", initScene);
-    videoMaterial.specularColor = new BABYLON.Color3(0,0,0);
-    videoMaterial.emissiveColor = BABYLON.Color3.White();
+    var videoMaterial2 = new BABYLON.StandardMaterial("initWebCamScreenTexture", initScene);
+    videoMaterial2.specularColor = new BABYLON.Color3(0,0,0);
+    videoMaterial2.backFaceCulling = false;  
+
+
+ var videoMaterial3 = new BABYLON.StandardMaterial("initWebCamScreenTexture", initScene);
+    videoMaterial3.specularColor = new BABYLON.Color3(0,0,0);
+    videoMaterial3.backFaceCulling = false;  
+
+    initWebCamScreen22.material = videoMaterial3;
 
     // Create our video texture
-    BABYLON.VideoTexture.CreateFromWebCam(initScene, function (videoTexture) {
-        initVideo = videoTexture;
-        videoMaterial.diffuseTexture = initVideo;
+    BABYLON.VideoTexture.CreateFromWebCam(initScene, function (videoTexture2) {
+        initVideo = videoTexture2;
+        videoMaterial2.diffuseTexture = initVideo;
+        // console.log("init video",initVideo);
     }, { maxWidth: 256, maxHeight: 256 });
-
-    // When there is a video stream (!=undefined),
-    // check if it's ready          (readyState == 4),
-    // before applying videoMaterial to avoid the Chrome console warning.
-    // [.Offscreen-For-WebGL-0xa957edd000]RENDER WARNING: there is no texture bound to the unit 0
+  
     initScene.onBeforeRenderObservable.add(function () {
         if (initVideo !== undefined && isAssigned == false) {
             if (initVideo.video.readyState == 4) {
-                initWebCamScreen.material = videoMaterial;
+                initWebCamScreen.material = videoMaterial2;
+                
                 isAssigned = true;
             }
         }
@@ -551,12 +563,10 @@ function add_init_mouse_listener(){
             else return;
             if(pickinfo.hit){
                 var theInitMesh = pickinfo.pickedMesh.name;
-                console.log("THe mesh clicked: ", theInitMesh, pickinfo.pickedMesh.position,pickinfo.pickedMesh.rotationQuaternion);
-                
-                //THIS IS A TEMPORARY LINK; MODIFY THIS PART
-               // if(theInitMesh === "initWebCamScreen") window.open('http://localhost/Mbaye_bootstrap_new/index.php',"_self");
-                if(theInitMesh === "initWebCamScreen") window.open('http://127.0.0.1:8000/register',"_self");
-                //http://127.0.0.1:8000/register                
+                console.log("THe mesh clicked: ", pickinfo.pickedMesh, pickinfo.pickedMesh.position,pickinfo.pickedMesh.rotationQuaternion);
+                if(theInitMesh === "sun"){
+                    checkScreenAndDoubleClick('register', 'register');
+                }
            }
            if(evt.button === 0){
                 deltaPointer.x = 0;
@@ -568,6 +578,17 @@ function add_init_mouse_listener(){
                 isFast = false;
                 startTime = new Date();
            }
+
+           if(orbitsMap.has(theInitMesh)){
+                //check if the screen is mobile/tablet
+               checkScreenAndDoubleClick(theInitMesh, 'orbit');
+           }
+           if(starsMap.has(theInitMesh)){
+                //check if the screen is mobile/tablet
+                checkScreenAndDoubleClick(theInitMesh,'star');
+            }
+
+
         }//end of on pointer down function
 
         var onPointerUpInit = function () {
@@ -642,6 +663,7 @@ function create_init_planet_orbit(){
 }//end of fxn
 
 
+let orbitsMap = new Map();
 function init_orbit( name, matlName, matlPath, x, y, z, scale, radiusVal, xRot ){
     var temp = BABYLON.MeshBuilder.CreateDisc(name, {radius:radiusVal, tessellation: 0}, initScene);
     temp.scaling = new BABYLON.Vector3( scale, scale, scale );
@@ -675,10 +697,34 @@ function init_orbit( name, matlName, matlPath, x, y, z, scale, radiusVal, xRot )
     }else if(name == "Pluto"){
         temp.rotationQuaternion = new BABYLON.Quaternion(0.692,0.143,0.143,0.692);
     }
+
+    orbitsMap.set(name,null);
    
 }// end of init orbit function
 
 
+function openWikipediaPage(theObj, type){
+    
+    if(theObj == "Mercury") showPage('Mercury_(planet)');
+    else showPage(theObj);    
+
+    if(type == 'star'){
+        if(theObj== "Leo") showPage('Leo_(constellation)');
+        else if(theObj== "Aquarius") showPage('Aquarius_(constellation)');
+        else if(theObj== "Aries") showPage('Aries_(constellation)');
+        else if(theObj== "Cancer") showPage('Cancer_(constellation)');
+        else if(theObj== "Capricorn") showPage('Capricorn_(constellation)');
+        else if(theObj== "Gemini") showPage('Gemini_(constellation)');
+        else if(theObj== "Libra") showPage('Libra_(constellation)');
+        else if(theObj== "Pisces") showPage('Pisces_(constellation)');
+        else if(theObj== "Sagittarius") showPage('Sagittarius_(constellation)');
+        else if(theObj== "Scorpio") showPage('Scorpio_(constellation)');
+        else if(theObj== "Taurus") showPage('Taurus_(constellation)');
+        else if(theObj== "Virgo") showPage('Virgo_(constellation)');
+    }
+
+
+}
 
 var wikiBtn;
 var onOverPlanetOrbitInit =(meshEvent)=>{
@@ -687,30 +733,18 @@ var onOverPlanetOrbitInit =(meshEvent)=>{
     wikiBtn.setAttribute("id", "planetOrbitLbl");
     var sty = wikiBtn.style;
     sty.position = "absolute";
-      sty.lineHeight = "1.2em";
-      sty.padding = "0.5%";
+    //   sty.lineHeight = "1.2em";
+    //   sty.padding = "0.5%";
       sty.color = "#00BFFF  ";
       sty.fontFamily = "Courgette-Regular";
-      sty.fontSize = "1vw";
-      sty.top = (initScene.pointerY-10) + "px";
-      sty.left = (initScene.pointerX+10) + "px";
+      sty.fontSize = "3rem";   
+      sty.top = (initScene.pointerY-50) + "px";
+      sty.left = (initScene.pointerX-50) + "px";
       sty.cursor = "pointer";
     
-    
-    if(meshEvent.meshUnderPointer.name == "Earth") wikiBtn.setAttribute("onclick", "showPage('Earth')");
-    else if(meshEvent.meshUnderPointer.name == "Mercury") wikiBtn.setAttribute("onclick", "showPage('Mercury_(planet)')");
-    else if(meshEvent.meshUnderPointer.name == "Venus") wikiBtn.setAttribute("onclick", "showPage('Venus')");
-    else if(meshEvent.meshUnderPointer.name == "Mars") wikiBtn.setAttribute("onclick", "showPage('Mars')");
-    else if(meshEvent.meshUnderPointer.name == "Jupiter") wikiBtn.setAttribute("onclick", "showPage('Jupiter')");
-    else if(meshEvent.meshUnderPointer.name == "Saturn") wikiBtn.setAttribute("onclick", "showPage('Saturn')");
-    else if(meshEvent.meshUnderPointer.name == "Uranus") wikiBtn.setAttribute("onclick", "showPage('Uranus')");
-    else if(meshEvent.meshUnderPointer.name == "Neptune") wikiBtn.setAttribute("onclick", "showPage('Neptune')");
-    else if(meshEvent.meshUnderPointer.name == "Pluto") wikiBtn.setAttribute("onclick", "showPage('Pluto')");
-    else if(meshEvent.meshUnderPointer.name == "Moon") wikiBtn.setAttribute("onclick", "showPage('Moon')");
-    else if(meshEvent.meshUnderPointer.name == "Sun") wikiBtn.setAttribute("onclick", "showPage('Sun')");
-
+    if(orbitsMap.has(meshEvent.meshUnderPointer.name)) wikiBtn.setAttribute("onclick", "openWikipediaPage('"+meshEvent.meshUnderPointer.name+"', 'orbit')");
     //constellations
-    else if(meshEvent.meshUnderPointer.name == "Leo") wikiBtn.setAttribute("onclick", "showPage('Leo_(constellation)')");
+    if(meshEvent.meshUnderPointer.name == "Leo") wikiBtn.setAttribute("onclick", "showPage('Leo_(constellation)')");
     else if(meshEvent.meshUnderPointer.name == "Aquarius") wikiBtn.setAttribute("onclick", "showPage('Aquarius_(constellation)')");
     else if(meshEvent.meshUnderPointer.name == "Aries") wikiBtn.setAttribute("onclick", "showPage('Aries_(constellation)')");
     else if(meshEvent.meshUnderPointer.name == "Cancer") wikiBtn.setAttribute("onclick", "showPage('Cancer_(constellation)')");
@@ -736,6 +770,7 @@ var onOutPlanetOrbitInit =(meshEvent)=>{
 };
 
 
+//added so the orbit label wont show when a planet is hovered
 var onOverPlanetInit =(meshEvent)=>{
     // console.log("over planet");
 };
@@ -747,6 +782,23 @@ var onOutPlanetInit =(meshEvent)=>{
 };
 
 
+function create_speech(name, matlPath, h, w, scale, x, y, z){
+    var temp= BABYLON.MeshBuilder.CreatePlane(name, {height:h, width: w}, initScene);
+    temp.scaling = new BABYLON.Vector3(scale, scale, scale);
+    temp.position = new BABYLON.Vector3(x,y,z);
+    temp.rotationQuaternion = new BABYLON.Quaternion(0.0249,0.8594,-0.1207,0.4959);
+    
+    var tempMatl = new BABYLON.StandardMaterial(name+"matl", initScene);
+    tempMatl.diffuseTexture = new BABYLON.Texture(matlPath, initScene);
+    tempMatl.opacityTexture = new BABYLON.Texture(matlPath, initScene);
+    tempMatl.ambientColor = new BABYLON.Color3(1,1,1);
+    tempMatl.diffuseTexture.hasAlpha = true;
+    temp.material = tempMatl;
+    // temp.material.backFaceCulling = false;
+    return temp;
+}
+
+let starsMap = new Map();
 function init_constellation(name, matlPath, h, w, scale, x, y, z){
     var temp= BABYLON.MeshBuilder.CreatePlane(name, {height:h, width: w}, initScene);
     temp.scaling = new BABYLON.Vector3(scale, scale, scale);
@@ -758,6 +810,8 @@ function init_constellation(name, matlPath, h, w, scale, x, y, z){
     temp.material = tempMatl;
     temp.material.backFaceCulling = false;
     temp.freezeWorldMatrix();
+
+    
 
     temp.actionManager = new BABYLON.ActionManager(initScene);
     temp.actionManager.registerAction(
@@ -776,6 +830,7 @@ function init_constellation(name, matlPath, h, w, scale, x, y, z){
     if(name === "Leo"){
         temp.rotationQuaternion = new BABYLON.Quaternion(-0.553,0.438,0.438, 0.553);
     }
+    starsMap.set(name, null);
 
 }
 
@@ -826,7 +881,9 @@ function init_clone_constellation(name, temp, matlPath,scale, x, y, z){
         temp.rotationQuaternion = new BABYLON.Quaternion(-0.703, 0.010, 0.0256,0.695);
     }else if(name === "Aquarius"){
         temp.rotationQuaternion = new BABYLON.Quaternion(-0.032,-0.710,0.027,0.687);    
-    }  
+    } 
+
+    starsMap.set(name, null);
 
 }//end of init planet function
 
@@ -927,31 +984,54 @@ function create_constellation_planes(){
 let isFast = false;
 let whoaAudio = new Audio('front/audio/participateScene/whoaAudio.mp3');
 
-            //create the game engine
-            var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true },true);
+//create the game engine
+var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true },true);
 
-            //create the scene
-            var theScene = createScene();
+//create the scene
+var theScene = createScene();
 
-            
-            theScene.executeWhenReady(function () {  
-                document.getElementById("loadingScreenPercent").style.visibility = "hidden";
-                document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
-                document.getElementById("loadingScreenDiv").remove();
-                engine.runRenderLoop(function () {
 
-                    if(theScene){
-                        //render the scene
-                        theScene.render();
-                    
-                    }    
-                }); 
-            }); 
+theScene.executeWhenReady(function () {  
+    document.getElementById("loadingScreenPercent").style.visibility = "hidden";
+    document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
+    document.getElementById("loadingScreenDiv").remove();
+    // initScene.debugLayer.show();
+    //scene optimizer
+    var options = new BABYLON.SceneOptimizerOptions();
+    options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
+    var optimizer = new BABYLON.SceneOptimizer(theScene, options);
 
-            // window resize handler
-            window.addEventListener("resize", function () {
-                engine.resize();
-            });
+    //if the current screen is a mobile/tablet device
+    if(isSmallDevice() || isMobile()){
+        if(initSun){
+            initSun.material.diffuseTexture = initVideo;
+            sunGlowLayer.intensity = 0;
+        }
+        alert_fullscreen();
+    }
+
+    engine.runRenderLoop(function () {
+
+        if(theScene){
+            //render the scene
+            theScene.render();
+        
+        }    
+    }); 
+}); 
+
+// window resize handler
+window.addEventListener("resize", function () {
+    engine.resize();
+    testOrientation();
+    testFullscreen();
+});
+
+
+//check orientation of screen when page is loaded
+$( document ).ready(function() {
+    testOrientation();
+});
 
 
 
@@ -959,49 +1039,91 @@ $('#wikiPage').on('load',function(){
     $('.iframe-loading').hide();
 });
 
-    let isScreenVisible = false;
-    let isCharDivFullscreen = false;
-    function showPage(pageName) {
-        $('.iframe-loading').show();
-        let loader = document.getElementById("iframe-loading");
-        let x = document.getElementById("wikipediaDiv");
-        let page = document.getElementById("wikiPage");
+let isScreenVisible = false;
+let isCharDivFullscreen = false;
+function showPage(pageName) {
+    $('.iframe-loading').show();
+    let loader = document.getElementById("iframe-loading");
+    let x = document.getElementById("wikipediaDiv");
+    let page = document.getElementById("wikiPage");
 
-        if(loader.style.visibility != "visible") loader.style.visibility = "visible";
-        
+    if(loader.style.visibility != "visible") loader.style.visibility = "visible";
+    $('#fullscreenIcon').hide();
 
-        
-        document.getElementById("page-url").textContent = "https://en.wikipedia.org/wiki/"+pageName+"";
-        page.src  = "https://en.wikipedia.org/wiki/"+pageName;
-        if(x.style.visibility != "visible"){
-            x.style.visibility = "visible";  
-            isScreenVisible = true;
-        }else return;
-    }
     
-    
+    document.getElementById("page-url").textContent = "https://en.wikipedia.org/wiki/"+pageName+"";
+    page.src  = "https://en.wikipedia.org/wiki/"+pageName;
 
-    function hidePage(){
-        let loader = document.getElementById("iframe-loading");
-        var x = document.getElementById("wikipediaDiv");
-        var page = document.getElementById("wikiPage");
-        page.src = "";
+    if(x.style.visibility != "visible"){
+        x.style.visibility = "visible";  
+        isScreenVisible = true;
+    }else return;
+}
 
-        x.style.visibility = "hidden";
-        loader.style.visibility = "hidden";
-        isScreenVisible = false;
+
+
+function hidePage(){
+    let loader = document.getElementById("iframe-loading");
+    var x = document.getElementById("wikipediaDiv");
+    var page = document.getElementById("wikiPage");
+    page.src = "";
+
+    x.style.visibility = "hidden";
+    loader.style.visibility = "hidden";
+    isScreenVisible = false;
+    $('#fullscreenIcon').show();
+}
+
+function fullscreenDescDiv(){
+    if(!isCharDivFullscreen){
+        document.getElementById("fullscreen-btn").src= "front/images3D/minimize-btn.png";
+        document.getElementById("fullscreen-btn").title= "Windowed";
+        document.getElementById("wikipediaDiv").style.width = "100%";
+        isCharDivFullscreen = true;
+    }else{
+        document.getElementById("fullscreen-btn").title= "Fullscreen";
+        document.getElementById("fullscreen-btn").src= "front/images3D/fullscreen-btn.png";
+        if(isSmallDevice() || isMobile()) document.getElementById("wikipediaDiv").style.width = "50%";
+        else document.getElementById("wikipediaDiv").style.width = "30%";
+        isCharDivFullscreen = false;
     }
+}//end of fullscreenDescDiv
 
-    function fullscreenDescDiv(){
-        if(!isCharDivFullscreen){
-            document.getElementById("fullscreen-btn").src= "front/images3D/minimize-btn.png";
-            document.getElementById("fullscreen-btn").title= "Windowed";
-            document.getElementById("wikipediaDiv").style.width = "100%";
-            isCharDivFullscreen = true;
+
+    //check if a mesh is clicked
+var isMeshClicked = false;
+function checkScreenAndDoubleClick(theMesh, type){
+    if(isMobile()){
+        if(isMeshClicked){
+            isMeshClicked = false;
+            if(type=='register') window.location.href = theMesh; 
+            else openWikipediaPage(theMesh, type);
         }else{
-            document.getElementById("fullscreen-btn").title= "Fullscreen";
-            document.getElementById("fullscreen-btn").src= "front/images3D/fullscreen-btn.png";
-            document.getElementById("wikipediaDiv").style.width = "30%";
-            isCharDivFullscreen = false;
+            isMeshClicked = true;
+            setTimeout(function(){
+                if(isMeshClicked){
+                    isMeshClicked = false;
+                        Swal.fire({
+                            width: '10vw',
+                            padding: '3em',
+                            title: 'Double Tap to enter the planet.',
+                            showConfirmButton: false,
+                            position: 'top-end',
+                            showClass:{
+                                backdrop: 'swal2-backdrop-hide',
+                            },
+                            timer: 2000,
+                            width: 100,
+                            customClass: {
+                                popup: 'trevor-popup-class',
+                            }
+                        });
+                    }
+            },500);
         }
-    }//end of fullscreenDescDiv
+    }else{
+        if(type === 'orbit') openWikipediaPage(theMesh, type);
+        else if(type=='register') window.location.href = theMesh; 
+    }
+    
+}

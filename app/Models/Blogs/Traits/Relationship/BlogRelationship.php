@@ -66,7 +66,7 @@ trait BlogRelationship
     }
 
     public function share(){
-        return $this->hasMany(BlogShare::class, 'blog_id')->where('blog_type', 'regular');
+        return $this->hasMany(BlogShare::class, 'blog_id')->where('blog_type', 'App\Models\Blogs\Blog');
     }
 
     // override the toArray function (called by toJson)
@@ -83,6 +83,7 @@ trait BlogRelationship
 
         if($this->publish_datetime) {
             $data['formatted_date'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y h:i A');
+            $data['formatted_time'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y');
         }
         
         if($this->featured_image == null) {
@@ -106,7 +107,15 @@ trait BlogRelationship
         $data['coolcount']     = $this->likes->where('emotion',1)->count();
         $data['naffcount']     = $this->likes->where('emotion',2)->count();
         $data['commentcount']  = $this->comments->count();
+        $data['sharecount']  = $this->share->count();
         $data['most_reaction'] = $this->mostReaction();
+        if($this->isDesignsBlog()) {
+            $data['editurl'] = url('/communicator?action=edit_design_blog&blog_id='.$this->id.'&section=designs_blog');
+        } else if ($this->isCareerBlog()) {
+            $data['editurl'] = url('/communicator?action=edit_career_blog&blog_id='.$this->id.'&section=career_blog');
+        } else {
+            $data['editurl'] = url('/communicator?action=edit_blog&blog_id='.$this->id.'&section=blog');
+        }
 
         return $data;
     }

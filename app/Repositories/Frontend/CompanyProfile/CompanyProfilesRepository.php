@@ -61,6 +61,7 @@ class CompanyProfilesRepository extends BaseRepository
 
             ]);
     }
+    
 
     /**
      * @param array $input
@@ -69,16 +70,33 @@ class CompanyProfilesRepository extends BaseRepository
      *
      * @return bool
      */
+    // public function create(array $input)
+    // {
+    //     // dd($input);
+    //     DB::beginTransaction();
+    //      $input['featured_image'] = $this->uploadImage($input);
+
+    //     if ($data = CompanyProfile::create($input)) {
+    //         DB::commit();
+    //         return $data;
+    //     }
+    // }
     public function create(array $input)
     {
+    //    dd($input);
+       DB::beginTransaction();
+    //    $input['featured_image'] = $this->uploadImage($input);
+    if($input['edited_featured_image']) {
+        $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
         // dd($input);
-        DB::beginTransaction();
-         $input['featured_image'] = $this->uploadImage($input);
+    } else if(array_key_exists('featured_image', $input)) {
+        $input['featured_image'] = $this->uploadImage($input);
+    }
 
-        if ($data = CompanyProfile::create($input)) {
-            DB::commit();
-            return $data;
-        }
+      if ($data = CompanyProfile::create($input)) {
+          DB::commit();
+          return $data;
+      }
     }
 
     /**
@@ -87,9 +105,17 @@ class CompanyProfilesRepository extends BaseRepository
      */
     public function update(CompanyProfile $profile, array $input)
     {
+        // dd($input);
         DB::beginTransaction();
 
-        if(array_key_exists('featured_image', $input)) {
+        // if(array_key_exists('featured_image', $input)) {
+        //     $this->deleteOldFile($profile);
+        //     $input['featured_image'] = $this->uploadImage($input);
+        // }
+        if($input['edited_featured_image']) {
+            $this->deleteOldFile($profile);
+            $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
+        } else if (array_key_exists('featured_image', $input)) {
             $this->deleteOldFile($profile);
             $input['featured_image'] = $this->uploadImage($input['featured_image']);
         }
@@ -123,8 +149,9 @@ class CompanyProfilesRepository extends BaseRepository
      */
     public function uploadImage($input)
     {
+        // dd($input);
         $avatar = $input['featured_image'];
-
+        // dd($avatar);
         if (isset($input['featured_image']) && !empty($input['featured_image'])) {
             $fileName =time().$avatar->getClientOriginalName();
 
@@ -134,6 +161,31 @@ class CompanyProfilesRepository extends BaseRepository
 
             return $fileName;
         }
+    }
+    public function uploadEditedImage($featured_image)
+    {
+        // dd($featured_image);
+        $avatar = $featured_image;
+        // dd($avatar);
+        $base64 = str_replace('data:image/png;base64,', '', $featured_image);
+        $base64 = str_replace(' ', '+', $base64);
+        $image = base64_decode($base64);
+
+        // $user_photo = explode('.', $user->photo);
+        $filename = Str::random().'.jpg';
+        while (Storage::exists('public/career/company/'.$filename)) {
+            $filename = Str::random().'.jpg';
+        }
+
+        Storage::disk('local')->put('public/career/company/'.$filename, $image);
+        
+        // compressing image
+        // $source= 'storage/img/blog/'.$filename;
+        // $quality=100;
+        // $dest="storage/img/blog/".$filename;
+        // $path= $this->compress($source,$dest, $quality);// compressing images
+
+        return $filename;
     }
 
     /**

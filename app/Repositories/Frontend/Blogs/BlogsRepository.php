@@ -304,6 +304,7 @@ class BlogsRepository extends BaseRepository
         return $filename;
     }
 
+    
     /**
      * Destroy Old Image.
      *
@@ -592,8 +593,8 @@ class BlogsRepository extends BaseRepository
             $filename = Str::random().'.'.$extension[1];
         }
 
-        if (Storage::exists('public/designPanel/screenshots/'.$featured_image)) {
-            Storage::copy('public/designPanel/screenshots/'.$featured_image, 'public/img/blog/'.$filename);
+        if (Storage::exists('public/saveState/designPanel/screenshots/'.$featured_image)) {
+            Storage::copy('public/saveState/designPanel/screenshots/'.$featured_image, 'public/img/blog/'.$filename);
 
             // compressing image
             $source= 'storage/img/blog/'.$filename;

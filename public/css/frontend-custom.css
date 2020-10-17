@@ -520,7 +520,6 @@ background-image: url(../front/images/skybox_bg1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-  
   }
 .fencing-railing{
 	/* The image used */
@@ -1401,6 +1400,7 @@ header{
         align-items: center;
         background-size: cover;
         background-attachment: fixed;
+        user-select: none;
 
   }
   .mbaye_reg{

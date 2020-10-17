@@ -29,8 +29,29 @@
         width:100%;
         height:100%;
     }
-</style>
-<script src="https://www.youtube.com/iframe_api"></script>   
+
+    .music-player-parent-div{
+        position: absolute;
+        left: 26vw;
+        top: 0.7vw;
+        width: 20vw;
+        height: 20vh;
+        
+    }
+
+    .music-close-btn{
+        height: 2vw;
+        width: 2vw;
+        position: relative;
+        float:right;
+        padding:1%;
+    }
+
+
+</style>   
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>  
+<script src="{{asset('front/JS/popper.min.js')}}"></script>
+<script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
 @endsection
 
 @section('content')
@@ -63,9 +84,11 @@
         <iframe id="carpetsWikiPage" src="" frameBorder="0"></iframe>
     </div>
    
-
-    <div class="player" id="player" data-player="youtube-player-1" style="visibility:hidden;width:20vw;height: 20vh;left: 26vw;top:0.5vw;position: absolute;"></div>
-   
+    <div class="music-player-parent-div" style="display:none;">
+        <div class="musicPlayer" id="player" data-player="youtube-player-1" style="">
+        </div>
+        <img class="music-close-btn" src="{{asset('front')}}/images3D/close-btn.png" data-toggle="tooltip" title="Close"/>
+    </div>
 
     <div id="flowerModelDiv">
         <img id="close-btn"  src="{{asset('front')}}/images3D/close-btn.png" data-toggle="tooltip" title="Close" align="right"/>
@@ -87,6 +110,14 @@
         </div>
     </div>
 
+
+
+    <div class="searchDiv" style="position: absolute;top:0;left:3vw;">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" id="searchFlowerField" class="searchClass" aria-label="Search" style="width: 10vw;
+            height: 2vw;">
+            <button class="btn aqua-gradient btn-rounded btn-sm my-0" id="searchFlowerBtn" type="submit" style="width:5vw;height:2vw;">Search</button>
+    </div>
+
     
   
     
@@ -103,6 +134,6 @@
     <script src="{{asset('front')}}/babylonjs/scenes/flowersMbaye/selectedFlowerScene.js"></script>
     <script src="{{asset('front')}}/babylonjs/scenes/flowersMbaye/flowersMap.js"></script>
     <script src="{{asset('front')}}/babylonjs/scenes/flowersMbaye/flowersMbayeScene.js"></script>
-   
+    
 
 @endsection

@@ -12,154 +12,29 @@
 @section('content')
 <div id="page-content">
 <div class="app">
-    <div class="blog-search">
-        <form action="{{url('/stories')}}" method="GET">
-            {{-- <fieldset>
-                <legend>Hi, Major {{(Auth::user()->gender == 'male' || Auth::user()->gender == null ? 'Tom' : 'Thomasina' )}} {{Auth::user()->first_name}}!</legend>
-                <legend class="sub-legend">These are your blogs:</legend>
-            </fieldset> --}}
-            <div class="search-form">
-                <div class="search-input-fields">
-                    <input type="text" class="form-control" placeholder="Search" name="search" autocomplete="off">
-                    <div class="input-group-prepend status-div">
-                        <select class="custom-select" id="inputGroupSelect02" name="status">
-                            <option selected value="">Status</option>
-                            <option value="Published">Published</option>
-                            <option value="Shared">Shared</option>
-                        </select>
-                    </div>
-                    <div class="input-group-prepend sort-div">
-                        <select class="custom-select" id="inputGroupSelect02" name="sort">
-                            <option selected value="">Sort</option>
-                            <option value="asc_name">Ascending Blog Title</option>
-                            <option value="desc_name">Descending Blog Title</option>
-                            <option value="asc_publisheddate">Ascending Date Published</option>
-                            <option value="desc_publisheddate">Descending Date Published</option>
-                        </select>
-                    </div>
+    <generalmulticount-component></generalmulticount-component>
+    <div>
+        <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+            @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+                <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
+                class="astronaut-body">
+                <div class="tos-div thomasina">
+                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
                 </div>
-                <button type="submit" class="btn search-btn">Search</button>
-            </div>
-        </form>
-    </div>
-    <div class="wrapper">
-        <div class="blog-cols">
-            @if(count($blogs))
-            @foreach ($blogs as $blog)
-                @if($blog->getTable() == 'general_blogs')
-                <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
-                    <div class="container">
-                        <div class="front @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/general_blogs/'.$blog->getFeaturedImage())}})">
-                            <div class="inner">
-                                <span class="blog-status {{($blog->status == 'Published' ? 'published' : 'draft')}}">{{$blog->status}}</span>
-                                <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
-                                
-                                <p class="blog-name">{{$blog->name}}</p>
-                                <multicount-component :blog_id="{!! json_encode($blog->id) !!}"></multicount-component>
-                            </div>
-                            {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
-                        </div>
-                        <div class="back @if($blog->isNearlyExpired()) nearly-expired @endif">
-                            <div class="inner">
-                                <div class="blog-action-buttons">
-                                    <a href="{{url('/single_general_blog/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/view-btn.png')}}" alt="" class="view-btn"></a>
-                                    <a class="delete" data-url="{{url('/general_blogs/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/delete-btn.png')}}" alt="" class="delete-btn"></a>
-                                    <a href="{{url('/communicator?action=edit_general_blog&blog_id='.$blog->id.'&section=general_blog') }}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @elseif($blog->getTable() == 'general_blog_shares')
-                <div class="blog-col" ontouchstart="this.classList.toggle('hover');">
-                    <div class="container">
-                        <div class="front shared-blog @if($blog->isNearlyExpired()) nearly-expired @endif" style="background-image: url({{asset('storage/img/general_blogs/'.$blog->blog->getFeaturedImage())}})">
-                            <div class="inner">
-                                <span class="blog-status shared">Shared</span>
-                                <span class="blog-date">{{($blog->publish_datetime != '' ? Carbon\Carbon::parse($blog->publish_datetime)->format('F d, Y') : '')}}</span>
-                                
-                                <p class="blog-name">{{$blog->blog->name}}</p>
-                                <multicount-component :blog_id="{!! json_encode($blog->blog->id) !!}"></multicount-component>
-                            </div>
-                            {{-- <img src="{{asset('front/images/naff555Votes.png')}}" alt="" class="naff-reaction"> --}}
-                        </div>
-                        <div class="back shared-blog @if($blog->isNearlyExpired()) nearly-expired @endif">
-                            <div class="inner">
-                                <div class="blog-action-buttons">
-                                    <a href="{{url('/shared_story/'.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/view-btn.png')}}" alt="" class="view-btn"></a>
-                                    <a class="delete" data-url="{{url('/general_blogs/'.$blog->blog->id.'?type=shared&share_id='.$blog->id)}}"><img src="{{asset('front/images/blog-buttons/delete-btn.png')}}" alt="" class="delete-btn"></a>
-                                    {{-- <a href="{{url('/communicator?action=edit_general_blog&blog_id='.$blog->blog->id.'&section=general_blog') }}"><img src="{{asset('front/images/blog-buttons/edit-btn.png')}}" alt="" class="edit-btn"></a> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-            @endforeach
             @else
-            <h2 class="no-result">No stories to show.</h2>
+                <img src="{{ asset('front/images/astronut/tom-navigator.png') }}" alt=""
+                class="astronaut-body">
+                <div class="tos-div">
+                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                </div>
             @endif
-        </div>
-        {{ $blogs->appends(['search' => request()->search, 'sort' => request()->sort, 'status' => request()->status])->links() }}
-   </div>
-   <div>
-   <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
-        @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
-            <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
-            class="astronaut-body">
-            <div class="tos-div thomasina">
-                <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
-            </div>
-        @else
-            <img src="{{ asset('front/images/astronut/tom-navigator.png') }}" alt=""
-            class="astronaut-body">
-            <div class="tos-div">
-                <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
-            </div>
-        @endif
-        <div class="user-photo {{access()->user()->getGender()}}">
-            <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
-        </div>
-        <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
-            <span>Zoom In</span>
-            <i class="fas fa-search-plus"></i>
-        </button>
-        <div class="navigator-buttons">
-            <div class="column column-1">
-                <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
-                <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
-            </div>
-            <div class="column column-2">
-                <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
-            </div>
-            <div class="column column-3">
-                <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
-                <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
-            </div>
-        </div>
-        <div class="instructions-div">
-            <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
-        </div>
-        <div class="communicator-div tooltips top">
-            <button class="communicator-button"></button>
-            <span>Communicator</span>
-        </div>
-        <button class="navigator-zoomout-btn tooltips zoom-in-out">
-            <span>Zoom Out</span>
-            <i class="fas fa-undo-alt"></i>
-        </button>
-    </div>
-    <div class="navigator-div-zoomed-in">
-        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-        <div class="navigator-components">
-            <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut">
-            <div class="tos-div">
-                <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
-            </div>
             <div class="user-photo {{access()->user()->getGender()}}">
                 <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
             </div>
-            {{-- <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button> --}}
+            <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+                <span>Zoom In</span>
+                <i class="fas fa-search-plus"></i>
+            </button>
             <div class="navigator-buttons">
                 <div class="column column-1">
                     <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
@@ -185,8 +60,44 @@
                 <i class="fas fa-undo-alt"></i>
             </button>
         </div>
+        <div class="navigator-div-zoomed-in">
+            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+            <div class="navigator-components">
+                <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut">
+                <div class="tos-div">
+                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                </div>
+                <div class="user-photo {{access()->user()->getGender()}}">
+                    <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+                </div>
+                {{-- <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button> --}}
+                <div class="navigator-buttons">
+                    <div class="column column-1">
+                        <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
+                        <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
+                    </div>
+                    <div class="column column-2">
+                        <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+                    </div>
+                    <div class="column column-3">
+                        <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
+                        <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+                    </div>
+                </div>
+                <div class="instructions-div">
+                    <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
+                </div>
+                <div class="communicator-div tooltips top">
+                    <button class="communicator-button"></button>
+                    <span>Communicator</span>
+                </div>
+                <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                    <span>Zoom Out</span>
+                    <i class="fas fa-undo-alt"></i>
+                </button>
+            </div>
+        </div>
     </div>
-</div>
     <div class="ally-dolphin">
         <div class="cloud-message">
             <img src="{{asset('front/images/cloudPNG.png')}}" alt="">

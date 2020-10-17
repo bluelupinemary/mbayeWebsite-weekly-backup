@@ -10,7 +10,7 @@
      display: flex;
  }  
  .mbaye_logo{
-            width: 13vw;
+            width: 15vw;
           
  }
 </style>
@@ -28,14 +28,16 @@
 
                 </td>
             </tr>
+            <br/>
             <tr>
 
                 <td align="left" style="color: #888888; width:20px; font-size: 16px; line-height: 24px;">
                     <!-- section text ======-->
 
                     <p style="line-height: 24px; margin-bottom:15px;padding-left: 5%;padding-right: 5%">
-                        Hello Major Tom/Thomasina,
+                        Hello Major Tom/Thomasina, {{ $name }}
                     </p>
+                    <br/>
                     <p style="line-height: 24px; margin-bottom:15px;padding-left: 5%;padding-right: 5%">
                         Greetings my friend!
                     </p>
@@ -65,7 +67,7 @@
 
                     <p style="line-height: 24px; margin-bottom:15px;padding-left: 5%;padding-right: 5%;font-size:1.5em;
                     color: #ffc705db;
-                    font-family: 'Nasalization' !important;">
+                    font-family: 'Electrolize' !important;">
                        Mbaye Team
                         </p>
                 </td>
@@ -75,15 +77,17 @@
                
                     <a href="{{ $confirmation_url }}" style="color: #ffffff; text-decoration: none;">
                     <input type="button" value="VERIFY EMAIL" style="background-color: #ffb240;
-                    width: 10vw;
-                    height: 3vw;
+                    /* width: 10vw;
+                    height: 3vw; */
                     color: white;
-                    font-size: 1vw;
+                    font-size: 0.9em;
                     font-weight: bold;
-                    border: 4px solid #ebfdffa3;"> 
+                    border: 4px solid #ebfdffa3;  padding: 1%;"> 
                     </a>
                 </td>
             </tr>
+            <br/>
+            <br/>
             <br/>
             <tr>
                 <td  align="center" style="width:20px; font-size: 16px; line-height: 60px;">

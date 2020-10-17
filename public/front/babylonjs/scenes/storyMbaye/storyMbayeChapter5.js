@@ -12,7 +12,7 @@ let skybox;
 let currentStage = 24;
 
 let faceFlowersMap = new Map();
-let createChapter4Scene = function(){
+let createChapter5Scene = function(){
     
     canvas = document.getElementById('canvas');
     engine = new BABYLON.Engine(canvas, true,{ preserveDrawingBuffer: true, stencil: true });
@@ -146,27 +146,119 @@ function setup_stage(stageNo){
         $('.firstVideoOverlayText').css('font-size','5.5vw');
         let temp = init_photo(imgArr[0],{w:1200,h:600},{x:0,y:0,z:-700},stageNo); 
         currStageObjMap.set(temp.name,temp);      
-
         add_delay(temp,1000,4000);
         animateObjectPosition(temp, 20, frameCount, new BABYLON.Vector3(0,0,-500));
     }else if(stageNo === 63){                                      
       //for the current stage, change font size of text; show texts; add zoomin animation
         setCamDefault(150);
-        $('.firstVideoOverlayText').css('font-size','5vw');
-        
-    }else if(stageNo === 63){                                      
+        $('.firstVideoOverlayText').css('font-size','4.5vw');
+        let initdelay = 1000;
+        let pos = stageMap.get(stageNo).imagePos;
+        let scale = stageMap.get(stageNo).imageScale;
+        for(i=0;i<imgArr.length;i++){
+            let temp = init_photo(imgArr[i],{w:200,h:200},{x:0,y:0,z:-600},stageNo);
+            add_delay(temp,initdelay,2000);
+            currStageObjMap.set(temp.name, temp);
+            animateObjectPosition(temp,20,frameCount,pos[i]);
+            animateObjectScaling(temp,20,frameCount,scale[i]);
+            initdelay += 1000;
+        }//end of for loop        
+    }else if(stageNo === 64){                                      
       //for the current stage, change font size of text; show texts; add zoomin animation
         setCamDefault(150);
-        $('.firstVideoOverlayText').css('font-size','5.5vw');
+        $('.firstVideoOverlayText').css('font-size','4.5vw');
+    
+    }else if(stageNo === 65){                                      
+      //for the current stage, change font size of text; show texts; add zoomin animation
+        setCamDefault(150);
+        $('.firstVideoOverlayText').css('font-size','4vw');
+       
+        /*
+        //for when the video is required
+        setCamDefault(500);
+        videoDisc = init_video("videoStage65",550,stageNo);
+        console.log(videoDisc);
+        videoDisc.material.diffuseTexture.uOffset = 0.16;
+        videoDisc.material.diffuseTexture.uScale = 0.7;
+        currStageObjMap.set(videoDisc.name, videoDisc);
+        hl.addMesh(videoDisc, new BABYLON.Color3(0,0.5,0.5));
+        */
+    }else if(stageNo === 66){                                      
+      //for the current stage, change font size of text; show texts; add zoomin animation
+        setCamDefault(150);
+        $('.firstVideoOverlayText').css('font-size','4.5vw');
+    }else if(stageNo === 67){                                      
+      //for the current stage, change font size of text; show texts; add zoomin animation
+        setCamDefault(150);
+        $('.firstVideoOverlayText').css('font-size','4.2vw');
+        let pos = stageMap.get(stageNo).imagePos;
+        let initdelay = 1000;
+        for(i=0;i<imgArr.length;i++){
+          let temp = init_photo(imgArr[i],{w:200,h:200},{x:0,y:0,z:-800},stageNo);
+          add_delay(temp,initdelay,2000);
+          currStageObjMap.set(temp.name, temp);
+          animateObjectPosition(temp,20,frameCount,pos[i]);
+          initdelay += 1000;
+          if(i==0) temp.scaling = new BABYLON.Vector3(2,2,2);
+      }//end of for loop     
+    
+    }else if(stageNo === 68){                                      
+      //for the current stage, change font size of text; show texts; add zoomin animation
+        setCamDefault(150);
+        $('.firstVideoOverlayText').css('font-size','4.5vw');
+        let pos = stageMap.get(stageNo).imagePos;
+      
+        for(i=0;i<imgArr.length;i++){
+          let temp = init_photo(imgArr[i],{w:200,h:200},pos[i],stageNo);
+          add_delay(temp,3000,2000);
+          currStageObjMap.set(temp.name, temp);
+        }//end of for loop        
+    }else if(stageNo === 69){                                      
+      //for the current stage, change font size of text; show texts; add zoomin animation
+        setCamDefault(150);
+        $('.firstVideoOverlayText').css('font-size','3.5vw');
+        let temp = init_photo(imgArr[0],{w:500,h:500},new BABYLON.Vector3(0,0,-600),stageNo);
+        currStageObjMap.set(temp.name, temp);     
+        animateObjectScaling(temp,20,frameCount,new BABYLON.Vector3(1.7,1.7,1));
+    
+    }else if(stageNo === 70){                                      
+      //for the current stage, change font size of text; show texts; add zoomin animation
+        setCamDefault(150);
+        $('.firstVideoOverlayText').css('font-size','4.5vw');
+        let initdelay = 2000;
+        let pos = stageMap.get(stageNo).imagePos;
+        for(i=0;i<imgArr.length;i++){
+            let temp = init_photo(imgArr[i],{w:500,h:500},pos[i],stageNo);
+            add_delay(temp,initdelay,3000);
+            initdelay+=3000;
+            if(i===0){    
+                let currTimer = setTimeout(function(){
+                  animateObjectFadeOut(temp, 30, 200, 0);
+                },6000);
+            }
+            currStageObjMap.set(temp.name, temp);
+        }//end of for loop 
+    }else if(stageNo === 71){                                      
+      //for the current stage, change font size of text; show texts; add zoomin animation
+        setCamDefault(150);
+        $('.firstVideoOverlayText').css('font-size','3.8vw');
+        let pos = stageMap.get(stageNo).imagePos;
+        for(i=0;i<imgArr.length;i++){
+            let temp = init_photo(imgArr[i],{w:200,h:200},pos[i],stageNo);
+            add_delay(temp,2000,3000);
+            currStageObjMap.set(temp.name, temp);
+        }//end of for loop 
+    }else if(stageNo === 72){                                      
+      //for the current stage, change font size of text; show texts; add zoomin animation
+        setCamDefault(150);
+        $('.firstVideoOverlayText').css('font-size','5vw');
+          let temp = init_photo(imgArr[0],{w:1200,h:600},{x:0,y:0,z:-500},stageNo);
+          add_delay(temp,2000,3000);
+          currStageObjMap.set(temp.name, temp);
     }
 
-
     currentStage++;
-    // currentStage = 31;
-
     
-    // console.log("the scene: ", scene.activeCamera);
-    // scene.meshes.forEach(function(mesh){console.log(mesh.name);});
 }
 
 
@@ -193,7 +285,7 @@ function setup_3D_photo(){
 
 
   //function that will render the scene on loop
-  var scene = createChapter4Scene();
+  var scene = createChapter5Scene();
   let loadingTimer;
   if(scene.isLoading){
       let c=0;
@@ -215,6 +307,7 @@ function setup_3D_photo(){
     $('.firstVideoOverlayText').css('display', 'block');
 
     rotate_sky();                                                   //start rotating the sky
+    //start with 62
     currentStage = 62;
     setup_stage(62);                                                 //start showing the script 1, stage 1
     // currentStage = 49;

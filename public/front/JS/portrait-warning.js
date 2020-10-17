@@ -1,17 +1,9 @@
-jQuery(function() { 
+// jQuery(function() { 
     // Start Force landscape orientation
     testOrientation();
-    window.addEventListener("orientationchange", function(event) {
-        // Generate a resize event if the device doesn't do it
-        // window.dispatchEvent(new Event("resize"));
-        testOrientation();
-    }, false);
+    window.addEventListener("orientationchange", testOrientation, false);
 
-    window.addEventListener("resize", function(event) {
-        // Generate a resize event if the device doesn't do it
-        // window.dispatchEvent(new Event("resize"));
-        testOrientation();
-    }, false);
+    window.addEventListener("resize", testOrientation, false);
 
     var elem = document.documentElement;
     var isFullScreen = 0;
@@ -29,7 +21,9 @@ jQuery(function() {
 		} else if (elem.requestFullscreen) {
 			elem.requestFullscreen();
 			contentDisplay();
-		} 
+		} else {
+            contentDisplay();
+        }
 	}
 	
     function testOrientation() {
@@ -54,13 +48,16 @@ jQuery(function() {
                         imageWidth: 80,
                         imageHeight: 80,
                         html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
-                        padding: '15px',
+                        padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)',
                         allowOutsideClick: false
                     }).then((result) => {
                         // if (result.value) {
-                            isFullScreen = 1;
-                            openFullscreen();
+                            if(!isFullScreen) {
+                                openFullscreen();
+                                isFullScreen = 1;
+                            }
+                           
                         // }
                     });
                 }
@@ -77,4 +74,4 @@ jQuery(function() {
         $('#block_land').hide();
     }
     // End Force landscape orientation
-});
+// });

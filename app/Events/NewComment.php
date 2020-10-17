@@ -47,7 +47,10 @@ class NewComment implements ShouldBroadcast
                 'created_at' => $this->comment->created_at,
                 'user' => [
                     'username' => $this->comment->user->username,
+                    'first_name' => $this->comment->user->first_name,
+                    'last_name' => $this->comment->user->last_name,
                     'photo' => $this->comment->user->photo,
+                    'gender' => $this->comment->user->gender,
 
                 ],
             ];

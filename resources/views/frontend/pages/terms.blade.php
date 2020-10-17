@@ -13,12 +13,12 @@
 @endsection
 
 @section('content')
-<div id="block_land">
+{{-- <div id="block_land">
   <div class="content">
       <h1 class="text-glow">Turn your device in landscape mode.</h1>
       <img src="{{ asset('front') }}/images/rotate-screen.gif" alt="">
   </div>
-</div>
+</div> --}}
 <div class="app">
 </div>
 <div id="page-content" class="page">

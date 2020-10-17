@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Blogs\Blog;
 use Illuminate\Support\Str;
 use App\Events\NewBlogEvent;
+use App\Events\NewBlogShare;
 use Illuminate\Http\Request;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
@@ -22,6 +23,7 @@ use App\Models\Friendships\FriendFriendshipGroups;
 use App\Http\Responses\Backend\Blog\CreateResponse;
 use App\Repositories\Frontend\Blogs\BlogsRepository;
 use App\Notifications\Frontend\BlogShareNotification;
+use App\Notifications\Frontend\GeneralBlogShareNotification;
 use App\Http\Requests\Backend\Blogs\StoreBlogsRequest;
 use App\Http\Requests\Backend\Blogs\ManageBlogsRequest;
 use App\Http\Requests\Backend\Blogs\UpdateBlogsRequest;
@@ -222,7 +224,8 @@ class BlogsController extends Controller
         $blog->valid_videos = $videos['valid_videos'];
         $blog->invalid_videos = $videos['invalid_videos'];
         $blog->naff_fart_status = $blog->getNaffFartStatus();
-        
+        $blog->type = "reguler";
+        // dd($blog);
         return view('frontend.blog.single_blog', compact('blog'));
     }
 
@@ -235,9 +238,6 @@ class BlogsController extends Controller
         // $excerpt_content = Str::limit($blog->content, 200);
         $blog->summary = preg_replace('#(<figure[^>]*>).*?(</figure>)#', '$1$2', $blog->content);
         
-        if($blog->featured_image == '') {
-            $blog->featured_image = 'blog-default-featured-image.png';
-        }
         $day = Carbon::parse($blog->publish_datetime)->format('d');
         $blog->day = $day;
 
@@ -252,9 +252,12 @@ class BlogsController extends Controller
 
         if($shared_blog->blog_type == 'App\Models\Blogs\Blog') {
             $tags = $blog->tags;
+            $blog->type = 'reguler';
         } else if($shared_blog->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
             $tags = $shared_blog->tags;
+            $blog->type = 'general';
         }
+        // dd(compact('blog', 'shared_blog', 'tags'));
         
         return view('frontend.blog.shared_blog', compact('blog', 'shared_blog', 'tags'));
     }
@@ -267,6 +270,7 @@ class BlogsController extends Controller
      */
     public function destroy($id, Request $request)
     {
+        // dd($request);
         if($request->has('type') && $request->type == 'shared') {
             $blog = BlogShare::find($request->share_id)->delete();
         } else {
@@ -328,7 +332,8 @@ class BlogsController extends Controller
     public function shareBlog(StoreBlogSharesRequest $request)
     {
         $blog = Blog::find($request->blog_id);
-        $user = User::where('id',$blog->created_by)->first();
+        $user = $blog->owner;
+
         $blog_share = new BlogShare();
         $blog_share->caption = $request->share_caption;
         $blog_share->blog_id = $request->blog_id;
@@ -337,7 +342,35 @@ class BlogsController extends Controller
         $blog_share->publish_datetime = date('Y-m-d H:i:s');
         $blog_share->save();
         Notification::send($user, new BlogShareNotification($blog_share));
-        return array('message' => 'Shared blog successfully!');
+        broadcast(new NewBlogShare($blog_share))->toOthers();
+        return array('message' => 'Shared blog successfully!', 'blog_share' => $blog_share);
+    }
+
+    public function shareGeneralBlog(StoreBlogSharesRequest $request)
+    {
+        // get shared blog details
+        $shared_blog = BlogShare::find($request->shared_id);
+        $tags = $shared_blog->tags->pluck('id')->toArray();
+        
+        $blog = GeneralBlog::find($request->blog_id);
+        $user = $blog->owner;
+
+        // share shared blog
+        $blog_share = new BlogShare();
+        $blog_share->caption = $request->share_caption;
+        $blog_share->blog_id = $request->blog_id;
+        $blog_share->blog_type = $blog->getMorphClass();
+        $blog_share->created_by = Auth::user()->id;
+        $blog_share->publish_datetime = date('Y-m-d H:i:s');
+        $blog_share->save();
+        
+        if (count($tags)) {
+            $blog_share->tags()->sync($tags);
+        }
+
+        Notification::send($user, new BlogShareNotification($blog_share));
+
+        return array('message' => 'Shared blog successfully!', 'blog_share' => $blog_share);
     }
 
     public function publishDesignBlog(StoreDesignsBlogsRequest $request)
@@ -558,5 +591,79 @@ class BlogsController extends Controller
         $share_blogs = $from_general_blog->merge($from_reg_blog);
 
         return $share_blogs;
+    }
+
+    public function getblogs(Request $request)
+    {
+        $search = $request->search;
+        $sort = $request->sort;
+        $status = $request->status;
+
+        $regular_blogs = Blog::where('created_by', Auth::user()->id)
+            ->when($status, function ($query, $status) {
+                return  $query->where('status', $status);
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('content', 'like', '%'.$search.'%');
+                });
+            })
+            ->when($sort, function ($query, $sort) {
+                if($sort == 'asc_name') {
+                    $query = $query->orderBy('name', 'asc');
+                } else if($sort == 'desc_name') {
+                    $query = $query->orderBy('name', 'desc');
+                }
+                
+                return  $query;
+            })
+            ->get();
+
+        if($status == 'Draft' || $status == 'Unpublished') {
+            $shared_blogs = [];
+        } else {
+            $shared_blogs = BlogShare::where('created_by', Auth::user()->id)
+            ->whereHas('blog', function($q) use ($search, $sort, $status){
+                $q->when($search, function ($query, $search) {
+                    return $query->where(function ($q) use ($search) {
+                        $q->where('name', 'like', '%'.$search.'%')
+                        ->orWhere('content', 'like', '%'.$search.'%');
+                    });
+                });
+             })
+             ->orWhereHas('general_blog', function($q) use ($search, $sort, $status){
+                $q->when($search, function ($query, $search) {
+                    return $query->where(function ($q) use ($search) {
+                        $q->where('name', 'like', '%'.$search.'%')
+                        ->orWhere('content', 'like', '%'.$search.'%');
+                    });
+                });
+             })
+            // ->with('blog')
+            ->get();
+        }
+        
+        $blogs = $regular_blogs->merge($shared_blogs)
+            ->when($sort, function ($query, $sort) {
+                if($sort == 'asc_publisheddate') {
+                    $query = $query->whereNotNull('publish_datetime')
+                        ->sortBy('publish_datetime');
+                } else if($sort == 'desc_publisheddate') {
+                    $query = $query->whereNotNull('publish_datetime')
+                        ->sortByDesc('publish_datetime');
+                }
+                return  $query;
+            })
+            ->when(!$sort, function ($query, $sort) {
+                return $query->sortByDesc('publish_datetime');
+            })
+            ->paginate(9);
+
+	    // dd($data->first()->getTable());
+        // $blogs = $query;
+        // dd($blogs);
+
+        return $blogs;
     }
 }

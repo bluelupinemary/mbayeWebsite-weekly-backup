@@ -4,14 +4,14 @@ var terms_labels = [ "TERMS OF SERVICES", "COPYRIGHT CLAIMS" ,"PRIVACY POLICY", 
 var url = $('meta[name="url"]').attr('content');
 var index=0;
 // for showing message to turn to landscape 
-  testOrientation();
-window.addEventListener("orientationchange", function(event) {
-    testOrientation();
-}, false);
+//   testOrientation();
+// window.addEventListener("orientationchange", function(event) {
+//     testOrientation();
+// }, false);
 
-window.addEventListener("resize", function(event) {
-    testOrientation();
-}, false);
+// window.addEventListener("resize", function(event) {
+//     testOrientation();
+// }, false);
 $(document).ready(function() {
     $('.home-div').css('pointer-events', 'auto');
     $('.back-div').css('pointer-events', 'auto');
@@ -20,58 +20,58 @@ $(document).ready(function() {
    
 
       
-    var elem = document.documentElement;
-    function openFullscreen() {
-        if (elem.mozRequestFullScreen) {  /* Firefox */
-        elem.mozRequestFullScreen(); 
-        contentDisplay();
-      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-        elem.webkitRequestFullscreen();
-        contentDisplay();
-      } else if (elem.msRequestFullscreen) { /* IE/Edge */
-        elem.msRequestFullscreen();
-        contentDisplay();
-      }
-      else if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-        contentDisplay();
-      } 
-      else{
-      //alert("iphone")
-        contentDisplay();
-      }
+    // var elem = document.documentElement;
+    // function openFullscreen() {
+    //     if (elem.mozRequestFullScreen) {  /* Firefox */
+    //     elem.mozRequestFullScreen(); 
+    //     contentDisplay();
+    //   } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+    //     elem.webkitRequestFullscreen();
+    //     contentDisplay();
+    //   } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    //     elem.msRequestFullscreen();
+    //     contentDisplay();
+    //   }
+    //   else if (elem.requestFullscreen) {
+    //     elem.requestFullscreen();
+    //     contentDisplay();
+    //   } 
+    //   else{
+    //   //alert("iphone")
+    //     contentDisplay();
+    //   }
     
-    }
-    if(window.innerWidth < 991 ){
-    $(document).ready(()=>{
-        Swal.fire({
-                imageUrl: '../../front/icons/alert-icon.png',
-                imageWidth: 100,
-                imageHeight: 100,
-                html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
-                padding: '15px',
-                background: 'rgba(8, 64, 147, 0.62)',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.value) {
-                    openFullscreen()
-                }
-            });
-        });
-    }
-    else  contentDisplay();
+    // }
+    // if(window.innerWidth < 991 ){
+    // $(document).ready(()=>{
+    //     Swal.fire({
+    //             imageUrl: '../../front/icons/alert-icon.png',
+    //             imageWidth: 100,
+    //             imageHeight: 100,
+    //             html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+    //             padding: '15px',
+    //             background: 'rgba(8, 64, 147, 0.62)',
+    //             allowOutsideClick: false
+    //         }).then((result) => {
+    //             if (result.value) {
+    //                 openFullscreen()
+    //             }
+    //         });
+    //     });
+    // }
+    // else  contentDisplay();
     
-    function contentDisplay() { 
-            setTimeout(function(){
-              $(".page").css({'visibility':'visible'});
-              $(".page").addClass('animate-zoomIn-arm');
-              $('.page').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){ 
-              $(".page").removeClass('animate-zoomIn-arm');
-              $(".page").addClass('zoomIn-arm');
-              });
-              }, 1000
-              );
-        }
+    // function contentDisplay() { 
+    //         setTimeout(function(){
+    //           $(".page").css({'visibility':'visible'});
+    //           $(".page").addClass('animate-zoomIn-arm');
+    //           $('.page').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){ 
+    //           $(".page").removeClass('animate-zoomIn-arm');
+    //           $(".page").addClass('zoomIn-arm');
+    //           });
+    //           }, 1000
+    //           );
+    //     }
     // Write all the labels 
  
     var label_Prev=terms_labels[terms_labels.length-1];

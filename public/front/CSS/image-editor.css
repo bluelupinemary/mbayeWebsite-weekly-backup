@@ -1,18 +1,18 @@
-.controls {
+.editor-controls {
     position: fixed;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
     display: flex;
     /* border: 1px solid red; */
-    width: 50%;
+    width: 80%;
     margin: 0 auto;
     /* margin-top: 1%; */
     justify-content: center;
     align-items: center;
 }
 
-.controls button {
+.editor-controls button{
     width: 5vw;
     height: 4vw;
     font-size: 1.3vw;
@@ -26,11 +26,11 @@
 }
 
 
-.controls button:focus {
+.editor-controls button:focus {
     outline: 0;
 }
 
-.controls button:disabled {
+.editor-controls button:disabled {
     color: #3a3a3a
 }
 
@@ -100,7 +100,7 @@
     display: none;
 }
 
-.cancel-btn {
+.image-editor-cancel-btn {
     position: absolute;
     left: 2%;
     top: 2%;
@@ -118,6 +118,38 @@
     vertical-align: middle;
     letter-spacing: 0.3px;
     text-align: center;
+}
+
+.image-editor-save-btn {
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    width: 7vw;
+    height: 3vw;
+    padding: 0;
+    line-height: 1em;
+    outline: none;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    vertical-align: middle;
+    letter-spacing: 0.3px;
+    text-align: center;
+    background:#cc273ea3;
+    color:white;
+    display:block;
+}
+
+.image-editor-save-btn:disabled {
+    background: #3a3a3a;
+    cursor: no-drop;
+}
+
+.image-editor-save-btn:hover{
+    filter: drop-shadow(0px 0px 3px white);
 }
 
 
@@ -159,6 +191,13 @@
     cursor: pointer;
 } */
 
+.bring-forward:hover, .bring-forward:focus,
+.send-backward:hover, .send-backward:focus {
+    fill:#17a2b8;
+}
+
+
+
 .undo:hover, .undo:focus, 
 .custom-file-upload:hover, .custom-file-upload.focus,
 .redo:hover, .redo:focus,
@@ -167,6 +206,7 @@
 .zoom-out:hover, .zoom-out:focus,
 .original-size:hover, .original-size:focus,
 .add_shapes:hover, .add_shapes:focus,
+.free-drawing:hover, .free-drawing:focus,
 .add_text:hover, .add_text:focus,
 .remove_object:hover, .remove_object:focus,
 .upload:hover, .upload:focus,
@@ -175,7 +215,14 @@
 .cropImage:hover, .cropImage:focus,
 .open_tuiEditor:hover, .open_tuiEditor:focus,
 .crop:hover, .crop:focus,
-.clear-highlight:hover, .clear-highlight:focus{
+.clear-highlight:hover, .clear-highlight:focus,
+.image-filter:hover, #image-filter:focus,
+#draw-pencil:hover, #draw-pencil:focus,
+#draw-spray:hover, #draw-spray:focus,
+#draw-circle:hover, #draw-circle:focus,
+#draw-vline:hover, #draw-vline:focus,
+#draw-hline:hover, #draw-hline:focus,
+#draw-grid:hover, #draw-grid:focus{
     color: #17a2b8;
     text-decoration: none;
     cursor: pointer;
@@ -213,7 +260,7 @@
     scrollbar-width: thin;
     scrollbar-color: #047999 #c1d7e491;
     width:60%;
-    height:100%;
+    height:20vh;
     display: flex;
     flex-wrap:wrap;
     overflow-y:auto;
@@ -222,11 +269,11 @@
 }
 
  #shape-color-box{
-    padding-top: 5%;
+    /* padding-top: 5%; */
     position:relative;
     border-right: 0.5px solid gray;
     width: 40%;
-    height: 100%;
+    height: 20vh;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -269,13 +316,13 @@
   border-radius: 50%;
 }
 .shape-select {
-    display: flex;
+    display: block;
     position: fixed;
     background: #161616;
     bottom: 8vh;
     left: 40vw;
     width: 25vw;
-    height: 10vw;
+    height: 25vh;
     margin: 0 auto;
     padding: 0.3vw;
     align-items: center;
@@ -316,7 +363,6 @@
 }
 
  #text-option-box{
-    padding-top:5%;
     position:relative;
     width: 100%;
     height: 100%;
@@ -324,6 +370,36 @@
     flex-direction: column;
     text-align: center;
 } 
+
+
+
+.free-drawing-div {
+    position: fixed;
+    background: #161616;
+    bottom: 8vh;
+    left: 50vw;
+    transform: translate(-50%, 0);
+    width: 23vw;
+    height: 25vh;
+    margin: 0 auto;
+    padding: 0.3vw;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    z-index: 100;
+    overflow-y:scroll;
+}
+
+ /* #text-option-box{
+    padding-top:5%;
+    position:relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}  */
+
 
 .font-select .fs-search input{
     font-size: 1vw;
@@ -355,6 +431,8 @@
 #imgLoader, #startImageLoader {
     display: none;
 }
+
+
 
 
 .bring-forward, .send-backward {
@@ -481,8 +559,8 @@
 
 /* Canvas controls */
 .instruction-3 {
-    transform: translate(24.95vw, 91.5vh);
-    width: 50vw;
+    transform: translate(10vw, 91.5vh);
+    width: 80vw;
     height: 8vh;
 }
 
@@ -542,4 +620,248 @@
     bottom: 1.5vh;
     font-size: 2.5vw;
     cursor: pointer;
+}
+
+
+#free-draw-options-box{
+    padding-top: 5%;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    text-align: center;
+} 
+
+#free-draw-select{
+   max-width:60%;
+   margin-left:20%;
+}
+
+#free-draw-select-div{
+    height:8vh;
+    overflow-y:scroll;
+    display:none;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: center;
+ }
+
+ #free-draw-size-div{
+    margin-top:5%;
+    display:none;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: center;
+ }
+
+ #free-draw-select-div button{
+     background: #161616;
+     color:white;
+     border: 0px;
+     text-shadow: none;
+     font-size:1.5em;
+     width: 3vw;
+     height:3vw;
+ }
+
+
+
+
+
+
+
+
+
+
+/*CSS for the sliders /round slider of free drawing and shape div*/
+.shapeForImageSwitch, .free-draw-switchlbl {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .shapeForImageSwitch input, .free-draw-switchlbl input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .shapeSlider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .shapeSlider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .shapeSlider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .shapeSlider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .shapeSlider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded shapeSliders */
+  .shapeSlider.round {
+    border-radius: 34px;
+  }
+  
+  .shapeSlider.round:before {
+    border-radius: 50%;
+  }
+
+
+
+
+
+
+  
+		
+/*========STYLES FOR THE IMAGE FILTER OPTIONS=====================*/	
+  	
+.image-filter-div {	
+    display:none;	
+    position: fixed;	
+    background: #161616;	
+    bottom: 8vh;	
+    left: 75vw;	
+    transform: translate(-50%, 0);	
+    width: 30vw;	
+    height: 25vh;	
+    margin: 0 auto;	
+    justify-content: center;	
+    align-items: center;	
+    color: #fff;	
+    z-index: 100;	
+    overflow-y:scroll;	
+}	
+#image-filter-options-box{	
+    display: flex;	
+    flex-direction: row;	
+    flex-wrap: wrap;	
+}	
+#image-filter-div-label, #text-tools-div-label, #shapes-tools-div-label{
+    font-size:1.2vw;
+    text-align:center;
+    position:relative;
+    width:100%;
+    margin-bottom:2%;
+    color:#eba534;
+    padding-top:1%;
+    text-shadow: 0px 0px 5px grey;
+}
+
+
+.filterOptions {	
+    display: block;	
+    position: relative;	
+    padding-left: 20%;	
+    cursor: pointer;	
+    font-size: 1.2vw;	
+    -webkit-user-select: none;	
+    -moz-user-select: none;	
+    -ms-user-select: none;	
+    user-select: none;	
+  }	
+  	
+  /* Hide the browser's default checkbox */	
+  .filterOptions input {	
+    position: absolute;	
+    opacity: 0;	
+    cursor: pointer;	
+    height: 0;	
+    width: 0;	
+  }	
+  	
+  /* Create a custom checkbox */	
+  .checkmark {	
+    position: absolute;	
+    top: 0;	
+    left: 0;	
+    height: 1.2vw;	
+    width: 1.2vw;	
+    margin:5%;	
+    background-color: #eee;	
+  }	
+  	
+  /* On mouse-over, add a grey background color */	
+  .filterOptions:hover input ~ .checkmark {	
+    background-color: #ccc;	
+  }	
+  	
+  /* When the checkbox is checked, add a blue background */	
+  .filterOptions input:checked ~ .checkmark {	
+    background-color: #2196F3;	
+  }	
+  	
+  /* Create the checkmark/indicator (hidden when not checked) */	
+  .filterOptions:after {	
+    content: "";	
+    position: absolute;	
+    display: none;	
+  }	
+  	
+  /* Show the checkmark when checked */	
+  .filterOptions input:checked ~ .checkmark:after {	
+    display: block;	
+  }	
+  	
+  /* Style the checkmark/indicator */	
+  .filterOptions .checkmark:after {	
+    left: 9px;	
+    top: 5px;	
+    width: 5px;	
+    height: 10px;	
+    border: solid white;	
+    border-width: 0 3px 3px 0;	
+    -webkit-transform: rotate(45deg);	
+    -ms-transform: rotate(45deg);	
+    transform: rotate(45deg);	
+  }
+
+
+
+  /*STYLE FOR THE IMAGE CROPPER FEATURE*/
+
+  .edit_image{
+    position:absolute;
+    left:2vw;
+    top:20vw;
+}
+
+.image-editor-modal{
+    padding-right: 0 !important;
+    background:url('../../images/skybox_bg1.jpg');
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    display: none;
+}
+.tui-editor-modal{
+    display: none;
 }

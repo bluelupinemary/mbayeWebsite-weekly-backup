@@ -5,9 +5,9 @@ var flowersMbayeMap = new Map([
     ["2Sunflower",[ {x: -139, y: -422.81, z: -249},null,"https://en.wikipedia.org/wiki/Helianthus",{id:"vBdGUBOs_r4",start:3}]],
     ["3ArumLily",[{x: 910.68, y: 102.32, z: -139.92},null,"https://en.wikipedia.org/wiki/Zantedeschia",{id:"CzANBg56hFo",start:10} ]],
     ["4ColoradoBlueColumbine",[{x: 881, y: 232, z: -473},null, "https://en.wikipedia.org/wiki/Aquilegia_coerulea",{id:"-LCAIUamxZ0",start:4} ]],
-    ["5AlpineColumbine",[{x: -719.438410543316, y: -460.18646391590494, z: -648.8401364518967},null,"https://en.wikipedia.org/wiki/Aquilegia",{id:"fZVi07gz28w",start:2} ]],
+    ["5AlpineColumbine",[{x: -719.438410543316, y: -460.18646391590494, z: -648.8401364518967},null,"https://en.wikipedia.org/wiki/Aquilegia_pubescens",{id:"fZVi07gz28w",start:2} ]],
     
-    ["6BlackEyedSusan",[ {x: 925, y: 178, z: 477} ,null,"https://en.wikipedia.org/wiki/Black-eyed_Susan",{id:"23dW3H9yFSU",start:30} ]],
+    ["6BlackEyedSusan",[ {x: 925, y: 178, z: 477} ,null,"https://en.wikipedia.org/wiki/Rudbeckia_hirta",{id:"23dW3H9yFSU",start:30} ]],
     ["7Daylily",[ {x: -792.712516322718, y: -150.99067616838144, z: 949.2300397335202} ,null,"https://en.wikipedia.org/wiki/Daylily",{id:"y73i8YejSCU",start:5} ]],
     ["8Chickweed",[ {x: -890, y: -79.8495677603157, z: 120} ,null,"https://en.wikipedia.org/wiki/Stellaria_media",{id:"yhv2WUUOAIQ",start:0} ]],
     ["9Damiana",[   {x: 524.0650820665461, y: -13.624331038709556, z: -683.1342562824325} ,null,"https://en.wikipedia.org/wiki/Turnera_diffusa",{id:"je0Q-0R3Fds",start:4} ]],
@@ -43,19 +43,19 @@ var flowersMbayeMap = new Map([
     ["34Tormentil",[ {x: 522.59, y: -384.67, z: -334.8},null, "https://en.wikipedia.org/wiki/Potentilla_erecta",{id:"l9d5Rj0FGU8",start:8} ]],
     ["35SpringGentian",[ {x: 302, y: -302, z: 76} ,null, "https://en.wikipedia.org/wiki/Gentiana_verna",{id:"Ubg7AI81VsQ",start:0} ]],
     
-    ["36Foxglove",[{x: -126.63712820145845, y: -20.960604252758458, z: 979.867986787892},null, "https://en.wikipedia.org/wiki/Digitalis",{id:"2-eclUz-RYI",start:0} ]],
+    ["36Foxglove",[{x: -126.63712820145845, y: -20.960604252758458, z: 979.867986787892},null, "https://en.wikipedia.org/wiki/Digitalis",{id:"5ll8cKiudDA",start:0} ]],
     ["37Snapdragon",[{x: 726.91, y: -3.66, z: 7.04},null, "https://en.wikipedia.org/wiki/Antirrhinum",{id:"GuanbnnzXQ4",start:0} ]],
     ["38Anthurium",[{x: 630, y: 239, z: 562} ,null, "https://en.wikipedia.org/wiki/Anthurium",{id:"Gcxv7i02lXc",start:4} ]],
     ["39Amaryllis",[ {x: 636, y: -378, z: 171} ,null, "https://en.wikipedia.org/wiki/Amaryllis",{id:"lVChCevOy-8",start:0} ]],
     ["40BlueWaterLily",[{x: 62, y: -274.70, z: -293},null, "https://en.wikipedia.org/wiki/Nymphaea_caerulea",{id:"wLAXfkK-DPg",start:5} ]],
     
-    ["41GenistaCorsica",[{x: -572.95, y: -105.16, z: 558.49},null, "https://en.wikipedia.org/wiki/Genista_corsica",{id:"Hc9fDn-Z3PQ",start:0} ]],
+    ["41GenistaCorsica",[{x: -572.95, y: -105.16, z: 558.49},null, "https://en.wikipedia.org/wiki/Genista_corsica",{id:"Ji-6gfWQq-s",start:0} ]],
     ["42YellowLily",[{x: -59, y: 401, z: -548} ,null, "https://en.wikipedia.org/wiki/Lilium_canadense",{id:"zBFvHDdh7oo",start:1} ]],
     ["43ArabianJasmine",[ {x: 188.92, y: -280.07, z: 550.91} ,null, "https://en.wikipedia.org/wiki/Jasminum_sambac",{id:"vNJnrcrvjTk",start:4} ]],
     ["44IrisAlbicans",[{x: -732.3104864237382, y: 50.899765979829965, z: -684.2058619037081},null, "https://en.wikipedia.org/wiki/Iris_albicans",{id:"eDuZWJ5Uz2I",start:0} ]],
     ["45Euphorbia",[ {x: 918.51, y: -166.77, z: 554.61} ,null, "https://en.wikipedia.org/wiki/Euphorbia",{id:"zkGzQulZSEo",start:0} ]],
    
-    ["46WesternWallflower",[{x: 329, y: -194.08, z: 152},null, "https://en.wikipedia.org/wiki/Erysimum_capitatum",{id:"mvRQtbqLPK8",start:4} ]], 
+    ["46WesternWallflower",[{x: 329, y: -194.08, z: 152},null, "https://en.wikipedia.org/wiki/Erysimum_capitatum",{id:"2X4ghUUCw7s",start:4} ]], 
     ["47Plumeria",[ {x: -568, y: -189.45, z: 200.01},null, "https://en.wikipedia.org/wiki/Plumeria",{id:"rJtDlvmbL20",start:2} ]],
     ["48Fuchsia",[ {x: -248.57383590932847, y: 396.82, z: 540.6152605301927},null, "https://en.wikipedia.org/wiki/Fuchsia",{id:"IrUbFvF8Lzk",start:3} ]],
     ["49BoatOrchid",[{x: -590, y: -147, z: 411} ,null, "https://en.wikipedia.org/wiki/Cymbidium",{id:"DzBUzjucWu4",start:5} ]],
@@ -87,11 +87,11 @@ var flowersMbayeMap = new Map([
     
     ["71NarcissusLongispathus",[{x: -694.1917705243361, y: -50.013883584677956, z: 990.8352586952858} ,null, "https://en.wikipedia.org/wiki/Narcissus_longispathus",{id:"Wm-Tlc1DGFg",start:0} ]],
     ["72Aster",[  {x: 363.0353028824895, y: 483, z: -701.7213721323034} ,null, "https://en.wikipedia.org/wiki/Aster_(genus)",{id:"mDEbkme11Gg",start:2} ]],
-    ["73Strelitzia",[ {x: -374, y: 207.53154801722272, z: -87},null,"Strelitzia","https://en.wikipedia.org/wiki/Strelitzia",{id:"tzvrMKQQbeU",start:0} ]],
+    ["73Strelitzia",[ {x: -374, y: 207.53154801722272, z: -87},null,"https://en.wikipedia.org/wiki/Strelitzia",{id:"tzvrMKQQbeU",start:0} ]],
     ["74Poinsettia",[  {x: -764.670888208799, y: -345.38902731745816, z: -773.1153212344318} ,null, "https://en.wikipedia.org/wiki/Poinsettia",{id:"qsNEu750zok",start:0} ]],
     ["75HydrangeaMacrophylla",[{x: 410, y: 438, z: 207} ,null, "https://en.wikipedia.org/wiki/Hydrangea_macrophylla",{id:"9BD1y0TOk3o",start:2} ]],
 
-    ["76Wallflower",[{x: -215, y: -298, z: -335} ,null, "https://en.wikipedia.org/wiki/Erysimum",{id:"2X4ghUUCw7s",start:0} ]],
+    ["76Wallflower",[{x: -215, y: -298, z: -335} ,null, "https://en.wikipedia.org/wiki/Erysimum",{id:"mvRQtbqLPK8",start:0} ]],
     ["77SweetPea",[ {x: 315.8842285448296, y: 297.09733425543124, z: 170.0896457639662}, {x: 0, y: -0.5914815711854607, z: 0, w: 0.8063185170563673}, "https://en.wikipedia.org/wiki/Sweet_pea",{id:"iMxOluEwfVw",start:4} ]],
     ["78Camellia",[ {x: -621.0361695338581, y: -227.98908870332048, z: 20.296243778102962} ,null, "https://en.wikipedia.org/wiki/Camellia",{id:"-6QU1yJE84Y",start:0} ]],
     ["79Freesia",[ {x: -554.8539972500363, y: 27.112113571664054, z: -739.7315660447824} , {x: 0.05261268999464182, y: -0.5711583258508043, z: -0.0751387083451885, w: 0.8156986245979889}, "https://en.wikipedia.org/wiki/Freesia",{id:"jTaotgdYVQE",start:1} ]],
@@ -115,7 +115,7 @@ var flowersMbayeMap = new Map([
     ["94IberisGibraltarica",[{x: -817.7551119196929, y: 591.6840577325191, z: -219.61493967382805},null, "https://en.wikipedia.org/wiki/Iberis_gibraltarica",{id:"JS27Mrb4a1E",start:0} ]],
     ["95Dendrobium",[ {x: 789, y: 495, z: -615} ,null, "https://en.wikipedia.org/wiki/Dendrobium",{id:"UpPoz2gy0Cc",start:0} ]],
     
-    ["96Poinciana",[{x: -17.21043166357328, y: 228.97170573045298, z: 1019.1338805387242},null, "https://en.wikipedia.org/wiki/Delonix_regia",{id:"8FfEhTBrlWc",start:1} ]],
+    ["96Poinciana",[{x: -17.21043166357328, y: 228.97170573045298, z: 1019.1338805387242},null, "https://en.wikipedia.org/wiki/Delonix_regia",{id:"oemo6CKqvgc",start:1} ]],
     ["97EasterLily",[{x: 333.483495581226, y: 182.30443931994677, z: 336.28828207195494} ,null, "https://en.wikipedia.org/wiki/Lilium_longiflorum",{id:"vo8JYCqHozI",start:26} ]],
     ["98FlameLily",[{x: 684, y: 331, z: -364}  ,null, "https://en.wikipedia.org/wiki/Gloriosa_(plant)",{id:"WL_EM4wSbqc",start:0} ]],
     ["99Agave",[{x: -258.73470755783626, y: 181.97741977711595, z: -1292.111443775402} ,null, "https://en.wikipedia.org/wiki/Agave",{id:"5C6lEyuibhM",start:2} ]],
@@ -123,7 +123,7 @@ var flowersMbayeMap = new Map([
     
     ["101AcaciaFlower",[{x: -558.0290746953855, y: 353.29020518538994, z: 1027.1625967197199} ,null, "https://en.wikipedia.org/wiki/Acacia",{id:"PFCekeoSTwg",start:6} ]],
     ["102Edelweiss",[{x: 631, y: -385, z: -141} ,null, "https://en.wikipedia.org/wiki/Leontopodium_nivale",{id:"_CTYymbbEL4",start:4} ]],
-    ["103GerberaDaisy",[{x: -407.7788059619496, y: -429.0872809433962, z: 375.47175041618766},null, "https://en.wikipedia.org/wiki/Gerbera",{id:"igQz3505y7s",start:0} ]],
+    ["103GerberaDaisy",[{x: -407.7788059619496, y: -429.0872809433962, z: 375.47175041618766},null, "https://en.wikipedia.org/wiki/Gerbera",{id:"5aMVuEF0WCc",start:0} ]],
     ["104Lantana",[ {x: 407.18, y: -448.99, z: -152.71} ,null, "https://en.wikipedia.org/wiki/Lantana",{id:"Pm3PyY9Hhzc",start:8} ]],
     ["105DwarfPoinciana",[{x: 74.61283405711532, y: -962.2264710500169, z: -1858.4993848907259}  ,null, "https://en.wikipedia.org/wiki/Caesalpinia_pulcherrima",{id:"3P-imA4618Y",start:0} ]],
     
@@ -169,7 +169,7 @@ var flowersMbayeMap = new Map([
     ["139RhanteriumEpapposum",[{x: 427.87, y: -258.35, z: 633.95}  ,null, "https://en.wikipedia.org/wiki/Rhanterium_epapposum",{id:"MY3A-xLLJXw",start:0} ]],
     ["140Rhododendron",[{x: -1112.1746895477363, y: -241.09138220632036, z: -247.79133234217133},null, "https://en.wikipedia.org/wiki/Rhododendron",{id:"qwDBE-87NWE",start:4} ]],
     
-    ["141Pepper",[{x: -384.42, y: -34.08, z: -871.6},null, "https://en.wikipedia.org/wiki/Capsicum_annuum",{id:"iZ29Dsec54A",start:0} ]],
+    ["141Pepper",[{x: -384.42, y: -34.08, z: -871.6},null, "https://en.wikipedia.org/wiki/Piperaceae",{id:"iZ29Dsec54A",start:0} ]],
     ["142PomegranateBlossom",[{x: -385, y: -129.96, z: 613}  ,null, "https://en.wikipedia.org/wiki/Pomegranate",{id:"pXfTtKcrUWI",start:1} ]],
     ["143Rue",[{x: -853.3356448017239, y: 169.6360253346283, z: -615.8851068303458} ,null, "https://en.wikipedia.org/wiki/Ruta_graveolens",{id:"pIaIPaDfhec",start:0} ]],
     ["144TrochetiaBoutoniana",[{x: -1100.3333301494063, y: 132.454182236963, z: -350.47609029967526} ,null, "https://en.wikipedia.org/wiki/Trochetia_boutoniana",{id:"J-DlH5LcH2g",start:11} ]],
@@ -177,7 +177,7 @@ var flowersMbayeMap = new Map([
     
     ["146Scabiosa",[{x: 879.28, y: 50, z: 756.64}  ,null, "https://en.wikipedia.org/wiki/Scabiosa",{id:"7RujKG9hmCY",start:9} ]],
     ["147Padauk",[{x: 877, y: 407, z: -421} ,null, "https://en.wikipedia.org/wiki/Pterocarpus_macrocarpus",{id:"9jMC6vmZo2w",start:0} ]],
-    ["148Kowhai",[{x: 661.15, y: 562.10, z: -303.84},null, "https://en.wikipedia.org/wiki/K%C5%8Dwhai",{id:"WsJIDptF-2c",start:0} ]],
+    ["148Kowhai",[{x: 661.15, y: 562.10, z: -303.84},null, "https://en.wikipedia.org/wiki/K%C5%8Dwhai",{id:"J9gKyRmic20",start:0} ]],
     ["149SilverFern",[{x: 149.24, y: -58.59, z: 797.50},null, "https://en.wikipedia.org/wiki/Alsophila_dealbata",{id:"ZRuYQ9KRJms",start:0} ]],
     ["150YellowTrumpet",[{x: 1104.1706191790988, y: -74.6933975448444, z: 803.5114933725326} ,null, "https://en.wikipedia.org/wiki/Tecoma_stans",{id:"CTW0ifgY9zc",start:10} ]],
     
@@ -202,7 +202,7 @@ var flowersMbayeMap = new Map([
     ["166MargueriteDaisy",[{x: 267.97, y: 725.28, z: -657.91}  ,null, "https://en.wikipedia.org/wiki/Argyranthemum",{id:"YYDqWDTw65U",start:0} ]],
     ["167Ixora",[{x: -540.3267809727703, y: -280.23, z: -155.6866907819152},{x: -0.1893, y: -0.5414, z: 0.2703, w: 0.7734}, "https://en.wikipedia.org/wiki/Ixora",{id:"9bCyWqNTZvQ",start:15} ]],
     ["168LinnaeaBorealis",[{x: 982, y: 523, z: -294}  ,null, "https://en.wikipedia.org/wiki/Linnaea_borealis",{id:"KTmatjyd4KM",start:1} ]],
-    ["169Gagea",[{x: 52.955174790459495, y: 566.0731825565001, z: 478.9972202900262},null, "https://en.wikipedia.org/wiki/Gagea",{id:"Sv2je9arNz4",start:14} ]],
+    ["169Gagea",[{x: 52.955174790459495, y: 566.0731825565001, z: 478.9972202900262},null, "https://en.wikipedia.org/wiki/Gagea",{id:"hsL9UL9qbv8",start:14} ]],
     ["170Ratchaphruek",[{x: -389.28, y: 420.30, z: -130.63}  ,null, "https://en.wikipedia.org/wiki/Royal_Flora_Ratchaphruek",{id:"cx1qW_iG5nA",start:1} ]],
     
     ["171SyzygiumAromaticum",[{x: -687.108703831399, y: 568.7294138344546, z: -560.0150059181129} ,null, "https://en.wikipedia.org/wiki/Clove",{id:"3qQ0MCFttFc",start:0} ]],
@@ -235,17 +235,18 @@ var flowersMbayeMap = new Map([
     ["194YellowCrownImperial",[ {x: -582, y: -250, z: -406}  ,null, "https://en.wikipedia.org/wiki/Fritillaria_imperialis",{id:"O192eo9zbT4",start:15} ]],
     ["195PeganumHarmala",[{x: 493.48, y: 84.18, z: 202.14} ,null, "https://en.wikipedia.org/wiki/Peganum_harmala",{id:"23GwYVIOLqk",start:0} ]],
    
-    ["196Lycoris",[{x: 218, y: -205, z: -753} ,null, "https://en.wikipedia.org/wiki/Lycoris_(plant)",{id:"ddFj_eMPCnE",start:1.5} ]],
+    ["196Lycoris",[{x: 218, y: -205, z: -753} ,null, "https://en.wikipedia.org/wiki/Lycoris_(plant)",{id:"Sv2je9arNz4",start:1.5} ]],
     ["197PurpleBall",[{x: 649.41, y: -170.11, z: 646.54} ,null, "https://en.wikipedia.org/wiki/Allium_giganteum",{id:"d2SNX3bfYKw",start:0} ]],
     ["198TrochetiopsisEbenus",[{x: -841.88, y: -190.54, z: 288.78}  ,null, "https://en.wikipedia.org/wiki/Trochetiopsis_ebenus",{id:"c41IFA3N7UE",start:0} ]],
     ["199CaribWood",[{x: 318.73, y: 344.88, z: 875.71}   ,null, "https://en.wikipedia.org/wiki/Poitea_carinalis",{id:"9w1atvkVQnE",start:0} ]],
     ["200RosaLaevigata",[{x: -42.38, y: 50.77, z: -1486.61} ,null, "https://en.wikipedia.org/wiki/Rosa_laevigata",{id:"BNg7fNiBmjI",start:25} ]],
 
-    ["201PaleMaiden",[{x: -152.74417415265043, y: -457.51923012460156, z: -419.6611560603373} ,null, "https://en.wikipedia.org/wiki/Olsynium_filifolium",{id:"ddFj_eMPCnE",start:1.5} ]],
-    ["202TiareFlower",[{x: 1043.5480007928913, y: -500.7988092638111, z: 325.7379584958651},null, "https://en.wikipedia.org/wiki/Gardenia_taitensis",{id:"d2SNX3bfYKw",start:0} ]],
-    ["203ScorpionGrasses",[{x: -455.9271859342539, y: -221.46683845105778, z: 246.83510873769637}  ,null, "https://en.wikipedia.org/wiki/Myosotis",{id:"c41IFA3N7UE",start:0} ]],
-    ["204CherryBlossom",[{x: 815.9729566237127, y: 430.42004144868196, z: -95.12160014743786}   ,null, "https://en.wikipedia.org/wiki/Cherry_blossom",{id:"9w1atvkVQnE",start:0} ]],
-    ["205Wisteria",[{x: -102, y: 282.77, z: -744} ,null, "https://en.wikipedia.org/wiki/Wisteria",{id:"BNg7fNiBmjI",start:25} ]],
+    ["201PaleMaiden",[{x: -152.74417415265043, y: -457.51923012460156, z: -419.6611560603373} ,null, "https://en.wikipedia.org/wiki/Olsynium_filifolium",{id:"FOt3oQ_k008",start:0} ]],
+    ["202TiareFlower",[{x: 1043.5480007928913, y: -500.7988092638111, z: 325.7379584958651},null, "https://en.wikipedia.org/wiki/Gardenia_taitensis",{id:"p0ifMFSebjw",start:0} ]],
+    ["203ScorpionGrasses",[{x: -455.9271859342539, y: -221.46683845105778, z: 246.83510873769637}  ,null, "https://en.wikipedia.org/wiki/Myosotis",{id:"rKFpaCMRWgU",start:0} ]],
+    ["204CherryBlossom",[{x: 815.9729566237127, y: 430.42004144868196, z: -95.12160014743786}   ,null, "https://en.wikipedia.org/wiki/Cherry_blossom",{id:"AK51LblcEOw",start:0} ]],
+    ["205Wisteria",[{x: -102, y: 282.77, z: -744} ,null, "https://en.wikipedia.org/wiki/Wisteria",{id:"NDOYawXjW8U",start:0} ]],
+   
    
 ]);
 
@@ -259,7 +260,7 @@ var flowers3DMap = new Map([
     ["5AlpineColumbine",['5A','5B']],
     
     ["6BlackEyedSusan",['6A']],
-    ["7Daylily",['7A']],
+    ["7Daylily",['7A','7B']],
     ["8Chickweed",['8A']],
     ["9Damiana",['9A']],
     ["10Poppy",['10A']],
@@ -288,16 +289,16 @@ var flowers3DMap = new Map([
     ["29PetuniaExserta",['29A','29B']],
     ["30Pansy",['30A']],
     
-    ["31Willowherb",['31A']],
+    ["31Willowherb",['31A','31B','31C']],
     ["32GeraldtonWax",['32A']],
-    ["33YulanMagnolia",['33A']],
+    ["33YulanMagnolia",['33A','33B']],
     ["34Tormentil",['34A']],
     ["35SpringGentian",['35A']],
     
     ["36Foxglove",['36A']],
     ["37Snapdragon",['37A']],
     ["38Anthurium",['38A']],
-    ["39Amaryllis",['39A']],
+    ["39Amaryllis",['39A','39B']],
     ["40BlueWaterLily",['40A']],
     
     ["41GenistaCorsica",['41A']],
@@ -314,14 +315,14 @@ var flowers3DMap = new Map([
     
     ["51CypressVine",['51A']],
     ["52Hollyhocks",['52A']],
-    ["53Rose",['53A','53B']],
+    ["53Rose",['53A','53B','53C']],
     ["54GardeniaThunbergia",['54A','54B']],
     ["55BlueEyedGrass",['55A']],
     
     ["56Trillium",['56A']],
     ["57TigerLily",['57A']],
     ["58Spathodea",['58A']],
-    ["59WhiteLotus",['59A']],
+    ["59WhiteLotus",['59A','59B','59C']],
     ["60VeronicaChamaedrys",['60A']],
     
     ["61WildBluePhlox",['61A']],
@@ -388,7 +389,7 @@ var flowers3DMap = new Map([
     ["112RedStinkwood",['112A','112B']],
     ["113Bunchberry",['113A']],
     ["114AerangisBiloba",['114A']],
-    ["115PlumBlossom",['115A']],
+    ["115PlumBlossom",['115A','115B']],
 
     ["116CattleyaTrianae",['116A']],
     ["117YlangYlang",['117A']],
@@ -398,7 +399,7 @@ var flowers3DMap = new Map([
 
     ["121SolanumIncanum",['121A']],
     ["122BayahibeRose",['122A']],
-    ["123Hibiscus",['123A']],
+    ["123Hibiscus",['123A','123B']],
     ["124FlorDeIzote",['124A']],
     ["125VernoniaDjalonensis",['125A']],
 
@@ -414,9 +415,9 @@ var flowers3DMap = new Map([
     ["134Shamrock",['134A']],
     ["135LignumVitae",['135A']],
 
-    ["136Chrysanthemum",['136A']],
+    ["136Chrysanthemum",['136A','136B']],
     ["137MagnoliaSieboldii",['137A']],
-    ["138Paeony",['138A']],
+    ["138Paeony",['138A','138B']],
     ["139RhanteriumEpapposum",['139A']],
     ["140Rhododendron",['140A']],
 
@@ -515,6 +516,8 @@ let bookPartsMap = new Map(
         ["postMiddle_primitive1"],
         ["postBottom_primitive0"],
         ["postBottom_primitive1"],
+        ["postHead_primitive0"],
+        ["postHead_primitive1"],
         ["wood001_primitive0"],         //music video wood
         ["wood001_primitive1"],         //music video wood text
        

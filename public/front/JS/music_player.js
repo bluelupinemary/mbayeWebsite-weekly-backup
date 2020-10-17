@@ -207,7 +207,8 @@ var videos = [
 ];
 var current_video = 0;
 var current_volume = 100;
-var player, iframe;
+var player;
+var browser = Object.keys($.browser)[0];
 
 
 // next slider initialization
@@ -278,6 +279,7 @@ var enable_mousewheel = true;
 
 if(browser == 'webkit') {
     enable_mousewheel = false;
+    
     $nextSlider.slick('slickSetOption', 'verticalSwiping', false);
     $volumeSlider.slick('slickSetOption', 'verticalSwiping', false);
 
@@ -302,16 +304,16 @@ $('.slick-carousel-1').click(function() {
 $('.slick-carousel-1').bind('wheel', function(e){
     if(enable_mousewheel) {
         if(e.originalEvent.deltaY < 0) {
-            //scroll down
-            $nextSlider.slick('slickPrev')
-            $nextColorSlider.slick('slickPrev')
-            playNextSong();
-        }else {
             //scroll up
             $nextSlider.slick('slickNext')
             $nextColorSlider.slick('slickNext')
             // $audio_player.play()
             playPrevSong();
+        }else {
+            //scroll down
+            $nextSlider.slick('slickPrev')
+            $nextColorSlider.slick('slickPrev')
+            playNextSong();
         }
     
         //prevent page fom scrolling
@@ -374,7 +376,7 @@ $('.slick-carousel-2').on('swipe', function(event, slick, direction){
 $('.close-btn').click(function() {
     var section = $.urlParam('section');
 
-    $('.music-player').hide();
+    $('.music-player-div').hide();
 
     if(window_url.includes('?')) {
         if(section == 'blog' || section == 'career_blog') {
@@ -397,6 +399,12 @@ $('#youtube-icon').click(function() {
 
 $('#fullscreen-icon').click(function() {
     playFullscreen();
+});
+
+$(document).on('keyup',function(evt) {
+    if (evt.keyCode == 27) {
+        exitFullscreen();
+    }
 });
 
 // // play music
@@ -454,8 +462,8 @@ $('#fullscreen-icon').click(function() {
 //     var artist = element.data('artist');
 
 //     $('#music_player').attr('src', song);
-//     $('.music-player .music-title').text(title);
-//     $('.music-player .music-singer').text(artist);
+//     $('.music-player-div .music-title').text(title);
+//     $('.music-player-div .music-singer').text(artist);
 
 //     $('.playlist li').removeClass('active');
 //     element.addClass('active');
@@ -469,7 +477,7 @@ $('#fullscreen-icon').click(function() {
 // play video
 function playVideo()
 {
-    $('.music-player').css('display', 'block');
+    $('.music-player-div').css('display', 'block');
     $('.featured-image-div').hide();
     playAudio();
 }
@@ -477,7 +485,7 @@ function playVideo()
 // show music player
 function showMusicPlayer()
 {
-    $('.music-player').css('display', 'block');
+    $('.music-player-div').css('display', 'block');
     $('.featured-image-div').hide();
 }
 
@@ -508,6 +516,7 @@ function showMusicPlayer()
 //     // });
 // }
 
+var is_first = 1;
 // play next song
 function playNextSong()
 {
@@ -522,10 +531,14 @@ function playNextSong()
     // // $('#music_player').prop('volume', audio_volume);
     // audio.play();
     // playVideo();
-    if(videos.length-1 > current_video) {
-        current_video += 1;
-    } else if(videos.length-1 == current_video) {
-        current_video = 0;
+    if(is_first) {
+        is_first = 0;
+    } else {
+        if(videos.length-1 > current_video) {
+            current_video += 1;
+        } else if(videos.length-1 == current_video) {
+            current_video = 0;
+        }
     }
 
     playVideo();
@@ -606,17 +619,14 @@ function volumeDown()
 
 // audio visualizer setup
 function playAudio() {
-    $('.music-player iframe').remove();
+    $('.music-player-div iframe').remove();
     console.log(current_video);
     var video = videos[current_video];
     var video_id = video.id;
     var start = video.start;
     var video_player = 'youtube-player';
-    // var ctrlq = document.querySelector(".music-player");
-    // ctrlq.innerHTML = '<img id="youtube-icon" src="https://i.imgur.com/IDzX9gL.png"/><div id="youtube-player"></div>';
-    // ctrlq.style.cssText = 'cursor:pointer;cursor:hand;';
-    // ctrlq.onclick = toggleAudio;
-    $('.music-player').append('<div id="youtube-player"></div>')
+    
+    $('.music-player-div .video-container').append('<div id="youtube-player"></div>')
     // player.pauseVideo();
     player = new YT.Player(video_player, {
         height: '100%',
@@ -629,7 +639,9 @@ function playAudio() {
             enablejsapi: 1,
             rel: 0,
             origin : window.location.href,
-            widget_referrer: window.location.href
+            widget_referrer: window.location.href,
+            fs: 0
+            // disablekb: 1
         },
         events: {
             'onReady': onPlayerReady,
@@ -651,10 +663,7 @@ function toggleAudio() {
     } else {
         player.playVideo(); 
         togglePlayButton(true);
-    } 
-
-    // document.getElementById("youtube-audio").style.display = "block";
-    // togglePlayButton(player.getPlayerState() !== 5);
+    }
 } 
 
 function onPlayerReady(event) {
@@ -662,25 +671,75 @@ function onPlayerReady(event) {
     // event.target.pauseVideo(); 
     event.target.setVolume(current_volume);
     event.target.playVideo();
-    iframe = $('#youtube-player');
-    // document.getElementById("youtube-audio").style.display = "block";
+
     togglePlayButton(player.getPlayerState() !== 5);
 }
 
 function onPlayerStateChange(event) {
     if (event.data === 0) {
-        togglePlayButton(false); 
+        // togglePlayButton(false); 
+        playNextSong();
         // play next video
+    }
+
+    if(event.data === 1) {
+        togglePlayButton(true);
     }
 }
 
+// detect enter or exit fullscreen mode
+document.addEventListener('webkitfullscreenchange', fullscreenChange);
+document.addEventListener('mozfullscreenchange', fullscreenChange);
+document.addEventListener('fullscreenchange', fullscreenChange);
+document.addEventListener('MSFullscreenChange', fullscreenChange);
+
 function playFullscreen (){
     player.playVideo();//won't work on mobile
+    togglePlayButton(true);
     
-    var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
-    alert(requestFullScreen);
-    if (requestFullScreen) {
-      requestFullScreen.bind(iframe)();
+    // check if fullscreen mode is available
+    if (document.fullscreenEnabled || 
+        document.webkitFullscreenEnabled || 
+        document.mozFullScreenEnabled ||
+        document.msFullscreenEnabled) {
+        
+        // which element will be fullscreen
+        var iframe = document.querySelector('#youtube-player');
+        // Do fullscreen
+        if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+        } else if (iframe.webkitRequestFullscreen) {
+        iframe.webkitRequestFullscreen();
+        } else if (iframe.mozRequestFullScreen) {
+        iframe.mozRequestFullScreen();
+        } else if (iframe.msRequestFullscreen) {
+        iframe.msRequestFullscreen();
+        }
+    }
+    else {
+        Swal.fire({
+            imageUrl: '../../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            title: 'Oops!',
+            html: 'Your browser is not supported.',
+            // width: '30%',
+            padding: '15px',
+            background: 'rgba(8, 64, 147, 0.62)'
+        });
+    }
+}
+
+function fullscreenChange() {
+    if (document.fullscreenEnabled ||
+         document.webkitIsFullScreen || 
+         document.mozFullScreen ||
+         document.msFullscreenElement) {
+        console.log('enter fullscreen');
+    }
+    else {
+      console.log('exit fullscreen');
     }
 }
 // End setup music player

@@ -127,6 +127,7 @@ function create_flowers_skybox(){
 }//end of create skybox function
 
 let mbaye_object,earth_object;
+let earth_submeshes = new Map();
 function load_meshes(){
     Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/mbaye/", "MbayePipes.glb", flowersScene,  function (evt) {
@@ -156,6 +157,7 @@ function load_meshes(){
            
             result.meshes.forEach(function(m) {
                 m.isPickable = true;
+               
                 if(m.name === "MbayeBody"){
                     let pbr = new BABYLON.PBRMaterial("pbr", flowersScene);
                     m.material = pbr;
@@ -176,10 +178,12 @@ function load_meshes(){
                 
                 result.meshes[9].scaling = new BABYLON.Vector3(0.45,0.45,0.45);
                 result.meshes[9].rotationQuaternion = new BABYLON.Quaternion(0, -0.7648,0,0.6442);
-               
-                for(let i=0;i<result.meshes.length-1;i++){
-                    result.meshes[i].isPickable = true;
-                    if(result.meshes[i].name === "Sea"){
+                
+                result.meshes.forEach(function(m) {
+                    m.isPickable = true;
+                    earth_submeshes.set(m.name,null);
+                    add_action_mgr(m);
+                    if(m.name === "Sea"){
                         water = new BABYLON.WaterMaterial("water", flowersScene, new BABYLON.Vector2(2048, 2048));
                         water.backFaceCulling = true;
                         water.bumpTexture = new BABYLON.Texture("front/textures/participate/waterbump.png", flowersScene);
@@ -192,9 +196,9 @@ function load_meshes(){
                         water.waterColor = new BABYLON.Color3(0.31428,0.2,0.80357);
 
                         water.addToRenderList(sceneSkybox);
-                       result.meshes[i].material = water;
+                        m.material = water;
                     }
-                }
+                });
 
                 earth_object = result.meshes[9];      
                 
@@ -238,14 +242,6 @@ function add_action_mgr(theFlower){
 let origScaling, origColor;
 let flowerLbl;
 var onOverFlower =(meshEvent)=>{
-    origScaling = meshEvent.source.scaling;
-    meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.4,origScaling.y*1.4,origScaling.z*1.4);
-    // hl.addMesh(meshEvent.source, new BABYLON.Color3(1,1,0.8));
-    let a = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
-    let b = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
-    let c = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
-    hl.addMesh(meshEvent.source, new BABYLON.Color3(a,b,c));
-
     flowerLbl = document.createElement("span");
     flowerLbl.setAttribute("id", "flowerLbl");
     var sty = flowerLbl.style;
@@ -254,20 +250,44 @@ var onOverFlower =(meshEvent)=>{
     sty.padding = "0.5%";
     sty.color = "#00BFFF  ";
     sty.fontFamily = "Courgette-Regular";
-    sty.fontSize = "1vw";
+    sty.fontSize = "1.5vw";
     sty.top = (flowersScene.pointerY-50) + "px";
     sty.left = (flowersScene.pointerX+10) + "px";
     sty.cursor = "pointer";
     
     let theName =  meshEvent.meshUnderPointer.name;
-    document.body.appendChild(flowerLbl);
-    flowerLbl.textContent = flowerName.get(theName);
+    if(earth_submeshes.has(meshEvent.source.name)){
+        document.body.appendChild(flowerLbl);
+        flowerLbl.textContent = "Click for Culture."
+    }else{
+        origScaling = meshEvent.source.scaling;
+        meshEvent.source.scaling = new BABYLON.Vector3(origScaling.x*1.4,origScaling.y*1.4,origScaling.z*1.4);
+        // hl.addMesh(meshEvent.source, new BABYLON.Color3(1,1,0.8));
+        let a = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
+        let b = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
+        let c = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
+        hl.addMesh(meshEvent.source, new BABYLON.Color3(a,b,c));
+
+        
+        document.body.appendChild(flowerLbl);
+        flowerLbl.textContent = flowerName.get(theName);
+    }
+    
+
+   
+    
 };
 
 //handles the on mouse out event
 var onOutFlower =(meshEvent)=>{
-    meshEvent.source.scaling = origScaling;
-    hl.removeMesh(meshEvent.source);
+
+    if(earth_submeshes.has(meshEvent.source.name)){
+        // console.log("out of earth earth");
+    }else{
+        meshEvent.source.scaling = origScaling;
+        hl.removeMesh(meshEvent.source);
+    }
+    
 
     while (document.getElementById("flowerLbl")) {
         document.getElementById("flowerLbl").parentNode.removeChild(document.getElementById("flowerLbl"));
@@ -293,6 +313,7 @@ function load_orig_flowers(){
 }
 
 
+let tempFlowersMap = new Map();
 function init_flower(name,matlName,imgPath,size, x, y, z){
     let plane = BABYLON.Mesh.CreatePlane(name, size, flowersScene);
     plane.isVisible = true;
@@ -313,12 +334,18 @@ function init_flower(name,matlName,imgPath,size, x, y, z){
     plane.material = planeMatl;
     // plane.freezeWorldMatrix();
     add_action_mgr(plane);
+    flowerObjMap.set(name,plane);
+
+    let tempName = name.toLowerCase();
+
+    tempName = tempName.replace(/\s/g, '');
+    tempFlowersMap.set(tempName,plane);
+    
     return plane;
 }
 
 
 
-//function that randomizes int
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -367,9 +394,7 @@ function add_mouse_listener(){
             else return;
             if(pickinfo.hit){
                 var theInitMesh = pickinfo.pickedMesh.name;
-                console.log("THe mesh clicked: ", theInitMesh, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
-
-                // if(flowersMbayeMap.has(theInitMesh) && currScene == "flowersScene") enable_gizmo(pickinfo.pickedMesh);
+               
                
                 if(flowersMbayeMap.has(theInitMesh) && currScene == "flowersScene"){
                     let hasName = get_has_flower_name(theInitMesh);
@@ -388,20 +413,15 @@ function add_mouse_listener(){
                             load_flower_music(videoId, startTime);          //load the music video
                             showPage(val[2],videoId);                       //show wikipedia page
                             showSelectedFlowerScene = true;
-                            // selectedFlowerScene.debugLayer.show();
                             set_scene_active_meshes(flowersScene,false);
                             set_scene_active_meshes(selectedFlowerScene,true);
                         },1000);
-
-                        // console.log("the scene: ", scene.meshes);
-                       
-                        
-                        // if(theClick===0) play_flower_music();
-                        // else change_flower_music();
-                              
-                        
                        
                     }
+                }//end of flowersmap
+
+                if(earth_submeshes.has(theInitMesh)){
+                    randomize_flower();
                 }
 
 
@@ -434,6 +454,42 @@ function add_mouse_listener(){
 }//end of listen to mouse function
 
 
+let flowerObjMap = new Map();
+let randomFlower;
+function randomize_flower(){
+    let i=0;
+    let num = Math.floor(Math.random() * Math.floor(205));
+    
+    for(const [flower,val] of flowersMbayeMap.entries()){
+    
+        if(num === i){
+            let videoId = val[3].id;                            //4th value is the video id
+            let startTime = val[3].start;
+            load_flower_music(videoId, startTime);              //load the music video
+            
+            //if there's a flower previously scaled and highlighted, remove highlight and scaling
+            if(tempOrigScaling){
+                randomFlower.scaling = tempOrigScaling;
+                hl.removeAllMeshes();
+            }
+            
+            //find the flower from the floating flowers
+            randomFlower = flowerObjMap.get(flower);
+            //highlight the flower, change scaling
+            hl.addMesh(randomFlower, new BABYLON.Color3.Green());
+            tempOrigScaling = randomFlower.scaling;
+            randomFlower.scaling = new BABYLON.Vector3(tempOrigScaling.x * 2, tempOrigScaling.y * 2, tempOrigScaling.z * 2, );
+           
+            //open the music video
+            if(!isVideoEnabled){
+                isVideoEnabled = true;
+                $(".music-player-parent-div").show();
+            }
+
+        }//eof if
+        i++;
+    }
+}
    
 
 //create the game engine
@@ -634,6 +690,12 @@ $('#carpetsWikiPage').on('load',function(){
     });
 
 
+    $('.music-close-btn').on("click", function (e) {
+        $('.music-player-parent-div').hide();
+        isVideoEnabled = false;
+     });
+
+
     document.onkeydown = (evt)=>{
      
         if(evt.key == 'o' || evt.key == 'O'){
@@ -655,7 +717,7 @@ $('#carpetsWikiPage').on('load',function(){
     function setup_music_player(){
         console.log("setup music");
        
-        $('.player').empty();
+        $('.musicPlayer').empty();
         let initVideo = "";
         var video_player = document.getElementById('player');
 
@@ -685,7 +747,7 @@ $('#carpetsWikiPage').on('load',function(){
     }
 
     function load_flower_music(videoId,start) {
-        $('.player').empty();
+        $('.musicPlayer').empty();
         yt_player.loadVideoById(videoId,start);
         yt_player.playVideo();
     }
@@ -735,3 +797,28 @@ $('#carpetsWikiPage').on('load',function(){
 
         }//end of if small screen size
     }
+
+    let tempOrigScaling;
+    $('#searchFlowerBtn').on('click',function(){
+        let flower = $('#searchFlowerField').val();
+        flower = flower.toLowerCase();
+        flower = flower.replace(/\s/g, '');
+        console.log("the flower: ", flower);
+
+        for (const [name,val] of tempFlowersMap.entries()) {
+           if(name.includes(flower)){
+                hl.addMesh(val, new BABYLON.Color3.Green());
+                tempOrigScaling = val.scaling;
+                val.scaling = new BABYLON.Vector3(tempOrigScaling.x * 1.5, tempOrigScaling.y * 1.5, tempOrigScaling.z * 1.5, );
+                setTimeout(function(){
+                    hl.removeMesh(val);
+                    val.scaling = tempOrigScaling;
+                },3000);
+
+           }
+        }
+       
+
+        
+        
+    });

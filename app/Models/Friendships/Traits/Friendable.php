@@ -70,7 +70,7 @@ trait Friendable
      */
     public function isFriendWith(Model $recipient)
     {
-        return Friendship::whereRecipient($this)->whereSender($recipient)->whereStatus(Status::ACCEPTED)->exists();
+        return Friendship::whereIn('sender_id', [$this->id, $recipient->id])->whereIn('recipient_id', [$this->id, $recipient->id])->where('status', Status::ACCEPTED)->exists();
     }
 
     /**

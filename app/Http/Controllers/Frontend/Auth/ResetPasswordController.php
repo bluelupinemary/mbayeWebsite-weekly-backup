@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\Access\User\UserRepository;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use App\Http\Responses\RedirectResponse;
 
 /**
  * Class ResetPasswordController.
@@ -102,6 +103,15 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetResponse($request, $response)
     {
-        return redirect()->route(homeRoute())->withFlashSuccess(trans($response));
+       
+        // return redirect()->route(homeRoute())->withFlashSuccess(trans($response));
+        // ->withFlashSuccess('Password has been reset successfully.You can login with your new password');
+        // return redirect()->route('frontend.auth.login')->withFlashSuccess(trans($response));
+   if($response)
+   { 
+    // return redirect()->route('frontend.auth.login')->withFlashSuccess(trans($response));
+    // return new RedirectResponse(route('frontend.auth.login'), ['flash_success' => trans($response)]);
+    return view('frontend.auth.login')->withFlashSuccess('Password has been reset successfully.You can login with your new password');
     }
+}
 }

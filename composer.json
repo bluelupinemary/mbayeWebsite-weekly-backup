@@ -19,6 +19,7 @@
         "davejamesmiller/laravel-breadcrumbs": "^5.0",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "hashids/hashids": "^4.0",
         "intervention/image": "^2.5",
         "jorenvanhocht/laravel-share": "^3.2",
         "krgupta/active": "^4.0",
@@ -27,13 +28,13 @@
         "laravel/socialite": "^4.2",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "6.0.*",
+        "nicmart/tree": "~0.2",
         "pusher/pusher-php-server": "~4.0",
         "spatie/laravel-cors": "^1.6",
+        "spatie/laravel-permission": "^3.17",
         "te7a-houdini/laravel-trix": "^2.0",
         "unisharp/laravel-filemanager": "~1.8",
-        "nicmart/tree": "~0.2",
         "yajra/laravel-datatables-oracle": "~9.0"
-
     },
     "require-dev": {
         "bvipul/generator": "^v6",

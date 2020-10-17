@@ -50,6 +50,18 @@
                             <li><a href="" class="create-career-account"><i class="fas fa-plus"></i> Add Career Account</a></li>
                         </ul>
                     </div>
+                    <div class="submenu your-stars-submenu">
+                        <ul>
+                            <li><a href="" class="list-friends"><i class="fas fa-users"></i></i> List Friends</a></li>
+                            <li><a href="" class="friends-activities"><i class="fas fa-stream"></i> Friends Activities</a></li>
+                        </ul>
+                    </div>
+                    <div class="submenu connects-submenu">
+                        <ul>
+                            <li><a href="" class="send-friend-requests"><i class="fas fa-user-plus"></i> Send Friend Requests</a></li>
+                            <li><a href="" class="accept-friend-requests"><i class="fas fa-user-check"></i> Accept Friend Requests</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="main-form">
                     <form method="POST" action="{{url('blogs')}}" id="main-form" enctype="multipart/form-data">
@@ -190,18 +202,26 @@
                     </div>
                 </div>
                 <div class="career-account-div">
-                    <a href="{{url('/career/companyProfile')}}">
+                    
                         <div class="employer-account">
                             <img src="{{asset('front/icons/employer-icon.png')}}" alt="">
-                            <p>I'm an employer</p>
+                            @if(count(Auth::user()->company) > 0)
+                                <a href="{{url('/company/setup-profile/'.Auth::user()->id)}}"><p class="view-profile view-company-profile">View my Company Profile</p></a>
+                            @else
+                                <a href="{{url('/company/setup-profile/'.Auth::user()->id)}}"><p>I'm an employer</p></a>
+                            @endif
                         </div>
-                    </a>
-                    <a href="{{url('/jobseekers/setup-profile')}}">
+                    
+                    
                         <div class="jobseeker-account">
                             <img src="{{asset('front/icons/jobseeker-icon.png')}}" alt="">
-                            <p>I'm an job-seeker</p>
+                            @if(Auth::user()->JobSeekerprofile)
+                                <a href="{{url('/my_career_profile/'.Auth::user()->id)}}"><p class="view-profile view-jobseeker-profile">View my Job-Seeker Profile</p></a>
+                            @else
+                                <a href="{{url('/jobseekers/setup-profile')}}"><p>I'm an job-seeker</p></a>
+                            @endif
                         </div>
-                    </a>
+                    
                 </div>
                 <div class="home-div">
                     <img src="{{asset('front/images/communicator-buttons/home.png')}}" class="communicator-button home-button" alt="">
@@ -297,7 +317,8 @@
                     <button><img id="youtube-icon" src="{{asset('front/images/communicator-buttons/pause-btn.png')}}" /></button>
                     <button><img id="fullscreen-icon"src="{{asset('front/images/communicator-buttons/fullscreen-btn.png')}}" /></button>
                 </div> --}}
-                <div class="music-player">
+                <div class="music-player-div">
+                    <div class="music-player">
                     <div class="video-container">
                         {{-- <canvas id="canvas"></canvas>
                         <div id="bars">
@@ -325,7 +346,7 @@
                             <div class="bar bar-animated"></div>
                             <div class="bar bar-animated"></div>
                         </div> --}}
-                        <span class="close-btn"><i class="far fa-times-circle"></i></span>
+                        
                         {{-- <div class="music-desc">
                             <p class="music-title">Music title</p>
                             <p class="music-singer">Singer here</p>
@@ -349,6 +370,8 @@
                             <li data-src="{{asset('front/images/audio/Don McLean - Vincent ( Starry, Starry Night).mp3')}}" data-songtitle="Vincent ( Starry, Starry Night)" data-artist="Don McLean"></li>
                         </ul> --}}
                     </div>
+                </div>
+                    <span class="close-btn"><i class="far fa-times-circle"></i></span>
                     <button class="custom-play-pause-btn"><img id="youtube-icon" src="{{asset('front/images/communicator-buttons/pause-btn.png')}}" /></button>
                     <button class="custom-fullscreen-btn"><img id="fullscreen-icon"src="{{asset('front/images/communicator-buttons/fullscreen-btn.png')}}" /></button>
                 </div>
@@ -490,6 +513,7 @@
             <div class="trix-content">{!! nl2br($user->blogcontent) !!}</div>
         </div> --}}
         <div class="text-editor-fullview blog-content">
+            <input type="text" name="fullscreen_name" class="form-control" placeholder="TITLE" autocomplete="off">
             <div class="font-picker">
                 <input id="font-picker" type="text">
             </div>
@@ -499,6 +523,7 @@
             <button type="button" class="exit-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
         </div>
         <div class="text-editor-fullview general-blog-content">
+            <input type="text" name="fullscreen_name" class="form-control" placeholder="TITLE" autocomplete="off">
             <div class="font-picker">
                 <input id="font-picker" type="text">
             </div>
@@ -508,6 +533,7 @@
             <button type="button" class="exit-general-blog-fullscreen"><i class="fas fa-compress"></i> <span>Exit Fullscreen</span></button>
         </div>
         <div class="text-editor-fullview designs-blog-content">
+            <input type="text" name="fullscreen_name" class="form-control" placeholder="TITLE" autocomplete="off">
             <div class="font-picker">
                 <input id="font-picker" type="text">
             </div>
@@ -681,6 +707,7 @@
     </script>
     @endif
     <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
-    <script src="{{asset('front/JS/communicator.js')}}"></script>
     <script src="{{asset('front/JS/music_player.js')}}"></script>
+    <script src="{{asset('front/JS/communicator.js')}}"></script>
+    
 @endsection

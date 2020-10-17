@@ -1,0 +1,133 @@
+#musicVideoDiv{
+    position: absolute;
+    width:20vw;
+    height:13vw;
+    right:0;
+    top:0.5vw;
+    background:black;
+}
+
+#flowerModelDiv{
+    border:1px solid gray;
+    position:absolute;
+    width:20vw;
+    height:12vw;
+    bottom:0vw;
+    left:0vw;
+    visibility: hidden;
+}
+
+#flowerModelDiv #close-btn{
+    position: absolute;
+    right:0;
+}
+
+#flowerModelDiv #fullscreen-btn{
+    position: absolute;
+    right:1.5vw;
+}
+
+#flowerModelDiv #minimize-btn{
+    position: absolute;
+    right:1.5vw;
+}
+
+#flowerViewer{
+    position: absolute;
+    width:100%;
+    height:100%;
+}
+
+#loadingScreenOverlay{
+    font-family: 'Courgette-Regular';
+    font-weight: normal;
+    font-style: normal;
+    text-align: center;
+    text-shadow: -2px 1px 20px black;
+    font-size: 1.5vw;
+    color: #e9ba29;
+}
+
+#heartBDiv{
+    bottom: 0%;
+    position: absolute;
+    right: 0;
+   
+    transform: translate(-25%,-30%);
+    -ms-transform: translate(-25%,-30%);
+}
+
+#heartTDiv{
+    top: 5vw;
+    left: 5vw;
+    position: absolute;
+}
+.heartImg{
+    width:20vw;
+    height:auto;
+    filter: drop-shadow(0 0 5px gold);
+    -webkit-filter: drop-shadow(0 0 5px gold);
+    -moz-filter: drop-shadow(0 0 5px gold);
+}
+#heartTTxt{
+    position:absolute;
+    left: 1vw;
+    padding: 2vw;
+    top: 3.5vw;
+}
+#heartBTxt{
+    position: absolute;
+    left: 2.5vw;
+    top: 6.5vw;
+}
+
+#musicVideoDiv #player{
+    width:20vw;
+    height: 12vw;
+    right: 0;
+    top:0;
+    position: absolute;
+}
+#musicVideoDiv #close-btn, #musicVideoDiv #fullscreen-btn, #musicVideoDiv #minimize-btn{
+  height: 100%;
+  width: auto;
+  position: relative;
+  float: right;
+  padding: 1%;
+}
+
+
+#musicVideoDivHeader{
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    height: 25%;
+    width:100%;
+}
+
+
+#musicVideoDiv{
+  position: absolute;
+  width: 20vw;
+  height: 20vh;
+  visibility:hidden;
+  filter: drop-shadow(2px 4px 6px black);
+
+}
+
+/*extra small and small screens*/
+@media (min-width : 320px) and (max-width : 1024px) and (orientation : landscape) { 
+    #musicVideoDiv #player{
+        width:30vw;
+        height:18vw;
+    }
+    #musicVideoDivHeader{
+        height:40%;
+    }
+   
+}
+
+
+
+

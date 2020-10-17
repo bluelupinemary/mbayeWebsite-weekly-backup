@@ -20,7 +20,14 @@ class NotifyController extends Controller
 		// $notification = $notifications->where($notifications->type == 'App\Notifications\Frontend\ReactionNotification');
 		// dd($notification);
 		return response()->json($notifications);
-		
+	}
+
+	public function getpaginatednotifications(Request $request){
+		$user = User::find($request['user_id']);
+		$notifications = $user->unreadNotifications->whereNotIn('type', ['App\Notifications\Frontend\BlogActivityNotification', 'App\Notifications\Frontend\GeneralBlogActivityNotification'])->paginate(10);
+		// $notification = $notifications->where($notifications->type == 'App\Notifications\Frontend\ReactionNotification');
+		// dd($notification);
+		return response()->json($notifications);
 	}
 
 	public function readnotification(Request $request){

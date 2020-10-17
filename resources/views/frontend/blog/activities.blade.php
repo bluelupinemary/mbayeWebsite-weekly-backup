@@ -189,6 +189,7 @@
 @endsection
 
 @section('before-scripts')
+    <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
 	<script src="{{asset('front/JS/blackhole.js')}}"></script>
 @endsection
 

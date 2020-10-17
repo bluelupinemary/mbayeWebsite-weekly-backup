@@ -14,7 +14,6 @@ const UPPER_RADIUS_VAL = 2000;                                      //zoom out l
 
 
 let earthTxt,mercuryTxt,venusTxt,marsTxt,jupiterTxt,saturnTxt,uranusTxt,neptuneTxt,plutoTxt,moonTxt,sunTxt,searchTxt;
-let venusInfoTxt;
 let planetsLight;
 let homeSun, homeMercury, homeVenus, homeEarth, homeMars, homeJupiter, homeSaturn, homeUranus, homeNeptune, homePluto, homeMoon;
 let planetAxis = new BABYLON.Vector3(0,4,0);  
@@ -55,6 +54,7 @@ function create_capt_camera(){
     camera.upperBetaLimit = 10;
     camera.panningDistanceLimit = 1500;
     camera.attachControl(canvas,true);
+    camera.maxZ = 280000;
     captScene.activeCamera = camera;
 
     return camera;
@@ -81,12 +81,12 @@ function create_capt_light(){
 }//end of create earth light function
 
 function create_capt_skybox(){ 
-    var skybox = BABYLON.MeshBuilder.CreateBox("captSkybox", {size:8300.0}, captScene);
-    // skybox.position.y = -3000;
-    skybox.position.y = -500;
-    skybox.position.z = 1000;
+    var skybox = BABYLON.MeshBuilder.CreateBox("captSkybox", {size:25000.0}, captScene);
+    skybox.position = new BABYLON.Vector3(942,-500,-1500);
+
     skybox.rotation.y = BABYLON.Tools.ToRadians(-60);
     skybox.isPickable = false;
+    skybox.infiniteDistance = true;
     skybox.checkCollisions = true;
     var skyboxMaterial = new BABYLON.StandardMaterial("captSkyboxMaterial", captScene);
     skyboxMaterial.backFaceCulling = false;
@@ -117,7 +117,7 @@ var theVideoParent;
 var agreeCameraUseDisc;
 function load_capt_meshes(){
     Promise.all([
-        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/homeScene/", "discThin2.glb", captScene,
+        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/homeScene/", "homeDisc.glb", captScene,
                     function (evt) {
                     // onProgress
                     var loadedPercent = 0;
@@ -157,7 +157,7 @@ function load_capt_meshes(){
             captLight.includedOnlyMeshes.push(agreeCameraUseDisc);
             add_material_to_disc();
             captCamera.target = new BABYLON.Vector3(0,0,0);
-            captCamera.radius = 1360;
+            captCamera.radius = 1400;
         },1000);
     });
 }//end of function load meshes
@@ -179,7 +179,6 @@ function create_capt_halo(){
     plane.isPickable = false;
 
     captHalo = plane;
-
     captLight.includedOnlyMeshes.push(captHalo);
 
 }
@@ -187,62 +186,33 @@ function create_capt_halo(){
 
 function create_capt_labels(){
     //params: name, matlPath, height, width,xpos, ypos, zpos
-    earthTxt = init_planet_label("story","front/textures/captMbaye/planetText/story.png", 175,325,929,195,528);
-    moonTxt = init_planet_label("home","front/textures/captMbaye/planetText/home.png", 60,130,792,133,472);
-    venusTxt = init_planet_label("foundation","front/textures/captMbaye/planetText/foundation.png", 135,200,-413,202,-919);
-    marsTxt = init_planet_label("youtube","front/textures/captMbaye/planetText/youtube.png", 70,110,-854,55,100);
-    jupiterTxt = init_planet_label("eyes","front/textures/captMbaye/planetText/eyes.png", 135,200,122,-177,823);
-    saturnTxt = init_planet_label("wikipedia","front/textures/captMbaye/planetText/wikipedia.png", 150,250,1024,349,-2269); 
-    uranusTxt = init_planet_label("un","front/textures/captMbaye/planetText/un.png", 190,350,1309,86,-665);
-    plutoTxt = init_planet_label("bbc","front/textures/captMbaye/planetText/bbc.png", 80,150,-50,-273,366);
+    earthTxt = init_planet_label("story","front/textures/captMbaye/planetText/story.png", 175,325,929,195,528,{x:-0.0388,y:0.7695,z:0.0712,w:0.6330});
+    moonTxt = init_planet_label("home","front/textures/captMbaye/planetText/home.png", 60,130,792,133,472,{x:0,y:0.7315,z:0,w:0.6817});
+    venusTxt = init_planet_label("foundation","front/textures/captMbaye/planetText/foundation.png", 135,200,-413,202,-919,{x:0.0250,y:0.9679,z:-0.1088,w:0.2240});
+    marsTxt = init_planet_label("youtube","front/textures/captMbaye/planetText/youtube.png", 70,110,-854,55,100,{x:0.0682,y:0.9388,z:0.0407,w:0.3346});
+    jupiterTxt = init_planet_label("eyes","front/textures/captMbaye/planetText/eyes.png", 135,200,122,-177,823,{x:0.0393,y:0.8215, z:-0.1371,w:0.5518});
+    saturnTxt = init_planet_label("wikipedia","front/textures/captMbaye/planetText/wikipedia.png", 150,250,1024,349,-2269,{x:0.2328,y:0.9158, z:0.1327,w:0.2985}); 
+    uranusTxt = init_planet_label("un","front/textures/captMbaye/planetText/un.png", 190,350,1309,86,-665,{x:0.0817, y:0.7915,z:0.0937,w:0.5979});
+    plutoTxt = init_planet_label("bbc","front/textures/captMbaye/planetText/bbc.png", 80,150,-50,-273,366,{x:0.0727, y:0.8678,z:-0.1614,w:0.4633});
+    neptuneTxt = init_planet_label("visit","front/textures/captMbaye/planetText/visit.png", 280,490,2416,290,-2236,{x:0, y:0.8872,z:0,w:0.4610});
+    mercuryTxt = init_planet_label("member","front/textures/captMbaye/planetText/member.png", 130,220,854,510,-1405,{x:0, y:0.9115,z:0,w:0.4106});
 
 
-    captLight.includedOnlyMeshes.push(earthTxt);
-    captLight.includedOnlyMeshes.push(moonTxt);
-    captLight.includedOnlyMeshes.push(venusTxt);
-    captLight.includedOnlyMeshes.push(marsTxt);
-    captLight.includedOnlyMeshes.push(uranusTxt);
-    captLight.includedOnlyMeshes.push(saturnTxt);
-    captLight.includedOnlyMeshes.push(jupiterTxt);
-    captLight.includedOnlyMeshes.push(plutoTxt);
 }
 
-function init_planet_label(name,matlPath,h,w,x,y,z){
+function init_planet_label(name,matlPath,h,w,x,y,z,rot){
     var plane = BABYLON.MeshBuilder.CreatePlane(name, {height:h,width:w}, captScene);
     plane.position = new BABYLON.Vector3(x,y,z);
-    
     var planeMatl = new BABYLON.StandardMaterial("labelMatl", captScene);
-    // planeMatl.diffuseColor = BABYLON.Color3.Red();
+    plane.scaling = new BABYLON.Vector3(1.3,1.3,1.3);
+    plane.rotationQuaternion = new BABYLON.Quaternion(rot.x,rot.y,rot.z,rot.w);
+    plane.isPickable = false;
     planeMatl.diffuseTexture = new BABYLON.Texture(matlPath, captScene);
     planeMatl.opacityTexture = new BABYLON.Texture(matlPath, captScene);
     planeMatl.alpha = 0.9;
     planeMatl.backFaceCulling = false;//Allways show the front and the back of an element
-   
-    
-    if(name === "story"){
-        plane.rotationQuaternion = new BABYLON.Quaternion (-0.0388, 0.7695, 0.0712,0.6330);
-    }else if(name === "foundation"){
-        plane.rotationQuaternion = new BABYLON.Quaternion (0.0250,0.9679,-0.1088,0.2240);
-        //plane.rotationQuaternion = new BABYLON.Quaternion (0.0011,0.9740,-0.0053,0.2254);
-    }else if(name === "youtube"){
-        plane.rotationQuaternion = new BABYLON.Quaternion ( 0.0682,0.9388,0.0407,0.3346);
-    }else if(name === "un"){
-        plane.rotationQuaternion = new BABYLON.Quaternion ( 0.0817, 0.7915,0.0937,0.5979);
-    }else if(name === "flower"){
-        plane.rotationQuaternion = new BABYLON.Quaternion ( -0.0176, 0.9270,0.0615,0.3690);
-    }else if(name === "member"){
-        plane.rotationQuaternion = new BABYLON.Quaternion (  -0.0124, 0.9133, 0.0279, 0.4056);
-    }else if(name === "wikipedia"){
-        plane.rotationQuaternion = new BABYLON.Quaternion ( 0.2328,0.9158, 0.1327,0.2985);
-    }else if(name === "eyes"){
-        plane.rotationQuaternion = new BABYLON.Quaternion ( 0.0393,0.8215, -0.1371,0.5518);
-    }else if(name === "bbc"){
-        plane.rotationQuaternion = new BABYLON.Quaternion ( 0.0727, 0.8678,-0.1614,0.4633);
-    }else if(name === "venusInfo"){
-         plane.rotationQuaternion = new BABYLON.Quaternion (0,  0.9814,-0.0005,0.1912);
-    }else{
-        plane.rotationQuaternion = new BABYLON.Quaternion (0,0.7315,0,0.6817);
-    }
+    captLight.includedOnlyMeshes.push(plane);
+
 
     plane.material = planeMatl;
 
@@ -251,19 +221,31 @@ function init_planet_label(name,matlPath,h,w,x,y,z){
 
 
 function add_material_to_disc(){
-
     var discMatl = new BABYLON.StandardMaterial("mbayeDiscMatl", captScene);
     discMatl.diffuseTexture = new BABYLON.Texture("front/textures/captMbaye/captDisc.png", captScene);
     discMatl.diffuseTexture.uScale = -1;
-    console.log(discMatl);
     discMatl.backFaceCulling = false;
     videoHome_obj.material = discMatl;
 }
 
 
+let homeGizmo;
+function enable_home_gizmo(themesh){
+    // Create gizmo
+    let utilLayer = new BABYLON.UtilityLayerRenderer(captScene)
+    utilLayer.utilityLayerScene.autoClearDepthAndStencil = false;
+    homeGizmo = new BABYLON.PositionGizmo(utilLayer);
+    homeGizmo2 = new BABYLON.RotationGizmo(utilLayer);
+    homeGizmo.attachedMesh = themesh;
+    homeGizmo.scaleRatio = 2;
+    homeGizmo2.attachedMesh = themesh;
+}
 
 
 
+
+let sunOrigTexture;
+let sunGlowLayer;
 function create_capt_planets(){
     //create the sun
 
@@ -277,10 +259,11 @@ function create_capt_planets(){
         }
     }
 
-    homeMercury = homeSun.clone("mercury");
+    sunGlowLayer = gl;
+  
+
+    homeMercury = homeSun.clone("homeMercury");
     init_clone_planet(homeMercury,"mercuryMatl","front/textures/home/planets/mercury.jpg","front/textures/home/planets/mercurynormal.jpg", 954,500,-1499,0.5);
-    //  homeMercury = homeSun.clone("mercury");
-    // init_clone_planet(homeMercury,"mercuryMatl","front/textures/home/planets/mercury.jpg","front/textures/home/planets/mercurynormal.jpg", 0,-50,500,0.5);
 
     homeVenus = homeSun.clone("homeVenus");
     init_clone_planet(homeVenus,"venusMatl","front/textures/home/planets/venus.jpg","front/textures/home/planets/venusnormal.jpg",-384,201, -1000,0.6);
@@ -376,7 +359,6 @@ function create_capt_planets(){
 
 
 
-
     //rotate the planets
     
     engine.runRenderLoop(function () {
@@ -409,7 +391,7 @@ function create_capt_planets(){
 
 //function that instantiates a planet
 function init_planet(name,material_name,texture_path,normal_texture_path,x_pos,y_pos,z_pos,radius){
-    var temp = BABYLON.Mesh.CreateSphere(name, 10, radius, captScene);
+    var temp = BABYLON.Mesh.CreateSphere(name, 0, radius, captScene);
     temp.position = new BABYLON.Vector3(x_pos,y_pos,z_pos);
     var temp_material = new BABYLON.StandardMaterial(material_name,captScene);
     temp_material.diffuseTexture = new BABYLON.Texture(texture_path, captScene);
@@ -418,7 +400,7 @@ function init_planet(name,material_name,texture_path,normal_texture_path,x_pos,y
     // temp_material.freeze();
     // temp.freezeWorldMatrix();
     temp.material = temp_material;
-    
+    if(name === "sun") sunOrigTexture = temp_material.diffuseTexture;
     return temp;
 }//end of init planet function
 
@@ -474,118 +456,31 @@ var onOutPlanet =(meshEvent)=>{
 
 
 var onOverSun =(meshEvent)=>{
+    var theMeshID = meshEvent.source.id;
+  
+    let lbl = document.createElement("span");
+    lbl.setAttribute("id", "sunLbl");
+    var sty = lbl.style;
+    sty.position = "absolute";
+    sty.lineHeight = "1.5em";
+    sty.padding = "0.2%";
+    sty.color = "#efad0c";
+    sty.fontFamily = "Courgette-Regular";
+    sty.fontSize = "1.5em";
+    sty.top = meshEvent.pointerY + "px";
+    sty.left = meshEvent.pointerX + "px";
+    sty.cursor = "pointer";
   
     var theMeshID = meshEvent.source.id 
     if(initWebCamScreen){
         if(theMeshID == "sun"){
-            initWebCamScreen.setEnabled(true);
-            initWebCamScreen.isVisible = true;  
-          //  console.log(" cam's position: ",captCamera.position, initWebCamScreen.radius);
-           
-            let camX = captCamera.position.x;
-            let camY = captCamera.position.y;
-            let camZ = captCamera.position.z;
-            let x = 3536;
-            let y = 461;
-            let z = -648;
+            homeSun.material.diffuseTexture = initVideo;
+            sunGlowLayer.intensity = 0;
 
-           if(camX< -850 && camX >=-900){
-                if(camZ > 0){
-                   x = 3538;
-                   z = -634;
-                }
-            }else if(camX <-900 && camX >= -1000){
-                if(camZ > 0) x = 3550;
-                else{
-                   x = 3615;
-                   z = -710;
-                }
-            }else if(camX<-1000 && camX>=-1050){ //from -1000 to -1050
-                if(camZ > 0) x = 3560;
-                else{
-                   x = 3609;
-                   z = -715;
-                }
-            }else if(camX<-1050 && camX>=-1110){
-                
-                if(camZ > 0) x = 3550;
-                else{
-                    x = 3525;
-                    z = -709;
-                }
-            }else if(camX<-1110 && camX>=-1120){
-                if(camZ > 0) x = 3550;
-                else{
-                    x = 3500;
-                    z =  -709;
-                }
-            }else if( camX<-1120 && camX>=-1130){
-                if(camZ > 0) x = 3500;
-                else{
-                    x = 3618;
-                    z = -713;
-                }
-            }else if( camX<-1130 && camX>=-1140){
-                if(camZ > 0) x = 3500;
-                else{
-                    x = 3622;
-                    z =  -712;
-                }
-            }else if( camX<-1140 && camX>=-1160){
-                if(camZ > 0) x = 3500;
-                else{
-                    x = 3487;
-                    z = -703;
-                }
-            }else if( camX<-1160 && camX>=-1180){
-                if(camZ > 0) x = 3500;
-                else{                 
-                    x = 3550;
-                    z = -685;
-                }
-            }else if( camX < -1180 && camX>=-1245){
-                if(camZ > 0) x = 3450;
-                else{
-                    x = 3527;
-                    z = -696;
-                }
-            }else if( camX < -1245 && camX>=-1270){
-                if(camZ > 0) x = 3530;
-                else{
-                   x = 3621; 
-                   z = -697;
-                }
-            }else if( camX < -1270 && camX>=-1300){
-                if(camZ > 0) x = 3530;
-                else{
-                    x = 3633;
-                    z = -699;
-                }
-            }else if(camX < -1300 && camX >= -1350){
-                if(camZ > 0) x = 3400;
-                else{
-                    x = 3528;
-                    z = -688;
-                }
-                 
-            }else if(camX < -1350 && camX >= -1400){
-                if(camZ > 0) x = 3530;
-                else{
-                    x = 3529;
-                    z = -683;
-                }
-            }
+            document.body.appendChild(lbl);
+            lbl.textContent = "All About You";
 
-            if(camY>0 && camY <= 250) y = 450;
-            else if(camY>-300 && camY <= 0) y = 425;
-            else if(camY>-450 && camY <= -300) y = 420;
-            else if(camY>-550 && camY <= -450) y = 415;
-            else if(camY>-650 && camY <= -550) y = 409;
-            else if(camY>-700 && camY <= -650) y = 409;
-            else if(camY>-750 && camY <= -700) y = 405;
-            else if(camY>-900 && camY <= -750) y = 400;
 
-            initWebCamScreen.position = new BABYLON.Vector3(x,y,z);  
         } 
     } 
 };
@@ -594,9 +489,13 @@ var onOverSun =(meshEvent)=>{
 var onOutSun =(meshEvent)=>{
     //part of the 3d text on hover on mesh
     if(initWebCamScreen){
-        initWebCamScreen.setEnabled(false);
-        initWebCamScreen.isVisible = false; 
+        homeSun.material.diffuseTexture = sunOrigTexture;
+        sunGlowLayer.intensity = 1;
     }
+
+    while (document.getElementById("sunLbl")) {
+        document.getElementById("sunLbl").parentNode.removeChild(document.getElementById("sunLbl"));
+    } 
     
     
 };
@@ -605,7 +504,6 @@ var onOutSun =(meshEvent)=>{
 let initVideo;  
 let initWebCamScreen,initWebCamScreen22;  
 function enable_capt_webcamera(){
-    // console.log("this is called");
     var isAssigned = false; // Is the Webcam stream assigned to material?
 
     initWebCamScreen = BABYLON.MeshBuilder.CreateDisc("initWebCamScreen", {radius:110, tessellation: 0}, captScene);
@@ -621,7 +519,7 @@ function enable_capt_webcamera(){
     initWebCamScreen22.rotationQuaternion = new BABYLON.Quaternion(0,-0.6424,0,0.7663);
     initWebCamScreen.setEnabled(false);
     initWebCamScreen.isVisible = false;
-     initWebCamScreen22.setEnabled(false);
+    initWebCamScreen22.setEnabled(false);
     initWebCamScreen22.isVisible = false;
   
     var videoMaterial2 = new BABYLON.StandardMaterial("initWebCamScreenTexture", captScene);
@@ -639,35 +537,21 @@ function enable_capt_webcamera(){
     BABYLON.VideoTexture.CreateFromWebCam(captScene, function (videoTexture2) {
         initVideo = videoTexture2;
         videoMaterial2.diffuseTexture = initVideo;
-        // console.log("init video",initVideo);
     }, { maxWidth: 256, maxHeight: 256 });
-    // console.log(initVideo);
-    // When there is a video stream (!=undefined),
-    // check if it's ready          (readyState == 4),
-    // before applying videoMaterial to avoid the Chrome console warning.
-    // [.Offscreen-For-WebGL-0xa957edd000]RENDER WARNING: there is no texture bound to the unit 0
-    captScene.onBeforeRenderObservable.add(function () {
-        if (initVideo !== undefined && isAssigned == false) {
-            if (initVideo.video.readyState == 4) {
-                initWebCamScreen.material = videoMaterial2;
-                 // initWebCamScreen22.material = videoMaterial2;
-                isAssigned = true;
-            }
-        }
-    });
+
 
 }//end of function
-
 
 function add_capt_mouse_listener(){
     
         var onPointerDownInit = function (evt) {
-            console.log(evt);
+            // console.log(evt);
             if(captScene) var pickinfo = captScene.pick(captScene.pointerX, captScene.pointerY);
             else return;
             if(pickinfo.hit){
                 var theInitMesh = pickinfo.pickedMesh.name;
                 // console.log("THe mesh clicked: ", theInitMesh, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
+                // console.log("camera: ", captCamera.position, captCamera.radius, captCamera.alpha, captCamera.beta);
             
                 if(theInitMesh === "a"){
                     agreeCameraUseDisc.isVisible = false;
@@ -680,28 +564,27 @@ function add_capt_mouse_listener(){
                         isAssignedWebcam = true;
                     },5000);
 
-                }else if(theInitMesh === "home" || theInitMesh === "homeMoon" ){
-                    window.open("/","_self"); 
-                }else if(theInitMesh === "wikipedia" || theInitMesh === "homeSaturn"){
+                }else if(theInitMesh === "homeMoon" ){
+                    checkScreenAndDoubleClick("/");
+                }else if(theInitMesh === "homeSaturn"){
                     showPage("https://en.wikipedia.org/wiki/Mbaye_Diagne");
-                }else if(theInitMesh === "eyes" || theInitMesh === "homeJupiter"){
-                    showPage("");
-                }else if(theInitMesh === "un" || theInitMesh === "homeUranus"){
+                }else if(theInitMesh === "homeJupiter"){
+                    showPage("inOurEyes");
+                }else if(theInitMesh === "homeUranus"){
                     showPage("https://www.youtube.com/embed/2tF1uEyvojU");
-                }else if(theInitMesh === "youtube" || theInitMesh ===  "homeMars"){
+                }else if(theInitMesh ===  "homeMars"){
                     showPage("https://www.youtube.com/embed/uuElJ1XApLo");
-                }else if(theInitMesh === "foundation" || theInitMesh ===  "homeVenus"){
+                }else if(theInitMesh ===  "homeVenus"){
                     showPage("https://www.captaindiagne.org/");
-                }else if(theInitMesh === "bbc" || theInitMesh ===  "homePluto"){
+                }else if(theInitMesh ===  "homePluto"){
                     showPage(" https://www.bbc.co.uk/news/special/2014/newsspec_6954/index.html");
-                }else if(theInitMesh ===  "homeSun" || theInitMesh === "initWebCamScreen"){
-              //      console.log("sun is clicked!");
-                    show_capt_webCamera();
+                }else if(theInitMesh ===  "homeSun"){
+                    checkScreenAndDoubleClick("dashboard");
+                }else if(theInitMesh ===  "homeNeptune"){
+                    checkScreenAndDoubleClick("visitingMbaye");
+                }else if(theInitMesh ===  "homeMercury"){
+                    checkScreenAndDoubleClick("blogviewMembers");
                 }
-
-
-
-
            }
            
         }//end of on pointer down function
@@ -730,6 +613,40 @@ function add_capt_mouse_listener(){
     
 }//end of listen to mouse func
 
+var isPlanetClicked = false;
+function checkScreenAndDoubleClick(theLink){
+    if(isMobile()){
+        if(isPlanetClicked){
+            isPlanetClicked = false;
+            window.location.href = theLink; 
+        }else{
+            isPlanetClicked = true;
+            setTimeout(function(){
+                if(isPlanetClicked){
+                    isPlanetClicked = false;
+                        Swal.fire({
+                            width: '10vw',
+                            padding: '3em',
+                            title: 'Double Tap to enter the planet.',
+                            showConfirmButton: false,
+                            position: 'top-end',
+                            showClass:{
+                                backdrop: 'swal2-backdrop-hide',
+                            },
+                            timer: 2000,
+                            width: 100,
+                            customClass: {
+                                popup: 'trevor-popup-class',
+                            }
+                        });
+                    }
+            },500);
+        }
+    }else{
+        window.location.href = theLink; 
+    }
+    
+}
 
 
 //create the game engine
@@ -739,33 +656,46 @@ var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, ste
 var theScene = createScene();
 var i=0;
 
-    theScene.executeWhenReady(function () {   
+theScene.executeWhenReady(function () {   
         document.getElementById("loadingScreenPercent").style.visibility = "hidden";
         document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
         document.getElementById("loadingScreenDiv").remove();
+        testFullscreen();
 
-    engine.runRenderLoop(function () {
+        //scene optimizer
+        var options = new BABYLON.SceneOptimizerOptions();
+        options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
+        var optimizer = new BABYLON.SceneOptimizer(theScene, options);
 
-        if(theScene){
+        if(isSmallDevice() || isMobile()){
+            if(homeSun){
+                homeSun.material.diffuseTexture = initVideo;
+                sunGlowLayer.intensity = 0;
+            }
+        }
 
-        //render the scene
-            theScene.render();
+        engine.runRenderLoop(function () {
 
-        }    
-    }); 
+            if(theScene){
+            //render the scene
+                theScene.render();
+            }    
+        }); 
 });
 
 // window resize handler
 window.addEventListener("resize", function () {
     engine.resize();
+    testOrientation();
+    testFullscreen();
 });
-
-           
+     
 
 /* Related to the wiki page */
 $('#wikiPage').on('load',function(){
     $('.iframe-loading').hide();
 });
+
 
 let isScreenVisible = false;
 let isCharDivFullscreen = false;
@@ -775,11 +705,24 @@ function showPage(pageName) {
     let x = document.getElementById("wikipediaDiv");
     let page = document.getElementById("wikiPage");
 
-    if(loader.style.visibility != "visible") loader.style.visibility = "visible";
-    
+    if(pageName === "inOurEyes"){
+        document.getElementById("page-url").textContent = "Mbaye In Our Eyes";
+        $('#wikipediaDiv').css('background','url("front/images/skybox_bg1.jpg")');
+        $('#wikipediaDiv').css('background-size','cover');
+        document.getElementById("fullscreen-btn").src= "front/images3D/minimize-btn.png";
+        document.getElementById("fullscreen-btn").title= "Windowed";
+        document.getElementById("wikipediaDiv").style.width = "100%";
+        isCharDivFullscreen = true;
+        $('.iframe-loading').hide();
+        showInOurEyes();
 
-    page.src  = pageName;
-    document.getElementById("page-url").textContent = pageName+"";
+    }else{
+        page.src  = pageName;
+        document.getElementById("page-url").textContent = pageName+"";
+        if(loader.style.visibility != "visible") loader.style.visibility = "visible";
+    }
+    $('#fullscreenIcon').hide();
+   
     if(x.style.visibility != "visible"){
         x.style.visibility = "visible";  
         isScreenVisible = true;
@@ -791,11 +734,17 @@ function hidePage(){
     let loader = document.getElementById("iframe-loading");
     var x = document.getElementById("wikipediaDiv");
     var page = document.getElementById("wikiPage");
+    
     page.src = "";
-
+    
     x.style.visibility = "hidden";
     loader.style.visibility = "hidden";
     isScreenVisible = false;
+    
+    $('#fullscreenIcon').show();
+    $('#wikipediaDiv').css('background','black');
+    $('#inOurEyesDiv').hide();
+   
 }
 
 function fullscreenDescDiv(){
@@ -807,9 +756,96 @@ function fullscreenDescDiv(){
     }else{
         document.getElementById("fullscreen-btn").title= "Fullscreen";
         document.getElementById("fullscreen-btn").src= "front/images3D/fullscreen-btn.png";
-        document.getElementById("wikipediaDiv").style.width = "30%";
+        if(isSmallDevice() || isMobile()) document.getElementById("wikipediaDiv").style.width = "50%";
+        else document.getElementById("wikipediaDiv").style.width = "30%";
         isCharDivFullscreen = false;
     }
 }//end of fullscreenDescDiv
 
 
+
+function showInOurEyes(){
+    // $('#wikiPage').hide();
+    $('#inOurEyesDiv').show();
+}
+
+
+/*======================================================== TEST THE DEVICE'S ORIENTATION =====================================================*/
+$( document ).ready(function() {
+    testOrientation();
+});
+
+
+function testOrientation() {
+    if (window.innerHeight < window.innerWidth) {
+        document.getElementById('block_land').style.display = 'none';
+    } else {
+        document.getElementById('block_land').style.display = 'block';
+    }
+}
+
+
+
+/*======================================================== CHECK IF FULLSCREEN FEATURE IS ACTIVATABLE =====================================================*/
+var elem = document.documentElement;
+function openFullscreen() {
+    if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+    }else if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    }
+}
+
+
+$('#fullscreenIcon').on('click',function(){
+    openFullscreen();
+    $(this).hide();
+});
+
+
+function testFullscreen(){
+    if((window.innerHeight !== window.screen.height) || (window.innerWidth !== window.screen.width)){
+        $('#fullscreenIcon').show();
+    }   
+}
+
+
+/*======================================================== CHECK THE BROWSWER BEING USED =====================================================*/
+
+function testBrowser() { 
+    if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ){
+       return 'Opera';
+    }else if(navigator.userAgent.indexOf("Chrome") != -1 ){
+        return 'Chrome';
+    }else if(navigator.userAgent.indexOf("Safari") != -1){
+        return 'Safari';
+    }else if(navigator.userAgent.indexOf("Firefox") != -1 ){
+        return 'Firefox';
+    }else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )){
+        return 'IE'; 
+    }else{
+        return 'unknown';
+    }
+}
+
+
+
+
+
+/*======================================================= CHECK PLATFORM TYPE============================================================ */
+function isMobile() {
+	try{ document.createEvent("TouchEvent"); return true; }
+	catch(e){ return false; }
+}
+
+function isSmallDevice() {
+	if(window.innerWidth <= 1024) {
+		return true;
+	} else {
+		return false;
+	}
+}

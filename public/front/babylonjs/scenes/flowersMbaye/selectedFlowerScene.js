@@ -136,7 +136,24 @@ function load_earth_with_flowers_mesh(){
             // console.log(result.meshes);
         }),
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/flowersMbayeScene/", "bookFlowersCarpet.glb", selectedFlowerScene).then(function (result) {
-         
+            result.meshes.forEach(function(a){
+                // console.log(a.name);
+                if(a.name === "wood001_primitive1"){
+                    a.isPickable = false;
+                }else if(a.name === "Object072"){
+                    bookLabel = a;
+                }else if(a.name === "leftTop"){
+                    bookLeftPages = a;
+                    light2.includedOnlyMeshes.push(bookLeftPages);
+                }else if(a.name === "rightTop"){
+                    bookRightPages = a;
+                    light2.includedOnlyMeshes.push(bookRightPages);
+                }else if(a.name === "wood001_primitive0" || a.name === "Home" || a.name === "MbayeFeet" || a.name === "MbayeHead" || a.name === "DesignAPanel"){
+                    console.log(a.material);
+                    bookPartsMap.set(a.name,null);
+                    add_obj_action_mgr(a);
+                }
+            });
             bookTask = result;
             result.animationGroups[0].loopAnimation = false;
             result.animationGroups[0].stop();
@@ -146,18 +163,7 @@ function load_earth_with_flowers_mesh(){
             result.meshes[0].position = new BABYLON.Vector3( -78.87,23.71,23.35);
             result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0846,0.8822,-0.0874, 0.4546);
             result.meshes[0].isPickable = false;
-            result.meshes[18].isPickable = false;                       //the music video wood text
-            bookLabel = result.meshes[42];                              //the plane for the book's label
-            bookLeftPages = result.meshes[16];                          //book's left top
-            bookRightPages = result.meshes[20];                         //book's right top 
             book_obj = result.meshes[0];
-            
-            light2.includedOnlyMeshes.push(bookLeftPages);
-            light2.includedOnlyMeshes.push(bookRightPages);
-            add_obj_action_mgr(result.meshes[35]);                                       //add action mgr to the home post text
-            add_obj_action_mgr(result.meshes[37]);                                       // add action mgr to the design a panel post text
-            add_obj_action_mgr(result.meshes[39]);                                       // add action mgr to the foot of mbaye post text
-            add_obj_action_mgr(result.meshes[17]);                                       //add action mgr to the  music video wood
             
         }),
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", selectedFlowerScene).then(function (result) {
@@ -588,12 +594,13 @@ function add_mouse_listener_selected_flower(){
         //check if the world of flowers mesh should be draggable/modified
         if (pickInfo.hit && evt.button === 0) {
             var theMeshClicked = pickInfo.pickedMesh;
-            console.log("inside the selected flower scene", theMeshClicked, theMeshClicked.position, theMeshClicked.rotationQuaternion);
+            // console.log("inside the selected flower scene", theMeshClicked, theMeshClicked.position, theMeshClicked.rotationQuaternion);
            
             if(showSelectedFlowerScene){     
                 if(theMeshClicked.name === "solarLamp"){
                     if(isVideoEnabled){
-                        document.getElementById("player").style.visibility = "hidden";
+                        // document.getElementById("player").style.visibility = "hidden";
+                        $(".music-player-parent-div").hide();
                         isVideoEnabled = false;
                     }
                     hidePage(3); //hide wiki
@@ -608,23 +615,24 @@ function add_mouse_listener_selected_flower(){
                     isShowFlowerScene = true;
                     set_scene_active_meshes(selectedFlowerScene,false);
                     set_scene_active_meshes(flowersScene,true);
-                }
-                else if(theMeshClicked.name === "wood001_primitive0"){            //show video function enable/disable
-                    // console.log("wood clicked");
+                }else if(theMeshClicked.name === "wood001_primitive0"){            //show video function enable/disable
                     if(!isVideoEnabled){
                         isVideoEnabled = true;
-                        document.getElementById("player").style.visibility = "visible";
+                        // document.getElementById("player").style.visibility = "visible";
+                        $(".music-player-parent-div").show();
                     }else{
-                        document.getElementById("player").style.visibility = "hidden";
+                        // document.getElementById("player").style.visibility = "hidden";
+                        $(".music-player-parent-div").hide();
                         isVideoEnabled = false;
                     }
-                }else if(theMeshClicked.name === "postTop_primitive0" || theMeshClicked.name === "postTop_primitive1"){
+                }else if(theMeshClicked.name === "Home"){
                     show_alert_box("Are you sure you want to go to the HOME page?","/");
-                    
-                }else if(theMeshClicked.name === "postMiddle_primitive0" || theMeshClicked.name === "postMiddle_primitive1"){
+                }else if(theMeshClicked.name === "DesignAPanel"){
                     show_alert_box("Are you sure you want to Design A Panel now?","/designPanel");  
-                }else if(theMeshClicked.name === "postBottom_primitive0" || theMeshClicked.name === "postBottom_primitive1"){
-                    show_alert_box("Are you sure you want to view Mbaye's Feet now?","/designPanel");  
+                }else if(theMeshClicked.name === "FeetMbaye"){
+                    show_alert_box("Are you sure you want to view Mbaye's Feet now?","/feetMbaye");  
+                }else if(theMeshClicked.name === "HeadMbaye"){
+                    show_alert_box("Are you sure you want to view Mbaye's Head now?","/headMbaye");  
                 }
 
 
@@ -728,7 +736,9 @@ var onOverPart =(meshEvent)=>{
         }else if(is_3d_flower(meshEvent.source.name)){
             objHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.5,0));
         }else if(bookPartsMap.has(meshEvent.source.name)){
-            objHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0,0.3,0));
+            console.log(meshEvent.source);
+            objHighlight.addMesh(meshEvent.source, new BABYLON.Color3.Green());
+            // meshEvent.source.material.emissiveColor = new BABYLON.Color3.Green();
         }else if(meshEvent.source.name === "blueBottom"){
             // console.log("bottom of solar");
             //solar_carpet_bot.isVisible = false;

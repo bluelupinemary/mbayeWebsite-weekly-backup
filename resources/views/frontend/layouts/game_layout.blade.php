@@ -83,7 +83,6 @@
         <!-- Scripts -->
         @yield('before-scripts')
         <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
-        <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
         <script src="{{asset('front')}}/babylonjs/babylon.js"></script>
         <script src="{{asset('front')}}/babylonjs/babylon.inspector.bundle.js"></script>
         <script src="{{asset('front')}}/babylonjs/babylonjs.loaders.min.js"></script>

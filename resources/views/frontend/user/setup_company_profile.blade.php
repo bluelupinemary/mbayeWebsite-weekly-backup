@@ -2,41 +2,69 @@
 
 @section('before-styles')
 
+<style></style>
 <style>
-      
+    .swal2-popup {
+    display: none;
+    position: relative;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    width: 32em;
+    max-width: 100%;
+    padding: 1.25em;
+    box-shadow: 0px 0px 20px #17a2b8 !important;
+    border: none;
+    border-radius: .3125em;
+    background: #fff;
+    font-family: inherit;
+    font-size: 1rem;
+}
+.swal2-content {
+    color: #17a2b8 !important;
+    font-size: 1.1vw !important;
+    font-family: 'Nasalization';
+}
+
+
 </style>
+    
+<link rel="stylesheet" type="text/css" href="{{asset('front/CSS/company-profile.css')}}"/>
+<link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
+<link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
+<link rel="stylesheet" href="{{ asset('front/CSS/cropper.css') }}">
+<link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
+{{-- <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/> --}}
+<link rel="stylesheet" href="{{ asset('front/CSS/company-profile-astranaut.css') }}">
+<link rel="stylesheet" type="text/css" href="{{asset('front/CSS/company-profile-responsive.css')}}"/>
+{{-- <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}"> --}}
 
-    <link rel="stylesheet" type="text/css" href="{{asset('front/CSS/company-profile.css')}}"/>
-    <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
-    <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
-    <link rel="stylesheet" href="{{ asset('front/CSS/cropper.min.css') }}">
-    <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
-    <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
-    <link rel="stylesheet" href="{{ asset('front/CSS/company-profile-astranaut.css') }}">
-    <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}"> 
-    <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>  
-    <script src="{{asset('front/JS/popper.min.js')}}"></script>
-    <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
-    <script src="{{asset('front/JS/jquery.fontselect.js')}}"></script>
-    <script src="{{asset('front/JS/cropper.js')}}"></script>
+<link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}"> 
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>  
+<script src="{{asset('front/JS/popper.min.js')}}"></script>
+<script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
+{{-- <script src="{{asset('front/JS/jquery.fontselect.js')}}"></script> --}}
+<script src="{{asset('front/JS/cropper.js')}}"></script>
 
-   
+
 @endsection
 
 @section('after-styles')
-    {{-- <link rel="stylesheet" type="text/css" href="{{asset('front/CSS/company-profile.css')}}"/>
-    <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
-    <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
-    <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
-    <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
-    <link rel="stylesheet" href="{{ asset('front/CSS/company-profile-astranaut.css') }}">
-    <link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}">  --}}
-     {{-- <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}"> --}}
-    {{-- <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}">  --}}
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> --}}
-    <link rel="stylesheet" href="{{asset('front/CSS/image-editor.css')}}">
-    <link rel="stylesheet" href="{{asset('front/CSS/jquery.fontselect.css')}}"/>
+{{-- <link rel="stylesheet" type="text/css" href="{{asset('front/CSS/company-profile.css')}}"/>
+<!-- <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}"> -->
+<!-- <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}"> -->
+<!-- <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}"> -->
+<link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
+<!-- <link rel="stylesheet" href="{{ asset('front/CSS/company-profile-astranaut.css') }}"> -->
+<link rel="stylesheet" href="{{asset('front/CSS/animate.min.css')}}">  --}}
+ {{-- <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}"> --}}
+{{-- <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}">  --}}
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/> -->
+{{-- <link rel="stylesheet" href="{{asset('front/CSS/bootstrap.min.css')}}"> --}}
+<link rel="stylesheet" href="{{asset('front/CSS/image-editor.css')}}">
+<link rel="stylesheet" href="{{asset('front/CSS/jquery.fontselect.css')}}"/>
 @endsection
+
 
 @section('content')
 
@@ -45,30 +73,53 @@
     <div id="page-content">
         <div id="container">
             <div class="screen"><br/><br/>
-
+                
                     <div class="row">
                             <div class="" style="padding-left:5vw;">
                                 
-                                <form action="{{ route('frontend.saveCompanyProfile') }}" method="POST" enctype="multipart/form-data">
+                                <form action="@if(!empty($company_profile)){{ route('frontend.company_profile.update',$company_profile->id)}}@else{{ route('frontend.company_profile.store') }}@endif " method="POST" enctype="multipart/form-data">
+                                    
                                     @csrf
+                                    @if($company_profile ?? '')
+                                    {{ method_field('PUT') }}
+                                    @endif
                                     <div class="user-upload-img" id="userImageUpload" >
 
                                             <label for="file" id="featured-image-label">
+                                            @if(!empty($company_profile))
                                             <!--changed id of img from outputImage to featured-image-previewimg-->
                                             {{-- <img src="{{asset('front/images/image-add.jpg')}}"  id="featured-image-previewimg"  alt="input image" class="inox img-resize"> --}}
-                                            <img src=""  id="featured-image-previewimg"  alt="input image" style=" width: 100%; display:none;">
-                                           
-                                            <div class="middle" id="middle">
-                                                <div id="middleText" style="font-size: 1rem">Upload Featured Image</div>
-                                            </div>
+                                                <img src="{{ asset('storage/career/company/'.$company_profile->featured_image) }}"  id="featured-image-previewimg"  alt="input image" style=" width: 100%;">
+                                                
+                                                <div class="middle" id="middle">
+                                                    <div id="middleText" style="font-size: calc(1vw + 1px)"></div>
+                                                </div>
+                                            @else
+                                                <img src=""  id="featured-image-previewimg"  alt="input image" style=" width: 100%; display:none;">
+                                            
+                                                <div class="middle" id="middle" style="background-color: black;">
+                                                    <div id="middleText" style="font-size: calc(1vw + 1px)">Upload Featured Image</div>
+                                                </div>
+                                            
+                                            @endif
                                             </label>
                                             {{-- <button type="button" class="" id="edit_uploaded_image" style="">Edit Image</button>  --}}
-                                            <i id="edit_uploaded_image" class="far fa-image btn_pointer  tooltips right" style="color:#16aedc;"> <span style="display:none;font-size:0.8rem; width:6vw;padding:10%; transform: translate(-49%, -209%);" >Edit photo</span></i>
-                                           
-                                            {{-- <button class="btn" id="edit_uploaded_image"> --}}
-                                            <input id="file"  onchange="loadFile(event)"  type="file" name="featured_image" style=" min-width: 100%;
-                                            min-height: 100%;">
-                                            <!--for the tui editor-->
+
+                                            @if(!empty($company_profile))
+                                                <i id="edit_uploaded_image" class="far fa-image btn_pointer  tooltips right" style="color:#16aedc; display:block;"> <span style="display:none;font-size:calc(0.8vw + 1px); width:6vw;padding:10%; transform: translate(-49%, -209%);" >Edit photo</span></i>
+                                            @else
+                                                <i id="edit_uploaded_image" class="far fa-image btn_pointer  tooltips right" style="color:#16aedc;"> <span style="display:none;font-size:calc(0.8vw + 1px); width:6vw;padding:10%; transform: translate(-49%, -209%);" >Edit photo</span></i>
+                                            @endif
+
+                                           {{-- <button class="btn" id="edit_uploaded_image"> --}}
+
+                                            @if(!empty($company_profile))
+                                                <input id="file"  onchange="loadFile(event)"  type="file" name="featured_image" value="{{ $company_profile->featured_image ?? '' }}"  style=" min-width:100%;min-height: 100%;">
+                                            @else
+                                                <input id="file"  onchange="loadFile(event)"  type="file" name="featured_image" value=""  style=" min-width:100%;min-height: 100%;">
+                                            @endif
+
+                                            <!--for the image editor-->
                                             <input type="hidden" name="edited_featured_image" id="edited_featured_image">
                                             
                                             {{-- <div class="image-edit">
@@ -80,7 +131,9 @@
                                             
 
                                     </div>
+                                    @if(empty($company_profile))
                                     <small class="error">{{ $errors->first('featured_image') }}</small>
+                                    @endif
                                     {{-- ----------------------------------Image Edit Code------------------------------------- --}}
                                     {{-- <div class="user-upload-img"></div> --}}
                                     <!--changed button class name from img-edit-button to edit_image-->
@@ -92,55 +145,91 @@
                             <!-- ---------------------Form code start-------------------------------------------- -->
 
                             <div class="column2">
-                                 <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;">Set Up Company Profile</h2></div>
+                                @if(!empty($company_profile))
+                                    <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;font-family: nasalization;
+                                    height: 5vh;padding: 4px 0px 0px 0px">EDIT COMPANY PROFILE</h2></div>
+                                @else
+                                    <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;font-family: nasalization;
+                                    height: 5vh;padding: 4px 0px 0px 0px">CREATE COMPANY PROFILE</h2></div>
+                                @endif        
                                  <div class="form">
                                     
                                             <div class="input-fields">
-                                                <label for="Cname">Company Name :<span style="color:red">*</span></label>
-                                                <input type="text" id="company_name" name="company_name" required>
+                                                
+                                                    <label for="Cname">Company Name :<span style="color:red">*</span></label>
+                                                    @if(!empty($company_profile))
+                                                    <input type="text" id="company_name" name="company_name" value="{{ $company_profile->company_name ?? '' }}" required>
+                                                
+                                                    @else
+                                                        {{-- <label for="Cname">Company Name :<span style="color:red">*</span></label> --}}
+                                                        <input type="text" id="company_name" name="company_name" value="" required>
+                                                    
+                                                    @endif
                                             </div><br/>
                                             <div>
                                                 <label for="Cadd">Company Email :<span style="color:red">*</span></label>
-                                                <input type="email" class="form-control {{ $errors->has('company_email') ? 'error' : '' }}" id="company_email" name="company_email" required>
+                                                @if(!empty($company_profile))
+                                                    <input type="email"  value="{{ $company_profile->company_email ?? '' }}" id="company_email" name="company_email" required>
+                                                @else
+                                                <input type="email"  value="" id="company_email" name="company_email" required>
+                                                @endif
+
                                                 {{-- @if ($errors->has('company_email'))
                                                 <div class="error">
                                                     {{ 'Email is already taken' }}
                                                 </div>
                                                 @endif --}}
-                                                <small class="error">{{ $errors->first('company_email') }}</small>
+                                                {{-- <small class="error">{{ $errors->first('company_email') }}</small> --}}
                     
                                                
                                             </div>
                                             
                                             <br/>
                                             <div>
-                                                <label for="country">Company Address :<span style="color:red">*</span></label>
-                                                <input type="text" id="company_address" name="address" required>
+                                                <label for="company">Company Address :<span style="color:red">*</span></label>
+                                                @if(!empty($company_profile))
+                                                    <input type="text" id="company_address" name="address" value="{{ $company_profile->address ?? '' }}" required>
+                                                @else
+                                                    <input type="text" id="company_address" name="address" value="" required>
+                                                @endif
                                             </div><br/>
                                         
                                             <div class="row">
                                                     <div class="col-md-4">
                                                         <label for="country">Country :<span style="color:red">*</span></label>
                                                         <select class="countries" name="country" id="countryId"  required>&#x25BC;
-                                                            <option value="" selected disabled>Select</option>
+                                                            @if(!empty($company_profile))
+                                                            <option value="{{ $company_profile->country ?? '' }}" >{{ $company_profile->country }}</option>
+                                                            @else
+                                                            <option id="initCountry" value="" selected disabled>Select Country</option>
+                                                            @endif
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="state">State :<span style="color:red">*</span></label>
                                                         <select id="stateId" class="states" name="state" required>
+                                                            @if(!empty($company_profile))
+                                                            
+                                                            <option value="{{ $company_profile->state ?? '' }}" >{{ $company_profile->state }}</option>
+                                                            @else
                                                             <option value="" selected disabled>Select State</option>
+                                                            @endif
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="city">City :<span style="color:red">*</span></label>
                                                         <select id="cityId" class="cities" name="city" required>
+                                                            @if(!empty($company_profile))
+                                                            <option value="{{ $company_profile->city ?? '' }}" >{{ $company_profile->city }}</option>
+                                                            @else
                                                             <option value="" selected disabled>Select City</option>
+                                                            @endif
                                                         </select>
                                                     </div>
                                             </div><br/>
                                                     <div class="mobile-no">
                                                             <label for="mobile">Mobile :<span style="color:red">*</span></label>
-                                                            <input type="number" class="form-control {{ $errors->has('company_phone_number') ? 'error' : '' }}" id="mob_no" name="company_phone_number" required>
+                                                            <input type="number" class="form-control {{ $errors->has('company_phone_number') ? 'error' : '' }}" value="{{ $company_profile->company_phone_number ?? '' }}" id="mob_no" name="company_phone_number" required>
                                                             <small class="error">{{ $errors->first('company_phone_number') }}</small>
 
                                                     </div>
@@ -154,9 +243,16 @@
                                                             <label for="industry">Industry :<span style="color:red">*</span></label>
                                                             <select id="industry" class="" name="industry_id" required>&#x25BC;
                                                                 <option value="select" selected disabled>Select industry</option>
+                                                                @if(!empty($company_profile)){
                                                                 @foreach($industry as $industry)
-                                                                <option value="{{$industry->id}}">{{$industry->industry_name}}</option>
+                                                                <option value="{{$industry->id}}"{{$company_profile->industry_id == $industry->id  ? 'selected' : ''}}>{{$industry->industry_name}}</option>
                                                                 @endforeach
+                                                                }@else{
+                                                                    @foreach($industry as $industry)
+                                                                    <option value="{{$industry->id}}">{{$industry->industry_name}}</option>
+                                                                    @endforeach
+                                                                }
+                                                                @endif
                                                             </select>
                                                         </div>
                                                         <input type="hidden" name="owner_id" value="{{Auth::user()->id}}">
@@ -172,7 +268,7 @@
 
                     </div>
                     {{-- <div class="row">--}}
-                        <div class="column3"> 
+                        {{-- <div class="column3">  --}}
                             <!-- ---------------------astronaut code start-------------------------------------------- -->
                             <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
                                 @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
@@ -206,8 +302,7 @@
                                         <button class="editphoto-btn tooltips top"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
                                     </div>
                                     <div class="column column-3">
-                                        <button class="tooltips right ">
-                                         <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                                        <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
                                         <button class="profile-btn tooltips right">
                                             <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt="">
                                             <span class="tooltiptext">User Profile</span></button>
@@ -218,7 +313,7 @@
                                 
                             </button>
                                  <!-- <button class="navigator-zoom navigator-zoomin"></button>-->
-                                <div class="instructions-div btn_pointer tooltips right">
+                                <div class="instructions-div">
                                     <button class="instructions-btn tooltips right">
                                         <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt="">
                                         <span class="tooltiptext">Instructions</span></button>
@@ -242,41 +337,95 @@
                                     <i class="fas fa-undo-alt"></i>
                                 </button> --}}
                             </div>
-                            <!-- ---------------------astronaut code End-------------------------------------------- -->
-
-                         </div>
+                            
+                         {{-- </div> --}}
                     {{--</div> --}}
+            </div>
+        </div>
+        <!-----------astronaut code End-------------->
+        <div class="navigator-div-zoomed-in @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+            {{-- <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> --}}
+            {{-- <h2 class="planet_name edit-photo" id="zoomedin-edit-photo">Edit Photo</h2> --}}
+    
+            <div class="navigator-components">
+                @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+                    <img class="astronaut-img {{access()->user()->getGender()}}" src="{{ asset('front/images/astronut/Thomasina_blog.png') }}" alt=""
+                    class="astronaut-body">
+                    <div class="tos-div thomasina">
+                        <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                    </div>
+                @else
+                    <img class="astronaut-img {{access()->user()->getGender()}}" src="{{ asset('front/images/astronut/Tom_blog.png') }}" alt=""
+                    class="astronaut-body">
+                    <div class="tos-div">
+                        <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+                    </div>
+                @endif
+    
+                <a href="{{url('profile/edit-photo')}}" class="profilepicture">
+                    <img  id="user-photo" class="{{access()->user()->getGender()}}" src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+                </a> 
+                {{-- <div class="profile-picture-overlay"></div> --}}
+    
+                {{-- <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+                    <span>Zoom In</span>
+                    <i class="fas fa-search-plus"></i>
+                </button> --}}
+                <div class="navigator-buttons">
+                    <div class="column column-1">
+                        <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
+                        <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
+                    </div>
+                    <div class="column column-2">
+                        <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+                    </div>
+                    <div class="column column-3">
+                        <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
+                        <button class="profile-btn tooltips right">
+                            <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt="">
+                            <span class="tooltiptext">User Profile</span></button>
+                        {{-- <button class="zoomout-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">Zoom Out</span></button> --}}
+                    </div>
+                </div>
+                <div class="instructions-div">
+                    <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
+                </div>
+                <div class="communicator-div tooltips right">
+                    <span>Communicator</span>
+                    <button class="communicator-button"></button>
+                </div>
+                <button class="navigator-zoomout-btn tooltips right">
+                    <i class="fas fa-undo-alt"></i>
+                    <span class="">Zoom Out</span>
+                </button>
+                {{-- <button class="navigator-zoomout-btn tooltips zoom-in-out">
+                    <span>Zoom Out</span>
+                    <i class="fas fa-undo-alt"></i>
+                </button> --}}
             </div>
         </div>
     </div>
     
 
 <div class="app">
-    <!----------------------------------------DIV FOR THE IMAGE EDITOR 1------------------------------------------>
+    <!------------------------DIV FOR THE IMAGE EDITOR 1----------------------->
     <div class="image-editor-modal" id="imageEditorModal">
-        <imageeditor-component :edit_blog="1"></imageeditor-component>
+        <imageeditor-component :in_page="'setupCompanyProfile'"></imageeditor-component>
      </div>
-     <!----------------------------------------END OF DIV FOR THE IMAGE EDITOR 1------------------------------------------>
- 
-     <!----------------------------------------DIV FOR THE TUI IMAGE EDITOR 2------------------------------------------>
+     <!--------------------END OF DIV FOR THE IMAGE EDITOR 1---------------------->
+     <!-------------------------DIV FOR THE TUI IMAGE EDITOR 2------------------------>
      <div class="tui-editor-modal" id="tuiEditorModal">
          <tuieditor-component></tuieditor-component>
      </div>
-      <!---------------------------------------END OF DIV FOR THE TUI IMAGE EDITOR 2------------------------------------------>
-
+      <!-------------END OF DIV FOR THE TUI IMAGE EDITOR 2----------------->
 </div> <!--end of app-->
-
-
-
-
-
 
 @endsection
 @section('after-scripts')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
 <script src="{{asset('front/JS/jquery.fontselect.js')}}"></script>
-{{-- <script src="{{asset('front/JS/popper.min.js')}}"></script>
-<script src="{{asset('front/JS/bootstrap.min.js')}}"></script> --}}
+{{-- <script src="{{asset('front/JS/popper.min.js')}}"></script>--}}
+<script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
 <script src="{{asset('front/JS/fabric.min.js')}}"></script>
 <script src="{{asset('front/JS/FileSaver.js')}}"></script>      
 <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>        
@@ -322,46 +471,46 @@
             });
         
         
-        var astronaut_zoom = 0;
+        // var astronaut_zoom = 0;
 
 
-            var navigator_zoom = 0;
-            $('button.zoom-btn').click( function() { 
+        //     var navigator_zoom = 0;
+        //     $('button.zoom-btn').click( function() { 
             
-                if(!navigator_zoom) {
-                    $('.zoom-btn').hide();
-                    $('.navigator-buttons').css('pointer-events', 'auto');
-                    $('.communicator-div').css('pointer-events', 'auto');
-                    $('.instruction-div').css('pointer-events', 'auto');
-                    $('.toss-div').css('pointer-events', 'auto');
-                    $('.btn_pointer').css('pointer-events', 'auto');
-                    $('.navigator-div').addClass('animate-navigator-zoomin');
+        //         if(!navigator_zoom) {
+        //             $('.zoom-btn').hide();
+        //             $('.navigator-buttons').css('pointer-events', 'auto');
+        //             $('.communicator-div').css('pointer-events', 'auto');
+        //             $('.instruction-div').css('pointer-events', 'auto');
+        //             $('.toss-div').css('pointer-events', 'auto');
+        //             $('.btn_pointer').css('pointer-events', 'auto');
+        //             $('.navigator-div').addClass('animate-navigator-zoomin');
                     
 
-                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                        $('.navigator-div').removeClass('animate-navigator-zoomin');
-                        $('.navigator-div').addClass('zoomin');
-                        $('.zoom-btn').hide();
-                    });
-                } else {
+        //         $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+        //                 $('.navigator-div').removeClass('animate-navigator-zoomin');
+        //                 $('.navigator-div').addClass('zoomin');
+        //                 $('.zoom-btn').hide();
+        //             });
+        //         } else {
                 
-                }
+        //         }
 
-                navigator_zoom = !navigator_zoom;
-            });
-            //Zoom out animation
-            $('.navigator-zoomout-btn').click(function() {
-                $('.navigator-div').addClass('animate-navigator-zoomout');
+        //         navigator_zoom = !navigator_zoom;
+        //     });
+        //     //Zoom out animation
+        //     $('.navigator-zoomout-btn').click(function() {
+        //         $('.navigator-div').addClass('animate-navigator-zoomout');
 
-                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                    $('.navigator-div').removeClass('animate-navigator-zoomout');
-                    $('.navigator-div').removeClass('zoomin');
-                    $('.zoom-btn').show();
+        //         $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+        //             $('.navigator-div').removeClass('animate-navigator-zoomout');
+        //             $('.navigator-div').removeClass('zoomin');
+        //             $('.zoom-btn').show();
                     
-                });
+        //         });
 
-                navigator_zoom = !navigator_zoom;
-            });
+        //         navigator_zoom = !navigator_zoom;
+        //     });
 
 
             function removeAstronautAnimation()
@@ -391,6 +540,57 @@
             $('.zoom-in span').css('display', 'none');
             }
     });
+
+    var astronaut_zoom = 0;
+        var img_has_loaded = 0;
+        $('button.zoom-btn').click( function() {
+            if(!astronaut_zoom) {
+                if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                    $('.navigator-div').hide();
+                    $('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
+                    // if(!img_has_loaded) {
+                    //     $('.navigator-div-zoomed-in .lds-ellipsis').show();
+                    //     $('.navigator-div-zoomed-in .astronaut').on('load', function() {
+                    //         $('.navigator-div-zoomed-in .lds-ellipsis').hide();
+                    //         $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    //         img_has_loaded = !img_has_loaded;
+                    //     });
+                    // } else {
+                        $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                    // }
+                } else {
+                    $(this).fadeOut();
+                    $('.navigator-div').addClass('animate-navigator-zoomin');
+
+                    $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.navigator-div').removeClass('animate-navigator-zoomin');
+                        $('.navigator-div').addClass('zoomin');
+                        $('.navigator-buttons, .tos-div, .instructions-div, .navigator-zoomout-btn, .communicator-div').css('pointer-events', 'auto');
+                    });
+                }
+            }
+
+            astronaut_zoom = !astronaut_zoom;
+        });
+
+        $('.navigator-zoomout-btn').click(function() {
+            $('button.zoom-btn').fadeIn();
+
+            if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                $('.navigator-div').fadeIn();
+                $('.navigator-div-zoomed-in').hide();
+            } else {
+                $('.navigator-div').addClass('animate-navigator-zoomout');
+
+                $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $('.navigator-div').removeClass('animate-navigator-zoomout');
+                    $('.navigator-div').removeClass('zoomin');
+                });
+            }
+
+            astronaut_zoom = !astronaut_zoom;
+        });
+    
     /*-----------------------PART OF THE IMAGE EDITOR-------------------------*/
 
 
@@ -413,6 +613,7 @@
             oldFeaturedImg = image.src;
             isNewImg = true;
         }
+        
     };
 
 

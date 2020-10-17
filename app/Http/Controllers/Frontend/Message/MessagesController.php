@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Frontend\Message;
 
-use App\Http\Controllers\Controller;
 use App\Events\MessageSent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Message\Message;
+use App\Models\Messages\Message;
 use App\Models\Access\User\User;
+use App\Models\Messages\ChatGroup;
 use App\Events\PrivateMessageSent;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\Messages\ChatGroupMembers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,12 +29,12 @@ class MessagesController extends Controller
 
     public function index()
     {
-        return view('chats');
+        return view('frontend.chat.chats');
     }
 
     public function private()
     {
-        return view('privatechat');
+        return view('frontend.chat.privatechat');
     }
 
     public function fetchMessages($id)
@@ -59,11 +61,8 @@ class MessagesController extends Controller
 
     public function fetchgroups()
     {
-        // dd($request['user_id']);
-        $ids = DB::table('friend_groups')->where('friend_id',auth::id())->pluck('group_id');
-        foreach($ids as $id){
-            $groups[] = DB::table('groups')->where('id',$id)->first();
-        }
+        $ids = DB::table('user_chat_groups')->where('user_id',auth::id())->pluck('group_id');
+        $groups= DB::table('chat_groups')->whereIn('id',$ids)->get();
         return $groups;
     }
 
@@ -128,5 +127,35 @@ class MessagesController extends Controller
             // $path= $this->compress($source,$dest, $quality);// compressing images
             return $fileName;
         }
+    }
+
+    public function savegroup(Request $request)
+    {
+        // dd($request->selected);
+        // foreach($request->selected as $selected){
+        //     dd($selected);
+        // }
+        // $group = DB::table('chat_groups')->insert([
+        //     'name' => $request->name,
+        //     'created_by' => Auth::id(),
+        // ]);
+        $group = new ChatGroup;
+        $group->name = $request->name;
+        $group->created_by = Auth::id();
+        $group->save();
+        // $users = User::whereIn('id',$request->selected)->get();
+        // dd($users);
+        // $users->chatgroups()->sync($group);
+        $group_member = new ChatGroupMembers;
+        $group_member->user_id = Auth::id();
+        $group_member->group_id = $group->id;
+        $group_member->save();
+        foreach($request->selected as $selected){
+        $group_members = new ChatGroupMembers;
+        $group_members->user_id = $selected;
+        $group_members->group_id = $group->id;
+        $group_members->save();
+    }
+    return response("successfull");
     }
 }

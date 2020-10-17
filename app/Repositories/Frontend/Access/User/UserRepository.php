@@ -104,11 +104,11 @@ class UserRepository extends BaseRepository
         else
             $user->is_term_accept=0;
 
-        $user->username = $data['username'];
+        $user->username = $data['email'];
         $user->dob = $data['dob'];
         //$user->age = $data['age'];
         $user->sponser_name = $data['sponser_name'];
-        $user->sponser_id = $data['sponser_id'];
+        $user->sponser_email = $data['sponser_email'];
         $user->gender = $data['gender'];
         $user->address = $data['address'];
         $user->country = $data['country'];

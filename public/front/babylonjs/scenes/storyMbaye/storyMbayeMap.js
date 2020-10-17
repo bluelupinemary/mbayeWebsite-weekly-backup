@@ -1060,64 +1060,158 @@ let stageMap = new Map(
             "collage":'',  
             "discImg":"",
             "imagesUsed":['63photo1.png','63photo2.png','63photo3.png','63photo4.png','63photo5.png'],
-             "texts":["<div class='overlayTxt' id='txt1' style='height:5.5vw;text-align:center;padding-top:3vw;'>Here, many stones were excluded </div>",
-                    "<div class='overlayTxt' id='txt2' style='height:5.5vw;text-align:center;'>due to their inconsistent </div>",
-                    "<div class='overlayTxt' id='txt3' style='height:5.5vw;text-align:center;'>colour or other inappropriate properties.</div>",
-                    "<div class='overlayTxt' id='txt4' style='height:5.5vw;text-align:center;'>Plus the significance</div>",
-                    "<div class='overlayTxt' id='txt5' style='height:5.5vw;text-align:center;'>of those stones.</div>",
-                    "<div class='overlayTxt' id='txt6' style='height:5.5vw;text-align:center;'>Then we had to deal with the politely-termed, </div>",
-                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:center;'>inconsistent behaviour of </div>",
-                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:center;'>suppliers and agents.</div>"
+            "imagePos":[{x:0,y:0,z:-400},{x: -178,y: 75,z: -504},{x:158,y:-112,z:-500},{x:179,y:50,z:-600},{x:-157,y:-128,z:-550}],
+            "imageScale":[{x: 1,y: 1, z: 1},{x: 1.3,y:1.3, z: 1},{x: 1.1,y:1.1, z: 1},{x: 1.2,y: 1.2, z: 1},{x: 1.1,y: 1.1, z: 1}],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:5.5vw;text-align:left;padding-top:2vw;padding-left:2vw;'>Here, many stones were excluded </div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5.5vw;text-align:center;padding-left:12vw;'>due to their inconsistent </div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5.5vw;text-align:left;padding-left:2vw;'>colour or other inappropriate properties.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5.5vw;text-align:left;padding-left:2vw;'>Plus the significance</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5.5vw;text-align:center;padding-left:7vw;'>of those stones.</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5.5vw;text-align:left;padding-left:2vw;'>Then we had to deal with the politely-termed, </div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:center;padding-left:13vw;'>inconsistent behaviour of </div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5.5vw;text-align:center;'>suppliers and agents.</div>"
+                ]
+            }
+        ],
+        [ 64,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":[],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:5.5vw;text-align:left;padding-top:2vw;padding-left:2vw;font-size:5vw;'>Kindly note</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5.5vw;text-align:center;'>that logical fair prices for works</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5.5vw;text-align:center;padding-left:25vw;'>have always been paid. </div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5.5vw;text-align:left;padding-left:2vw;'>Everybody has always been paid. </div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5.5vw;text-align:center;padding-left:7vw;'>Some people, unfortunately, </div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5.5vw;text-align:left;padding-left:2vw;'>tried to hold us to ransom</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:center;padding-left:5vw;'>throughout the construction of  Mbaye </div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5.5vw;text-align:left;font-size:5vw;padding-left:2vw;'>and it happened with these stones.</div>"
+                ]
+            }
+        ],									 
+        [ 65,{ 
+            "collage":'',  
+            "discImg":"",
+            "video":['65EyesProduction.mp4'],
+            "imagesUsed":[],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:4.7vw;text-align:left;padding-left:2vw;'>We are sorry</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4.7vw;text-align:center;'>we cannot accredit them to the poor man</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4.7vw;text-align:center;padding-left:11vw;'>who carved them having found the stone,</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4.7vw;text-align:left;padding-left:2vw;'>but we did make sure that he was fully-paid</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4.7vw;text-align:center;padding-left:26vw;'>with his requested price.</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:4.7vw;text-align:left;padding-left:2vw;'>The boss of the agent eventually saw it appropriate</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4.7vw;text-align:center;padding-left:10vw;'>to reprimand her and ordered these stones</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:4.7vw;text-align:left;padding-left:2vw;'>to be forwarded to us</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:4.7vw;text-align:center;padding-left:8vw;'>after many months of being held to ransom.</div>",
+                    "<div class='overlayTxt' id='txt10' style='height:4.7vw;text-align:left;padding-left:2vw;'>For the hopeful benefit of all.</div>"
+                ]
+            }
+        ],
+        [ 66,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":[],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:4.8vw;text-align:left;padding-left:2vw;padding-top:1vw;'>We are not going to mention</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4.8vw;text-align:center;padding-left:22vw;'>the name or nationality</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4.8vw;text-align:left;padding-left:2vw;'>of the person who tried to hold us to ransom.</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4.8vw;text-align:center;'>We will allow destiny</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4.8vw;text-align:center;padding-left:24vw;'>to pay consequences.</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:4.8vw;text-align:left;padding-left:2vw;'>You may note we sound offended.</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4.8vw;text-align:center;padding-left:18vw;'>We are because such works</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:4.8vw;text-align:left;padding-left:2vw;'>contain so many emotions and our politeness</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:4.8vw;text-align:center;'>should not be taken for weakness.</div>"
+                ]
+            }
+        ],			 
+        [ 67,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['67photo1.png','67photo2.png','67photo3.png','67photo4.png','67photo5.png','67photo6.png'],
+            "imagePos":[{x:0,y:0,z:-500},{x: 450,y: -162,z: -500},{x:318,y:131,z:-500},{x:-137,y:-125,z:-436},{x:-343,y:91,z:-500},{x:-505,y:-205,z:-600}],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:5.5vw;text-align:center;padding-top:1vw;font-size:5.5vw;'>So let’s move on to the positive side.</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5.5vw;text-align:center;'>The carpenter chose to make</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5.5vw;text-align:center;padding-left:38vw;'>the eyes</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5.5vw;text-align:left;padding-left:2vw;'>from the luckiest stone in the world,</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5.5vw;text-align:center;padding-left:30vw;'>or it is to at least</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5.5vw;text-align:center;'>1 and half billion people of China</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:center;font-size:5.5vw;padding-top:7vw;'>- a type of jade called Aventurine.</div>"
+                ]
+            }
+        ],
+		[ 68,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['68photo1.png','68photo2.png','68photo3.png'],
+            "imagePos":[{x:270,y:-76,z:-312},{x: 75,y: 46,z: -211},{x:-180,y:-9,z:-183}],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:5.5vw;text-align:left;padding-top:2vw;padding-left:2vw;'> A quartz stone that is said to be effective</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5.5vw;text-align:center;padding-left:20vw;'>against depression</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5.5vw;text-align:center;padding-left:27vw;'>and heart-related </div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5.5vw;text-align:center;padding-left:35vw;'>health issues.</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5.5vw;text-align:center;padding-top:1vw;'>Named after the</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5.5vw;text-align:center;'>Italian word,</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.5vw;text-align:center;padding-left:18vw;'>Ventura - to Venture.</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5.5vw;text-align:center;'>Kindly read up on it.</div>"
+                ]
+            }
+        ],
+        [ 69,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['69photo.png'],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:5vw;text-align:left;padding-top:2vw;padding-left:2vw;'>On this note, we allow you to venture your thoughts</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5vw;text-align:left;padding-left:2vw;'>into how we found such a large stone for both eyes and</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5vw;text-align:left;padding-left:2vw;'>the difficulties we overcame to finally receive these eyes.</div>"
+                ]
+            }
+        ],
+        [ 70,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['70photo1.png','70photo2.png'],
+            "imagePos":[{x:0,y:0,z:-400},{x: 0,y: 0, z: -390}],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:5.2vw;text-align:left;padding-top:2vw;padding-left:2vw;'>We really hope these eyes,</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:5.2vw;text-align:center;padding-left:8vw;'>which are made in Green Aventurine</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:5.2vw;text-align:left;padding-left:7vw;'>and not blue as those of the</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:5.2vw;text-align:center;padding-top:2vw;padding-left:29vw;'>carpenter’s eyes,</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:5.2vw;text-align:left;padding-left:2vw;'>can bring happiness</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:5.2vw;text-align:left;padding-left:2vw;'>and good luck to all</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:5.2vw;text-align:center;padding-left:16vw;'>who venture to follow the</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:5.2vw;text-align:center;'>spirit in which we made Mbaye.</div>",
+                ]
+            }
+        ],						
+        [ 71,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['71photo1.png','71photo2.png','71photo3.png'],
+            "imagePos":[{x:278,y:-121,z:-450},{x: 0,y: -15, z: -250},{x: -313,y: 57, z: -390}],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:4.7vw;text-align:left;padding-left:2vw;'>The outer part of the eyeball is made from Obsidian</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:4.7vw;text-align:center;padding-left:19vw;'>as is the pupil.</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:4.7vw;text-align:left;padding-left:2vw;'>Obsidian is known in Feng Shui as the stone of truth</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:4.7vw;text-align:center;padding-left:19vw;'>which according to Roman history</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:4.7vw;text-align:left;padding-left:2vw;'>was first found by a Roman called Obsidius</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:4.7vw;text-align:center;padding-left:31vw;'>in Ethiopia Africa.</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:4.7vw;text-align:left;padding-left:2vw;'>It is known for being a protective stone</div>",
+                    "<div class='overlayTxt' id='txt8' style='height:4.7vw;text-align:center;padding-left:20vw;'>used for curing diseases and a</div>",
+                    "<div class='overlayTxt' id='txt9' style='height:4.7vw;text-align:left;padding-left:2vw;'>powerful cleanser of</div>",
+                    "<div class='overlayTxt' id='txt10' style='height:4.7vw;text-align:center;'>negative thoughts.</div>",
+                ]
+            }
+        ],
+        [72,{ 
+            "collage":'',  
+            "discImg":"",
+            "imagesUsed":['72photo.png'],
+             "texts":["<div class='overlayTxt' id='txt1' style='height:6vw;text-align:left;padding-left:3vw;padding-top:2vw;'>We believe that the significance</div>",
+                    "<div class='overlayTxt' id='txt2' style='height:6vw;text-align:left;padding-left:2vw;'>of these two stones</div>",
+                    "<div class='overlayTxt' id='txt3' style='height:6vw;text-align:left;padding-left:2vw;'>together</div>",
+                    "<div class='overlayTxt' id='txt4' style='height:6vw;text-align:left;padding-left:2vw;'>may bring good luck and protect</div>",
+                    "<div class='overlayTxt' id='txt5' style='height:6vw;text-align:center;padding-left:25vw;'>the health including</div>",
+                    "<div class='overlayTxt' id='txt6' style='height:6vw;text-align:center;padding-left:25vw;'>mental health</div>",
+                    "<div class='overlayTxt' id='txt7' style='height:6vw;text-align:left;padding-left:2vw;'>of all who may believe in our message. </div>"
                 ]
             }
         ],
         
-		
-		
-																				
-
-
-																						
-
-																			
-														 
-
-
-
-
-
-				
-														
-						
-											
-										
-												
-											 
-											
-
-
-         
-
-
-
-
-
-        
-
-
-
-
-
-        
-
-
- 
-
-
-
- 
-
- 
         
 
     ]

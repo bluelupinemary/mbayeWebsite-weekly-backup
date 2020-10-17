@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/jquery.mobile-1.4.5.min.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/ldbtn.min.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/loading.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/dashboard-responsive.css')}}">
     <style>
@@ -22,11 +24,24 @@
 
         /* Tablets */
         @media (max-width: 1024px) {
-            .navigator-div.zoomin .tooltips span, .navigator-div-zoomed-in .tooltips span {
-                display: none !important;
+            .navigator-div .tooltips span {
+                display: none;
             }
-            .navigator-div.zoomin .tooltips.zoom-in-out span, .navigator-div-zoomed-in .tooltips.zoom-in-out span {
-                display: block !important;
+
+            .navigator-div .navigator-zoomin.tooltips span {
+                display: block;
+            }
+
+            .navigator-div.zoomin .navigator-zoomin.tooltips span, .navigator-div.zoomin .navigator-buttons .tooltips span, .navigator-div.zoomin .communicator-div.tooltips span, .navigator-div-zoomed-in .navigator-buttons .tooltips span, .navigator-div-zoomed-in .communicator-div.tooltips span {
+                display: none;
+            }
+            
+            .navigator-div.zoomin .navigator-zoomout-btn.tooltips span, .navigator-div-zoomed-in .tooltips.zoom-in-out span {
+                display: block;
+            }
+
+            .navigator-div .navigator-zoomout-btn.tooltips span {
+                display: none;
             }
 
             .communicator-div button {
@@ -158,6 +173,7 @@
 
 @section('content')
 <div id="page-content">
+    <div class="app">
     <div id="container" onmouseover="hidePreview()">
         <img class='img_bg' src="{{asset('front/images/skybox_bg.png')}}" />
     </div>
@@ -575,7 +591,6 @@
     </div>
 
     <!--astronaut img div-->
-    <div class="app"></div>
     <div  class="astronaut-img-div navigator-div @if($user->gender == null || $user->gender == 'male') tom @endif" id="draggable" class="ui-widget-content slide_10"> 
         <h2 class="planet_name" id="edit-photo">Edit Photo</h2>
 
@@ -621,6 +636,10 @@
             <span>Communicator</span>
             <button class="communicator-button"></button>
         </div>
+        <div class="profile-div tooltips right">
+            <span>View Details</span>
+            <button class="profile-button"></button>
+        </div>
         <button class="navigator-zoomout-btn tooltips zoom-in-out">
             <span>Zoom Out</span>
             <i class="fas fa-undo-alt"></i>
@@ -647,10 +666,7 @@
 
             <a href="{{url('profile/edit-photo')}}" class="profilepicture">
                 <img  id="user-photo" class="{{$user->getGender()}}" src="{{asset('storage/profilepicture/'.$user->getProfilePicture())}}"/>
-            </a> 
-            <div class="profile-picture-overlay">
-
-            </div>
+            </a>
 
             {{-- <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
                 <span>Zoom In</span>
@@ -681,6 +697,33 @@
                 <i class="fas fa-undo-alt"></i>
             </button>
         </div>
+    </div>
+    <div class="profile-details">
+        <img src="{{asset('front/icons/close-btn.png')}}" alt="" class="close-btn">
+        <div class="details">
+            <label for="">Name</label>
+            <p>{{$user->first_name.' '.$user->last_name}}</p>
+            <label for="">Address</label>
+            <p>{{$user->address.', '.$user->city.', '.$user->state.', '.$user->country}}</p>
+            <label for="">Email Address</label>
+            <p>{{$user->email}}</p>
+            <label for="">Mobile Number</label>
+            <p>{{$user->mobile_number}}</p>
+            <label for="">Date of Birth</label>
+            <p>{{Carbon\Carbon::parse($user->dob)->format('F j, Y')}}</p>
+            <label for="">Member Since</label>
+            <p>{{Carbon\Carbon::parse($user->created_at)->format('F j, Y')}}</p>
+        </div>
+        @if(!$user->is_friend)
+            @if($user->has_sent)
+                <button class="recruit-btn ld-ext-left" data-user-id="{{$user->id}}"><div class="ld ld-ring ld-spin"></div> <span class="text">Cancel Request</span></button>
+            @else
+                <button class="recruit-btn ld-ext-left" data-user-id="{{$user->id}}"><div class="ld ld-ring ld-spin"></div> <span class="text">Recruit</span></button>
+            @endif
+        @else
+            <button class="recruit-btn" disabled="disabled">Friends</button>
+        @endif
+    </div>
     </div>
     <!--end of astronaut img div-->
 </div>

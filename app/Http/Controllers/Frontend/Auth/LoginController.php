@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\Frontend\Auth;
 
-use App\Events\Frontend\Auth\UserLoggedIn;
-use App\Events\Frontend\Auth\UserLoggedOut;
-use App\Exceptions\GeneralException;
 use App\Helpers\Auth\Auth;
-use App\Helpers\Frontend\Auth\Socialite;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Models\Access\User\User;
+use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Utilities\NotificationIos;
+use Illuminate\Support\Facades\Session;
+use App\Helpers\Frontend\Auth\Socialite;
 use App\Http\Utilities\PushNotification;
+use App\Events\Frontend\Auth\UserLoggedIn;
+use App\Events\Frontend\Auth\UserLoggedOut;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
-use App\Models\Access\User\User;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
 // use Illuminate\Support\Facades\Auth;
 
 /**
@@ -63,33 +68,66 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
-        if (method_exists($this, 'hasTooManyLoginAttempts') &&
-            $this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
 
+        if (method_exists($this, 'hasTooManyLoginAttempts') && $this->hasTooManyLoginAttempts($request)) 
+        {
+            Log::debug('has too many login');
+            $this->fireLockoutEvent($request);
             return $this->sendLockoutResponse($request);
         }
-
-        if ($this->attemptLogin($request)) {
+        if ($this->attemptLogin($request)) 
+        {
+            Log::debug('attempt login');
             return $this->sendLoginResponse($request);
+            
         }
-
-        
-
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
-        
+        Log::debug('increment attempts');
         $this->incrementLoginAttempts($request);
-// dd($this->sendFailedLoginResponse($request));
+        // dd($this->sendFailedLoginResponse($request));
+        // dd($this->sendFailedLoginResponse($request));
+
+        Log::debug($this->sendFailedLoginResponse($request));
         return $this->sendFailedLoginResponse($request);
+        // return  $this->sendFailedLoginResponse($request);
+             
         // dd( $this->incrementLoginAttempts($request));
         // return redirect()->back()->withErrors('You did not sign-in correctly or your account is temporarily disabled');
     }
+     protected function sendFailedLoginResponse(Request $request)
+    {
+        return response()->json([
+            $this->username() => [trans('auth.failed')],
+            'redirectPath' => 'login',
+            'title'=>'Something Went Wrong!',
+            'message'=>'Email or password is incorrect',
+            'status'=>'failed'
+        ]);
+        
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard()->user())
+                ?: redirect()->intended($this->redirectPath());
+        // dd($return);        
+    }
+
 
     /**
      * @param Request $request
@@ -101,45 +139,96 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-
+        // dd($user);
+        Log::debug($user);
        /**
         * Checking user account is verified or not, if not redirect back
         */
-        if ($user->confirmed==0) {
+        if ($user->confirmed == 0) {
+            
             access()->logout();
-            return redirect()->back()->withErrors('This account is not yet verified. Please check your email to verify your account.');
-   
+            // throw new GeneralException('This account is not yet verified. Please check your email to verify your account.');
+            // return redirect()->back()->withErrors('This account is not yet verified. Please check your email to verify your account.');
+            // return redirect()->back()->with('error', 'This account is not yet verified. Please check your email to verify your account.');
+            // commented by nouman
+            // Session::flash('message', 'This account is not yet verified. Please check your email to verify your account.!'); 
+            // Session::flash('alert-class', 'alert-danger');
+            // commented by nouman
+
+            return response()->json([
+                'redirectPath' => 'login',
+                'redirect'=>'no',
+                'title'=>'Not Confirmed',
+                'message'=>trans('exceptions.frontend.auth.confirmation.confirm'),
+                'status'=>'notConfirmed'
+            ]); 
         }
 
         /*
          * Check to see if the users account is confirmed and active
          */
-        if (!$user->isConfirmed()) {
+        if ($user->status == 0 && $user->confirmed == 1) 
+        {
             access()->logout();
 
-            throw new GeneralException(trans('exceptions.frontend.auth.confirmation.resend', ['user_id' => $user->id]), true);
-        } elseif (!$user->isActive()) {
-            access()->logout();
+            // throw new GeneralException(trans('exceptions.frontend.auth.confirmation.resend', ['user_id' => $user->id]), true);
+            
+            return response()->json([
+                'redirectPath' => 'login',
+                'redirect'=>'no',
+                'title'=>'Deactive',
+                'message'=> trans('exceptions.frontend.auth.deactivated'),
+                'status'=>'deActive'
+            ]);
 
-            throw new GeneralException(trans('exceptions.frontend.auth.deactivated'));
         }
 
-        
+        /*
+         * Check to see if the users account is active and not confirmed
+         */
+        if ($user->status == 1 && $user->confirmed == 0) 
+        {
+            access()->logout();
+            // Auth::logout();
 
-        event(new UserLoggedIn($user));
+            // throw new GeneralException(trans('exceptions.frontend.auth.confirmation.resend', ['user_id' => $user->id]), true);
+            
+            return response()->json([
+                'redirectPath' => 'login',
+                'redirect'=>'no',
+                'title'=>'Not Confirm',
+                'message'=> trans('exceptions.frontend.auth.confirmation.resend'),
+                'status'=>'notConfirmed'
+            ]);
 
-       
+        }
+
         // dd("sd".$user->already_login);
-        if ($user->already_login==0) {
+        if ($user->already_login==0) 
+        {
             $affectedRows = User::where('id', '=',$user->id)->update(array('already_login' => 1));
+             event(new UserLoggedIn($user));
            
-            return  redirect()->route('frontend.initial-agreement');
+            // return  redirect()->route('frontend.initial-agreement');
             // return route('frontend.dashboard');
+            return response()->json([
+                'redirectPath' => 'initial-agreement',
+                'title'=>'Success',
+                'message'=>'Welcome to Mbaye',
+                'status'=>'success'
+            ]);
            
         }
         else{
-          
-            return  redirect()->route('frontend.participateMbaye'); 
+            // return redirect()->intended($this->redirectPath());
+            event(new UserLoggedIn($user));
+            return response()->json([
+                'redirectPath' => $this->redirectPath(),
+                'title'=>'Success',
+                'message'=>'Welcome to Mbaye',
+                'status'=>'success'
+            ]);
+            // return  redirect()->route('frontend.participateMbaye'); 
         }
         /*
         // Push notification implementation
@@ -154,7 +243,29 @@ class LoginController extends Controller
         // $passportToken->token->save();
         // $token = $passportToken->accessToken;
         // dd($token);
-        return redirect()->intended($this->redirectPath());
+        // return redirect()->intended($this->redirectPath());
+    }
+    /**
+     * Redirect the user after determining they are locked out.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function sendLockoutResponse(Request $request)
+    {
+        $seconds = $this->limiter()->availableIn(
+            $this->throttleKey($request)
+        );
+
+        return response()->json([
+            'message' => Lang::get('auth.throttle', ['seconds' => $seconds,'minutes' => ceil($seconds / 60)]),
+            'code'=>429,
+            'title'=>'Access Resticted',
+            'status'=>'moreAttempts'
+        ]);
+        
     }
 
     /**
@@ -228,4 +339,6 @@ class LoginController extends Controller
             return redirect()->route('frontend.auth.login');
         }
     }
+
+    
 }

@@ -2,11 +2,14 @@
 
 namespace App\Models\Access\User\Traits\Relationship;
 
-use App\Models\Access\User\FeaturedUser;
 use App\Models\System\Session;
 use App\Models\Comment\Comment;
+use App\Models\Messages\Message;
 use App\Models\Friendships\Group;
+use App\Models\Messages\ChatGroup;
+use App\Models\Company\CompanyProfile;
 use App\Models\Access\User\SocialLogin;
+use App\Models\Access\User\FeaturedUser;
 use App\Models\JobSeekerProfile\JobSeekerProfile;
 
 
@@ -64,6 +67,11 @@ trait UserRelationship
           return $this->hasMany(Group::class, 'created_by');
       }
 
+      public function chatgroups()
+      {
+          return $this->belongsToMany(ChatGroup::class, 'user_chat_groups','user_id','group_id');
+      }
+
     public function JobSeekerprofile()
       {
           return $this->hasOne(JobSeekerProfile::class,'user_id');
@@ -74,9 +82,19 @@ trait UserRelationship
         return $this->hasMany('App\Models\Game\UserDesignPanel', 'user_id');
     }
 
+    public function company()
+    {
+        return $this->hasMany(CompanyProfile::class, 'owner_id');
+    }
+
     public function featureduser()
     {
         return $this->hasOne(FeaturedUser::class,'user_id');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 
     // override the toArray function (called by toJson)

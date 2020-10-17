@@ -34,7 +34,7 @@ class JobSeekerProfilesRepository extends BaseRepository
 
     public function __construct()
     {
-        $this->upload_path = 'img'.DIRECTORY_SEPARATOR.'JobSeekerProfile'.DIRECTORY_SEPARATOR;
+        $this->upload_path = 'career'.DIRECTORY_SEPARATOR.'employee'.DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('public');
     }
 
@@ -72,7 +72,20 @@ class JobSeekerProfilesRepository extends BaseRepository
      */
     public function create(array $input)
     {
-       
+    //    dd($input);
+       DB::beginTransaction();
+    //    $input['featured_image'] = $this->uploadImage($input);
+    if($input['edited_featured_image']) {
+        $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
+        // dd($input);
+    } else if(array_key_exists('featured_image', $input)) {
+        $input['featured_image'] = $this->uploadImage($input);
+    }
+
+      if ($data = JobSeekerProfile::create($input)) {
+          DB::commit();
+          return $data;
+      }
     }
     
 
@@ -115,10 +128,36 @@ class JobSeekerProfilesRepository extends BaseRepository
 
             $this->storage->put($this->upload_path.$fileName, file_get_contents($avatar->getRealPath()));
 
-            $input = array_merge($input, ['featured_image' => $fileName]);
+            // $input = array_merge($input, ['featured_image' => $fileName]);
 
-            return $input;
+            return $fileName;
         }
+    }
+
+    public function uploadEditedImage($featured_image)
+    {
+        // dd($featured_image);
+        $avatar = $featured_image;
+        // dd($avatar);
+        $base64 = str_replace('data:image/png;base64,', '', $featured_image);
+        $base64 = str_replace(' ', '+', $base64);
+        $image = base64_decode($base64);
+
+        // $user_photo = explode('.', $user->photo);
+        $filename = Str::random().'.jpg';
+        while (Storage::exists('public/career/employee/'.$filename)) {
+            $filename = Str::random().'.jpg';
+        }
+
+        Storage::disk('local')->put('public/career/employee/'.$filename, $image);
+        
+        // compressing image
+        // $source= 'storage/img/blog/'.$filename;
+        // $quality=100;
+        // $dest="storage/img/blog/".$filename;
+        // $path= $this->compress($source,$dest, $quality);// compressing images
+
+        return $filename;
     }
 
     /**

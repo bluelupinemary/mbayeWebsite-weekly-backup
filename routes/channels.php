@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
+
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -14,5 +17,26 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+Broadcast::channel('groupchat.{groupid}', function ($user,$groupid) {
 
+    return auth::check();
+});
+
+Broadcast::channel('chat', function ($user) {
+    if(auth()->check()){
+        return $user;
+    }
+});
+
+Broadcast::channel('privatechat.{receiverid}', function ($user,$receiverid) {
+
+    return auth::check();
+});
+
+Broadcast::channel('pchat', function ($user) {
+
+    if(auth()->check()){
+        return $user;
+    }
+});
 

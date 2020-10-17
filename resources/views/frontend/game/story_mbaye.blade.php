@@ -55,7 +55,12 @@
         <div class="player" id="player" data-player="youtube-player-1" style="width:20vw;height: 12vw;right: 0;top:0;position: absolute;"></div>
     </div>
 
-    {{-- <div id="continueBtnDiv" style="position:absolute; right: 3vw; bottom: 3vw;visibility:hidden;"> --}}
+    <div id="previousBtnDiv" style="position:absolute; left: 3vw; bottom: 3vw;visibility:hidden;z-index:10">
+        <button id="previousBtn" class="btn arrow-down" style="position:relative;"> >
+        </button>
+    </div>
+
+
     <div id="continueBtnDiv" style="position:absolute; right: 3vw; bottom: 3vw;visibility:hidden;z-index:10">
         <button id="continueBtn" class="btn arrow-down" style="position:relative;"> >
         </button>

@@ -7,15 +7,16 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+        {{-- @if(!Request::is('login')) --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        {{-- @endif --}}
         <meta name="user_id" content="{{ Auth::check() ? Auth::user()->id : '' }}">
         <title>@yield('title', app_name())</title>
 
-        <!-- Meta -->
-        <meta name="description" content="@yield('meta_description', 'Laravel AdminPanel')">
-        <meta name="author" content="@yield('meta_author', 'Viral Solani')">
-        <meta name="keywords" content="@yield('meta_keywords', 'Laravel AdminPanel')">
-        <meta name="url" content="{{ url('') }}">
+       <script type="text/javascript">
+           var base_url = {!! json_encode(url('/')) !!}
+       </script>
         @yield('meta')
 
         <!-- Styles -->
@@ -35,9 +36,7 @@
         <script>
             window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),
-                'coolcount' => '',
-                'hotcount' => '',
-                'naffcount' => '',
+          
             ]); ?>
         </script>
         <?php

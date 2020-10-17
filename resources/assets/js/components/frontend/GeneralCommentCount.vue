@@ -7,7 +7,7 @@ import EventBus from '../../frontend/event-bus';
 export default {
     data:function() {
             return{
-                commentcount: '',
+                commentcount: '0',
         }
       },
      methods: {

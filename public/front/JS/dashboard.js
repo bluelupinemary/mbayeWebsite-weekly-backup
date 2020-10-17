@@ -151,9 +151,21 @@ $('.planet-back-button').click(function() {
 $(".img_pluto").removeClass("ani-rolloutPluto");
 
 $('.pluto-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
+
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.pluto-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
 			$('.pluto-img').hide();
@@ -173,6 +185,12 @@ $('.pluto-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -220,9 +238,21 @@ $('.zoom-in-planet').on('dblclick', function() {
 $(".img_neptune").removeClass("ani-rolloutNeptune");
 
 $('.neptune-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
+
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.neptune-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
 			$('.neptune-img').hide();
@@ -242,6 +272,12 @@ $('.neptune-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -284,9 +320,21 @@ $('.img_neptune .planet-buttons button.back').click(function() {
 $(".img_uranus").removeClass("ani-rolloutUranus");
 
 $('.uranus-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
+
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.uranus-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
 			$('.uranus-img').hide();
@@ -305,6 +353,12 @@ $('.uranus-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -325,7 +379,7 @@ $('.uranus-img').on('click', function() {
 });
 
 $(".img_uranus").on('mouseenter', function(event) {
-	if(isMobile()) {
+	if(isMobile() || isSmallDevice()) {
 		$('.uranus_preview .map').hide();
 		$('.uranus_preview').show();
 		$('.img_uranus img.planet-img').css('opacity', '0');
@@ -380,9 +434,21 @@ $('.img_uranus .planet-buttons button.back').click(function() {
 $(".img_jupiter").removeClass("ani-rolloutJupiter");
 
 $('.jupiter-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
+
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.jupiter-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
 			$('.jupiter-img').hide();
@@ -402,6 +468,12 @@ $('.jupiter-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -449,9 +521,21 @@ $('.img_jupiter .planet-buttons button.back').click(function() {
 $(".img_moon").removeClass("ani-rolloutMoon");
 
 $('.moon-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
+
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.moon-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
 			$('.moon-img').hide();
@@ -471,6 +555,12 @@ $('.moon-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -513,10 +603,21 @@ $('.img_moon .planet-buttons button.back').click(function() {
 $(".img_saturn").removeClass("ani-rolloutSaturn");
 
 $('.saturn-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
 
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.saturn-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
 			$('.saturn-img').hide();
@@ -535,6 +636,12 @@ $('.saturn-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -556,7 +663,7 @@ $('.saturn-img').on('click', function() {
 });
 
 $(".img_saturn").on('mouseenter', function(event) {
-	if(isMobile()) {
+	if(isMobile() || isSmallDevice()) {
 		$('.saturn_preview .map').hide();
 		$('.saturn_preview').show();
 		$('.img_saturn img.planet-img').css('opacity', '0');
@@ -609,9 +716,21 @@ $('.img_saturn .planet-buttons button.back').click(function() {
 $(".img_mars").removeClass("ani-rolloutMars");
 
 $('.mars-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
+
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.mars-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){4
 			$('.mars-img').hide();
@@ -631,6 +750,12 @@ $('.mars-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -673,9 +798,21 @@ $('.img_mars .planet-buttons button.back').click(function() {
 $(".img_venus").removeClass("ani-rolloutVenus");
 
 $('.venus-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
+
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.venus-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
 			$('.venus-img').hide();
@@ -695,6 +832,12 @@ $('.venus-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -737,9 +880,21 @@ $('.img_venus .planet-buttons button.back').click(function() {
 $(".img_mercury").removeClass("ani-rolloutMercury");
 
 $('.mercury-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
+
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.mercury-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
 			$('.mercury-img').hide();
@@ -759,6 +914,11 @@ $('.mercury-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -801,9 +961,21 @@ $('.img_mercury .planet-buttons button.back').click(function() {
 $(".img_sun").removeClass("ani-rolloutSun");
 
 $('.sun-img').on('click', function() {
+	// hide profile details
+	if($('.profile-details').hasClass('show')) {
+		$('.profile-details').removeClass('fadeInUpBig');
+		$('.profile-details').addClass('fadeOutDown');
+	}
+
 	if(isMobile()) {
 		$(this).find('.planet_name').addClass('animated zoomIn');
 		$(this).find('.planet_name').css('opacity', '1');
+
+		// hide notifications list
+		show_notifications = 0;
+		$('.hologram').removeClass('full');
+		$('.notifications-list-div').fadeOut();
+		$('.earth-holo span').html('View Notification');
 
 		$('.sun-img .planet_name').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
 			$('.sun-img').hide();
@@ -823,6 +995,12 @@ $('.sun-img').on('click', function() {
 	} else {
 		if(isSmallDevice()) {
 			$('.astronaut-img-div').hide();
+
+			// hide notifications list
+			show_notifications = 0;
+			$('.hologram').removeClass('full');
+			$('.notifications-list-div').fadeOut();
+			$('.earth-holo span').html('View Notification');
 		}
 
 		if(isZoomIn()) {
@@ -877,7 +1055,7 @@ $('.main-planet').mouseover(function() {
 // 	$(this).find('.planet_name').removeClass('animated zoomIn');
 // 	$(this).find(' .planet_name').css('opacity', '0');
 // 	});
-$('.profilepicture').mouseover(function() {
+$('.profile-picture-overlay').mouseover(function() {
 	$('h2.edit-photo').addClass('animated zoomIn');
 	$('h2.edit-photo').css('opacity', '1');
 }).mouseout(function() {
@@ -912,7 +1090,7 @@ $("div.main-planet").on("taphold", function() {
 // 	$(this).find('.planet_name').css('opacity', '1');
 // });
 
-$(".profilepicture").on("taphold", function() {
+$(".profile-picture-overlay").on("taphold", function() {
 	$('.planet_name').css('opacity', '0');
 	$('h2#edit-photo').addClass('animated zoomIn');
 	$('h2#edit-photo').css('opacity', '1');
@@ -980,18 +1158,14 @@ new CircleType(document.getElementById('planet_name_sun'))
 // 	.radius(60);
 // }
 
-if(window.innerWidth >= 2560) {
+if(window.innerWidth >= 1920) {
 	new CircleType(document.getElementById('edit-photo'))
 	.dir(1)
 	.radius(100);
-} else if(window.innerWidth >= 1680) {
-	new CircleType(document.getElementById('edit-photo'))
-	.dir(1)
-	.radius(80);
 } else {
 	new CircleType(document.getElementById('edit-photo'))
 	.dir(1)
-	.radius(60);
+	.radius(70);
 }
 
 // Collage image on click, open modal with iframe
@@ -1039,6 +1213,11 @@ var navigator_zoom = 0;
 
 $('button.navigator-zoomin').click( function() {
 	if(!navigator_zoom) {
+		if($('.profile-details').hasClass('show')) {
+			$('.profile-details').removeClass('fadeInUpBig');
+			$('.profile-details').addClass('fadeOutDown');
+		}
+		
 		if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
 			$('.navigator-div').hide();
 			$('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
@@ -1151,8 +1330,12 @@ $('.participate-btn').click( function() {
 	window.location.href = url+'/participateMbaye';
 });
 
-$('.instructions-btn, .tos-btn').click( function() {
-	window.location.href = url+'/page_under_development';
+$('.instructions-btn').click( function() {
+	window.location.href = url+'/instructions';
+});
+
+$('.tos-btn').click( function() {
+	window.location.href = url+'/terms';
 });
 
 $('.editphoto-btn').click( function() {
@@ -1166,7 +1349,7 @@ var show_notifications = 0;
 // }).mouseleave(function() {
 // 	$('.notifications-div').fadeOut();
 // 	$('.hologram').removeClass('full');
-// 	$('.notifications-list').hide();
+// 	$('.notifications-list-div').hide();
 
 // 	show_notifications = 0;
 // });
@@ -1174,14 +1357,20 @@ var show_notifications = 0;
 $('.earth-holo').click( function() {
 	if(!show_notifications) {
 		$('.hologram').addClass('full', function() {
-			$('.notifications-count').addClass('float-right');
-			$('.notifications-list').fadeIn(1000);
+			$('.notifications-count').addClass('animated pulse');
+			$('.notifications-count').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+				$('.notifications-count').removeClass('animated pulse');
+			});
+			$('.notifications-list-div').fadeIn().css('display', 'flex');
 			$('.earth-holo span').html('Hide Notification');
 		});
 	} else {
 		$('.hologram').removeClass('full');
-		$('.notifications-count').removeClass('float-right');
-		$('.notifications-list').fadeOut(1000);
+		$('.notifications-count').addClass('animated pulse');
+		$('.notifications-count').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+			$('.notifications-count').removeClass('animated pulse');
+		});
+		$('.notifications-list-div').fadeOut(1000);
 		$('.earth-holo span').html('View Notification');
 	}
 
@@ -1221,6 +1410,103 @@ if(!isMobile() && !isSmallDevice()) {
 $('button.collage').click(function() {
 	var tag = $(this).data('tag');
 	window.location.href = url+'/editor_collage?tag='+tag;
+});
+
+$('.profile-button').on('click', function() {
+	// $('.profile-details').show();
+	$('.profile-details').removeClass('fadeOutDown');
+	$('.profile-details').addClass('animated fadeInUpBig show');
+	// $('.profile-details').css('opacity', '1');
+
+	
+});
+
+$('.profile-details.animated.fadeOutDown').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+	$('.profile-details').removeClass('show');
+	// $('.profile-details').css('opacity', '0');
+	// $('.profile-details').hide();
+});
+
+$('.profile-details .close-btn').on('click', function() {
+	$('.profile-details').removeClass('fadeInUpBig');
+	$('.profile-details').addClass('fadeOutDown');
+	
+});
+
+$('.profile-details .edit-btn').on('click', function() {
+	window.location.href = url+'/profile/edit-profile';
+});
+
+$('.profile-details .recruit-btn').on('click', function() {
+	var user_id = $(this).data('user-id');
+	var button = $(this);
+	button.prop('disabled', true);
+	button.addClass('running');
+	$('.profile-details .text').html('Processing...');
+
+	var form_url = url+'/sendrequest/'+user_id;
+
+	$.ajax({
+		url: form_url,
+		method: 'get',
+		// dataType: 'JSON',
+		contentType: false,
+		cache: false,
+		processData: false,
+		success: function(response) {
+			console.log(response);
+			
+			$('.profile-details').hide();
+			$('.navigator-div').hide();
+
+			if(response.status) {
+				Swal.fire({
+					title: '<span class="success">Success!</span>',
+					text: response.message,
+					imageUrl: '../../front/icons/alert-icon.png',
+					imageWidth: 80,
+					imageHeight: 80,
+					imageAlt: 'Mbaye Logo',
+					// width: '30%',
+					padding: '1rem',
+					background: 'rgba(8, 64, 147, 0.62)'
+				}).then((res) => {
+					$('.profile-details').show();
+					$('.navigator-div').show();
+					button.prop('disabled', false);
+					button.removeClass('running');
+					$('.profile-details .text').html('Cancel Request');
+				});
+			} else {
+				$('.profile-details').show();
+				$('.navigator-div').show();
+				button.prop('disabled', false);
+				button.removeClass('running');
+				$('.profile-details .text').html('Recruit');
+			}
+		},
+		error: function (request, status, error) {
+			$('.profile-details').hide();
+			$('.navigator-div').hide();
+			Swal.fire({
+				imageUrl: '../../front/icons/alert-icon.png',
+				imageWidth: 80,
+				imageHeight: 80,
+				imageAlt: 'Mbaye Logo',
+				title: 'Error!',
+				html: 'Something went wrong.',
+				// width: '30%',
+				padding: '1rem',
+				background: 'rgba(8, 64, 147, 0.62)'
+			}).then((res) => {
+				$('.profile-details').show();
+				$('.navigator-div').show();
+				button.prop('disabled', false);
+				button.removeClass('running');
+				$('.profile-details .text').html('Recruit');
+			});
+		}
+	});
 });
 
 /**

@@ -57,10 +57,6 @@ public/front/videos/
 server.php
 public/js/backend.js
 public/js/frontend.js
-public/js/frontend.js
-public/js/backend.js
-public/js/frontend.js
-public/js/backend.js
 storage/framework
 storage/app
 storage/debugbar

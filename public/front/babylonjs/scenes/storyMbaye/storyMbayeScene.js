@@ -263,25 +263,13 @@ function init_photo(name,size,pos,stageNo){
     planeMatl.diffuseTexture.hasAlpha = true;
     planeMatl.diffuseTexture.uScale = -1;
 
-    // if(stageNo === 57){
-
-    // }else{
-    //     planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
-    //     planeMatl.opacityTexture.uScale = -1;
-    // }
-   
-
-    // if(stageNo === 5 || stageNo === 6 || stageNo === 7){            //images at the bottom
-    //     plane.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(-90),0,BABYLON.Tools.ToRadians(0));
-       
-    // }
 
     if(stageNo === 5 || stageNo === 6 || stageNo === 7){            //images at the bottom
         plane.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(-90),0,BABYLON.Tools.ToRadians(0));
         planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
         planeMatl.opacityTexture.uScale = -1;
         // planeMatl.opacityTexture = new BABYLON.Texture("front/textures/storyMbaye/"+name+".png", scene);
-    }else if(stageNo === 25 || stageNo === 26 ||  stageNo === 29 || stageNo === 30 || stageNo === 36 || stageNo === 38 || stageNo === 40 || stageNo === 48 || stageNo === 49 || stageNo === 50 || stageNo === 53 || stageNo === 58 || stageNo===61){
+    }else if(stageNo === 25 || stageNo === 26 ||  stageNo === 29 || stageNo === 30 || stageNo === 36 || stageNo === 38 || stageNo === 40 || stageNo === 48 || stageNo === 49 || stageNo === 50 || stageNo === 53 || stageNo === 58 || stageNo===61 || stageNo===63 || stageNo===67 || stageNo===68 || stageNo===69 || stageNo===70 || stageNo===71){
         planeMatl.opacityTexture = new BABYLON.Texture(imagePath+name, scene);
         planeMatl.opacityTexture.uScale = -1;
     }
@@ -307,7 +295,7 @@ function init_video(name,radius,stageNo){
     
 
     let video;
-    if(stageNo == 39 || stageNo == 59){
+    if(stageNo == 39 || stageNo == 59 || stageNo == 65){
         video = stageMap.get(stageNo).video;
     }
 
@@ -315,7 +303,9 @@ function init_video(name,radius,stageNo){
     mat.emissiveColor = BABYLON.Color3.White();
 	
 	var videoTexture = new BABYLON.VideoTexture("video", [videoPath+video], scene, true, true);
-
+    if(stageNo === 65){
+        videoTexture.video.volume = 0.01;
+    }
 	mat.diffuseTexture = videoTexture;
 	disc.material = mat;
 
