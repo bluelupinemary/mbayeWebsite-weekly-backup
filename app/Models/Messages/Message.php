@@ -14,11 +14,9 @@ class Message extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'sender_id',
         'message',
-        'receiver_id',
-        'file',
-        'group_id'
+        'conversation_id',
     ];
 
     protected $dates = [
@@ -29,5 +27,10 @@ class Message extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function chatmedia()
+    {
+        return $this->hasMany(ChatMedia::class)->where('message_type',Message::class);
     }
 }

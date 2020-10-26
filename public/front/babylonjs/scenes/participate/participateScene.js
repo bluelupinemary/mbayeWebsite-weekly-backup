@@ -744,7 +744,8 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
     document.getElementById("loadingScreenDiv").remove();
-//    earthScene.debugLayer.show();
+
+
     engine.runRenderLoop(function () {
 
         if(theScene){
@@ -767,4 +768,12 @@ theScene.executeWhenReady(function () {
 // window resize handler
 window.addEventListener("resize", function () {
     engine.resize();
+    testOrientation();
+    testFullscreen();
+});
+
+
+//check orientation of screen when page is loaded
+$( document ).ready(function() {
+    testOrientation();
 });

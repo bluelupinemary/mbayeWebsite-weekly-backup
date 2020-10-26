@@ -8,9 +8,11 @@ $factory->define(User::class, function (Generator $faker) {
     static $password;
 
     return [
-        'username'         => $faker->safename,
-        'email'             => $faker->safeEmail,
-        'password'          => $password ?: $password = bcrypt('secret'),
+        'username'         => $faker->name,
+        'first_name'         => $faker->name,
+        'last_name'         => $faker->name,
+        'email'             => $faker->unique()->safeEmail,
+        'password'          => $password ?: $password = bcrypt('aszx'),
         'confirmation_code' => md5(uniqid(mt_rand(), true)),
         'remember_token'    => Str::random(10),
     ];

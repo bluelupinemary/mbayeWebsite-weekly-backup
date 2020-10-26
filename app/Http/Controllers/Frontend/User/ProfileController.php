@@ -42,6 +42,7 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
+        // dd($request->all());
         $output = $this->user->updateProfile(access()->id(), $request->all());
 
         // E-mail address was updated, user has to reconfirm
@@ -50,8 +51,7 @@ class ProfileController extends Controller
 
             return redirect()->route('frontend.auth.login')->withFlashInfo(trans('strings.frontend.user.email_changed_notice'));
         }
-
-        return redirect()->route('frontend.user.account')->withFlashSuccess(trans('strings.frontend.user.profile_updated'));
+        return redirect()->route('frontend.user.profile.edit-profile')->with('success',trans('strings.frontend.user.profile_updated'));
     }
 
     public function editPhotoPage()

@@ -878,7 +878,6 @@ function init_scrollable_viewer(name,imgName,w,h,pos,rot){
 
 
 
-//FUNCTIONS BELOW TO BE FIXED
 
 let initVideo;  
 let initWebCamScreen,initWebCamScreen22;  
@@ -917,7 +916,6 @@ function enable_init_webcamera(){
     BABYLON.VideoTexture.CreateFromWebCam(homeScene, function (videoTexture2) {
         initVideo = videoTexture2;
         videoMaterial2.diffuseTexture = initVideo;
-        // console.log("init video",initVideo);
     }, { maxWidth: 256, maxHeight: 256 });
   
     homeScene.onBeforeRenderObservable.add(function () {
@@ -1095,7 +1093,7 @@ var i=0;
 let isInitCameraMoving = false;
 let isIntroDone = false;
 
-//check the lenght of the video and set the length of video1 so we know where it stops
+
 theScene.executeWhenReady(function () {   
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";

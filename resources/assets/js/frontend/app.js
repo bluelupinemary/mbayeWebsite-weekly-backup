@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
 import Vue2TouchEvents from 'vue2-touch-events'
 import Paginate from 'vuejs-paginate'
+import moment from 'moment'
+import VueMoment from 'vue-moment'
 
 
 // import VueMaterial from 'vue-material'
@@ -24,6 +26,7 @@ window.Vue = require('vue');
 window.axios.defaults.baseURL = document.head.querySelector('meta[name="url"]').content;
 // Vue.use(VueMaterial);
 Vue.use(Vue2TouchEvents)
+Vue.use(VueMoment, { moment })
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

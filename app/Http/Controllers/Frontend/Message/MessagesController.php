@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Frontend\Message;
 use App\Events\MessageSent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Messages\Message;
 use App\Models\Access\User\User;
-use App\Models\Messages\ChatGroup;
+use App\Models\Messages\Message;
 use App\Events\PrivateMessageSent;
+use App\Models\Messages\ChatGroup;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Messages\ChatGroupMembers;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Messages\Conversation;
+use App\Models\Messages\GroupMessage;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Messages\ChatGroupMembers;
 
 class MessagesController extends Controller
 {
@@ -40,23 +43,36 @@ class MessagesController extends Controller
     public function fetchMessages($id)
     {
 
-        return Message::with('user')->where('group_id',$id)->get();
+        return GroupMessage::where('group_id',$id)->get();
     }
 
     public function fetchprivateMessages(User $user)
     {
-        $privateCommunication= Message::with('user')
-        ->where(['user_id'=> auth()->id(), 'receiver_id'=> $user->id])
-        ->orWhere(function($query) use($user){
-            $query->where(['user_id' => $user->id, 'receiver_id' => auth()->id()]);
-        })
-        ->get();
+        // return $user;
+        $con = Conversation::where(['user1_id' => auth::id(),'user2_id' => $user->id])->orWhere(['user2_id'=>auth::id(),'user1_id'=>$user->id])->first();
+        $privateCommunication = Message::where('conversation_id', $con->id)->get();
         return $privateCommunication;
     }
 
-    public function fetchUsers()
+    public function fetchconversations()
     {
-        return User::where('id','!=',auth::id())->get();
+        // $con = [];
+        // $i = 0;
+        $conversations = Conversation::where('user1_id',auth::id())->orWhere('user2_id',auth::id())->get();
+        $user1_ids = $conversations->pluck('user1_id');
+        $user2_ids = $conversations->pluck('user2_id');
+        $users = $user1_ids->merge($user2_ids);
+        $users = $users->unique();
+        $users = User::whereIn('id',$users)->where('id','!=',auth::id())->get();
+        return $users;
+        // foreach($conversations as $con[$i]){
+        // if($con[$i]->user1_id == Auth::id())
+        // $con[$i]->friend = User::find($con[$i]->user2_id);
+        // else
+        // $con[$i]->friend = User::find($con[$i]->user1_id);
+        // $i++;
+        // }
+        // return $con;
     }
 
     public function fetchgroups()
@@ -81,17 +97,21 @@ class MessagesController extends Controller
 
     public function sendPrivateMessage(Request $request,$user)
     {
-
+        $con = Conversation::where(['user1_id' => auth::id(),'user2_id' => $user])->orWhere(['user2_id'=>auth::id(),'user1_id'=>$user])->first();
             $input=request()->all();
             // dd($input);
             if(request()->has('file')){
-                // dd('have');
+                $extension = $input['file']->extension();
                 $filename = $this->uploadImage($input['file']);
                 // dd($filename);
                 $message=auth()->user()->messages()->create([
-                    // 'user_id' => request()->user()->id,
-                    'file' => $filename,
-                    'receiver_id' => $user,
+                    // 'message' => $input['message'],
+                    'conversation_id' => $con->id,
+                ]);
+                $message->chatmedia()->create([
+                    'filename' => $filename,
+                    'filetype' => $extension,
+                    'message_type' => Message::class,
                 ]);
             }
             else{
@@ -99,7 +119,7 @@ class MessagesController extends Controller
             $message=auth()->user()->messages()->create([
                 // 'user_id' => request()->user()->id,
                 'message' => $input['message'],
-                'receiver_id' => $user,
+                'conversation_id' => $con->id,
             ]);
         }
         broadcast(new PrivateMessageSent($message->load('user')))->toOthers();
@@ -157,5 +177,39 @@ class MessagesController extends Controller
         $group_members->save();
     }
     return response("successfull");
+    }
+
+    public function liveStatus($user_id)
+    {
+        // get user data
+        $user = User::find($user_id);
+
+        // check online status
+        if (Cache::has('user-is-online-' . $user->id))
+            $status = 'Online';
+        else
+            $status = 'Offline';
+
+        // // check last seen
+        // if ($user->last_seen != null)
+        //     $last_seen = "Active " . Carbon::parse($user->last_seen)->diffForHumans();
+        // else
+        //     $last_seen = "No data";
+
+        // response
+        return response()->json(
+             $status,
+            
+        );
+    }
+    public function searchusers(Request $request){
+        // dd($request);
+        $q = $request['q'];
+        // dd($q);
+    $user = User::where('username','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->get();
+    // dd($user);
+    if(count($user) > 0)
+        return $user;
+    else return 'No Details found. Try to search again !';
     }
 }

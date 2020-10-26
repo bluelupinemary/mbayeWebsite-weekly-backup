@@ -17,7 +17,10 @@
             background-color: #17a2b854;
             box-shadow: 2px 0px 9px #17a2b8;
         }
-
+        .mbaye_body{
+            justify-content: normal !important;
+        }
+        /* $('.mbaye_body').css('justify-content','normal'); */
     </style>
 
     <!-- Fonts -->
@@ -47,6 +50,9 @@
 
 
 @section('content')
+<div class="slider">
+    <h2 class="sidenav-heading"  onclick="openNav()">SETUP&nbsp;PROFILE</h2>
+</div>
 {{-- <h1>Testing</h1>     --}}
     <div id="page-content">
         {{-- <div class="app">  --}}
@@ -84,7 +90,7 @@
 
             </div>
             {{-- --------------------------------------------------------------------- --}}
-            <div class="modal" id="AboutMeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal" id="AboutMeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -133,27 +139,31 @@
                                         <input type="text" class="form-control disabled_field" id="Country" disabled value="{{ $user->country }}">
                                       </div>
                                       <div class="form-group col-md-12 input-group-sm">
+                                        <label for="objective">Objective</label>
+                                        <textarea type="text" class="form-control" name="objective" id="objective" maxlength="250"></textarea>
+                                      </div>
+                                      {{-- <div class="form-group col-md-12 input-group-sm">
                                       <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                      Add Current Address
                                       </button>
-                                      </div>
+                                      </div> --}}
                                     <br>  <br>
-                                      <div class="collapse" id="collapseExample">
+                                      {{-- <div class="collapse col-md-12" id="collapseExample"> --}}
                                             <div class="form-group col-md-12 input-group-sm ">
                                                 <label for="country">Present Country</label>
-                                                <select class="countries" name="present_country" id="countryId" required>&#x25BC;
+                                                <select class="countries form-control" name="present_country" id="countryId" required>&#x25BC;
                                                     <option value="">Select</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-12 input-group-sm">
                                                 <label for="state">Present State</label>
-                                                <select id="stateId" class="states" name="state" required>
+                                                <select id="stateId" class="states form-control" name="state" required>
                                                     <option value="">Select State</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-12 input-group-sm">
                                                 <label for="city">Present City</label>
-                                                <select id="cityId" class="cities" name="present_city" required>
+                                                <select id="cityId" class="cities form-control" name="present_city" required>
                                                     <option value="">Select City</option>
                                                 </select>
                                             </div>
@@ -161,11 +171,11 @@
                                                 <label for="pAddress">Present Address</label>
                                                 <input type="text" class="form-control" name="present_address" id="pAddress" >
                                             </div>
-                                            <div class="form-group col-md-12 input-group-sm">
+                                            {{-- <div class="form-group col-md-12 input-group-sm">
                                                 <label for="objective">Objective</label>
-                                                <input type="text" class="form-control" name="objective" id="objective" >
-                                            </div>
-                                      </div>
+                                                <textarea type="text" class="form-control" name="objective" id="objective" maxlength="250"></textarea>
+                                            </div> --}}
+                                      {{-- </div> --}}
                                      
                                       {{-- <input type="hidden" name="user_id" value="{{Auth::user()->id}}"> --}}
                                       
@@ -184,9 +194,9 @@
                     </div>
                   </div>
                 </div>
-                </form>
+                
               </div>
-
+            </form>
             {{-- ---------------------------------------------------------------------------- --}}
              
         
@@ -198,11 +208,14 @@
             </div>
 
             <div id="mySidenav" class="sidenav">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
+                {{-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a> --}}
                 <h3 class="heading_setup">Setup Profile</h3>
                 <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
                 <a href="" class="profession" data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
                 <a href="" class="education" data-toggle="modal" data-target="#EducationModal">Education</a>
+                <div class="slider-close-button">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
+                </div>
                 <a href="" class="work-experience" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
                 <a href="" class="contacts" data-toggle="modal" data-target="#ContactModal">Contact</a>
                 <a href="" class="reference" data-toggle="modal" data-target="#CharacterReferencesModal">Character References</a>
@@ -210,16 +223,17 @@
                 
             </div>
 
-            <div class="slider">
-            </div>
-            <div class="sidenav-left">
+            {{-- <div class="slider">
+                <h2 class="sidenav-heading"  onclick="openNav()">SETUP&nbsp;PROFILE</h2>
+            </div> --}}
+            {{-- <div class="sidenav-left">
             <!-- left controls -->
          
-                <div id="main">
+                {{-- <div id="main"> --}}
                     {{-- <span  class="arrows" style="font-size:17px;font-family:Nasalization;cursor:pointer" onclick="openNav()">S<br>E<br>T</span> --}}
-                    <h2 class="sidenav-heading"  onclick="openNav()">SETUP&nbsp;PROFILE</h2>
-                </div>
-            </div>
+                    {{-- <h2 class="sidenav-heading"  onclick="openNav()">SETUP&nbsp;PROFILE</h2> --}}
+                {{-- </div> --}}
+            </div> --}}
 
             <div class="sidenav-right">
             <!-- right controls -->
@@ -228,7 +242,7 @@
             
         <form method="POST" action="{{url('save_work_experience')}}" id="work-experience-form"  enctype="multipart/form-data">
             @csrf
-             <div class="modal" id="WorkExperienceModal"  class="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+             <div class="modal" id="WorkExperienceModal"  class="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 {{-- <div class="form-block">  --}}
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content">
@@ -243,10 +257,11 @@
                     <div class="modal-body work-modal-body">
                         <div class="work-experience-body main_work_experience_div workDiv_1">
                             <fieldset>
-                               
+                                <div style="position: relative;">
                                   <button type="button"  class="close remove-btn-workexperience"   title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
                                     <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
-                                    </button>
+                                  </button>
+                                </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 input-group-sm">
                                           <label for="StartDate">Start Date<span style="color:red">*</span></label>
@@ -261,28 +276,30 @@
                                             <label for="CompName">Company Name<span style="color:red">*</span></label>
                                             <input type="text" class="form-control" id="company_name" name="company_name[]" placeholder="">
                                         </div>
-                                      <div class="form-group  input-group-sm">
-                                        <label for="CompRole">Role<span style="color:red">*</span></label>
-                                        {{-- <input type="text" class="form-control" id="CompRole" name="role[]" placeholder=""> --}}
-                                        <textarea class="form-control" id="CompRole" name="role[]" placeholder="">
-                                        </textarea>
-                                      </div>
+                                        <div class="form-group input-group-sm">
+                                            <label for="Address">Company Address<span style="color:red">*</span></label>
+                                            <input type="text" class="form-control" id="Address" name="address[]" placeholder="">
+                                        </div>
                                       <div class="form-group input-group-sm">
                                         <label for="CompDesig">Designation<span style="color:red">*</span></label>
                                         <input type="text" class="form-control" id="CompDesig" name="designation[]" placeholder="">
                                       </div>
+                                      <div class="form-group  input-group-sm">
+                                        <label for="CompRole">Role<span style="color:red">*</span></label>
+                                        {{-- <input type="text" class="form-control" id="CompRole" name="role[]" placeholder=""> --}}
+                                        <textarea class="form-control" id="CompRole" name="role[]" placeholder="" maxlength="250"></textarea>
+                                      </div>
                                       <div class="form-group input-group-sm">
-                                        <label for="Contact">Contact<span style="color:red">*</span></label>
+                                        <label for="Contact">Contact Person<span style="color:red">*</span></label>
                                         <input type="text" class="form-control" id="Contact" name="contact_no[]" placeholder="">
                                       </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="Address">Address<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" id="Address" name="address[]" placeholder="">
+                                      
+                                      <div style="position: relative;">
+                                        <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
+                                            <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                        </button>
                                       </div>
-                                      <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
-                                        <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
-                                      </button>
-                            </fieldset>
+                            </fieldset><br>
                         </div>
                     </div>
                     <div class="work_experience-clone"></div>
@@ -298,7 +315,7 @@
 
         <form method="POST" action="{{url('save_education')}}" id="education-form" enctype="multipart/form-data">
             @csrf
-            <div class="modal" id="EducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal" id="EducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
               {{-- <div class="education_form-block">  --}}
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content">
@@ -324,20 +341,23 @@
                                 {{-- <button type="button"  class="close clone-btn-education  "  title="Add More Education" aria-label="Clone">
                                     <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
                                   </button> --}}
-
-                                  <button type="button"  class="close remove-btn-education"  title="Remove Education " aria-label="Clone" onclick="remove(this)">
-                                    <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
-                                    </button>
+                                  <div style="position: relative;">
+                                    <button type="button"  class="close remove-btn-education"  title="Remove Education " aria-label="Clone" onclick="remove(this)">
+                                        <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                      </button>
+                                  </div>
+                                  
                                     <div class="form-row">
                                         <div class="form-group col-md-12 input-group-sm" id="education_dropdown">
                                             <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
                                                 <select class="form-control" name="education_level[]" id="xyz"  required>
-                                                    <option value="Select" selected disabled>Select</option>
-                                                    <option value="Doctrate">Doctrate</option>
-                                                    <option value="Post-graduate">Post-graduate</option>
-                                                    <option value="Undergraduate">Undergraduate</option>
-                                                    <option value="Intermediate">Intermediate</option>
-                                                    <option value="Secondary">Secondary</option>
+                                                    <option value="Doctorate" > Doctorate</option>
+                                                    <option value="Master" >Master's Degree</option>
+                                                    <option value="Bachelor" >Bachelor's Degree</option>
+                                                    <option value="Associate" >Associate Degree</option>
+                                                    <option value="SomeCollege" >Some College</option>
+                                                    <option value="Vocational" >Vocational</option>
+                                                    <option value="HighSchool" >High School Graduate</option>
                                                 </select>
                                         </div> 
                                         <div class="form-group col-md-12 input-group-sm">
@@ -350,8 +370,7 @@
                                       </div>
                                       <div class="form-group col-md-12 input-group-sm">
                                         <label for="Description">Description<span style="color:red">*</span></label><br>
-                                        <textarea id="Description" name="description[]" required>
-                                            </textarea>
+                                        <textarea id="Description" class="form-control" name="description[]" maxlength="250" required></textarea>
                                       </div>
                                         <div class="form-group col-md-4 input-group-sm">
                                           <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
@@ -367,13 +386,14 @@
                                       </div>
                                       
 
-                                       
-                                      <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
-                                        <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
-                                      </button>
-                            </fieldset>
+                                      <div style="position: relative;">
+                                        <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
+                                            <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
+                                        </button>
+                                      </div>
+                            </fieldset><br>
                         </div>  
-             
+                        
                     </div>
               
                     <div class="education-clone"></div>
@@ -390,7 +410,7 @@
 
          <form method="POST" action="" id="reference-form"  enctype="multipart/form-data">
             @csrf
-              <div class="modal" id="CharacterReferencesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal" id="CharacterReferencesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 {{-- <div class="reference_form-block "> --}}
                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content">
@@ -409,10 +429,11 @@
                     <div class="modal-body reference-modal-body">
                        <div class="reference-body  main_reference_div referenceDiv_1">
                          <fieldset> 
-                                
-                                  <button type="button"  class="close remove-btn-reference"  aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
-                                    <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
-                                    </button>
+                                        <div style="position: relative;">
+                                            <button type="button"  class="close remove-btn-reference"  aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
+                                                <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                            </button>
+                                        </div>
                                         <div class="form-group input-group-sm">
                                             <label for="Name"> Name<span style="color:red">*</span></label>
                                             <input type="text" class="form-control" id="Name" name="name[]" placeholder="">
@@ -429,16 +450,18 @@
                                         <label for="Designation">Designation<span style="color:red">*</span></label>
                                         <input type="text" class="form-control" id="Designation"  name="designation[]" placeholder="">
                                       </div>
-                                      <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
-                                        <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
-                                      </button>
-                            </fieldset>
+                                      <div style="position: relative;">
+                                        <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
+                                            <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                        </button>
+                                      </div>
+                            </fieldset><br>
                         </div>
                     </div>
            
                     <div class="reference-clone"></div>
                     <div class="modal-footer">
-                        <input type="submit"  class="btn btn-primary characterRederences-done" value="Done" id="submit_reference"/>
+                        <input type="submit"  class="btn btn-primary characterRederences-done" value="Submit" id="submit_reference"/>
                     </div>
                 </div>
             </div>
@@ -456,7 +479,7 @@
 
               <form action="" id="contact-form">
                 @csrf
-              <div class="modal" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -482,11 +505,11 @@
                                         <input type="text" class="form-control disabled_field" id="pMobNumber" name="mobile_number" disabled value="{{ $user->mobile_number }}" >
                                       </div>
                                       <div class="form-group col-md-12 input-group-sm">
-                                        <label for="sEmail">Secondary Email</label>
+                                        <label for="sEmail">Secondary Email (Optional)</label>
                                         <input type="email" class="form-control" id="sEmail" name="secondary_email" >
                                       </div>
                                       <div class="form-group col-md-12 input-group-sm">
-                                        <label for="sMobNumber">Secondary  Mobile Number</label>
+                                        <label for="sMobNumber">Secondary  Mobile Number (Optional)</label>
                                         <input type="text" class="form-control" id="sMobNumber" name="secondary_mobile_number" >
                                       </div>
                                 </div>
@@ -506,7 +529,7 @@
 
     
               
-                <div class="modal" id="ProfessionSkillModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal" id="ProfessionSkillModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                   {{-- <div class="profession_form-block">  --}}
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                       <div class="modal-content">
@@ -549,7 +572,7 @@
                                         <div class="form-row"> 
                                           <div class="form-group col-md-12 col-lg-12 input-group-sm">
                                             <label for="skills">Skills<span style="color:red">*</span></label>
-                                            <textarea id="skills" name="skills"></textarea>
+                                            <textarea class="form-control" id="skills" name="skills"></textarea>
                                           </div>  
                                         </div>
                                   
@@ -601,7 +624,8 @@
 <script src="{{asset('front/JS/lodash.min.js')}}"></script>
 {{-- <script src="{{asset('front/system-google-font-picker/jquery.fontselect.js')}}"></script> --}}
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+{{-- <script src="//geodata.solutions/includes/countrystatecity.js"></script> --}}
+<script src="{{ asset('front/JS/countrystatecity.js') }}">
 
 <script>
     $(function() {
@@ -619,8 +643,9 @@ document.getElementById("Profession").selectedIndex = "52";
 </script>
 
 <script>
+    
     $(document).ready(function() {
-
+        
         // $('.image-editor-modal').show();
         var url = $('meta[name="url"]').attr('content');
 //    
@@ -868,10 +893,12 @@ document.getElementById("Profession").selectedIndex = "52";
                         imageAlt: 'Mbaye Logo',
                         width: '30%',
                         padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
+                        background: 'rgba(8, 64, 147, 0.62)',
+                        allowOutsideClick: false
                     }).then((res) => {
                         $('#WorkExperienceModal').modal('hide');
                         $('#ContactModal').modal('show');
+                        $('.modal-backdrop').remove();
                         // window.open(url+'/single_blog/'+data.data.id);
                         //window.location.href = url+'/single_general_blog/'+data.data.id;
                         // resetGeneralBlogForm();
@@ -911,7 +938,7 @@ document.getElementById("Profession").selectedIndex = "52";
             e.preventDefault();
             // alert('jjkkk');
                 //    $(".remove-btn-education").hide();
-                
+
                     var $form = $('form#education-form');
                     var newel = $('.education-body:last').clone();
                     $(newel).insertAfter(".education-body:last");
@@ -926,6 +953,8 @@ document.getElementById("Profession").selectedIndex = "52";
                     $(".education-body:last .remove-btn-education").show();
                  }
                  $(".education-body:last #StartDate").focus().select();  
+
+                 console.log();
                  
         });
         
@@ -1043,10 +1072,12 @@ document.getElementById("Profession").selectedIndex = "52";
                         imageAlt: 'Mbaye Logo',
                         width: '30%',
                         padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
+                        background: 'rgba(8, 64, 147, 0.62)',
+                        allowOutsideClick: false
                     }).then((res) => {
                         $('#EducationModal').modal('hide');
                         $('#WorkExperienceModal').modal('show');
+                        $('.modal-backdrop').remove();
                         // window.open(url+'/single_blog/'+data.data.id);
                         //window.location.href = url+'/single_general_blog/'+data.data.id;
                         // resetGeneralBlogForm();
@@ -1110,7 +1141,7 @@ document.getElementById("Profession").selectedIndex = "52";
             var count = $(".reference-body");
             totalDiv=count.length;
             var alert_status;
-          
+           var id = {{ Auth::user()->id }};
             for(var i=1;i<=totalDiv;i++){
 
                 // console.log("here");
@@ -1181,7 +1212,7 @@ document.getElementById("Profession").selectedIndex = "52";
                 processData: false,
                 success: function(data) {
                     Swal.fire({
-                        title: '<span class="success">Success!</span>',
+                        title: '<span class="success">Your Jobseeker Profile Is Created!</span>',
                         text: data.message,
                         imageUrl: '../../front/icons/alert-icon.png',
                         imageWidth: 80,
@@ -1189,10 +1220,11 @@ document.getElementById("Profession").selectedIndex = "52";
                         imageAlt: 'Mbaye Logo',
                         width: '30%',
                         padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
+                        background: 'rgba(8, 64, 147, 0.62)',
+                        allowOutsideClick: false
                     }).then((res) => {
                         // window.open(url+'/single_blog/'+data.data.id);
-                        //window.location.href = url+'/single_general_blog/'+data.data.id;
+                        window.location.href = url+'/my_career_profile/'+ id;
                         // resetGeneralBlogForm();
                     });
                 },
@@ -1292,11 +1324,12 @@ document.getElementById("Profession").selectedIndex = "52";
                         imageAlt: 'Mbaye Logo',
                         width: '30%',
                         padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
+                        background: 'rgba(8, 64, 147, 0.62)',
+                        allowOutsideClick: false
                     }).then((res) => {
                         $('#ContactModal').modal('hide');
                         $('#CharacterReferencesModal').modal('show');
-                        
+                        $('.modal-backdrop').remove();
                         // window.open(url+'/single_blog/'+data.data.id);
                         //window.location.href = url+'/single_general_blog/'+data.data.id;
                         // resetGeneralBlogForm();
@@ -1406,7 +1439,8 @@ document.getElementById("Profession").selectedIndex = "52";
                                 imageAlt: 'Mbaye Logo',
                                 width: '30%',
                                 padding: '1rem',
-                                background: 'rgba(8, 64, 147, 0.62)'
+                                background: 'rgba(8, 64, 147, 0.62)',
+                                allowOutsideClick: false
                             }).then((res) => {
                                 if (res.value) {
                                     // document.getElementByClassName("profession").click;
@@ -1534,7 +1568,8 @@ document.getElementById("Profession").selectedIndex = "52";
                         imageAlt: 'Mbaye Logo',
                         width: '30%',
                         padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
+                        background: 'rgba(8, 64, 147, 0.62)',
+                        allowOutsideClick: false
                     }).then((res) => {
                         $('#ProfessionSkillModal').modal('hide');
                         $('#EducationModal').modal('show');
@@ -1629,7 +1664,7 @@ document.getElementById("Profession").selectedIndex = "52";
                 function closeNav()
                  {
                 document.getElementById("mySidenav").style.width = "0";
-                document.getElementById("main").style.marginLeft= "0";
+                // document.getElementById("main").style.marginLeft= "0";
                 document.body.style.backgroundColor = "white";
                 }
                 function remove(e){

@@ -362,6 +362,7 @@ html, body {
 
 
 
+/************************** STYLE FOR THE LOADING SPINNER ***********************************/
 .lds-spinner {
     color: official;
     display: inline-block;
@@ -441,6 +442,7 @@ html, body {
         opacity: 0;
     }
 }
+/************************** END OF STYLE FOR THE LOADING SPINNER ***********************************/
 
 
 

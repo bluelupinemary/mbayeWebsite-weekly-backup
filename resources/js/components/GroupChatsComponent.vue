@@ -196,14 +196,14 @@
                         </div>
                         <div class="content" id="content">
                             <div class="container">
-                                <div class="col-md-12" style="height:500px; overflow-y:scroll" v-chat-scroll>
+                                <div class="col-md-12" style="height:500px;" v-chat-scroll>
                                     <div class="date">
                                         <hr>
                                         <span>Yesterday</span>
                                         <hr>
                                     </div>
                                     <div v-for="(message, index) in messages" :key="index">
-                                        <div v-if="user.id===message.user.id" class="message" >
+                                        <div v-if="user.id===message.sender_id" class="message" >
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
                                             <div class="text-main">
                                                 <div class="text-group">
@@ -214,11 +214,11 @@
                                                 <span>09:46 AM</span>
                                             </div>
                                         </div>
-                                        <div v-else-if="user.id!==message.user.id" class="message me" >
+                                        <div v-else-if="user.id!==message.sender_id" class="message me" >
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
                                             <div class="text-main">
-                                                <div class="text-group">
-                                                    <div class="text">
+                                                <div class="text-group me">
+                                                    <div class="text me">
                                                         <p>{{message.message}}</p>
                                                     </div>
                                                 </div>

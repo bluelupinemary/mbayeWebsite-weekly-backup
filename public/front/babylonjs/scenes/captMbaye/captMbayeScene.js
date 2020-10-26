@@ -578,7 +578,7 @@ function add_capt_mouse_listener(){
                     showPage("https://www.captaindiagne.org/");
                 }else if(theInitMesh ===  "homePluto"){
                     showPage(" https://www.bbc.co.uk/news/special/2014/newsspec_6954/index.html");
-                }else if(theInitMesh ===  "homeSun"){
+                }else if(theInitMesh ===  "sun"){
                     checkScreenAndDoubleClick("dashboard");
                 }else if(theInitMesh ===  "homeNeptune"){
                     checkScreenAndDoubleClick("visitingMbaye");

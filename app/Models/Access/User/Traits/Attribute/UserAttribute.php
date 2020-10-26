@@ -6,6 +6,9 @@ use App\Models\Access\User\FeaturedUser;
 use Illuminate\Support\Carbon;
 use App\Models\Game\UserDesignPanel;
 use App\Models\Game\UserPanelFlowers;
+use App\Models\Messages\ChatGroup;
+use App\Models\Messages\ChatGroupMembers;
+use App\Models\Messages\Conversation;
 use App\Models\UserCollage\UserCollage;
 
 /**
@@ -593,6 +596,17 @@ trait UserAttribute
         $groups = $this->groups()->get();
 
         return $groups;
+    }
+
+    public function chatgroup(){
+        $ids = ChatGroupMembers::where('user_id',$this->id)->pluck('group_id');
+        $groups=ChatGroup::whereIn('id',$ids)->get();
+        return $groups;
+    }
+
+    public function conversations(){
+        $conversation = Conversation::where('user1_id',$this->id)->orWhere('user2_id',$this->id)->get();
+        return $conversation;
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Frontend\User;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class ChangePasswordRequest.

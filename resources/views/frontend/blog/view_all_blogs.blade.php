@@ -2,6 +2,7 @@
 
 @section('after-styles')
     <link rel="preload" as="font" href="{{asset('fonts/georgia italic.ttf')}}" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="{{asset('fonts/nasalization-rg.ttf')}}" type="font/woff2" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('front/fontawesome/css/all.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/view-all-blogs.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/view-all-blogs-responsive.css')}}">
@@ -55,7 +56,6 @@
         </button>
     </div>
     <div class="navigator-div-zoomed-in">
-        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
         <div class="navigator-components">
             <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut">
             <div class="tos-div">
@@ -98,7 +98,7 @@
                 <p>Ooooooofa!</p>
             </div>
             <div class="message message-2 {{(Auth::user()->gender == 'female' ? 'thomasina' : '' )}}">
-                <p>Hi, <span>Major {{(Auth::user()->gender == 'male' || Auth::user()->gender == null ? 'Tom' : 'Thomasina' )}}</span> <span class="user-name">{{Auth::user()->first_name}}!</span></p>
+                <p>Hi, <span>Major {{(Auth::user()->gender == 'male' || Auth::user()->gender == null ? 'Tom' : 'Thomasina' )}}</span> <span class="user-name">{{current(explode(' ', Auth::user()->first_name))}}!</span></p>
                 <p class="sub-title">These are your blogs:</p>
             </div>
         </div>
@@ -208,7 +208,7 @@
                 imageWidth: 80,
                 imageHeight: 80,
                 imageAlt: 'Mbaye Logo',
-                width: '30%',
+                // width: '30%',
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.78)',
                 showCancelButton: true,
@@ -231,7 +231,7 @@
                         imageWidth: 80,
                         imageHeight: 80,
                         imageAlt: 'Mbaye Logo',
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.78)'
                     }).then((res) => {
@@ -259,7 +259,7 @@
                             imageAlt: 'Mbaye Logo',
                             title: title,
                             html: errorString,
-                            width: '30%',
+                            // width: '30%',
                             padding: '1rem',
                             background: 'rgba(8, 64, 147, 0.78)'
                         });

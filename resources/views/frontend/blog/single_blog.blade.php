@@ -431,7 +431,7 @@
             $('.navigator-div').css("display", "flex").hide().fadeIn(1000);
             $('.single-blog, .reaction-div').fadeIn(1000, function() {
                 if(naff_fart_status) {
-                    $('body').on('click', function(){
+                    $('#page-content').on('click', function(){
                         if(naff_fart_animation) {
                             animateNaffFart();
                             naff_fart_animation = !naff_fart_animation;

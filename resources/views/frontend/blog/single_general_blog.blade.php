@@ -412,7 +412,7 @@
             $('.navigator-div').css("display", "flex").hide().fadeIn(1000);
             $('.single-blog, .reaction-div').fadeIn(1000, function() {
                 if(naff_fart_status) {
-                    $('body').on('click', function(){
+                    $('#page-content').on('click', function(){
                         if(naff_fart_animation) {
                             animateNaffFart();
                             naff_fart_animation = !naff_fart_animation;
@@ -1167,7 +1167,11 @@
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
-                        window.open(url+'/shared_story/'+data.blog_share.id, '_blank'); 
+                        if(data.permanent) {
+                            window.open(url+'/shared_blog/'+data.blog_share.id, '_blank'); 
+                        } else {
+                            window.open(url+'/shared_story/'+data.blog_share.id, '_blank'); 
+                        }
                     });
                 },
                 error: function (request, status, error) {

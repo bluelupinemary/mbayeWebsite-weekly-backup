@@ -1,5 +1,4 @@
-
- // A button for taking snaps
+  // A button for taking snaps
   window.onload = function() 
   {
     calculate_age();
@@ -7,6 +6,8 @@
 
   // Get old selected gender, country, organization type;
   $(document).ready(function() {
+   
+      
 
     $("#MyForm input#text_occupation_astro").keyup(function(){
       var value = $(this).val();
@@ -139,26 +140,76 @@
     function contentDisplay() 
     {   
       $(".sub_container").show();
-    }
+    } 
     
-    // const genderOldValue = "{{ old('gender') }}";
-    // const countryOldValue = "{{ old('country') }}";
-    // const orgtypeOldValue = "{{ old('org_type') }}";
     
-    if(genderOldValue !== '') 
-    {
-      $('#genders').val(genderOldValue);
-    }
     
-    if(countryOldValue !== '') 
-    {
-      $('#countryId').val(countryOldValue);
-    }
-    if(orgtypeOldValue !== '') 
-    {
-      $('#org_types').val(orgtypeOldValue);
-    }
+    
   });
+
+
+   // COUNTRIES AND STATE AND SITIES
+   var countires;
+   var states = [];
+   var allcities = [];
+   var alldata=[];
+   // FETCHING THE OBJECT OF COUNTRIES AND CITIES AND STATE
+     $.getJSON( "/front/json/reg-countries-states-cities.json", function( data ) {
+       alldata = data;
+         $.each( data, function( key, val ) {
+           $('#countryId').append("<option value='" + val.name + "'>" + val.name + "</option>");
+         });
+     });
+     // SELECTING THE COUNTRY AND FETCHING THE STATES
+     $('#countryId').change(function(){
+        var c_check = $('#countryId').val();
+        $('#stateId').html('');
+        $('#cityId').html('');
+        $.each( alldata, function( key, val ) {
+          if(val.name === c_check)
+          {
+            if(val.states.length)
+            {
+              $.each( val.states , function( key_c, val_c ) {
+                $('#stateId').append("<option value='" + val_c.name + "'>" + val_c.name + "</option>");
+              })
+            }
+            else
+            {
+              $('#stateId').append("<option value='" + c_check + "'>" + c_check + "</option>");
+            }
+          }
+        });
+      });
+     // SECLTING THE STATE TO GET THE CITIES
+     $('#stateId').change(function(){
+       var c_check = $('#stateId').val();
+       $('#cityId').html('');
+       
+       $.each( alldata, function( key, val ) {
+         $.each( val.states , function( key_c, val_c ) {
+           if(val_c.name === c_check)
+           { 
+             // console.log(c_check);
+            //  console.log(val_c.cities.length);
+            if(val_c.cities.length)
+            {
+              $.each( val_c.cities , function( key_c1, val_c1 ) {
+                $('#cityId').append("<option value='" + val_c1.name + "'>" + val_c1.name + "</option>");
+             })
+            }
+            else{
+              $('#cityId').append("<option value='" + c_check + "'>" + c_check + "</option>");
+            }
+             
+           }
+
+         })
+         
+       });
+
+     });
+     
   //var global_occupation='';
   // for showing message to turn to landscape
   testOrientation();
@@ -243,7 +294,7 @@
     });
     
     $(".btn_occ_submit").click(function(e){
-         
+         alert('coing eree');
         var occ_astro=$("#text_occupation_astro").val();
         
         if(occ_astro=='' || occ_astro==null)
@@ -660,11 +711,75 @@
       /**
       Function to validate email address
       */
+      // function validateEmail() 
+      // {
+      //   var email=$("#Email").val(); 
+      //   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      //   var blnValidate=re.test(String(email).toLowerCase());          
+      //   if(blnValidate==false)
+      //   {
+      //     return false;
+      //   }
+      //   else
+      //   {
+      //     $('#Email').removeClass('danger-alter');
+      //     return true; 
+      //   }
+      // }
       function validateEmail() 
       {
         var email=$("#Email").val(); 
+        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        
+        if(!emailReg.test(email) && email == '') {
+            custom_swal("Error!","Please Enter Valid Email Id","Email");
+            $('#Email').tooltip();
+            return false;
+        }
+        else if ( emailReg.test(email) && email !='')
+        {
+          $.ajax({
+            type: "POST",
+            url: base_url+'/validateemail',
+            data:{email:email},
+            headers: {
+                    'X-CSRF-Token': $('input[name="_token"]').val() 
+               },
+            success: function(responce) {
+              // console.log(responce);
+              if (responce.status == 'exist') 
+              {
+                custom_swal("Already Exist!","login into to your account","Email");
+                $('#Email').addClass('danger-alter');
+                $('#Email').tooltip();
+                valideemail=false;
+                return false;
+              }
+              if (responce.status == 'not-exist') 
+              {
+                $('#Email').removeClass('danger-alter');
+                  $('#Email').addClass('success-alter');
+                  valideemail=true;
+              }
+              // console.log('success :'+ responce);
+            }
+          });
+        }
+      }
+
+      function email_formate()
+      {
+        var email=$("#Email").val(); 
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        var blnValidate=re.test(String(email).toLowerCase());          
+        var blnValidate=re.test(String(email).toLowerCase());
+        
+        if (valideemail == false ) 
+        {
+          custom_swal("Already Exist!","login into to your account","Email");
+          $('#Email').addClass('danger-alter');
+          $('#Email').tooltip();
+          return false;
+        }
         if(blnValidate==false)
         {
           return false;
@@ -892,7 +1007,7 @@
         // LOGIN DETAILS SECTION JS START
         if (current_fs.attr('attr-tab-id') == 1) 
         {
-          var check1 = validateEmail();
+          var check1 = email_formate();
           var check2 = validatePassword('password');
           var check3 = validateConfirmpass();
           
@@ -1091,7 +1206,7 @@
       })
 
 
-    function custom_swal(title,message,focus_id)
+    function custom_swal(title,message,focus_id,alert_type)
     {
       Swal.fire({
               imageUrl: '../front/icons/alert-icon.png',

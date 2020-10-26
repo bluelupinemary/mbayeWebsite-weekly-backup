@@ -23,9 +23,6 @@ const UPPER_RADIUS_VAL = 3000;                                      //zoom out l
 
 
 
-
-
-
 function createScene(){
     engine.enableOfflineSupport = true;
            
@@ -58,18 +55,20 @@ function createScene(){
 //function that creates the scene's cameras
 function create_init_camera(){
     var camera = new BABYLON.ArcRotateCamera("Initial Camera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-1135,486,1000),initScene);
+    camera.allowUpsideDown = false;
     camera.fovMode = BABYLON.Camera.FOVMODE_HORIZONTAL_FIXED;
     camera.fov = 1.4;
     //set zoom in and zoom out capability
+    camera.lowerRadiusLimit = 200;
     camera.upperRadiusLimit = UPPER_RADIUS_VAL;
     camera.wheelPrecision = 1;
     camera.angularSensibilityX = 4000;     //rotation speed of camera; lower number, faster rotation
     camera.angularSensibilityY = 4000;
     //for the right mouse button panning function; ;0 -no panning, 1 - fastest panning
     camera.panningSensibility = 10; 
-    camera.pinchPrecision = 1;
     camera.upperBetaLimit = 10;
-    camera.panningDistanceLimit = 1500;
+    //camera.panningDistanceLimit = 1500;
+    camera.pinchPrecision = 1;
     camera.attachControl(canvas,true);
     camera.maxZ = 280000;
     initScene.activeCamera = camera;
@@ -172,28 +171,7 @@ function load_init_meshes(){
           mermaidHead.material.glossiness = 2;
           mermaidHead.material.roughness = 0.2;
         }),
-        //  BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", initScene).then(function (result) {
-          
-        //   result.meshes[0].scaling = new BABYLON.Vector3(25,25,-25);
-        //   result.meshes[0].position = new BABYLON.Vector3(-568.34,260.86,678.33);
-        //   result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.1162,0.5704,0.0147,-0.8129);
-
-        //   nuvolaSpeechCloud = result.meshes[0];
-
-        //   // console.log(result.meshes);
-        //   // result.meshes[1].isPickable = true;
-          
-        // }),
-        //  BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/cloud/", "nuvolaParticipate1.glb", initScene).then(function (result) {
-        //   // console.log("Ruru Speech: ", result.meshes);
-        //   result.meshes[0].scaling = new BABYLON.Vector3(50,50,-50);
-        //   result.meshes[0].position = new BABYLON.Vector3(-566.16,262.82, 679.201);
-        //   result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0888,0.6065,0.0013,-0.7899);
-
-        //   result.meshes[0].isPickable = true;
-        //   nuvolaSpeech = result.meshes[0];
-        //   // enable_home_gizmo2(nuvolaSpeech);
-        // }),
+      
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/earth/", "earth122319.babylon", initScene, 
                 function (evt) {
                     // onProgress
@@ -253,18 +231,87 @@ function load_init_meshes(){
         mermaidTail_object.scaling = new BABYLON.Vector3(0.15,0.15,0.15);
 
         mermaidTail_object.isPickable = true;
-    // setTimeout(function(){
+    
         initCamera.target = new BABYLON.Vector3(0,0,0);
         initCamera.radius = 1360;
         mbayeInit_object.isPickable = true;
+      
+        nuvolaSpeech =  create_speech("nuvolaSpeech", "front/images3D/participateScene/nuvolaNonmember.png",78 , 110, 1, -566, 278, 684, {x:0.0249,y:0.8594,z:-0.1207,w:0.4959});
+        init_scrollable_viewer("speech1Nonmember","speech1Nonmember.png",2000,1000,{x:-5509,y:347,z:2266},{x:0.1143,  y:-0.5471, z:0.0752, w:0.8256});
+        let closeBtn = create_speech("speech1Nonmember-close-btn", "front/images3D/close-btn.png",100,100,1,-5117,734,2771,{x:0.0808,y:-0.4426,z:0.0545,w:0.8913});
         
-        nuvolaSpeech =  create_speech("nuvolaSpeech", "front/images3D/participateScene/nuvolaNonmember.png",78 , 110, 1, -566, 278, 684);
-        // enable_home_gizmo2(nuvolaSpeech);
-    // },1000);
+        closeBtn.actionManager = new BABYLON.ActionManager(initScene);
+        closeBtn.actionManager.registerAction(
+              new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
+              onOverSun)
+        );
+        closeBtn.actionManager.registerAction(
+              new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOutTrigger,
+               onOutSun)
+        );
        
+        // enable_home_gizmo2(temp);
     });
 }//end of function load meshes
 
+
+function init_scrollable_viewer(name,imgName,w,h,pos,rot){
+    //create plane for the texts
+    let plane = BABYLON.MeshBuilder.CreatePlane(name, {width:w, height: h}, initScene);
+    plane.position = new BABYLON.Vector3(pos.x,pos.y,pos.z);
+    plane.rotationQuaternion = new BABYLON.Quaternion(rot.x,rot.y,rot.z,rot.w);
+
+    let discmatl = new BABYLON.StandardMaterial(name+"Matl", initScene);
+    discmatl.diffuseColor = new BABYLON.Color3(1,0,0);
+    discmatl.backFaceCulling = false;
+    plane.material = discmatl;
+
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
+
+    //create scrollable viwer for solar's text
+    var sv = new BABYLON.GUI.ScrollViewer();
+    sv.thickness = 0;
+    sv.width = 1;
+    sv.height = 1;
+    sv.barColor = "green";
+
+    sv.thumbLength = 0.3;
+    sv.thumbHeight = 0.1;
+    sv.verticalBar.border = 0;
+    sv.barSize = 40;
+
+    if(isSmallDevice() || isMobile()){
+        sv.barSize = 60;
+    }
+
+    sv.onPointerDownObservable.add(function() {
+        if(isSpeechViewActive) initCamera.detachControl(canvas);
+    });
+    sv.onPointerUpObservable.add(function() {
+        if(isSpeechViewActive) initCamera.attachControl(canvas,true);
+    });
+    advancedTexture.addControl(sv);
+
+    //create holder of solar's text image
+    var rc = new BABYLON.GUI.Rectangle();
+    rc.thickness = 0;
+    rc.width = 1;
+    
+   
+    rc.height = 4;
+    rc.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    rc.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    rc.isPickable = false;
+
+    sv.addControl(rc);
+
+    //create the image and add to the rectangle holder
+    var image = new BABYLON.GUI.Image(name+"Img", "front/images3D/participateScene/"+imgName);
+    image.width = 1;
+    image.height = 1;
+    rc.addControl(image);
+    return plane;
+}
 
 
 let designUtilLayer;
@@ -455,11 +502,11 @@ var onOverSun =(meshEvent)=>{
     lbl.setAttribute("id", "sunLbl");
     var sty = lbl.style;
     sty.position = "absolute";
-    sty.lineHeight = "1.5em";
+    // sty.lineHeight = "2em";
     sty.padding = "0.2%";
     sty.color = "#efad0c";
     sty.fontFamily = "Courgette-Regular";
-    sty.fontSize = "1.5em";
+    sty.fontSize = "2em";
     sty.top = meshEvent.pointerY + "px";
     sty.left = meshEvent.pointerX + "px";
     sty.cursor = "pointer";
@@ -477,12 +524,21 @@ var onOverSun =(meshEvent)=>{
 
 
         } 
-    } 
+    }
+
+    if(theMeshID === "speech1Nonmember-close-btn"){
+        meshEvent.source.material.emissiveColor = BABYLON.Color3.White();
+        document.body.appendChild(lbl);
+        lbl.textContent = "Return";
+    }
 };
 
 //handles the on mouse out event
 var onOutSun =(meshEvent)=>{
     if(!isMobile()) initSun.material.diffuseTexture = sunOrigTexture;
+    if(meshEvent.source.id === "speech1Nonmember-close-btn"){
+        meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,0,0);
+    }
     while (document.getElementById("sunLbl")) {
         document.getElementById("sunLbl").parentNode.removeChild(document.getElementById("sunLbl"));
     } 
@@ -541,13 +597,6 @@ function enable_init_webcamera(){
 
 }//end of function
 
-function enable_gizmo(){
-    // Create gizmo
-    var utilLayer = new BABYLON.UtilityLayerRenderer(initScene)
-    utilLayer.utilityLayerScene.autoClearDepthAndStencil = false;
-    initGizmo = new BABYLON.RotationGizmo(utilLayer);
-    initGizmo.attachedMesh = scorpioStars;
-}
 
 let initPointer = {x:null,y:null,z:null};
 let deltaPointer = {x:0,y:0,z:0};
@@ -555,15 +604,19 @@ var timestamp = null;
 let lastMouseX;
 let lastMouseY;
 let startTime;
+let isSpeechViewActive = false;
+let focusSpeechSpecs = [{x: -4315, y: 683, z: 1804},5.8836,1.2971, 0.0001];
+let initCameraSpecs = [{x: -1134, y: 516, z: 1000},2.4193,1.2420, 1300];
 
 function add_init_mouse_listener(){
-    
         var onPointerDownInit = function (evt) {
             if(initScene) var pickinfo = initScene.pick(initScene.pointerX, initScene.pointerY);
             else return;
             if(pickinfo.hit){
                 var theInitMesh = pickinfo.pickedMesh.name;
                 console.log("THe mesh clicked: ", pickinfo.pickedMesh, pickinfo.pickedMesh.position,pickinfo.pickedMesh.rotationQuaternion);
+                // console.log("camera: ", initCamera.radius, initCamera.alpha, initCamera.beta, initCamera.position);
+                console.log("initial camera: ", initCamera.radius, initCamera.alpha, initCamera.beta, initCamera.position);
                 if(theInitMesh === "sun"){
                     checkScreenAndDoubleClick('register', 'register');
                 }
@@ -588,6 +641,27 @@ function add_init_mouse_listener(){
                 checkScreenAndDoubleClick(theInitMesh,'star');
             }
 
+            if(theInitMesh === "speech1Nonmember" && !isSpeechViewActive){
+                // initCamera.position = new BABYLON.Vector3( -4258, 738, 1708);
+                let pos = focusSpeechSpecs[0];
+                initCamera.setTarget(new BABYLON.Vector3(pos.x,pos.y,pos.z));
+                initCamera.alpha = focusSpeechSpecs[1];
+                initCamera.beta = focusSpeechSpecs[2];
+                initCamera.radius = focusSpeechSpecs[3];
+                isSpeechViewActive = true;
+                //initCamera.position = BABYLON.Vector3(-1135,486,1000) 
+            }
+
+            if(theInitMesh === "speech1Nonmember-close-btn" && isSpeechViewActive){
+                let pos = initCameraSpecs[0];
+                initCamera.setTarget(new BABYLON.Vector3(0,0,0));
+                initCamera.alpha = initCameraSpecs[1];
+                initCamera.beta = initCameraSpecs[2];
+                initCamera.radius = initCameraSpecs[3];
+                // initCamera = new BABYLON.ArcRotateCamera("Initial Camera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-1135,486,1000),initScene);
+                isSpeechViewActive = false;
+            }
+           
 
         }//end of on pointer down function
 
@@ -621,7 +695,7 @@ function add_init_mouse_listener(){
 
                 timestamp = new Date();
 
-                if(speedX >= 400){
+                if(speedX >= 800){
                 whoaAudio.play();
                 }
            }
@@ -782,11 +856,11 @@ var onOutPlanetInit =(meshEvent)=>{
 };
 
 
-function create_speech(name, matlPath, h, w, scale, x, y, z){
+function create_speech(name, matlPath, h, w, scale, x, y, z,rot){
     var temp= BABYLON.MeshBuilder.CreatePlane(name, {height:h, width: w}, initScene);
     temp.scaling = new BABYLON.Vector3(scale, scale, scale);
     temp.position = new BABYLON.Vector3(x,y,z);
-    temp.rotationQuaternion = new BABYLON.Quaternion(0.0249,0.8594,-0.1207,0.4959);
+    temp.rotationQuaternion = new BABYLON.Quaternion(rot.x, rot.y,rot.z,rot.w);
     
     var tempMatl = new BABYLON.StandardMaterial(name+"matl", initScene);
     tempMatl.diffuseTexture = new BABYLON.Texture(matlPath, initScene);
@@ -995,6 +1069,7 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
     document.getElementById("loadingScreenDiv").remove();
+    console.log(initCamera.position, initCamera.radius, initCamera.alpha, initCamera.beta);
     // initScene.debugLayer.show();
     //scene optimizer
     var options = new BABYLON.SceneOptimizerOptions();

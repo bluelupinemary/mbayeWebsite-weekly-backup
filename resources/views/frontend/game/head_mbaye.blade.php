@@ -10,7 +10,9 @@
 
 @section('content')
     <canvas id="canvas"></canvas>
-    <div id="loadingScreenDiv"></div>
+    <div id="loadingScreenDiv" style="">
+      <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
     <div id="loadingScreenPercent"> Loading: 0 % </div>
     <div id="loadingScreenOverlay">
       <div id="heartBDiv">
@@ -37,9 +39,7 @@
         <img id="fullscreen-btn" src="front/images3D/fullscreen-btn.png" data-toggle="tooltip" title="Fullscreen" align="right" style=""/> 
         <img id="minimize-btn" src="front/images3D/minimize-btn.png" data-toggle="tooltip" title="Fullscreen" align="right" style="display:none;"/> 
       </div>
-        <div class="player" id="player" data-player="youtube-player-1" style=""></div>
-        
-        
+      <div class="player" id="player" data-player="youtube-player-1" style=""></div>    
     </div>
     
 @endsection
@@ -53,7 +53,5 @@
 <script src="{{asset('front/babylonjs/scenes/commonScenes.js')}}"></script>
 <script src="{{asset('front/babylonjs/scenes/flowersMbaye/flowersMap.js')}}"></script>
 <script src="{{asset('front/babylonjs/scenes/headMbaye/headScene.js')}}"></script>
-  <script>
-   
-  </script>
+ 
 @endsection

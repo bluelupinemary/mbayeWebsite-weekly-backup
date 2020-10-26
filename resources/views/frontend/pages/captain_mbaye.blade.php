@@ -10,7 +10,9 @@
     <div>
         <canvas id="canvas"></canvas>
     </div>
+   
     <div id="loadingScreenDiv" style="">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
 
     <div id="wikipediaDiv">

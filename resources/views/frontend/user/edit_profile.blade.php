@@ -1,822 +1,358 @@
 @extends('frontend.layouts.app')
-
-
 @section('before-styles')
+  
 
-
-
-<link rel="stylesheet" href="{{ asset('front/CSS/register_style.css') }}">
-
-    <style>
-
-    </style>
+  <link rel="stylesheet" href="{{ asset('front/CSS/profile_edit_style.css') }}">
 @endsection
-
 @section('content')
     <div  id="block_land"  >
-
         <div class="content">
             <h1 class="text-glow">Turn your device in landscape mode.</h1>
             <div><img src="{{ asset('front') }}/images/rotate-screen.gif" alt=""></div>
         </div>
     </div>
     <div class="flex" >
-    <section class="container-fluid" style="height:100vh">
-        <div class="sub_container" style="border:0px solid white">
+    <section style="height:100vh">
+      <div class="container-fluid">
+        <div class="sub_container">  
           <div id="overlay"></div>
-                  @if(session('success'))
-                      <script >
-
-                        document.getElementById("overlay").style.display = "block";
-                          $(document).ready(function(){
-
-                  if(sweetMessage){
-                        Swal.fire({
-                            imageUrl: '../front/icons/alert-icon.png',
-                            imageWidth: 80,
-                            imageHeight: 80,
-                            imageAlt: 'Mbaye Logo',
-                            title: "<span id='success'>Congratulations!</span>",
-                            html: sweetMessage,
-                            width: '30%',
-                            padding: '1rem',
-                            background: 'rgba(8, 64, 147, 0.62)'
-                                  });
-                                }
-    }
-    );
-                    </script>
-
-                       <div class="sucess_msg " >
-                        <div><img  id='swal.fire' class="logo_mbaye  img-fluid"
-                        src="{{ asset('front') }}/icons/alert-icon.png" />
-                        </div>
-                        <span class="alert-success">
-                          <h2 style="color:#09b523">Congratulations!</h2>
-                            <p style="width: 39vw; color: #ffffff">{{ session('success') }}</p>
-
-                        </span>
-                      <input type="button"  style="position: absolute; left: 45%;background:#f00000;color: #faf5f5;top: 82% ; border: hidden; border-radius: 8px;width: 6vw;height: 3vw" value="OK" class="navbar-toggle collapsed"onclick="redirectToSamePage()"/>
-
-                      </div>
-                  @endif
-          {{  Form::open(['files'=>true , 'class' => 'form-horizontal form_details', 'method' => 'PATCH', 'id'=>'MyForm','onsubmit' => 'event.preventDefault(); validateMyForm();']) }}
-          <div class="page-header">
-              <h1 class=" head_1 col_white" style="">EDIT YOUR PROFILE</h1>
-              <p class="col_white label_info">Please fill in desired field/s to edit.</p>
-          </div>
-
-          <div class="topcorner"><input type="button" class="btn btn-info lbl_text" style="background-color:rgba(1,1,1,0.2);" value="Home" onclick="redirectToHome()"/></div>
-
-          <div class="div_error">
-            @if($errors->any())
-
-            {!! implode('<br>',$errors->all(':message')) !!}
-            @endif
-          </div>
-          <br>
-          <br>
-          <br>
-          <br>
-
-          <div class="row border1 cls_zr">
-              <div class="col-lg-1 col-xl-2 col-sm-1 col-md-1 col-0  border1"></div>
-
-              <div class="col-lg-4  col-xl-3  col-sm-4  col-md-4 col-12  border1">
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5  col-md-5 col-3 border1" >
-                          <label for="first_name" class="col_white lbl_text">First Name:<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8  cls_zr col-xl-8 col-sm-7  col-md-7 col-6 border1" >
-                          <input  class="form-control cls_zr lbl_text @error('first_name') is-invalid @enderror" type="text" id="fname" name="first_name"  value="{{ $user->first_name }}" required/>
-                          @error('first_name')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                      </div>
-                  </div>
-              </div>
-
-              <div class="cls_zr col-lg-4 col-xl-3 col-sm-4  col-md-4 col-12 border1" >
-                  <div class="row border1">
-                      <div class="cls_zr col-lg-4 col-xl-4 col-sm-5  col-md-5 col-3 border1" >
-                          <label for="last_name " class="col_white lbl_text">Last Name:<span style="color:red">*</span></label>
-                      </div>
-                      <div class="cls_zr col-lg-8 col-xl-8 col-sm-7  col-md-7 col-6 border1" >
-                      <input type="text" class="cls_zr form-control lbl_text" id="lname" name="last_name"  value="{{ $user->last_name }}" required/>
-                    </div>
-                  </div>
-              </div>
-
-               <div class="col-lg-2 col-xl-4 col-sm-3 col-md-3  col-0  border1"></div>
-          </div>
-
-        <br>
-
-          <div class="row border1">
-              <div class="col-lg-1 col-xl-2  col-sm-1 col-md-1 col-0  border1"></div>
-
-              <div class="col-lg-4 col-xl-3 col-sm-4  col-md-4 col-12  border1">
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5 col-3 border1" >
-                          <label for ="dob"class="control-label col_white lbl_text ">Date Of Birth<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7 col-md-7 col-6 border1" >
-                          <input class="form-control lbl_text" id="date" name="dob" placeholder="MM/DD/YYYY" type="date" value="{{ $user->dob }}" required onchange="calculate_age()"/>
-                      </div>
-
-                  </div>
-              </div>
-
-              <div class="col-lg-4 col-xl-3 col-sm-4 col-md-4 col-12 border1 " >
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5 col-3" >
-                          <label for="age" class="col_white lbl_text">Age:<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7  col-md-7 col-6 border1" >
-                          <input  class="form-control lbl_text" id="age" value="{{ $user->age }}" name="age" readonly>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="col-lg-2 col-xl-4 col-sm-3 col-md-3 col-0  border1 "></div>
-          </div>
-          <br>
-
-
-          <div class="row  sponser_name border1">
-              <div class="col-lg-1 col-xl-2 col-sm-1 col-md-1 col-0 border1 "></div>
-
-              <div class="col-lg-4 col-xl-3 col-sm-4 col-md-4 col-12 sponser_name border1">
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5  col-md-5 col-3 border1" >
-                          <label for="sname" class="col_white lbl_text">Sponsor Name:<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8 col-lg-8 col-sm-7  col-md-7 col-6 border1" >
-                          <input  class="form-control lbl_text" type="text" id="sname"  value="{{ $user->sponser_name }}" name="sponser_name"/>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="col-lg-4  col-xl-3 col-sm-4 col-md-4 col-12 sponser_id border1" >
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5 col-3 border1" >
-                          <label  for="sid" class="col_white lbl_text">Sponsor ID:<span style="color:red">*</span></label>
-                      </div>
-
-                        <div class="col-lg-8 col-xl-8 col-sm-7 col-md-7 col-6 border1" >
-                          <input type="text" class="form-control lbl_text" id="sid"  value="{{ $user->sponser_id }}" name="sponser_id"/>
-                       </div>
-                  </div>
-              </div>
-              <div class="col-lg-2 col-xl-4 col-sm-3 col-md-3 col-0 sponser_name border1"></div>
-          </div>
-
-          <!--4-->
-
-          <br>
-
-          <div class="row  border1">
-              <div class="col-lg-1  col-xl-2 col-sm-1 col-md-1 col-0 border1"></div>
-
-              <div class="col-lg-4  col-xl-3 col-sm-4 col-md-4 col-12 border1 ">
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5 col-3 border1" >
-                      <label for="gender" class="col_white lbl_text">Gender: &nbsp;<span style="color:red">*</span> </label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7 col-md-7 col-6 border1" >
-                          <select name="gender" value="{{ $user->gender }}" class="mb-3 form-control lbl_text" style="text-transform: capitalize;" id="genders" required>
-                              <option value="male">Male</option>
-                              <option value="female">Female</option>
-                              <option value="male">Other</option>
-                           </select>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="col-lg-4  col-xl-3 col-sm-4 col-md-4 col-12 border1" >
-                  <div class="row">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5 col-3 border1" >
-                          <label for="sname" class="col_white lbl_text">Address:<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7  col-md-7 col-6 border1" >
-                          <input  class="form-control lbl_text" type="text" id="address" value="{{ $user->address }}" required name="address"/>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-2 col-xl-4 col-sm-3 col-md-3 col-0 border1"></div>
-          </div>
-
-          <!--5-->
-
-         <br>
-          <div class="row  border1">
-              <div class="col-lg-1  col-xl-2 col-sm-1 col-md-1 col-0 border1"></div>
-
-              <div class="col-lg-4  col-xl-3 col-sm-4 col-md-4 col-12 border1">
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5 col-3 border1" >
-                          <label for="country" class="col_white lbl_text">Country:<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7 col-md-7 col-6 border1" >
-
-                        <select id="countries" required name="country" value="{{ $user->country }}" class="form-control lbl_text">
-                          <option value="Afghanistan">Afghanistan</option>
-                          <option value="Åland Islands">Åland Islands</option>
-                          <option value="Albania">Albania</option>
-                          <option value="Algeria">Algeria</option>
-                          <option value="American Samoa">American Samoa</option>
-                          <option value="Andorra">Andorra</option>
-                          <option value="Angola">Angola</option>
-                          <option value="Anguilla">Anguilla</option>
-                          <option value="Antarctica">Antarctica</option>
-                          <option value="Antigua and Barbuda">Antigua and Barbuda</option>
-                          <option value="Argentina">Argentina</option>
-                          <option value="Armenia">Armenia</option>
-                          <option value="Aruba">Aruba</option>
-                          <option value="Australia">Australia</option>
-                          <option value="Austria">Austria</option>
-                          <option value="Azerbaijan">Azerbaijan</option>
-                          <option value="Bahamas">Bahamas</option>
-                          <option value="Bahrain">Bahrain</option>
-                          <option value="Bangladesh">Bangladesh</option>
-                          <option value="Barbados">Barbados</option>
-                          <option value="Belarus">Belarus</option>
-                          <option value="Belgium">Belgium</option>
-                          <option value="Belize">Belize</option>
-                          <option value="Benin">Benin</option>
-                          <option value="Bermuda">Bermuda</option>
-                          <option value="Bhutan">Bhutan</option>
-                          <option value="Bolivia">Bolivia</option>
-                          <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-                          <option value="Botswana">Botswana</option>
-                          <option value="Bouvet Island">Bouvet Island</option>
-                          <option value="Brazil">Brazil</option>
-                          <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
-                          <option value="Brunei Darussalam">Brunei Darussalam</option>
-                          <option value="Bulgaria">Bulgaria</option>
-                          <option value="Burkina Faso">Burkina Faso</option>
-                          <option value="Burundi">Burundi</option>
-                          <option value="Cambodia">Cambodia</option>
-                          <option value="Cameroon">Cameroon</option>
-                          <option value="Canada">Canada</option>
-                          <option value="Cape Verde">Cape Verde</option>
-                          <option value="Cayman Islands">Cayman Islands</option>
-                          <option value="Central African Republic">Central African Republic</option>
-                          <option value="Chad">Chad</option>
-                          <option value="Chile">Chile</option>
-                          <option value="China">China</option>
-                          <option value="Christmas Island">Christmas Island</option>
-                          <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
-                          <option value="Colombia">Colombia</option>
-                          <option value="Comoros">Comoros</option>
-                          <option value="Congo">Congo</option>
-                          <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
-                          <option value="Cook Islands">Cook Islands</option>
-                          <option value="Costa Rica">Costa Rica</option>
-                          <option value="Cote D'ivoire">Cote D'ivoire</option>
-                          <option value="Croatia">Croatia</option>
-                          <option value="Cuba">Cuba</option>
-                          <option value="Cyprus">Cyprus</option>
-                          <option value="Czech Republic">Czech Republic</option>
-                          <option value="Denmark">Denmark</option>
-                          <option value="Djibouti">Djibouti</option>
-                          <option value="Dominica">Dominica</option>
-                          <option value="Dominican Republic">Dominican Republic</option>
-                          <option value="Ecuador">Ecuador</option>
-                          <option value="Egypt">Egypt</option>
-                          <option value="El Salvador">El Salvador</option>
-                          <option value="Equatorial Guinea">Equatorial Guinea</option>
-                          <option value="Eritrea">Eritrea</option>
-                          <option value="Estonia">Estonia</option>
-                          <option value="Ethiopia">Ethiopia</option>
-                          <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
-                          <option value="Faroe Islands">Faroe Islands</option>
-                          <option value="Fiji">Fiji</option>
-                          <option value="Finland">Finland</option>
-                          <option value="France">France</option>
-                          <option value="French Guiana">French Guiana</option>
-                          <option value="French Polynesia">French Polynesia</option>
-                          <option value="French Southern Territories">French Southern Territories</option>
-                          <option value="Gabon">Gabon</option>
-                          <option value="Gambia">Gambia</option>
-                          <option value="Georgia">Georgia</option>
-                          <option value="Germany">Germany</option>
-                          <option value="Ghana">Ghana</option>
-                          <option value="Gibraltar">Gibraltar</option>
-                          <option value="Greece">Greece</option>
-                          <option value="Greenland">Greenland</option>
-                          <option value="Grenada">Grenada</option>
-                          <option value="Guadeloupe">Guadeloupe</option>
-                          <option value="Guam">Guam</option>
-                          <option value="Guatemala">Guatemala</option>
-                          <option value="Guernsey">Guernsey</option>
-                          <option value="Guinea">Guinea</option>
-                          <option value="Guinea-bissau">Guinea-bissau</option>
-                          <option value="Guyana">Guyana</option>
-                          <option value="Haiti">Haiti</option>
-                          <option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option>
-                          <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
-                          <option value="Honduras">Honduras</option>
-                          <option value="Hong Kong">Hong Kong</option>
-                          <option value="Hungary">Hungary</option>
-                          <option value="Iceland">Iceland</option>
-                          <option value="India">India</option>
-                          <option value="Indonesia">Indonesia</option>
-                          <option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
-                          <option value="Iraq">Iraq</option>
-                          <option value="Ireland">Ireland</option>
-                          <option value="Isle of Man">Isle of Man</option>
-                          <option value="Israel">Israel</option>
-                          <option value="Italy">Italy</option>
-                          <option value="Jamaica">Jamaica</option>
-                          <option value="Japan">Japan</option>
-                          <option value="Jersey">Jersey</option>
-                          <option value="Jordan">Jordan</option>
-                          <option value="Kazakhstan">Kazakhstan</option>
-                          <option value="Kenya">Kenya</option>
-                          <option value="Kiribati">Kiribati</option>
-                          <option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option>
-                          <option value="Korea, Republic of">Korea, Republic of</option>
-                          <option value="Kuwait">Kuwait</option>
-                          <option value="Kyrgyzstan">Kyrgyzstan</option>
-                          <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
-                          <option value="Latvia">Latvia</option>
-                          <option value="Lebanon">Lebanon</option>
-                          <option value="Lesotho">Lesotho</option>
-                          <option value="Liberia">Liberia</option>
-                          <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
-                          <option value="Liechtenstein">Liechtenstein</option>
-                          <option value="Lithuania">Lithuania</option>
-                          <option value="Luxembourg">Luxembourg</option>
-                          <option value="Macao">Macao</option>
-                          <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
-                          <option value="Madagascar">Madagascar</option>
-                          <option value="Malawi">Malawi</option>
-                          <option value="Malaysia">Malaysia</option>
-                          <option value="Maldives">Maldives</option>
-                          <option value="Mali">Mali</option>
-                          <option value="Malta">Malta</option>
-                          <option value="Marshall Islands">Marshall Islands</option>
-                          <option value="Martinique">Martinique</option>
-                          <option value="Mauritania">Mauritania</option>
-                          <option value="Mauritius">Mauritius</option>
-                          <option value="Mayotte">Mayotte</option>
-                          <option value="Mexico">Mexico</option>
-                          <option value="Micronesia, Federated States of">Micronesia, Federated States of</option>
-                          <option value="Moldova, Republic of">Moldova, Republic of</option>
-                          <option value="Monaco">Monaco</option>
-                          <option value="Mongolia">Mongolia</option>
-                          <option value="Montenegro">Montenegro</option>
-                          <option value="Montserrat">Montserrat</option>
-                          <option value="Morocco">Morocco</option>
-                          <option value="Mozambique">Mozambique</option>
-                          <option value="Myanmar">Myanmar</option>
-                          <option value="Namibia">Namibia</option>
-                          <option value="Nauru">Nauru</option>
-                          <option value="Nepal">Nepal</option>
-                          <option value="Netherlands">Netherlands</option>
-                          <option value="Netherlands Antilles">Netherlands Antilles</option>
-                          <option value="New Caledonia">New Caledonia</option>
-                          <option value="New Zealand">New Zealand</option>
-                          <option value="Nicaragua">Nicaragua</option>
-                          <option value="Niger">Niger</option>
-                          <option value="Nigeria">Nigeria</option>
-                          <option value="Niue">Niue</option>
-                          <option value="Norfolk Island">Norfolk Island</option>
-                          <option value="Northern Mariana Islands">Northern Mariana Islands</option>
-                          <option value="Norway">Norway</option>
-                          <option value="Oman">Oman</option>
-                          <option value="Pakistan">Pakistan</option>
-                          <option value="Palau">Palau</option>
-                          <option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option>
-                          <option value="Panama">Panama</option>
-                          <option value="Papua New Guinea">Papua New Guinea</option>
-                          <option value="Paraguay">Paraguay</option>
-                          <option value="Peru">Peru</option>
-                          <option value="Philippines">Philippines</option>
-                          <option value="Pitcairn">Pitcairn</option>
-                          <option value="Poland">Poland</option>
-                          <option value="Portugal">Portugal</option>
-                          <option value="Puerto Rico">Puerto Rico</option>
-                          <option value="Qatar">Qatar</option>
-                          <option value="Reunion">Reunion</option>
-                          <option value="Romania">Romania</option>
-                          <option value="Russian Federation">Russian Federation</option>
-                          <option value="Rwanda">Rwanda</option>
-                          <option value="Saint Helena">Saint Helena</option>
-                          <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
-                          <option value="Saint Lucia">Saint Lucia</option>
-                          <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
-                          <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
-                          <option value="Samoa">Samoa</option>
-                          <option value="San Marino">San Marino</option>
-                          <option value="Sao Tome and Principe">Sao Tome and Principe</option>
-                          <option value="Saudi Arabia">Saudi Arabia</option>
-                          <option value="Senegal">Senegal</option>
-                          <option value="Serbia">Serbia</option>
-                          <option value="Seychelles">Seychelles</option>
-                          <option value="Sierra Leone">Sierra Leone</option>
-                          <option value="Singapore">Singapore</option>
-                          <option value="Slovakia">Slovakia</option>
-                          <option value="Slovenia">Slovenia</option>
-                          <option value="Solomon Islands">Solomon Islands</option>
-                          <option value="Somalia">Somalia</option>
-                          <option value="South Africa">South Africa</option>
-                          <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
-                          <option value="Spain">Spain</option>
-                          <option value="Sri Lanka">Sri Lanka</option>
-                          <option value="Sudan">Sudan</option>
-                          <option value="Suriname">Suriname</option>
-                          <option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
-                          <option value="Swaziland">Swaziland</option>
-                          <option value="Sweden">Sweden</option>
-                          <option value="Switzerland">Switzerland</option>
-                          <option value="Syrian Arab Republic">Syrian Arab Republic</option>
-                          <option value="Taiwan, Province of China">Taiwan, Province of China</option>
-                          <option value="Tajikistan">Tajikistan</option>
-                          <option value="Tanzania, United Republic of">Tanzania, United Republic of</option>
-                          <option value="Thailand">Thailand</option>
-                          <option value="Timor-leste">Timor-leste</option>
-                          <option value="Togo">Togo</option>
-                          <option value="Tokelau">Tokelau</option>
-                          <option value="Tonga">Tonga</option>
-                          <option value="Trinidad and Tobago">Trinidad and Tobago</option>
-                          <option value="Tunisia">Tunisia</option>
-                          <option value="Turkey">Turkey</option>
-                          <option value="Turkmenistan">Turkmenistan</option>
-                          <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
-                          <option value="Tuvalu">Tuvalu</option>
-                          <option value="Uganda">Uganda</option>
-                          <option value="Ukraine">Ukraine</option>
-                          <option value="United Arab Emirates">United Arab Emirates</option>
-                          <option value="United Kingdom">United Kingdom</option>
-                          <option value="United States">United States</option>
-                          <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
-                          <option value="Uruguay">Uruguay</option>
-                          <option value="Uzbekistan">Uzbekistan</option>
-                          <option value="Vanuatu">Vanuatu</option>
-                          <option value="Venezuela">Venezuela</option>
-                          <option value="Viet Nam">Viet Nam</option>
-                          <option value="Virgin Islands, British">Virgin Islands, British</option>
-                          <option value="Virgin Islands, U.S.">Virgin Islands, U.S.</option>
-                          <option value="Wallis and Futuna">Wallis and Futuna</option>
-                          <option value="Western Sahara">Western Sahara</option>
-                          <option value="Yemen">Yemen</option>
-                          <option value="Zambia">Zambia</option>
-                          <option value="Zimbabwe">Zimbabwe</option>
-                      </select>
-                      </div>
-
-                  </div>
-              </div>
-
-              <div class="col-lg-4 col-xl-3 col-sm-4 col-md-4 col-12 border1" >
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5 col-3  border1" >
-                          <label for="id" class="col_white lbl_text">ID Number:<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7  col-md-7 col-6  border1" >
-                          <input type="text" class="form-control lbl_text" type="text" id="id_number" value="{{ $user->id_number }}" required name="id_number"/>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="col-lg-2  col-xl-4 col-sm-3 col-md-3 col-0  border1"></div>
-          </div>
-
-          <!--6-->
-
-          <br>
-          <div class="row  border1">
-              <div class="col-lg-1  col-xl-2 col-sm-1  col-md-1 col-0  border1"></div>
-
-              <div class="col-lg-4  col-xl-3 col-sm-4 col-md-4 col-12  border1">
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5 col-3  border1" >
-                        <label for="email" class="col_white lbl_text">Email:<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8  col-sm-7 col-md-7 col-6  border1" >
-                        <input type="email" class="form-control lbl_text mb-3 " id="Email" value="{{ $user->email }}" required name="email" readonly/>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="col-lg-4  col-xl-3 col-sm-4 col-md-4 col-12  border1" >
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5 col-3  border1" >
-                          <label for="mob" class="col_white lbl_text">Mobile Number:<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7 col-md-7 col-6  border1" >
-                          <input type="number" class="form-control lbl_text" type="number" id="mob_no" value="{{ $user->mobile_number }}" required name="mobile_number"/>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-2 col-xl-4 col-sm-3 col-md-3 col-0 border1 "></div>
-          </div>
-
-          <!--7-->
-
-          <br>
-          <div class="row  border1">
-              <div class="col-lg-1 col-xl-2 col-sm-1 col-md-1 col-0 border1"></div>
-              <div class="col-lg-4 col-xl-3  col-sm-4  col-md-4 col-12 border1">
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5  col-md-5 col-3  border1" >
-                        <label for="org_type" class="col_white lbl_text">Organization Type:</label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7  col-md-7 col-6  border1" >
-                        <select name="org_type" value="{{ $user->org_type }}" class=" form-control lbl_text" id="org_types" >
-                            <option value="School">School</option>
-                            <option value="Club">Club</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                  </div>
-              </div>
-
-              <div class="col-lg-4  col-xl-3 col-sm-4  col-md-4 col-12 border1" >
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5 col-md-5  col-3 border1" >
-                        <label for="org_name" class="col_white lbl_text">Organization Name:</label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7 col-md-7 col-6 border1" >
-                          <input type="text" class="form-control lbl_text" id="org_name" value="{{ $user->org_name }}" name="org_name"/>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="col-lg-2 col-xl-4  col-sm-3  col-md-3 col-0 border1"></div>
-          </div>
-
-          <!--8-->
-          <br>
-
-
-          <div class="row  border1 ">
-              <div class="col-lg-1  col-xl-2 col-sm-1 col-md-1 col-0 border1"></div>
-
-              <div class="col-lg-4  col-xl-3 col-sm-4 col-md-4  col-12 border1">
-                  <div class="row border1">
-                      <div class="col-lg-4 col-xl-4 col-sm-5  col-md-5 col-3 border1" >
-                          <label for="username" class="col_white lbl_text">Username:<span style="color:red">*</span></label>
-                      </div>
-
-                      <div class="col-lg-8 col-xl-8 col-sm-7  col-md-7 col-6 border1" >
-                          <input type="text" class="form-control lbl_text" id="username" value="{{ $user->username }}" required name="username"/>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="col-lg-4  col-xl-3 col-sm-4 col-md-4  col-12 border1">
-                <div class="row border1">
-                    <div class="col-lg-8 col-xl-8 col-sm-7  col-md-7 col-6 border1" >
-                      <input type="button" class="btn  lbl_text btn_update" value="Update Password" onclick="redirectToUpdatePassword()"/>
-                    </div>
-
-                    <div class="col-lg-4 col-xl-4 col-sm-5  col-md-5 col-3 border1" >
-                      <input type="submit" class="btn btn-info lbl_text" value="Submit">
-                    </div>
+          <div class="row content-row">
+            <div class="col-md-2 col-sm-2 tabs-two-cols">
+              <div class="tabs-link-css">
+                <div class="nav flex-column nav-pills nav-justified" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Login Details</a>
+                  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Personal Details</a>
+                  <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">location Details</a>
+                  <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Organization Details</a>
+                  <a class="nav-link" id="v-pills-snapshot-tab" data-toggle="pill" href="#v-pills-snapshot" role="tab" aria-controls="v-pills-snapshot" aria-selected="false">Snapshot</a>
+                  <a class="nav-link" id="v-pills-home-tab2" data-toggle="pill" href="#v-pills-home2" role="tab" aria-controls="v-pills-home2" aria-selected="false">Payment Details</a>
+                  <a class="nav-link" id="v-pills-home-tab3" data-toggle="pill" href="#v-pills-home3" role="tab" aria-controls="v-pills-home3" aria-selected="false">Other Settings</a>
                 </div>
+              </div>
+            </div>
+            <div class="col-md-8 col-sm-8">
+              <div class="page-header">
+                <h1 class=" head_1" style="">Manage Your Profile</h1>
+              </div>
+              {{  Form::open(['files'=>true , 'class' => '', 'method' => 'PATCH', 'id'=>'MyForm','onsubmit' => 'event.preventDefault(); validateMyForm();']) }}
+              <div class="tab-content" id="v-pills-tabContent">
+                {{-- LOGIN DETAILS SECTION --}}
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                  <h2 class="col_white">Login Details</h2>
+                  <div class="form-feilds">
+                    <div class="row text-center">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <input type="email" class="form-control mb-3" id="Email" value="{{ $user->email }}" required name="email" readonly/>
+                        </div>
+                      </div>
+                      {{-- password update div --}}
+                      <div class="col-md-12" id="passsword_div" style="display:none">
+                        <div class="input-group mb-3" id="show_old_password">
+                          <input type="password" placeholder="Old Password" data-toggle="tooltip" title="Password is Required!" data-placement="left" class="form-control @error('password') danger-alter @enderror" placeholder="Password" id="password" name="old_password" autocomplete="off" value="{{ old('old_password') }}">
+                          <div class="input-group-append">
+                            <span class="input-group-text" onclick="showpassword('show_old_password')"><i class="fa fa-eye"></i></span>
+                          </div>
+                        </div>
+    
+                        <div class="input-group mb-3" id="show_new_password">
+                          <input type="password" data-toggle="tooltip" value="{{ old('new_password') }}" placeholder="New Password" title="Confirm password is Required!" data-placement="left" class="form-control @error('c_password') danger-alter @enderror" placeholder="Confirm Password" id="new_password" name="new_password" >
+                          <div class="input-group-append">
+                            <span class="input-group-text" onclick="showpassword('show_new_password')"><i class="fa fa-eye"></i></span>
+                          </div>
+                        </div>
+    
+                        <div class="input-group mb-3" id="show_new_cpassword">
+                          <input type="password" data-toggle="tooltip" title="Confirm password is Required!" data-placement="left" class="form-control @error('c_password') danger-alter @enderror" placeholder="Confirm Password" id="c_password" name="c_password" >
+                          <div class="input-group-append">
+                            <span class="input-group-text" onclick="showpassword('show_new_cpassword')"><i class="fa fa-eye"></i></span>
+                          </div>
+                        </div>
+                      </div> 
+                      {{-- password update div --}}
+                      <div class="col-md-12">
+                        <a href="javascript:void(0)" class="btn btn-primary submit-btn" id="change_pass">Change Password</a>
+                      </div>
+                    </div>
+                  </div>                  
+                </div>
+                {{-- PERSONAL DETAILS SECTION --}}
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                  <h2 class="col_white">Profile Details</h2>
+                  <div class="form-feilds">
+                    
+                        <div class="form-group">
+                          <input  class="form-control @error('first_name') is-invalid @enderror" type="text" id="fname" name="first_name"  value="{{ $user->first_name }}" required/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="lname" name="last_name"  value="{{ $user->last_name }}" required/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" type="text" id="id_number" value="{{ $user->id_number }}" required name="id_number"/>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <select name="gender" value="{{ $user->gender }}" class="form-control lbl_text" style="text-transform: capitalize;" id="genders" required>
+                                <option value="male" {{($user->gender == "male") ? 'selected' : ''}}>Male</option>
+                                <option value="female" {{($user->gender == "female") ? 'selected' : ''}}>Female</option>
+                                <option value="other" {{($user->gender == "other") ? 'selected' : ''}}>Other</option>
+                             </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <input class="form-control lbl_text" id="date" name="dob" placeholder="MM/DD/YYYY" type="date" value="{{ $user->dob }}" required onchange="calculate_age()"/>
+                            </div>
+                          </div>
+                        </div>
+                      
+                  </div>{{-- form feild close --}} 
+                </div> {{-- tab close --}}
+                {{-- LOCATION DETAILS SECTION --}}
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                  <h2 class="col_white">Location Details</h2>
+                  <div class="form-feilds">
+                    <div class="form-group">
+                      <input  class="form-control lbl_text" type="text" id="address" value="{{ $user->address }}" required name="address"/>
+                    </div>
+                    <div class="form-group">
+                      <select id="countryId" required data-toggle="tooltip" title="Country is Required!" data-placement="right" name="country" value="{{ old('country') }}" class="form-control @error('country') danger-alter @enderror countries order-alpha">
+                        
+                      </select>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <select name="state" class="form-control @error('state') danger-alter @enderror states order-alpha" data-toggle="tooltip" title="state is Required!" data-placement="left" id="stateId">
+                            
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <select name="city" class="cities order-alpha form-control @error('city') danger-alter @enderror" id="cityId" data-toggle="tooltip" title="City is Required!" data-placement="right">
+                                
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <input type="number" class="form-control lbl_text" type="number" id="mob_no" value="{{ $user->mobile_number }}" required name="mobile_number"/>
+                    </div>
+                  </div> 
+                </div>
+                {{-- ORGANIZATIONAL DETAILS SECTION  --}}
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                  <h2 class="col_white">Organizational Details</h2>
+                  <div class="form-feilds">
+                    <div class="form-group">
+                      <select name="org_type" value="{{ $user->org_type }}" class=" form-control lbl_text" id="org_types" >
+                        <option value="School" {{($user->org_type == "School") ? 'selected' : ''}}>School</option>
+                        <option value="Club" {{($user->org_type == "Club") ? 'selected' : ''}}>Club</option>
+                        <option value="Company" {{($user->org_type == "Company") ? 'selected' : ''}}>Company</option>
+                        <option value="Non-profit Organization" {{($user->org_type == "Non-profit Organization") ? 'selected' : ''}}> Non-profit Organization</option>
+                        <option value="International Organization" {{($user->org_type == "International Organization") ? 'selected' : ''}}>International Organization</option>
+                        <option value="Group" {{($user->org_type == "Group") ? 'selected' : ''}}>Group</option>
+                        <option value="Individual" {{($user->org_type == "Individual") ? 'selected' : ''}}>Individual</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control lbl_text" id="org_name" value="{{ $user->org_name }}" name="org_name"/>
+                    </div>
+                    <div class="form-group">
+                      <input  class="form-control" type="text" id="sname"  value="{{ $user->sponser_name }}" name="sponser_name"/>
+                    </div>
+                    <div class="form-group">
+                      <input type="email" class="form-control" id="sponser_email"  value="{{ $user->sponser_email }}" name="sponser_email"/>
+                    </div>
+                  </div> 
+                </div>
+                {{-- SNAPSHOT DETAILS AND OCCUPATIONAL DETAILS --}}
+                <div class="tab-pane fade" id="v-pills-snapshot" role="tabpanel" aria-labelledby="v-pills-snapshot-tab">
+                  <h2 class="col_white">Snapshot</h2>
+                  <div class="form-feilds">
+                    <div class="row" style="align-items: center;">
+                      <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                        <input type="text" name="occupation" id="list_occupation" readonly data-toggle="tooltip" class="form-control @error('occupation') danger-alter @enderror" title="Occupation is Required!" data-placement="right" onclick="load_animation_astronut()" value="{{ $user->occupation }}" class="form-control" placeholder="School">
+                        </div>
+                        <p class="warning-text"><small>If your snapshot is inappropiate or irrelevent we will block</small></p>
+                        <div class="checkbox" style="text-align: left;">
+                          <label id="terms_label"  style="color: #ffffff">
+                          <a href="javascript:void(0);" id="term">Terms & Conditions</a> <input type="checkbox" {{($user->is_term_accept == 1) ? 'checked' : ''}} id="is_term_accept" name="is_term_accept" onchange="setCheckbox();"> </label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 text-center">
+                        <div id="my_camera" class="camera_alignment">
+                          <img id="img_photo" class="camera_style" style="object-fit: cover;" src="{{url('storage/profilepicture/'.$user->getProfilePicture())}}">
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12 overlap-image">
+                            <button type="button"  class="btn_reg_snap_shot border1"  accept="image/*" capture ="camera" value="" style="display: none" onClick="take_snapshot()"><i class="fas fa-camera"></i></button>
+                            <button type="button"  class="btn_reg_cam_reset border1"  accept="image/*" capture ="camera" value="Reset" onClick="reset_snapshot()"><i class="fas fa-retweet"></i></button>
+                          </div>  
+                        </div>  
+                        <input type="hidden" class="form-control"  id="img_photo_register" name="photo"  value="" />
+                        <input type="hidden" class="form-control"  id="id" name="img_id"/>
+                        <input type="hidden" name="occupation" id="occupation" value="{{ $user->occupation }}">
+                        <input type="hidden" class="form-control"  id="pk_user_id" name="pk_user_id"/>
+                        <div id="results" ></div>
+                      </div>  
+                    </div>
+                    
+                  </div> 
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-md-2 col-sm-2">
+              <div class="btn-div padding-0">
+                <button class="btn btn-primary custom-button submit-btn">Submit</button>
+                {{-- <button class="btn btn-danger custom-button reset-btn">Reset</button> --}}
+              </div>
+              {{ Form::close() }}
             </div>
           </div>
-
-          <div class="row  border1">
-            <div class="col-lg-1 col-xl-2 col-sm-1 col-md-1 col-0 border1"></div>
-            <div class="col-lg-4 col-xl-3  col-sm-4  col-md-4 col-12 border1">
-                   <div class="row border1">
-                       <div class="col-lg-12 col-xl-12 col-sm-12  col-md-12 col-12  border1" >
-                       <label for="u_name" class="col_white lbl_text">
-                        <br><br>By creating an account you agree to our&nbsp;<a id="term" style="color:#0066ff;" onmouseover="style='text-decoration:underline;color:#0066ff;'" onmouseout="style='text-decoration:none;color:#0066ff;'">Terms & Agreement</a>
-                       </div>
-                   </div>
-            </div>
-       </div>
-
-          <!--form rows ends-->
-
-         <!---camera section---->
-         <!-- <div class="camborder1"></div>  -->
-          <div id="my_camera" class="camera_alignment" style="display:none;"></div>
-
-          @if($user->photo)
-            @if(str_contains($user->photo, 'cropped'))       
-              <div id="currentimg" class="camera_alignment"><img  id="user-photo" style="display: block; height:auto; width:15vw;" name="photo" src="{{asset('storage/profilepicture/crop/'.$user->photo)}}"/></div>  
-            @else
-              <div id="currentimg" class="camera_alignment"><img  id="user-photo" style="display: block; height:auto; width:15vw;" name="photo" src="{{asset('storage/profilepicture/'.$user->photo)}}"/></div>    
-            @endif
-          @endif
-          
+        </div>
+      </div>
       
-          <div id="update_photo"><input type="button"  class="btn btn-info lbl_text btn_snap_shot border1"  value="Update Photo" onClick="cam_on();update_photo();"></div>
-          <div id="capture" style="display:none;"><input type="button"  class="btn btn-info btn_snap_shot border1"  accept="image/*" capture ="camera" value="Take Snapshot" onClick="take_snapshot()"></div>
-          <div id="reset" style="display:none;"><input type="button"  class="btn btn-info btn_cam_reset border1"  accept="image/*" capture ="camera" value="Reset" onClick="reset_snapshot()"></div>
-          <div id="cancel_capture" style="display:none;"><input type="button"  class="btn btn-info btn_cam_cancel border1" value="Cancel" onClick="cancel_capture();"></div>
-          <div id="results" ></div>
-
-
-          <!---camera section ends---->
-
-          <!------Occupation --------->
-
-          <label for="occupation" class="lbl_occupation col_white lbl_text">Occupation:</label>
-          <img  id='cloud' class="occupation" src="{{ asset('front') }}/images/cloud_occupation_1.png"   />
-          <img  class="cloud_bg mt-xl-4"  src="{{ asset('front') }}/images/speechCloud.png" >
-          <textarea rows="3" class='txtarea_occup' id='list_occupation' name="list_occupation" style="background:transparent;overflow-x: hidden;overflow-y: auto;resize: none;" spellcheck="false">{{str_replace(',', "\n", $user->occupation)}}</textarea>
-          <!------ <input type="hidden" class="form-control txt_occup" id="occupation_text_area" value="{{ old('occupation') }}" required name="list_occupation" /> ---->
-
-          <!------Occupation ends---->
-
-          <!--hidden fields -->
-
-          <div class="container">
-            <div class="row ">
-               <div class="col-lg-12 col-xl-12" >
-                  <div><input type="hidden" class="form-control"  id="img_photo_register" name="photo"/></div>
-                  <div><input type="hidden" class="form-control"  id="curr_img" value="{{ $user->photo }}"/></div>
-                  <div><input type="hidden" class="form-control"  id="id" name="img_id"/></div>
-                  <input type="hidden" name="occupation" id="occupation" value="{{ $user->occupation }}">
-                  <div><input type="hidden" class="form-control"  id="pk_user_id" name="pk_user_id"/>
-                </div></div>
-            </div></div>
-          <!------hidden fields-->
-
-          <!-------------------------------------------------------------->
-          <!------------------For astronaut div---------------------------->
-
-        <div class="div_for_astro" style="display:none" >
-        <img id="div" src="{{ asset('front') }}/images/close-btn.png" style="width:3%;max-width:100%;height:auto; z-index: 1; " align="right">
-        <img class="astro_occupation"  style="display:none"  src="{{ asset('front') }}/images/astronut/backpack 2.png">
-          <div id = 'viki' class="div_helmet"  style="display:none" onClick="goto_wiki2()"></div>
-          <div class="occ_description" style="display:none">
-          <p>
-            Hello,<br>I am <span id = 'divv' onClick="openwikipedia()" style="color: chocolate;">General Michael.</span>
-            <br>Your occupation in life will <br> most probably change, <br> as these changes of life go on,
-            <br>you should be able to note <br> here on your site.
-            <br><br>The record of your occupations <br> will stay here forever.
-            <br><br>So if your occupation is, example; <br> shoveling poo from a
-            <span style="color:#c6552b" onClick="show_cuckoo()" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
-            <br><br>And then you become an astronaut.
-            <br><br>It will be always on your profile.
-            <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
-          </p>
-          <br>
-          <center><div class="txtocp"><input type="text" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation"/></div></center>
-          <br class="">
-          <button type="button" class="btn btn-info btn_occ_submit">Submit</button>
-          </div>
-          <div class="div_clock overlay" style="display:none" >
-          <img  class='cuckoo_image'  title="Cuckoo clock" src="{{ asset('front') }}/images/astronut/cuckoo clock.png">
-          <p class="cuckoo_text">A Cuckoo clock as in the picture is a German black forest clock
-                                 with a little bird that comes out  and goes cuckoo. Actually
-                                 somebody  really useless in life like villa the crab.
-                                 We say they are so useless they couldn’t shovel poo out of a cuckoo clock.
+       
+      
+      {{-- @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif --}}
+    </section>
+  </div>
+    {{-- DIV FOR THE STARS HOROSCOPRE START --}}
+    <div class="box_for_stars" style="position:fixed; top:0; left:0; width:100vw;height:100vh;z-index: -10;">
+      <div id='constellations'>
+    
+         <span class="text_Aquaris" style=""><i>Aquarius</i></span>
+          <img class='aquarius aq_normal img_1' title="Aquarius" src="{{ asset('front') }}/images/constellations/aquarius_1.png">
+    
+      </div>
+    
+      <div class="cls_zc">
+          <span class="text_Aries" style=""><i>Aries</i></span>
+          <img  class='aries ar_normal img_1 cls_zc'  title="Aries" src="{{ asset('front') }}/images/constellations/aries_1.png">
+    
+      </div>
+    
+      <div class="cls_zc">
+          <span class="text_Cancer" style="" ><i>Cancer</i></span>
+          <img  class='cancer c_normal img_1 cls_zc' title="Cancer" src="{{ asset('front') }}/images/constellations/cancer_1.png">
+    
+      </div>
+    
+      <div class="cls_zc">
+        <span class="text_Capricorn"  style=""><i>Capricorn</i></span>
+        <img  class='capricorn cp_normal img_1 cls_zc' title="Capricorn" src="{{ asset('front') }}/images/constellations/capricorn_1.png">
+    
+      </div>
+    
+      <div  class="cls_zc">
+        <span class="text_Libra" style=""><i>Libra</i></span>
+        <img  class='libra  li_normal img_1 cls_zc' title="Libra" src="{{ asset('front') }}/images/constellations/libra_1.png">
+    
+      </div>
+    
+      <div  class="cls_zc">
+        <span class="text_Gemini" style=""><i>Gemini</i></span>
+        <img  class='gemini gm_normal img_1 cls_zc' title="Gemini" src="{{ asset('front') }}/images/constellations/gemini_1.png">
+    
+      </div>
+    
+      <div  class="cls_zc">
+        <span class="text_Leo" style=""><i>Leo</i></span>
+        <img  class='leo  le_normal img_1 cls_zc' title="Leo" src="{{ asset('front') }}/images/constellations/leo_1.png">
+    
+      </div>
+    
+      <div class="cls_zc">
+        <span class="text_Pisces" style=""><i>Pisces</i></span>
+        <img  class='pisces  p_normal img_1 cls_zc' title="Pisces" src="{{ asset('front') }}/images/constellations/pisces_1.png">
+    
+      </div>
+    
+      <div class="cls_zc">
+        <span class="text_Sagittarius" style=""><i>Sagittarius</i></span>
+        <img  class='sagittarius sg_normal img_1 cls_zc'  title="Sagittarius" src="{{ asset('front') }}/images/constellations/sagittarius_1.png">
+    
+    
+      </div>
+    
+      <div class="cls_zc">
+        <span class="text_Scorpio" style=""><i>Scorpio</i></span>
+        <img  class='scorpio sc_normal img_1 cls_zc'  title="Scorpio" src="{{ asset('front') }}/images/constellations/scorpio_1.png">
+    
+      </div>
+    
+      <div class="cls_zc" >
+        <span class="text_Taurus" style=""><i>Taurus</i></span>
+        <img  class='taurus t_normal img_1 cls_zc' title="Taurus" src="{{ asset('front') }}/images/constellations/taurus_1.png">
+    
+      </div>
+    
+      <div class="cls_zc">
+        <span class="text_Virgo" style=""><i>Virgo</i></span>
+        <img  class='virgo v_normal img_1 cls_zc'  title="Virgo" src="{{ asset('front') }}/images/constellations/virgo_1.png">
+    
+      </div>
+    </div>
+  {{-- DIV FOR THE STARS HOROSCOPRE END`` --}}
+  {{-- div for astronaut to add the accupation  --}}
+  <audio id="audio_cuckoo" src="{{ asset('front') }}/images/astronut/Cuckoo.wav"></audio>
+  <div class="div_for_astro" style="display:none" >
+    <img id="div" class="" style="display:none" src="{{ asset('front') }}/images/close-btn.png" align="right">
+    <img class="astro_occupation"  style="display:none"  src="{{ asset('front') }}/images/astronut/backpack 2.png">
+    <div id = 'viki' class="div_helmet"  style="display:none" onClick="goto_wiki2()"></div>
+    <div class="occ_description" style="display:none">
+      <p>
+        Hello,<br>I am <span id = 'divv' onClick="openwikipedia()" style="color: chocolate;">General Michael.</span>
+        <br>Your occupation in life will <br> most probably change, <br> as these changes of life go on,
+        <br>you should be able to note <br> here on your site.
+        <br><br>The record of your occupations <br> will stay here forever.
+        <br><br>So if your occupation is, example; <br> shoveling poo from a
+        <span style="color:#c6552b" onClick="show_cuckoo()" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
+        <br><br>And then you become an astronaut.
+        <br><br>It will be always on your profile.
+        <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
+      </p>
+      <br>
+      <center><div class="txtocp"><input type="text" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation" value="{{ old('occupation') }}"/></div></center>
+      <br class="">
+      <button type="button" class="btn btn-info btn_occ_submit">Submit</button>
+      </div>
+      <div class="div_clock overlay" style="display:none" >
+      <img  class='cuckoo_image'  title="Cuckoo clock" src="{{ asset('front') }}/images/astronut/cuckoo clock.png">
+      <p class="cuckoo_text">A Cuckoo clock as in the picture is a German black forest clock
+        with a little bird that comes out  and goes cuckoo. Actually somebody  really useless in life like villa the crab. We say they are so useless they couldn’t shovel poo out of a cuckoo clock.
           </p>
       </div>
-        </div>
-      {{ Form::close() }}
-
-  <!-------Form Details End---------->
-
-  <!---------------------------------Constellation images ----------------------------------------->
-<div class="box_for_stars" style="position:fixed; top:0; left:0; width:100vw;height:100vh;z-index: -10;">
-  <div id='constellations'>
-
-     <span class="text_Aquaris" style=""><i>Aquarius</i></span>
-      <img class='aquarius aq_normal img_1' title="Aquarius" src="{{ asset('front') }}/images/constellations/aquarius_1.png">
-
   </div>
-
-  <div class="cls_zc">
-      <span class="text_Aries" style=""><i>Aries</i></span>
-      <img  class='aries ar_normal img_1 cls_zc'  title="Aries" src="{{ asset('front') }}/images/constellations/aries_1.png">
-
-  </div>
-
-  <div class="cls_zc">
-      <span class="text_Cancer" style="" ><i>Cancer</i></span>
-      <img  class='cancer c_normal img_1 cls_zc' title="Cancer" src="{{ asset('front') }}/images/constellations/cancer_1.png">
-
-  </div>
-
-  <div class="cls_zc">
-    <span class="text_Capricorn"  style=""><i>Capricorn</i></span>
-    <img  class='capricorn cp_normal img_1 cls_zc' title="Capricorn" src="{{ asset('front') }}/images/constellations/capricorn_1.png">
-
-  </div>
-
-  <div  class="cls_zc">
-    <span class="text_Libra" style=""><i>Libra</i></span>
-    <img  class='libra  li_normal img_1 cls_zc' title="Libra" src="{{ asset('front') }}/images/constellations/libra_1.png">
-
-  </div>
-
-  <div  class="cls_zc">
-    <span class="text_Gemini" style=""><i>Gemini</i></span>
-    <img  class='gemini gm_normal img_1 cls_zc' title="Gemini" src="{{ asset('front') }}/images/constellations/gemini_1.png">
-
-  </div>
-
-  <div  class="cls_zc">
-    <span class="text_Leo" style=""><i>Leo</i></span>
-    <img  class='leo  le_normal img_1 cls_zc' title="Leo" src="{{ asset('front') }}/images/constellations/leo_1.png">
-
-  </div>
-
-  <div class="cls_zc">
-    <span class="text_Pisces" style=""><i>Pisces</i></span>
-    <img  class='pisces  p_normal img_1 cls_zc' title="Pisces" src="{{ asset('front') }}/images/constellations/pisces_1.png">
-
-  </div>
-
-  <div class="cls_zc">
-    <span class="text_Sagittarius" style=""><i>Sagittarius</i></span>
-    <img  class='sagittarius sg_normal img_1 cls_zc'  title="Sagittarius" src="{{ asset('front') }}/images/constellations/sagittarius_1.png">
-
-
-  </div>
-
-  <div class="cls_zc">
-    <span class="text_Scorpio" style=""><i>Scorpio</i></span>
-    <img  class='scorpio sc_normal img_1 cls_zc'  title="Scorpio" src="{{ asset('front') }}/images/constellations/scorpio_1.png">
-
-  </div>
-
-  <div class="cls_zc" >
-    <span class="text_Taurus" style=""><i>Taurus</i></span>
-    <img  class='taurus t_normal img_1 cls_zc' title="Taurus" src="{{ asset('front') }}/images/constellations/taurus_1.png">
-
-  </div>
-
-  <div class="cls_zc">
-    <span class="text_Virgo" style=""><i>Virgo</i></span>
-    <img  class='virgo v_normal img_1 cls_zc'  title="Virgo" src="{{ asset('front') }}/images/constellations/virgo_1.png">
-
-  </div></div>
-
-
-      <!--- div for helmet--->
-
-
-
-      <!--------------------->
-
-      <!-------------------------------------------------------------->
-      <!--audio for cuckoo clock -->
-  <audio id="audio_cuckoo" src="{{ asset('front') }}/images/astronut/Cuckoo.wav"></audio>
-      <!-------------------------------------------------------------->
-
-      <!----wikipedia div -->
-      <div id = "div_for_wikki"  >
-  <div id="Div_for_wiki">
-      <img class="close_btn" src="{{ asset('front') }}/images/close-btn.png" style="position:absolute;left:94%;width:4%;max-width:100%;height:auto; z-index: 1; " align="right" onclick="hidePage()"/>
-      <object id="wikiPage" type="text/html" data="" style="overflow:auto;width:100%;height: 100%;">
-      </object>
-  </div>
-  <div id="Div_for_wiki2">
-      <img  class="close_btn2" src="{{ asset('front') }}/images/close-btn.png" style="position:absolute;left:94%;width:4%;max-width:100%;height:auto; z-index: 1; " align="right" onclick="hidePage2()"/>
-      <object id="wikiPage2" type="text/html" data="" style="overflow:auto;width:100%;height: 100%;">
-      </object>/
-  </div></div>
-  <!----------------->
-
-  <!-- Modal -->
-
-<!-- The Modal -->
-
-  <!-- The Modal -->
+  {{-- div for astronaut to add the accupation --}}
+  <!-- The Modal for terms and condition -->
   <div class="modal" id="myModal" style="z-index:50000;height: 35vw;top: 6vw;width: 82vw !important">
-
     <div class="modal-content" style="width: 67vw;left: 15vw">
-
       <!-- Modal Header -->
       <div class="modal-header">
         <h3 class="modal-title">TERMS OF SERVICE AGREEMENT</h1>
         <br>
-
         <button type="button" class="close" data-dismiss="modal">×</button>
       </div>
-
       <!-- Modal body -->
       <div class="modal-body">
         <h5 class="">LAST REVISION: [16-03-2020]</h5><br>
         <p class="">
           PLEASE READ THIS TERMS OF SERVICE AGREEMENT CAREFULLY. BY USING THIS WEBSITE AGREE TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT.
         </p>
-
         <p class="">
           This Terms of Service Agreement (the "Agreement") governs your use of this website, www.Mbaye.com (the "Website. This Agreement includes,
           and incorporates by this reference, the policies and guidelines referenced below. Inox Arabia FZC and associated companies reserve the
@@ -831,107 +367,69 @@
                 policies or guidelines), please immediately terminate your use of the Website. If you would like to print this Agreement,
                  please click the print button on your browser toolbar.
         </p>
-
-
-      <h3 class="">I. WEBSITE</h3>
-
-      <p class="">
-      <b>Content; Intellectual Property; Third Party Links.</b>
-       In addition to making Products available, this Website also offers information and allows you to play game. This Website also offers
-        information, both directly and through indirect links to third-party websites. Mbaye.com does not always create the information offered
-         on this Website; instead the information is often gathered from other sources. To the extent that Inox Arabia FZC and associated companies
-         do create the content on this Website, such content is protected by intellectual property laws of the foreign nations, and international
-         bodies. Unauthorized use of the material may violate copyright, trademark, and/or other laws. You acknowledge that your use of the content
-         on this Website is for personal, noncommercial use. Any links to third-party websites are provided solely as a convenience to you.
-          Inox Arabia FZC and associated companies do not endorse the contents on any such third-party websites.
-           Inox Arabia FZC and associated companies are not responsible for the content of or any damage that may result from your access to or reliance
-            on these third-party websites. If you link to third-party websites, you do so at your own risk.
-      </p>
-
-
-      <p class="">
-        <b>Use of Website;</b>
-         Inox Arabia FZC and associated companies are not responsible for any damages resulting from use of this website by anyone. You will not use
-          the Website for illegal purposes. You will
-         <ul>
-           <li>
-              Abide by all applicable local, state, national, and international laws and regulations in your use of the Website (including laws
-              regarding intellectual property)
-           </li>
-           <li>    Not interfere with or disrupt the use and enjoyment of the Website by other users
-           </li>
-           <li>
-             Not resell material on the Website
-           </li>
-           <li>
-             Not engage, directly or indirectly, in transmission of "spam", chain letters, junk mail or any other type of unsolicited communication, and
-           </li>
-           <li>Not defame, harass, abuse, or disrupt other users of the Website.
-           </li>
+        <h3 class="">I. WEBSITE</h3>
+        <p class="">
+          <b>Content; Intellectual Property; Third Party Links.</b>
+          In addition to making Products available, this Website also offers information and allows you to play game. This Website also offersinformation, both directly and through indirect links to third-party websites. Mbaye.com does not always create the information offered on this Website; instead the information is often gathered from other sources. To the extent that Inox Arabia FZC and associated companies do create the content on this Website, such content is protected by intellectual property laws of the foreign nations, and international bodies. Unauthorized use of the material may violate copyright, trademark, and/or other laws. You acknowledge that your use of the content on this Website is for personal, noncommercial use. Any links to third-party websites are provided solely as a convenience to you.
+          Inox Arabia FZC and associated companies do not endorse the contents on any such third-party  websites. Inox Arabia FZC and associated companies are not responsible for the content of or any damage that may result from your access to or reliance on these third-party websites. If you link to third-party websites, you do so at your own risk.
+        </p>
+        <p class="">
+          <b>Use of Website;</b>
+          Inox Arabia FZC and associated companies are not responsible for any damages resulting from use of this website by anyone. You will not use the Website for illegal purposes. You will
+          <ul>
+            <li>
+                Abide by all applicable local, state, national, and international laws and regulations in your use of the Website (including laws
+                regarding intellectual property)
+            </li>
+            <li>
+              Not interfere with or disrupt the use and enjoyment of the Website by other users
+            </li>
+            <li>
+              Not resell material on the Website
+            </li>
+            <li>
+              Not engage, directly or indirectly, in transmission of "spam", chain letters, junk mail or any other type of unsolicited communication, and
+            </li>
+            <li>Not defame, harass, abuse, or disrupt other users of the Website.
+            </li>
           </ul>
-      </p>
-      <br>
-
-      <p class="">
-        <b>License.</b> By using this Website, you are granted a limited, non-exclusive, non-transferable right to use the content and materials on
-         the Website in connection with your normal, noncommercial, use of the Website. You may not copy, reproduce, transmit, distribute, or create
-          derivative works of such content or information without express written authorization from Inox Arabia FZC and associated companies or the applicable
-           third party (if third party content is at issue).
-      </p>
-      <br>
-
-      <p class="">
-        <b>Posting.</b> By posting, storing, or transmitting any content on the Website, you hereby grant Inox Arabia FZC and associated companies a perpetual,
-         worldwide, non-exclusive, royalty-free, assignable, right and license to use, copy, display, perform, create derivative works from, distribute,
-          have distributed, transmit and assign such content in any form, in all media now known or hereinafter created, anywhere in the world.
-          Inox Arabia FZC and associated companies do not have the ability to control the nature of the user-generated content offered through the Website.
-          You are solely responsible for your interactions with other users of the Website and any content you post. Inox Arabia FZC and associated companies
-          is not liable for any damage or harm resulting from any posts by or interactions between users. Inox Arabia FZC and associated companies reserve
-          the right, but has no obligation, to monitor interactions between and among users of the Website and to remove any content Inox Arabian
-          Technical Services LLC deems objectionable.
         </p>
         <br>
-
+        <p class="">
+          <b>License.</b> By using this Website, you are granted a limited, non-exclusive, non-transferable right to use the content and materials on the Website in connection with your normal, noncommercial, use of the Website. You may not copy, reproduce, transmit, distribute, or create derivative works of such content or information without express written authorization from Inox Arabia FZC and associated companies or the applicable third party (if third party content is at issue).
+        </p>
+        <br>
+        <p class="">
+          <b>Posting.</b>
+          By posting, storing, or transmitting any content on the Website, you hereby grant Inox Arabia FZC and associated companies a perpetual, worldwide, non-exclusive, royalty-free, assignable, right and license to use, copy, display, perform, create derivative works from, distribute, have distributed, transmit and assign such content in any form, in all media now known or hereinafter created, anywhere in the world. Inox Arabia FZC and associated companies do not have the ability to control the nature of the user-generated content offered through the Website. You are solely responsible for your interactions with other users of the Website and any content you post. Inox Arabia FZC and associated companies is not liable for any damage or harm resulting from any posts by or interactions between users. Inox Arabia FZC and associated companies reserve the right, but has no obligation, to monitor interactions between and among users of the Website and to remove any content Inox Arabian Technical Services LLC deems objectionable.
+        </p>
+        <br>
         <h3 class="">II. DISCLAIMER OF WARRANTIES</h3>
         <p class="">
-                YOUR USE OF THIS WEBSITE IS AT YOUR SOLE RISK. THE WEBSITE IS OFFERED ON AN "AS IS" AND "AS AVAILABLE" BASIS. WITHOUT LIMITING
-                 THE GENERALITY OF THE FOREGOING, INOX ARABIA FZC AND ASSOCIATED COMPANIES  MAKE NO WARRANTY:
-            THAT THE INFORMATION PROVIDED ON THIS WEBSITE IS ACCURATE, RELIABLE, COMPLETE, OR TIMELY.
-            THAT THE LINKS TO THIRD-PARTY WEBSITES ARE TO INFORMATION THAT IS ACCURATE, RELIABLE, COMPLETE, OR TIMELY.
-            NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED BY YOU FROM THIS WEBSITE WILL CREATE ANY WARRANTY NOT EXPRESSLY STATED HEREIN.
+          YOUR USE OF THIS WEBSITE IS AT YOUR SOLE RISK. THE WEBSITE IS OFFERED ON AN "AS IS" AND "AS AVAILABLE" BASIS. WITHOUT LIMITING THE GENERALITY OF THE FOREGOING, INOX ARABIA FZC AND ASSOCIATED COMPANIES  MAKE NO WARRANTY: THAT THE INFORMATION PROVIDED ON THIS WEBSITE IS ACCURATE, RELIABLE, COMPLETE, OR TIMELY. THAT THE LINKS TO THIRD-PARTY WEBSITES ARE TO INFORMATION THAT IS ACCURATE, RELIABLE, COMPLETE, OR TIMELY. NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED BY YOU FROM THIS WEBSITE WILL CREATE ANY WARRANTY NOT EXPRESSLY STATED HEREIN.
         </p>
-
         <br>
         <h3 class="">III. INDEMNIFICATION</h3>
         <p class="">
-          You will release, indemnify, defend and hold harmless Inox Arabia FZC and associated companies, and any of its contractors, agents, employees,
-           officers, directors, shareholders, affiliates and assigns from all liabilities, claims, damages, costs and expenses, including reasonable
-            attorneys' fees and expenses, of third parties relating to or arising out of
+          You will release, indemnify, defend and hold harmless Inox Arabia FZC and associated companies, and any of its contractors, agents, employees, officers, directors, shareholders, affiliates and assigns from all liabilities, claims, damages, costs and expenses, including reasonable attorneys' fees and expenses, of third parties relating to or arising out of
         </p>
-         <ul>
-            <li> this Agreement or the breach of your warranties, representations and obligations under this Agreement;
+        <ul>
+          <li> this Agreement or the breach of your warranties, representations and obligations under this Agreement;
+          </li>
+          <li>the Website content or your use of the Website content
+          </li>
+          <li>
+            any intellectual property or other proprietary right of any person or entity;
+          </li>
+          <li>
+            your violation of any provision of this Agreement; or
+          </li>
+          <li>
+            any information or data you supplied to Inox Arabia FZC and associated companies. When Inox Arabia FZC and associated companies is threatened with suit or sued by a third party, Inox Arabia FZC and associated companies may seek written assurances from you concerning your promise to indemnify Inox Arabia FZC and associated companies;
             </li>
-            <li>the Website content or your use of the Website content
-            </li>
-            <li>
-               any intellectual property or other proprietary right of any person or entity;
-            </li><li>
-             your violation of any provision of this Agreement; or
-            </li>
-            <li>
-              any information or data you supplied to Inox Arabia FZC and associated companies. When Inox Arabia FZC and associated companies is threatened with
-              suit or sued by a third party, Inox Arabia FZC and associated companies may seek written assurances from you concerning your promise to indemnify
-              Inox Arabia FZC and associated companies;
-            </li>
-          </ul>
-            <p class="">
-                your failure to provide such assurances may be considered by Inox Arabia FZC and associated companies to be a material breach of this Agreement.
-                 Inox Arabia FZC and associated companies will have the right to participate in any defense by you of a third-party claim related to your use of
-                  any of the Website content, with counsel of Inox Arabia FZC and associated companies choice at its expense. Inox Arabia FZC and associated companies
-                  will reasonably cooperate in any defense by you of a third-party claim at your request and expense. You will have sole responsibility to
-                  defend Inox Arabia FZC and associated companies against any claim, but you must receive Inox Arabia FZC and associated companies prior written
-                  consent regarding any related settlement. The terms of this provision will survive any termination or cancellation of this Agreement
-                   or your use of the Website or Products.
+        </ul>
+        <p class="">
+          your failure to provide such assurances may be considered by Inox Arabia FZC and associated companies to be a material breach of this Agreement. Inox Arabia FZC and associated companies will have the right to participate in any defense by you of a third-party claim related to your use of any of the Website content, with counsel of Inox Arabia FZC and associated companies choice at its expense. Inox Arabia FZC and associated companies will reasonably cooperate in any defense by you of a third-party claim at your request and expense. You will have sole responsibility to defend Inox Arabia FZC and associated companies against any claim, but you must receive Inox Arabia FZC and associated companies prior written consent regarding any related settlement. The terms of this provision will survive any termination or cancellation of this Agreement or your use of the Website or Products.
         </p>
         <br>
 
@@ -1029,78 +527,194 @@
         </p>
 
       </div>
-
+      <!-- Modal body -->
       <!-- Modal footer -->
     </div>
 
-</div>
+  </div>
 <!---model ends -->
-        </div>
-    </section>
 @endsection
 
 @section('after-scripts')
-    <!-----------------------------------   script section ------------------------------------------>
-
-    <script type="text/javascript" src="{{ asset('front') }}/JS/jquery-2.1.3x.min"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <!-- <script type="text/javascript" src="webcamjs/webcam.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-    <script src="{{ asset('front') }}/JS/webcam.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
-    <script src="{{ asset('front') }}/JS/bootstrap-datepicker.min.js"></script>
-    <script src="{{ asset('front/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
-        <!-- Webcam.min.js -->
-    <!--------------------------------------- For camera--------------------------------------------->
+  <!-------------   script section -------------------->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <!-- <script type="text/javascript" src="webcamjs/webcam.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+  <script src="{{ asset('front') }}/JS/webcam.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+  <script src="{{ asset('front') }}/JS/bootstrap-datepicker.min.js"></script>
+  <script src="{{ asset('front/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
+      <!-- Webcam.min.js -->
+  <!--------------- For camera------------------------->
 
 <script language="JavaScript">
    var occ_details;
 // When list occupation modified
+  $('#change_pass').click(function(){
+    if($('#passsword_div').is(":visible"))
+    {
+      $('#passsword_div').hide();
+    }
+    else
+    {
+      $('#passsword_div').show();
+    }
+    
+  });
 
-$('#list_occupation').on('change', function(e){
+  
+  $('#list_occupation').on('change', function(e){
     var newlist = $('#list_occupation').val();
-    //var newlist2 = str_replace('\n', ',', newlist);
     $("#MyForm input#occupation").val(newlist);
-});
+  });
 
-function disable_readonly(){
+  function disable_readonly()
+  {
     IsReadOnly="False";
     load_animation_astronut().stop;
-}
+  }
+   // COUNTRIES AND STATE AND SITIES
+   var countires;
+   var states = [];
+   var allcities = [];
+   var alldata=[];
+   // FETCHING THE OBJECT OF COUNTRIES AND CITIES AND STATE
+     $.getJSON( "/front/json/reg-countries-states-cities.json", function( data ) {
+        alldata = data;
+        $.each( alldata, function( countryKey, countryVal ) { //iterate the countires-state-cityobj
+        if(countryVal.name == "{{ $user->country }}") //check if users country match woth any country
+        {
+          $('#countryId').append("<option Selected value='" + countryVal.name + "'>" + countryVal.name + "</option>");
+
+          if(countryVal.states.length) //check if country has any states
+          {
+            $.each( countryVal.states , function( stateKey, stateVal ) //iterate through states 
+            {
+              if(stateVal.name === "{{ $user->state }}") //if state match with users state
+              {
+                // add selected attribute to the select
+                $('#stateId').append("<option selected value='" + stateVal.name + "'>" + stateVal.name + "</option>");
+              }
+              else
+              {
+                $('#stateId').append("<option value='" + stateVal.name + "'>" + stateVal.name + "</option>");
+              }
+               
+              //  iterate through the cities added in the JSON Object
+              if(stateVal.cities.length)
+              {
+                $.each( stateVal.cities , function( cityKey, cityVal ) //iterate through cities 
+                {
+                  if(cityVal.name === "{{ $user->state }}") //if state match with users state
+                  {
+                    // add selected attribute to the select
+                    $('#cityId').append("<option selected value='" + cityVal.name + "'>" + cityVal.name + "</option>");
+                  }
+                  else
+                  {
+                    $('#cityId').append("<option value='" + cityVal.name + "'>" + cityVal.name + "</option>");
+                  }
+                });   
+              }
+            }); //iteration through the states ends here
+          }
+        }
+        else
+        {
+          $('#countryId').append("<option value='" + countryVal.name + "'>" + countryVal.name + "</option>");
+        }     
+      });
+     });
+     // SELECTING THE COUNTRY AND FETCHING THE STATES
+     $('#countryId').change(function(){
+
+        var c_check = $('#countryId').val(); 
+        $('#stateId').html('<option value="">Select State</option>');
+        $('#cityId').html('<option value="">Select State</option>');
+
+        $.each( alldata, function( countryKey, countryVal ) { //variable that contain all the values
+          if(countryVal.name === c_check) //if its selected country
+          {
+            console.log(countryVal.states.length);
+            if(countryVal.states.length > 0) //if a country has states
+            {
+              $.each( countryVal.states , function( stateKey, stateVal ) { //iterate through states
+                $('#stateId').append("<option value='" + stateVal.name + "'>" + stateVal.name + "</option>");
+              })
+            }
+            else
+            {
+              $('#stateId').append("<option value='" + c_check + "'>" + c_check + "</option>");
+              $('#cityId').append("<option value='" + c_check + "'>" + c_check + "</option>");
+            }
+          }
+        });
+      });
+     // SECLTING THE STATE TO GET THE CITIES
+     $('#stateId').change(function(){
+       var c_check = $('#stateId').val();
+       $('#cityId').html('');
+       
+       $.each( alldata, function( key, val ) {
+         $.each( val.states , function( key_c, val_c ) {
+           if(val_c.name === c_check)
+           { 
+             // console.log(c_check);
+            //  console.log(val_c.cities.length);
+            if(val_c.cities.length)
+            {
+              $.each( val_c.cities , function( key_c1, val_c1 ) {
+                $('#cityId').append("<option value='" + val_c1.name + "'>" + val_c1.name + "</option>");
+             })
+            }
+            else{
+              $('#cityId').append("<option value='" + c_check + "'>" + c_check + "</option>");
+            }
+             
+           }
+
+         })
+         
+       });
+
+     });
 
 // Webcam on
 
-function cam_on(){
-   Webcam.set({
-   width: 240,
-   height: 240,
-   image_format: 'jpeg',
-   jpeg_quality: 90
+  function cam_on()
+  {
+    Webcam.set({
+    width: 240,
+    height:240,
+    image_format: 'jpeg',
+    jpeg_quality: 90
   });
-  Webcam.attach( '#my_camera' );
-}
+    Webcam.attach( '#my_camera' );
+  }
 
  // A button for taking snaps
 
- function take_snapshot() {
-  // take snapshot and get image data
-  Webcam.snap( function(data_uri) {
-  // display results in page
-  document.getElementById('results').innerHTML =
-   '<img id="imageprev" src="'+data_uri+'"/>';
-  } );
+  function take_snapshot() 
+  {
+    // take snapshot and get image data
+    Webcam.snap( function(data_uri) {
+    // display results in page
+    document.getElementById('results').innerHTML =
+    '<img id="imageprev" src="'+data_uri+'"/>';
+    });
+    Webcam.reset();
+  }
 
-  Webcam.reset();
- }
-
-//Adds New Occupation
-function add_occ(){
-var new_occ = document.getElementById("text_occupation_astro").value;
-var curr_occlist = $('#occupation').val();
-var new_occlist = new_occ + "," + curr_occlist;
-$("#MyForm input#occupation").val(new_occlist);
-};
+  //Adds New Occupation
+  function add_occ()
+  {
+    var new_occ = document.getElementById("text_occupation_astro").value;
+    var curr_occlist = $('#occupation').val();
+    var new_occlist = new_occ + "," + curr_occlist;
+    $("#MyForm input#occupation").val(new_occlist);
+  };
 
 </script>
     <!--------------------------------------- Manual script ------------------------------------------>
@@ -1112,32 +726,6 @@ $("#MyForm input#occupation").val(new_occlist);
   }
 
 //Get selected gender, country, organization type;
-  $(document).ready(function() {
-        const genderSavedValue = '{{ $user->gender }}';
-        const countrySavedValue = '{{ $user->country }}';
-        const orgtypeSavedValue = '{{ $user->org_type }}';
-
-        if(genderSavedValue !== '') {
-        $('#genders').val(genderSavedValue);
-        }
-
-        if(countrySavedValue !== '') {
-        $('#countries').val(countrySavedValue);
-        }
-
-        if(orgtypeSavedValue !== '') {
-        $('#org_types').val(orgtypeSavedValue);
-        }
-        });
-
-
-   $(document).ready(function() {
-    var occlistdb = $('$user->occupation').val();
-    $occ_details = explode(',', $occ_results['occlistdb']);
-    $occ_details[0] = "<b>{$occ_details[0]}</b>";
-    $occ_details = implode('\n', $occ_details);
-        });
-
         //var global_occupation='';
         // for showing message to turn to landscape
         testOrientation();
@@ -1162,78 +750,45 @@ $("#MyForm input#occupation").val(new_occlist);
                   $('section').hide();
             }
     }
-    function show_cuckoo(){
-        $('.div_clock').css({'display':'block'});
-        var audio = document.getElementById("audio_cuckoo");
-        audio.playbackRate =1;
-        audio.play();
+    function show_cuckoo()
+    {
+      $('.div_clock').css({'display':'block'});
+      var audio = document.getElementById("audio_cuckoo");
+      audio.playbackRate =1;
+      audio.play();
+    }
+    /**
+      Function to show password
+      */
+      function showpassword(fieldid)
+      {
+        if($('#'+fieldid+' input').attr("type") == "text")
+        {
+          $('#'+fieldid+' input').attr('type', 'password');
+          $('#'+fieldid+' svg').attr('data-icon', 'eye');
         }
-        $(document).ready(function () {
-
-
-          var options = {
-                          data: countries,
-                          getValue: "name",
-                          list: {
-                              match: {
-                                  enabled: true
-                              }
-                          }
-               };
-
-
-//$("#countries").easyAutocomplete(options);
-
-
+        else if($('#'+fieldid+'  input').attr("type") == "password")
+        {
+          $('#'+fieldid+'  input').attr('type', 'text');
+          $('#'+fieldid+'  svg').attr('data-icon', 'eye-slash');
+        }
+      }
+  $(document).ready(function () {
+    
     //for identifying zordiac sign in the edit mode
     //$("#list_occupation ").hide();
     $(".close_btn ").hide();
 
-    var org='';
-    var country='';
-    //var occupation='';
-    //var gender='';
-    var count='';
-    var width='';
-    var height='';
-
-
-
- org='DUMMY';
- country='dummy';
-
- /* For occupation cloud */
-
- //occupation='dummy';
-
- //gender='dummy';
- count='dummy';
- width = document.getElementById('cloud').offsetWidth;
- height = document.getElementById('cloud').offsetHeight;
- if(count>=4){
-    width=width+1;
-    height=height+15;
-
- }
-
-document.getElementById('countryIds').value = country;
-
-
-/*$("#list_occupation").show();
-$("#list_occupation ").html(occupation);
-if(occupation!='')
-$("#list_occupation ").val(occupation.split(",").join("\n"));
-global_occupation=occupation;*/
-
-
-/*var encodedString='dummy';
-var img_src='';
-var img_src=decodeURIComponent(encodedString);
-document.getElementById('my_camera').innerHTML =
+  /*$("#list_occupation").show();
+  $("#list_occupation ").html(occupation);
+  if(occupation!='')
+  $("#list_occupation ").val(occupation.split(",").join("\n"));
+  global_occupation=occupation;*/
+  /*var encodedString='dummy';
+  var img_src='';
+  var img_src=decodeURIComponent(encodedString);
+  document.getElementById('my_camera').innerHTML =
        '<div id="captured_img" class="camera_alignment"><img  name="photo" id="img_photo" style="display: block; height:240; width:240;" src="'+img_src+'"/></div>'; */
-
-
-
     //For the name  of zordiac signs
     $(".text_Aquaris ").removeClass("ani-rollouttext_Aquaris");
     $(".text_Pisces").removeClass("ani-rollouttext_Pisces");
@@ -1247,10 +802,7 @@ document.getElementById('my_camera').innerHTML =
     $(".text_Scorpio ").removeClass("ani-rollouttext_Scorpio");
     $(".text_Sagittarius ").removeClass("ani-rollouttext_Sagittarius");
     $(".text_Capricorn").removeClass("ani-rollouttext_Capricorn");
-
-    //$('.img_2').css({'display':'none'});
     $('.img_1').css({'display':'block'});
-
     $(".text_Aquaris ").removeClass("ani-rollouttext_Aquaris");
     $('.text_Aquaris').css({'display':'none'});
     $(".text_Pisces ").removeClass("ani-rollouttext_Pisces");
@@ -1276,18 +828,11 @@ document.getElementById('my_camera').innerHTML =
     $(".text_Capricorn ").removeClass("ani-rollouttext_Capricorn");
     $('.text_Capricorn').css({'display':'none'});
     $(".sponser_name").hide(); //for hiding sponser name and sponser id
-
     calculate_age();
     // Date time picker change value
     $('#date').change(function(){
     $(this).attr('value', $('#date').val());
-});
-//combo box  value setting
-//loadSelect_for_country(country);
-/*if(org!='')
- loadSelect_for_org_type(org);
- if(gender!='')
- loadSelect_for_gender(gender); */
+  });
 });
 
             /*
@@ -1339,28 +884,27 @@ document.getElementById('my_camera').innerHTML =
             $(".btn_occ_submit").click(function(e){
               $(".astro_occupation ").removeClass("img_astro_down");
               var occ_astro=$("#occupation").val();
-              if(occ_astro=='' || occ_astro==null){
+              if(occ_astro=='' || occ_astro==null)
+              {
                 var new_occ = document.getElementById("text_occupation_astro").value;
                 $("#MyForm input#occupation").val(new_occ);
                 $("#list_occupation").html('');
-                $("#list_occupation").html(new_occ);}
-
-              else{
+                $("#list_occupation").html(new_occ);
+              }
+              else
+              {
                /* var str_occupation= $("#text_occupation_astro").val();
                 var occ_astro=$("#text_occupation_astro").val(); */
-
                 var new_occ = document.getElementById("text_occupation_astro").value;
-                var curr_occlist = $('#occupation').val();
-                var new_occlist = new_occ + "," + curr_occlist;
+                // var curr_occlist = $('#occupation').val();
+                // var new_occlist = new_occ + "," + curr_occlist;
+                // $("#list_occupation").html('');
+                // $("#list_occupation").html(new_occlist);
+                $("#list_occupation").val(new_occ);
+                add_occ(); 
+              }
 
-                $("#list_occupation").html('');
-                $("#list_occupation").html(new_occlist);
-                $("#list_occupation").val(new_occlist.split(",").join("\n"));
-                add_occ(); }
-
-               // $("#text_occupation_astro").val()
-                hidePage();
-                hidePage2();
+                $("#text_occupation_astro").val();
                 $('.occ_description').css({'display':'none'});
                 $('.text_occup').css({'display':'none'});
                 $('.btn_occ_submit').css({'display':'none'});
@@ -1398,6 +942,8 @@ document.getElementById('my_camera').innerHTML =
               $('.div_for_astro').css({'display':'block'});
               $('.astro_occupation').css({'display':'block'});
               $(".astro_occupation ").addClass("img_astro");
+              $('#div').css({'display':'block'});
+              $("#div").addClass("close-as-img");
               $('.text_occup').css({'display':'block'});
               $('.btn_occ_submit').css({'display':'block'});
 
@@ -1805,7 +1351,7 @@ document.getElementById('my_camera').innerHTML =
                 // Check the ranges of month and year
                 if(year < 1000 || year > 3000 || month == 0 || month > 12)
                 {
-                    return false;
+                  return false;
                 }
 
                 var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
@@ -1835,21 +1381,65 @@ document.getElementById('my_camera').innerHTML =
             }
 
 
-            /* Reset camera option */
-
-            function reset_snapshot(){
-              Webcam.reset();
-
-                Webcam.set({
-                    //width: 207,
-                    //height: 270,
-                    //dest_width: 207,
-                    //dest_height: 270,
-                    image_format: 'jpeg',
-                    jpeg_quality: 90
-                });
-                Webcam.attach( '#my_camera' );
-            }
+    /* Reset camera option */
+    function reset_snapshot()
+    {
+      Webcam.reset();
+      var screen_width = window.innerWidth;
+      var screen_height = window.innerHeight;
+      // alert('Width of th device : '+screen_width+" , height of the view Port: "+screen_height);
+      if (screen_height == 500 || screen_height < 500) 
+      {
+        Webcam.set({
+          width: 120,
+          height: 120,
+          image_format: 'jpeg',
+          jpeg_quality: 90
+        });
+        Webcam.attach( '#my_camera' );
+      }
+      else if((screen_height == 360 || screen_height < 360) && screen_height > 360 )
+      {
+        Webcam.set({
+          width: 120,
+          height: 130,
+          image_format: 'jpeg',
+          jpeg_quality: 90
+        });
+        Webcam.attach( '#my_camera' );
+      }
+      else if((screen_height == 320 || screen_height < 320) && screen_height > 320 )
+      {
+        Webcam.set({
+          width: 100,
+          height: 100,
+          image_format: 'jpeg',
+          jpeg_quality: 90
+        });
+        Webcam.attach( '#my_camera' );
+      }
+      else if((screen_height == 768 || screen_height < 768) && screen_height > 500 )
+      {
+        Webcam.set({
+          width: 200,
+          height: 200,
+          image_format: 'jpeg',
+          jpeg_quality: 90
+        });
+        Webcam.attach( '#my_camera' );
+      }
+      else
+      {
+        Webcam.set({
+          width: 305,
+          height: 230,
+          image_format: 'jpeg',
+          jpeg_quality: 90
+        });
+        Webcam.attach( '#my_camera' ); 
+      }
+    $('.btn_reg_snap_shot').show();
+  }
             /*function reset(){
               Webcam.reset();
               Webcam.off();
@@ -1947,7 +1537,6 @@ document.getElementById('my_camera').innerHTML =
 
                 }
 
-            // $(document).ready(function(){
                  $("#Div_for_wiki2").on('click',function(){
                       $("#Div_for_wiki").hide();
                   });
@@ -1957,15 +1546,11 @@ document.getElementById('my_camera').innerHTML =
                  $("#viki").on('click',function(){
                     $("#Div_for_wiki2").show();
                   });
-            // });
+            
 
 
-                /*
-                Function to redirect to home page after registration  save sucess
-                */
-            function redirectToHome(){
-                  window.location = "{{route('frontend.index')}}";
-                }
+                
+            
 
                 /*
                 Function to redirect to home page after registration  save sucess
@@ -1987,18 +1572,8 @@ document.getElementById('my_camera').innerHTML =
                 /**
                 Function to validate form
                 */
-                $(document).ready(function(){
-
-                             $("#term").click(function(){
-                               $("#myModal").modal({show:true});
-                  });
-                           });
-
-
-                /**
-                Function to validate form
-                */
                 function validateMyForm(){
+
                     document.getElementById("MyForm").submit();
                 }
             /**
@@ -2031,8 +1606,35 @@ document.getElementById('my_camera').innerHTML =
             }
 
 
-              $(document).ready(function(){
-                  if({{count($errors) }} > 0)
+  $(document).ready(function(){
+    @if (session('success'))
+        Swal.fire({
+            imageUrl: '../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            title: "<span id='success' style='color:green;'>Data Updated!</span>",
+            html:"{{ session('success') }}" ,
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)'
+          });
+    @endif
+    @if (session('flash_danger'))
+        Swal.fire({
+            imageUrl: '../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            title: "<span id='success'>Went Wrong!</span>",
+            html:"{{ session('flash_danger') }}" ,
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)'
+          });
+    @endif
+
+    if({{count($errors) }} > 0)
     {
         var errorMessage = {!! html_entity_decode($errors, ENT_QUOTES, 'UTF-8') !!};
         var sweetMessage = '';
@@ -2043,22 +1645,30 @@ document.getElementById('my_camera').innerHTML =
         else{
             sweetMessage = errorMessage[0][0];
         }
-        }
-                  if(sweetMessage){
-                        Swal.fire({
-                            imageUrl: '../front/icons/alert-icon.png',
-                            imageWidth: 80,
-                            imageHeight: 80,
-                            imageAlt: 'Mbaye Logo',
-                            title: "<span id='error'>Registration Failed!</span>",
-                            html: sweetMessage,
-                            width: '30%',
-                            padding: '1rem',
-                            background: 'rgba(8, 64, 147, 0.62)'
-                                  });
-                                }
     }
-    );
+    if(sweetMessage){
+        Swal.fire({
+            imageUrl: '../front/icons/alert-icon.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Mbaye Logo',
+            title: "<span id='error'>Failed!</span>",
+            html: sweetMessage,
+            width: '30%',
+            padding: '1rem',
+            background: 'rgba(8, 64, 147, 0.62)'
+          });
+        }
+    });
+
+    $("#term").click(function(){
+        $("#myModal").modal('toggle');
+    });
+
+    // var occlistdb = $('').val();
+    $occ_details = explode(',', $occ_results['occlistdb']);
+    $occ_details[0] = "<b>{$occ_details[0]}</b>";
+    $occ_details = implode('\n', $occ_details);
 
 </script>
 @endsection

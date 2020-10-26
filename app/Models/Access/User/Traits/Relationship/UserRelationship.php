@@ -11,6 +11,7 @@ use App\Models\Company\CompanyProfile;
 use App\Models\Access\User\SocialLogin;
 use App\Models\Access\User\FeaturedUser;
 use App\Models\JobSeekerProfile\JobSeekerProfile;
+use App\Models\Messages\GroupMessage;
 
 
 /**
@@ -94,7 +95,12 @@ trait UserRelationship
 
     public function messages()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Message::class,'sender_id');
+    }
+
+    public function groupmessages()
+    {
+        return $this->hasMany(GroupMessage::class);
     }
 
     // override the toArray function (called by toJson)

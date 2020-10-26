@@ -15,7 +15,7 @@ class CreateBlogSharesTable extends Migration
     {
         Schema::create('blog_shares', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('blog_id')->unsigned()->index();
+            $table->integer('blog_id');
             // $table->foreign('blog_id')->references('id')->on('blogs')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->text('caption');
             $table->integer('created_by')->unsigned();

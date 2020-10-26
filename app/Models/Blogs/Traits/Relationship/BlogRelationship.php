@@ -99,6 +99,8 @@ trait BlogRelationship
         if($this->tags) {
             $data['all_tags'] = implode(', ', $this->tags->pluck('name')->toArray());
             $data['tags'] = $this->tags;
+            $data['firstTwoTags'] = $this->getFirstTwoTags();
+            $data['remainingTagCount'] = $this->remainingTagCount();
         }
 
         $data['owner'] = $this->owner;

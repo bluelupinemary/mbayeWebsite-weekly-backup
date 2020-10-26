@@ -80,7 +80,7 @@ class BlogsRepository extends BaseRepository
         DB::beginTransaction();
         $input['content'] = $this->replaceContentFileLocation($input['content']);
         $input['slug'] = Str::slug($input['name']);
-        $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
+        $input['publish_datetime'] = Carbon::now();
         $input['created_by'] = $input['user_id'];
         if(isset($input['privacy'])){
             $input['shareable'] = 0;
@@ -143,7 +143,7 @@ class BlogsRepository extends BaseRepository
         $input['slug'] = Str::slug($input['name']);
 
         if($input['status'] != 'Unpublished') {
-            $input['publish_datetime'] = ($input['status'] == 'Published' ? Carbon::now() : null);
+            $input['publish_datetime'] = Carbon::now();
         }
         
         $input['updated_by'] = access()->user()->id;

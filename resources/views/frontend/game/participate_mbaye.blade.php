@@ -1,8 +1,8 @@
 @extends('frontend.layouts.game_layout')
 @section('before-styles')
-<link href="{{asset('front')}}/CSS/game/GeneralSceneStyle.css" rel="stylesheet"/>
-  <style>
-  </style>
+    <link href="{{asset('front')}}/CSS/game/GeneralSceneStyle.css" rel="stylesheet"/>
+    <link rel="preload" as="font" href="{{asset('fonts/Courgette-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="{{asset('fonts/NasalizationRg-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
 @endsection
 
 @section('content')
@@ -10,7 +10,9 @@
     <div>
         <canvas id="canvas"></canvas>
     </div>
+    
     <div id="loadingScreenDiv" style="">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
 
     <div id="wikipediaDiv">
@@ -50,18 +52,10 @@
 @endsection
 
 @section('after-scripts')
-
-    
-
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
-    <script src="{{asset('front')}}/babylonjs/scenes/participate/participateMaps.js"></script>
-    <script src="{{asset('front')}}/babylonjs/scenes/participate/astronautScene.js"></script>
-    <script src="{{asset('front')}}/babylonjs/scenes/participate/participateCommonJS.js"></script>
-    <script src="{{asset('front')}}/babylonjs/scenes/participate/participateScene.js"></script>
-    
-    
-    
-    {{-- <script src="MbayeJS/030620/AstronautSceneJS.js"></script> 
-        <script src="MbayeJS/030620/MainSceneJS.js"></script>  --}}
-
+    <script src="{{asset('front/babylonjs/scenes/commonScenes.js')}}"></script>
+    <script src="{{asset('front/babylonjs/scenes/participate/participateMaps.js')}}"></script>
+    <script src="{{asset('front/babylonjs/scenes/participate/astronautScene.js')}}"></script>
+    <script src="{{asset('front/babylonjs/scenes/participate/participateCommonJS.js')}}"></script>
+    <script src="{{asset('front/babylonjs/scenes/participate/participateScene.js')}}"></script>
 @endsection

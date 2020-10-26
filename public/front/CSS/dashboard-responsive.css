@@ -16,7 +16,7 @@ and (max-width: 1920px) {
 }
 
 /* Ipad Pro */
-@media (max-width: 1366px) 
+@media (max-width: 1367px) 
 and (min-width: 1024px)
 {
     .astronaut-img-div {
@@ -25,6 +25,24 @@ and (min-width: 1024px)
 
     #edit-photo {
         /* transform: translate(-71%, -284%) rotate(-28deg); */
+    }
+
+    @keyframes rollOutSaturn {
+        from {
+            top: 9%;
+            left: 48%;
+            width: 10.2vw;
+        }
+    
+        to {
+            top: 50%;
+            left: 50%;
+            width: 62vw;
+        }
+    }
+
+    .zoom-in-planet.img_saturn {
+        width: 62vw;
     }
 
     /* .navigator-div.zoomin {

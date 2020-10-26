@@ -197,56 +197,63 @@ video {
 }
 /* Style for constellation*/
       /*     Constellation     */
+      /* Style for constellation*/
+      /*     Constellation     */
       .aquarius{
         position: absolute;
-        top: 2%;
-        left: 1%;
-        width: 15vw ;
-
+        top: 9%;
+        left: 2%;
+        width: 15%;
+      
       }
       .aries{
         position: absolute;
-        bottom: 1%;
-        left: 16%;
-        width: 15vw;
+        top: 1%;
+        left: 24%;
+        width: 16%;
       }
-
+     /* .cancer{
+        position: absolute;
+        left: 81%;
+        top: 78%;
+        width: 17%;
+      }*/
       .cancer {
         position: absolute;
-        right: 2%;
-        bottom: 19%;
-        width: 15vw;
+        left: 81%;
+        top: 40%;
+        width: 14%;
     }
       .cancer_profile_p{
         position: absolute;
-        top: 67%;
+        top: 77%;
         left: 94%;
         height: 112px;
         width: 17%;
-
+      
       }
       .capricorn{
         position: absolute;
-        top: 44%;
-        width: 15vw;
-        left: 0%;
-
+        top: 0%;
+        width: 17%;
+        left: 46%;
+      
       }
 
       .libra{
         position: absolute;
-        left: 0%;
-        top: 64%;
-        width: 15vw;
-
-
+        left: 1%;
+        top: 48%;
+        width: 15%;
+        height: 23%;
+      
       }
 
       .gemini{
         position: absolute;
-        bottom:2%;
-        width: 15vw;
-        right:6%;
+        top: 70%;
+        width: 19%;
+        left: 80%;
       }
       .gemini_p{
         position: absolute;
@@ -254,29 +261,29 @@ video {
         left: 65%;
         height: 117px;
         width: 20%;
-
+      
       }
       .leo{
-            position: absolute;
-            top: 22%;
-            width: 15vw;
-            left: 83%;
-
+        position: absolute;
+        top: 0%;
+        width: 17%;
+        left: 74%;
+      
       }
       .pisces{
         position: absolute;
         left: 0%;
-        top: 20%;
-        width: 15vw;
-
-
+        top: 26%;
+        width: 14%;
+        height: 15%;
+      
       }
       .sagittarius{
         position: absolute;
-        left: 80%;
-        top: 0%;
-        width: 15vw;
-
+        left: 82%;
+        top: 16%;
+        width: 14%;
+      
       }
       .sagittarius_p{
         position: absolute;
@@ -284,27 +291,28 @@ video {
         left: 90%;
         height: 20%;
         width: 19%;
-
+      
       }
       .scorpio{
         position: absolute;
-        left: 59%;
-        width: 18vw;
-        top: 80%;
+        left: 60%;
+        width: 20%;
+        top: 76%;
       }
-      .scorpio_p{
+      .scorpio_p
+      {
         position: absolute;
-    top: 84%;
-    left: 34%;
-    height: 24%;
-    width: 23%;
-
+        top: 84%;
+        left: 34%;
+        height: 24%;
+        width: 23%;
+      
       }
       .taurus{
         position: absolute;
-        width: 18vw;
-        right: 0%;
-        top: 40%;
+        width: 19%;
+        left: 40%;
+        top: 78%;
       }
       .taurus_p{
         position: absolute;
@@ -315,10 +323,10 @@ video {
       }
       .virgo{
         position: absolute;
-        top: 83%;
+        top: 78%;
         left: 0%;
-        width: 17vw;
-
+        width: 19%;
+        height: 20%;
       }
 #overlay {
   position: fixed;
@@ -491,13 +499,14 @@ border:0px ;
         width: 100% ;
         height: 100% ;
     }
+    
     /* Constellation animation */
     /*Capricorn*/
     .text_Capricorn {
         display: none;
         position: absolute;
-        top: 50%;
-        left: -3%;
+        top: 10%;
+        left: 44%;
         height: 2%;
         width: 21%;
         color: rgb(255, 255, 255);
@@ -509,7 +518,7 @@ border:0px ;
     .ani-rollouttext_Capricorn {
         position: absolute;
         animation-name: rollouttext_Capricorn;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Capricorn {
         from {
@@ -523,8 +532,8 @@ border:0px ;
         }
         to {
             position: absolute;
-            top: 50%;
-            left: 0%;
+            top: 10%;
+            left:44%;
             height: 2%;
             width: 21%;
             font-size: 24px;
@@ -548,7 +557,7 @@ border:0px ;
     .ani-rollouttext_Aquaris {
         position: absolute;
         animation-name: rollouttext_Aquaris;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Aquaris {
         from {
@@ -587,7 +596,7 @@ border:0px ;
     .ani-rollouttext_Pisces {
         position: absolute;
         animation-name: rollouttext_Pisces;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Pisces {
         from {
@@ -613,8 +622,8 @@ border:0px ;
     .text_Aries {
         display: none;
         position: absolute;
-        top: 88%;
-        left: 5%;
+        top: 8%;
+        left: 15%;
         height: 2%;
         width: 34%;
         color: rgb(255, 255, 255);
@@ -626,12 +635,12 @@ border:0px ;
     .ani-rollouttext_Aries {
         position: absolute;
         animation-name: rollouttext_Aries;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Aries {
         from {
             position: absolute;
-            top: 88%;
+            top: 0%;
             left: 0%;
             height: 0%;
             width: 0%;
@@ -640,8 +649,8 @@ border:0px ;
         }
         to {
             position: absolute;
-            top: 88%;
-            left: 5%;
+            top: 5%;
+            left: 15%;
             height: 2%;
             width: 34%;
             font-size: 24px;
@@ -652,8 +661,8 @@ border:0px ;
     .text_Taurus {
         display: none;
         position: absolute;
-        top: 50%;
-        left: 74%;
+        top: 92%;
+        left: 33%;
         height: 2%;
         width: 34%;
         color: rgb(255, 255, 255);
@@ -665,12 +674,12 @@ border:0px ;
     .ani-rollouttext_Taurus {
         position: absolute;
         animation-name: rollouttext_Taurus;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Taurus {
         from {
             position: absolute;
-            top: 0%;
+            top: 90%;
             left: 88%;
             height: 0%;
             width: 0%;
@@ -679,8 +688,8 @@ border:0px ;
         }
         to {
             position: absolute;
-            top: 50%;
-            left: 72%;
+            top: 92%;
+            left: 33%;
             height: 2%;
             width: 34%;
             font-size: 24px;
@@ -692,8 +701,8 @@ border:0px ;
     .text_Gemini {
         display: none;
         position: absolute;
-        top: 88%;
-        left: 77%;
+        top: 80%;
+        left: 82%;
         height: 2%;
         width: 21%;
         color: rgb(255, 255, 255);
@@ -705,7 +714,7 @@ border:0px ;
     .ani-rollouttext_Gemini {
         position: absolute;
         animation-name: rollouttext_Gemini;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Gemini {
         from {
@@ -719,8 +728,8 @@ border:0px ;
         }
         to {
             position: absolute;
-            top: 86%;
-            left: 75%;
+            top: 82%;
+            left: 80%;
              height: 10%;
             width: 21%;
             font-size: 24px;
@@ -733,7 +742,7 @@ border:0px ;
     .text_Cancer {
         display: none;
         position: absolute;
-        top: 69%;
+        top: 43%;
         left: 80%;
         height: 7%;
         width: 21%;
@@ -747,13 +756,13 @@ border:0px ;
     .ani-rollouttext_Cancer {
         position: absolute;
         animation-name: rollouttext_Cancer;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Cancer {
         from {
             position: absolute;
             top: 0%;
-            left: 88%;
+            left: 80%;
             height: 0%;
             width: 0%;
             font-size: 12px;
@@ -761,8 +770,8 @@ border:0px ;
         }
         to {
             position: absolute;
-            top: 70%;
-            left: 88%;
+            top: 43%;
+            left: 82%;
             height: 2%;
             width: 11%;
             font-size: 24px;
@@ -772,8 +781,8 @@ border:0px ;
     .text_Leo {
         display: none;
         position: absolute;
-        top: 27%;
-        left: 80%;
+        top: 5%;
+        left: 70%;
         height: 2%;
         width: 21%;
         color: rgb(255, 255, 255);
@@ -785,13 +794,13 @@ border:0px ;
     .ani-rollouttext_Leo {
         position: absolute;
         animation-name: rollouttext_Leo;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Leo {
         from {
             position: absolute;
             top: 0%;
-            left: 85%;
+            left: 100%;
             height: 0%;
             width: 0%;
             font-size: 12px;
@@ -799,8 +808,8 @@ border:0px ;
         }
         to {
             position: absolute;
-            top: 27%;
-            left: 80%;
+            top: 5%;
+            left: 70%;
             height: 2%;
             width: 21%;
             font-size: 24px;
@@ -824,7 +833,7 @@ border:0px ;
     .ani-rollouttext_Virgo {
         position: absolute;
         animation-name: rollouttext_Virgo;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Virgo {
         from {
@@ -838,8 +847,8 @@ border:0px ;
         }
         to {
             position: absolute;
-            top: 94%;
-            left: -6%;
+            top: 82%;
+            left: -12%;
             height: 2%;
             width: 34%;
             font-size: 24px;
@@ -864,7 +873,7 @@ border:0px ;
     .ani-rollouttext_Libra {
         position: absolute;
         animation-name: rollouttext_Libra;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Libra {
         from {
@@ -905,7 +914,7 @@ border:0px ;
     .ani-rollouttext_Scorpio {
         position: absolute;
         animation-name: rollouttext_Scorpio;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Scorpio {
         from {
@@ -931,7 +940,7 @@ border:0px ;
     .text_Sagittarius {
         display: none;
         position: absolute;
-        top: 5% ;
+        top: 23% ;
         left: 80%;
         height: 2%;
         width: 21%;
@@ -944,13 +953,13 @@ border:0px ;
     .ani-rollouttext_Sagittarius {
         position: absolute;
         animation-name: rollouttext_Sagittarius;
-        animation-duration: 1s;
+        animation-duration: 3s;
     }
     @keyframes rollouttext_Sagittarius {
         from {
             position: absolute;
-            top: 5% ;
-            left: 79%;
+            top: 0% ;
+            left: 80%;
             height: 0%;
             width: 0%;
             font-size: 12px;
@@ -958,7 +967,7 @@ border:0px ;
         }
         to {
             position: absolute;
-            top: 8% ;
+            top: 23% ;
             left: 79%;
             height: 2%;
             width: 21%;
@@ -1422,6 +1431,27 @@ border:0px ;
         border: 1px solid #b82c2c !important;
         box-shadow: 1px 1px 10px 3px #b81c1c;
     }
+    .success-alter
+    {
+        border: 1px solid #0cd30a!important;
+        box-shadow: 1px 1px 10px 3px #0cd30a;    
+    }
+    .alreadyHave
+    {
+        text-align: left;
+        position: absolute;
+        bottom: 2%;
+        left: 2%;
+    }
+    .alreadyHave small
+    {
+        color: #ffffff;
+    }
+    .alreadyHave a    
+    {
+        color: #138496;
+    }
+    
     .tooltip > .tooltip-inner 
     {
         font-size: 10px;
@@ -1453,9 +1483,7 @@ border:0px ;
     .overlap-image
     {
         margin-top: -13%;
-        left: 15%;
-
-        
+        left: 15%;        
     }
 
     @keyframes cross_img_appear {
@@ -1998,4 +2026,10 @@ border:0px ;
             margin-top: -14%;
             left: 10%;
         }
+        .alreadyHave
+        {
+            font-size: 60%;
+        }
     }
+
+    

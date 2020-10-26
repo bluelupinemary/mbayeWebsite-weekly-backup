@@ -719,6 +719,24 @@ body::after {
     width: 100%;
     align-self: center;
 }
+.navigator-div {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    bottom: 0;
+    -webkit-transform: translate(37%, -50%) scale(0.2);
+    -moz-transform: translate(37%, -50%) scale(0.2);
+    -ms-transform: translate(37%, -50%) scale(0.2);
+    transform: translate(37%, -50%) scale(0.2);
+    width: 60vw;
+    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;
+    z-index: 10;
+    display: none;
+    pointer-events: none;
+}
 
 .navigator-div-zoomed-in .astronaut-body {
     align-self: flex-end;
@@ -1244,7 +1262,7 @@ span.cool-tooltip {
     z-index: 999;
 }
 
-.reaction-popup div {
+.reaction-popup .reaction-button-div {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1265,6 +1283,10 @@ span.cool-tooltip {
     flex-direction: column;
 }
 
+.reaction-count {
+    min-height: 3vw;
+}
+
 .reaction-popup button {
     border: 0;
     background: #fff0;
@@ -1272,17 +1294,17 @@ span.cool-tooltip {
 }
 
 .reaction-popup img {
-    width: 70%;
+    width: 100%;
     /* display: none; */
 }
 
-.reaction-popup img.coolIcon {
-    width: 100%;
+.reaction-popup img.naffIcon {
+    width: 70%;
 }
 
-.reaction-popup img.hotIcon {
+/* .reaction-popup img.hotIcon {
     width: 100%;
-}
+} */
 
 .astronaut-butt {
     position: absolute;
@@ -1341,23 +1363,7 @@ p.comment-date {
     cursor: pointer;
 }
 
-.navigator-div {
-    position: fixed;
-    right: 0;
-    top: 50%;
-    bottom: 0;
-    -webkit-transform: translate(37%, -50%) scale(0.2);
-    -moz-transform: translate(37%, -50%) scale(0.2);
-    -ms-transform: translate(37%, -50%) scale(0.2);
-    transform: translate(37%, -50%) scale(0.2);
-    width: 60vw;
-    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-    display: -ms-flexbox;  /* TWEENER - IE 10 */
-    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
-    display: flex;
-    display: none;
-    pointer-events: none;
-}
+
 
 .navigator-div img {
     cursor: pointer;

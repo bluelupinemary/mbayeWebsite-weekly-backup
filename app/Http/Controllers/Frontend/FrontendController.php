@@ -471,58 +471,64 @@ public function blog_general_friend_post(Request $request){
             return view('frontend.blog.blogview.jobseekers.profiles',compact('country'));
         }
     }
-  /* For career blogs my */
-  public function blog_career_my_post(Request $request){
-    $id = $request['id'];
-    $user = Auth::user();
-    if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
-    return view('frontend.auth.login');
-}
-
-public function blog_career_my(Request $request)
-{ 
-    $user = Auth::user();
- 
-    if($user) {
-        $id = $user->id;
-        return  view('frontend.blog.blogview.career.my_career_blogs',compact('id'));
-    } else {
+    /* For career blogs my */
+    public function blog_career_my_post(Request $request){
+        $id = $request['id'];
+        $user = Auth::user();
+        if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
         return view('frontend.auth.login');
     }
-}
-public function blog_career_friend_post(Request $request){
-    $id = $request['id'];
-    $user = Auth::user();
-    if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
-    return view('frontend.auth.login');
-}
 
-public function blog_career_friend(Request $request) {
-    $user = Auth::user();
-    $type = 'friend';
-
-    if($request->has('id')) {
-        $id = $request->id;
-    } else {
-        $id = 0;
+    public function blog_career_my(Request $request)
+    { 
+        $user = Auth::user();
+    
+        if($user) {
+            $id = $user->id;
+            return  view('frontend.blog.blogview.career.my_career_blogs',compact('id'));
+        } else {
+            return view('frontend.auth.login');
+        }
     }
- 
-    if($user) {
-        return  view('frontend.blog.blogview.career.friend_career_blogs',compact('id', 'type'));
-    } else {
+    public function blog_career_friend_post(Request $request){
+        $id = $request['id'];
+        $user = Auth::user();
+        if($user) return array('status' => 'success', 'message' => 'Successful!', 'data' => $id);
         return view('frontend.auth.login');
     }
-}
+
+    public function blog_career_friend(Request $request) {
+        $user = Auth::user();
+        $type = 'friend';
+
+        if($request->has('id')) {
+            $id = $request->id;
+        } else {
+            $id = 0;
+        }
+    
+        if($user) {
+            return  view('frontend.blog.blogview.career.friend_career_blogs',compact('id', 'type'));
+        } else {
+            return view('frontend.auth.login');
+        }
+    }
 
 
-//dummy pages
-public function blogviewMembers(){
-    $gender = 'trevor';
-    return view('frontend.blog.blogview.dummy_blogview',compact('gender'));
-}
+    //dummy pages
+    public function blogviewMembers(){
+        $gender = 'trevor';
+        return view('frontend.blog.blogview.dummy_blogview',compact('gender'));
+    }
 
-public function userConfirmation(){
-    return view('emails.reset-password');
-}
+    public function userConfirmation(){
+        return view('emails.reset-password');
+    }
 
+    public function getTags()
+    {
+        $tags = BlogTag::all();
+        
+        return $tags;
+    }
 }

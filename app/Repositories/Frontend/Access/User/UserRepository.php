@@ -112,6 +112,8 @@ class UserRepository extends BaseRepository
         $user->gender = $data['gender'];
         $user->address = $data['address'];
         $user->country = $data['country'];
+        $user->state = $data['state'];
+        $user->city = $data['city'];
         $user->id_number = $data['id_number'];
         $user->mobile_number = $data['mobile_number'];
         $user->org_type = $data['org_type'];
@@ -269,15 +271,12 @@ class UserRepository extends BaseRepository
      */
     public function updateProfile($id, $input)
     {
-
-        // dd($input);
         $user = $this->find($id);
         $user->first_name = $input['first_name'];
         $user->last_name = $input['last_name'];
         $user->dob = $input['dob'];
-        $user->age = $input['age'];
         $user->sponser_name = $input['sponser_name'];
-        $user->sponser_id = $input['sponser_id'];
+        $user->sponser_email = $input['sponser_email'];
         $user->gender = $input['gender'];
         $user->address = $input['address'];
         $user->country = $input['country'];
@@ -285,15 +284,19 @@ class UserRepository extends BaseRepository
         $user->mobile_number = $input['mobile_number'];
         $user->org_type = $input['org_type'];
         $user->org_name = $input['org_name'];
-        $user->username = $input['username'];
         //$user->password = $input['password'];
         $user->occupation = $input['occupation'];
         $user->updated_by = access()->user()->id;
-
-        if ($input['photo']=='' || $input['photo']==null){
-        return $user->save();}
-
-        else{
+        if($input['old_password']!='' || $input['old_password']!=null)
+        {
+            $this->changePassword($input);
+        }
+        if ($input['photo']=='' || $input['photo']==null)
+        {
+            return $user->save();
+        }
+        else
+        {
           // for uploading and saving captured image
           $base64 = str_replace('data:image/jpeg;base64,', '', $input['photo']);
           $base64 = str_replace(' ', '+', $base64);
@@ -302,7 +305,8 @@ class UserRepository extends BaseRepository
           $filename =  '-snap'.mt_rand().'.jpg';
           Storage::disk('local')->put('public/profilepicture/'.$filename, $image);
           $user->photo =$filename;
-          return $user->save();}
+          return $user->save();
+        }
         //   dd($user->photo);
 
         // if ($user->canChangeEmail()) {
@@ -342,11 +346,12 @@ class UserRepository extends BaseRepository
     {
         $user = $this->find(access()->id());
 
-        if (Hash::check($input['old_password'], $user->password)) {
-            $user->password = Hash::make($input['password']);
+        if (Hash::check($input['old_password'], $user->password)) 
+        {
+            $user->password = Hash::make($input['new_password']);
 
             if ($user->save()) {
-                $user->notify(new UserChangedPassword($input['password']));
+                $user->notify(new UserChangedPassword($input['new_password']));
 
                 return true;
             }
@@ -364,7 +369,7 @@ class UserRepository extends BaseRepository
     {
         $token = hash_hmac('sha256', Str::random(40), 'hashKey');
 
-        \DB::table('password_resets')->insert([
+        DB::table('password_resets')->insert([
             'email' => request('email'),
             'token' => $token,
         ]);

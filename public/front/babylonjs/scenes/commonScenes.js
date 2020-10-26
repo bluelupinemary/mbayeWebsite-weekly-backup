@@ -23,7 +23,7 @@ $('#fullscreenIcon').on('click',function(){
 function testFullscreen(){
     if((window.innerHeight !== window.screen.height) || (window.innerWidth !== window.screen.width)){
         $('#fullscreenIcon').show();
-    }   
+    }
 }
 
 

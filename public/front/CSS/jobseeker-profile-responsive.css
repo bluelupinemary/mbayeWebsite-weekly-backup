@@ -73,13 +73,14 @@ and (orientation : landscape){
         position: fixed;
         z-index: 100;
         top: 18%;
+        overflow-y: scroll;
         left: 0;
         background-color: #111;
-        overflow: hidden !important;
+        overflow-x: hidden !important;
         transition: 0.5s;
     }
     
-    .sidenav .closebtn {
+    /* .sidenav .closebtn {
         position: absolute;
         top: 52%;
         left: 32%;
@@ -87,10 +88,10 @@ and (orientation : landscape){
         font-size: 17px;
         color: gold;
         font-family: Nasalization;
-    }
+    } */
     
     .sidenav a {
-        padding: 26px 8px 23px 16px;
+        /* padding: 26px 8px 23px 16px; */
         text-decoration: none;
         font-size: 0.8rem;
         color: white;
@@ -98,7 +99,7 @@ and (orientation : landscape){
         transition: 0.3s;
         font-family: Nasalization;
     }
-    .slider {
+    /* .slider {
         height: 43vw;
         width: 2%;
         display: flex;
@@ -107,7 +108,7 @@ and (orientation : landscape){
         top: 47%;
         transform: translate(-2503%,-50%);
         background: black;
-    }
+    } */
     .arrows {
         /* font-size: 17px;
         font-family: Nasalization;
@@ -196,7 +197,7 @@ and (orientation : landscape){
         font-size: 1.3rem !important;
     } */
 }
-@media only screen  and (max-width:1024px){
+@media only screen  and (max-width:1023px){
     .modal .modal-content {
         border: 0;
         background-color: transparent;
@@ -229,7 +230,7 @@ and (orientation : landscape){
         transition: 0.5s;
     }
     
-    .sidenav .closebtn {
+    /* .sidenav .closebtn {
         position: absolute;
         top: 55%;
         left: 12%;
@@ -237,10 +238,10 @@ and (orientation : landscape){
         font-size: 17px;
         color: gold;
         font-family: Nasalization;
-    }
+    } */
     
     .sidenav a {
-        padding: 30px 8px 2px 16px;
+        /* padding: 30px 8px 2px 16px; */
         text-decoration: none;
         font-size: 0.8rem;
         color: white;
@@ -248,7 +249,7 @@ and (orientation : landscape){
         transition: 0.3s;
         font-family: Nasalization;
     }
-    .slider {
+    /* .slider {
         height: 43vw;
         width: 2%;
         display: flex;
@@ -257,7 +258,7 @@ and (orientation : landscape){
         top: 47%;
         transform: translate(-2503%,-50%);
         background: black;
-    }
+    } */
     .arrows {
         /* font-size: 17px;
         font-family: Nasalization;
@@ -341,13 +342,16 @@ and (orientation : landscape){
         font-size: 0.875rem !important;
     }
     .slider {
-        height: 30vw;
-        width: 2%;
+        height: 20vw;
+        width: 3vw;
         display: flex;
+        /* border: 1px solid white; */
         position: absolute;
+        height: 65vh;
+        /* top: 18%;
         left: 50%;
-        top: 48%;
-        transform: translate(-2503%,-50%);
+        top: 50%;
+        transform: translate(-2503%,-50%); */
         background: black;
     }
     .heading_setup {
@@ -366,12 +370,13 @@ and (orientation : landscape){
         top: 18%;
         left: 0;
         height: 75vh;
+        overflow-y: scroll;
         background-color: #111;
-        overflow: hidden !important;
+        overflow-x: hidden !important;
         transition: 0.5s;
     }
     .sidenav a {
-        padding: 9px 8px 2px 8px;
+        padding: 5% 8px 2px 8px;
         text-decoration: none;
         font-size: 10px;
         color: white;
@@ -379,7 +384,7 @@ and (orientation : landscape){
         transition: 0.3s;
         font-family: Nasalization;
     }
-    .sidenav .closebtn {
+    /* .sidenav .closebtn {
         position: absolute;
         top: 57%;
         left: 6%;
@@ -387,7 +392,7 @@ and (orientation : landscape){
         font-size: 17px;
         color: gold;
         font-family: Nasalization;
-    }
+    } */
     #main {
         transition: margin-left .5s;
         border: 0px solid white;
@@ -591,7 +596,7 @@ and (orientation : landscape){
         line-height: 0.5rem !important;
        
     }
-    .slider {
+    /* .slider {
         height: 32vw;
         width: 2%;
         display: flex;
@@ -600,8 +605,8 @@ and (orientation : landscape){
         top: 47%;
         transform: translate(-2503%,-50%);
         background: black;
-    }
-    .sidenav .closebtn {
+    } */
+    /* .sidenav .closebtn {
         position: absolute;
         top: 54%;
         left: 10%;
@@ -609,7 +614,7 @@ and (orientation : landscape){
         font-size: 17px;
         color: gold;
         font-family: Nasalization;
-    }
+    } */
     .heading_setup {
         color: gold;
         /* background-color: white; */
@@ -630,7 +635,7 @@ and (orientation : landscape){
 }
 
 
-@media only screen and (max-height:320px){
+@media only screen and (max-width:480px){
     .sidenav a {
         padding: 3px 8px 2px 6px;
         text-decoration: none;
@@ -641,7 +646,7 @@ and (orientation : landscape){
         font-family: Nasalization;
         height: 33vh;
     }
-    .slider {
+    /* .slider {
         height: 34vw;
         width: 2%;
         display: flex;
@@ -650,7 +655,7 @@ and (orientation : landscape){
         top: 52%;
         transform: translate(-2503%,-50%);
         background: black;
-    }
+    } */
     .sidenav {
         display: flex;
         flex-direction: column;
@@ -664,7 +669,7 @@ and (orientation : landscape){
         overflow: hidden !important;
         transition: 0.5s;
     }
-    .sidenav .closebtn {
+    /* .sidenav .closebtn {
         position: absolute;
         top: 82%;
         left: -16%;
@@ -672,7 +677,7 @@ and (orientation : landscape){
         font-size: 17px;
         color: gold;
         font-family: Nasalization;
-    }
+    } */
     .modal .modal-content {
         border: 0;
         background-color: transparent;

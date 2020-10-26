@@ -532,8 +532,8 @@ padding: 0;
     border-radius: 0;
 }
 
-.status-div, .sort-div {
-    flex: 25%;
+.status-div, .sort-div, .tag-div {
+    flex: 50%;
 }
 
 .blog-search .status-div {
@@ -580,13 +580,13 @@ padding: 0;
 
 .swal2-title {
     font-family: 'Nasalization';
-    font-size: 1.3em !important;
+    /* font-size: 1.3em !important; */
     color: #df1613 !important;
 }
 
 .swal2-content {
     color: #17a2b8 !important;
-    font-size: 1em !important;
+    /* font-size: 1em !important; */
     font-family: 'Nasalization';
 }
 

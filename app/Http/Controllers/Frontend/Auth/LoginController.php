@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Frontend\Auth;
 
+use App\Events\NewLogin;
 use App\Helpers\Auth\Auth;
+use App\Events\LogoutEvent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Access\User\User;
+use Illuminate\Support\Facades\Log;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Lang;
 use App\Http\Utilities\NotificationIos;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\Frontend\Auth\Socialite;
 use App\Http\Utilities\PushNotification;
 use App\Events\Frontend\Auth\UserLoggedIn;
 use App\Events\Frontend\Auth\UserLoggedOut;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 // use Illuminate\Support\Facades\Auth;
 
 /**
@@ -220,6 +222,8 @@ class LoginController extends Controller
            
         }
         else{
+            // $users = User::all();
+            broadcast(new NewLogin($user))->toOthers();
             // return redirect()->intended($this->redirectPath());
             event(new UserLoggedIn($user));
             return response()->json([
@@ -296,8 +300,9 @@ class LoginController extends Controller
         /*
          * Fire event, Log out user, Redirect
          */
+        
+        broadcast(new LogoutEvent(access()->user()))->toOthers();
         event(new UserLoggedOut($this->guard()->user()));
-
         /*
          * Laravel specific logic
          */

@@ -155,7 +155,11 @@ function load_3D_mesh(){
                       m.hasVertexAlpha = false;
                     }
                     
+                    //fixes for the parts of the head with wrong filename
                     if(m.name === 'no name') m.name = "82Gladiolus";
+                    if(m.name === '23westernColumbine') m.name = "23WesternColumbine (5)";
+
+
                     m.isPickable = true;
                     if(m.name === "Head" || m.name === "FP1" || m.name === "FP2" || m.name === "FP3" || m.name === "FP4" || m.name === "FP5" || m.name === "FP6"
                     || m.name === "FP7" || m.name === "FP8" || m.name === "FP9" || m.name === "FP10" || m.name === "FP11" || m.name === "FP12" || m.name === "FP13" 
@@ -183,6 +187,8 @@ function load_3D_mesh(){
                         m.visibility = 0;
                         m.material = mtl;
                         panelFlowersMap.set(m.name,m);
+
+
                     }
                 });//end of foreach
 
@@ -237,6 +243,9 @@ function enable_gizmo(themesh){
 let isPlane2Selected = false;
 let isLaunchEnabled = false;
 let currFlower;
+let cameraInitPos = {a:null, b:null};
+let tempFlower;
+let isPointerDown = false;
 function add_mouse_listener(){
   var onPointerDownVisit = function (evt) {
       if(scene) var pickinfo = scene.pick(scene.pointerX, scene.pointerY);
@@ -244,43 +253,40 @@ function add_mouse_listener(){
       if(pickinfo.hit){
           let theMesh = pickinfo.pickedMesh;
           let mesh_arr = [];
-         
-
-          // console.log("parent of mesh: ", theMesh.parent);
-          if(headFlowersMap.has(theMesh.name)){
-            // console.log("flower ", theMesh.name," is clicked.");
-            get_head_mesh(theMesh.name);
-           
-
-                  let music = flowersMbayeMap.get(theMesh.name);
-                  let videoId = music[3].id;                            //4th value is the video id
-                  let startTime = music[3].start;
-                  
-                
-                  if(theMesh.name!=currFlower){
-                    load_flower_music(videoId, startTime);          //load the music video
-                    currFlower = theMesh.name;
-                  }else if(theMesh.name==currFlower) document.getElementById("musicVideoDiv").style.visibility = "visible";
+          // console.log("flower ", theMesh.name, theMesh.position);
         
-              
-              
-          }
-         
-         
-         
+          if(headFlowersMap.has(theMesh.name)){
+           
+            get_head_mesh(theMesh.name);
 
-         
-
-    }//eof if
+            let music = flowersMbayeMap.get(theMesh.name);
+            let videoId = music[3].id;                            //4th value is the video id
+            let startTime = music[3].start;
+            
+          
+            if(theMesh.name!=currFlower){
+                load_flower_music(videoId, startTime);          //load the music video
+                currFlower = theMesh.name;
+            }else if(theMesh.name==currFlower) document.getElementById("musicVideoDiv").style.visibility = "visible";
+          }//end of if
+    }else{
+        if(!isPointerDown){
+           isPointerDown = true;
+        }
+    }//end of else
     
   }//end of on pointer down function
 
   var onPointerUpVisit = function () {
-     
+     isPointerDown = false;
+    //  isFlowerRotated = false;
   }//end of on pointer up function
 
+  let isFlowerRotated = false;
   var onPointerMoveVisit = function (evt) {
-   
+      if(isPointerDown){
+        set_flower_angle();
+      }
   }//end of on pointer move function
 
   canvas.addEventListener("pointerdown", onPointerDownVisit, false);
@@ -299,9 +305,16 @@ function add_mouse_listener(){
 
 }//end of listen to mouse function
 
+//function to rotate the flower as the camera angle is moved to the left or right
+function set_flower_angle(){
+    for(const [key,val] of origFlowersMap.entries()){
+        val.rotation.y += 0.015;
+    }
+}
+
 let litFlowersMap = new Map();
 function get_head_mesh(theMesh){
-  console.log(panelFlowersMap);
+  // console.log(panelFlowersMap);
   // console.log("camAngle", camAngle);
 
   //set to original color
@@ -318,8 +331,8 @@ function get_head_mesh(theMesh){
     //for each flower identified from the loaded head of mbaye, check for the flower mapping of the currently selected flower
     panelFlowersMap.forEach(function(m) {
      
-      if (m.name === theMesh || m.name.indexOf(theMesh) >= 0) {
-        console.log("here: ", m.name);
+      if (m.name == theMesh || m.name.indexOf(theMesh) >= 0) {
+        // console.log("here: ", m.name);
           litFlowersMap.set(m,m.material);
           m.material.emissiveColor = new BABYLON.Color3(0,1,0);
           // m.material.emissiveColor = new BABYLON. Color4(0.7,0.5,0,0.2);
@@ -416,6 +429,7 @@ function getRandomInt(min, max) {
 let nb = 100;
 var TWO_PI = Math.PI * 2;
 var angle =  TWO_PI/ nb;
+let origFlowersMap = new Map();
 function load_orig_flowers(){
   for (const [flowerName,val] of headFlowersMap.entries()) {
       // let thePos = set_position();
@@ -423,6 +437,7 @@ function load_orig_flowers(){
       if(val[0]!==null) thePos = val[0];
       let theSize = set_scale();
       let samp = init_flower(flowerName,flowerName+"Matl", "front/images3D/flowers2D/orig/"+flowerName+".png",theSize,thePos.x,thePos.y,thePos.z);
+      origFlowersMap.set(flowerName, samp);
   }
 }
 
@@ -669,7 +684,7 @@ $( document ).ready(function() {
   let isMusicChanged = false;
   let theClick = 0;
   function setup_music_player(){
-      console.log("setup music");
+      // console.log("setup music");
      
       $('.player').empty();
       let initVideo = "";
@@ -714,7 +729,9 @@ $( document ).ready(function() {
   }
 
 
-  /*################################################### END OF SETUP YOUTUBE PLAYER FUNCTION ############################################## */
+/*################################################### END OF SETUP YOUTUBE PLAYER FUNCTION ############################################## */
+
+/*################################################### MUSIC VIDEO SECTIONFUNCTIONS         ############################################## */
 $('#musicVideoDiv #close-btn').on("click", function (e) {
     // $('#flowerModelDiv').hide();
     document.getElementById("musicVideoDiv").style.visibility = "hidden";
@@ -722,11 +739,8 @@ $('#musicVideoDiv #close-btn').on("click", function (e) {
 
 
 let isFlowerFullscreen = false;
-let divSize = {w:null, h:null};
 $('#musicVideoDivHeader #fullscreen-btn, #musicVideoDivHeader #minimize-btn').on("click", function (e) {
    if(!isFlowerFullscreen){
-      divSize.w = $('#musicVideoDiv').width();
-      divSize.h = $('#musicVideoDiv').height();
        $('#musicVideoDiv #player').css({ 
            width :'100vw',
            height: '100vh'
@@ -751,12 +765,6 @@ $('#musicVideoDivHeader #fullscreen-btn, #musicVideoDivHeader #minimize-btn').on
    }
    isFlowerFullscreen = !isFlowerFullscreen;
 });
-
- function showFlowerModelDiv(theFlowerName){
-  document.getElementById("flowerViewer").src = "front/objects/flowersMbayeScene/flowers3D/"+theFlowerName+".glb";
-  document.getElementById("flowerModelDiv").style.visibility = "visible";
-  // $('#flowerModelDiv').show();
-}//end of showCharDescDiv function
 
 
 $('#loadingScreenOverlay').on('click', function(evt){

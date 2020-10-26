@@ -161,13 +161,13 @@ class BlogsController extends Controller
         // dd($request->all());
         $saved_blog = $this->blog->create($request->except('_token'));
 
-        // $user = User::find($request->user_id);
+        $user = User::find($request->user_id);
 
-        // if($user->roles[0]->name == 'User') {
-        //     return array('status' => 'success', 'message' => 'Blog progress saved!', 'data' => $saved_blog);
-        // } else {
-        //     return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
-        // }
+        if($user->roles[0]->name == 'User') {
+            return array('status' => 'success', 'message' => 'Blog progress saved!', 'data' => $saved_blog);
+        } else {
+            return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
+        }
     }
 
     /**
@@ -253,9 +253,11 @@ class BlogsController extends Controller
         if($shared_blog->blog_type == 'App\Models\Blogs\Blog') {
             $tags = $blog->tags;
             $blog->type = 'reguler';
+            $blog->share_route = '/share_blog';
         } else if($shared_blog->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
             $tags = $shared_blog->tags;
             $blog->type = 'general';
+            $blog->share_route = '/share_general_blog';
         }
         // dd(compact('blog', 'shared_blog', 'tags'));
         
@@ -304,6 +306,27 @@ class BlogsController extends Controller
         }
         // dd(compact('saved_blog'));
         broadcast(new NewBlogEvent($saved_blog))->toOthers();
+        
+        $user = User::find($request->user_id);
+
+        if($user->roles[0]->name == 'User') {
+            return array('status' => 'success', 'message' => 'Blog published successfully!', 'data' => $saved_blog);
+            
+        } else {
+            return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
+        }
+    }
+
+    public function republishBlog(UpdateBlogsRequest $request)
+    {
+        // dd($request->all());
+        if($request->blog_id != '') {
+            $blog = Blog::find($request->blog_id);
+            $saved_blog = $this->blog->update($blog, $request->except('_token'));
+        } else {
+            $saved_blog = $this->blog->create($request->except('_token'));
+        }
+        // dd(compact('saved_blog'));
         
         $user = User::find($request->user_id);
 
@@ -595,9 +618,16 @@ class BlogsController extends Controller
 
     public function getblogs(Request $request)
     {
-        $search = $request->search;
-        $sort = $request->sort;
-        $status = $request->status;
+        $limit = 9;
+        $search = ($request->search ? $request->search : '');
+        $sort = ($request->sort ? $request->sort : '');
+        $status = ($request->status ? $request->status : '');
+        $tag = ($request->tag ? $request->tag : '');
+        $page = 1; 
+
+        if($request->has('page') && $request->page >= 1) {
+            $page = $request->page;
+        }
 
         $regular_blogs = Blog::where('created_by', Auth::user()->id)
             ->when($status, function ($query, $status) {
@@ -609,61 +639,106 @@ class BlogsController extends Controller
                     ->orWhere('content', 'like', '%'.$search.'%');
                 });
             })
-            ->when($sort, function ($query, $sort) {
-                if($sort == 'asc_name') {
-                    $query = $query->orderBy('name', 'asc');
-                } else if($sort == 'desc_name') {
-                    $query = $query->orderBy('name', 'desc');
-                }
-                
-                return  $query;
+            ->when($tag, function ($query, $tag) {
+                return $query->whereHas('tags', function($query) use($tag) {
+                    $query->where('tag_id', $tag);
+                });
             })
             ->get();
 
-        if($status == 'Draft' || $status == 'Unpublished') {
-            $shared_blogs = [];
-        } else {
+        $shared_blogs = [];
+        $shared_general_blogs = [];
+        if($status == '' || $status == 'Shared') {
             $shared_blogs = BlogShare::where('created_by', Auth::user()->id)
-            ->whereHas('blog', function($q) use ($search, $sort, $status){
+            ->where('blog_type', 'App\Models\Blogs\Blog')
+            ->whereHas('blog', function($q) use ($search, $tag){
                 $q->when($search, function ($query, $search) {
                     return $query->where(function ($q) use ($search) {
                         $q->where('name', 'like', '%'.$search.'%')
                         ->orWhere('content', 'like', '%'.$search.'%');
                     });
-                });
-             })
-             ->orWhereHas('general_blog', function($q) use ($search, $sort, $status){
-                $q->when($search, function ($query, $search) {
-                    return $query->where(function ($q) use ($search) {
-                        $q->where('name', 'like', '%'.$search.'%')
-                        ->orWhere('content', 'like', '%'.$search.'%');
+                })->when($tag, function ($query, $tag) {
+                    return $query->whereHas('tags', function($query) use($tag) {
+                        $query->where('tag_id', $tag);
                     });
                 });
-             })
-            // ->with('blog')
+            })
             ->get();
+
+            $shared_blogs = $shared_blogs->map(function($d){
+                $d['name'] = $d->blog->name;
+                return $d;
+            });
+
+            $shared_general_blogs = BlogShare::where('created_by', Auth::user()->id)
+            ->where('blog_type', 'App\Models\GeneralBlogs\GeneralBlog')
+            ->whereHas('general_blog', function($q) use ($search, $sort, $status){
+                $q->when($search, function ($query, $search) {
+                    return $query->where(function ($q) use ($search) {
+                        $q->where('name', 'like', '%'.$search.'%')
+                        ->orWhere('content', 'like', '%'.$search.'%');
+                    });
+                });
+            })
+            ->when($tag, function ($query, $tag) {
+                return $query->whereHas('tags', function($query) use($tag) {
+                    $query->where('tag_id', $tag);
+                });
+            })
+            ->get();
+
+            $shared_general_blogs = $shared_general_blogs->map(function($d){
+                $d['name'] = $d->general_blog->name;
+                return $d;
+            });
         }
+
+        // dd($shared_general_blogs);
         
-        $blogs = $regular_blogs->merge($shared_blogs)
-            ->when($sort, function ($query, $sort) {
-                if($sort == 'asc_publisheddate') {
-                    $query = $query->whereNotNull('publish_datetime')
+        $regular_plus_shared = $regular_blogs->toBase()->merge($shared_blogs)->merge($shared_general_blogs);
+        // dd($regular_plus_shared);
+        // $plus_shared_general = $regular_plus_shared->merge($shared_general_blogs);
+        // dd($regular_plus_shared);
+        $blogs = $regular_plus_shared->when($sort, function ($query, $sort) {
+                if($sort == 'asc_name') {
+                    return $query->sortBy('name', SORT_NATURAL|SORT_FLAG_CASE);
+                } else if($sort == 'desc_name') {
+                    return $query->sortByDesc('name', SORT_NATURAL|SORT_FLAG_CASE);
+                } else if($sort == 'asc_publisheddate') {
+                    return $query->whereNotNull('publish_datetime')
                         ->sortBy('publish_datetime');
                 } else if($sort == 'desc_publisheddate') {
-                    $query = $query->whereNotNull('publish_datetime')
+                    return $query->whereNotNull('publish_datetime')
                         ->sortByDesc('publish_datetime');
                 }
-                return  $query;
             })
-            ->when(!$sort, function ($query, $sort) {
+            ->when($sort == '', function ($query, $sort) {
                 return $query->sortByDesc('publish_datetime');
-            })
-            ->paginate(9);
-
-	    // dd($data->first()->getTable());
-        // $blogs = $query;
+            });
+            
         // dd($blogs);
 
-        return $blogs;
+        // $sorted = $blogs->sortBy(function($value, $key){
+        //     if($value->blog_id) {
+        //         if($value->blog_type == 'App\Models\Blogs\Blog') {
+        //             // dd($query->blog->name);
+        //             return (string) $value->blog->name;
+        //         } else if($value->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
+        //             return (string) $value->general_blog->name;
+        //         }
+        //     } else {
+        //         // dd($value->name);
+        //         return (string) $value->name;
+        //     }
+        // }, SORT_NATURAL, false);
+        // dd($sorted);
+
+        $last_page = ceil($blogs->count() / $limit);
+        $total = $blogs->count();
+        $paginated = $blogs->forPage($page, $limit);
+        // dd($paginated);
+        $to = $paginated->count();
+
+        return response()->json(['data' => $paginated->values(), 'current_page' => $page, 'last_page' => $last_page, 'total' => $total, 'to' => $to]);
     }
 }

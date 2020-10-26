@@ -14,7 +14,7 @@ export default {
       },
      methods: {
     countshares() {
-      debugger;
+      // debugger;
       axios.get("/api/countblogshare/"+this.blog_id)
         .then((response) => {
           // alert(response.data);

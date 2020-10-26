@@ -1,3 +1,20 @@
+var nextCarousel = new Carousel({
+    id: '.music-knobs-1 #carousel'
+});
+
+var nextColorCarousel = new Carousel({
+    id: '.next-colors #carousel'
+});
+
+var volumeCarousel = new Carousel({
+    id: '.music-knobs-2 #carousel'
+});
+
+var volumeColorCarousel = new Carousel({
+    id: '.volume-colors #carousel'
+});
+
+
 var videos = [
     {id:"SBH_u-vEK30",start:2},
     {id:"vBdGUBOs_r4",start:3},
@@ -212,107 +229,112 @@ var browser = Object.keys($.browser)[0];
 
 
 // next slider initialization
-var $nextSlider = $('.slick-carousel-1').slick({
-    infinite: true,
-    vertical:true,  
-    // swipe: true,
-    verticalSwiping:true,
-    // swipeToSlide: true,
-    // draggable: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    // variableWidth: true,
-    arrows: false,
-    // adaptiveHeight: true,
-    // centerMode: true
-});
+// var $nextSlider = $('.slick-carousel-1').slick({
+//     infinite: true,
+//     vertical:true,  
+//     // swipe: true,
+//     verticalSwiping:true,
+//     // swipeToSlide: true,
+//     // draggable: true,
+//     slidesToShow: 4,
+//     slidesToScroll: 1,
+//     // variableWidth: true,
+//     arrows: false,
+//     // adaptiveHeight: true,
+//     // centerMode: true
+// });
 
-// volume slider initialization
-var $volumeSlider = $('.slick-carousel-2').slick({
-    infinite: true,
-    vertical:true,  
-    // swipe: true,
-    verticalSwiping:true,
-    // swipeToSlide: true,
-    // draggable: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    // variableWidth: true,
-    arrows: false,
-    // adaptiveHeight: true,
-    // centerMode: true
-});
+// // volume slider initialization
+// var $volumeSlider = $('.slick-carousel-2').slick({
+//     infinite: true,
+//     vertical:true,  
+//     // swipe: true,
+//     verticalSwiping:true,
+//     // swipeToSlide: true,
+//     // draggable: true,
+//     slidesToShow: 4,
+//     slidesToScroll: 1,
+//     // variableWidth: true,
+//     arrows: false,
+//     // adaptiveHeight: true,
+//     // centerMode: true
+// });
 
-// next color initialization
-var $nextColorSlider = $('.next-colors-slider').slick({
-    infinite: true,
-    vertical:true,  
-    // swipe: true,
-    // verticalSwiping:true,
-    // swipeToSlide: true,
-    // draggable: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    // variableWidth: true,
-    arrows: false,
-    // adaptiveHeight: true,
-    // centerMode: true
-});
+// // next color initialization
+// var $nextColorSlider = $('.next-colors-slider').slick({
+//     infinite: true,
+//     vertical:true,  
+//     // swipe: true,
+//     // verticalSwiping:true,
+//     // swipeToSlide: true,
+//     // draggable: true,
+//     slidesToShow: 4,
+//     slidesToScroll: 1,
+//     // variableWidth: true,
+//     arrows: false,
+//     // adaptiveHeight: true,
+//     // centerMode: true
+// });
 
-// volume color initialization
-var $volumeColorSlider = $('.volume-colors-slider').slick({
-    infinite: true,
-    vertical:true,  
-    // swipe: true,
-    // verticalSwiping:true,
-    // swipeToSlide: true,
-    // draggable: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    // variableWidth: true,
-    arrows: false,
-    // adaptiveHeight: true,
-    // centerMode: true
-});
+// // volume color initialization
+// var $volumeColorSlider = $('.volume-colors-slider').slick({
+//     infinite: true,
+//     vertical:true,  
+//     // swipe: true,
+//     // verticalSwiping:true,
+//     // swipeToSlide: true,
+//     // draggable: true,
+//     slidesToShow: 4,
+//     slidesToScroll: 1,
+//     // variableWidth: true,
+//     arrows: false,
+//     // adaptiveHeight: true,
+//     // centerMode: true
+// });
 
 var enable_mousewheel = true;
 
 if(browser == 'webkit') {
     enable_mousewheel = false;
     
-    $nextSlider.slick('slickSetOption', 'verticalSwiping', false);
-    $volumeSlider.slick('slickSetOption', 'verticalSwiping', false);
+    // $nextSlider.slick('slickSetOption', 'verticalSwiping', false);
+    // $volumeSlider.slick('slickSetOption', 'verticalSwiping', false);
 
-    $('.slick-carousel-1').click(function() {
+    $('.music-knobs-1 #carousel').click(function() {
         // playMusic();
         playVideo();
         
         enable_mousewheel = true;
-        $nextSlider.slick('slickSetOption', 'verticalSwiping', true);
-        $volumeSlider.slick('slickSetOption', 'verticalSwiping', true);
+        // $nextSlider.slick('slickSetOption', 'verticalSwiping', true);
+        // $volumeSlider.slick('slickSetOption', 'verticalSwiping', true);
         // $('.slick-carousel-1').slick({
         //     verticalSwiping: true
         // });
     });
 }
 
-$('.slick-carousel-1').click(function() {
+$('.music-knobs-1 #carousel').click(function() {
     showMusicPlayer();
 });
 
 // scroll next slider to go to next and previous songs
-$('.slick-carousel-1').bind('wheel', function(e){
+$('.music-knobs-1 #carousel').bind('wheel', function(e){
     if(enable_mousewheel) {
         if(e.originalEvent.deltaY < 0) {
             //scroll up
-            $nextSlider.slick('slickNext')
-            $nextColorSlider.slick('slickNext')
+            // $nextSlider.slick('slickNext')
+            // $nextColorSlider.slick('slickNext')
+            nextCarousel.nextSlide('.music-knobs-1 #carousel');
+            nextColorCarousel.nextSlide('.next-colors #carousel');
             // $audio_player.play()
             playPrevSong();
         }else {
             //scroll down
-            $nextSlider.slick('slickPrev')
-            $nextColorSlider.slick('slickPrev')
+            // $nextSlider.slick('slickPrev')
+            // $nextColorSlider.slick('slickPrev')
+            
+            nextCarousel.previousSlide('.music-knobs-1 #carousel');
+            nextColorCarousel.previousSlide('.next-colors #carousel');
             playNextSong();
         }
     
@@ -322,19 +344,19 @@ $('.slick-carousel-1').bind('wheel', function(e){
 });
 
 // scroll volume slider to adjust volume
-$('.slick-carousel-2').bind('wheel', function(e){
+$('.music-knobs-2 #carousel').bind('wheel', function(e){
     console.log(e.originalEvent.deltaY);
     if(enable_mousewheel) {
         if(e.originalEvent.deltaY < 0) {
             //scroll up
-            $volumeSlider.slick('slickNext')
-            $volumeColorSlider.slick('slickNext')
+            volumeCarousel.nextSlide('.music-knobs-2 #carousel');
+            volumeColorCarousel.nextSlide('.volume-colors #carousel');
             volumeUp();
             
         }else {
             //scroll down
-            $volumeSlider.slick('slickPrev')
-            $volumeColorSlider.slick('slickPrev')
+            volumeCarousel.previousSlide('.music-knobs-2 #carousel');
+            volumeColorCarousel.previousSlide('.volume-colors #carousel');
             volumeDown();
         }
     
@@ -343,29 +365,119 @@ $('.slick-carousel-2').bind('wheel', function(e){
     }
 });
 
-// swipe next slider to go to next and previous songs
-$('.slick-carousel-1').on('swipe', function(event, slick, direction){
-    if(direction == 'up') {
-        $nextColorSlider.slick('slickPrev');
-        playNextSong();
-        // audio.play();
-    } else if(direction == 'down') {
-        $nextColorSlider.slick('slickNext');
+let touchstartX = 0;
+let touchstartY = 0;
+let touchendX = 0;
+let touchendY = 0;
+
+const next_carousel = document.querySelector('.music-knobs-1 #carousel');
+
+next_carousel.addEventListener('touchstart', function(event) {
+    touchstartX = event.changedTouches[0].screenX;
+    touchstartY = event.changedTouches[0].screenY;
+}, false);
+
+next_carousel.addEventListener('touchend', function(event) {
+    touchendX = event.changedTouches[0].screenX;
+    touchendY = event.changedTouches[0].screenY;
+    nextCarouselhandleGesture();
+}, false); 
+
+function nextCarouselhandleGesture() {
+    // if (touchendX <= touchstartX) {
+    //     console.log('Swiped left');
+    // }
+    
+    // if (touchendX >= touchstartX) {
+    //     console.log('Swiped right');
+    // }
+    
+    if (touchendY <= touchstartY) {
+        // console.log('Swiped up');
+        nextCarousel.nextSlide('.music-knobs-1 #carousel');
+        nextColorCarousel.nextSlide('.next-colors #carousel');
         playPrevSong();
     }
-});
+    
+    if (touchendY >= touchstartY) {
+        // console.log('Swiped down');
+        nextCarousel.previousSlide('.music-knobs-1 #carousel');
+        nextColorCarousel.previousSlide('.next-colors #carousel');
+        playNextSong();
+    }
+    
+    // if (touchendY === touchstartY) {
+    //     console.log('Tap');
+    // }
+}
 
-// swipe volume slider to adjust volume
-$('.slick-carousel-2').on('swipe', function(event, slick, direction){
-    console.log(direction);
-    if(direction == 'up') {
-        $volumeColorSlider.slick('slickPrev');
-        volumeDown();
-    } else if(direction == 'down') {
-        $volumeColorSlider.slick('slickNext')
+const volume_carousel = document.querySelector('.music-knobs-2 #carousel');
+
+volume_carousel.addEventListener('touchstart', function(event) {
+    touchstartX = event.changedTouches[0].screenX;
+    touchstartY = event.changedTouches[0].screenY;
+}, false);
+
+volume_carousel.addEventListener('touchend', function(event) {
+    touchendX = event.changedTouches[0].screenX;
+    touchendY = event.changedTouches[0].screenY;
+    volumeCarouselhandleGesture();
+}, false); 
+
+function volumeCarouselhandleGesture() {
+    // if (touchendX <= touchstartX) {
+    //     console.log('Swiped left');
+    // }
+    
+    // if (touchendX >= touchstartX) {
+    //     console.log('Swiped right');
+    // }
+    
+    if (touchendY <= touchstartY) {
+        // console.log('Swiped up');
+        volumeCarousel.nextSlide('.music-knobs-2 #carousel');
+        volumeColorCarousel.nextSlide('.volume-colors #carousel');
         volumeUp();
     }
-});
+    
+    if (touchendY >= touchstartY) {
+        // console.log('Swiped down');
+        volumeCarousel.previousSlide('.music-knobs-2 #carousel');
+        volumeColorCarousel.previousSlide('.volume-colors #carousel');
+        volumeDown();
+    }
+    
+    // if (touchendY === touchstartY) {
+    //     console.log('Tap');
+    // }
+}
+
+// swipe next slider to go to next and previous songs
+// $('.music-knobs-1 #carousel').on('swipe', function(event){
+//     alert(event);
+    // if(direction == 'up') {
+    //     nextCarousel.previousSlide('.music-knobs-1 #carousel');
+    //     nextColorCarousel.previousSlide('.next-colors #carousel');
+    //     playNextSong();
+    //     // audio.play();
+    // } else if(direction == 'down') {
+    //     nextCarousel.nextSlide('.music-knobs-1 #carousel');
+    //     nextColorCarousel.nextSlide('.next-colors #carousel');
+    //     playPrevSong();
+    // }
+// });
+
+// swipe volume slider to adjust volume
+// $('.slick-carousel-2').on('swipe', function(event, slick, direction){
+//     console.log(direction);
+//     if(direction == 'up') {
+//         $volumeColorSlider.slick('slickPrev');
+//         volumeDown();
+//     } else if(direction == 'down') {
+//         $volumeColorSlider.slick('slickNext')
+//         volumeUp();
+//     }
+// });
 
 // Start setup music player
 // var audio = document.querySelector("audio"); 
@@ -715,19 +827,6 @@ function playFullscreen (){
         } else if (iframe.msRequestFullscreen) {
         iframe.msRequestFullscreen();
         }
-    }
-    else {
-        Swal.fire({
-            imageUrl: '../../front/icons/alert-icon.png',
-            imageWidth: 80,
-            imageHeight: 80,
-            imageAlt: 'Mbaye Logo',
-            title: 'Oops!',
-            html: 'Your browser is not supported.',
-            // width: '30%',
-            padding: '15px',
-            background: 'rgba(8, 64, 147, 0.62)'
-        });
     }
 }
 

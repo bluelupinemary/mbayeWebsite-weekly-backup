@@ -155,7 +155,7 @@
                     </div>
 
                     <div class="row justify-content-center login-btn">
-                        <button type="button" class=" btn_log btn-info login-btn" id="login-btn">Login</button>
+                        <button type="submit" class=" btn_log btn-info login-btn" id="login-btn">Login</button>
                     </div>
 
                     <div class="row signup-row">
@@ -302,7 +302,7 @@
 
         // ....................................
 
-        $('#login-btn').click(function(e) 
+        $('#main-form').submit(function(e) 
         {
             e.preventDefault();
             if ($.trim($("#email").val()) === "" || $.trim($("#password").val()) === "")
@@ -394,8 +394,9 @@
                         }   
                     },
                     error: function(error){
-                              alert(error);
-                            }
+                            //   alert(error);
+                            console.log(error);
+                    }
             });
         });
            

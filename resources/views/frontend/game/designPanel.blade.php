@@ -1,44 +1,12 @@
 @extends('frontend.layouts.game_layout')
 @section('before-styles')
     <link href="{{asset('front')}}/CSS/game/DesignPanelStyle.css" rel="stylesheet"/>
-    
-  <style>
-        .trevor-popup-class{
-            background-repeat: no-repeat !important;
-            background-position: center !important;
-            background-size: auto 100% !important;
-            height:25vh !important;
-        }
-        .screenshot-swal{
-            background-repeat: no-repeat !important;
-            background-position: center !important;
-            background-size: auto 100% !important;
-            height:25vh !important;
-            width:50vw !important;
-        }
-        #showScreenshotModal .modal-content {
-            background: rgba(8, 64, 147, 0.6);
-            box-shadow: 0px 0px 20px #17a2b8;
-            font-family: 'Nasalization Rg';
-            font-size:1rem;
-        }
-        #showScreenshotModal .modal-body {
-           width:auto;
-           height:40vw;
-        }
-        #showScreenshotModal .modal-header {
-            background: rgba(2, 40, 96, 0.62);
-            color:white;
-        }
-
-        #modalScreenshot{
-            background-repeat: no-repeat !important;
-            background-position: center !important;
-            background-size: contain !important;
-        }
-
+    <link rel="preload" as="font" href="{{asset('fonts/Courgette-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="{{asset('fonts/NasalizationRg-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
+    <style>
         
-  </style>
+
+    </style>
   
 @endsection
 
@@ -51,7 +19,9 @@
         We all need patience.
         <br/>Please use it. 
         <br/>This may take a little while to download.
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
+
     <div id="loadingScreenOverlay" >
         <div id="overlayText">Please click anywhere to play the game</div>
     </div>
@@ -65,7 +35,27 @@
         </div>
     </div>
 
+    <div id="fullscreenIcon">
+        <img id="fullscreenImg" src="{{asset('front/images3D/fullscreen-btn.png')}}" alt="fullscreen-img" >
+    </div>
 
+   
+
+    <div id="takeScreenshotMain">
+        <div class="tooltips">
+            <span>Take Screenshot</span>
+        </div>
+        <i class="fas fa-camera mainScreenshotIcon"></i>
+        <div class="submenu takeScreenshotMain-submenu">
+            <ul>
+                <li><i class="fas fa-camera-retro" style="padding-right:3%;"></i><a href="" id="take-screenshot-submenu"> Capture Now</a></li>
+                <li><i class="fas fa-redo" style="padding-right:3%;"></i><a href="" id="resetScene-submenu"> Reset Scene </a></li>
+                
+            </ul>
+        </div>
+    
+    </div>
+    
     <div class="modal fade" id="showScreenshotModal" aria-hidden="true" style="display:none;">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
@@ -89,7 +79,9 @@
             
           </div>
         </div>
-      </div>
+    </div>
+
+   
 
 
     <script>
@@ -100,8 +92,7 @@
         var load_filename = '{{$filename ?? ''}}';
         var user_panels = '{{$user_panels ?? ''}}'
 
-       
- 
+    
     </script>
     
 @endsection
@@ -110,15 +101,12 @@
 
    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    
-    <script src="{{asset('front')}}/babylonjs/scenes/designPanel/mbayeMaps.js"></script>
-    <script src="{{asset('front')}}/babylonjs/scenes/designPanel/earthFlowersScene.js"></script>
-    <script src="{{asset('front')}}/babylonjs/scenes/designPanel/designScene.js"></script>
-    <script>
-       
-    </script>
-    
+     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> --}}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="{{asset('front/babylonjs/scenes/commonScenes.js')}}"></script>
+    <script src="{{asset('front/babylonjs/scenes/designPanel/mbayeMaps.js')}}"></script>
+    <script src="{{asset('front/babylonjs/scenes/designPanel/earthFlowersScene.js')}}"></script>
+    <script src="{{asset('front/babylonjs/scenes/designPanel/designScene.js')}}"></script>
+
 
 @endsection

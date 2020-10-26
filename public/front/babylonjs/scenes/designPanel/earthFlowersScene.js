@@ -62,8 +62,9 @@ function load_earth_with_flowers_mesh(){
                             loadedPercent += Math.floor(dlCount * 100.0) / 100.0;
                         }
                         document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+loadedPercent+" %";
-                        worldLoadedPercent = loadedPercent;
+                        // worldLoadedPercent = loadedPercent;
                 }
+               
             
           ).then(function (result) {
             // console.log(result.meshes.length);
@@ -98,11 +99,11 @@ function load_earth_with_flowers_mesh(){
         })
    
     ]).then(() => {
-      if(!worldLoadedPercent){
-        setTimeout(function(){
-            worldLoadedPercent = 100;
-        },3000);
-      }
+    //   if(!worldLoadedPercent){
+    //     setTimeout(function(){
+    //         worldLoadedPercent = 100;
+    //     },3000);
+    //   }
       earthFlowers_object.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(90),0);
     });
 } //end of load world of flowers mesh function

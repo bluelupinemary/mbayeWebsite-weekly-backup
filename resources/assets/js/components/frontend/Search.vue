@@ -13,7 +13,7 @@ export default {
    search() {
       this.renderComponent = false;
       const API = `http://127.0.0.1:8000/api/search/${this.query}`;
-      debugger;
+      // debugger;
       fetch(API)
         .then((response) => {
           if (response.ok) {

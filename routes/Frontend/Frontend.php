@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Frontend\Message\MessagesController;
 use Illuminate\Support\Facades\Route;
 use App\Models\CompanyProfile\Industry;
 use App\Models\Access\User\User;
@@ -8,7 +10,7 @@ use Illuminate\Support\Facades\Crypt;
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
-// Route::get('/professionsdata', 'DemoFormsubmit@demoSave')->name('save');
+// Route::get('/professionsdata', 'DemoFormsubmit@demoSaveIndustry')->name('save');
 Route::get('/', 'FrontendController@index')->name('index');
 Route::post('/get/states', 'FrontendController@getStates')->name('get.states');
 Route::post('/get/cities', 'FrontendController@getCities')->name('get.cities');
@@ -84,6 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/designPanel','GameController@storeDesignPanel')->name('storeDesignPanel');
         Route::post('/designPanel-screenshot','GameController@storeDesignPanelScreenshot')->name('storeDesignPanelScreenshot');
         Route::get('buildMbaye', 'GameController@showBuildMbayeScene')->name('buildMbaye');
+        Route::get('storyCare', 'StoryCareController@index')->name('storyCare');
 
 
         // Route::get('/company/setup-profile', function () {
@@ -135,13 +138,15 @@ Route::group(['namespace' => 'Friendship'], function () {
 Route::group(['namespace' => 'Message'], function () {
     Route::get('/groupchat', 'MessagesController@index');
     Route::get('/privatechat', 'MessagesController@private');
-    Route::get('/users', 'MessagesController@fetchUsers');
+    Route::get('/fetchconversations', 'MessagesController@fetchconversations');
     Route::get('/chatgroups', 'MessagesController@fetchgroups');
     Route::post('/savechatgroup', 'MessagesController@savegroup');
     Route::get('/getmessages/{id}', 'MessagesController@fetchMessages');
     Route::get('/getprivate_messages/{user}', 'MessagesController@fetchprivateMessages');
     Route::post('/sendmessages/{id}', 'MessagesController@sendMessage');
     Route::post('/sendprivate-messages/{user}', 'MessagesController@sendprivateMessage');
+    Route::get('live-status/{id}', 'MessagesController@liveStatus');
+    Route::post('/searchuser','MessagesController@searchusers');
 });
 //End chat
     Route::group(['namespace' => 'Blogs'], function () {
@@ -150,6 +155,7 @@ Route::group(['namespace' => 'Message'], function () {
         Route::get('/single_blog/{id}', 'BlogsController@show');
         Route::get('/shared_blog/{id}', 'BlogsController@sharedBlog');
         Route::post('publish_blog', 'BlogsController@publishBlog');
+        Route::post('republish_blog', 'BlogsController@republishBlog');
         Route::post('publish_design_blog', 'BlogsController@publishDesignBlog');
         Route::post('share_blog', 'BlogsController@shareBlog');
         Route::post('share_general_blog', 'BlogsController@shareGeneralBlog');
@@ -278,6 +284,8 @@ Route::post('/blogview/career/my', 'FrontendController@blog_career_my_post')->na
 Route::get('/blogview/career/friend', 'FrontendController@blog_career_friend');
 Route::post('/blogview/career/friend', 'FrontendController@blog_career_friend_post')->name('blog_career_friend');
 
+// fetch list of data
+Route::get('/get_tags', 'FrontendController@getTags');
 
 //testing routes for Jobseekers profile view
 Route::get('/jobseekers/profileview-test','JobSeekerProfile\JobSeekerProfilesController@profileView');
@@ -287,9 +295,11 @@ Route::group(['namespace' => 'Blogs'], function () {
 });
 
 Route::post('save_work_experience', 'JobSeekerProfile\JobSeekerProfilesController@save_work_experience');
+Route::post('update_work-experience', 'JobSeekerProfile\JobSeekerProfilesController@update_workExperience');
 Route::post('save_education', 'JobSeekerProfile\JobSeekerProfilesController@save_education');
 Route::post('update_education', 'JobSeekerProfile\JobSeekerProfilesController@update_education_details');
 Route::post('save_character_references', 'JobSeekerProfile\JobSeekerProfilesController@save_character_references');
+Route::post('update_character_reference', 'JobSeekerProfile\JobSeekerProfilesController@update_character_reference');
 Route::post('save_contact_details', 'JobSeekerProfile\JobSeekerProfilesController@save_contact_details');
 Route::post('save_aboutme_details', 'JobSeekerProfile\JobSeekerProfilesController@save_aboutme_details');
 Route::post('update_aboutme_details', 'JobSeekerProfile\JobSeekerProfilesController@update_aboutme_details');

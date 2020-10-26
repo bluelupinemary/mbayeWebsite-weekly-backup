@@ -1,8 +1,8 @@
 @extends('frontend.layouts.game_layout')
 @section('before-styles')
-<link href="{{asset('front')}}/CSS/game/GeneralSceneStyle.css" rel="stylesheet"/>
-  <style>
-  </style>
+    <link href="{{asset('front')}}/CSS/game/GeneralSceneStyle.css" rel="stylesheet"/>
+    <link rel="preload" as="font" href="{{asset('fonts/Courgette-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="{{asset('fonts/NasalizationRg-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
 @endsection
 
 @section('content')
@@ -10,6 +10,7 @@
         <canvas id="canvas"></canvas>
     </div>
     <div id="loadingScreenDiv" style="">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
 
     <div id="wikipediaDiv">

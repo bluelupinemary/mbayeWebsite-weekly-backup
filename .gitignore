@@ -27,15 +27,15 @@ Todo.rtf
 npm-debug.log
 yarn-error.log
 phpunit.txt
-public/css/
+public/css/*.css
 public/js/*.js
 public/js/plugins/
 public/js/skins/
 public/js/themes/
 public/vendor
 public/js/skins/*.js
-CODE_OF_CONDUCT.md
-LICENSE.txt
+*.md
+*.txt
 composer.lock
 public/img/backend/blog_images/*
 public/mix-manifest.json
@@ -55,8 +55,6 @@ public/front/audio/
 public/front/finalSkybox/
 public/front/videos/
 server.php
-public/js/backend.js
-public/js/frontend.js
 storage/framework
 storage/app
 storage/debugbar

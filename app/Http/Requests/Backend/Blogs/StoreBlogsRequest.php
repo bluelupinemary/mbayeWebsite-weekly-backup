@@ -28,7 +28,7 @@ class StoreBlogsRequest extends Request
     {
         return [
             // 'name'              => 'required|max:191|unique:blogs,name',
-            'name'              => 'required|max:191',
+            'name'              => 'required|max:80',
             'featured_image'    => 'image|mimes:jpeg,png,jpg|max:5242880',
             // 'publish_datetime'  => 'required|date',
             'content'           => 'required',
@@ -45,7 +45,7 @@ class StoreBlogsRequest extends Request
     {
         return [
             'name.required' => 'Blog Title is empty.',
-            'name.max'      => 'Blog Title may not be greater than 191 characters.',
+            'name.max'      => 'Blog Title may not be greater than 80 characters.',
             'name.unique'   => 'Blog Title already exist.',
             'content.required' => 'Blog Content is empty.',
             'tags.required' => 'No selected tag.'

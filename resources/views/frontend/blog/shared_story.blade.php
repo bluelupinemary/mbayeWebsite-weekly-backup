@@ -462,7 +462,7 @@
             $('.navigator-div').css("display", "flex").hide().fadeIn(1000);
             $('.single-blog, .reaction-div').fadeIn(1000, function() {
                 if(naff_fart_status) {
-                    $('body').on('click', function(){
+                    $('#page-content').on('click', function(){
                         if(naff_fart_animation) {
                             animateNaffFart();
                             naff_fart_animation = !naff_fart_animation;
@@ -976,8 +976,12 @@
             window.location.href = url+'/dashboard';
         });
 
-        $('.instructions-btn, .tos-btn').click( function() {
-            window.location.href = url+'/page_under_development';
+        $('.instructions-btn').click( function() {
+            window.location.href = url+'/instructions';
+        });
+
+        $('.tos-btn').click( function() {
+            window.location.href = url+'/terms';
         });
 
         $('.editphoto-btn').click( function() {

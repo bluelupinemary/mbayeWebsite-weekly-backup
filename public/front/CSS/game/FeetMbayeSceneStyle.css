@@ -1,0 +1,121 @@
+
+#musicVideoDiv #player{
+    width:20vw;
+    height: 12vw;
+    right: 0;
+    top:0;
+    position: absolute;
+}
+
+#musicVideoDiv #close-btn, #musicVideoDiv #fullscreen-btn, #musicVideoDiv #minimize-btn,
+#flowerModelDiv #close-btn, #flowerModelDiv #fullscreen-btn, #flowerModelDiv #minimize-btn{
+    height: 100%;
+    width: auto;
+    position: relative;
+    float: right;
+    padding: 1%;
+}
+
+
+#musicVideoDivHeader, #flowerModelDivHeader{
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    height: 25%;
+    width:100%;
+}
+
+/* #musicVideoDiv{
+  position: absolute;
+  width: 20vw;
+  height: 20vh;
+  visibility:hidden;
+ 
+
+} */
+
+#musicVideoDiv{
+    position: absolute;
+    width:20vw;
+    height:13vw;
+    right:0;
+    top:0;
+    display:none;
+    background:black;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+
+
+
+/*=================================3D Flower Viewer=========================*/
+#flowerModelDiv{
+    border:1px solid gray;
+    position:absolute;
+    width:20vw;
+    height:12vw;
+    bottom:0;
+    left:0;
+    display:flex;
+    filter:drop-shadow(3px 0px 6px black);
+    visibility: hidden;
+}
+
+#flowerModelDiv #flowerViewer{
+    position: absolute;
+    width:100%;
+    height:100%;
+}
+
+
+.modelArrow{    
+  display:none; 
+  position: absolute;
+  font-size: 3em;
+  border: none;
+  color: #16aedc;
+  cursor: pointer;
+  z-index:1;
+  padding:1vw;
+}
+
+#leftArrow{
+  bottom:0;
+  left:0;
+}
+
+#rightArrow{     
+  bottom:0;
+  right:0;
+}
+
+
+#leftArrow:hover, #rightArrow:hover{
+    filter: drop-shadow(0px 0px 4px white);
+}
+
+
+
+
+/*=================================End of 3D Flower Viewer=========================*/
+
+/*extra small and small screens*/
+@media (min-width : 320px) and (max-width : 1024px) and (orientation : landscape) { 
+    #musicVideoDiv #player, #flowerModelDiv{
+        width:30vw;
+        height:18vw;
+    }
+    #musicVideoDivHeader{
+        height:35%;
+    }
+
+    #flowerModelDivHeader{
+        height:25%;
+    }
+   
+}
+
+
+
+

@@ -47,7 +47,12 @@
                     <div class="submenu career-submenu">
                         <ul>
                             <li><a href="" class="create-career-blog"><i class="fas fa-plus"></i> Create Blog</a></li>
+                            @if(count(Auth::user()->company) > 0 || Auth::user()->JobSeekerprofile)
+                            <li><a href="" class="create-career-account"><i class="fas fa-plus"></i> View Career Profile</a></li>
+                            @else
                             <li><a href="" class="create-career-account"><i class="fas fa-plus"></i> Add Career Account</a></li>
+                            @endif
+                            
                         </ul>
                     </div>
                     <div class="submenu your-stars-submenu">
@@ -231,7 +236,7 @@
                     <button class="publish-button"></button> --}}
                     <img src="{{asset('front/images/communicator-buttons/buttons/saveBtn.png')}}" class="communicator-button save-button" alt="">
                     <img src="{{asset('front/images/communicator-buttons/buttons/saveTxt.png')}}" class="save-text" alt="">
-                    <img src="{{asset('front/images/communicator-buttons/buttons/launchBtn.png')}}" class="communicator-button publish-button" alt="">
+                    <img src="{{asset('front/images/communicator-buttons/buttons/launchBtn.png')}}" class="communicator-button publish-button publish-blog" alt="">
                     <img src="{{asset('front/images/communicator-buttons/buttons/launchTxt.png')}}" class="publish-text" alt="">
                         
                     {{-- <div class="save-div">
@@ -376,7 +381,7 @@
                     <button class="custom-fullscreen-btn"><img id="fullscreen-icon"src="{{asset('front/images/communicator-buttons/fullscreen-btn.png')}}" /></button>
                 </div>
                 <div class="music-knobs-colors next-colors">
-                    <div class="slick-carousel colors-slider next-colors-slider">
+                    {{-- <div class="slick-carousel colors-slider next-colors-slider">
                         <div class="red"></div>
                         <div class="white"></div>
                         <div class="red"></div>
@@ -385,10 +390,21 @@
                         <div class="white"></div>
                         <div class="red"></div>
                         <div class="white"></div>
-                    </div>
+                    </div> --}}
+                    <div id="spinner" style="display: none"> 
+                        Loading...
+                      </div>
+                      <div id="carousel">
+                        <img src="{{asset('front/images/music-knobs/red.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/white.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/red-light.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/red.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/white.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/red-light.png')}}" class="slide img-responsive">
+                      </div>
                 </div>
                 <div class="music-knobs music-knobs-1">
-                    <div class="slick-carousel slick-carousel-1">
+                    {{-- <div class="slick-carousel slick-carousel-1">
                         
                         <div><img src="{{asset('front/images/music-knobs/letter-n.png')}}" class="img-responsive">
                         </div>
@@ -401,10 +417,20 @@
                         <div><img src="{{asset('front/images/music-knobs/blank.png')}}" class="img-responsive">
                             
                         </div>
-                     </div>
+                     </div> --}}
+                     <div id="spinner" style="display: none"> 
+                        Loading...
+                      </div>
+                     <div id="carousel">
+                        <img src="{{asset('front/images/music-knobs/letter-n.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/letter-e.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/letter-x.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/letter-t.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/blank.png')}}" class="slide img-responsive">
+                      </div>
                 </div>
                 <div class="music-knobs-colors volume-colors">
-                    <div class="slick-carousel colors-slider volume-colors-slider">
+                    {{-- <div class="slick-carousel colors-slider volume-colors-slider">
                         <div class="red"></div>
                         <div class="white"></div>
                         <div class="red"></div>
@@ -413,10 +439,21 @@
                         <div class="white"></div>
                         <div class="red"></div>
                         <div class="white"></div>
-                    </div>
+                    </div> --}}
+                    <div id="spinner" style="display: none"> 
+                        Loading...
+                      </div>
+                      <div id="carousel">
+                        <img src="{{asset('front/images/music-knobs/red.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/white.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/red-light.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/red.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/white.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/red-light.png')}}" class="slide img-responsive">
+                      </div>
                 </div>
                 <div class="music-knobs music-knobs-2">
-                    <div class="slick-carousel slick-carousel-2">
+                    {{-- <div class="slick-carousel slick-carousel-2">
                         
                         <div><img src="{{asset('front/images/music-knobs/letter-v.png')}}" class="img-responsive">
                         </div>
@@ -433,7 +470,19 @@
                         <div><img src="{{asset('front/images/music-knobs/blank.png')}}" class="img-responsive">
                             
                         </div>
-                     </div>
+                     </div> --}}
+                     <div id="spinner" style="display: none"> 
+                        Loading...
+                      </div>
+                     <div id="carousel">
+                        <img src="{{asset('front/images/music-knobs/letter-v.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/letter-o.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/letter-l.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/letter-u.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/letter-m.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/letter-e.png')}}" class="slide img-responsive">
+                        <img src="{{asset('front/images/music-knobs/blank.png')}}" class="slide img-responsive">
+                      </div>
                 </div>
                 <div class="blog-tags">
                     <img src="{{asset('front/images/communicator-buttons/filmsBtn.png')}}" alt="" class="tag-btn films-btn" data-tag="films">
@@ -490,6 +539,7 @@
                     <div class="instruction instruction-10" data-text-div="instruction-text-10"></div>
                     <div class="instruction instruction-11" data-text-div="instruction-text-11"></div>
                     <div class="instruction instruction-12" data-text-div="instruction-text-12"></div>
+                    <div class="instruction instruction-13" data-text-div="instruction-text-13"></div>
     
                     <div class="instruction-text instruction-text-1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
                     <div class="instruction-text instruction-text-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
@@ -503,6 +553,7 @@
                     <div class="instruction-text instruction-text-10">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
                     <div class="instruction-text instruction-text-11">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
                     <div class="instruction-text instruction-text-12">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                    <div class="instruction-text instruction-text-13">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
                 </div>
             </div>
             <div class="start-div">
@@ -688,7 +739,7 @@
     <script src="{{asset('front/JS/music-wave.js')}}"></script>
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
-    <script src="{{asset('front/slick/slick.min.js')}}"></script>
+    <script src="{{asset('front/slick-new/slick.js')}}"></script>
     <script src="{{asset('front/JS/piklor.min.js')}}"></script>
     <script src="{{asset('front/system-google-font-picker/jquery.fontselect.js')}}"></script>
     @if($blog != '')
@@ -707,6 +758,7 @@
     </script>
     @endif
     <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+    <script src="{{asset('front/JS/Carousel.js')}}"></script>
     <script src="{{asset('front/JS/music_player.js')}}"></script>
     <script src="{{asset('front/JS/communicator.js')}}"></script>
     

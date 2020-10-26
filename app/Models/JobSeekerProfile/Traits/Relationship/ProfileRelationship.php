@@ -41,6 +41,6 @@ trait ProfileRelationship
 
     public function profession()
     {
-        return $this->belongsTo(Profession::class, 'jobseeker_profile_id');
+        return $this->belongsTo(Profession::class);
     }
 }

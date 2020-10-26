@@ -49,8 +49,8 @@ height: 50px;
                                 <figure class="setting"><img class="avatar-xl" src="front/images/chat/avatars/avatar-male-1.jpg" alt="avatar"></figure>
                                 <span class="logo"><img src="front/images/chat/logo.png" alt=""></span>
                                 <div class="search">
-                                    <form class="form-inline position-relative">
-                                        <input type="search" class="form-control" id="conversations" placeholder="Search for conversations...">
+                                    <form class="form-inline position-relative searchform" v-on:submit.prevent="search">
+                                        <input type="search" class="form-control" id="conversations"  v-model="q" placeholder="Search for conversations...">
                                         <button type="button" class="btn btn-link loop"><i class="ti-search"></i></button>
                                     </form>
                                     <button class="btn create" data-toggle="modal" data-target="#startnewchat"><i class="ti-pencil"></i></button>
@@ -67,7 +67,8 @@ height: 50px;
                                         <a href="#" v-if="activeFriend==friend.id" class="filterDiscussions all unread single active" id="list-chat-list" @click="activeFriend=friend.id" data-toggle="list" role="tab">
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
 
-                                            <div v-if="onlineFriends.find(user=>user.id===friend.id)" class="status online"></div>
+                                            <div v-if="friend.status == 'Online'" class="status online"></div>
+                                            <div v-else-if="onlineFriends.find(user=>user.id===friend.id)" class="status online"></div>
                                             <div v-else class="status offline"></div>
 
                                             <div class="data">
@@ -76,19 +77,22 @@ height: 50px;
                                                     <span>5+</span>
                                                 </div>
                                                 <span>Mon</span>
-                                                <div v-if="typingFriend != null">
-                                                <p v-if="typingFriend.id == friend.id">{{typingFriend.name}} is typing...</p>
-                                                <p v-else>Some other Text.</p>
+                                                <div v-if="onlineFriends.find(user=>user.id===friend.id)">
+                                                    <div v-if="typingFriend != null">
+                                                    <p v-if="typingFriend.id == friend.id">{{typingFriend.name}} is typing...</p>
+                                                    </div>
+                                                    <div v-else>Online.</div>
                                                 </div>
                                                 <div v-else>
-                                                <p>Some other Text.</p>
+                                                <p>Offline.</p>
                                                 </div>
                                             </div>
                                         </a>
                                         <a href="#" v-else class="filterDiscussions all unread single" id="list-chat-list" @click="activeFriend=friend.id" data-toggle="list" role="tab">
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
 
-                                            <div v-if="onlineFriends.find(user=>user.id===friend.id)" class="status online"></div>
+                                            <div v-if="friend.status == 'Online'" class="status online"></div>
+                                            <div v-else-if="onlineFriends.find(user=>user.id===friend.id)" class="status online"></div>
                                             <div v-else class="status offline"></div>
 
                                             <div class="data">
@@ -97,16 +101,18 @@ height: 50px;
                                                     <span>5+</span>
                                                 </div>
                                                 <span>Mon</span>
-                                                <div v-if="typingFriend != null">
-                                                <p v-if="typingFriend.id == friend.id">{{typingFriend.name}} is typing...</p>
-                                                <p v-else>Some other Text.</p>
+                                                <div v-if="onlineFriends.find(user=>user.id===friend.id)">
+                                                    <div v-if="typingFriend != null">
+                                                    <p v-if="typingFriend.id == friend.id">{{typingFriend.name}} is typing...</p>
+                                                    </div>
+                                                    <div v-else>Online.</div>
                                                 </div>
                                                 <div v-else>
-                                                <p>Some other Text.</p>
+                                                <p>Offline.</p>
                                                 </div>
                                             </div>
                                         </a>
-                                        </div>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
@@ -162,14 +168,14 @@ height: 50px;
                         </div>
                         <div class="content" id="content">
                             <div class="container">
-                                <div class="col-md-12" style="height:500px; overflow-y:scroll" v-chat-scroll>
+                                <div class="col-md-12" style="height:500px;" v-chat-scroll>
                                     <div class="date">
                                         <hr>
                                         <span>Yesterday</span>
                                         <hr>
                                     </div>
                                     <div v-for="(message, index) in allMessages" :key="index">
-                                        <div v-if="user.id===message.user.id" class="message" >
+                                        <div v-if="user.id===message.sender_id" class="message" >
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
                                             <div v-if="message.message" class="text-main">
                                                 <div class="text-group">
@@ -193,7 +199,7 @@ height: 50px;
                                                 <span>09:46 AM</span>
                                             </div>
                                         </div>
-                                        <div v-else-if="user.id!==message.user.id" class="message me" >
+                                        <div v-else-if="user.id!==message.sender_id" class="message me" >
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
                                             <div v-if="message.message" class="text-main">
                                                 <div class="text-group me">
@@ -279,6 +285,7 @@ height: 50px;
                                             :post-action="'sendprivate-messages/'+this.activeFriend"
                                             ref='upload'
                                             v-model="files"
+                                            :multiple="true"
                                             @input-file="$refs.upload.active = true"
                                             :headers="{'X-CSRF-TOKEN': token}">
                                             <span class="btn attach"><i class="ti-clip"></i></span>
@@ -304,6 +311,7 @@ height: 50px;
         data() {
             return {
                 allMessages:[],
+                q:'',
                 message:null,
                 users:[],
                 files:[],
@@ -314,11 +322,34 @@ height: 50px;
                 token:document.head.querySelector('meta[name="csrf-token"]').content,
             }
         },
+        mounted(){
+            
+            // debugger;
+            Echo.channel('userlogin')
+            .listen('NewLogin',(response) => {
+                // console.log(response.user);
+                this.onlineFriends.push(response.user);
+                  console.log('joining',response.user.name);
+            });
+            Echo.channel('userlogout')
+            .listen('LogoutEvent',(response) => {
+                // console.log(response);
+                this.onlineFriends = this.onlineFriends.filter((obj) => {
+                    // console.log(obj.id);
+                    // console.log(response.data);
+                    // debugger;
+                return obj.id !== response.user.id;
+                });
+                console.log(this.onlineFriends);
+                // debugger;
+                // this.onlineFriends.push(response.user);
+                //   console.log('joining',response.user.name);
+            });
+        },
 
         created() {
             // this.fetchMessages();
-             this.fetchUsers();
-
+            this.fetchconversations();
             Echo.join('pchat')
               .here((users) => {
                    console.log('online',users);
@@ -354,19 +385,43 @@ height: 50px;
                     });
                 },
         watch:{
+            
             activeFriend(val){
                 this.fetchMessages();
             }
             },
 
         methods: {
+            search(){
+               axios.post('/searchuser',{q: this.q,}).then(response => {
+                   console.log(response);
+            });
+            },
+            live_friend(id){
+                var status='';
+                axios.get('/live-status/'+id).then(response => {
+                    // console.log(response);
+                    status = response.data;
+                    // console.log(status);
+                    // debugger;
+            });
+                    // console.log(status);
+                    // if(status == 'Online'){
+                    //     // console.log('online');
+                    //     debugger;
+                    //     return 'online';
+                    // }else{
+                    //     // console.log('offline');
+                    //     return "offline";
+                    // }
+            },
             fetchMessages() {
                 axios.get('getprivate_messages/'+this.activeFriend).then(response => {
                    this.allMessages = response.data;
                 })
             },
-            fetchUsers() {
-            axios.get('/users').then(response => {
+            fetchconversations() {
+            axios.get('/fetchconversations').then(response => {
                 this.users = response.data;
                 // if(this.friends.length>0){
                 //   this.activeFriend=this.friends[0].id;
@@ -391,7 +446,7 @@ height: 50px;
 
         });
       },
-        }
+        },
     }
 </script>
 

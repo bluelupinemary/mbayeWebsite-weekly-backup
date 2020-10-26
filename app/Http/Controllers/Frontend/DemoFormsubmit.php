@@ -25,4 +25,13 @@ class DemoFormsubmit extends Controller
         
     }
 
+    public function demoSaveIndustry(Request $request)
+    {
+        $industry = Industry::all();
+        $industry->toArray();
+        return $industry;
+
+        
+    }
+
 }

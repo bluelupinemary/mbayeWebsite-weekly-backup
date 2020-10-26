@@ -3,7 +3,6 @@
   @section('before-styles')
     <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('front/CSS/register_style.css') }}">
-    
   @endsection
 
 @section('content')
@@ -48,8 +47,11 @@
                         <span class="input-group-text" onclick="showpassword('show_hide_cpassword')"><i class="fa fa-eye"></i></span>
                       </div>
                     </div>
-
                     <input type="button" name="next" style="margin: 3% auto;" class="btn btn-primary next action-button" value="Next" />
+                    <div class="cleaarfix"></div>
+                    <div class="alreadyHave">
+                      <p style="color:#ffffff"><small>Already have an account?</small><br><a href="{{ url('login') }}">Sign in</a> </p>
+                    </div>
                   </fieldset>
                   {{-- lOGIN DETAILS ENDS --}}
                   {{-- PERSONAL DETAILS START --}}
@@ -87,6 +89,10 @@
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
                     <input type="button" name="next" class="next action-button" value="Next" />
+                    <div class="cleaarfix"></div>
+                    <div class="alreadyHave">
+                      <p style="color:#ffffff"><small>Already have an account?</small><br><a href="{{ url('login') }}">Sign in</a> </p>
+                    </div>
                   </fieldset>
                   {{-- PERSONAL DETAILS ENDS --}}
                   {{-- LOCATION DETAILS START --}}
@@ -100,7 +106,7 @@
                     </div>
                     <div class="form-group">
                       <select id="countryId" required data-toggle="tooltip" title="Country is Required!" data-placement="right" name="country" value="{{ old('country') }}" class="form-control @error('country') danger-alter @enderror countries order-alpha">
-                        <option value="">Country</option>
+                        <option value="">Select Country</option>
                       </select>
                     </div>
                     
@@ -108,15 +114,14 @@
                       <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                           <select name="state" class="form-control @error('state') danger-alter @enderror states order-alpha" data-toggle="tooltip" title="state is Required!" data-placement="left" id="stateId">
-                            <option value="">State</option>
-                            option
+                            <option value="">Select State</option>
                           </select>
                         </div>    
                       </div>
                       <div class="col-md-6 col-sm-6">
                           <div class="form-group">
                             <select name="city" class="cities order-alpha form-control @error('city') danger-alter @enderror" id="cityId" data-toggle="tooltip" title="City is Required!" data-placement="right">
-                                <option value="">Select City</option>
+                              <option value="">Select City</option>
                             </select>
                           </div>    
                       </div>
@@ -128,6 +133,10 @@
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
                     <input type="button" name="next" class="next action-button" value="Next" />
+                    <div class="cleaarfix"></div>
+                    <div class="alreadyHave">
+                      <p style="color:#ffffff"><small>Already have an account?</small><br><a href="{{ url('login') }}">Sign in</a> </p>
+                    </div>
                   </fieldset>
                   {{-- LOCATION DETAILS END --}}
                   {{-- ORGANIZATIONAL DETAILS START --}}
@@ -163,6 +172,10 @@
 
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
                     <input type="button" name="next" class="next action-button" value="Next" />
+                    <div class="cleaarfix"></div>
+                    <div class="alreadyHave">
+                      <p style="color:#ffffff"><small>Already have an account?</small><br><a href="{{ url('login') }}">Sign in</a> </p>
+                    </div>
                   </fieldset>
                   {{-- ORGANIZATIONAL DETAILS END --}}
                   {{-- SNAPSHOT START --}}
@@ -177,12 +190,12 @@
                         <div class="form-group">
                           <label>&nbsp;</label>
                           <input id='list_occupation' data-toggle="tooltip" class="form-control @error('occupation') danger-alter @enderror" title="Occupation is Required!" data-placement="right" name="list_occupation" onclick="load_animation_astronut();" class="form-control" placeholder="Occupation" autocomplete="off" type="text" readonly value="{{ old('occupation') }}">
-                          
+
                         </div>
-                       <div class="checkbox" style="text-align: left;">
-                        <label id="terms_label"  style="color: #ffffff">
+                        <div class="checkbox" style="text-align: left;">
+                          <label id="terms_label"  style="color: #ffffff">
                           <a href="javascript:void(0);" id="term">Terms & Conditions</a> <input type="checkbox" id="is_term_accept" name="is_term_accept" onchange="setCheckbox();"> </label>
-                      </div>
+                        </div>
                         <p style="text-align: left;"><small class="warning-text">If your snapshot is inappropiate or irrelevent we will block</small></p>
                       </div>
 
@@ -209,6 +222,10 @@
                     
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
                     <input type="submit" name="submit" class="submit action-button" value="Submit" />
+                    <div class="cleaarfix"></div>
+                    <div class="alreadyHave">
+                      <p style="color:#ffffff"><small>Already have an account?</small><br><a href="{{ url('login') }}">Sign in</a> </p>
+                    </div>
                   </fieldset>
                   {{-- SNAPSHOT END --}}
               {{ Form::close() }}  
@@ -222,43 +239,37 @@
             <li>Snapshot</li>
           </ul>
         </section>
-
-
-        
-
       </div>
   </div>
   <audio id="audio_cuckoo" src="{{ asset('front') }}/images/astronut/Cuckoo.wav"></audio>
   <div class="div_for_astro" style="display:none" >
-        <img id="div" class="" style="display:none" src="{{ asset('front') }}/images/close-btn.png" align="right">
-        <img class="astro_occupation"  style="display:none"  src="{{ asset('front') }}/images/astronut/backpack 2.png">
-          <div id = 'viki' class="div_helmet"  style="display:none" onClick="goto_wiki2()"></div>
-          <div class="occ_description" style="display:none">
-          <p>
-            Hello,<br>I am <span id = 'divv' onClick="openwikipedia()" style="color: chocolate;">General Michael.</span>
-            <br>Your occupation in life will <br> most probably change, <br> as these changes of life go on,
-            <br>you should be able to note <br> here on your site.
-            <br><br>The record of your occupations <br> will stay here forever.
-            <br><br>So if your occupation is, example; <br> shoveling poo from a
-            <span style="color:#c6552b" onClick="show_cuckoo()" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
-            <br><br>And then you become an astronaut.
-            <br><br>It will be always on your profile.
-            <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
-          </p>
-          <br>
-          <center><div class="txtocp"><input type="text" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation" value="{{ old('occupation') }}"/></div></center>
-          <br class="">
-          <button type="button" class="btn btn-info btn_occ_submit">Submit</button>
-          </div>
-          <div class="div_clock overlay" style="display:none" >
-          <img  class='cuckoo_image'  title="Cuckoo clock" src="{{ asset('front') }}/images/astronut/cuckoo clock.png">
-          <p class="cuckoo_text">A Cuckoo clock as in the picture is a German black forest clock
-                                 with a little bird that comes out  and goes cuckoo. Actually
-                                 somebody  really useless in life like villa the crab.
-                                 We say they are so useless they couldn’t shovel poo out of a cuckoo clock.
+    <img id="div" class="" style="display:none" src="{{ asset('front') }}/images/close-btn.png" align="right">
+    <img class="astro_occupation"  style="display:none"  src="{{ asset('front') }}/images/astronut/backpack 2.png">
+    <div id = 'viki' class="div_helmet"  style="display:none" onClick="goto_wiki2()"></div>
+    <div class="occ_description" style="display:none">
+      <p>
+        Hello,<br>I am <span id = 'divv' onClick="openwikipedia()" style="color: chocolate;">General Michael.</span>
+        <br>Your occupation in life will <br> most probably change, <br> as these changes of life go on,
+        <br>you should be able to note <br> here on your site.
+        <br><br>The record of your occupations <br> will stay here forever.
+        <br><br>So if your occupation is, example; <br> shoveling poo from a
+        <span style="color:#c6552b" onClick="show_cuckoo()" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
+        <br><br>And then you become an astronaut.
+        <br><br>It will be always on your profile.
+        <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
+      </p>
+      <br>
+      <center><div class="txtocp"><input type="text" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation" value="{{ old('occupation') }}"/></div></center>
+      <br class="">
+      <button type="button" class="btn btn-info btn_occ_submit">Submit</button>
+      </div>
+      <div class="div_clock overlay" style="display:none" >
+      <img  class='cuckoo_image'  title="Cuckoo clock" src="{{ asset('front') }}/images/astronut/cuckoo clock.png">
+      <p class="cuckoo_text">A Cuckoo clock as in the picture is a German black forest clock
+        with a little bird that comes out  and goes cuckoo. Actually somebody  really useless in life like villa the crab. We say they are so useless they couldn’t shovel poo out of a cuckoo clock.
           </p>
       </div>
-        </div>
+  </div>
 
 {{-- TERMS AND CONDITIONS MODAL --}}
 <!-- Modal -->
@@ -590,12 +601,10 @@
 @section('after-scripts')
     <!-----------------------------------   script section ------------------------------------------>
 
-    {{-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> --}}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    {{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>  --}}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-    <script src="//geodata.solutions/includes/countrystatecity.js"></script>
+   
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>

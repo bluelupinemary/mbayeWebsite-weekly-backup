@@ -10,6 +10,6 @@ trait ProfessionRelationship
 {
 
     public function profile(){
-        return $this->hasMany(JobSeekerProfile::class);
+        return $this->hasMany(JobSeekerProfile::class,'profession_id');
     }
 }

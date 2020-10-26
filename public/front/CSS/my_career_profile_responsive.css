@@ -1,7 +1,7 @@
 /* ipads */
 @media only screen 
-and (min-device-width : 1024px) 
-and (max-device-width : 1366px) 
+and (min-width : 1024px) 
+and (max-width : 1366px) 
 and (orientation : landscape){
     .navigator-div-zoomed-in .astronaut {
         width: 60%;
@@ -361,6 +361,9 @@ and (orientation : landscape) {
         text-shadow: 0px 0px 3px #000000;
         font-family: 'Nasalization';
         font-size: 0.7rem;
+    }
+    .objective p{
+        font-size: calc(1vw + 3px) !important;
     }
 }
 @media only screen 

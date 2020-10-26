@@ -170,6 +170,16 @@
       0 => 'Te7aHoudini\\LaravelTrix\\LaravelTrixServiceProvider',
     ),
   ),
+  'unisharp/laravel-filemanager' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
+    ),
+    'aliases' => 
+    array (
+    ),
+  ),
   'yajra/laravel-datatables-oracle' => 
   array (
     'providers' => 
