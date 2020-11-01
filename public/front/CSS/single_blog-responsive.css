@@ -54,6 +54,10 @@ and (max-width : 1024px) {
         padding-top: 0.90em; */
     }
 
+    .navigator-div.zoom-in .tooltips span {
+        font-size: 10px;
+    }
+
     .navigator-div-zoomed-in .navigator-buttons .tooltips span, .navigator-div-zoomed-in .communicator-div.tooltips span, .navigator-div-zoomed-in .navigator-zoomout-btn.tooltips span, .navigator-div-zoomed-in .internal-share.tooltips span{
         display: block;
     }
@@ -169,6 +173,10 @@ and (max-width : 1024px) {
         font-size: 10px;
         /* padding: 1.5em;
         padding-top: 0.90em; */
+    }
+
+    .navigator-div.zoom-in .tooltips span {
+        font-size: 10px;
     }
 
     .navigator-div-zoomed-in .navigator-buttons .tooltips span, .navigator-div-zoomed-in .communicator-div.tooltips span, .navigator-div-zoomed-in .navigator-zoomout-btn.tooltips span, .navigator-div-zoomed-in .internal-share.tooltips span{
@@ -298,6 +306,10 @@ and (max-width: 1024px) {
         font-size: 10px;
         /* padding: 1.5em;
         padding-top: 0.90em; */
+    }
+
+    .navigator-div.zoomin .tooltips span {
+        font-size: 10px;
     }
 
     .navigator-div-zoomed-in .navigator-buttons .tooltips span, .navigator-div-zoomed-in .communicator-div.tooltips span, .navigator-div-zoomed-in .navigator-zoomout-btn.tooltips span, .navigator-div-zoomed-in .internal-share.tooltips span{
@@ -905,17 +917,9 @@ and (min-width: 480px) {
 @media only screen
 and (max-width: 896px)
 and (min-width: 414px) {
-    /* .navigator-zoomout-btn {
-        -webkit-transform: translate(200%, -437%);
-            -moz-transform: translate(200%, -437%);
-                transform: translate(200%, -437%);
-    } */
-
-    /* .communicator-div {
-        -webkit-transform: translate(-75%, -322%) skew(16deg, 10deg);
-            -moz-transform: translate(-75%, -322%) skew(16deg, 10deg);
-                transform: translate(-75%, -322%) skew(16deg, 10deg);
-    } */
+    .reaction-popup .reaction-button-div {
+        width: 17vw;
+    }
 }
 
 /* Iphone X */

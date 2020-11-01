@@ -47,7 +47,7 @@
                     <div class="submenu career-submenu">
                         <ul>
                             <li><a href="" class="create-career-blog"><i class="fas fa-plus"></i> Create Blog</a></li>
-                            @if(count(Auth::user()->company) > 0 || Auth::user()->JobSeekerprofile)
+                            @if(Auth::user()->company || Auth::user()->JobSeekerprofile)
                             <li><a href="" class="create-career-account"><i class="fas fa-plus"></i> View Career Profile</a></li>
                             @else
                             <li><a href="" class="create-career-account"><i class="fas fa-plus"></i> Add Career Account</a></li>
@@ -210,7 +210,7 @@
                     
                         <div class="employer-account">
                             <img src="{{asset('front/icons/employer-icon.png')}}" alt="">
-                            @if(count(Auth::user()->company) > 0)
+                            @if(Auth::user()->company)
                                 <a href="{{url('/company/setup-profile/'.Auth::user()->id)}}"><p class="view-profile view-company-profile">View my Company Profile</p></a>
                             @else
                                 <a href="{{url('/company/setup-profile/'.Auth::user()->id)}}"><p>I'm an employer</p></a>
@@ -378,6 +378,12 @@
                 </div>
                     <span class="close-btn"><i class="far fa-times-circle"></i></span>
                     <button class="custom-play-pause-btn"><img id="youtube-icon" src="{{asset('front/images/communicator-buttons/pause-btn.png')}}" /></button>
+                    <div class="volume-progress">
+                        <span class="mute-music"><i class="fas fa-volume-up"></i></span>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
                     <button class="custom-fullscreen-btn"><img id="fullscreen-icon"src="{{asset('front/images/communicator-buttons/fullscreen-btn.png')}}" /></button>
                 </div>
                 <div class="music-knobs-colors next-colors">
@@ -609,25 +615,27 @@
                 <p>Launch Successful!</p>
                 <button>OK</button>
             </div>
-            <div class="rocket-launching">
-                <div class="rocket-launching-body">
-                    <div class="body"></div>
-                    <div class="fin fin-left"></div>
-                    <div class="fin fin-right"></div>
-                    <div class="window"></div>
+            <div class="main-rocket-body">
+                <div class="rocket-launching">
+                    <div class="rocket-launching-body">
+                        <div class="body"></div>
+                        <div class="fin fin-left"></div>
+                        <div class="fin fin-right"></div>
+                        <div class="window"></div>
+                    </div>
+                    <div class="exhaust-flame"></div>
+                    <ul class="exhaust-fumes">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
                 </div>
-                <div class="exhaust-flame"></div>
-                <ul class="exhaust-fumes">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
             </div>
         </div>
 
@@ -739,7 +747,7 @@
     <script src="{{asset('front/JS/music-wave.js')}}"></script>
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
-    <script src="{{asset('front/slick-new/slick.js')}}"></script>
+    <script src="{{asset('front/slick/slick.js')}}"></script>
     <script src="{{asset('front/JS/piklor.min.js')}}"></script>
     <script src="{{asset('front/system-google-font-picker/jquery.fontselect.js')}}"></script>
     @if($blog != '')

@@ -66,10 +66,9 @@ function isSmallDevice() {
 function alert_fullscreen(){
 	  Swal.fire({
 			imageUrl: '../../front/icons/alert-icon.png',
-			imageWidth: '15vw',
-			imageHeight: '15vw',
+			imageWidth: '10vw',
+			imageHeight: '10vw',
 			html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
-			padding: '5%',
 			background: 'rgba(8, 64, 147, 0.62)',
 			allowOutsideClick: false
 		  }).then((result) => {

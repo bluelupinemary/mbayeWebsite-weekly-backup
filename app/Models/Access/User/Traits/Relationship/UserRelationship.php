@@ -85,7 +85,7 @@ trait UserRelationship
 
     public function company()
     {
-        return $this->hasMany(CompanyProfile::class, 'owner_id');
+        return $this->hasOne(CompanyProfile::class, 'owner_id');
     }
 
     public function featureduser()
@@ -100,7 +100,7 @@ trait UserRelationship
 
     public function groupmessages()
     {
-        return $this->hasMany(GroupMessage::class);
+        return $this->hasMany(GroupMessage::class,'sender_id');
     }
 
     // override the toArray function (called by toJson)

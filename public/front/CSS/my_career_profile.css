@@ -1,3 +1,80 @@
+.tooltips-buttons.top span {
+    -webkit-transform: translate(-49%, -243%);
+    -moz-transform: translate(-49%, -243%);
+    -ms-transform: translate(-49%, -243%);
+    transform: translate(0%, -73%);
+    white-space: nowrap;
+    width: auto;
+}
+.tooltips-buttons span {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    /* opacity: 0.8; */
+    -webkit-transform: translate(20%, -50%);
+    -moz-transform: translate(20%, -50%);
+    -ms-transform: translate(20%, -50%);
+    transform: translate(20%, -50%);
+    /* left: 70%; */
+    /* top: 50%; */
+    /* margin-top: -36px; */
+    /* margin-left: 15px; */
+    z-index: 999;
+    width: 13vw;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 3px #000000;
+    font-family: 'Arial';
+    background: #0b91c3a3;
+    /* height: 72px; */
+    line-height: 1em;
+    text-align: center;
+    display: none;
+    border-radius: 12px;
+    -webkit-box-shadow: 0px 3px 4px #000000;
+    box-shadow: 0px 3px 4px #000000;
+    font-size: 1em;
+    word-wrap: break-word;
+    padding: 10%;
+    outline: 0;
+    border: 0;
+}
+.tooltips-buttons:hover span{
+    display: block;
+}
+.planet-buttons .tooltips:hover span {
+    display: inline;
+}
+.tooltips-buttons span:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -8px;
+    width: 0;
+    height: 0;
+    border-right: 1em solid #0b91c3a3;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+.button.tooltips-buttons {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    outline: 0;
+    /* align-items: center; */
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.featured-img{
+    border-top: 1px solid gray;
+    padding-bottom: 1%;
+    height:100%;
+}
 #featured-image-previewimg{
     padding-top:1.5%;
     margin-left: auto;
@@ -29,7 +106,7 @@
     width: 13vw;
     color: #FFFFFF;
     text-shadow: 0px 0px 3px #000000;
-    font-family: 'Nasalization';
+    font-family: 'Arial';
     background: #0b91c3a3;
     /* height: 72px; */
     line-height: 1em;
@@ -78,6 +155,7 @@
     width: 100%;
     height: auto;
     position: relative;
+    outline:none;
     /* right: 0; */
     /* top: 90%; */
     top: 10%;
@@ -122,11 +200,13 @@
     left: 50%;
     transform: translate(-429%, 397%); */
     background: #00bff3;
+    outline: none !important;
     box-shadow:1px 1px 11px #0000005e;
 }
 .planet-buttons button.messenger{
     background-color: #1cbbb4;
     box-shadow: 1px 1px 11px #0000005e;
+    outline: none !important;
 }
 .view-profile-button{
     text-align: center;
@@ -143,7 +223,8 @@
 display: -ms-flexbox;
 display: -webkit-flex;
 display: flex;
-flex-direction: column;
+outline: none !important;
+/* flex-direction: column; */
 justify-content: space-between;
 width: 10%;
 /* line-height: 1; */
@@ -192,7 +273,7 @@ box-shadow: 1px 1px 11px #0000005e;
     width: 7vw;
     color: #FFFFFF;
     text-shadow: 0px 0px 3px #000000;
-    font-family: 'Nasalization';
+    font-family: 'Arial';
     background: #0b91c3a3;
     /* height: 72px; */
     line-height: 0.3em;
@@ -215,8 +296,9 @@ box-shadow: 1px 1px 11px #0000005e;
     left: 50%;
     transform: translate(99%,401%); */
     background: #2b9964;
+    outline: none !important;
     box-shadow: 1px 1px 11px #0000005e;
-    pointer-events: none;
+    /* pointer-events: none; */
 } 
 
 
@@ -242,7 +324,7 @@ box-shadow: 1px 1px 11px #0000005e;
     width: 7vw;
     color: #FFFFFF;
     text-shadow: 0px 0px 3px #000000;
-    font-family: 'Nasalization';
+    font-family: 'Arial';
     background: #0b91c3a3;
     /* height: 72px; */
     line-height: 0.2em;
@@ -263,6 +345,7 @@ box-shadow: 1px 1px 11px #0000005e;
     left: 50%;
     transform: translate(571%,401%); */
     background: #b0a034;
+    outline: none !important;
     box-shadow:1px 1px 11px #0000005e;
 }
 .fa-ellipsis-h{
@@ -272,7 +355,7 @@ box-shadow: 1px 1px 11px #0000005e;
 .bg-div{
     position: absolute;
     top: 15vh;
-    left: 20vw;
+    left: 21vw;
     width: 55vw;
     height: 67vh;
     /* margin: 0 auto; */
@@ -367,7 +450,7 @@ box-shadow: 1px 1px 11px #0000005e;
     position: absolute;
     top: 4vh;
     left: 72vw;
-    width: 23vw;
+    width: 26vw;
     height: 95vh;
     /* margin: 0 auto; */
     /* overflow: hidden; */
@@ -489,7 +572,7 @@ box-shadow: 1px 1px 11px #0000005e;
           }
 .arrow{
     font-size: 17px;
-    font-family: Nasalization;
+    font-family: Arial;
     cursor: pointer;
     left: 20%;
     top: 20%;
@@ -577,6 +660,7 @@ Animation profile image
     justify-content: flex-end;
     width: 100%;
     height: auto;
+    z-index: 10;
     position: absolute;
     /* float: right; */
     /* top: 78%; */
@@ -594,6 +678,10 @@ Animation profile image
 }
 .edit-buttons button.edit {
     background: transparent;
+    outline: none !important;
+}
+.edit-buttons .tooltips:hover span {
+    display: inline;
 }
 .astronaut-body {
     width: 100%;
@@ -1638,3 +1726,13 @@ img {
     border-radius: 5px;
     padding: 0;
 }
+.jobseeker-title h1{
+    color: white;
+    z-index: 1;
+    position: absolute;
+    top: 3%;
+    left: 40%; 
+    font-size: calc(1.5vw + 1px);
+    font-family: arial regular;
+    text-shadow: 2px 2px 11px #25e2f5e6;
+    }

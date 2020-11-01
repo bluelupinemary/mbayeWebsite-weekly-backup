@@ -168,7 +168,7 @@ height: 50px;
                         </div>
                         <div class="content" id="content">
                             <div class="container">
-                                <div class="col-md-12" style="height:500px;" v-chat-scroll>
+                                <div class="col-md-12" style="height:500px; overflow-y:scroll" v-chat-scroll>
                                     <div class="date">
                                         <hr>
                                         <span>Yesterday</span>
@@ -185,12 +185,12 @@ height: 50px;
                                                 </div>
                                                 <span>09:46 AM</span>
                                             </div>
-                                            <div v-else-if="message.file" class="text-main">
+                                            <div v-else-if="message.message == null" class="text-main">
                                                 <div class="text-group">
                                                     <div class="text">
                                                         <div class="attachment">
-															<div class="image-container">
-																<img :src="'/storage/chat/'+message.file">
+															<div v-if="message.chatmedia.filename != null" class="image-container">
+																<img :src="'/storage/chat/'+message.chatmedia.filename">
 																<!-- <span>80kb Document</span> -->
 															</div>
 														</div>
@@ -209,12 +209,12 @@ height: 50px;
                                                 </div>
                                                 <span>09:46 AM</span>
                                             </div>
-                                            <div v-else-if="message.file" class="text-main">
+                                            <div v-else-if="message.message == null" class="text-main">
                                                 <div class="text-group me">
                                                     <div class="text me">
                                                         <div class="attachment">
-															<div class="image-container">
-																<img :src="'/storage/chat/'+message.file">
+															<div v-if="message.chatmedia.filename != null" class="image-container">
+																<img :src="'/storage/chat/'+message.chatmedia.filename">
 																<!-- <span>80kb Document</span> -->
 															</div>
 														</div>
@@ -317,7 +317,7 @@ height: 50px;
                 files:[],
                 activeFriend:null,
                 typingFriend:null,
-                 onlineFriends:[],
+                onlineFriends:[],
                 typingTimer: false,
                 token:document.head.querySelector('meta[name="csrf-token"]').content,
             }
@@ -418,6 +418,7 @@ height: 50px;
             fetchMessages() {
                 axios.get('getprivate_messages/'+this.activeFriend).then(response => {
                    this.allMessages = response.data;
+                   console.log(this.allMessages);
                 })
             },
             fetchconversations() {

@@ -5,6 +5,10 @@
     padding: 6px 0;
     font-size: 14px;
 }
+label{
+    /* font-size: 1.3rem; */
+    font-size: calc(1.2vw + 3px );
+}
 
 .form-control.error{
     border:1px solid red !important;
@@ -419,7 +423,7 @@ cursor: not-allowed;
         display: inline-block;
         font-weight: 400;
         text-align: center;
-        width: 8vw !important;
+        width: 20%;
         height: auto;
         white-space: nowrap;
         vertical-align: middle;
@@ -554,21 +558,18 @@ cursor: not-allowed;
  } */
 
 
-.screen input, .text-editor-fullview input,  select, .designs-blog-form select {
-        margin-bottom: 0.5em;
-        background: #ffffff;
-        color:black;
-        border: 0;
-        
-        font-size: 0.8vw;
-        text-shadow: 0px 0px 8px #343a40;
-        height: 1.9vw;
-        border-radius: 3px;
-        width: 100%;
-        
-        
-        font-family: 'Nasalization';
-    }
+ .screen input, .text-editor-fullview input, select, .designs-blog-form select {
+    margin-bottom: 0.5em;
+    background: #ffffff;
+    color: black;
+    border: 0;
+    font-size: 1rem;
+    text-shadow: 0px 0px 8px #343a40;
+    height: 4vh;
+    border-radius: 3px;
+    width: 100%;
+    font-family: 'Arial';
+}
     .screen input::placeholder, .text-editor-fullview input::placeholder {
             color: #ffffff;
             text-shadow: 0px 0px 8px #343a40;
@@ -612,7 +613,7 @@ cursor: not-allowed;
 
      @media (min-width:736px) and (min-height: 414px){
         .button-done{
-            width: 10vw !important;
+            /* width: 10vw !important; */
         }
      }
     
@@ -690,7 +691,7 @@ cursor: not-allowed;
         z-index: 999;
         color: #FFFFFF;
         text-shadow: 0px 0px 3px #000000;
-        font-family: 'Nasalization';
+        font-family: 'Arial';
         background: #0b91c3a3;
         line-height: 1em;
         text-align: center;
@@ -837,7 +838,7 @@ cursor: not-allowed;
         z-index: 999;
         color: #FFFFFF;
         text-shadow: 0px 0px 3px #000000;
-        font-family: 'Nasalization';
+        font-family: 'Arial';
         background: #0b91c3a3;
         /* line-height: 1em; */
         text-align: center;
@@ -927,7 +928,7 @@ cursor: not-allowed;
         height: 1.9vw;
         border-radius: 3px;
         width: 100%;
-        font-family: 'Nasalization';
+        font-family: 'Arial';
     }
 } */
 
@@ -1038,6 +1039,7 @@ cursor: not-allowed;
     -ms-transform: translate(-78%, -63%);
     transform: translate(-78%, -63%);
     width: 15.5vw;
+
     height: 8.5vw;
     outline: 0;
     pointer-events: auto;

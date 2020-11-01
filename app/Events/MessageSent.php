@@ -2,8 +2,8 @@
 
 namespace App\Events;
 
-use App\Models\Messages\Message;
 use Illuminate\Broadcasting\Channel;
+use App\Models\Messages\GroupMessage;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -22,7 +22,7 @@ class MessageSent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct(GroupMessage $message)
     {
         $this->message = $message;
     }

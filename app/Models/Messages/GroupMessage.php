@@ -3,6 +3,7 @@
 namespace App\Models\Messages;
 
 use App\Models\Access\User\User;
+use App\Models\Messages\ChatMedia;
 use Illuminate\Database\Eloquent\Model;
 
 class GroupMessage extends Model
@@ -26,6 +27,11 @@ class GroupMessage extends Model
 
     public function chatmedia()
     {
-        return $this->hasMany(ChatMedia::class)->where('message_type',GroupMessage::class);
+        return $this->hasOne(ChatMedia::class,'message_id')->where('message_type',GroupMessage::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

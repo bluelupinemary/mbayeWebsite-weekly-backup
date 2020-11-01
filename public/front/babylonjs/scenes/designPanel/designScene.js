@@ -122,7 +122,7 @@ function create_design_scene(){
       
     }
     //add the gui for the buttons
-    create_design_gui();
+    //create_design_gui();
     //add mouse event listener
     add_designScene_mouse_listener();
     //do not autoClear the scene
@@ -261,6 +261,9 @@ function load_design_meshes(){
                         result.meshes[i].material = tempMatl;
                         result.meshes[i].isPickable = true;
                         mbayePanelsMap.set(result.meshes[i].name,result.meshes[i]);
+                        let val = {};
+                        val['pos'] = result.meshes[i].position;
+                        val['rot'] = result.meshes[i].rotationQuaternion;
                     }
                    
                 }else if(result.meshes[i].name === "R_EYE" || result.meshes[i].name === "L_EYE"){
@@ -270,6 +273,9 @@ function load_design_meshes(){
                
             }//end of for
             mbayeDesign_object = result.meshes[0];
+
+
+
             // temp_gizmo(mbayeDesign_object);
       }),
    
@@ -351,43 +357,43 @@ function load_design_meshes(){
     //       result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0936,.5051,-0.0944,0.8520);
     //       ruruSpeech = result.meshes[0];
     //   }),
-      BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/nuvola/", "nuvolaDesign2.glb", designScene).then(function (result) {
-          result.meshes[0].scaling = new BABYLON.Vector3(9.5,9.5,-9.5);
-          result.meshes[0].position = new BABYLON.Vector3(388.01,19.01,156.72);
-          result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0964,0.6455,-0.0877,0.7524);
-          result.meshes[0].isVisible = false;
-          result.meshes[0].setEnabled(false);
-          nuvolaSpeech2 = result.meshes[0];
-      }),
-      BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/nuvola/", "nuvolaFocus.glb", designScene).then(function (result) {
-          result.meshes[0].scaling = new BABYLON.Vector3(9.5,9.5,-9.5);
-          result.meshes[0].position = new BABYLON.Vector3( 514.69,48.44,80.21);
-          result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.2044,-0.2045,-0.0377, 0.9563);
-          nuvolaSpeech3 = result.meshes[0];
-      }),
-      BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/ruru/", "ruruDesign2.glb", designScene).then(function (result) {
-          result.meshes[0].scaling = new BABYLON.Vector3(9.5,9.5,-9.5);
-          result.meshes[0].position = new BABYLON.Vector3( 396.77,49.41,116.98);
-          result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.1860,0.5200,-0.1480,0.8202);
-          result.meshes[0].isVisible = false;
-          result.meshes[0].setEnabled(false);
-          ruruSpeech2 = result.meshes[0];
-      }),
-      BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/ruru/", "ruruDesign3.glb", designScene).then(function (result) {
-        result.meshes[0].scaling = new BABYLON.Vector3(9.5,9.5,-9.5);
-        result.meshes[0].position = new BABYLON.Vector3( 396.77,49.41,116.68);
-        result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.1860,0.5200,-0.1480,0.8202);
-        result.meshes[0].isVisible = false;
-        result.meshes[0].setEnabled(false);
-        ruruSpeech3 = result.meshes[0];
-        ruruSpeech3.isPickable = false;
+    //   BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/nuvola/", "nuvolaDesign2.glb", designScene).then(function (result) {
+    //       result.meshes[0].scaling = new BABYLON.Vector3(9.5,9.5,-9.5);
+    //       result.meshes[0].position = new BABYLON.Vector3(388.01,19.01,156.72);
+    //       result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0964,0.6455,-0.0877,0.7524);
+    //       result.meshes[0].isVisible = false;
+    //       result.meshes[0].setEnabled(false);
+    //       nuvolaSpeech2 = result.meshes[0];
+    //   }),
+    //   BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/nuvola/", "nuvolaFocus.glb", designScene).then(function (result) {
+    //       result.meshes[0].scaling = new BABYLON.Vector3(9.5,9.5,-9.5);
+    //       result.meshes[0].position = new BABYLON.Vector3( 514.69,48.44,80.21);
+    //       result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.2044,-0.2045,-0.0377, 0.9563);
+    //       nuvolaSpeech3 = result.meshes[0];
+    //   }),
+    //   BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/ruru/", "ruruDesign2.glb", designScene).then(function (result) {
+    //       result.meshes[0].scaling = new BABYLON.Vector3(9.5,9.5,-9.5);
+    //       result.meshes[0].position = new BABYLON.Vector3( 396.77,49.41,116.98);
+    //       result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.1860,0.5200,-0.1480,0.8202);
+    //       result.meshes[0].isVisible = false;
+    //       result.meshes[0].setEnabled(false);
+    //       ruruSpeech2 = result.meshes[0];
+    //   }),
+    //   BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/ruru/", "ruruDesign3.glb", designScene).then(function (result) {
+    //     result.meshes[0].scaling = new BABYLON.Vector3(9.5,9.5,-9.5);
+    //     result.meshes[0].position = new BABYLON.Vector3( 396.77,49.41,116.68);
+    //     result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.1860,0.5200,-0.1480,0.8202);
+    //     result.meshes[0].isVisible = false;
+    //     result.meshes[0].setEnabled(false);
+    //     ruruSpeech3 = result.meshes[0];
+    //     ruruSpeech3.isPickable = false;
         
-      }),
+    //   }),
   ]).then(() => {  
 
         // console.log(JSON.stringify(mbayePanelsMap));
          
-
+       
         isBookFlowerReady = true;
         // create_flower_label();
         enable_design_utility();
@@ -520,16 +526,22 @@ function create_panel_box(){
     panelFlowerBox.scaling = new BABYLON.Vector3(1.8,1.8,1.5);
     panelFlowerBox.material = new BABYLON.StandardMaterial("flowerBoxMatl", designScene);
     panelFlowerBox.material.diffuseColor = BABYLON.Color3.White();
-    panelFlowerBox.material.alpha = 0;
+    panelFlowerBox.material.alpha = 0;        //was 0
     panelFlowerBox.isPickable = false;
 }
 
 
 function create_cloud_speeches(){
     ruruSpeechCloud =  init_image("ruruSpeech1", "front/images3D/designScene/ruruDesign1.png",14 , 20, 1, {x:54.8,y:20.9,z:15.6}, {x:0.0028,y:-0.8282,z:0.0128,w:0.5599});
-    nuvolaSpeechCloud =  init_image("nuvolaSpeech1", "front/images3D/designScene/nuvolaDesign1.png",14 , 20, 1, {x:24.4,y:11.80,z:52.82}, {x:-0.0005,y:-0.6610,z:0.0130,w:0.7499});
+    nuvolaSpeechCloud =  init_image("nuvolaSpeech1", "front/images3D/designScene/nuvolaDesign1.png",14 , 20, 1, {x:34.53,y:10.21,z:52.40}, {x:0.0161,y:-0.6941,z:-0.0069,w:0.7191});
 
-    // test_gizmo(nuvolaSpeechCloud);
+    ruruSpeech2 =  init_image("ruruSpeech2", "front/images3D/designScene/ruruDesign2.png",14 , 20, 1, {x:394.5,y:51,z:120.6}, {x:-0.0593,y:-0.8380,z:-0.0787,w:0.5366});
+    ruruSpeech3 = init_image("ruruSpeech3", "front/images3D/designScene/ruruDesign3.png",14 , 20, 1, {x:394.5,y:51,z:120.6}, {x:-0.0593,y:-0.8380,z:-0.0787,w:0.5366});
+
+    nuvolaSpeech2 = init_image("nuvolaSpeech2", "front/images3D/designScene/nuvolaDesign2.png",14 , 20, 1, {x:396.8,y:21.42,z:160.54}, {x:-0.0242,y:-0.7339,z:-0.0253,w:0.6782});
+    nuvolaSpeech3 = init_image("nuvolaSpeech3", "front/images3D/designScene/nuvolaDesign3.png",14 , 20, 1, {x:510.81,y:48.43,z:90.73}, {x:0.0372,y:0.9640,z:0.1858,w:0.1847});
+
+    // test_gizmo(nuvolaSpeech3temp);
 }
 
 
@@ -543,6 +555,7 @@ function init_image(name, matlPath, h, w, scale,pos,rot){
     tempMatl.diffuseTexture = new BABYLON.Texture(matlPath, designScene);
     tempMatl.opacityTexture = new BABYLON.Texture(matlPath, designScene);
     tempMatl.ambientColor = new BABYLON.Color3(1,1,1);
+    tempMatl.emissiveColor = new BABYLON.Color3(0.5,0.5,0.5);
     tempMatl.diffuseTexture.hasAlpha = true;
     temp.material = tempMatl;
 
@@ -569,7 +582,9 @@ function check_if_mesh_is_flower(mesh){
     let isInFlowersMap = false;
     if(flowersPanelsMap.has(currentPanel)) isInFlowersMap = flowersPanelsMap.get(currentPanel).has(id);
     // console.log("mesh" , mesh, "id", id, "isFLower: ", isFlower, "isInFlowersMap: ", isInFlowersMap, "flowesPanelsMap ", flowersPanelsMap);
-    if(isFlower || isInFlowersMap) return true;
+    if(isFlower || isInFlowersMap){
+        return true;
+    }
     return false;
 }//end of function 
 
@@ -601,8 +616,8 @@ function create_black_flower_copy(theFlower){
         theFlowerCopy.position.y += 50;
         theFlowerCopy.position.x -= 50;
         theFlowerCopy.setParent(null);
-    }else{                                      //if panel camera
-        theFlowerCopy.position.y += 1;
+    }else{          
+        theFlowerCopy.position.y += 2.5;
         theFlowerCopy.position.x += 0.1;
     }
       
@@ -611,12 +626,15 @@ function create_black_flower_copy(theFlower){
     if(theCurrentFlower.obj) theCurrentFlower.obj.showBoundingBox = false;
     //attach the gizmo to the flower clone
     designGizmoManager.attachToMesh(theFlowerCopy);
+    //the flower should be draggable on the panel
+    
     //set the clone as the current flower and show bounding box
     theCurrentFlower.obj = theFlowerCopy;
     theCurrentFlower.obj.showBoundingBox = true;
     //add the flower to the selected flowers map
     selectedFlowersMap.set(theFlowerCopy.uniqueId, theFlowerCopy);
     //console.log("SELECTED FLOWERS: ", selectedFlowersMap, flowerSelectionCount);
+   
 }
 
 //function for creating the flower mesh in a plane and adding material with transparent bg for the book of flowers
@@ -1047,6 +1065,8 @@ function returnPanelViaButton(){
   if(!isPanelReturned && isStartOfDesignPanel){
         //show the screenshot icon
         $('#takeScreenshotMain').show();
+        //hide the gizmo icon
+        $('#gizmoToolsDiv').hide();
 
         designLight.direction = new BABYLON.Vector3(0.5,5,-2);
         designScene.activeCamera = panelCamera;
@@ -1065,12 +1085,12 @@ function returnPanelViaButton(){
         bookFlowers_object.rotationQuaternion = bookFlowersInitRot;
 
        
-        posTool_btn.isVisible = false;
-        rotTool_btn.isVisible = false;
-        scaleTool_btn.isVisible = false;
-        offTool_btn.isVisible = false;
+        // posTool_btn.isVisible = false;
+        // rotTool_btn.isVisible = false;
+        // scaleTool_btn.isVisible = false;
+        // offTool_btn.isVisible = false;
         // screenshot_btn.isVisible = true;
-        if(load_hd_world_btn) load_hd_world_btn.isVisible = false;
+        // if(load_hd_world_btn) load_hd_world_btn.isVisible = false;
         // delTool_btn.isVisible = false;
 
 
@@ -1081,7 +1101,8 @@ function returnPanelViaButton(){
 
     
         panel.position = new BABYLON.Vector3(panelInitPos.x,panelInitPos.y,panelInitPos.z);
-        panel.rotationQuaternion = panelInitRot;
+        // panel.rotationQuaternion = panelInitRot;
+         panel.rotation = panelInitRot;
        
         panel.scaling = panelInitScale;
 
@@ -1092,7 +1113,10 @@ function returnPanelViaButton(){
         //modify the var values
         flowerSelectionCount = 0; 
         isPanelReturned = true;
-        isPanelCameraMoving = true;
+       
+       // isPanelCameraMoving = true;
+        animatePanelCameraToRadius(panelCamera, 50, 100, 100);
+       
         isDesignSceneActive = false;  
         isStartOfDesignPanel = false;
         isPanelRotationActive = false;
@@ -1286,7 +1310,7 @@ function enable_design_utility(){
                 designGizmoManager.gizmos.positionGizmo.onDragEndObservable.add(function () {
                     isGizmoDragging = false;
                 });
-            }
+            }   
 
             if(evt.key == 'r' || evt.key == 'R'){
                 designGizmoManager.rotationGizmoEnabled = true;
@@ -1302,6 +1326,9 @@ function enable_design_utility(){
                 designGizmoManager.boundingBoxGizmoEnabled = true;
                 designGizmoManager.gizmos.boundingBoxGizmo.setEnabledRotationAxis("xyz");
                 designGizmoManager.gizmos.boundingBoxGizmo.setEnabledScaling(true,true);
+               
+
+                
                 designGizmoManager.gizmos.boundingBoxGizmo.onDragStartObservable.add(function () {
                     isGizmoDragging = true;
                 });
@@ -1311,6 +1338,7 @@ function enable_design_utility(){
                 designGizmoManager.gizmos.boundingBoxGizmo.onRotationSphereDragEndObservable.add(function () {
                     isGizmoDragging = false;
                 });
+               
             }
         }
 
@@ -1359,6 +1387,8 @@ function enable_design_utility(){
     // Start by only enabling position control
     document.onkeydown({key: 'p'})
 }
+
+
 
 
 //#################################################### FUNCTIONS FOR THE SCENE'S GUI #######################################################//
@@ -1710,41 +1740,41 @@ function create_design_gui(){
     // }); 
 
 
-    load_hd_world_btn.height = btnHeight+"px";
-    load_hd_world_btn.width = btnWidth+"px";
-    load_hd_world_btn.color = "white";
-    load_hd_world_btn.alpha = 0.6;
-    load_hd_world_btn.fontSize = fontSz;
-    load_hd_world_btn.background = "green";
-    load_hd_world_btn.verticalAlignment = 0;
-    load_hd_world_btn.horizontalAlignment = 1;
-    load_hd_world_btn.isVisible = false;
+    // load_hd_world_btn.height = btnHeight+"px";
+    // load_hd_world_btn.width = btnWidth+"px";
+    // load_hd_world_btn.color = "white";
+    // load_hd_world_btn.alpha = 0.6;
+    // load_hd_world_btn.fontSize = fontSz;
+    // load_hd_world_btn.background = "green";
+    // load_hd_world_btn.verticalAlignment = 0;
+    // load_hd_world_btn.horizontalAlignment = 1;
+    // load_hd_world_btn.isVisible = false;
 
     
 
-    //return button functions
-    load_hd_world_btn.onPointerDownObservable.add(
-    function(info) {
-        load_hd_world();
-        load_hd_world_btn.dispose();
-    });
-    load_hd_world_btn.onPointerUpObservable.add(
-        function(info) {
-            load_hd_world_btn.background = "green";
-    });
-    load_hd_world_btn.onPointerEnterObservable.add(
-        function() {
-            load_hd_world_btn.background = "red";
-    });
-    load_hd_world_btn.onPointerOutObservable.add(
-        function() {
-            load_hd_world_btn.background = "green";
+    // //return button functions
+    // load_hd_world_btn.onPointerDownObservable.add(
+    // function(info) {
+    //     load_hd_world();
+    //     load_hd_world_btn.dispose();
+    // });
+    // load_hd_world_btn.onPointerUpObservable.add(
+    //     function(info) {
+    //         load_hd_world_btn.background = "green";
+    // });
+    // load_hd_world_btn.onPointerEnterObservable.add(
+    //     function() {
+    //         load_hd_world_btn.background = "red";
+    // });
+    // load_hd_world_btn.onPointerOutObservable.add(
+    //     function() {
+    //         load_hd_world_btn.background = "green";
 
-    });    
-    load_hd_world_btn.onPointerMoveObservable.add(
-        function(coordinates) {
+    // });    
+    // load_hd_world_btn.onPointerMoveObservable.add(
+    //     function(coordinates) {
             
-    }); 
+    // }); 
 
 
     //add the buttons to the gui
@@ -1755,7 +1785,7 @@ function create_design_gui(){
     advancedTexture.addControl(offTool_btn);
     // advancedTexture.addControl(screenshot_btn);
     // advancedTexture.addControl(reset_btn);
-    advancedTexture.addControl(load_hd_world_btn);
+    // advancedTexture.addControl(load_hd_world_btn);
     // advancedTexture.addControl(delTool_btn);
 }//end of create gui function
 
@@ -1781,18 +1811,39 @@ function design_handle_tool(theGizmo){
             if(designGizmoManager.positionGizmoEnabled) designGizmoManager.positionGizmoEnabled = false;
             if(designGizmoManager.boundingBoxGizmoEnabled) designGizmoManager.boundingBoxGizmoEnabled = false;
             designGizmoManager.rotationGizmoEnabled = true;
+
+            designGizmoManager.gizmos.rotationGizmo.onDragStartObservable.add(function () {
+                isGizmoDragging = true;
+            });
+            designGizmoManager.gizmos.rotationGizmo.onDragEndObservable.add(function () {
+                isGizmoDragging = false;
+            });
         }else if(theGizmo == 1){
              //1- change gizmo to position
             if(designGizmoManager.boundingBoxGizmoEnabled) designGizmoManager.boundingBoxGizmoEnabled = false;
             if(designGizmoManager.rotationGizmoEnabled) designGizmoManager.rotationGizmoEnabled = false;
             designGizmoManager.positionGizmoEnabled = true;   
+
+            designGizmoManager.gizmos.positionGizmo.onDragStartObservable.add(function () {
+                isGizmoDragging = true;
+            });
+            designGizmoManager.gizmos.positionGizmo.onDragEndObservable.add(function () {
+                isGizmoDragging = false;
+            });
+
         }else if(theGizmo == 3){
              //3 - change gizmo to bounding box
             if(designGizmoManager.positionGizmoEnabled) designGizmoManager.positionGizmoEnabled = false;
             if(designGizmoManager.rotationGizmoEnabled) designGizmoManager.rotationGizmoEnabled = false;
             designGizmoManager.boundingBoxGizmoEnabled = true;  
+            designGizmoManager.gizmos.boundingBoxGizmo.onDragStartObservable.add(function () {
+                isGizmoDragging = true;
+            });
+            designGizmoManager.gizmos.boundingBoxGizmo.onDragEndObservable.add(function () {
+                isGizmoDragging = false;
+            });
         }else if(theGizmo == 4){
-            //3 - change gizmo to bounding box
+            //4 - delete the current selected flower
             if(theCurrentFlower.obj){
                 //call the function to delete the currently selected flower
                 delete_flower_selected(theCurrentFlower.obj);
@@ -1807,6 +1858,8 @@ function design_handle_tool(theGizmo){
 
 //#################################################### FUNCTION TO HANDLE MOUSE EVENTS #######################################################//
 let isCharMovementEnabled;
+let isDraggedPanelInLocation = false;
+let pickedPanelInitSpecs = {'pos':null, 'rot':null};
 function add_designScene_mouse_listener(){
       //handle the dragging behavior of the panel selected
       designScene.onPointerObservable.add((pointerInfo) => {          
@@ -1822,16 +1875,13 @@ function add_designScene_mouse_listener(){
                     panelPointerDragBehavior.dragDeltaRatio = 0.2;
                     panelPointerDragBehavior.attach(pointerInfo.pickInfo.pickedMesh);
 
-
-            
-
                       // add double click event listener to the panel
-                      pointerInfo.pickInfo.pickedMesh.actionManager = new BABYLON.ActionManager(designScene);
-                      pointerInfo.pickInfo.pickedMesh.actionManager
-                          .registerAction(
-                                new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnDoublePickTrigger,
-                                returnPanel)
-                          );
+                    pointerInfo.pickInfo.pickedMesh.actionManager = new BABYLON.ActionManager(designScene);
+                    pointerInfo.pickInfo.pickedMesh.actionManager
+                        .registerAction(
+                            new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnDoublePickTrigger,
+                            returnPanel)
+                    );
                   }//eof if
 
                   if(pointerInfo.pickInfo.hit &&  (pointerInfo.pickInfo.pickedMesh === ruruDesign_obj || pointerInfo.pickInfo.pickedMesh === nuvolaDesign_obj) && designScene.activeCamera === designCamera && isCharMovementEnabled) {
@@ -1849,7 +1899,8 @@ function add_designScene_mouse_listener(){
           break;
           }
       });
-      
+
+    
     
 
       let onPointerDownDesign = function (evt) {
@@ -1870,8 +1921,9 @@ function add_designScene_mouse_listener(){
               if (pickInfo.hit) {
                 //global var for tracking the current mesh clicked
                 theDesignMesh = pickInfo.pickedMesh;              
-                console.log("the mesh clicked: ", theDesignMesh.name, theDesignMesh.position, theDesignMesh.rotationQuaternion);  
-
+                console.log("the mesh clicked: ", theDesignMesh.name, theDesignMesh.position, theDesignMesh.rotationQuaternion, theDesignMesh.rotation);  
+                
+                
                 //check if the mesh clicked is a flower from the book of flowers
                 let isFlower = check_if_mesh_is_flower(theDesignMesh);
             
@@ -1880,7 +1932,17 @@ function add_designScene_mouse_listener(){
                     //if the mesh clicked is a panel, detach earthFLowerCamera control
                       earthFlowersCamera.detachControl(canvas);
                       //if the panel clicked is not the current panel, set the clicked panel as the current panel
-                      if(currentPanel==null || theDesignMesh!=theCurrentPanel.obj)  set_current_panel(theDesignMesh);
+                      if(currentPanel==null || theDesignMesh!=theCurrentPanel.obj) { 
+                        // if(pickedPanelInitSpecs['pos'] === null) pickedPanelInitSpecs['pos'] = theDesignMesh.position;
+                        // else currentPanel.position = pickedPanelInitSpecs.pos;
+                       
+                        // if(pickedPanelInitSpecs['rot'] === null) pickedPanelInitSpecs['rot'] = theDesignMesh.rotationQuaternion;
+                        // else currentPanel.rotationQuaternion = pickedPanelInitSpecs.rot;
+                        
+                            set_current_panel(theDesignMesh);
+                           
+                        }
+                      
                       isPanelMeshClicked = true;
                 }//end of if a panel is clicked from Mbaye
 
@@ -1888,7 +1950,7 @@ function add_designScene_mouse_listener(){
                     if(theDesignMesh === ruruDesign_obj || theDesignMesh === nuvolaDesign_obj){
                         homeGizmo.attachedMesh = theDesignMesh;
                         homeGizmo2.attachedMesh = theDesignMesh;
-                        offTool_btn.isVisible = true;
+                        //offTool_btn.isVisible = true;
                     }
                 }
 
@@ -1939,15 +2001,33 @@ function add_designScene_mouse_listener(){
                         theCurrentFlower.obj = theDesignMesh;                       //set the flower is the current flower
                         theCurrentFlower.obj.showBoundingBox = true;
                         designGizmoManager.attachToMesh(theDesignMesh);
+                        
+                        
+                        //enable the movement of this flower on over the current panel selected
+                       
+                        isStartMovementofFlowerOnPanel = true;
+                        console.log("this is the flower", isStartMovementofFlowerOnPanel);
+                    }else{
+                        isStartMovementofFlowerOnPanel = false;
                     }
-                  }//end of if flower is clicked
 
+                   
+    
+                }//end of if flower is clicked
+                  
                 //check if the flower clicked is a version of a flower if the book of flowers is active
                 if(isBookFlowersActive){
                     earthFlowersCamera.detachControl(canvas);
                     let isFlowerVariety = check_if_mesh_is_flower_variety(theDesignMesh);
-                    if(isFlowerVariety && flowerSelectionCount < MAX_NUM_FLOWERS) create_black_flower_copy(theDesignMesh);  
+                    if(isFlowerVariety && flowerSelectionCount < MAX_NUM_FLOWERS){
+                        create_black_flower_copy(theDesignMesh); 
+                        isStartMovementofFlowerOnPanel = true;
+                        console.log("this is the flower copy", isStartMovementofFlowerOnPanel);
+                    } 
                 }//end of if book of flowers active
+
+                
+                  
             }//end of pick info hit
         }//end of if there is a design Scene
     }//end of on pointer down function
@@ -1955,9 +2035,40 @@ function add_designScene_mouse_listener(){
     //on mouse pointer up
     let onPointerUpDesign = function (evt) {
         isPanelMeshClicked = false;
+        if(!isStartOfDesignPanel){
+            if(isDraggedPanelInLocation){ 
+                set_current_panel_to_location();
+                isDraggedPanelInLocation = false;
+            }else{
+                // console.log("not yet in location", panelInitPos);
+                if(currentPanel) currentPanel.position = new BABYLON.Vector3(panelInitPos.x, panelInitPos.y, panelInitPos.z);
+               
+            }
+        }
+        
+
     }//end of on pointer up function
 
-    let onPointerMoveDesign = function (evt) {  
+    let isCurrentFlowerOnCurrentPanel = false;
+    let isStartMovementofFlowerOnPanel = true;
+    let onPointerMoveDesign = function (evt) { 
+        // console.log("isCurrentPanelInLocation", isCurrentPanelInLocation, "isStartMovementofFlowerOnPanel ",isStartMovementofFlowerOnPanel);
+        //if the current panel is to be designed, this runs after clicking the first black flower copy
+        if(isCurrentPanelInLocation && isStartMovementofFlowerOnPanel && !isGizmoDragging){
+            // console.log("this is happening");
+           
+            let pickInfo = designScene.pick(designScene.pointerX, designScene.pointerY);
+            if (pickInfo.hit) {     
+                if(theCurrentFlower.obj){
+                    isCurrentFlowerOnCurrentPanel = true;
+                    
+                    if(currentPanel.name === pickInfo.pickedMesh.name){
+                        theCurrentFlower.obj.position = new BABYLON.Vector3(pickInfo.pickedPoint.x, pickInfo.pickedPoint.y, pickInfo.pickedPoint.z + 0.1);
+                    }
+                }
+            }
+        }
+
         //on pointer movement, check if there is a current panel set and if the the onpointerdown is triggered
         if(isPanelMeshClicked && currentPanel){
             //compute for changes in x, y, z / distance from original pos
@@ -1966,9 +2077,14 @@ function add_designScene_mouse_listener(){
             let deltaZ = Math.abs(currentPanel.position.z - panelInitPos.z);
     
             //if abs distance of panel from its orig position is > 10
-            if((deltaX>=8 || deltaY>=8 || deltaZ >= 8) && !isStartOfDesignPanel){
+            if( ( (deltaX >= 4 && deltaX <= 8) || (deltaY >= 4 && deltaY <= 8) || (deltaZ >= 4 && deltaZ <= 8) ) && !isStartOfDesignPanel){
+                // set_current_panel_to_location();
+                isDraggedPanelInLocation = true;
+            }else if((deltaX >= 8 || deltaY >= 8 || deltaZ >= 8) && !isStartOfDesignPanel){
                 set_current_panel_to_location();
-            }//end of delta x , y, z
+            }else{
+                isDraggedPanelInLocation = false;
+            }
         }else return; //end of if current panel is set and pointer down is observed            
     }//end of on pointer move function
 
@@ -2049,18 +2165,19 @@ function set_current_panel_to_location(){
         if(!isCurrentPanelInLocation){
             setTimeout(function(){
                 //set the buttons to active
-                posTool_btn.isVisible = true;
-                rotTool_btn.isVisible = true;
-                scaleTool_btn.isVisible = true;
-                offTool_btn.isVisible = true;
-                // delTool_btn.isVisible = true;
-                // screenshot_btn.isVisible = false;
-                load_hd_world_btn.isVisible = true;
+                // posTool_btn.isVisible = true;
+                // rotTool_btn.isVisible = true;
+                // scaleTool_btn.isVisible = true;
+                // offTool_btn.isVisible = true;
+                // // delTool_btn.isVisible = true;
+                // // screenshot_btn.isVisible = false;
+                // load_hd_world_btn.isVisible = true;
                 //get and set the current panel's initial rotation for when the panel is returned back to Mbaye
                 // let temp = mbayePanelsPosRotMap.get(currentPanel.name);
                 // let rot = temp[1];
                 // panelInitRot = new BABYLON.Quaternion(rot.x,rot.y,rot.z,rot.w);;
-                panelInitRot = currentPanel.rotationQuaternion;
+                // panelInitRot = currentPanel.rotationQuaternion;
+                panelInitRot = currentPanel.rotation;
 
                 //make the world of flowers visible
                 earthFlowers_object.setEnabled(true);
@@ -2096,8 +2213,12 @@ function set_current_panel_to_location(){
 
                 //hide the take screenshot for main view icon
                 $('#takeScreenshotMain').hide();
+                //show the gizmo tools
+                $('#gizmoToolsDiv').css('display','flex');
+                
             }, 1000);
             isCurrentPanelInLocation = true;
+
         }//end of if in location
 }
 
@@ -2116,7 +2237,12 @@ function start_design_setup(){
         // temp_gizmo(currentPanel);
         // currentPanel.position = currentPanelDesignPos.get(0);
         // currentPanel.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(180),0);
-        currentPanel.rotation = new BABYLON.Vector3(-0.9158, 1.8938,0);
+        let rot = panelDesignRotation.get(currentPanel.name);
+        console.log("the rot: ", rot);
+        if(rot !== null) currentPanel.rotation = rot[0];
+        else currentPanel.rotation = new BABYLON.Vector3(-0.9158, 1.8938,0);
+        // currentPanel.rotation = new BABYLON.Vector3(-0.9158, 1.8938,0);
+        
         isAnimatePanelOn = false;
         isPanelMovementDone = true;                         //let to indicate that panel is done moving away from Mbaye to the design location
 
@@ -2695,7 +2821,7 @@ var viewport_init_specs = new Map([
     [2,{'designCamRadius':150, 'earthCamRadius':200,'panelCamFOV':1.2, 'focusCamFOV':1.2}],
     [3,{'designCamRadius':142, 'earthCamRadius':180,'panelCamFOV':1.25, 'focusCamFOV':1.25}],
     [4,{'designCamRadius':140.5, 'earthCamRadius':140,'panelCamFOV':1.3, 'focusCamFOV':1.3}],
-    [5,{'designCamRadius':120, 'earthCamRadius':140,'panelCamFOV':1.4, 'focusCamFOV':1.4}],
+    [5,{'designCamRadius':138, 'earthCamRadius':140,'panelCamFOV':1.4, 'focusCamFOV':1.4}],
     [6,{'designCamRadius':134, 'earthCamRadius':120,'panelCamFOV':1.5, 'focusCamFOV':1.5}],
 ]);
 
@@ -2712,7 +2838,29 @@ function set_camera_viewport_specs(num){
 
 
 
+var animateObjectPositionNoEase = function(obj, speed, frameCount, newPos) {
+    var ease = new BABYLON.CubicEase();
+    ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+    BABYLON.Animation.CreateAndStartAnimation('objPos', obj, 'position', speed, frameCount, obj.position, newPos, 0, null);
+}
 
+var animatePanelCameraToRadius = function(cam, speed, frameCount, newRad) {
+    BABYLON.Animation.CreateAndStartAnimation('at4', cam, 'radius', speed, frameCount, cam.radius, newRad, 0, null,panelCameraAnimEnded);
+}
+
+var panelCameraAnimEnded = function() {
+    currentScene.activeCamera = designCamera;
+    
+    // isPanelCameraMoving = false;                    //set to false to exit the game loop
+    isPanelMovementDone = false;                    //disable rotation gui after panel is returned to mbaye
+    isCurrentPanelInLocation = false;               //set to false because current panel is returned to mbaye
+    if(isRuruClicked){
+        setTimeout(function(){
+            save_designed_panels(userId+"_designedPanel");
+        },1000);
+    }
+    isRuruClicked = false;
+}
 
 
 
@@ -2816,6 +2964,7 @@ currentScene.executeWhenReady(function () {
             // }
 
             //return the panel to Mbaye; if the current active camera is the panel camera and the panel camera should start moving
+            /*
             if(currentScene.activeCamera === panelCamera && isPanelCameraMoving){
                 //subtract radius of panel camera to enable zooming effect
                 if(panelCamera.radius >85){
@@ -2834,15 +2983,16 @@ currentScene.executeWhenReady(function () {
                     }
                     isRuruClicked = false;
                 }                  
-            }
+            }*/
 
             //if there is a current panel and a current flower and it's the start of design a panel
             if(currentPanel && theCurrentFlower.obj && isStartOfDesignPanel){
 
             
-
+                
                 // if flower's parent is not yet set, check if it has intersected the panel
                 if(theCurrentFlower.obj.intersectsMesh(currentPanel, true)){
+                    // console.log("flower intersects mesh", theCurrentFlower.obj.position, currentPanel.position);
                     //if the current flower does not have parent and intersects the current panel, add the panel to the parent
                     if(!theCurrentFlower.obj.parent &&  !theCurrentFlower.hasParent){
                         let scale = theCurrentFlower.obj.scaling;
@@ -2866,51 +3016,53 @@ currentScene.executeWhenReady(function () {
                 }
 
                 //if the current flower does not intersect the panel flower box (for bounds checking)
-                if(!theCurrentFlower.obj.intersectsMesh(panelFlowerBox, true)){        
-                    let x = theCurrentFlower.obj.position.x;
-                    let y = theCurrentFlower.obj.position.y;
-                    let z = theCurrentFlower.obj.position.z;
-                    //if the current flower is not yet in the panel
-                    if(designScene.activeCamera === panelCamera){
-                        if(!theCurrentFlower.obj.parent){
-                            if( theCurrentFlower.obj.position.x > 470 ) x = 469;
-                            if( theCurrentFlower.obj.position.x < 464 ) x = 463;
-                            if( theCurrentFlower.obj.position.y > 29.5 ) y = 28;
-                            if( theCurrentFlower.obj.position.y < 18 ) y = 19;
-                            if( theCurrentFlower.obj.position.z > 156 ) z = 155;
-                            if( theCurrentFlower.obj.position.z < 148 ) z = 149;
-                        }else{
-                            if( theCurrentFlower.obj.position.x > 20 ) x = 20;
-                            if( theCurrentFlower.obj.position.x < -18 ) x = -18;
-                            if( theCurrentFlower.obj.position.y > 75 ) y = 75;
-                            if( theCurrentFlower.obj.position.y < -78 ) y = -77;
-                            if( theCurrentFlower.obj.position.z > -9 ) z = -9;
-                            if( theCurrentFlower.obj.position.z < -55 ) z = -55;
-                        }
-                    }else if(designScene.activeCamera === focusCamera){
-                        if(!theCurrentFlower.obj.parent){
-                            if( theCurrentFlower.obj.position.x > 472.5 ) x = 471;
-                            if( theCurrentFlower.obj.position.x < 464 ) x = 463;
-                            if( theCurrentFlower.obj.position.y > 27.5 ) y = 27;
-                            if( theCurrentFlower.obj.position.y < 19.5 ) y = 19;
-                            if( theCurrentFlower.obj.position.z > 156 ) z = 155;
-                            if( theCurrentFlower.obj.position.z < 148 ) z = 149;
-                        }
-                        else{
-                            if( theCurrentFlower.obj.position.x > 15 ) x = 15;
-                            if( theCurrentFlower.obj.position.x < -22 ) x = -22;
-                            if( theCurrentFlower.obj.position.y > 75 ) y = 75;
-                            if( theCurrentFlower.obj.position.y < 11 ) y = 11;
-                            if( theCurrentFlower.obj.position.z > -9 ) z = -9;
-                            if( theCurrentFlower.obj.position.z < -55 ) z = -55;
-                        }
-                    }    
-                    theCurrentFlower.obj.position = new BABYLON.Vector3(x,y,z);       
-                }
-
+                
+                // if(!theCurrentFlower.obj.intersectsMesh(panelFlowerBox, true)){        
+                //     let x = theCurrentFlower.obj.position.x;
+                //     let y = theCurrentFlower.obj.position.y;
+                //     let z = theCurrentFlower.obj.position.z;
+                //     //if the current flower is not yet in the panel
+                //     if(designScene.activeCamera === panelCamera){
+                //         if(!theCurrentFlower.obj.parent){
+                //             if( theCurrentFlower.obj.position.x > 470 ) x = 469;
+                //             if( theCurrentFlower.obj.position.x < 464 ) x = 463;
+                //             if( theCurrentFlower.obj.position.y > 29.5 ) y = 28;
+                //             if( theCurrentFlower.obj.position.y < 18 ) y = 19;
+                //             if( theCurrentFlower.obj.position.z > 156 ) z = 155;
+                //             if( theCurrentFlower.obj.position.z < 148 ) z = 149;
+                //         }else{
+                //             if( theCurrentFlower.obj.position.x > 20 ) x = 20;
+                //             if( theCurrentFlower.obj.position.x < -18 ) x = -18;
+                //             if( theCurrentFlower.obj.position.y > 75 ) y = 75;
+                //             if( theCurrentFlower.obj.position.y < -78 ) y = -77;
+                //             if( theCurrentFlower.obj.position.z > -9 ) z = -9;
+                //             if( theCurrentFlower.obj.position.z < -55 ) z = -55;
+                //         }
+                //     }else if(designScene.activeCamera === focusCamera){
+                //         if(!theCurrentFlower.obj.parent){
+                //             if( theCurrentFlower.obj.position.x > 472.5 ) x = 471;
+                //             if( theCurrentFlower.obj.position.x < 464 ) x = 463;
+                //             if( theCurrentFlower.obj.position.y > 27.5 ) y = 27;
+                //             if( theCurrentFlower.obj.position.y < 19.5 ) y = 19;
+                //             if( theCurrentFlower.obj.position.z > 156 ) z = 155;
+                //             if( theCurrentFlower.obj.position.z < 148 ) z = 149;
+                //         }
+                //         else{
+                //             if( theCurrentFlower.obj.position.x > 15 ) x = 15;
+                //             if( theCurrentFlower.obj.position.x < -22 ) x = -22;
+                //             if( theCurrentFlower.obj.position.y > 75 ) y = 75;
+                //             if( theCurrentFlower.obj.position.y < 11 ) y = 11;
+                //             if( theCurrentFlower.obj.position.z > -9 ) z = -9;
+                //             if( theCurrentFlower.obj.position.z < -55 ) z = -55;
+                //         }
+                //     }    
+                //     theCurrentFlower.obj.position = new BABYLON.Vector3(x,y,z);       
+                // }
+                    
                 
             
             }//end of if current panel and currentflower
+           
 
             //if a current panel is active and the book of flowers is active
             if(currentPanel && isOpenBookFlowers){
@@ -2999,7 +3151,7 @@ $('#loadingScreenOverlay').on('click', function(evt){
             position: 'top-end',
             title: 'Welcome back, Major Tom!<br/><br/>Your game progress has been loaded successfully!',
             showConfirmButton: false,
-            timer: 7000,
+            // timer: 7000,
             width: 100,
             background: 'rgba(8, 64, 147, 0.6)',
         });
@@ -3133,6 +3285,31 @@ $(".mainScreenshotIcon").hover(function(){
     $('.tooltips span').hide();
 });
   
+
+
+//gizmo tools functions
+$('#positionGizmo').on('click',function(e){
+    design_handle_tool(1);
+});
+
+$('#rotationGizmo').on('click',function(e){
+    design_handle_tool(2);
+});
+
+$('#scaleGizmo').on('click',function(e){
+    design_handle_tool(3);
+});
+
+$('#offGizmo').on('click',function(e){
+    design_handle_tool(0);
+});
+
+$('deleteGizmo').on('click',function(e){
+    design_handle_tool(4);
+});
+
+
+
                 /*
                 $.ajax({
                     type: "POST",

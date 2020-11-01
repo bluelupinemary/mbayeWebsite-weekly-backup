@@ -1,4 +1,8 @@
 /*---------------------------------------------------------------------------------*/
+.input-group
+{
+    margin-bottom: 1rem !important;
+}
 .btn-showpassword{
     position: absolute;
     left: 50%;
@@ -988,9 +992,9 @@ border:0px ;
     } */
 
     .camera_style {
-        position: absolute;
-        top: 0 ;
-        left: 0;
+        /* position: absolute; */
+        /* top: 0 ; */
+        /* left: 0; */
         height:auto;
         width: 200px;
     }
@@ -1303,6 +1307,7 @@ border:0px ;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 3px 4px 20px black;
     }
     .tab-pane
     {
@@ -1372,7 +1377,7 @@ border:0px ;
     .overlap-image
     {
         margin-top: -17%;
-        left: 20%;       
+        left: 15%;       
     }
     .close-as-img
     {
@@ -1388,7 +1393,19 @@ border:0px ;
     {
         height: 60vh;
     }
-    /* IPAD Landscape */
+    /*iPad Pro  Landscape */
+@media only screen 
+and (min-width: 1024px) 
+and (max-height: 1366px) 
+and (orientation: landscape) 
+and (-webkit-min-device-pixel-ratio: 1.5) 
+{
+    .overlap-image
+    {
+        left: 20%;
+    }
+}
+/* IPAD Landscape */
 @media only screen 
 and (min-device-width: 768px) 
 and (max-device-width: 1024px) 
@@ -1448,7 +1465,9 @@ and (-webkit-min-device-pixel-ratio: 1)
     }
     .overlap-image
     {
-        margin-top: 10%;
+        margin-top: -13%;
+        left: 10%;
+        
     }
     .warning-text
     {
@@ -1497,6 +1516,10 @@ and (-webkit-min-device-pixel-ratio: 1)
     {
         font-size: .8rem !important;
     }
+    .form-control
+    {
+        font-size:0.7rem !important;
+    }
     .input-group
     {
         margin-bottom: 0.5rem!important;
@@ -1533,7 +1556,7 @@ and (-webkit-min-device-pixel-ratio: 1)
     }
     .overlap-image
     {
-        margin-top: 10%;
+        /* margin-top: 10%; */
     }
     .warning-text
     {
@@ -1629,14 +1652,15 @@ and (-webkit-min-device-pixel-ratio: 1)
     }
     .overlap-image
     {
-        margin-top: 0%;
+        margin-top: -15%;
+        left: 20%;
     }
     .warning-text
     {
         font-size: 1.2vw;
     }
 }
-/* small devices vich are smaller than 600px */
+/* small devices vich are smaller than 600px and greater than 375 */
 @media only screen and (max-width: 601px) and (min-width: 375px) and (orientation: landscape) {
     /* portrait phones */
     body{
@@ -1653,7 +1677,7 @@ and (-webkit-min-device-pixel-ratio: 1)
     }
     .custom-button {
         padding: .575rem .55rem !important;
-        font-size: 0.8rem !important;
+        font-size: 0.6rem !important;
     }
     .col_white
     {
@@ -1662,6 +1686,10 @@ and (-webkit-min-device-pixel-ratio: 1)
     .form-feilds input
     {
         font-size: .8rem !important;
+    }
+    .form-control
+    {
+        font-size: .5rem !important;
     }
     .form-feilds select
     {
@@ -1685,8 +1713,8 @@ and (-webkit-min-device-pixel-ratio: 1)
     }
     .camera_alignment
     {
-        min-height: 100px !important;
-        min-width: 100px;
+        min-height: 90px !important;
+        min-width: 90px;
         
     }
     .btn_occ_submit
@@ -1727,13 +1755,21 @@ and (-webkit-min-device-pixel-ratio: 1)
     .form-feilds input 
     {
         font-size: .5rem !important;
-        margin-bottom: .5rem !important;
+        /* margin-bottom: .5rem !important; */
     }
     .form-feilds select 
     {
         margin-bottom: .5rem !important;
         height: auto !important;
         font-size: .5rem !important;
+    }
+    .input-group
+    {
+        margin-bottom: .5rem !important;
+    }
+    .mb-3, .my-3
+    {
+        margin-bottom: .5rem !important;
     }
     .col-sm-2
     {
@@ -1753,8 +1789,8 @@ and (-webkit-min-device-pixel-ratio: 1)
     }
     .camera_style 
     {
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
     }
     .overlap-image 
     {

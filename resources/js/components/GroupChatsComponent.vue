@@ -196,7 +196,7 @@
                         </div>
                         <div class="content" id="content">
                             <div class="container">
-                                <div class="col-md-12" style="height:500px;" v-chat-scroll>
+                                <div class="col-md-12" style="height:500px; overflow-y:scroll" v-chat-scroll>
                                     <div class="date">
                                         <hr>
                                         <span>Yesterday</span>
@@ -205,7 +205,7 @@
                                     <div v-for="(message, index) in messages" :key="index">
                                         <div v-if="user.id===message.sender_id" class="message" >
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
-                                            <div class="text-main">
+                                            <div v-if="message.message" class="text-main">
                                                 <div class="text-group">
                                                     <div class="text">
                                                         <p>{{message.message}}</p>
@@ -213,16 +213,42 @@
                                                 </div>
                                                 <span>09:46 AM</span>
                                             </div>
+                                             <div v-else-if="message.message == null" class="text-main">
+                                                <div class="text-group">
+                                                    <div class="text">
+                                                        <div class="attachment">
+															<div class="image-container">
+																<img :src="'/storage/chat/'+message.chatmedia.filename">
+																<!-- <span>80kb Document</span> -->
+															</div>
+														</div>
+                                                    </div>
+                                                </div>
+                                                <span>09:46 AM</span>
+                                            </div>
                                         </div>
                                         <div v-else-if="user.id!==message.sender_id" class="message me" >
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
-                                            <div class="text-main">
+                                            <div v-if="message.message" class="text-main">
                                                 <div class="text-group me">
                                                     <div class="text me">
                                                         <p>{{message.message}}</p>
                                                     </div>
                                                 </div>
                                                 <span>09:47 AM</span>
+                                            </div>
+                                            <div v-else-if="message.message == null" class="text-main">
+                                                <div class="text-group me">
+                                                    <div class="text me">
+                                                        <div class="attachment">
+															<div class="image-container">
+																<img :src="'/storage/chat/'+message.chatmedia.filename">
+																<!-- <span>80kb Document</span> -->
+															</div>
+														</div>
+                                                    </div>
+                                                </div>
+                                                <span>09:46 AM</span>
                                             </div>
                                         </div>
                                     </div>
@@ -269,8 +295,15 @@
                                         <button type="submit" class="btn send"><i class="ti-location-arrow"></i></button>
                                     </div>
                                     <label>
-                                        <input type="file">
-                                        <span class="btn attach"><i class="ti-clip"></i></span>
+                                        <file-upload
+                                            :post-action="'sendmessages/'+this.activegroup"
+                                            ref='upload'
+                                            v-model="files"
+                                            :multiple="true"
+                                            @input-file="$refs.upload.active = true"
+                                            :headers="{'X-CSRF-TOKEN': token}">
+                                            <span class="btn attach"><i class="ti-clip"></i></span>
+                                        </file-upload>
                                     </label>
                                 </div>
                             </div>
@@ -448,6 +481,9 @@
                 activegroup: false,
                 typingTimer: false,
                 fields: {},
+                media:[],
+                files:[],
+                 token:document.head.querySelector('meta[name="csrf-token"]').content,
             }
         },
 
@@ -509,17 +545,21 @@
             fetchMessages() {
                 axios.get('getmessages/'+this.activegroup).then(response => {
                     this.messages = response.data;
+             
                 })
             },
 
             sendMessage() {
-
+            if(!this.activegroup){
+            return alert('Please select Group');
+            }
                 this.messages.push({
                     user: this.user,
                     message: this.newMessage
                 });
 
-                axios.post('sendmessages/'+this.activegroup, {message: this.newMessage}).then(response =>{
+                axios.post('sendmessages/'+this.activegroup, {message: this.newMessage})
+                .then(response =>{
                     this.newMessage = '';
                 })
             },

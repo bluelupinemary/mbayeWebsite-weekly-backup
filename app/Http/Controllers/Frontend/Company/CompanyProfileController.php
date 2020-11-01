@@ -96,11 +96,16 @@ class CompanyProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $company_profile = CompanyProfile::find($id);
+        // $user = Auth::user()->id;
+        $industry = Industry::all();
+        $company = CompanyProfile::where('owner_id',Auth::id())->first();
+        // dd($company);
+        return  view('frontend.user.view_company_profile',compact('industry','company'));
+        // $company_profile = CompanyProfile::find($id);
 
-        return $company_profile;
+        // return $company_profile;
     }
 
     /**
@@ -139,9 +144,9 @@ class CompanyProfileController extends Controller
         
         // }
         $company_profile = CompanyProfile::where('owner_id',Auth::user()->id)->first();
-        
+        // dd($company_profile);
         $saved_company_profile = $this->company_profile->update($company_profile, $request->except('_token'));
-        // dd('jj');
+        // dd($saved_company_profile);
         $user = User::find($request->owner_id);
 
         if($user->roles[0]->name == 'User') {

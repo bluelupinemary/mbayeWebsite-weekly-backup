@@ -151,7 +151,12 @@ function load_3D_mesh(){
             earth_object = result.meshes[9];      
             
       }),
-      
+      BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/storyCareScene/", "storyCareBookGLB.glb", scene).then(function (result) {
+            result.meshes.forEach(function(part){
+                console.log(part);
+            });     
+        
+  }),
       ]).then(() => {
         add_mouse_listener();
        

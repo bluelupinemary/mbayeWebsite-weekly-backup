@@ -99,7 +99,7 @@ class LikeController extends Controller
     public function countgeneralblogshare($id){
         // dd($id);
         $generalsharecount = GeneralBlogShare::where('general_blog_id',$id)->count();
-        $regulersharecount = Blogshare::where('blog_id',$id)->where('blog_type','App\Models\GeneralBlogs\GeneralBlog')->count();
-        return $sharecount = $generalsharecount+$regulersharecount;
+        $regularsharecount = Blogshare::where('blog_id',$id)->where('blog_type','App\Models\GeneralBlogs\GeneralBlog')->count();
+        return $sharecount = $generalsharecount+$regularsharecount;
     }
 }

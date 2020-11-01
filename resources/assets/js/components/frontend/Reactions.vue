@@ -23,7 +23,9 @@
         <div class="reaction-popup">
             <div class="reaction-button-div">
                 <button>
-                    <img src="/front/icons/hotNew.png" alt="">
+                    <img class="hotImg" src="/front/icons/hotNew.png" alt="">
+                    <img class="coolImg" src="/front/icons/cool300.png" alt="">
+                    <img class="naffImg naffIcon" src="/front/icons/naffPicked.png" alt="">
                 </button>
                 <div class="reaction-count">
                     <p class="hotCount">{{(this.hotcount > 0 ? this.hotcount : '')}}</p>
@@ -56,7 +58,7 @@ import EventBus from '../../frontend/event-bus';
         }
       },
         mounted() {
-            if(this.blog_type=="reguler"){
+            if(this.blog_type=="regular"){
                  this.getuserreaction();
                 this.countemotions(this.blog_id);
                 Echo.channel('blogLike'+this.blog_id)
@@ -158,7 +160,7 @@ import EventBus from '../../frontend/event-bus';
             return array;
         },
         emotion: function (emotion_id){
-            if(this.blog_type=="reguler"){
+            if(this.blog_type=="regular"){
                     var that = this;
                     axios.post('/api/blogs/'+this.blog_id+'/emotions', {
                     user_id: this.user.id,
@@ -176,28 +178,32 @@ import EventBus from '../../frontend/event-bus';
                                 // $('.reaction-popup img').attr('src', emotion.img);
                                 // $('.reaction-popup img').removeClass('hotIcon');
                                 // $('.reaction-popup img').removeClass('coolIcon');
-                                $('.reaction-popup img').attr('src', emotion.img);
-
-                                $('.reaction-popup p').hide();
+                            
+                                $('.reaction-popup p, .reaction-popup img').hide();
                                 if(emotion.emotion == 'hot') {
+                                    $('.reaction-popup img.hotImg').show();
+                                    // $('.reaction-popup img').removeClass('naffIcon');
                                     $('.reaction-popup .hotCount').show();
                                 } else if(emotion.emotion == 'cool') {
+                                    $('.reaction-popup img.coolImg').show();
+                                    // $('.reaction-popup img').removeClass('naffIcon');
                                     $('.reaction-popup .coolCount').show();
                                 } else if(emotion.emotion == 'naff') {
-                                    $('.reaction-popup img').addClass('naffIcon');
+                                    $('.reaction-popup img.naffImg').show();
+                                    // $('.reaction-popup img').addClass('naffIcon');
                                     $('.reaction-popup .naffCount').show();
                                 }
 
                                 if(emotion.emotion == 'naff' && response.data.naff_fart_status) {
                                     animateNaffFartReaction();
                                 } else {
-                                    $('.reaction-popup img').on('load', function() {
+                                    // $('.reaction-popup img').on('load', function() {
                                         $('.reaction-popup').fadeIn('slow', function() {
                                                 $('.reaction-popup button').click();
                                                 $('.reaction-popup').delay(1000).fadeOut('slow');
                                                 $('.reaction-popup button').click();
                                         });
-                                    }); 
+                                    // }); 
                                 }
                             }
                     } else if (response.data.status == 'unlike') {
@@ -226,28 +232,31 @@ import EventBus from '../../frontend/event-bus';
                                 // $('.reaction-popup img').attr('src', emotion.img);
                                 // $('.reaction-popup img').removeClass('hotIcon');
                                 // $('.reaction-popup img').removeClass('coolIcon');
-                                $('.reaction-popup img').attr('src', emotion.img);
-
-                                $('.reaction-popup p').hide();
+                                $('.reaction-popup p, .reaction-popup img').hide();
                                 if(emotion.emotion == 'hot') {
+                                    $('.reaction-popup img.hotImg').show();
+                                    // $('.reaction-popup img').removeClass('naffIcon');
                                     $('.reaction-popup .hotCount').show();
                                 } else if(emotion.emotion == 'cool') {
+                                    $('.reaction-popup img.coolImg').show();
+                                    // $('.reaction-popup img').removeClass('naffIcon');
                                     $('.reaction-popup .coolCount').show();
                                 } else if(emotion.emotion == 'naff') {
-                                    $('.reaction-popup img').addClass('naffIcon');
+                                    $('.reaction-popup img.naffImg').show();
+                                    // $('.reaction-popup img').addClass('naffIcon');
                                     $('.reaction-popup .naffCount').show();
                                 }
 
                                 if(emotion.emotion == 'naff' && response.data.naff_fart_status) {
                                     animateNaffFartReaction();
                                 } else {
-                                    $('.reaction-popup img').on('load', function() {
+                                    // $('.reaction-popup img').on('load', function() {
                                         $('.reaction-popup').fadeIn('slow', function() {
                                             $('.reaction-popup button').click();
                                             $('.reaction-popup').delay(1000).fadeOut('slow');
                                             $('.reaction-popup button').click();
                                         });
-                                    }); 
+                                    // }); 
                                 }
                             }
                     } else if (response.data.status == 'unlike') {

@@ -23,7 +23,7 @@
 .swal2-content {
     color: #17a2b8 !important;
     font-size: 1.1vw !important;
-    font-family: 'Nasalization';
+    font-family: 'Arial';
 }
 
 
@@ -146,10 +146,10 @@
 
                             <div class="column2">
                                 @if(!empty($company_profile))
-                                    <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;font-family: nasalization;
+                                    <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;font-family: Arial;
                                     height: 5vh;padding: 4px 0px 0px 0px">EDIT COMPANY PROFILE</h2></div>
                                 @else
-                                    <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;font-family: nasalization;
+                                    <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;font-family: Arial;
                                     height: 5vh;padding: 4px 0px 0px 0px">CREATE COMPANY PROFILE</h2></div>
                                 @endif        
                                  <div class="form">
@@ -165,9 +165,9 @@
                                                         <input type="text" id="company_name" name="company_name" value="" required>
                                                     
                                                     @endif
-                                            </div><br/>
+                                            </div>
                                             <div>
-                                                <label for="Cadd">Company Email :<span style="color:red">*</span></label>
+                                                <label for="CEmail">Company Email :<span style="color:red">*</span></label>
                                                 @if(!empty($company_profile))
                                                     <input type="email"  value="{{ $company_profile->company_email ?? '' }}" id="company_email" name="company_email" required>
                                                 @else
@@ -184,7 +184,7 @@
                                                
                                             </div>
                                             
-                                            <br/>
+                                            
                                             <div>
                                                 <label for="company">Company Address :<span style="color:red">*</span></label>
                                                 @if(!empty($company_profile))
@@ -192,7 +192,7 @@
                                                 @else
                                                     <input type="text" id="company_address" name="address" value="" required>
                                                 @endif
-                                            </div><br/>
+                                            </div>
                                         
                                             <div class="row">
                                                     <div class="col-md-4">
@@ -226,7 +226,7 @@
                                                             @endif
                                                         </select>
                                                     </div>
-                                            </div><br/>
+                                            </div>
                                                     <div class="mobile-no">
                                                             <label for="mobile">Mobile :<span style="color:red">*</span></label>
                                                             <input type="number" class="form-control {{ $errors->has('company_phone_number') ? 'error' : '' }}" value="{{ $company_profile->company_phone_number ?? '' }}" id="mob_no" name="company_phone_number" required>
@@ -238,7 +238,7 @@
                                                         {{ 'Enter valid mobile number' }}
                                                     </div>
                                                     @endif --}}
-                                                    <br/>
+                                                    
                                                         <div class="industry">
                                                             <label for="industry">Industry :<span style="color:red">*</span></label>
                                                             <select id="industry" class="" name="industry_id" required>&#x25BC;
@@ -254,7 +254,7 @@
                                                                 }
                                                                 @endif
                                                             </select>
-                                                        </div>
+                                                        </div><br>
                                                         <input type="hidden" name="owner_id" value="{{Auth::user()->id}}">
                                             <div class="form-btn">
                                                 <button type="submit"  class="button-done">Submit</button>
@@ -432,7 +432,8 @@
 <script src="{{asset('front/JS/gaTrackingJSFiddle.js')}}"></script>     
 <script src="{{asset('front/JS/lodash.min.js')}}"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+{{-- <script src="//geodata.solutions/includes/countrystatecity.js"></script> --}}
+<script src="{{asset('front/JS/countrystatecity.js')}}"></script>
 
  
     

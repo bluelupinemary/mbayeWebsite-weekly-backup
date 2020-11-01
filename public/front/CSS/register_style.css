@@ -1504,7 +1504,10 @@ border:0px ;
             width: 3%;
         }
 }
-
+.input-group
+{
+    margin-bottom: 1rem !important;
+}
     /* Ipad Pro */
     @media only screen 
     and (min-width: 909px) 
@@ -2029,6 +2032,17 @@ border:0px ;
         .alreadyHave
         {
             font-size: 60%;
+        }
+        .form-group {
+            margin-bottom: .5rem !important;
+        }
+        .input-group
+        {
+            margin-bottom: .5rem !important;
+        }
+        .col-sm-6
+        {
+            width:50%;
         }
     }
 

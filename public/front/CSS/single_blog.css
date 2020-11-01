@@ -1326,7 +1326,7 @@ span.cool-tooltip {
     outline: 0;
 }
 
-p.comment-date {
+p.comment-date .v-time-ago__text {
     /* position: absolute; */
     /* bottom: 0; */
     /* right: 0; */
@@ -1339,6 +1339,8 @@ p.comment-date {
     font-size: 0.7em;
     color: #ccc;
     white-space: nowrap;
+    line-height: 0;
+    margin-left: 5%;
 }
 
 .trix-content .attachment--preview .attachment__caption {
@@ -1827,7 +1829,7 @@ p.comment-date {
 
 
 
-.navigator-buttons button:focus {
+.navigator-buttons button:focus, .navigator-div button:focus, .navigator-div-zoomed-in button:focus {
     outline: 0;
     outline: 0px auto -webkit-focus-ring-color;
 }

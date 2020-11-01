@@ -4,8 +4,58 @@
     <link rel="preload" as="font" href="{{asset('fonts/Courgette-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" as="font" href="{{asset('fonts/NasalizationRg-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
     <style>
-        
+        #saveScreenshotBtn{
+            border-color:white;
+        }
+        #cancelScreenshotBtn{
+            background-color:red;
+            border-color:white;
+        }
+        .takeScreenshotMain-submenu i{
+            padding-right:3%;
+        }
+        #gizmoToolsDiv{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            display: none;
+        }
+        .gizmoToolsIcons img{
+            height: 4rem;
+            width: auto;
+            /* border: 1px solid gray; */
+        }
 
+        .gizmoToolsIcons img:hover{
+           filter:drop-shadow(2px 2px 5px white);
+        }
+
+        .gizmoLabel{
+            display:none;
+            position: absolute;
+            color: white;
+            transform: translate(-90%, -90%);
+            font-size: 1.2rem;
+            text-shadow: 0px 0px 3px #000000;
+            background: #0b91c3a3;
+            font-family: 'Nasalization Rg';
+            width: 10vw;
+            height: 3.5vh;
+            text-align: center;
+            border-radius: 12px
+        }
+
+        .gizmoToolsIcons:hover span{
+            display:inline-block;
+        }
+
+        #offGizmo img, #deleteGizmo img{
+            height:3.2rem;
+            padding-top:22%;
+        }
     </style>
   
 @endsection
@@ -48,12 +98,10 @@
         <i class="fas fa-camera mainScreenshotIcon"></i>
         <div class="submenu takeScreenshotMain-submenu">
             <ul>
-                <li><i class="fas fa-camera-retro" style="padding-right:3%;"></i><a href="" id="take-screenshot-submenu"> Capture Now</a></li>
-                <li><i class="fas fa-redo" style="padding-right:3%;"></i><a href="" id="resetScene-submenu"> Reset Scene </a></li>
-                
+                <li><i class="fas fa-camera-retro" style=""></i><a href="" id="take-screenshot-submenu"> Capture Now</a></li>
+                <li><i class="fas fa-redo" style=""></i><a href="" id="resetScene-submenu"> Reset Scene </a></li>
             </ul>
         </div>
-    
     </div>
     
     <div class="modal fade" id="showScreenshotModal" aria-hidden="true" style="display:none;">
@@ -73,14 +121,48 @@
             
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button id="saveScreenshotBtn" type="button" class="btn btn-primary" style="border-color:white;">Save Screenshot</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color:red;border-color:white;">Close</button>
+                <button id="saveScreenshotBtn" type="button" class="btn btn-primary" style="">Save Screenshot</button>
+                <button id="cancelScreenshotBtn" type="button" class="btn btn-secondary" data-dismiss="modal" style="">Close</button>
             </div>
             
           </div>
         </div>
     </div>
 
+    <!--start of gizmo buttons-->
+    <div id="gizmoToolsDiv">
+        <div class="gizmoToolsIcons" id="positionGizmo">
+            <img src="{{asset('front/images3D/designScene/posGizmo.png')}}">
+            <span class="gizmoLabel">Position: ON</span>
+        </div>
+        <div class="gizmoToolsIcons" id="rotationGizmo">
+            <img src="{{asset('front/images3D/designScene/rotateGizmo.png')}}">
+            <span class="gizmoLabel">Rotation: ON</span>
+        </div>
+        <div class="gizmoToolsIcons" id="scaleGizmo">
+            <img src="{{asset('front/images3D/designScene/scaleGizmo.png')}}">
+            <span class="gizmoLabel">Scaling: ON</span>
+        </div>
+        <div class="gizmoToolsIcons" id="deleteGizmo">
+            <img src="{{asset('front/images3D/designScene/deleteGizmo.png')}}">
+            <span class="gizmoLabel">Delete Flower</span>
+        </div>
+        <div class="gizmoToolsIcons" id="offGizmo">
+            <img src="{{asset('front/images3D/designScene/offGizmo.png')}}">
+            <span class="gizmoLabel">Off Tool</span>
+        </div>
+        {{-- <div class="tooltips">
+            <span>Take Screenshot</span>
+        </div> --}}
+        {{-- <i class="fas fa-camera mainScreenshotIcon"></i> --}}
+        {{-- <div class="submenu takeScreenshotMain-submenu">
+            <ul>
+                <li><i class="fas fa-camera-retro" style=""></i><a href="" id="take-screenshot-submenu"> Capture Now</a></li>
+                <li><i class="fas fa-redo" style=""></i><a href="" id="resetScene-submenu"> Reset Scene </a></li>
+            </ul>
+        </div> --}}
+    
+    </div>
    
 
 
@@ -105,6 +187,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="{{asset('front/babylonjs/scenes/commonScenes.js')}}"></script>
     <script src="{{asset('front/babylonjs/scenes/designPanel/mbayeMaps.js')}}"></script>
+    <script src="{{asset('front/babylonjs/scenes/designPanel/designSceneMaps.js')}}"></script>
     <script src="{{asset('front/babylonjs/scenes/designPanel/earthFlowersScene.js')}}"></script>
     <script src="{{asset('front/babylonjs/scenes/designPanel/designScene.js')}}"></script>
 

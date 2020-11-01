@@ -629,9 +629,9 @@ function add_mouse_listener_selected_flower(){
                     show_alert_box("Are you sure you want to go to the HOME page?","/");
                 }else if(theMeshClicked.name === "DesignAPanel"){
                     show_alert_box("Are you sure you want to Design A Panel now?","/designPanel");  
-                }else if(theMeshClicked.name === "FeetMbaye"){
+                }else if(theMeshClicked.name === "MbayeFeet"){
                     show_alert_box("Are you sure you want to view Mbaye's Feet now?","/feetMbaye");  
-                }else if(theMeshClicked.name === "HeadMbaye"){
+                }else if(theMeshClicked.name === "MbayeHead"){
                     show_alert_box("Are you sure you want to view Mbaye's Head now?","/headMbaye");  
                 }
 

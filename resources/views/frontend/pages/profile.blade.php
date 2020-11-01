@@ -12,21 +12,21 @@
   </div>
 </div>
 
-  <section class="container-fluid">
+<section class="container-fluid">
   <div class=" div_container">
   <img  class="img_sun img_sun1 img-fluid" src="{{ asset('front') }}/Images/agreement/s1.png" >
 
   <div class="page_1" >
-              <img class="next_button_ag img-fluid" src="{{ asset('front') }}/Images/next_sun.png" onclick="changepage();">
+    <img class="next_button_ag img-fluid" src="{{ asset('front') }}/Images/next_sun.png" onclick="changepage();">
   </div>
 
   <div class="page_2" >
-              <img class="text_part22 img_sun2 img-fluid" src="{{ asset('front') }}/Images/agreement/s2.png" >
-              <img class="btn_agree img-fluid"  id="btn_agree" src="{{ asset('front') }}/Images/ag.png" style="" onclick="fun_agree();">
-              <img class="prev_button_ag img-fluid" src="{{ asset('front') }}/Images/prev_sun.png" style="" onclick="changeprev();">
+    <img class="text_part22 img_sun2 img-fluid" src="{{ asset('front') }}/Images/agreement/s2.png" >
+    <img class="btn_agree img-fluid"  id="btn_agree" src="{{ asset('front') }}/Images/ag.png" style="" onclick="fun_agree();">
+    <img class="prev_button_ag img-fluid" src="{{ asset('front') }}/Images/prev_sun.png" style="" onclick="changeprev();">
   </div>
   <div>
-  </section>
+</section>
 @endsection
 
 @section('after-scripts')
@@ -147,7 +147,7 @@ Function for changing to previous page of agreement */
       }
 
 function fun_agree(){
-window.location.href = "{{URL::to('/dashboard')}}"
+window.location.href = "{{URL::to('/participateMbaye')}}"
 }
 
 

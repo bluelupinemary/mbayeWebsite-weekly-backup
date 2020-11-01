@@ -2,6 +2,8 @@
 
 @section('after-styles')
     <link rel="preload" as="font" href="{{asset('fonts/georgia italic.ttf')}}" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="{{asset('fonts/nasalization-rg.ttf')}}" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="{{asset('fonts/space age.ttf')}}" type="font/woff2" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('front/fontawesome/css/all.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/toastr.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/view-all-blogs.css')}}">
@@ -13,28 +15,69 @@
 <div id="page-content">
 <div class="app">
     <generalmulticount-component></generalmulticount-component>
-    <div>
-        <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+    <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+        @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
+            <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
+            class="astronaut-body">
+            <div class="tos-div thomasina">
+                <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+            </div>
+        @else
+            <img src="{{ asset('front/images/astronut/tom-navigator.png') }}" alt=""
+            class="astronaut-body">
+            <div class="tos-div">
+                <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+            </div>
+        @endif
+        <div class="user-photo {{access()->user()->getGender()}}">
+            <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
+        </div>
+        <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
+            <span>Zoom In</span>
+            <i class="fas fa-search-plus"></i>
+        </button>
+        <div class="navigator-buttons">
+            <div class="column column-1">
+                <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
+                <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
+            </div>
+            <div class="column column-2">
+                <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+            </div>
+            <div class="column column-3">
+                <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
+                <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
+            </div>
+        </div>
+        <div class="instructions-div">
+            <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
+        </div>
+        <div class="communicator-div tooltips top">
+            <button class="communicator-button"></button>
+            <span>Communicator</span>
+        </div>
+        <button class="navigator-zoomout-btn tooltips zoom-in-out">
+            <span>Zoom Out</span>
+            <i class="fas fa-undo-alt"></i>
+        </button>
+        
+    </div>
+    <div class="navigator-div-zoomed-in @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+        <div class="navigator-components">
             @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
-                <img src="{{ asset('front/images/astronut/thomasina-navigator.png') }}" alt=""
+                <img src="{{ asset('front/images/astronut/Thomasina_blog.png') }}" alt=""
                 class="astronaut-body">
-                <div class="tos-div thomasina">
-                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
-                </div>
             @else
-                <img src="{{ asset('front/images/astronut/tom-navigator.png') }}" alt=""
-                class="astronaut-body">
-                <div class="tos-div">
-                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
-                </div>
+                <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut-body">
             @endif
+            <div class="tos-div">
+                <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
+            </div>
             <div class="user-photo {{access()->user()->getGender()}}">
                 <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
             </div>
-            <button class="navigator-zoom navigator-zoomin tooltips zoom-in-out">
-                <span>Zoom In</span>
-                <i class="fas fa-search-plus"></i>
-            </button>
+            {{-- <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button> --}}
             <div class="navigator-buttons">
                 <div class="column column-1">
                     <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
@@ -59,43 +102,7 @@
                 <span>Zoom Out</span>
                 <i class="fas fa-undo-alt"></i>
             </button>
-        </div>
-        <div class="navigator-div-zoomed-in">
-            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-            <div class="navigator-components">
-                <img src="{{url('front/images/astronut/tom_blog.png')}}" alt="" class="astronaut">
-                <div class="tos-div">
-                    <button class="tos-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt=""><span class="">Terms of Services</span></button>
-                </div>
-                <div class="user-photo {{access()->user()->getGender()}}">
-                    <img src="{{asset('storage/profilepicture/'.access()->user()->getProfilePicture())}}"/>
-                </div>
-                {{-- <button class="navigator-zoom navigator-zoomin"><i class="fas fa-search-plus"></i></button> --}}
-                <div class="navigator-buttons">
-                    <div class="column column-1">
-                        <button class="music-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt=""><span class="">Music on/off</span></button>
-                        <button class="home-btn tooltips left"><img src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt=""><span class="">Home</span></button>
-                    </div>
-                    <div class="column column-2">
-                        <button class="editphoto-btn tooltips top"><img src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
-                    </div>
-                    <div class="column column-3">
-                        <button class="participate-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""><span class="">Participate</span></button>
-                        <button class="profile-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt=""><span class="">User Profile</span></button>
-                    </div>
-                </div>
-                <div class="instructions-div">
-                    <button class="instructions-btn tooltips right"><img src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt=""><span class="">Instructions</span></button>
-                </div>
-                <div class="communicator-div tooltips top">
-                    <button class="communicator-button"></button>
-                    <span>Communicator</span>
-                </div>
-                <button class="navigator-zoomout-btn tooltips zoom-in-out">
-                    <span>Zoom Out</span>
-                    <i class="fas fa-undo-alt"></i>
-                </button>
-            </div>
+            
         </div>
     </div>
     <div class="ally-dolphin">
@@ -105,7 +112,7 @@
                 <p>Ooooooofa!</p>
             </div>
             <div class="message message-2 {{(Auth::user()->gender == 'female' ? 'thomasina' : '' )}}">
-                <p>Hi, <span>Major {{(Auth::user()->gender == 'male' || Auth::user()->gender == null ? 'Tom' : 'Thomasina' )}}</span> <span class="user-name">{{Auth::user()->first_name}}!</span></p>
+                <p>Hi, <span>Major {{(Auth::user()->gender == 'male' || Auth::user()->gender == null ? 'Tom' : 'Thomasina' )}}</span> <span class="user-name">{{current(explode(' ', Auth::user()->first_name))}}!</span></p>
                 <p class="sub-title">These are your stories:</p>
             </div>
         </div>
@@ -122,7 +129,6 @@
     <script src="{{asset('front/JS/toastr.min.js')}}"></script>
     <script>
         var url = $('meta[name="url"]').attr('content');
-        var alert = '{{$alert}}';
 
         $('.ally-dolphin .dolphin').attr('src', "{{asset('front/images/Ally2.png')}}");
         toastr.options = {
@@ -147,12 +153,17 @@
             }
         });
 
+        $(window).on('load', function() {
+            $('.navigator-div').css("display", "flex").hide().fadeIn(1000);
+            $('.wrapper').fadeIn(1000);
+        });
+
         function animateDolphin() {
             $('.cloud-message').hide();
             $('.cloud-message .message').hide();
 
             $('.ally-dolphin .dolphin').on('load', function() {
-                console.log('loaded');
+                // console.log('loaded');
                 // $(".ally-dolphin .dolphin").on('load', function() {
                 // setTimeout(function() {
                     // $('.ally-dolphin .dolphin').delay(1000).addClass('animate-ally-1');
@@ -200,9 +211,7 @@
                             $('.cloud-message').css("display", "flex");
                             $('.ally-dolphin .dolphin').addClass('swim-ally-2');
 
-                            if(alert) {
-                                toastr.info('<strong>Notice:</strong> Tiles in <span style="text-decoration: underline;">red</span> are about to expire');
-                            }
+                            
                         });
                     });
                 });

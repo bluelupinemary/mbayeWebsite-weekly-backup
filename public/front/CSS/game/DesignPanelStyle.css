@@ -93,7 +93,7 @@ html, body {
         height: 100%;
         display: none;
         color: #fff;
-        z-index: 1000;
+        z-index: 9000;
     }
     #block_land h1 {
         text-transform: uppercase;
@@ -212,7 +212,7 @@ html, body {
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: auto 100% !important;
-    height:25vh !important;
+    height:auto !important;
 }
 
 .screenshot-popup-class{
@@ -261,21 +261,21 @@ html, body {
 .swal2-title{
     color:#17a2b8 !important;
     text-shadow: 1px 1px 1px black;
-    font-size: 1.2rem !important;
+    font-size: 1.3rem !important;
     font-family: 'Nasalization Rg';
 }
 .swal2-content{
     color:#c13939 !important;
-    font-size: 1em !important;
+    font-size: 1.3rem !important;
     font-family: 'Nasalization Rg';
 }
 .swal2-confirm, .swal2-cancel {
-    font-size: 0.8vw !important;
+    font-size: 1rem !important;
     font-family: 'Nasalization Rg';
 }
 .error-title-class{
     color:#df1613 !important;
-    font-size: 1vw !important;
+    font-size: 1rem !important;
     font-family: 'Nasalization Rg';
 }
 /***************** RELATED TO SWEETALERT OF TREVOR ON FIRST LOAD********************/
@@ -391,4 +391,18 @@ html, body {
     padding: 10%;
     outline: 0;
     border: 0;
+}
+
+/*extra small and small screens*/
+@media (min-width : 320px) and (max-width : 1024px) and (orientation : landscape) {
+    .swal2-popup {
+        width: 45vw !important;
+    }
+
+    .submenu{
+        width:30vw;
+    }
+    #fullscreenImg{
+        width:10vh;
+    }
 }

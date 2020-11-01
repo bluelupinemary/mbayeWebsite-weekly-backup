@@ -283,9 +283,9 @@ and (min-width: 1024px)
         font-size: 0.6em;
     }
 
-    .edit-photo {
+    /* .edit-photo {
         display: none;
-    }
+    } */
 
     .navigator-div .navigator-buttons .tooltips span {
         display: none;

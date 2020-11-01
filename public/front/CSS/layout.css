@@ -865,3 +865,7 @@ width: 30% !important;
     to   { opacity: 1; }
 }
 
+input::-ms-reveal,
+      input::-ms-clear {
+        display: none;
+      }

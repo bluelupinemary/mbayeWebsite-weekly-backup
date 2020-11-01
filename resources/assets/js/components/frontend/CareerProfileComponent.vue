@@ -254,11 +254,11 @@ export default {
         let that = this;
 
         /* Calling API for fetching images */
-        if(that.user_country != '') {
-            var country = that.user_country;
-        } else {
+        // if(that.user_country != '') {
+        //     var country = that.user_country;
+        // } else {
             var country = that.country;
-        }
+        // }
 
         axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+country+'&city='+that.city)
         .then((response) => {
@@ -381,11 +381,11 @@ export default {
         let that = this;
         that.profiles = {};
        /* Calling API for fetching images */
-        if(that.user_country != '' && that.country == '') {
-            var country = that.user_country;
-        } else {
+        // if(that.user_country != '' && that.country == '') {
+        //     var country = that.user_country;
+        // } else {
             var country = that.country;
-        }
+        // }
 
         axios.get("/api/v1/jobseekers?page="+that.page+'&search='+that.search+'&type='+that.type+'&country='+country+'&city='+that.city)
         .then((response) => {

@@ -95,7 +95,24 @@ class JobSeekerProfilesRepository extends BaseRepository
      */
     public function update(JobSeekerProfile $profile, array $input)
     {
-        
+        DB::beginTransaction();
+
+        // if(array_key_exists('featured_image', $input)) {
+        //     $this->deleteOldFile($profile);
+        //     $input['featured_image'] = $this->uploadImage($input);
+        // }
+        if($input['edited_featured_image']) {
+            $this->deleteOldFile($profile);
+            $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
+        } else if (array_key_exists('featured_image', $input)) {
+            $this->deleteOldFile($profile);
+            $input['featured_image'] = $this->uploadImage($input);
+        }
+
+        if ($profile->update($input)) {
+            DB::commit();
+            return $profile;
+        }
     }
 
     

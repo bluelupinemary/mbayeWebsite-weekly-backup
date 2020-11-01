@@ -1,7 +1,18 @@
 @extends('frontend.layouts.app')
 @section('before-styles')
-  
-
+  <style>
+    
+    .danger-alter 
+    {
+      border: 1px solid #b82c2c !important;
+      box-shadow: 1px 1px 10px 3px #b81c1c;
+    }
+    input::-ms-reveal,
+      input::-ms-clear {
+        display: none;
+      }
+  </style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="{{ asset('front/CSS/profile_edit_style.css') }}">
 @endsection
 @section('content')
@@ -14,19 +25,70 @@
     <div class="flex" >
     <section style="height:100vh">
       <div class="container-fluid">
-        <div class="sub_container">  
+        <div class="sub_container">
+          @php
+              $login=[];
+              $profile=[];
+              $location=[];
+              $organization=[];
+              $snapshot=[];
+              $payment=[];
+              $settings=[];
+              
+            if($errors->any())
+            { 
+              foreach ($errors->getMessages() as $key => $error ) 
+              {
+                // LOGIN TAB ERRORS START
+                if($key == 'email' || $key == 'old_password' || $key == 'new_password'  )
+                {
+                  $login[]=$error;
+                }
+                // LOGIN TAB ERRORS END
+                // PROFILE TAB ERRORS START
+                if($key == 'first_name' || $key == 'last_name' || $key == 'gender' || $key == 'dob')
+                {
+                  $profile[]=$error;
+                } 
+                // PROFILE TAB ERRORS ENDS
+                // LOCATION TAB ERRORS STARTS
+                if($key == 'address' || $key == 'country' || $key == 'state' || $key == 'city' || $key == 'mobile_number')
+                {
+                  $location[]=$error;
+                }
+                // LOCATION TAB ERRORS ENDS
+                // ORGANIZATIONAL TAB ERRORS STARTS
+                if($key == 'org_type' || $key == 'org_name' || $key == 'sponsor_name' || $key == 'sponsor_email' )
+                {
+                  $organization[]=$error;
+                }
+                // ORGANIZATIONAL TAB ERRORS ENDS
+                if($key == 'occupation')
+                {
+                  $snapshot[]=$error;
+                }
+              }
+              // print_r($login);
+              
+              
+              
+             
+            }    
+            // print_r($profile);
+          @endphp
+            
           <div id="overlay"></div>
           <div class="row content-row">
             <div class="col-md-2 col-sm-2 tabs-two-cols">
               <div class="tabs-link-css">
                 <div class="nav flex-column nav-pills nav-justified" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Login Details</a>
-                  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Personal Details</a>
-                  <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">location Details</a>
-                  <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Organization Details</a>
-                  <a class="nav-link" id="v-pills-snapshot-tab" data-toggle="pill" href="#v-pills-snapshot" role="tab" aria-controls="v-pills-snapshot" aria-selected="false">Snapshot</a>
-                  <a class="nav-link" id="v-pills-home-tab2" data-toggle="pill" href="#v-pills-home2" role="tab" aria-controls="v-pills-home2" aria-selected="false">Payment Details</a>
-                  <a class="nav-link" id="v-pills-home-tab3" data-toggle="pill" href="#v-pills-home3" role="tab" aria-controls="v-pills-home3" aria-selected="false">Other Settings</a>
+                <a class="nav-link active " id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Login Details @if(count( $login ) > 0)<span class="badge badge-danger">{{ count($login) }}</span> @endif </a>
+                  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Personal Details @if(count( $profile ) > 0)<span class="badge badge-danger">{{ count($profile) }}</span> @endif</a>
+                  <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Location Details @if(count( $location ) > 0)<span class="badge badge-danger">{{ count($location) }}</span> @endif</a>
+                  <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Organization Details @if(count( $organization ) > 0)<span class="badge badge-danger">{{ count($organization) }}</span> @endif</a>
+                  <a class="nav-link" id="v-pills-snapshot-tab" data-toggle="pill" href="#v-pills-snapshot" role="tab" aria-controls="v-pills-snapshot" aria-selected="false">Snapshot @if(count( $snapshot ) > 0)<span class="badge badge-danger">{{ count($snapshot) }}</span> @endif</a>
+                  <a class="nav-link" id="v-pills-payment-tab" data-toggle="pill" href="#v-pills-payment" role="tab" aria-controls="v-pills-payment" aria-selected="false">Payment Details </a>
+                  <a class="nav-link" id="v-pills-other-settings-tab" data-toggle="pill" href="#v-pills-other-settings" role="tab" aria-controls="v-pills-other-settings" aria-selected="false">Other Settings </a>
                 </div>
               </div>
             </div>
@@ -43,26 +105,27 @@
                     <div class="row text-center">
                       <div class="col-md-12">
                         <div class="form-group">
-                          <input type="email" class="form-control mb-3" id="Email" value="{{ $user->email }}" required name="email" readonly/>
+                          <input type="email" class="form-control" id="Email" value="{{ $user->email }}" placeholder="Enter Email"  name="email" readonly/>
+                          <input type="hidden" name="login_details" value="">
                         </div>
                       </div>
                       {{-- password update div --}}
                       <div class="col-md-12" id="passsword_div" style="display:none">
-                        <div class="input-group mb-3" id="show_old_password">
-                          <input type="password" placeholder="Old Password" data-toggle="tooltip" title="Password is Required!" data-placement="left" class="form-control @error('password') danger-alter @enderror" placeholder="Password" id="password" name="old_password" autocomplete="off" value="{{ old('old_password') }}">
+                        <div class="input-group" id="show_old_password">
+                          <input type="password" placeholder="Old Password" data-toggle="tooltip" title="Password is Required!" data-placement="left" class="form-control @error('old_password') danger-alter @enderror" placeholder="Password" id="password" name="old_password" autocomplete="off" value="{{ old('old_password') }}">
                           <div class="input-group-append">
                             <span class="input-group-text" onclick="showpassword('show_old_password')"><i class="fa fa-eye"></i></span>
                           </div>
                         </div>
     
-                        <div class="input-group mb-3" id="show_new_password">
+                        <div class="input-group" id="show_new_password">
                           <input type="password" data-toggle="tooltip" value="{{ old('new_password') }}" placeholder="New Password" title="Confirm password is Required!" data-placement="left" class="form-control @error('c_password') danger-alter @enderror" placeholder="Confirm Password" id="new_password" name="new_password" >
                           <div class="input-group-append">
                             <span class="input-group-text" onclick="showpassword('show_new_password')"><i class="fa fa-eye"></i></span>
                           </div>
                         </div>
     
-                        <div class="input-group mb-3" id="show_new_cpassword">
+                        <div class="input-group" id="show_new_cpassword">
                           <input type="password" data-toggle="tooltip" title="Confirm password is Required!" data-placement="left" class="form-control @error('c_password') danger-alter @enderror" placeholder="Confirm Password" id="c_password" name="c_password" >
                           <div class="input-group-append">
                             <span class="input-group-text" onclick="showpassword('show_new_cpassword')"><i class="fa fa-eye"></i></span>
@@ -82,27 +145,30 @@
                   <div class="form-feilds">
                     
                         <div class="form-group">
-                          <input  class="form-control @error('first_name') is-invalid @enderror" type="text" id="fname" name="first_name"  value="{{ $user->first_name }}" required/>
+                          <input  class="form-control @error('first_name') is-invalid @enderror" type="text" id="fname" placeholder="First Name" name="first_name"  value="{{ $user->first_name }}"/>
+                          <input type="hidden" name="profile_details" value="">
                         </div>
                         <div class="form-group">
-                          <input type="text" class="form-control" id="lname" name="last_name"  value="{{ $user->last_name }}" required/>
+                          <input type="text" class="form-control" placeholder="Last Name" id="lname" name="last_name"  value="{{ $user->last_name }}"/>
                         </div>
                         <div class="form-group">
-                          <input type="text" class="form-control" type="text" id="id_number" value="{{ $user->id_number }}" required name="id_number"/>
+                          <input type="text" class="form-control" placeholder="ID Number" type="text" id="id_number" value="{{ $user->id_number }}" name="id_number"/>
                         </div>
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                              <select name="gender" value="{{ $user->gender }}" class="form-control lbl_text" style="text-transform: capitalize;" id="genders" required>
+                              <select name="gender" value="{{ $user->gender }}" class="form-control lbl_text" style="text-transform: capitalize;" id="genders">
+                                <option value="">Select Gender</option>
                                 <option value="male" {{($user->gender == "male") ? 'selected' : ''}}>Male</option>
                                 <option value="female" {{($user->gender == "female") ? 'selected' : ''}}>Female</option>
                                 <option value="other" {{($user->gender == "other") ? 'selected' : ''}}>Other</option>
                              </select>
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-6 col-sm-6" >
                             <div class="form-group">
-                              <input class="form-control lbl_text" id="date" name="dob" placeholder="MM/DD/YYYY" type="date" value="{{ $user->dob }}" required onchange="calculate_age()"/>
+                              <input class="form-control lbl_text datepicker" id="date" name="dob" placeholder="YYYY-MM-DD" type="text" value="{{ $user->dob }}" onchange="calculate_age()"/>
+                              <input  class="form-control lbl_text" type="hidden" id="age" value="{{ old('age') }}" name="age" readonly>
                             </div>
                           </div>
                         </div>
@@ -114,31 +180,31 @@
                   <h2 class="col_white">Location Details</h2>
                   <div class="form-feilds">
                     <div class="form-group">
-                      <input  class="form-control lbl_text" type="text" id="address" value="{{ $user->address }}" required name="address"/>
+                      <input  class="form-control lbl_text" type="text" id="address" value="{{ $user->address }}" placeholder="Address" name="address"/>
+                      <input type="hidden" name="location_details" value="">
                     </div>
                     <div class="form-group">
-                      <select id="countryId" required data-toggle="tooltip" title="Country is Required!" data-placement="right" name="country" value="{{ old('country') }}" class="form-control @error('country') danger-alter @enderror countries order-alpha">
+                      <select id="countryId" data-toggle="tooltip" title="Country is Required!" data-placement="right"  name="country" value="{{ old('country') }}" class="form-control @error('country') danger-alter @enderror countries order-alpha">
                         
                       </select>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                           <select name="state" class="form-control @error('state') danger-alter @enderror states order-alpha" data-toggle="tooltip" title="state is Required!" data-placement="left" id="stateId">
                             
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                           <select name="city" class="cities order-alpha form-control @error('city') danger-alter @enderror" id="cityId" data-toggle="tooltip" title="City is Required!" data-placement="right">
-                                
                           </select>
                         </div>
                       </div>
                     </div>
                     <div class="form-group">
-                      <input type="number" class="form-control lbl_text" type="number" id="mob_no" value="{{ $user->mobile_number }}" required name="mobile_number"/>
+                      <input type="number" class="form-control lbl_text" type="number" id="mob_no" value="{{ $user->mobile_number }}" placeholder="Phone Number" name="mobile_number"/>
                     </div>
                   </div> 
                 </div>
@@ -156,15 +222,16 @@
                         <option value="Group" {{($user->org_type == "Group") ? 'selected' : ''}}>Group</option>
                         <option value="Individual" {{($user->org_type == "Individual") ? 'selected' : ''}}>Individual</option>
                     </select>
+                    <input type="hidden" name="organizational_details" value="">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control lbl_text" id="org_name" value="{{ $user->org_name }}" name="org_name"/>
+                      <input type="text" class="form-control lbl_text" id="org_name" value="{{ $user->org_name }}" placeholder="Organization Name" name="org_name"/>
                     </div>
                     <div class="form-group">
-                      <input  class="form-control" type="text" id="sname"  value="{{ $user->sponser_name }}" name="sponser_name"/>
+                      <input  class="form-control" type="text" id="sname"  value="{{ $user->sponser_name }}" placeholder="Sponsor Name" name="sponsor_name"/>
                     </div>
                     <div class="form-group">
-                      <input type="email" class="form-control" id="sponser_email"  value="{{ $user->sponser_email }}" name="sponser_email"/>
+                      <input type="email" class="form-control" id="sponsor_email"  value="{{ $user->sponser_email }}" placeholder="Sponsor Email" name="sponsor_email"/>
                     </div>
                   </div> 
                 </div>
@@ -175,17 +242,19 @@
                     <div class="row" style="align-items: center;">
                       <div class="col-md-6 col-sm-6">
                         <div class="form-group">
-                        <input type="text" name="occupation" id="list_occupation" readonly data-toggle="tooltip" class="form-control @error('occupation') danger-alter @enderror" title="Occupation is Required!" data-placement="right" onclick="load_animation_astronut()" value="{{ $user->occupation }}" class="form-control" placeholder="School">
+                        {{-- <input type="text" name="occupation" id="list_occupation" readonly data-toggle="tooltip" class="form-control @error('occupation') danger-alter @enderror" title="Occupation is Required!" data-placement="right" onclick="load_animation_astronut()" value="{{ $user->occupation }}" class="form-control" placeholder="Occupation"> --}}
+                        <textarea name="occupation" id="list_occupation" style="resize: none;" readonly data-toggle="tooltip" class="form-control @error('occupation') danger-alter @enderror" title="{{ $user->occupation }}" data-placement="right" onclick="load_animation_astronut()" class="form-control" placeholder="Occupation">{{ $user->occupation }}</textarea>
+                        <input type="hidden" name="snap_details" value="">
                         </div>
                         <p class="warning-text"><small>If your snapshot is inappropiate or irrelevent we will block</small></p>
                         <div class="checkbox" style="text-align: left;">
                           <label id="terms_label"  style="color: #ffffff">
-                          <a href="javascript:void(0);" id="term">Terms & Conditions</a> <input type="checkbox" {{($user->is_term_accept == 1) ? 'checked' : ''}} id="is_term_accept" name="is_term_accept" onchange="setCheckbox();"> </label>
+                          <a href="javascript:void(0);" id="term">Terms & Conditions</a> </label>
                         </div>
                       </div>
                       <div class="col-md-6 col-sm-6 text-center">
                         <div id="my_camera" class="camera_alignment">
-                          <img id="img_photo" class="camera_style" style="object-fit: cover;" src="{{url('storage/profilepicture/'.$user->getProfilePicture())}}">
+                          <img id="img_photo" class="camera_style" style="object-fit: cover;" src="{{url('storage/profilepicture/'.($user->getProfilePicture()!=''?$user->getProfilePicture():'dummy-person.jpg'))}}">
                         </div>
                         <div class="row">
                           <div class="col-md-12 overlap-image">
@@ -203,8 +272,21 @@
                     
                   </div> 
                 </div>
+                {{-- PAYMENT DETAILS SECTION --}}
+              <div class="tab-pane fade" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
+                <h2 class="col_white">Payments Details Coming Soon!</h2>
+                <div class="form-feilds">
+                  <input type="hidden" name="payment_details" value="">
+                </div> 
               </div>
-              
+              {{-- OTHER SETTINGS DETAILS SECTION --}}
+              <div class="tab-pane fade" id="v-pills-other-settings" role="tabpanel" aria-labelledby="v-pills-other-settings-tab">
+                <h2 class="col_white">Other Settings Coming Soon!</h2>
+                <div class="form-feilds">
+                  <input type="hidden" name="other_settings_details" value="">
+                </div> 
+              </div>
+              </div>
             </div>
             <div class="col-md-2 col-sm-2">
               <div class="btn-div padding-0">
@@ -216,18 +298,6 @@
           </div>
         </div>
       </div>
-      
-       
-      
-      {{-- @if ($errors->any())
-      <div class="alert alert-danger">
-          <ul>
-              @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-              @endforeach
-          </ul>
-      </div>
-  @endif --}}
     </section>
   </div>
     {{-- DIV FOR THE STARS HOROSCOPRE START --}}
@@ -543,23 +613,31 @@
   <!-- <script type="text/javascript" src="webcamjs/webcam.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
   <script src="{{ asset('front') }}/JS/webcam.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
-  <script src="{{ asset('front') }}/JS/bootstrap-datepicker.min.js"></script>
+  {{-- <script src="{{ asset('front') }}/JS/bootstrap-datepicker.min.js"></script> --}}
   <script src="{{ asset('front/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
+  <script src="{{ asset('js/notify.min.js') }}"></script>
+  
+  
+  
       <!-- Webcam.min.js -->
   <!--------------- For camera------------------------->
 
 <script language="JavaScript">
    var occ_details;
+   
 // When list occupation modified
   $('#change_pass').click(function(){
     if($('#passsword_div').is(":visible"))
     {
       $('#passsword_div').hide();
+      $('#change_pass').html('Change Password');
     }
     else
     {
       $('#passsword_div').show();
+      $('#change_pass').html('Cancel');
     }
     
   });
@@ -607,7 +685,7 @@
               {
                 $.each( stateVal.cities , function( cityKey, cityVal ) //iterate through cities 
                 {
-                  if(cityVal.name === "{{ $user->state }}") //if state match with users state
+                  if(cityVal.name === "{{ $user->city }}") //if state match with users state
                   {
                     // add selected attribute to the select
                     $('#cityId').append("<option selected value='" + cityVal.name + "'>" + cityVal.name + "</option>");
@@ -632,7 +710,7 @@
 
         var c_check = $('#countryId').val(); 
         $('#stateId').html('<option value="">Select State</option>');
-        $('#cityId').html('<option value="">Select State</option>');
+        $('#cityId').html('<option value="">Select City</option>');
 
         $.each( alldata, function( countryKey, countryVal ) { //variable that contain all the values
           if(countryVal.name === c_check) //if its selected country
@@ -774,6 +852,101 @@
         }
       }
   $(document).ready(function () {
+
+    $('.datepicker').datepicker({
+      dateFormat: "yy-mm-dd"
+    });
+
+    var elem = document.documentElement;
+        if(window.innerWidth < 991 )
+        {
+            Swal.fire({
+                imageUrl: '../../front/icons/alert-icon.png',
+                imageWidth: 80,
+                imageHeight: 80,
+                html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+                padding: '15px',
+                background: 'rgba(8, 64, 147, 0.62)',
+                allowOutsideClick: false
+            }).then((result) => {
+                openFullscreen();
+            });
+                    
+        }
+        else  contentDisplay();
+
+        // for showing message to turn to landscape 
+        testOrientation();
+        window.addEventListener("orientationchange", function(event) {
+            testOrientation();
+        }, false); 
+
+        window.addEventListener("resize", function(event) {
+            testOrientation();
+        }, false);
+
+        
+        function testOrientation() 
+        {
+            document.getElementById('block_land').style.display = (screen.width > screen.height) ? 'none' : 'block';
+
+            //above condition is not working sometimes then this condition will work
+            if (window.innerHeight < window.innerWidth) 
+            {
+                document.getElementById('block_land').style.display = 'none';
+            } 
+            else 
+            {
+                document.getElementById('block_land').style.display = 'block';
+            }
+        }
+
+        // MRESSAGE TO SWITCH TO LANDSCAP MODE
+
+        // CHECK FULLSCREEN MODE OR NOT START
+        
+        //Full Screen size start.
+        
+        function openFullscreen() 
+        {
+            if (elem.mozRequestFullScreen) 
+            { /* Firefox */
+                elem.mozRequestFullScreen();
+                contentDisplay();
+            } 
+            else if (elem.webkitRequestFullscreen) 
+            { /* Chrome, Safari & Opera */
+                elem.webkitRequestFullscreen();
+                contentDisplay();
+            } 
+            else if (elem.msRequestFullscreen) 
+            { /* IE/Edge */
+                elem.msRequestFullscreen();
+                contentDisplay();
+            }
+            else if (elem.requestFullscreen) 
+            { 
+                elem.requestFullscreen();
+                contentDisplay();
+            } 
+            else
+            {
+                contentDisplay();
+            }
+        }
+        
+        function contentDisplay() 
+        {
+            setTimeout(function(){
+                $(".astronautarm-img").show();
+                $(".astronautarm-img").addClass('animate-arm');
+                $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                    $(".astronautarm-img").removeClass('animate-arm');
+                });
+                    }, 1000
+            );
+        }
+        // .................................... //
     
     //for identifying zordiac sign in the edit mode
     //$("#list_occupation ").hide();
@@ -827,7 +1000,7 @@
     $('.text_Sagittarius').css({'display':'none'});
     $(".text_Capricorn ").removeClass("ani-rollouttext_Capricorn");
     $('.text_Capricorn').css({'display':'none'});
-    $(".sponser_name").hide(); //for hiding sponser name and sponser id
+    $("#sname").hide(); //for hiding sponser name and sponser id
     calculate_age();
     // Date time picker change value
     $('#date').change(function(){
@@ -893,13 +1066,13 @@
               }
               else
               {
-               /* var str_occupation= $("#text_occupation_astro").val();
-                var occ_astro=$("#text_occupation_astro").val(); */
+                var str_occupation= $("#text_occupation_astro").val();
+                var occ_astro=$("#text_occupation_astro").val();
                 var new_occ = document.getElementById("text_occupation_astro").value;
-                // var curr_occlist = $('#occupation').val();
-                // var new_occlist = new_occ + "," + curr_occlist;
-                // $("#list_occupation").html('');
-                // $("#list_occupation").html(new_occlist);
+                var curr_occlist = $('#occupation').val();
+                var new_occlist = new_occ + "," + curr_occlist;
+                $("#list_occupation").html('');
+                $("#list_occupation").html(new_occlist);
                 $("#list_occupation").val(new_occ);
                 add_occ(); 
               }
@@ -1025,11 +1198,10 @@
             //Function for age calculation
             function calculate_age()
             {
-              $("#sname").removeAttr('required');
-              $("#sid").removeAttr('required');
               //DATE validation
-            var dob=$("#date").val();
-            var zordiac=check_zordiac(dob); // Checking zordiac signs
+              var dob=$("#date").val();
+              $("#age").val(' ');
+              var zordiac=check_zordiac(dob); // Checking zordiac signs
 
                 //$('.img_2').css({'display':'none'});
                 $('.img_1').css({'display':'block'});
@@ -1164,19 +1336,15 @@
                         age=0;
                       $("#age").val(age);
 
-                      if(age<18)
+                      if(age < 18)
                       {
-                       $(".sponser_name").show();
-                       $(".sponser_hide").show();
-                       document.getElementById("sname").required = true;
-                       document.getElementById("sid").required = true;
+                       $("#sname").show();
+                       $("#sponsor_email").show();
 
                        }
                       else{
-                        $(".sponser_name").hide();
-                        $(".sponser_hide").hide();
-                        $("#sname").removeAttr('required');
-                        $("#sid").removeAttr('required');
+                        $("sname").hide();
+                        $("#sponsor_email").hide();
                       }
 
                 }
@@ -1408,11 +1576,11 @@
         });
         Webcam.attach( '#my_camera' );
       }
-      else if((screen_height == 320 || screen_height < 320) && screen_height > 320 )
+      else if((screen_height == 320 || screen_height < 320) && screen_height > 360 )
       {
         Webcam.set({
-          width: 100,
-          height: 100,
+          width: 90,
+          height: 90,
           image_format: 'jpeg',
           jpeg_quality: 90
         });
@@ -1637,6 +1805,12 @@
     if({{count($errors) }} > 0)
     {
         var errorMessage = {!! html_entity_decode($errors, ENT_QUOTES, 'UTF-8') !!};
+        
+        $.each( errorMessage , function( Key, Val ) //iterate through cities 
+        {
+          // console.log('Key : '+Key+ ", Value : "+Val);
+          $.notify(Val, "warn");
+        }); 
         var sweetMessage = '';
         if(typeof(errorMessage==="object")){
         var errType = Object.keys(errorMessage)[0];
@@ -1666,9 +1840,9 @@
     });
 
     // var occlistdb = $('').val();
-    $occ_details = explode(',', $occ_results['occlistdb']);
-    $occ_details[0] = "<b>{$occ_details[0]}</b>";
-    $occ_details = implode('\n', $occ_details);
+    // $occ_details = explode(',', $occ_results['occlistdb']);
+    // $occ_details[0] = "<b>{$occ_details[0]}</b>";
+    // $occ_details = implode('\n', $occ_details);
 
 </script>
 @endsection

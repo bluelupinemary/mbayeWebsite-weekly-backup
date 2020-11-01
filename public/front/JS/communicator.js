@@ -492,7 +492,7 @@ $('.communicator-buttons .save-button').click(function (e) {
 // republish blog
 // $('.communicator-buttons .publish-button.republish-blog').click(function (e) {
 function republishBlog() {
-    alert('republish');
+    // alert('republish');
     // e.preventDefault();
 
     $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'none');
@@ -622,7 +622,7 @@ function republishBlog() {
 // publish/launch blog
 $('.communicator-buttons .publish-button.publish-blog').click(function (e) {
     if (!$(this).hasClass('republish-blog')) {
-        alert('publish');
+        // alert('publish');
         e.preventDefault();
 
         $('.menu-div, .email-div, .chat-div, .home-div, .menu-div-2, .music-knobs, .show-instruction a, .tos-div, .communicator-buttons').css('pointer-events', 'none');
@@ -782,6 +782,7 @@ $('.general-blog-buttons .publish-button').click(function (e) {
                         //     $('.main-body .prepare').fadeOut();
                         //     $('.main-screen').fadeIn();
                         // });
+                        // alert();
                         window.location.href = url+'/single_general_blog/'+data.data.id;
                     });
                 });
@@ -1846,12 +1847,12 @@ $('.accept-friend-requests').click(function(e) {
 
 // hide/show remove featured image button
 $(".featured-image-preview").hover(function(){
-    if($('.featured-image-preview img').attr('src') != '') {
-        $('.featured-image-remove').show();
+    if($(this).find('img').attr('src') != '') {
+        $(this).find('.featured-image-remove').show();
     }
 }, function(){
-    if($('.featured-image-preview img').attr('src') != '') {
-        $('.featured-image-remove').hide();
+    if($(this).find('img').attr('src') != '') {
+        $(this).find('.featured-image-remove').hide();
     }
 });
 
@@ -2587,6 +2588,7 @@ function hideBlogSection()
 // show blog section and forms
 function showBlogSection()
 {
+    $('.music-player-div').hide();
     $('.main-form').show();
     $('.featured-image-div.all-blog').show();
     $('.communicator-buttons').css('display', 'flex');
@@ -2676,6 +2678,7 @@ function showGeneralBlogSection()
         });
     }
 
+    $('.music-player-div').hide();
     $('.general-button').addClass('active');
     $('.general-blog-buttons').css('display', 'flex');
     $('.general-blog-buttons').css('pointer-events', 'auto');
@@ -2722,6 +2725,7 @@ function showDesignsBlogSection()
         });
     }
 
+    $('.music-player-div').hide();
     $('.designs-button').addClass('active');
     $('.designs-blog-buttons').css('display', 'flex');
     $('.designs-blog-buttons').css('pointer-events', 'auto');
@@ -2733,6 +2737,7 @@ function showDesignsBlogSection()
 // show blog section and forms
 function showCareerBlogSection()
 {
+    $('.music-player-div').hide();
     $('.main-form').addClass('career-blog-form');
     $('.text-editor-fullview.blog-content').addClass('career-blog-content');
     $('.main-form').show();
@@ -2752,6 +2757,7 @@ function showCareerAccountSection()
 // hide career account section
 function hideCareerAccountSection()
 {
+    $('.featured-image-div').hide();
     $('.career-account-div').hide();
 }
 
@@ -2766,7 +2772,10 @@ $('#panel_list').on('change', function (e) {
         $('.designs-blog .edit_image').removeAttr('disabled');
         $('.designs-blog-form #designs_blog_featured_image').val(screenshot);
         $('.designs-blog .featured-image-text').css('opacity', '0');
+
+        $('.music-player-div').hide();
         $('.featured-image-div.designs-blog #featured-image-previewimg').attr('src', url+'/storage/saveState/designPanel/screenshots/'+screenshot);
+        $('.featured-image-div.designs-blog, .featured-image-div.designs-blog #featured-image-previewimg').show();
     } else {
         $('.flower-list-div').empty();
         $('.designs-blog-form .flower-list button').prop('disabled', true);
@@ -2774,6 +2783,7 @@ $('#panel_list').on('change', function (e) {
         $('.designs-blog-form #designs_blog_featured_image').val('');
         $('.designs-blog .featured-image-text').css('opacity', '1');
         $('.featured-image-div.designs-blog #featured-image-previewimg').attr('src', '');
+        $('.featured-image-div.designs-blog #featured-image-previewimg').hide();
         $('#panel_list').val('');
 
         Swal.fire({
@@ -2878,6 +2888,7 @@ function filePreview(input) {
             // $('#uploadForm + img').remove();
             $('.all-blog .featured-image-text').css('opacity', '0');
             $('.all-blog #featured-image-previewimg').attr('src', e.target.result);
+            $('.all-blog #featured-image-previewimg').show();
         };
         reader.readAsDataURL(input.files[0]);
         $('.all-blog .edit_image').removeAttr('disabled');
@@ -2891,6 +2902,7 @@ function generalBlogfilePreview(input) {
             // $('#uploadForm + img').remove();
             $('.general-blog .featured-image-text').css('opacity', '0');
             $('.general-blog #featured-image-previewimg').attr('src', e.target.result);
+            $('.general-blog #featured-image-previewimg').show();
         };
         reader.readAsDataURL(input.files[0]);
         $('.general-blog .edit_image').removeAttr('disabled');
@@ -3046,10 +3058,12 @@ function unsetButtonLabel()
     $('.publish-text').attr('src', url+'/front/images/communicator-buttons/buttons/launchTxt.png');
     $('input[name="save_status"]').val('Draft');
     
-    document.querySelector(".republish-blog").removeEventListener('click',
-        republishBlog,
-        false
-    );
+    if($('.publish-button').hasClass('republish-blog')) {
+        document.querySelector(".republish-blog").removeEventListener('click',
+            republishBlog,
+            false
+        );
+    }
 
     $('.publish-button').removeClass('republish-blog');
 }
@@ -3211,6 +3225,7 @@ function removeFeaturedImage()
 {
     $("input[name='featured_image']").attr('value', '');
     $('.featured-image-text').css('opacity', '1');
+    $(".preview-image").hide();
     $('.preview-image').attr('src', '');
 }
 

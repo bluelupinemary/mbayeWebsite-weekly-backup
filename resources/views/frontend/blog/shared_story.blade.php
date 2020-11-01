@@ -9,6 +9,9 @@
 <meta property="og:type" content="website" /> <meta property="og:image:width" content="720" />
 <meta property="og:image:height" content="720" />
 
+<link rel="preload" as="font" href="{{asset('fonts/georgia italic.ttf')}}" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="{{asset('fonts/nasalization-rg.ttf')}}" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="{{asset('fonts/space age.ttf')}}" type="font/woff2" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.carousel.min.css') }}">
@@ -466,6 +469,8 @@
                         if(naff_fart_animation) {
                             animateNaffFart();
                             naff_fart_animation = !naff_fart_animation;
+                        } else {
+                            naff_fart_animation = false;
                         }
                     });
                 }
@@ -852,65 +857,69 @@
         var astronaut_zoom = 0;
 
         $('.zoom-btn').click(function() {
-            if(!astronaut_zoom) {
-                // removeAstronautAnimation();
-                // $('.reaction-div').css('transition', 'none');
-                $('.zoom-in').hide();
-                $('.zoom-out').show();
-                $('.reaction-div').addClass('animate-zoomIn');
+            if(!naff_fart_animation) {
+                if(!astronaut_zoom) {
+                    // removeAstronautAnimation();
+                    // $('.reaction-div').css('transition', 'none');
+                    $('.zoom-in').hide();
+                    $('.zoom-out').show();
+                    $('.reaction-div').addClass('animate-zoomIn');
 
-                $('.reaction-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                    $('.reaction-div').addClass('zoomin-astronaut');
-                    $('.reaction-div').removeClass('animate-zoomIn');
-                });
-            } else {
-                $('.zoom-out').hide();
-                $('.zoom-in').show();
+                    $('.reaction-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.reaction-div').addClass('zoomin-astronaut');
+                        $('.reaction-div').removeClass('animate-zoomIn');
+                    });
+                } else {
+                    $('.zoom-out').hide();
+                    $('.zoom-in').show();
+                    
+                    $('.reaction-div').addClass('animate-zoomOut');
+
+
+                    $('.reaction-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.reaction-div').removeClass('zoomin-astronaut');
+                        $('.reaction-div').removeClass('animate-zoomOut');
+                        // $('.reaction-div').addClass('zoomin-astronaut');
+                        // returnAstronautAnimation();
+                        // $('.reaction-div').css('transition', 'transform 3s ease 0s');
+                    });
+                }
                 
-                $('.reaction-div').addClass('animate-zoomOut');
-
-
-                $('.reaction-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                    $('.reaction-div').removeClass('zoomin-astronaut');
-                    $('.reaction-div').removeClass('animate-zoomOut');
-                    // $('.reaction-div').addClass('zoomin-astronaut');
-                    // returnAstronautAnimation();
-                    // $('.reaction-div').css('transition', 'transform 3s ease 0s');
-                });
+                astronaut_zoom = !astronaut_zoom;
             }
-            
-            astronaut_zoom = !astronaut_zoom;
         });
 
         var navigator_zoom = 0;
 
         $('button.navigator-zoomin').click( function() {
-            if(!navigator_zoom) {
-                if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
-                    $('.navigator-div').hide();
-                    $('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
-                    // if(!img_has_loaded) {
-                    //     $('.navigator-div-zoomed-in .lds-ellipsis').show();
-                    //     $('.navigator-div-zoomed-in .astronaut').on('load', function() {
-                    //         $('.navigator-div-zoomed-in .lds-ellipsis').hide();
-                    //         $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
-                    //         img_has_loaded = !img_has_loaded;
-                    //     });
-                    // } else {
-                        $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
-                    // }
-                } else {
-                    $(this).fadeOut();
-                    $('.navigator-div').addClass('animate-navigator-zoomin');
+            if(!naff_fart_animation) {
+                if(!navigator_zoom) {
+                    if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                        $('.navigator-div').hide();
+                        $('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
+                        // if(!img_has_loaded) {
+                        //     $('.navigator-div-zoomed-in .lds-ellipsis').show();
+                        //     $('.navigator-div-zoomed-in .astronaut').on('load', function() {
+                        //         $('.navigator-div-zoomed-in .lds-ellipsis').hide();
+                        //         $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                        //         img_has_loaded = !img_has_loaded;
+                        //     });
+                        // } else {
+                            $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                        // }
+                    } else {
+                        $(this).fadeOut();
+                        $('.navigator-div').addClass('animate-navigator-zoomin');
 
-                    $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                        $('.navigator-div').removeClass('animate-navigator-zoomin');
-                        $('.navigator-div').addClass('zoomin');
-                    });
+                        $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                            $('.navigator-div').removeClass('animate-navigator-zoomin');
+                            $('.navigator-div').addClass('zoomin');
+                        });
+                    }
                 }
-            }
 
-            navigator_zoom = !navigator_zoom;
+                navigator_zoom = !navigator_zoom;
+            }
         });
 
         $('.navigator-zoomout-btn').click(function() {
@@ -974,6 +983,10 @@
 
         $('.profile-btn').click( function() {
             window.location.href = url+'/dashboard';
+        });
+
+        $('.participate-btn').click( function() {
+            window.location.href = url+'/participateMbaye';
         });
 
         $('.instructions-btn').click( function() {

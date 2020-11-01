@@ -441,6 +441,32 @@ html, body {
 }
 /*related to sweetalert box*/
 .swal2-popup {
+    box-shadow: 0px 0px 20px #17a2b8;
+    width: 32em !important;
+    padding: 1vw !important;
+}
+
+.swal2-title{
+    color:#17a2b8 !important;
+    text-shadow: 1px 1px 1px black;
+    font-size: 1.3rem !important;
+    font-family: 'Nasalization Rg';
+}
+.swal2-content{
+    color:#17a2b8 !important;
+    font-size: 1.3rem !important;
+    font-family: 'Nasalization Rg';
+}
+.swal2-confirm, .swal2-cancel {
+    font-size: 1rem !important;
+    font-family: 'Nasalization Rg';
+}
+.error-title-class{
+    color:#df1613 !important;
+    font-size: 1rem !important;
+    font-family: 'Nasalization Rg';
+}
+/* .swal2-popup {
     box-shadow: 0px 0px 8px #17a2b8;
     width: 30vw !important;
     padding: 1vw !important;
@@ -464,7 +490,7 @@ html, body {
     color:#df1613 !important;
     font-size: 1vw !important;
     font-family: 'Nasalization Rg';
-}
+} */
 
 
 .musicPlayer{

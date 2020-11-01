@@ -853,17 +853,25 @@ ul.music {
     transition: 0.5s;
     
   }
-  
-  .sidenav a {
-    padding: 10% 10px 0px 16px;
+  .navbar-tabs{
+    /* border: 1px solid red; */
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
+  }
+  .sidenav a {
+    padding-left: 4%;
+    /* border: 1px solid red; */
+    position: relative;
     text-decoration: none;
-    font-size:1rem;
+    font-size: 1rem;
+    height: 7vh;
     color: white;
     display: block;
-    font-size: calc( 1vw + 3px );
     transition: 0.3s;
-    font-family:arial regular;
+    font-family: Arial;
   }
   
 
@@ -1211,7 +1219,7 @@ display:none;
 
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 12px;}
+    .sidenav a {font-size: 9px;}
   }
 .modal-box{
 
@@ -1224,7 +1232,7 @@ transition: 0.3s;
 font-family:arial regular;
 text-align: center;
 font-size: 1.3rem;
-padding: 15px;
+padding: 10px;
 }
 .btn-footer{
 display: flex;

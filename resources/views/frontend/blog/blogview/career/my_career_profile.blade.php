@@ -26,7 +26,9 @@
       <input type="hidden" id="profile_user_id_input" name="profile_user_id_input" value="{{$profile->user_id}}">
     
     <div class="app">
-        
+        <div class="jobseeker-title">
+            <h1>JOBSEEKER PROFILE</h1>
+        </div>
             
             <div class="bg-div">
                 
@@ -36,7 +38,7 @@
                     </div>
                     
                     
-                    <div class="featured-img" style="height:100%;">
+                    <div class="featured-img" >
                         <img src="{{ asset('storage/career/employee/'.$profile->featured_image) }}"  id="featured-image-previewimg"  alt="input image" style=" max-width:100%; max-height:100%;">
                            
                         {{-- </label> --}}
@@ -45,25 +47,37 @@
                     @if(Auth::id() != $profile->user_id)
                         
                             <div class="view-profile-button">
-                                
-                                <button class="more-icon" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt=""></button>
+                               
+                                <button class="more-icon tooltips-buttons top" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt="">
+                                    <span id="details-text">View Details</span>
+                                </button>
                                 
                             </div>
                             <div class="planet-buttons">
                                 
-                                <button class="view" onclick="goto_dashboard({{$profile->user_id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-                                <button class="save" data-tag="careers"><img src="{{asset('front/icons/save.png')}}" alt=""></button>
-                                <button class="call" onclick="connect_mail({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/call.png')}}" alt=""></button>
-                                <button class="messenger" onclick="connect_mail({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/messengerIcon.png')}}" alt="message-icon"></button>
+                                <button class="view tooltips top" onclick="goto_dashboard({{$profile->user_id}})"><img src="{{asset('front/icons/view.png')}}" alt="">
+                                    <span class="">View Dashboard</span>
+                                </button>
+                                <button class="save tooltips top"><img src="{{asset('front/icons/save.png')}}" alt="">
+                                    <span class="">Save Profile</span>
+                                </button>
+                                <button class="call tooltips top" onclick="connect_mail({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/call.png')}}" alt="">
+                                    <span class="">Contact</span>
+                                </button>
+                                <button class="messenger tooltips top" onclick="connect_mail({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/messengerIcon.png')}}" alt="message-icon">
+                                    <span class="">Chat</span>
+                                </button>
                             </div>
                     @else
                         <div class="edit-buttons">
-                            <button class="edit" onclick="edit_profile();"><i class="fas fa-edit"  style="font-size:2em; color:#c5a739;"></i></button>
+                            <button class="edit tooltips top" onclick="edit_profile();"><i class="fas fa-edit"  style="font-size:2em; color:#c5a739;"></i><span class="">Edit My Profile</span></button>
                             
                         </div>
                         <div class="view-profile-button" >
                         
-                            <button class="more-icon" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt=""></button>
+                            <button class="more-icon tooltips-buttons top" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt="">
+                                <span id="details-text">View Detail</span>
+                            </button>
                             
                         </div>
                     @endif
@@ -201,9 +215,9 @@
         {{-- <label class="titile">About Me</label><br> --}}
         <div class="sub-section">
         
-                <label class="lbl_titile">Name : </label><span class="spn_value"> {{ $user->first_name ?? '' }} &nbsp; {{ $user->last_name ?? '' }} </span><br>
-                <label class="lbl_titile">DOB : </label><span class="spn_value"> {{ $user->dob ?? '' }} </span><br>
-                <label class="lbl_titile">Address : </label> <span class="spn_value" > {{ $user->address ?? '' }}</span>
+                <label class="lbl_titile">Name : </label><span class="spn_value"> {{ $profile->user->first_name ?? '' }} &nbsp; {{ $profile->user->last_name ?? '' }} </span><br>
+                <label class="lbl_titile">DOB : </label><span class="spn_value"> {{ $profile->user->dob ?? '' }} </span><br>
+                <label class="lbl_titile">Address : </label> <span class="spn_value" > {{ $profile->user->address ?? '' }}</span>
         </div>
         <div data-toggle="modal" data-target="#AboutMeModal" style="position: relative;width: 100%;">
             <i class="fas fa-ellipsis-h" style="position:relative; float:right; right:5%;"></i>
@@ -313,12 +327,12 @@
         </div> --}}
         <div class="modal-body" style="background-color: rgb(5 26 57); height:50vh;overflow-y:scroll;">
             <div class="aboutme-body">
-                <label class="lbl_title">Name : </label><span class="modal_spn_value"> {{ $user->first_name ?? '' }} &nbsp;{{ $user->last_name ?? '' }}</span><br/>
-                <label class="lbl_title">Profession : </label><span class="modal_spn_value">{{$profile->profession->profession_name}}</span><br/>
-                <label class="lbl_title">DOB : </label><span class="modal_spn_value">{{ $user->dob ?? '' }}</span><br/>
+                <label class="lbl_title">Name : </label><span class="modal_spn_value"> {{ $profile->user->first_name ?? '' }} &nbsp;{{ $profile->user->last_name ?? '' }}</span><br/>
+                <label class="lbl_title">Profession : </label><span class="modal_spn_value">{{$profile->profession->profession_name ?? ''}}</span><br/>
+                <label class="lbl_title">DOB : </label><span class="modal_spn_value">{{$profile->user->dob ?? '' }}</span><br/>
                 {{-- <label class="lbl_title">Address : </label> <span class="address spn_value" ></span><br/> --}}
-                <label class="lbl_title">Age : </label> <span class="modal_spn_value" >{{ $user->age ?? '' }}</span><br/>
-                <label class="lbl_title">Gender : </label> <span class="modal_spn_value" >{{ $user->gender ?? '' }}</span><br/>
+                <label class="lbl_title">Age : </label> <span class="modal_spn_value" >{{ $profile->user->age ?? '' }}</span><br/>
+                <label class="lbl_title">Gender : </label> <span class="modal_spn_value" >{{ $profile->user->gender ?? '' }}</span><br/>
                 <label class="lbl_title">Present Address : </label> <span class="modal_spn_value" >{{ $profile->present_address ?? '' }}</span><br/>
                 <div style="display: flex">
                     <div style="padding: 1%;width: 15vw;"><label class="lbl_title">Objective : </label></div>
@@ -354,15 +368,22 @@
                     <div class="modal-body" style="background-color: rgb(5 26 57);height:50vh;overflow-y:scroll;">
                         
                         <div class="education-body">
-                            @foreach($profile->education as $education)
-                            {{-- <h1>testing loop</h1> --}}
-                            <label class="lbl_title">Level of Education : </label><span class="modal_spn_value">{{ $education->education_level }}</span><br/>
-                            <label class="lbl_title">Field of Study : </label><span class="modal_spn_value">{{ $education->field_of_study }}</span><br/>
-                            <label class="lbl_title">School Name : </label><span class="modal_spn_value">{{ $education->school_name}}</span><br/>
-                            <label class="lbl_title">Year Attended : </label> <span class="modal_spn_value" >{{ \Carbon\Carbon::parse($education->start_date)->format('F Y') }} - {{ \Carbon\Carbon::parse($education->end_date)->format('F Y') }}</span><br/>
-                            <label class="lbl_title">Description : </label> <span class="modal_spn_value" >{{ $education->description}}</span><br/>
-                            <hr style="background-color: white;">
-                            @endforeach
+                            @if(empty($profile->education))
+                                <label class="lbl_title">Level of Education : </label><span class="modal_spn_value"></span><br/>
+                                <label class="lbl_title">Field of Study : </label><span class="modal_spn_value"></span><br/>
+                                <label class="lbl_title">School Name : </label><span class="modal_spn_value"></span><br/>
+                                <label class="lbl_title">Year Attended : </label> <span class="modal_spn_value" ></span><br/>
+                            @else
+                                @foreach($profile->education as $education)
+                                {{-- <h1>testing loop</h1> --}}
+                                <label class="lbl_title">Level of Education : </label><span class="modal_spn_value">{{ $education->education_level ?? '' }}</span><br/>
+                                <label class="lbl_title">Field of Study : </label><span class="modal_spn_value">{{ $education->field_of_study ?? '' }}</span><br/>
+                                <label class="lbl_title">School Name : </label><span class="modal_spn_value">{{ $education->school_name ?? ''}}</span><br/>
+                                <label class="lbl_title">Year Attended : </label> <span class="modal_spn_value" >{{ \Carbon\Carbon::parse($education->start_date)->format('F Y') }} - {{ \Carbon\Carbon::parse($education->end_date)->format('F Y') }}</span><br/>
+                                <label class="lbl_title">Description : </label> <span class="modal_spn_value" >{{ $education->description ?? ''}}</span><br/>
+                                <hr style="background-color: white;">
+                                @endforeach
+                            @endif
                         </div>
                         
                         
@@ -417,31 +438,35 @@
         </div> --}}
         <div class="modal-body" style="background-color: rgb(5 26 57);height:50vh;overflow-y:scroll;">
             <div class="work-body">
-                @foreach($profile->workexp as $workExperience)
-           
-                    <label class="lbl_title">{{ \Carbon\Carbon::parse($workExperience->start_date)->format('F Y') }} - {{ \Carbon\Carbon::parse($workExperience->end_date)->format('F Y') }}</label><br>
-                    <label class="lbl_title">Company Name : </label><span class="spn_valuee"> {{ $workExperience->company_name ?? '' }}</span><br>
-                    <label class="lbl_title">Designation : </label><span class="spn_valuee"> {{ $workExperience->designation ?? '' }} </span><br>
-                    <label class="lbl_title">Contact Number : </label><span class="spn_valuee"> {{ $workExperience->contact_no ?? '' }}</span><br>
-                    <label class="lbl_title">Company Address : </label><span class="spn_valuee"> {{ $workExperience->address ?? '' }}  </span><br>
-                    <div style="display: flex">
-                        <div style="padding: 1%;width: 15vw;"><label class="lbl_title">Role : </label></div>
-                        <div>
-                            <span class="spn_valuee" style="text-align: justify-all" >{{ $workExperience->role ?? '' }}</span><br/>
+                @if(empty($profile->workexp))
+                    <label class="lbl_title"></label><br>
+                        <label class="lbl_title">Company Name : </label><span class="spn_valuee"> </span><br>
+                        <label class="lbl_title">Designation : </label><span class="spn_valuee"></span><br>
+                        <label class="lbl_title">Contact Number : </label><span class="spn_valuee"></span><br>
+                        <label class="lbl_title">Company Address : </label><span class="spn_valuee"></span><br>
+                        <div style="display: flex">
+                            <div style="padding: 1%;width: 15vw;"><label class="lbl_title">Role : </label></div>
+                            <div>
+                                <span class="spn_valuee" style="text-align: justify-all" ></span><br/>
+                            </div>
                         </div>
-    
-                    </div>
-                    
-                    {{-- <label class="lbl_title">Role : </label><span class="spn_value"> {{ $workExperience->role ?? '' }}</span><br> --}}
-                    {{-- <span class="spn_valuee">{{ $workExperience->company_name ?? '' }}</span><br>
-                        <span class="spn_valuee">{{ $workExperience->designation ?? '' }}</span><br><br>
-                        <span class="spn_valuee">{{ $workExperience->role ?? '' }}</span> --}}
-                        {{-- <label class="lbl_titile">DOB : </label><span class="dob spn_value"></span>
-                        <label class="lbl_titile">Address : </label> <span class="address spn_value" ></span> --}}
-                    
-                <hr style="background-color: #8e9898">
-                @endforeach
-                
+                @else
+                    @foreach($profile->workexp as $workExperience)
+            
+                        <label class="lbl_title">{{ \Carbon\Carbon::parse($workExperience->start_date)->format('F Y') }} - {{ \Carbon\Carbon::parse($workExperience->end_date)->format('F Y') }}</label><br>
+                        <label class="lbl_title">Company Name : </label><span class="spn_valuee"> {{ $workExperience->company_name ?? '' }}</span><br>
+                        <label class="lbl_title">Designation : </label><span class="spn_valuee"> {{ $workExperience->designation ?? '' }} </span><br>
+                        <label class="lbl_title">Contact Number : </label><span class="spn_valuee"> {{ $workExperience->contact_no ?? '' }}</span><br>
+                        <label class="lbl_title">Company Address : </label><span class="spn_valuee"> {{ $workExperience->address ?? '' }}  </span><br>
+                        <div style="display: flex">
+                            <div style="padding: 1%;width: 15vw;"><label class="lbl_title">Role : </label></div>
+                            <div>
+                                <span class="spn_valuee" style="text-align: justify-all" >{{ $workExperience->role ?? '' }}</span><br/>
+                            </div>
+                        </div>
+                        <hr style="background-color: #8e9898">
+                    @endforeach
+                @endif
             </div>
         </div>
         
@@ -525,7 +550,7 @@
                     $(".contacts").hide();
                     $(".character_refernces").hide();
                     $(".job_description").hide();
-                 
+                    $('#details-text').text('View Details');
                     $(".bg-div").addClass("ani-rollout_profile_back");
                     $(".bg-div").css({'transform':'scale(1)'});
                     // $(".bg-div").css({'height':'67vh'});
@@ -553,17 +578,12 @@
             $(".bg-div").removeClass("ani-rollout_profile");
              $(".bg-div").removeClass("ani-rollout_profile_back");
              $(".bg-div").addClass("ani-rollout_profile");
-            //  $(".planet-buttons").removeClass("planet-buttons-rollout");
-            // $(".planet-buttons").addClass("planet-buttons-rollout");
-            // $(".view-profile-button").removeClass("view-profile-button-rollout");
-            // $(".view-profile-button").addClass("view-profile-button-rollout");
-            // $(".edit-buttons").removeClass("ani-rollout_edit");
-            // $(".edit-buttons").addClass("ani-rollout_edit");
-            var form_url = url+'/get_career_details';
-            $(".navigator-div").hide();
-            $(".bg-div").css({'transform':'scale(0.7)'});
-            $(".bg-div").css({'top':'17vh'});
+             var form_url = url+'/get_career_details';
+             $(".navigator-div").hide();
+             $(".bg-div").css({'transform':'scale(0.7)'});
+             $(".bg-div").css({'top':'17vh'});
             // $(".bg-div").css({'height':'97vh'});
+            $('#details-text').text('Hide Details');
             // $(".edit-buttons").css({'left':'45%'});
             // // $(".edit-buttons").css({'top':'25%'});
             // $(".edit-buttons").css({'transform':'scale(0.7)'});
@@ -595,28 +615,16 @@
 
 
     function connect_mail(profile_id,user_id){
-        var form_url = url+'/get_career_details';
-        $.ajax({
-                url: form_url,
-                method: 'post',
-                data: { 
-                    profile_id: profile_id,
-                    user_id: user_id,
-                    },
-               dataType: 'json',
-                success: function(data) {
+       
                   
 
-                    var primary_email_id=data['User_details'].email;
+                    // var primary_email_id=data['User_details'].email;
                    
-                    window.open('mailto:'+primary_email_id+'?subject=test subject');
-                },
-                error: function (request, status, error) {
-                   
-                }
-                });
+                    window.open('mailto:user_id["email"]');
+                
+                };
         
-    }
+    
     var navigator_zoom = 0;
         var img_has_loaded = 0;
         $('button.navigator-zoomin').click( function() {

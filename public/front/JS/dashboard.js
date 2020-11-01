@@ -1055,13 +1055,13 @@ $('.main-planet').mouseover(function() {
 // 	$(this).find('.planet_name').removeClass('animated zoomIn');
 // 	$(this).find(' .planet_name').css('opacity', '0');
 // 	});
-$('.profile-picture-overlay').mouseover(function() {
-	$('h2.edit-photo').addClass('animated zoomIn');
-	$('h2.edit-photo').css('opacity', '1');
-}).mouseout(function() {
-	$('h2.edit-photo').removeClass('animated zoomIn');
-	$('h2.edit-photo').css('opacity', '0');
-});
+// $('.profile-picture-overlay').mouseover(function() {
+// 	$('h2.edit-photo').addClass('animated zoomIn');
+// 	$('h2.edit-photo').css('opacity', '1');
+// }).mouseout(function() {
+// 	$('h2.edit-photo').removeClass('animated zoomIn');
+// 	$('h2.edit-photo').css('opacity', '0');
+// });
 
 var zoomedin_edit_photo = '';
 $('.profile-picture-overlay').mouseover(function() {
@@ -1340,6 +1340,40 @@ $('.tos-btn').click( function() {
 
 $('.editphoto-btn').click( function() {
 	window.location.href = url+'/profile/edit-photo';
+});
+
+var edit_photo = '';
+
+$('.navigator-div .profile-picture-overlay').click(function() {
+	if(isMobile()) {
+		$('.navigator-div h2.edit-photo').addClass('animated zoomIn');
+		$('.navigator-div h2.edit-photo').css('opacity', '1');
+
+		$('.navigator-div h2.edit-photo').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+			window.location.href = url+'/profile/edit-photo';
+		});
+	} else {
+		window.location.href = url+'/profile/edit-photo';
+	}
+});
+
+$('.navigator-div-zoomed-in .profile-picture-overlay').click(function() {
+	if(isMobile()) {
+		if(zoomedin_edit_photo == '') {
+			zoomedin_edit_photo = new CircleType(document.getElementById('zoomedin-edit-photo'))
+				.dir(1)
+				.radius(150);
+		}
+
+		$('.navigator-div-zoomed-in h2.edit-photo').addClass('animated zoomIn');
+		$('.navigator-div-zoomed-in h2.edit-photo').css('opacity', '1');
+
+		$('.navigator-div-zoomed-in h2.edit-photo').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+			window.location.href = url+'/profile/edit-photo';
+		});
+	} else {
+		window.location.href = url+'/profile/edit-photo';
+	}
 });
 
 var show_notifications = 0;

@@ -1,11 +1,42 @@
-@media (min-width: 1921px) {
-    /* .trix-editor trix-editor {
-        height: 23em;
-    } */
 
-    /* .blog-submenu {
-        font-size: 1em;
-    } */
+
+@media (min-width: 1920px) {
+    .fullscreen-blog-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(14rem, 7em) !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(14rem, 3em) !important;
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        width: 13em !important;
+    }
+}
+
+@media (min-width: 2560px) {
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 202%);
+        padding: 0.5%;
+    }
+
+    .trix-editor .color-picker, .text-editor-fullview .color-picker {
+        padding: 0.5%;
+    }
+
+    .fullscreen-blog-color-picker div, .fullscreen-email-color-picker div, .fullscreen-genblog-color-picker div, .fullscreen-designs-blog-color-picker div {
+        width: 1vw !important;
+        height: 1vw !important;
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(14rem, 7.5em) !important;
+        width: 11em !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(14rem, 3em) !important;
+    }
 }
 
 @media (max-width: 1920px)
@@ -42,10 +73,27 @@ and (max-width: 1280px) {
 }
 
 /* Ipad Pro */
-@media (min-width: 1024px) 
-and (max-width: 1366px)
-and (orientation: landscape)  {
-    
+@media (min-width: 320px) 
+and (max-width: 1367px)
+and (orientation: landscape) {
+    .text-editor-fullview.email-content .font-picker {
+        transform: translate(1rem, 69%);
+    }
+
+    .fullscreen-blog-color-picker div, .fullscreen-email-color-picker div, .fullscreen-genblog-color-picker div, .fullscreen-designs-blog-color-picker div {
+        width: 1.5em !important;
+        height: 1.5em !important;
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        left: 1rem !important;
+        transform: translate(130%, 6em) !important;
+        width: 10em !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(140%, 2.8em) !important;
+    }
 }
 
 /* Laptop 3 */
@@ -75,39 +123,31 @@ and (max-width: 1280px) {
 }
 
 /* Ipad */
-@media (max-width : 1024px) {
-    /* .start-div p {
-        font-size: 1em;
-    } */
+@media (max-width : 1024px)
+and (min-width: 768px)
+and (orientation: landscape) {
+    .text-editor-fullview.email-content .font-picker {
+        transform: translate(1rem, 78%);
+    }
 
-    /* .trix-editor trix-editor {
-        height: 7em;
-    } */
-    
-    /* .featured-image-text {
-        font-size: 0.5em;
-    } */
+    .trix-editor .color-picker, .text-editor-fullview .color-picker {
+        transform: translate(119%, 26%);
+    }
 
-    /* .custom-file-upload {
-        font-size: 0.4em;
-    } */
+    .fullscreen-blog-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(130%, 5.4em) !important;
+    }
 
-    /* .blog-submenu {
-        width: 11vw;
-    } */
-
-    /* .video-form {
-        top: 22%;
-    } */
-}
-
-@media (max-width: 991px) {
-    .text-editor-fullview .font-picker {
-        top: 5.5em;
-        left: 1em;
-        transform: unset;
+    .fullscreen-email-color-picker {
+        transform: translate(139%, 2.7em) !important;
     }
 }
+
+@media (max-width: 991px)  {
+    
+}
+
+
 
 @media (min-width : 480px) 
 and (max-width : 853px)
@@ -147,89 +187,148 @@ and (orientation : landscape) {
     }
 }
 
+/* @media (min-width: 480px)
+and (max-width: 853px)
+and (orientation: portrait) {
+    .text-editor-fullview .font-picker {
+        top: 1em;
+        left: 1em;
+        transform: translate(0, 5em);
+    }
+} */
+
 @media (min-width : 411px) 
-and (max-width : 823px)
+and (max-width : 824px)
 and (orientation : landscape) {
-    /* .start-div p {
-        font-size: 0.8em;
-    } */
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 169%);
+    }
 
-    
+    .trix-editor .color-picker, .text-editor-fullview .color-picker {
+        transform: translate(151%, 26%);
+    }
 
-    /* .main-screen input {
-        font-size: 0.9vw;
-        height: 2vw;
-    } */
+    .fullscreen-blog-color-picker div, .fullscreen-email-color-picker div, .fullscreen-genblog-color-picker div, .fullscreen-designs-blog-color-picker div {
+        width: 1.5em !important;
+        height: 1.5em !important;
+    }
 
-    /* .main-form .add-video-btn {
-        font-size: 0.6vw;
-        height: 2vw;
-    } */
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        left: 1rem !important;
+        transform: translate(130%, 5.3em) !important;
+        width: 10em !important;
+    }
 
-    /* .blog-submenu {
-        width: 14vw;
-    } */
-
-    /* .video-form {
-        top: 30%;
-        width: 17vw;
-    } */
+    .fullscreen-email-color-picker {
+        transform: translate(130%, 2.7em) !important;
+    }
 }
 
 /* Iphone X */
 @media (min-width : 375px) 
 and (max-width : 812px)
 and (orientation : landscape) {
-    /* .menu-div {
-        transform: translate(-675%, -65%);
-    } */
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 169%);
+    }
 
-    /* .menu-div button {
-        padding: 22% 0;
-    } */
-    /* .trix-editor trix-editor {
-        height: 6em;
-    } */
+    .text-editor-fullview.email-content .font-picker {
+        transform: translate(1rem, 84%);
+    }
 
-    
+    .fullscreen-blog-color-picker div, .fullscreen-email-color-picker div, .fullscreen-genblog-color-picker div, .fullscreen-designs-blog-color-picker div {
+        width: 1.5em !important;
+        height: 1.5em !important;
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        left: 1rem !important;
+        transform: translate(130%, 5.3em) !important;
+        width: 10em !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(130%, 2.7em) !important;
+    }
+}
+
+@media (min-width : 375px) 
+and (max-width : 812px)
+and (orientation : portrait) {
+    .text-editor-fullview.email-content .font-picker {
+        transform: translate(1rem, 117%);
+    }
+
+    .fullscreen-blog-color-picker div, .fullscreen-email-color-picker div, .fullscreen-genblog-color-picker div, .fullscreen-designs-blog-color-picker div, .fullscreen-designs-blog-color-picker div {
+        width: 1.5em !important;
+        height: 1.5em !important;
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(9rem, 5.9em) !important;
+        width: 10em !important;
+    }
 }
 
 @media (min-width : 414px) 
 and (max-width : 736px)
 and (orientation : landscape) {
-    /* .blog-submenu {
-        width: 15vw;
-    } */
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 184%);
+    }
+
+    .text-editor-fullview.email-content .font-picker {
+        transform: translate(1rem, 102%);
+    }
+
+    .trix-editor .color-picker, .text-editor-fullview .color-picker {
+        transform: translate(102%, 26%);
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(121%, 5.5em) !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(121%, 3em) !important;
+    }
 }
 
 /* Iphone 6/7/8 */
 @media (min-width : 375px) 
-and (max-width : 667px)
+and (max-width : 668px)
 and (orientation : landscape) {
-    /* .trix-editor trix-editor {
-        height: 5em;
-    } */
+    .trix-editor .color-picker, .text-editor-fullview .color-picker {
+        transform: translate(113%, 26%);
+    }
 
-    /* .blog-submenu {
-        width: 16vw;
-    } */
+    .fullscreen-blog-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(113%, 5.5em) !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(110%, 3em) !important;
+    }
+}
+
+@media (min-width : 280px)
+and (max-width: 653px) {
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 219%);
+    }
 }
 
 /* Galaxy S5 */
 @media (min-width : 360px) 
 and (max-width : 640px)
 and (orientation : landscape) {
-    /* .start-div p {
-        font-size: 0.7em;
-    } */
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 189%);
+    }
 
-    /* .trix-editor trix-editor {
-        height: 4em;
-    } */
-
-    /* .blog-submenu {
-        width: 17vw;
-    } */
+    .trix-editor .color-picker, .text-editor-fullview .color-picker {
+        transform: translate(117%, 26%);
+    }
 }
 
 /* Iphone 5 */
@@ -237,31 +336,155 @@ and (orientation : landscape) {
 and (max-width : 568px) 
 /* and (-webkit-device-pixel-ratio : 2)  */
 and (orientation : landscape) {
-    /* .start-div p {
-        font-size: 0.6em;
-    } */
-
-    /* .trix-editor trix-editor {
-        height: 4em;
-    } */
-
-    /* .blog-submenu {
-        width: 19vw;
-    } */
-
-    /* .video-form {
-        top: 37%;
-        width: 20vw;
-    } */
-
     .modal.show .modal-dialog {
         width: 80%;
         margin: 0 auto;
     }
+
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 191%);
+    }
+
+    .text-editor-fullview.email-content .font-picker {
+        transform: translate(1rem, 108%);
+    }
+
+    .trix-editor .color-picker, .text-editor-fullview .color-picker {
+        transform: translate(133%, 26%);
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(102%, 5.5em) !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(102%, 3em) !important;
+    }
 }
 
-@media (max-height : 200px) {
-    /* .zoomIn-arm {
-        transform: translate(-33%, 0%) scale(1.4);
-    } */
+
+/* PORTRAIT */
+@media (min-width : 414px) 
+and (max-width : 736px)
+and (orientation : portrait) {
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(9.5rem, 5.6em) !important;
+        width: 10em !important;
+    }
+}
+
+@media (min-width : 320px) 
+and (max-width : 568px) 
+/* and (-webkit-device-pixel-ratio : 2)  */
+and (orientation : portrait) {
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 204%);
+    }
+
+    .text-editor-fullview.email-content .font-picker {
+        transform: translate(1rem, 120%);
+    }
+
+    .fullscreen-blog-color-picker div, .fullscreen-email-color-picker div, .fullscreen-genblog-color-picker div, .fullscreen-designs-blog-color-picker div {
+        width: 1.5em !important;
+        height: 1.5em !important;
+    }
+    
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(8.5rem, 5.1em) !important;
+        width: 10em !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(8.5rem, 3em) !important;
+    }
+}
+
+@media (min-width : 360px) 
+and (max-width : 640px)
+and (orientation : portrait) {
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(9rem, 5.1em) !important;
+        width: 10em !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(9rem, 3em) !important;
+    }
+}
+
+@media (min-width : 375px) 
+and (max-width : 668px)
+and (orientation : portrait) {
+    .fullscreen-blog-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(9rem, 5.5em) !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(9rem, 3em) !important;
+    }
+}
+
+@media (min-width : 411px) 
+and (max-width : 824px)
+and (orientation : portrait) {
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 223%);
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(9.5rem, 5.9em) !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(9.5rem, 3em) !important;
+    }
+}
+
+@media (max-width: 1024px)
+and (min-width: 768px)
+and (orientation: portrait) {
+    .text-editor-fullview .font-picker {
+        transform: translate(1rem, 216%);
+    }
+
+    .text-editor-fullview.email-content .font-picker {
+        transform: translate(1rem, 99%);
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(13.4rem, 6.5em) !important;
+        width: 10em !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(13.4rem, 3em) !important;
+    }
+}
+
+@media (min-width: 1024px) 
+and (max-width: 1366px)
+and (orientation: portrait)  {
+    .text-editor-fullview .font-picker {
+        top: 0;
+        transform: translate(1rem, 214%);
+    }
+
+    .text-editor-fullview.email-content .font-picker {
+        transform: translate(1rem, 78%);
+    }
+
+    .fullscreen-blog-color-picker, .fullscreen-email-color-picker, .fullscreen-genblog-color-picker, .fullscreen-designs-blog-color-picker {
+        transform: translate(14rem, 7.3em) !important;
+        width: 9em !important;
+    }
+
+    .fullscreen-email-color-picker {
+        transform: translate(14rem, 2.7em) !important;
+    }
+
+    .fullscreen-blog-color-picker div, .fullscreen-email-color-picker div, .fullscreen-genblog-color-picker div, .fullscreen-designs-blog-color-picker div {
+        width: 2vw !important;
+        height: 2vw !important;
+    }
 }

@@ -224,7 +224,7 @@ class BlogsController extends Controller
         $blog->valid_videos = $videos['valid_videos'];
         $blog->invalid_videos = $videos['invalid_videos'];
         $blog->naff_fart_status = $blog->getNaffFartStatus();
-        $blog->type = "reguler";
+        $blog->type = "regular";
         // dd($blog);
         return view('frontend.blog.single_blog', compact('blog'));
     }
@@ -252,7 +252,7 @@ class BlogsController extends Controller
 
         if($shared_blog->blog_type == 'App\Models\Blogs\Blog') {
             $tags = $blog->tags;
-            $blog->type = 'reguler';
+            $blog->type = 'regular';
             $blog->share_route = '/share_blog';
         } else if($shared_blog->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
             $tags = $shared_blog->tags;
@@ -442,9 +442,9 @@ class BlogsController extends Controller
         // dd($general_blogs_private);
         $general_blogs_public = GeneralBlog::whereIn('created_by', $fid)->doesntHave('privacy')->get();
         // dd(compact('general_blogs_private'));
-        $reguler_blogs = $blogs_private->merge($blogs_public);
+        $regular_blogs = $blogs_private->merge($blogs_public);
         $general_blogs = $general_blogs_private->merge($general_blogs_public);
-        $blogs = $reguler_blogs->merge($general_blogs)
+        $blogs = $regular_blogs->merge($general_blogs)
         ->sortByDesc('publish_datetime')
         ->paginate(8);
         // dd($blogs);

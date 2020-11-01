@@ -30,18 +30,18 @@
                     </div>
                     <h2 class="fs-title">Login Details</h2>
                     <input type="hidden" name="">
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                       <input type="email"  data-toggle="tooltip" title="Email is Required!" data-placement="right"  class="form-control @error('email') danger-alter @enderror" id="Email" value="{{ old('email') }}"  onchange="validateEmail()" required name="email" placeholder="Email">
                     </div>
 
-                    <div class="input-group mb-3" id="show_hide_password">
+                    <div class="input-group" id="show_hide_password">
                       <input type="password" data-toggle="tooltip" title="Password is Required!" data-placement="left" class="form-control @error('password') danger-alter @enderror" placeholder="Password" id="password" name="password" onchange="validatePassword('password')" autocomplete="off">
                       <div class="input-group-append">
                         <span class="input-group-text" onclick="showpassword('show_hide_password')"><i class="fa fa-eye"></i></span>
                       </div>
                     </div>
 
-                    <div class="input-group mb-3" id="show_hide_cpassword">
+                    <div class="input-group " id="show_hide_cpassword">
                       <input type="password" data-toggle="tooltip" title="Confirm password is Required!" data-placement="left" class="form-control @error('c_password') danger-alter @enderror" placeholder="Confirm Password" id="c_password" name="c_password" onchange="validateConfirmpass()">
                       <div class="input-group-append">
                         <span class="input-group-text" onclick="showpassword('show_hide_cpassword')"><i class="fa fa-eye"></i></span>
@@ -67,7 +67,7 @@
                       <input type="text" data-toggle="tooltip" title="Last Name is Required!" data-placement="right" class="form-control @error('last_name') danger-alter @enderror" id="lname" name="last_name"  value="{{ old('last_name') }}" required placeholder="Last Name">
                     </div>
                     <div class="form-group">
-                      <input type="text" data-toggle="tooltip" title="ID Number is optional!" data-placement="right" class="form-control @error('id_number') danger-alter @enderror" id="id_number" value="{{ old('id_number') }}" required name="id_number" placeholder="ID Number (Optional)">
+                      <input type="text" data-toggle="tooltip" title="ID Number is optional!" data-placement="right" class="form-control @error('id_number') danger-alter @enderror" id="id_number" value="{{ old('id_number') }}" name="id_number" placeholder="ID Number (Optional)">
                     </div>
                     <div class="row">
                       <div class="col-md-6 col-sm-6">
@@ -163,11 +163,11 @@
                     </div>
                     
                     <div class="form-group">
-                      <input class="form-control @error('sponser_name') danger-alter @enderror" type="text" id="sname"  value="{{ old('sponser_name') }}" name="sponser_name" placeholder="Sponsor Name">
+                      <input class="form-control @error('sponsor_name') danger-alter @enderror" type="text" id="sname"  value="{{ old('sponsor_name') }}" name="sponsor_name" placeholder="Sponsor Name">
                     </div>
 
                     <div class="form-group">
-                      <input type="email" class="form-control @error('sponser_email') danger-alter @enderror" id="sponser_email"  value="{{ old('sponser_email') }}" name="sponser_email" placeholder="Sponsor Email">
+                      <input type="email" class="form-control @error('sponsor_email') danger-alter @enderror" id="sponsor_email"  value="{{ old('sponsor_email') }}" name="sponsor_email" placeholder="Sponsor Email">
                     </div>
 
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
@@ -620,21 +620,21 @@
     <!--------------------------------------- For camera--------------------------------------------->
 
     @if(session('success'))
-     <script>
+    <script>
         $(document).ready(function(){                  
           Swal.fire({
               imageUrl: '../front/icons/alert-icon.png',
               imageWidth: 80,
               imageHeight: 80,
               imageAlt: 'Mbaye Logo',
-              title: "<span id='success'>Congratulations!</span>",
+              title: "<span id='success' style='color:green;'>Congratulations!</span>",
               html: "Registration completed. We have sent an activation link to your email address . Please verify your account.",
               width: '30%',
               padding: '1rem',
               background: 'rgba(8, 64, 147, 0.62)'
         });                                        
-    });
-                    </script>
+      });
+    </script>
     @endif
  <script>
  

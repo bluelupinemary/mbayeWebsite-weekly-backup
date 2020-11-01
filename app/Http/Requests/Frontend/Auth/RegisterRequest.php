@@ -33,7 +33,7 @@ class RegisterRequest extends Request
             'last_name'            => 'required|max:255',
             'dob'                  => 'date_format:Y-m-d|before:today',
             'gender'               => 'required',
-            'id_number'            => 'required',
+            'age'                  => '',
             'occupation'           => 'required',
             'email'                => ['required', 'email', 'max:255', Rule::unique('users')],
             'photo'                => 'required',
@@ -55,5 +55,26 @@ class RegisterRequest extends Request
             'password.regex'                   => 'Password must contain at least one number and both uppercase and lowercase letters.',
             'is_term_accept.required'          => 'Pleasse accept terms & agreement to continue',
         ];
+    }
+
+    // CUSTOM VALIDATION FOR SPOONSOR NAME AND SPONSOR EMAIL
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if($this->has('age'))
+            {
+                if($this->get('age') <= 18)
+                {
+                    if($this->get('sponsor_name') =='')
+                    {
+                        $validator->errors()->add('sponsor_name', 'Sponsor Name is a Required');
+                    }
+                    if($this->get('sponsor_email') =='')
+                    {
+                        $validator->errors()->add('sponsor_email', 'Sponsor Email is a Required');    
+                    }
+                }
+            }   
+        });       
     }
 }

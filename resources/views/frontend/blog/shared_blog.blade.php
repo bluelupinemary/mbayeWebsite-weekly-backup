@@ -2,23 +2,36 @@
 
 @section('before-styles')
 @trixassets
-@if($blog->type == "reguler")
-<meta property="og:image" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+@if($blog->featured_image)
+    @if($blog->type == "regular")
+    <meta property="og:image" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+    @else
+    <meta property="og:image" content="{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}">
+    @endif
 @else
-<meta property="og:image" content="{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}">
+    <meta property="og:image" content="{{ asset('storage/img/blog/blog-default-featured-image.png') }}">
 @endif
 
 <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($blog->summary), 20, '...') }}">
 <meta property="og:url" content="{{ url('') }}">
 <meta property="og:title" content="{{ $blog->name }}">
-@if($blog->type == "reguler")
-<meta name="twitter:card" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+
+@if($blog->featured_image)
+    @if($blog->type == "regular")
+    <meta name="twitter:card" content="{{ asset('storage/img/blog/'.$blog->featured_image) }}">
+    @else
+    <meta name="twitter:card" content="{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}">
+    @endif
 @else
-<meta name="twitter:card" content="{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}">
+    <meta name="twitter:card" content="{{ asset('storage/img/general_blogs/blog-default-featured-image.png') }}">
 @endif
+
 <meta property="og:type" content="website" /> <meta property="og:image:width" content="720" />
 <meta property="og:image:height" content="720" />
 
+<link rel="preload" as="font" href="{{asset('fonts/georgia italic.ttf')}}" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="{{asset('fonts/nasalization-rg.ttf')}}" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="{{asset('fonts/space age.ttf')}}" type="font/woff2" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.carousel.min.css') }}">
@@ -79,14 +92,20 @@
             <div class="blog-heading">
                 <div class="blog" data-blogid="{{ $blog->id }}"></div>
                 <div class="blog-details-1">
-                    @if($blog->type == "reguler")
-                    <div class="blog-featured-img"
-                        style='background-image: url("{{ asset('storage/img/blog/'.$blog->featured_image) }}")'>
-                    </div>
+                    @if($blog->featured_image)
+                        @if($blog->type == "regular")
+                            <div class="blog-featured-img"
+                                style='background-image: url("{{ asset('storage/img/blog/'.$blog->featured_image) }}")'>
+                            </div>
+                        @else
+                            <div class="blog-featured-img"
+                                style='background-image: url("{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}")'>
+                            </div>
+                        @endif
                     @else
-                    <div class="blog-featured-img"
-                        style='background-image: url("{{ asset('storage/img/general_blogs/'.$blog->featured_image) }}")'>
-                    </div>
+                        <div class="blog-featured-img"
+                            style='background-image: url("{{ asset('storage/img/blog/blog-default-featured-image.png') }}")'>
+                        </div>
                     @endif
                     <div class="blog-dates-reactions">
                         <div class="blog-dates">
@@ -105,7 +124,7 @@
                                 <img src="{{ asset('front/icons/hotNew.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Hot</p>
-                                    @if($blog->type == "reguler")
+                                    @if($blog->type == "regular")
                                     <hotcount-component></hotcount-component>
                                     @else
                                     <generalhotcount-component></generalhotcount-component>
@@ -116,7 +135,7 @@
                                 <img src="{{ asset('front/icons/coolIcon.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Cool</p>
-                                    @if($blog->type == "reguler")
+                                    @if($blog->type == "regular")
                                     <coolcount-component></coolcount-component>
                                     @else
                                     <generalcoolcount-component></generalcoolcount-component>
@@ -127,7 +146,7 @@
                                 <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                 <div class="button-details">
                                     <p class="button-title">Share</p>
-                                    @if($blog->type == "reguler")
+                                    @if($blog->type == "regular")
                                     <blogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></blogsharecount-component>
                                     @else
                                     <generalblogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></generalblogsharecount-component>
@@ -138,7 +157,7 @@
                                 <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                 <div class="button-details">
                                     <p class="button-title">Naff</p>
-                                    @if($blog->type == "reguler")
+                                    @if($blog->type == "regular")
                                     <naffcount-component></naffcount-component>
                                     @else
                                     <generalnaffcount-component></generalnaffcount-component>
@@ -149,7 +168,7 @@
                                 <img src="{{ asset('front/icons/commentsNew.png') }}" alt="" width="40">
                                 <div class="button-details">
                                     <p class="button-title">Declarations</p>
-                                    @if($blog->type == "reguler")
+                                    @if($blog->type == "regular")
                                     <commentcount-component></commentcount-component>
                                     @else
                                     <generalcommentcount-component></generalcommentcount-component>
@@ -186,7 +205,7 @@
                                     <img src="{{ asset('front/icons/hotNew.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Hot</span><span class="abbr">Hot</span></p>
-                                        @if($blog->type == "reguler")
+                                        @if($blog->type == "regular")
                                         <hotcount-component></hotcount-component>
                                         @else
                                         <generalhotcount-component></generalhotcount-component>
@@ -197,7 +216,7 @@
                                     <img src="{{ asset('front/icons/coolIcon.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Cool</span><span class="abbr">Cool</span></p>
-                                        @if($blog->type == "reguler")
+                                        @if($blog->type == "regular")
                                         <coolcount-component></coolcount-component>
                                         @else
                                         <generalcoolcount-component></generalcoolcount-component>
@@ -208,7 +227,7 @@
                                     <img src="{{ asset('front/icons/naffPicked.png') }}" />
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Naff</span><span class="abbr">Naff</span></p>
-                                        @if($blog->type == "reguler")
+                                        @if($blog->type == "regular")
                                         <naffcount-component></naffcount-component>
                                         @else
                                         <generalnaffcount-component></generalnaffcount-component>
@@ -221,7 +240,7 @@
                                     <img src="{{ asset('front/icons/commentsNew.png') }}" alt="" width="40">
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Declarations</span><span class="abbr">Declar.</span></p>
-                                        @if($blog->type == "reguler")
+                                        @if($blog->type == "regular")
                                         <commentcount-component></commentcount-component>
                                         @else
                                         <generalcommentcount-component></generalcommentcount-component>
@@ -232,7 +251,7 @@
                                     <img src="{{ asset('front/icons/share.png') }}" alt="" width="40">
                                     <div class="button-details">
                                         <p class="button-title"><span class="full">Share</span><span class="abbr">Share</span></p>
-                                        @if($blog->type == "reguler")
+                                        @if($blog->type == "regular")
                                         <blogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></blogsharecount-component>
                                         @else
                                         <generalblogsharecount-component :blog_id="{!! json_encode($blog->id) !!}"></generalblogsharecount-component>
@@ -297,18 +316,18 @@
                     @endif
                 </div>
                 <div id="app">
-                    @if($blog->type == "reguler")
-                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="reguler">
+                    @if($blog->type == "regular")
+                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="regular">
                     </comment-component>
                     @else
-                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="general">
+                    <comment-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="general"></comment-component>
                     @endif
                     <button class="blog-btn blog-minimize"><i class="fas fa-arrow-up"></i></button>
                 </div>
             </div>
         </div>
-        @if($blog->type == "reguler")
-        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="reguler"></like-component>
+        @if($blog->type == "regular")
+        <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="regular"></like-component>
         @else
         <like-component :blog_id="{!! json_encode($blog->id) !!}" :user="{{ Auth::user() }}" blog_type="general"></like-component>
         @endif
@@ -458,11 +477,15 @@
                                 <div class="owner-name">{{$blog->owner->first_name.' '.$blog->owner->last_name}}</div>
                             </div>
                              {{-- <img class="card-img-top" src="" alt="Card image cap"> --}}
-                             @if($blog->type == "reguler")
-                             <div class="card-body" style="background-image: url({{ asset('storage/img/blog/'.$blog->featured_image) }});">
-                             @else
-                             <div class="card-body" style="background-image: url({{ asset('storage/img/general_blogs/'.$blog->featured_image) }});">
-                             @endif
+                            @if($blog->featured_image)
+                                @if($blog->type == "regular")
+                                    <div class="card-body" style="background-image: url({{ asset('storage/img/blog/'.$blog->featured_image) }});">
+                                @else
+                                    <div class="card-body" style="background-image: url({{ asset('storage/img/general_blogs/'.$blog->featured_image) }});">
+                                @endif
+                            @else
+                                <div class="card-body" style="background-image: url({{ asset('storage/img/blog/blog-default-featured-image.png') }});">
+                            @endif
                             </div>
                             <div class="card-footer">
                                 <div class="blog-share-title">{{$blog->name}}</div>
@@ -549,6 +572,8 @@
                             naff_fart_animation = !naff_fart_animation;
                         }
                     });
+                } else {
+                    naff_fart_animation = false;
                 }
             });
         });
@@ -937,65 +962,69 @@
         var astronaut_zoom = 0;
 
         $('.zoom-btn').click(function() {
-            if(!astronaut_zoom) {
-                // removeAstronautAnimation();
-                // $('.reaction-div').css('transition', 'none');
-                $('.zoom-in').hide();
-                $('.zoom-out').show();
-                $('.reaction-div').addClass('animate-zoomIn');
+            if(!naff_fart_animation) {
+                if(!astronaut_zoom) {
+                    // removeAstronautAnimation();
+                    // $('.reaction-div').css('transition', 'none');
+                    $('.zoom-in').hide();
+                    $('.zoom-out').show();
+                    $('.reaction-div').addClass('animate-zoomIn');
 
-                $('.reaction-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                    $('.reaction-div').addClass('zoomin-astronaut');
-                    $('.reaction-div').removeClass('animate-zoomIn');
-                });
-            } else {
-                $('.zoom-out').hide();
-                $('.zoom-in').show();
+                    $('.reaction-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.reaction-div').addClass('zoomin-astronaut');
+                        $('.reaction-div').removeClass('animate-zoomIn');
+                    });
+                } else {
+                    $('.zoom-out').hide();
+                    $('.zoom-in').show();
+                    
+                    $('.reaction-div').addClass('animate-zoomOut');
+
+
+                    $('.reaction-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                        $('.reaction-div').removeClass('zoomin-astronaut');
+                        $('.reaction-div').removeClass('animate-zoomOut');
+                        // $('.reaction-div').addClass('zoomin-astronaut');
+                        // returnAstronautAnimation();
+                        // $('.reaction-div').css('transition', 'transform 3s ease 0s');
+                    });
+                }
                 
-                $('.reaction-div').addClass('animate-zoomOut');
-
-
-                $('.reaction-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                    $('.reaction-div').removeClass('zoomin-astronaut');
-                    $('.reaction-div').removeClass('animate-zoomOut');
-                    // $('.reaction-div').addClass('zoomin-astronaut');
-                    // returnAstronautAnimation();
-                    // $('.reaction-div').css('transition', 'transform 3s ease 0s');
-                });
+                astronaut_zoom = !astronaut_zoom;
             }
-            
-            astronaut_zoom = !astronaut_zoom;
         });
 
         var navigator_zoom = 0;
 
         $('button.navigator-zoomin').click( function() {
-            if(!navigator_zoom) {
-                if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
-                    $('.navigator-div').hide();
-                    $('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
-                    // if(!img_has_loaded) {
-                    //     $('.navigator-div-zoomed-in .lds-ellipsis').show();
-                    //     $('.navigator-div-zoomed-in .astronaut').on('load', function() {
-                    //         $('.navigator-div-zoomed-in .lds-ellipsis').hide();
-                    //         $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
-                    //         img_has_loaded = !img_has_loaded;
-                    //     });
-                    // } else {
-                        $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
-                    // }
-                } else {
-                    $(this).fadeOut();
-                    $('.navigator-div').addClass('animate-navigator-zoomin');
+            if(!naff_fart_animation) {
+                if(!navigator_zoom) {
+                    if((navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') == -1) || (navigator.userAgent.indexOf("Mozilla") != -1 && navigator.userAgent.indexOf("Firefox") != -1)) {
+                        $('.navigator-div').hide();
+                        $('.navigator-div-zoomed-in').css('display', 'flex').hide().fadeIn();
+                        // if(!img_has_loaded) {
+                        //     $('.navigator-div-zoomed-in .lds-ellipsis').show();
+                        //     $('.navigator-div-zoomed-in .astronaut').on('load', function() {
+                        //         $('.navigator-div-zoomed-in .lds-ellipsis').hide();
+                        //         $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                        //         img_has_loaded = !img_has_loaded;
+                        //     });
+                        // } else {
+                            $('.navigator-div-zoomed-in .navigator-components').css('display', 'flex').hide().fadeIn();
+                        // }
+                    } else {
+                        $(this).fadeOut();
+                        $('.navigator-div').addClass('animate-navigator-zoomin');
 
-                    $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-                        $('.navigator-div').removeClass('animate-navigator-zoomin');
-                        $('.navigator-div').addClass('zoomin');
-                    });
+                        $('.navigator-div').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+                            $('.navigator-div').removeClass('animate-navigator-zoomin');
+                            $('.navigator-div').addClass('zoomin');
+                        });
+                    }
                 }
-            }
 
-            navigator_zoom = !navigator_zoom;
+                navigator_zoom = !navigator_zoom;
+            }
         });
 
         $('.navigator-zoomout-btn').click(function() {
@@ -1059,6 +1088,10 @@
 
         $('.profile-btn').click( function() {
             window.location.href = url+'/dashboard';
+        });
+
+        $('.participate-btn').click( function() {
+            window.location.href = url+'/participateMbaye';
         });
 
         $('.instructions-btn').click( function() {

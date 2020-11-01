@@ -2,7 +2,7 @@
 
 @section('before-styles')
 <link rel="stylesheet" href="{{ asset('front/CSS/login_style.css') }}">
-<link href="//db.onlinewebfonts.com/c/ee837e8aeaf5d681604ab401337b9046?family=Space+Age" rel="stylesheet" type="text/css" />
+
 <style>   
     .header
     {
@@ -45,6 +45,10 @@
         border: 1px solid #b82c2c !important;
         box-shadow: 1px 1px 10px 3px #b81c1c;
     }
+    input::-ms-reveal,
+      input::-ms-clear {
+        display: none;
+      }
 </style>
 @endsection
 
@@ -187,19 +191,22 @@
 @endsection
 
 @section('after-scripts')
-<script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
-{{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
+{{-- <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script> --}}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 
     
 
     $(document).ready(function() {
 
-       $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('input[name="_token"]').val()
-            }
+        $('#email').focus(function(){
+            $('#email').removeClass('danger-alter');
         });
+        $('#password').focus(function(){
+            $('#password').removeClass('danger-alter');
+        });
+
+       
 
         var elem = document.documentElement;
         if(window.innerWidth < 991 )
@@ -217,7 +224,7 @@
             });
                     
         }
-            else  contentDisplay();
+        else  contentDisplay();
 
         // for showing message to turn to landscape 
         testOrientation();
@@ -305,7 +312,7 @@
         $('#main-form').submit(function(e) 
         {
             e.preventDefault();
-            if ($.trim($("#email").val()) === "" || $.trim($("#password").val()) === "")
+            if ($.trim($("#email").val()) === "")
             {
                 Swal.fire({
                         imageUrl: '../front/icons/alert-icon.png',
@@ -313,12 +320,13 @@
                         imageHeight: 80,
                         imageAlt: 'Mbaye Logo',
                         title: "<span id='error'>Error!</span>",
-                        html: "Email or Password Field is Empty",
+                        html: "Email Field is Empty",
                         width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
-            return false;
+                    $('#email').addClass('danger-alter');
+                return false;
             }
             if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val()))
             {
@@ -332,30 +340,49 @@
                         width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
-                    });    
+                    });
+                    $('#email').addClass('danger-alter');
                 return false;
             }
+            if ($.trim($("#password").val()) === "")
+            {
+                Swal.fire({
+                        imageUrl: '../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        title: "<span id='error'>Error!</span>",
+                        html: "Password Field is Empty",
+                        width: '30%',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    });
+                    $('#password').addClass('danger-alter');
+                return false;
+            }
+            
             $.ajax({
-                    type: "POST",
                     url: base_url+'/login',
+                    type:"POST",
                     data: $("#main-form").serialize(),
+                    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
                     success: function(responce) {
                         if (responce.status=='success') 
                         {
-                            Swal.fire({
-                                imageUrl: '../front/icons/alert-icon.png',
-                                imageWidth: 80,
-                                imageHeight: 80,
-                                imageAlt: 'Mbaye Logo',
-                                title: "<span id='error'>Succes</span>",
-                                html: responce.message,
-                                width: '30%',
-                                padding: '1rem',
-                                background: 'rgba(8, 64, 147, 0.62)'
-                                });
+                            // Swal.fire({
+                            //     imageUrl: '../front/icons/alert-icon.png',
+                            //     imageWidth: 80,
+                            //     imageHeight: 80,
+                            //     imageAlt: 'Mbaye Logo',
+                            //     title: "<span id='error'>Succes</span>",
+                            //     html: responce.message,
+                            //     width: '30%',
+                            //     padding: '1rem',
+                            //     background: 'rgba(8, 64, 147, 0.62)'
+                            //     });
                                 window.location.href = responce.redirectPath;   
                         }
-                        if ( responce.status=='failed' || responce.status=='notConfirmed' || responce.status=='deActive') 
+                        if (responce.status=='notConfirmed' || responce.status=='deActive') 
                         {
                             Swal.fire({
                                 imageUrl: '../front/icons/alert-icon.png',
@@ -370,12 +397,8 @@
                                 }).then((result) => {
                                         window.location.href = responce.redirectPath;
                                     }); 
-                            if (responce.status=='failed') 
-                            {
-                                $('#email').addClass('danger-alter');
-                            }
                         }
-                        if ( responce.status=='moreAttempts') 
+                        if ( responce.status=='failed') 
                         {
                             Swal.fire({
                                 imageUrl: '../front/icons/alert-icon.png',
@@ -388,7 +411,44 @@
                                 padding: '1rem',
                                 background: 'rgba(8, 64, 147, 0.62)'
                                 }).then((result) => {
-                                        window.location.href = responce.redirectPath;
+                                        $('#email').addClass('danger-alter');
+                                        $('#password').addClass('danger-alter');
+                                    }); 
+                        }
+                        if ( responce.status=='moreAttempts') 
+                        {
+                            let timerInterval;
+                            Swal.fire({
+                                imageUrl: '../front/icons/alert-icon.png',
+                                imageWidth: 80,
+                                imageHeight: 80,
+                                imageAlt: 'Mbaye Logo',
+                                title: "<span id='error'>"+ responce.title +"</span>",
+                                html: responce.message,
+                                width: '30%',
+                                timer: parseInt(responce.seconds) * 1000,
+                                timerProgressBar: true,
+                                willOpen: () => {
+                                    Swal.showLoading()
+                                    timerInterval = setInterval(() => {
+                                    const content = Swal.getContent()
+                                    if (content) {
+                                        const b = content.querySelector('b')
+                                        if (b) {
+                                        b.textContent = Math.ceil(Swal.getTimerLeft() / 1000)
+                                        }
+                                    }
+                                    }, 100)
+                                },
+                                willClose: () => {
+                                    clearInterval(timerInterval)
+                                },
+                                padding: '1rem',
+                                background: 'rgba(8, 64, 147, 0.62)'
+                                }).then((result) => {
+                                        // window.location.href = responce.redirectPath;
+                                        $('#email').addClass('danger-alter');
+                                        $('#password').addClass('danger-alter');
                                     }); 
                             
                         }   

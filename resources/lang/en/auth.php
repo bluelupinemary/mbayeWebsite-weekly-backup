@@ -18,6 +18,7 @@ return [
     'socialite'     => [
         'unacceptable' => ':provider is not an acceptable login type.',
     ],
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    // 'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'throttle' => 'Too many login attempts. Please try again in <b></b> seconds.',
     'unknown'  => 'An unknown error occurred',
 ];

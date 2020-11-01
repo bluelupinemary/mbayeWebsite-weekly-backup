@@ -78,7 +78,8 @@ class RegisterController extends Controller
                     'status' => 'exist',
                     'message' => 'email is already in database'
                 ], 200); 
-        }else
+        }
+        if($user==null)
         {
             return response()->json([
                     'status' => 'not-exist',

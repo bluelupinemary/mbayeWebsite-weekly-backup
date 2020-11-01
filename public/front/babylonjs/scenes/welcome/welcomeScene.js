@@ -25,8 +25,11 @@ const UPPER_RADIUS_VAL = 3000;                                      //zoom out l
 
 function createScene(){
     engine.enableOfflineSupport = true;
-           
+    BABYLON.Database.IDBStorageEnabled = true;
+
     initScene = new BABYLON.Scene(engine);                             //intantiate earth scene's scene
+    
+    
     initCamera = create_init_camera();                                //create earth scene's camera
     initLight = create_init_light();                                  //create earth scene's light
     initSkybox = create_init_skybox();                                              //create earth scene's skybox
@@ -127,7 +130,6 @@ let nuvolaSpeech;
 function load_init_meshes(){
     Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/mbaye/", "MbayePipes.glb", initScene).then(function (result) {
-            // console.log(result.meshes);
             mbayeInitTask = result.meshes;
             
             result.meshes[0].position = new  BABYLON.Vector3(-467.95,285.39,642.78);
@@ -162,34 +164,62 @@ function load_init_meshes(){
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/nuvola/", "mermaidTail.babylon", initScene).then(function (result) {
           mermaidTail_object = result.meshes[0];
           
-          initScene.ambientColor = new BABYLON.Color3(0.2,0.2,0.2);
+        //   initScene.ambientColor = new BABYLON.Color3(0.2,0.2,0.2);
         }),
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/nuvola/", "mermaidBody.babylon", initScene).then(function (result) {
           mermaidHead =result.meshes[0];
           mermaidHair = result.meshes[1];
-          
-          mermaidHead.material.glossiness = 2;
-          mermaidHead.material.roughness = 0.2;
+       
         }),
       
-        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/earth/", "earth122319.babylon", initScene, 
-                function (evt) {
-                    // onProgress
-                    var loadedPercent = 0;
-                    if (evt.lengthComputable) {
-                        loadedPercent = (evt.loaded * 100 / evt.total).toFixed();
-                    } else {
-                        var dlCount = evt.loaded / (1024 * 1024);
-                        loadedPercent = Math.floor(dlCount * 100.0) / 100.0;
-                    }
-                    // assuming "loadingScreenPercent" is an existing html element
-                    document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+loadedPercent+" %";
-            }).then(function (result) {
+    ]).then(() => {
+        mermaidHead.setParent(mermaidTail_object);
+        mermaidHair.setParent(mermaidTail_object);
+        mermaidTail_object.position = new BABYLON.Vector3( -551.84,219.14,709.45);
+        mermaidTail_object.rotationQuaternion = new BABYLON.Quaternion(-0.0946,-0.8844,0.1707,-0.4235);
+        mermaidTail_object.scaling = new BABYLON.Vector3(0.15,0.15,0.15);
+
+        mermaidTail_object.isPickable = true;
+    
+        initCamera.target = new BABYLON.Vector3(0,0,0);
+        initCamera.radius = 1360;
+        mbayeInit_object.isPickable = true;
+      
+        nuvolaSpeech =  create_speech("nuvolaSpeech", "front/images3D/participateScene/nuvolaNonmember.png",78 , 110, 1, -566, 278, 684, {x:0.0249,y:0.8594,z:-0.1207,w:0.4959});
+        init_scrollable_viewer("speech1Nonmember","speech1Nonmember.png",2000,1000,{x:-5509,y:347,z:2266},{x:0.1143,  y:-0.5471, z:0.0752, w:0.8256});
+        let closeBtn = create_speech("speech1Nonmember-close-btn", "front/images3D/close-btn.png",100,100,1,-5117,734,2771,{x:0.0808,y:-0.4426,z:0.0545,w:0.8913});
+        
+        closeBtn.actionManager = new BABYLON.ActionManager(initScene);
+        closeBtn.actionManager.registerAction(
+              new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
+              onOverSun)
+        );
+        closeBtn.actionManager.registerAction(
+              new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOutTrigger,
+               onOutSun)
+        );
+       
+        // enable_home_gizmo2(temp);
+    });
+}//end of function load meshes
+
+
+
+function create_lowres_earth(){
+    initEarth_object = init_planet("earth","earthMatl","front/textures/home/planets/earth.jpg","front/textures/home/planets/earthnormal.png",0,0,0,400);
+    animateObjectRotationNoEase(initEarth_object, 10, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-360), 0));
+}
+
+
+function load_highres_earth(){
+    Promise.all([
+        
+        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/earth/", "earth122319.babylon", initScene 
+            ).then(function (result) {
                 // earthNormalMesh = result.meshes;
                 
                 result.meshes[9].scaling = new BABYLON.Vector3(0.6,0.6,0.6);
                
-                
                 water = new BABYLON.WaterMaterial("water", initScene, new BABYLON.Vector2(2048, 2048));
                 water.backFaceCulling = true;
                 water.bumpTexture = new BABYLON.Texture("front/textures/participate/waterbump.png", initScene);
@@ -223,36 +253,9 @@ function load_init_meshes(){
                 initEarth_object = result.meshes[9];      
           }),
     ]).then(() => {
-        // nuvolaSpeech.setParent(nuvolaSpeechCloud);
-        mermaidHead.setParent(mermaidTail_object);
-        mermaidHair.setParent(mermaidTail_object);
-        mermaidTail_object.position = new BABYLON.Vector3( -551.84,219.14,709.45);
-        mermaidTail_object.rotationQuaternion = new BABYLON.Quaternion(-0.0946,-0.8844,0.1707,-0.4235);
-        mermaidTail_object.scaling = new BABYLON.Vector3(0.15,0.15,0.15);
-
-        mermaidTail_object.isPickable = true;
-    
-        initCamera.target = new BABYLON.Vector3(0,0,0);
-        initCamera.radius = 1360;
-        mbayeInit_object.isPickable = true;
-      
-        nuvolaSpeech =  create_speech("nuvolaSpeech", "front/images3D/participateScene/nuvolaNonmember.png",78 , 110, 1, -566, 278, 684, {x:0.0249,y:0.8594,z:-0.1207,w:0.4959});
-        init_scrollable_viewer("speech1Nonmember","speech1Nonmember.png",2000,1000,{x:-5509,y:347,z:2266},{x:0.1143,  y:-0.5471, z:0.0752, w:0.8256});
-        let closeBtn = create_speech("speech1Nonmember-close-btn", "front/images3D/close-btn.png",100,100,1,-5117,734,2771,{x:0.0808,y:-0.4426,z:0.0545,w:0.8913});
-        
-        closeBtn.actionManager = new BABYLON.ActionManager(initScene);
-        closeBtn.actionManager.registerAction(
-              new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOverTrigger,
-              onOverSun)
-        );
-        closeBtn.actionManager.registerAction(
-              new BABYLON.ExecuteCodeAction( BABYLON.ActionManager.OnPointerOutTrigger,
-               onOutSun)
-        );
-       
-        // enable_home_gizmo2(temp);
+        animateObjectRotationNoEase(initEarth_object, 10, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-360), 0));
     });
-}//end of function load meshes
+}
 
 
 function init_scrollable_viewer(name,imgName,w,h,pos,rot){
@@ -419,40 +422,25 @@ function create_init_planets(){
            onOutSun)
     );
 
-
-    //rotate the planets
-    
-    engine.runRenderLoop(function () {
-        // if(mbayeEarth_object) console.log("mbaye: ", mbayeEarth_object.position, mbayeEarth_object.rotationQuaternion);
-        if(initScene && initEarth_object){
-            initMercury.rotation.y = Math.PI / 2;
-            initMercury.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
-            initVenus.rotation.y = Math.PI / 2;
-            initVenus.rotate(planetAxis, redAngle, BABYLON.Space.LOCAL);
-            initMars.rotation.y = Math.PI / 2;
-            initMars.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
-            initJupiter.rotation.y = Math.PI / 2;
-            initJupiter.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
-            initSaturn.rotation.y = Math.PI / 2;
-            initSaturn.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
-            initUranus.rotation.y = Math.PI / 2;
-            initUranus.rotate(planetAxis, redAngle, BABYLON.Space.LOCAL);
-            initNeptune.rotation.y = Math.PI / 2;
-            initNeptune.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
-            initPluto.rotation.y = Math.PI / 2;
-            initPluto.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
-
-            // if( && isEarthRotating){
-                initEarth_object.rotation.y = Math.PI / 2;
-                initEarth_object.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
-            // }
-        }else return;
-    });
+  
+    animateObjectRotationNoEase(initVenus, 15, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(360), 0));
+    animateObjectRotationNoEase(initMars, 15, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-360), 0));
+    animateObjectRotationNoEase(initJupiter, 15, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-360), 0));
+    animateObjectRotationNoEase(initUranus, 15, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-360), 0));
+    animateObjectRotationNoEase(initNeptune, 15, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-360), 0));
+    animateObjectRotationNoEase(initPluto, 15, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-360), 0));
+   
 } // end of create_planets function
+
+
+
+var animateObjectRotationNoEase = function(obj, speed, frameCount, newRot) {
+    BABYLON.Animation.CreateAndStartAnimation('objRot'+obj.name, obj, 'rotation', speed, frameCount, obj.rotation, newRot, 1, null);
+}
 
 //function that instantiates a planet
 function init_planet(name,material_name,texture_path,normal_texture_path,x_pos,y_pos,z_pos,radius){
-    var temp = BABYLON.Mesh.CreateSphere(name, 10, radius, initScene);
+    var temp = BABYLON.Mesh.CreateSphere(name, 0, radius, initScene);
     temp.position = new BABYLON.Vector3(x_pos,y_pos,z_pos);
     var temp_material = new BABYLON.StandardMaterial(material_name,initScene);
     temp_material.diffuseTexture = new BABYLON.Texture(texture_path, initScene);
@@ -515,14 +503,8 @@ var onOverSun =(meshEvent)=>{
     if(initWebCamScreen){
         if(theMeshID == "sun"){
            
-            // initSun.material.diffuseTexture = initVideo;
             initSun.material.diffuseTexture = initVideo;
             sunGlowLayer.intensity = 0;
-
-            document.body.appendChild(lbl);
-            lbl.textContent = "All About You";
-
-
         } 
     }
 
@@ -614,9 +596,6 @@ function add_init_mouse_listener(){
             else return;
             if(pickinfo.hit){
                 var theInitMesh = pickinfo.pickedMesh.name;
-                console.log("THe mesh clicked: ", pickinfo.pickedMesh, pickinfo.pickedMesh.position,pickinfo.pickedMesh.rotationQuaternion);
-                // console.log("camera: ", initCamera.radius, initCamera.alpha, initCamera.beta, initCamera.position);
-                console.log("initial camera: ", initCamera.radius, initCamera.alpha, initCamera.beta, initCamera.position);
                 if(theInitMesh === "sun"){
                     checkScreenAndDoubleClick('register', 'register');
                 }
@@ -1055,6 +1034,14 @@ function create_constellation_planes(){
 }
 
 
+let loadCounter=0;
+setInterval(function(){ 
+    if(loadCounter<100) $('#loadingScreenPercent').html("Loading: "+loadCounter+" %");
+    loadCounter++;
+}, 700);
+
+
+
 let isFast = false;
 let whoaAudio = new Audio('front/audio/participateScene/whoaAudio.mp3');
 
@@ -1069,20 +1056,22 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
     document.getElementById("loadingScreenDiv").remove();
-    console.log(initCamera.position, initCamera.radius, initCamera.alpha, initCamera.beta);
-    // initScene.debugLayer.show();
-    //scene optimizer
+    
+   
+    // scene optimizer
     var options = new BABYLON.SceneOptimizerOptions();
     options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
     var optimizer = new BABYLON.SceneOptimizer(theScene, options);
 
-    //if the current screen is a mobile/tablet device
+    // if the current screen is a mobile/tablet device
     if(isSmallDevice() || isMobile()){
         if(initSun){
             initSun.material.diffuseTexture = initVideo;
             sunGlowLayer.intensity = 0;
         }
-        alert_fullscreen();
+
+        // let browser = testBrowser();
+        // if(browser !== 'Safari') alert_fullscreen();
     }
 
     engine.runRenderLoop(function () {
@@ -1106,6 +1095,12 @@ window.addEventListener("resize", function () {
 //check orientation of screen when page is loaded
 $( document ).ready(function() {
     testOrientation();
+
+    if(isSmallDevice() || isMobile()) create_lowres_earth();
+    else load_highres_earth();
+
+    
+    
 });
 
 
@@ -1175,26 +1170,26 @@ function checkScreenAndDoubleClick(theMesh, type){
             else openWikipediaPage(theMesh, type);
         }else{
             isMeshClicked = true;
-            setTimeout(function(){
-                if(isMeshClicked){
-                    isMeshClicked = false;
-                        Swal.fire({
-                            width: '10vw',
-                            padding: '3em',
-                            title: 'Double Tap to enter the planet.',
-                            showConfirmButton: false,
-                            position: 'top-end',
-                            showClass:{
-                                backdrop: 'swal2-backdrop-hide',
-                            },
-                            timer: 2000,
-                            width: 100,
-                            customClass: {
-                                popup: 'trevor-popup-class',
-                            }
-                        });
-                    }
-            },500);
+            // setTimeout(function(){
+            //     if(isMeshClicked){
+            //         isMeshClicked = false;
+            //             Swal.fire({
+            //                 width: '10vw',
+            //                 padding: '3em',
+            //                 title: 'Double Tap to enter the planet.',
+            //                 showConfirmButton: false,
+            //                 position: 'top-end',
+            //                 showClass:{
+            //                     backdrop: 'swal2-backdrop-hide',
+            //                 },
+            //                 timer: 2000,
+            //                 width: 100,
+            //                 customClass: {
+            //                     popup: 'trevor-popup-class',
+            //                 }
+            //             });
+            //         }
+            // },500);
         }
     }else{
         if(type === 'orbit') openWikipediaPage(theMesh, type);

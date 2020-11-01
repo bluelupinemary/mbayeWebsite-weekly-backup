@@ -21,6 +21,29 @@
             justify-content: normal !important;
         }
         /* $('.mbaye_body').css('justify-content','normal'); */
+
+
+        .vertical-alignment-helper {
+            display:table;
+            height: 100%;
+            width: 100%;
+            pointer-events:none;}
+
+            .vertical-align-center {
+            /* To center vertically */
+            display: table-cell !important;
+            vertical-align: middle;
+            pointer-events:none;}
+
+            .modal-content {
+            /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+            width:inherit;
+            max-width:inherit; /* For Bootstrap 4 - to avoid the modal window stretching 
+            full width */
+            height:inherit;
+            /* To center horizontally */
+            margin: 0 auto;
+            pointer-events:all;}
     </style>
 
     <!-- Fonts -->
@@ -91,7 +114,8 @@
             </div>
             {{-- --------------------------------------------------------------------- --}}
             <div class="modal" id="AboutMeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+              <div class="vertical-alignment-helper">
+                <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLongTitle">About Me</h5>
@@ -151,7 +175,7 @@
                                       {{-- <div class="collapse col-md-12" id="collapseExample"> --}}
                                             <div class="form-group col-md-12 input-group-sm ">
                                                 <label for="country">Present Country</label>
-                                                <select class="countries form-control" name="present_country" id="countryId" required>&#x25BC;
+                                                <select class="countries form-control" name="present_country" id="countryId" required>
                                                     <option value="">Select</option>
                                                 </select>
                                             </div>
@@ -194,7 +218,7 @@
                     </div>
                   </div>
                 </div>
-                
+              </div>  {{-- --end of added div---------- --}}
               </div>
             </form>
             {{-- ---------------------------------------------------------------------------- --}}
@@ -209,18 +233,21 @@
 
             <div id="mySidenav" class="sidenav">
                 {{-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a> --}}
-                <h3 class="heading_setup">Setup Profile</h3>
-                <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
-                <a href="" class="profession" data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
-                <a href="" class="education" data-toggle="modal" data-target="#EducationModal">Education</a>
-                <div class="slider-close-button">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
+                <div class="navbar-tabs">
+                    <h3 class="heading_setup">Setup Profile</h3>
+                    <a href="" class="AboutMeTab" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
+                    <a href="" class="tab" id="professionTab">Profession And Skills</a>
+                    <a href="" class="tab" id="educationTab">Education</a>
+                    <div class="slider-close-button">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
+                    </div>
+                    <a href="" class="tab" id="workExperienceTab">Work Experience</a>
+                    <a href="" class="tab" id="contactTab" >Contact</a>
+                    <a href="" class="tab" id="characterRefTab" style="border-bottom: 1px solid gray">Character References</a>
+                    <hr style="background-color:white; ">
+                    <a href="{{ url('jobseekers/view-profile/'.Auth::user()->id)}}" class="view-car-profile" style="color: rgb(22, 174, 220);text-align:center">Go To My<br> Jobseeker Profile</a>
+                     
                 </div>
-                <a href="" class="work-experience" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
-                <a href="" class="contacts" data-toggle="modal" data-target="#ContactModal">Contact</a>
-                <a href="" class="reference" data-toggle="modal" data-target="#CharacterReferencesModal">Character References</a>
-            
-                
             </div>
 
             {{-- <div class="slider">
@@ -233,7 +260,7 @@
                     {{-- <span  class="arrows" style="font-size:17px;font-family:Nasalization;cursor:pointer" onclick="openNav()">S<br>E<br>T</span> --}}
                     {{-- <h2 class="sidenav-heading"  onclick="openNav()">SETUP&nbsp;PROFILE</h2> --}}
                 {{-- </div> --}}
-            </div> --}}
+            {{--</div> --}}
 
             <div class="sidenav-right">
             <!-- right controls -->
@@ -242,231 +269,222 @@
             
         <form method="POST" action="{{url('save_work_experience')}}" id="work-experience-form"  enctype="multipart/form-data">
             @csrf
-             <div class="modal" id="WorkExperienceModal"  class="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                {{-- <div class="form-block">  --}}
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Work Experiences</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    {{-- <div class="app" style="display: none;">
-                    </div> --}}
-                    <div class="modal-body work-modal-body">
-                        <div class="work-experience-body main_work_experience_div workDiv_1">
-                            <fieldset>
-                                <div style="position: relative;">
-                                  <button type="button"  class="close remove-btn-workexperience"   title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
-                                    <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
-                                  </button>
+            <div class="modal" id="WorkExperienceModal"  class="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="vertical-alignment-helper">
+                    <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Work Experiences</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {{-- <div class="app" style="display: none;">
+                            </div> --}}
+                            <div class="modal-body work-modal-body">
+                                <div class="work-experience-body main_work_experience_div workDiv_1">
+                                    <fieldset>
+                                        <div style="position: relative;">
+                                            <button type="button"  class="close remove-btn-workexperience"   title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
+                                                <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                            </button>
+                                        </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6 input-group-sm">
+                                                <label for="StartDate">Start Date<span style="color:red">*</span></label>
+                                                <input type="date" class="form-control" id="start_date" value="" name="start_date[]" >
+                                                </div>
+                                                <div class="form-group col-md-6 input-group-sm">
+                                                <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                <input type="date" class="form-control" value="" id="end_date" name="end_date[]" >
+                                                </div>
+                                            </div>
+                                                <div class="form-group input-group-sm">
+                                                    <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                    <input type="text" class="form-control" id="company_name" name="company_name[]" placeholder="">
+                                                </div>
+                                                <div class="form-group input-group-sm">
+                                                    <label for="Address">Company Address<span style="color:red">*</span></label>
+                                                    <input type="text" class="form-control" id="Address" name="address[]" placeholder="">
+                                                </div>
+                                            <div class="form-group input-group-sm">
+                                                <label for="CompDesig">Designation<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control" id="CompDesig" name="designation[]" placeholder="">
+                                            </div>
+                                            <div class="form-group  input-group-sm">
+                                                <label for="CompRole">Role<span style="color:red">*</span></label>
+                                                {{-- <input type="text" class="form-control" id="CompRole" name="role[]" placeholder=""> --}}
+                                                <textarea class="form-control" id="CompRole" name="role[]" placeholder="" maxlength="250"></textarea>
+                                            </div>
+                                            <div class="form-group input-group-sm">
+                                                <label for="Contact">Contact Person<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control" id="Contact" name="contact_no[]" placeholder="">
+                                            </div>
+                                            
+                                            <div style="position: relative;">
+                                                <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
+                                                    <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                                </button>
+                                            </div>
+                                    </fieldset><br>
                                 </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6 input-group-sm">
-                                          <label for="StartDate">Start Date<span style="color:red">*</span></label>
-                                          <input type="date" class="form-control" id="start_date" value="" name="start_date[]" >
-                                        </div>
-                                        <div class="form-group col-md-6 input-group-sm">
-                                          <label for="EndDate">End Date<span style="color:red">*</span></label>
-                                          <input type="date" class="form-control" value="" id="end_date" name="end_date[]" >
-                                        </div>
-                                      </div>
-                                        <div class="form-group input-group-sm">
-                                            <label for="CompName">Company Name<span style="color:red">*</span></label>
-                                            <input type="text" class="form-control" id="company_name" name="company_name[]" placeholder="">
-                                        </div>
-                                        <div class="form-group input-group-sm">
-                                            <label for="Address">Company Address<span style="color:red">*</span></label>
-                                            <input type="text" class="form-control" id="Address" name="address[]" placeholder="">
-                                        </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="CompDesig">Designation<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" id="CompDesig" name="designation[]" placeholder="">
-                                      </div>
-                                      <div class="form-group  input-group-sm">
-                                        <label for="CompRole">Role<span style="color:red">*</span></label>
-                                        {{-- <input type="text" class="form-control" id="CompRole" name="role[]" placeholder=""> --}}
-                                        <textarea class="form-control" id="CompRole" name="role[]" placeholder="" maxlength="250"></textarea>
-                                      </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="Contact">Contact Person<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" id="Contact" name="contact_no[]" placeholder="">
-                                      </div>
-                                      
-                                      <div style="position: relative;">
-                                        <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
-                                            <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
-                                        </button>
-                                      </div>
-                            </fieldset><br>
+                            </div>
+                            <div class="work_experience-clone"></div>
+                            <div class="modal-footer">
+                                <input type="submit"  class="btn btn-primary work-experience-done" value="Done" id="submit"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="work_experience-clone"></div>
-                    <div class="modal-footer">
-                        <input type="submit"  class="btn btn-primary work-experience-done" value="Done" id="submit"/>
                     </div>
                 </div>
             </div>
-           {{-- </div> --}}
-         </div>
         </form>
 
 
         <form method="POST" action="{{url('save_education')}}" id="education-form" enctype="multipart/form-data">
             @csrf
             <div class="modal" id="EducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-              {{-- <div class="education_form-block">  --}}
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Education</h5>
+                <div class="vertical-alignment-helper">
+                    <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Education</h5>
+                                <button type="button" class="close" data-dismiss="modal"   aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            
 
-                     
-                     
-                      <button type="button" class="close" data-dismiss="modal"   aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      
-                    </div>
-                    {{-- <div class="app" style="display: none;">
-                      
-                    </div> --}}
-
-                    <div class="modal-body education-modal-body">
-                       
-                        <div class="education-body main_education_div div_1">
-                           
-                            <fieldset>
-                                {{-- <button type="button"  class="close clone-btn-education  "  title="Add More Education" aria-label="Clone">
-                                    <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
-                                  </button> --}}
-                                  <div style="position: relative;">
-                                    <button type="button"  class="close remove-btn-education"  title="Remove Education " aria-label="Clone" onclick="remove(this)">
-                                        <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
-                                      </button>
-                                  </div>
-                                  
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12 input-group-sm" id="education_dropdown">
-                                            <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
-                                                <select class="form-control" name="education_level[]" id="xyz"  required>
-                                                    <option value="Doctorate" > Doctorate</option>
-                                                    <option value="Master" >Master's Degree</option>
-                                                    <option value="Bachelor" >Bachelor's Degree</option>
-                                                    <option value="Associate" >Associate Degree</option>
-                                                    <option value="SomeCollege" >Some College</option>
-                                                    <option value="Vocational" >Vocational</option>
-                                                    <option value="HighSchool" >High School Graduate</option>
-                                                </select>
-                                        </div> 
-                                        <div class="form-group col-md-12 input-group-sm">
-                                            <label for="SchoolName">School Name<span style="color:red">*</span></label>
-                                            <input type="text" class="form-control" id="SchoolName" name="school_name[]"  required>
-                                        </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" id="FieldOfStudy"  name="field_of_study[]"  required>
-                                      </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="Description">Description<span style="color:red">*</span></label><br>
-                                        <textarea id="Description" class="form-control" name="description[]" maxlength="250" required></textarea>
-                                      </div>
-                                        <div class="form-group col-md-4 input-group-sm">
-                                          <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
-                                          <input type="date" class="form-control" id="StartDate" placeholder="Date"  name="start_date[]" required >
-                                        </div>
-                                        <div class="form-group col-md-4 input-group-sm">
-                                         
-                                        </div>
-                                        <div class="form-group col-md-4 input-group-sm">
-                                            <label for="EndDate">End Date<span style="color:red">*</span></label>
-                                            <input type="date" class="form-control" id="EndDate" name="end_date[]" required >
-                                          </div>
-                                      </div>
-                                      
-
-                                      <div style="position: relative;">
-                                        <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
-                                            <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
-                                        </button>
-                                      </div>
-                            </fieldset><br>
-                        </div>  
-                        
-                    </div>
-              
-                    <div class="education-clone"></div>
-                    <div class="modal-footer">
-                     <input type="submit"  class="btn btn-primary education-done" value="Done" id="submit_education"/>
-                    </div>
-                </div>
-            {{-- </div> --}}
-       
-              </div>
-            </div>
-         </form>
-
-
-         <form method="POST" action="" id="reference-form"  enctype="multipart/form-data">
-            @csrf
-              <div class="modal" id="CharacterReferencesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                {{-- <div class="reference_form-block "> --}}
-                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Character References</h5>
-
-                    
-
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    {{-- <div class="app" style="display: none;">
-                      
-                    </div> --}}
-                    <div class="modal-body reference-modal-body">
-                       <div class="reference-body  main_reference_div referenceDiv_1">
-                         <fieldset> 
+                            <div class="modal-body education-modal-body">
+                            
+                                <div class="education-body main_education_div div_1">
+                                
+                                    <fieldset>
+                                        
                                         <div style="position: relative;">
-                                            <button type="button"  class="close remove-btn-reference"  aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
+                                            <button type="button"  class="close remove-btn-education"  title="Remove Education " aria-label="Clone" onclick="remove(this)">
                                                 <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                             </button>
                                         </div>
-                                        <div class="form-group input-group-sm">
-                                            <label for="Name"> Name<span style="color:red">*</span></label>
-                                            <input type="text" class="form-control" id="Name" name="name[]" placeholder="">
-                                        </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="Email">Email<span style="color:red">*</span></label>
-                                        <input type="email" class="form-control" id="Email"  name="email[]" placeholder="">
-                                      </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="CompName">Company Name<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" id="CompName"  name="company_name[]" placeholder="">
-                                      </div>
-                                      <div class="form-group input-group-sm">
-                                        <label for="Designation">Designation<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" id="Designation"  name="designation[]" placeholder="">
-                                      </div>
-                                      <div style="position: relative;">
-                                        <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
-                                            <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
-                                        </button>
-                                      </div>
-                            </fieldset><br>
+                                        
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12 input-group-sm" id="education_dropdown">
+                                                    <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
+                                                        <select class="form-control" name="education_level[]" id="xyz"  required>
+                                                            <option value="Doctorate" > Doctorate</option>
+                                                            <option value="Master" >Master's Degree</option>
+                                                            <option value="Bachelor" >Bachelor's Degree</option>
+                                                            <option value="Associate" >Associate Degree</option>
+                                                            <option value="SomeCollege" >Some College</option>
+                                                            <option value="Vocational" >Vocational</option>
+                                                            <option value="HighSchool" >High School Graduate</option>
+                                                        </select>
+                                                </div> 
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="SchoolName">School Name<span style="color:red">*</span></label>
+                                                    <input type="text" class="form-control" id="SchoolName" name="school_name[]"  required>
+                                                </div>
+                                            <div class="form-group col-md-12 input-group-sm">
+                                                <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control" id="FieldOfStudy"  name="field_of_study[]"  required>
+                                            </div>
+                                            <div class="form-group col-md-12 input-group-sm">
+                                                <label for="Description">Description<span style="color:red">*</span></label><br>
+                                                <textarea id="Description" class="form-control" name="description[]" maxlength="250" required></textarea>
+                                            </div>
+                                                <div class="form-group col-md-4 input-group-sm">
+                                                <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
+                                                <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="StartDate" placeholder="Date"  name="start_date[]" required >
+                                                </div>
+                                                <div class="form-group col-md-4 input-group-sm">
+                                                
+                                                </div>
+                                                <div class="form-group col-md-4 input-group-sm">
+                                                    <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                    <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="EndDate" name="end_date[]" required >
+                                                </div>
+                                            </div>
+                                            
+
+                                            <div style="position: relative;">
+                                                <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
+                                                    <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
+                                                </button>
+                                            </div>
+                                    </fieldset><br>
+                                </div>  
+                                
+                            </div>
+                    
+                            <div class="education-clone"></div>
+                            <div class="modal-footer">
+                            <input type="submit"  class="btn btn-primary education-done" value="Done" id="submit_education"/>
+                            </div>
                         </div>
-                    </div>
-           
-                    <div class="reference-clone"></div>
-                    <div class="modal-footer">
-                        <input type="submit"  class="btn btn-primary characterRederences-done" value="Submit" id="submit_reference"/>
                     </div>
                 </div>
             </div>
-        {{-- </div>   --}}
-        </div>
+        </form>
+
+
+        <form method="POST" action="" id="reference-form"  enctype="multipart/form-data">
+            @csrf
+              <div class="modal" id="CharacterReferencesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                    <div class="vertical-alignment-helper">
+                            <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Character References</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                    </div>
+                    
+                                    <div class="modal-body reference-modal-body">
+                                        <div class="reference-body  main_reference_div referenceDiv_1">
+                                                <fieldset> 
+                                                            <div style="position: relative;">
+                                                                <button type="button"  class="close remove-btn-reference"  aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
+                                                                    <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="form-group input-group-sm">
+                                                                <label for="Name"> Name<span style="color:red">*</span></label>
+                                                                <input type="text" class="form-control" id="Name" name="name[]" placeholder="">
+                                                            </div>
+
+                                                            <div class="form-group input-group-sm">
+                                                                <label for="Email">Email<span style="color:red">*</span></label>
+                                                                <input type="email" class="form-control" id="Email"  name="email[]" placeholder="">
+                                                            </div>
+
+                                                            <div class="form-group input-group-sm">
+                                                                <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                                <input type="text" class="form-control" id="CompName"  name="company_name[]" placeholder="">
+                                                            </div>
+
+                                                            <div class="form-group input-group-sm">
+                                                                <label for="Designation">Designation<span style="color:red">*</span></label>
+                                                                <input type="text" class="form-control" id="Designation"  name="designation[]" placeholder="">
+                                                            </div>
+
+                                                            <div style="position: relative;">
+                                                                <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
+                                                                    <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                                                </button>
+                                                            </div>
+                                                </fieldset><br>
+                                        </div>
+                                    </div>
+           
+                                    <div class="reference-clone"></div>
+                                    <div class="modal-footer">
+                                        <input type="submit"  class="btn btn-primary characterRederences-done" value="Submit" id="submit_reference"/>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>  
+                </div>
        </form>  
 
         <!--PART TO ADD THE FORM FOR SUBMITTING THE PROFILE'S FEATURED IMAGE-->
@@ -477,120 +495,116 @@
               
             
 
-              <form action="" id="contact-form">
+            <form action="" id="contact-form">
                 @csrf
-              <div class="modal" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Contact Details</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    {{-- <div class="app" style="display: none;">
-                      
-                    </div> --}}
-                    <div class="modal-body">
-                        <div class="contact-body">
-                            <fieldset>
-                                
-                                <div class="form-row">
-                                        <div class="form-group col-md-12 input-group-sm">
-                                            <label for="pEmail"> Primary Email</label>
-                                            <input type="text"  class="form-control disabled_field" id="pEmail" name="email" disabled value="{{ $user->email }}" >
-                                        </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="pMobNumber">Primary Mobile Number</label>
-                                        <input type="text" class="form-control disabled_field" id="pMobNumber" name="mobile_number" disabled value="{{ $user->mobile_number }}" >
-                                      </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="sEmail">Secondary Email (Optional)</label>
-                                        <input type="email" class="form-control" id="sEmail" name="secondary_email" >
-                                      </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="sMobNumber">Secondary  Mobile Number (Optional)</label>
-                                        <input type="text" class="form-control" id="sMobNumber" name="secondary_mobile_number" >
-                                      </div>
+                <div class="modal" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Contact Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                            </fieldset>
-                            
-                            
+                    
+                                <div class="modal-body">
+                                    <div class="contact-body">
+                                        <fieldset>
+                                            <div class="form-row">
+                                                    <div class="form-group col-md-12 input-group-sm">
+                                                        <label for="pEmail"> Primary Email</label>
+                                                        <input type="text"  class="form-control disabled_field" id="pEmail" name="email" disabled value="{{ $user->email }}" >
+                                                    </div>
+
+                                                    <div class="form-group col-md-12 input-group-sm">
+                                                        <label for="pMobNumber">Primary Mobile Number</label>
+                                                        <input type="text" class="form-control disabled_field" id="pMobNumber" name="mobile_number" disabled value="{{ $user->mobile_number }}" >
+                                                    </div>
+
+                                                    <div class="form-group col-md-12 input-group-sm">
+                                                        <label for="sEmail">Secondary Email (Optional)</label>
+                                                        <input type="email" class="form-control" id="sEmail" name="secondary_email" >
+                                                    </div>
+
+                                                    <div class="form-group col-md-12 input-group-sm">
+                                                        <label for="sMobNumber">Secondary  Mobile Number (Optional)</label>
+                                                        <input type="text" class="form-control" id="sMobNumber" name="secondary_mobile_number" >
+                                                    </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary contact-done">Done</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary contact-done">Done</button>
-                    </div>
-                  </div>
                 </div>
-              </div>
-            
-        </form>
+            </form>
 
     
               
                 <div class="modal" id="ProfessionSkillModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                   {{-- <div class="profession_form-block">  --}}
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Profession And Skills</h5>
-    
-                         
-                         
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                          
-                        </div>
-                        {{-- <div class="app" style="display: none;">
-                        </div> --}}
-                        <div class="modal-body ">
-                            <div class="profession-body" id="Profession-body">
-                                <form method="POST" action="" id="profession-form" enctype="multipart/form-data">
-                                    @csrf
-                                <fieldset>
-                                   
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12 input-group-sm">
-                                              <label for="Profession">Profession<span style="color:red">*</span></label>
-                                              <select id="Profession" class="form-control" name="profession_id" required>&#x25BC;
-                                                    <option value="public" selected disabled>Select</option>
-                                                    @foreach($profession as $profession)
-                                                    <option value="{{$profession->id}}" id="hhh">{{$profession->profession_name}}</option>
-                                                    @endforeach
-                                               </select>
-                                              {{-- <input type="text" class="form-control" id="Profession"  name="Profession" >
-                                              <button type="button"  class="dropdown-btn" >
-                                                <span aria-hidden="true" class="btn-down"><i class="fas fa-angle-down"></i></span>
-                                              </button> --}}
-                                              
-                                            </div>
-                                            <div id="profession_list"></div>      
-                                        </div>
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Profession And Skills</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {{-- <div class="app" style="display: none;">
+                                </div> --}}
+                                <div class="modal-body ">
+                                    <div class="profession-body" id="Profession-body">
+                                        <form method="POST" action="" id="profession-form" enctype="multipart/form-data">
+                                            @csrf
+                                            <fieldset>
+                                        
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="Profession">Profession<span style="color:red">*</span></label>
+                                                    <select id="Profession" class="form-control" name="profession_id" required>&#x25BC;
+                                                            <option value="" >Select</option>
+                                                            @foreach($profession as $profession)
+                                                            <option value="{{$profession->id}}" id="hhh">{{$profession->profession_name}}</option>
+                                                            @endforeach
+                                                    </select>
+                                                    {{-- <input type="text" class="form-control" id="Profession"  name="Profession" >
+                                                    <button type="button"  class="dropdown-btn" >
+                                                        <span aria-hidden="true" class="btn-down"><i class="fas fa-angle-down"></i></span>
+                                                    </button> --}}
+                                                    
+                                                    </div>
+                                                    <div id="profession_list"></div>      
+                                                </div>
 
-                                        <div class="form-row"> 
-                                          <div class="form-group col-md-12 col-lg-12 input-group-sm">
-                                            <label for="skills">Skills<span style="color:red">*</span></label>
-                                            <textarea class="form-control" id="skills" name="skills"></textarea>
-                                          </div>  
-                                        </div>
-                                  
-                                </fieldset>
-                            </div>  
-                 
+                                                <div class="form-row"> 
+                                                    <div class="form-group col-md-12 col-lg-12 input-group-sm">
+                                                        <label for="skills">Skills<span style="color:red">*</span></label>
+                                                        <textarea class="form-control" id="skills" name="skills"></textarea>
+                                                    </div>  
+                                                </div>
+                                        
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                        
+                
+                                <div class="modal-footer">
+                                    <input type="submit"  class="btn btn-primary profession-done" value="Done" id="submit_profession"/>
+                                </div>
+                            </div>
                         </div>
-                  
-         
-                        <div class="modal-footer">
-                         <input type="submit"  class="btn btn-primary profession-done" value="Done" id="submit_profession"/>
-                        </div>
-                    </div>
-                {{-- </div> --}}
-           
-                  </div>
                 </div>
-             </form>
+             
+                </div>
         {{-- </div> <!--end of app--> --}}   
 </div>
 
@@ -721,47 +735,7 @@ document.getElementById("Profession").selectedIndex = "52";
             }
         }
   
-        // //function to download the image
-        // function downloadImage() {
-        //     var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will 
-
-        //     var link = window.document.createElement('a');
-        //     link.href = image;
-        //     link.download = "screenshot.jpg";
-        //     var click = document.createEvent("MouseEvents");
-        //     click.initEvent("click", true, false);
-        //     link.dispatchEvent(click); 
-
-        // }
-
-
-    
-
-        /*FUNCTIONS RELATED TO THE INSTRUCTIONS OVERLAY*/
-        // show instruction overlay
-        // $('.help a').click(function () {
-        //     $('.instructions').fadeIn();
-        // });
-
-        // // hide instruction overlay
-        // $('.instruction-close-btn').click(function() {
-        //     $('.instructions').fadeOut();
-        //     $('#main').show();
-        //     $('.start-message').show();
-            
-        // });
-
-        // show instruction text on hover of each box
-        // $('.instruction').hover(
-        //     function() {
-        //         var text_div = $(this).data('text-div');
-        //         $('.'+text_div).fadeIn();
-        //     },
-        //     function() {
-        //         var text_div = $(this).data('text-div');
-        //         $('.'+text_div).hide();
-        //     }
-        // );
+        
         $(".remove-btn-education").hide();
         $(".remove-btn-workexperience").hide();
         $(".remove-btn-reference").hide();
@@ -796,7 +770,7 @@ document.getElementById("Profession").selectedIndex = "52";
             var count = $(".work-experience-body");
             totalDiv=count.length;
             var alert_status;
-        
+            var err_message = {}; 
             for(var i=1;i<=totalDiv;i++){
 
                 // console.log("here");
@@ -813,44 +787,89 @@ document.getElementById("Profession").selectedIndex = "52";
                 if(start_date==''){
                     alert_status = true;
                      message = 'Start Date is required';
-                     $("form#work-experience-form .workDiv_"+i+" #StartDate").focus();
+                     err_message[message] = null;
+                     $("form#work-experience-form .workDiv_"+i+" #StartDate").css('border-color', 'red');
                 }
-                else if(end_date==''){
+                else{
+                    $("form#work-experience-form .workDiv_"+i+" #StartDate").css('border-color', 'white');
+                }
+                
+                if(end_date==''){
                      alert_status = true;
                      message = 'End Date is required';
-                     $("form#work-experience-form .workDiv_"+i+" #EndDate").focus();
+                     err_message[message] = null;
+                     $("form#work-experience-form .workDiv_"+i+" #EndDate").css('border-color', 'red');
                 }
-                else if(company_name==''){
+                else{
+                    $("form#work-experience-form .workDiv_"+i+" #EndDate").css('border-color', 'white');
+                }
+                
+                if(company_name==''){
                      alert_status = true;
                      message = 'Company Name is required';
-                     $("form#work-experience-form .workDiv_"+i+" #company_name").focus();
+                     err_message[message] = null;
+                     $("form#work-experience-form .workDiv_"+i+" #company_name").css('border-color', 'red');
                 }
-                else if(CompRole==''){
+                else{
+                    $("form#work-experience-form .workDiv_"+i+" #company_name").css('border-color', 'white');
+                }
+                
+                if(CompRole==''){
                      alert_status = true;
                      message = 'Role is required';
-                     $("form#work-experience-form .div_"+i+" #CompRole").focus();
+                     err_message[message] = null;
+                     $("form#work-experience-form .div_"+i+" #CompRole").css('border-color', 'red');
                 }
-                else if(CompDesig==''){
+                else{
+                    $("form#work-experience-form .workDiv_"+i+" #CompRole").css('border-color', 'white');
+                }
+                
+                if(CompDesig==''){
                      alert_status = true;
                      message = 'Designation is required';
-                     $("form#work-experience-form .div_"+i+" #CompDesig").focus();
+                     err_message[message] = null;
+                     $("form#work-experience-form .div_"+i+" #CompDesig").css('border-color', 'red');
                 }
-                else if(Contact==''){
+                else{
+                    $("form#work-experience-form .workDiv_"+i+" #CompDesig").css('border-color', 'white');
+                }
+                
+                if(Contact==''){
                      alert_status = true;
                      message = 'Contact is required';
-                     $("form#work-experience-form .div_"+i+" #Contact").focus();
+                     err_message[message] = null;
+                     $("form#work-experience-form .div_"+i+" #Contact").css('border-color', 'red');
                 }
-                else if(Address==''){
+                else{
+                    $("form#work-experience-form .workDiv_"+i+" #Contact").css('border-color', 'white');
+                }
+                
+                if(Address==''){
                      alert_status = true;
                      message = 'Address is required';
-                     $("form#work-experience-form .div_"+i+" #Address").focus();
+                     err_message[message] = null;
+                     $("form#work-experience-form .div_"+i+" #Address").css('border-color', 'red');
+                }
+                else{
+                    $("form#work-experience-form .workDiv_"+i+" #Address").css('border-color', 'white');
+                }
+
+                if ((Date.parse(end_date) <= Date.parse(start_date))) {
+                    alert_status = true;
+                     message = 'End Date should not be less than Start Date';
+                     err_message[message] = null;
+                     $("form#work-experience-form .workDiv_"+i+" #EndDate").css('border-color', 'red');
                 }
             }
           
     if(alert_status) {
+        let errors = "The following fields are required: ";
+            for (var k in err_message) {
+               errors = errors + "<br/>" +k;
+            }
         Swal.fire({
             title: 'Discard Changes',
-            text: message,
+            html: errors,
             imageUrl: '../../front/icons/alert-icon.png',
             imageWidth: 80,
             imageHeight: 80,
@@ -869,9 +888,8 @@ document.getElementById("Profession").selectedIndex = "52";
             cancelButtonColor: '#d33',
         }).then((res) => {
             if (res.value) {
-                if(action) {
-                    window.location.href = action;
-                }
+                err_message = {}; 
+                return false;
             }
         });
     } else {
@@ -944,6 +962,7 @@ document.getElementById("Profession").selectedIndex = "52";
                     $(newel).insertAfter(".education-body:last");
                     var new_ele = $('.education-body:last');
                     new_ele.find('input').val("");
+                    new_ele.find('textarea').val("");
                     var count = $(".education-body");
                     new_ele.removeClass('div_'+(count.length-1))
                     new_ele.addClass('div_'+count.length)
@@ -952,7 +971,7 @@ document.getElementById("Profession").selectedIndex = "52";
                     $(".education-body:last .clone-btn-education").hide();
                     $(".education-body:last .remove-btn-education").show();
                  }
-                 $(".education-body:last #StartDate").focus().select();  
+                 $(".education-body:last #SchoolName").focus().select();  
 
                  console.log();
                  
@@ -983,6 +1002,7 @@ document.getElementById("Profession").selectedIndex = "52";
             var form_data = $('#education-form').serialize();
             var post_data = new FormData($form[0]);
             var count = $(".education-body");
+            var err_message = {};
             totalDiv=count.length;
             var alert_status=false;
           
@@ -999,35 +1019,66 @@ document.getElementById("Profession").selectedIndex = "52";
                 if(start_date==''){
                     alert_status = true;
                      message = 'Start Date is required';
-                     $("form#education-form .div_"+i+" #StartDate").focus();
+                     err_message[message] = null;
+                     $("form#education-form .div_"+i+" #StartDate").css('border-color', 'red');
                 }
-                else if(end_date==''){
+                else{ 
+                    $("form#education-form .div_"+i+" #StartDate").css('border-color', 'white');
+                }
+                if(end_date==''){
                      alert_status = true;
                      message = 'End Date is required';
-                     $("form#education-form .div_"+i+" #EndDate").focus();
+                     err_message[message] = null;
+                     $("form#education-form .div_"+i+" #EndDate").css('border-color', 'red');
                 }
-                else if(school_name==''){
+                else{ 
+                    $("form#education-form .div_"+i+" #EndDate").css('border-color', 'white');
+                }
+                 if(school_name==''){
                      alert_status = true;
                      message = 'School Name is required';
-                     $("form#education-form .div_"+i+" #SchoolName").focus();
+                     err_message[message] = null;
+                     $("form#education-form .div_"+i+" #SchoolName").css('border-color', 'red');
                 }
-                else if(field_of_study==''){
+                else{ 
+                    $("form#education-form .div_"+i+" #SchoolName").css('border-color', 'white');
+                }
+                 if(field_of_study==''){
                      alert_status = true;
                      message = 'Filed Of study is required';
-                     $("form#education-form .div_"+i+" #FieldOfStudy").focus();
+                     err_message[message] = null;
+                     $("form#education-form .div_"+i+" #FieldOfStudy").css('border-color', 'red');
                 }
-                else if(desccription==''){
+                else{ 
+                    $("form#education-form .div_"+i+" #FieldOfStudy").css('border-color', 'white');
+                }
+                 if(desccription==''){
                      alert_status = true;
                      message = 'Description is required';
-                     $("form#education-form .div_"+i+" #Description").focus();
+                     err_message[message] = null;
+                     $("form#education-form .div_"+i+" #Description").css('border-color', 'red');
+                }
+                else{ 
+                    $("form#education-form .div_"+i+" #Description").css('border-color', 'white');
+                }
+
+                if ((Date.parse(end_date) <= Date.parse(start_date))) {
+                    alert_status = true;
+                     message = 'End Date should not be less than Start Date';
+                     err_message[message] = null;
+                     $("form#education-form .div_"+i+" #EndDate").css('border-color', 'red');
                 }
             }
             
             
     if(alert_status) {
+        let errors = "The following fields are required: ";
+            for (var k in err_message) {
+               errors = errors + "<br/>" +k;
+            }
         Swal.fire({
-            title: 'Discard Changes',
-            text: message,
+            title: 'Error',
+            html: errors,
             imageUrl: '../../front/icons/alert-icon.png',
             imageWidth: 80,
             imageHeight: 80,
@@ -1046,9 +1097,8 @@ document.getElementById("Profession").selectedIndex = "52";
             cancelButtonColor: '#d33',
         }).then((res) => {
             if (res.value) {
-                if(action) {
-                    window.location.href = action;
-                }
+                err_message = {}; 
+                        return false;
             }
         });
     } else {
@@ -1141,6 +1191,7 @@ document.getElementById("Profession").selectedIndex = "52";
             var count = $(".reference-body");
             totalDiv=count.length;
             var alert_status;
+            var err_message = {}; 
            var id = {{ Auth::user()->id }};
             for(var i=1;i<=totalDiv;i++){
 
@@ -1154,30 +1205,52 @@ document.getElementById("Profession").selectedIndex = "52";
                 if(Name==''){
                     alert_status = true;
                      message = 'Name is required';
-                     $("form#reference-form .referenceDiv_"+i+" #Name").focus();
+                     err_message[message] = null;
+                     $("form#reference-form .referenceDiv_"+i+" #Name").css('border-color', 'red');
                 }
-                else if(Email==''){
+                else{
+                    $("form#reference-form .referenceDiv_"+i+" #Name").css('border-color', 'white');
+                }
+
+                if(Email==''){
                      alert_status = true;
                      message = 'Email is required';
-                     $("form#reference-form .referenceDiv_"+i+' #Email').focus();
+                     err_message[message] = null;
+                     $("form#reference-form .referenceDiv_"+i+' #Email').css('border-color', 'red');
                 }
-                else if(CompName==''){
+                else{
+                    $("form#reference-form .referenceDiv_"+i+" #Email").css('border-color', 'white');
+                }
+                
+                if(CompName==''){
                      alert_status = true;
                      message = 'Company Name is required';
-                     $("form#reference-form .referenceDiv_"+i+' #CompName').focus();
+                     err_message[message] = null;
+                     $("form#reference-form .referenceDiv_"+i+' #CompName').css('border-color', 'red');
                 }
-                else if(Designation==''){
+                else{
+                    $("form#reference-form .referenceDiv_"+i+" #CompName").css('border-color', 'white');
+                }
+
+                if(Designation==''){
                      alert_status = true;
                      message = 'Designation is required';
-                     $("form#reference-form .referenceDiv_"+i+' #Designation').focus();
+                     err_message[message] = null;
+                     $("form#reference-form .referenceDiv_"+i+' #Designation').css('border-color', 'red');
                 }
-               
+               else{
+                    $("form#reference-form .referenceDiv_"+i+" #Designation").css('border-color', 'white');
+                }
             }
             
     if(alert_status) {
+        let errors = "The following fields are required: ";
+            for (var k in err_message) {
+               errors = errors + "<br/>" +k;
+            }
         Swal.fire({
             title: 'Discard Changes',
-            text: message,
+            html: errors,
             imageUrl: '../../front/icons/alert-icon.png',
             imageWidth: 80,
             imageHeight: 80,
@@ -1196,9 +1269,8 @@ document.getElementById("Profession").selectedIndex = "52";
             cancelButtonColor: '#d33',
         }).then((res) => {
             if (res.value) {
-                if(action) {
-                    window.location.href = action;
-                }
+                err_message = {}; 
+                     return false;
             }
         });
     } else {
@@ -1224,7 +1296,7 @@ document.getElementById("Profession").selectedIndex = "52";
                         allowOutsideClick: false
                     }).then((res) => {
                         // window.open(url+'/single_blog/'+data.data.id);
-                        window.location.href = url+'/my_career_profile/'+ id;
+                        window.location.href = url+'/jobseekers/view-profile/'+ id;
                         // resetGeneralBlogForm();
                     });
                 },
@@ -1264,23 +1336,23 @@ document.getElementById("Profession").selectedIndex = "52";
             var $form = $('form#contact-form');
             var post_data = new FormData($form[0]);
             var alert_status;
-                    var secondary_email = $("form#contact-form #sEmail").val();
-                    var secondary_mobNumber = $("form#contact-form #sMobNumber").val();
+                    // var secondary_email = $("form#contact-form #sEmail").val();
+                    // var secondary_mobNumber = $("form#contact-form #sMobNumber").val();
                 
-                    if(secondary_email==''){
-                        alert_status = true;
-                        message = 'Secondary Email is required';
-                        $("form#contact-form  #sEmail").focus();
-                    }
-                    if(secondary_mobNumber==''){
-                        alert_status = true;
-                        message = 'Secondary Mobile Number is required';
-                        $("form#contact-form  #sEmail").focus();
-                    }
+                    // if(secondary_email==''){
+                    //     alert_status = true;
+                    //     message = 'Secondary Email is required';
+                    //     $("form#contact-form  #sEmail").focus();
+                    // }
+                    // if(secondary_mobNumber==''){
+                    //     alert_status = true;
+                    //     message = 'Secondary Mobile Number is required';
+                    //     $("form#contact-form  #sEmail").focus();
+                    // }
                     if(alert_status) {
                     Swal.fire({
                         title: 'Discard Changes',
-                        text: message,
+                        // text: message,
                         imageUrl: '../../front/icons/alert-icon.png',
                         imageWidth: 80,
                         imageHeight: 80,
@@ -1376,25 +1448,71 @@ document.getElementById("Profession").selectedIndex = "52";
                     var post_data = new FormData($form[0]);
                     // post_data.append('featured_image', feature_image);
                     var alert_status;
-                    var present_address = $("form#aboutme-form #pAddress").val();
+                    var err_message = {};
                     var objective = $("form#aboutme-form #objective").val();
+                    var country = $("form#aboutme-form #countryId").val();
+                    var state = $("form#aboutme-form #stateId").val();
+                    var city = $("form#aboutme-form #cityId").val();
+                    var present_address = $("form#aboutme-form #pAddress").val();
                     
                     // alert(feature_image);
                     // return false;
-                    if(present_address==''){
-                        alert_status = true;
-                        message = 'Present address is required';
-                        $("form#aboutme-form  #pAddress").focus();
-                    }
                     if(objective==''){
                         alert_status = true;
                         message = 'objective is required';
-                        $("form#aboutme-form  #objective").focus();
+                        err_message[message] = null;
+                        // $("form#aboutme-form  #objective").focus();
+                        $("#objective").css('border-color', 'red');
                     }
+                    else{
+                        $("#objective").css('border-color', 'white');
+                        }
+                   
+                    if(country==''){
+                        alert_status = true;
+                        message = 'country is required';
+                        err_message[message] = null;
+                        $("#countryId").css('border-color', 'red');
+                    }
+                    else{
+                        $("#countryId").css('border-color', 'white');
+                        }
+                    if(state==''){
+                        alert_status = true;
+                        message = 'state is required';
+                        err_message[message] = null;
+                        $("#stateId").css('border-color', 'red');
+                    }
+                    else{
+                        $("#stateId").css('border-color', 'white');
+                        }
+                    if(city==''){
+                        alert_status = true;
+                        message = 'city is required';
+                        err_message[message] = null;
+                        $("#cityId").css('border-color', 'red');
+                    }
+                    else{
+                        $("#cityId").css('border-color', 'white');
+                        }
+                     if(present_address==''){
+                        alert_status = true;
+                        message = 'Present address is required';
+                        err_message[message] = null;
+                        $("#pAddress").css('border-color', 'red');
+                    }
+                    else{
+                        $("#pAddress").css('border-color', 'white');
+                        }
+                    
                     if(alert_status) {
+                        let errors = "The following fields are required: ";
+                            for (var k in err_message) {
+                            errors = errors + "<br/>" +k;
+                            }
                     Swal.fire({
                         title: 'Discard Changes',
-                        text: message,
+                        html: errors,
                         imageUrl: '../../front/icons/alert-icon.png',
                         imageWidth: 80,
                         imageHeight: 80,
@@ -1413,9 +1531,8 @@ document.getElementById("Profession").selectedIndex = "52";
                         cancelButtonColor: '#d33',
                     }).then((res) => {
                         if (res.value) {
-                            if(action) {
-                                window.location.href = action;
-                            }
+                            err_message = {}; 
+                            return false;
                         }
                     });
                 } else {
@@ -1447,8 +1564,27 @@ document.getElementById("Profession").selectedIndex = "52";
                                     $('#AboutMeModal').modal('hide');
                                     $('.modal-backdrop').remove();
                                     // $('#ProfessionSkillModal').show();
+                                    $('.navbar-tabs #professionTab').css({'pointer-events':'auto','cursor':'pointer'});
+                                    $('.navbar-tabs #educationTab').css({'pointer-events':'auto','cursor':'pointer'});
+                                    $('.navbar-tabs #workExperienceTab').css({'pointer-events':'auto','cursor':'pointer'});
+                                    $('.navbar-tabs #contactTab').css({'pointer-events':'auto','cursor':'pointer'});
+                                    $('.navbar-tabs #characterRefTab').css({'pointer-events':'auto','cursor':'pointer'});
+                                    $('.navbar-tabs #professionTab').attr('data-toggle', 'modal');
+                                    $('.navbar-tabs #educationTab').attr('data-toggle', 'modal');
+                                    $('.navbar-tabs #workExperienceTab').attr('data-toggle', 'modal');
+                                    $('.navbar-tabs #contactTab').attr('data-toggle', 'modal');
+                                    $('.navbar-tabs #characterRefTab').attr('data-toggle', 'modal');
+
+                                    $('.navbar-tabs #professionTab').attr('data-target', '#ProfessionSkillModal');
+                                    $('.navbar-tabs #educationTab').attr('data-target', '#EducationModal');
+                                    $('.navbar-tabs #workExperienceTab').attr('data-target', '#WorkExperienceModal');
+                                    $('.navbar-tabs #contactTab').attr('data-target', '#ContactModal');
+                                    $('.navbar-tabs #characterRefTab').attr('data-target', '#CharacterReferencesModal');
+
+
                                     $("#ProfessionSkillModal").modal('show');
-                        }
+                                    
+                                }
                                 
                                 // $('#Profession-body').parent().parent().show();
                                 // document.getElementById("aboutme-body").innerHTML = "hide";
@@ -1504,7 +1640,7 @@ document.getElementById("Profession").selectedIndex = "52";
             var $form = $('form#profession-form');
             var post_data = new FormData($form[0]);
             var alert_status;
-          
+            var err_message = {};
           
                 var professsion = $("form#profession-form #Profession").val();
                 var skills = $("form#profession-form  #skills").val();
@@ -1512,20 +1648,33 @@ document.getElementById("Profession").selectedIndex = "52";
                 if(professsion==''){
                     alert_status = true;
                      message = 'Profession is required';
-                     $("form#profession-form  #Profession").focus();
+                     err_message[message] = null;
+                    $("#Profession").css('border-color', 'red');
                 }
-                else if(skills==''){
+                else{
+                    $("#Profession").css('border-color', 'white');
+                }
+
+                if(skills==''){
                      alert_status = true;
-                     message = 'Skills is required';
-                     $("form#profession-form #skills").focus();
+                     message = 'Skills are required';
+                     err_message[message] = null;
+                        $("#skills").css('border-color', 'red');
                 }
+                else{
+                    $("#skills").css('border-color', 'white');
+                    }
                
                
                    
     if(alert_status) {
+        let errors = "The following fields are required: ";
+          for (var k in err_message) {
+           errors = errors + "<br/>" +k;
+            }
         Swal.fire({
             title: 'Discard Changes',
-            text: message,
+            html: errors,
             imageUrl: '../../front/icons/alert-icon.png',
             imageWidth: 80,
             imageHeight: 80,
@@ -1544,9 +1693,8 @@ document.getElementById("Profession").selectedIndex = "52";
             cancelButtonColor: '#d33',
         }).then((res) => {
             if (res.value) {
-                if(action) {
-                    window.location.href = action;
-                }
+                err_message = {};
+                return false;
             }
         });
     } else {
@@ -1636,7 +1784,7 @@ document.getElementById("Profession").selectedIndex = "52";
     });
                 function openNav(){
                     if(isImageAvailable){
-                        document.getElementById("mySidenav").style.width = "10vw";
+                        document.getElementById("mySidenav").style.width = "14vw";
                         // document.getElementById("main").style.marginLeft = "250px";
                         document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
                     }else{
@@ -1939,8 +2087,15 @@ document.getElementById("Profession").selectedIndex = "52";
             oldFeaturedImg = image.src;
             isNewImg = true;
         }
-        
+        $('.sidenav-heading').click();
+        $('.tab').css({'cursor':'not-allowed'});
+        // cursor: not-allowed;
     };
+
+    $('.tab').on('click',function(e){
+        e.preventDefault();
+    });
+
 
 
     $(".fa-image").on({

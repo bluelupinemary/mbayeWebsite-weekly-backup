@@ -76,25 +76,20 @@ class LoginController extends Controller
 
         if (method_exists($this, 'hasTooManyLoginAttempts') && $this->hasTooManyLoginAttempts($request)) 
         {
-            Log::debug('has too many login');
             $this->fireLockoutEvent($request);
             return $this->sendLockoutResponse($request);
         }
         if ($this->attemptLogin($request)) 
         {
-            Log::debug('attempt login');
             return $this->sendLoginResponse($request);
             
         }
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
-        Log::debug('increment attempts');
         $this->incrementLoginAttempts($request);
         // dd($this->sendFailedLoginResponse($request));
         // dd($this->sendFailedLoginResponse($request));
-
-        Log::debug($this->sendFailedLoginResponse($request));
         return $this->sendFailedLoginResponse($request);
         // return  $this->sendFailedLoginResponse($request);
              
@@ -110,7 +105,6 @@ class LoginController extends Controller
             'message'=>'Email or password is incorrect',
             'status'=>'failed'
         ]);
-        
     }
 
     /**
@@ -141,30 +135,36 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        // dd($user);
-        Log::debug($user);
        /**
         * Checking user account is verified or not, if not redirect back
         */
-        if ($user->confirmed == 0) {
+        if($request->ajax())
+        {
+            if ($user->confirmed == 0) {
             
-            access()->logout();
-            // throw new GeneralException('This account is not yet verified. Please check your email to verify your account.');
-            // return redirect()->back()->withErrors('This account is not yet verified. Please check your email to verify your account.');
-            // return redirect()->back()->with('error', 'This account is not yet verified. Please check your email to verify your account.');
-            // commented by nouman
-            // Session::flash('message', 'This account is not yet verified. Please check your email to verify your account.!'); 
-            // Session::flash('alert-class', 'alert-danger');
-            // commented by nouman
-
-            return response()->json([
-                'redirectPath' => 'login',
-                'redirect'=>'no',
-                'title'=>'Not Confirmed',
-                'message'=>trans('exceptions.frontend.auth.confirmation.confirm'),
-                'status'=>'notConfirmed'
-            ]); 
+                access()->logout();
+                // throw new GeneralException('This account is not yet verified. Please check your email to verify your account.');
+                // return redirect()->back()->withErrors('This account is not yet verified. Please check your email to verify your account.');
+                // return redirect()->back()->with('error', 'This account is not yet verified. Please check your email to verify your account.');
+                // commented by nouman
+                // Session::flash('message', 'This account is not yet verified. Please check your email to verify your account.!'); 
+                // Session::flash('alert-class', 'alert-danger');
+                // commented by nouman
+    
+                // return redirect()->back()->withErrors('This account is not yet verified. Please check your email to verify your account.');
+    
+                // return $request->session()->all();
+    
+                return response()->json([
+                    'redirectPath' => 'login',
+                    'redirect'=>'no',
+                    'title'=>'Not Confirmed',
+                    'message'=>trans('exceptions.frontend.auth.confirmation.confirm'),
+                    'status'=>'notConfirmed'
+                ]); 
+            }
         }
+        
 
         /*
          * Check to see if the users account is confirmed and active
@@ -208,6 +208,17 @@ class LoginController extends Controller
         // dd("sd".$user->already_login);
         if ($user->already_login==0) 
         {
+            if (access()->allow('view-backend')) {
+                $affectedRows = User::where('id', '=',$user->id)->update(array('already_login' => 1));
+                event(new UserLoggedIn($user));
+                return response()->json([
+                    'redirectPath' => $this->redirectPath(),
+                    'title'=>'Success',
+                    'message'=>'Welcome to Mbaye',
+                    'status'=>'success'
+                ]);
+                
+            }
             $affectedRows = User::where('id', '=',$user->id)->update(array('already_login' => 1));
              event(new UserLoggedIn($user));
            
@@ -267,7 +278,8 @@ class LoginController extends Controller
             'message' => Lang::get('auth.throttle', ['seconds' => $seconds,'minutes' => ceil($seconds / 60)]),
             'code'=>429,
             'title'=>'Access Resticted',
-            'status'=>'moreAttempts'
+            'status'=>'moreAttempts',
+            'seconds' =>$seconds,
         ]);
         
     }

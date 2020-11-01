@@ -99,6 +99,7 @@ class CompanyProfilesRepository extends BaseRepository
       }
     }
 
+
     /**
      * Update Profile.
      *
@@ -117,7 +118,7 @@ class CompanyProfilesRepository extends BaseRepository
             $input['featured_image'] = $this->uploadEditedImage($input['edited_featured_image']);
         } else if (array_key_exists('featured_image', $input)) {
             $this->deleteOldFile($profile);
-            $input['featured_image'] = $this->uploadImage($input['featured_image']);
+            $input['featured_image'] = $this->uploadImage($input);
         }
 
         if ($profile->update($input)) {

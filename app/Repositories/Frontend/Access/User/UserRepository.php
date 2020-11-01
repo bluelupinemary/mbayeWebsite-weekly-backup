@@ -107,8 +107,8 @@ class UserRepository extends BaseRepository
         $user->username = $data['email'];
         $user->dob = $data['dob'];
         //$user->age = $data['age'];
-        $user->sponser_name = $data['sponser_name'];
-        $user->sponser_email = $data['sponser_email'];
+        $user->sponser_name = $data['sponsor_name'];
+        $user->sponser_email = $data['sponsor_email'];
         $user->gender = $data['gender'];
         $user->address = $data['address'];
         $user->country = $data['country'];
@@ -275,11 +275,14 @@ class UserRepository extends BaseRepository
         $user->first_name = $input['first_name'];
         $user->last_name = $input['last_name'];
         $user->dob = $input['dob'];
-        $user->sponser_name = $input['sponser_name'];
-        $user->sponser_email = $input['sponser_email'];
+        // $user->age = $input['age'];
+        $user->sponser_name = $input['sponsor_name'];
+        $user->sponser_email = $input['sponsor_email'];
         $user->gender = $input['gender'];
         $user->address = $input['address'];
         $user->country = $input['country'];
+        $user->state = $input['state'];
+        $user->city = $input['city'];
         $user->id_number = $input['id_number'];
         $user->mobile_number = $input['mobile_number'];
         $user->org_type = $input['org_type'];

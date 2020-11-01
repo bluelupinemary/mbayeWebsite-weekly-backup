@@ -205,6 +205,7 @@ Route::group(['namespace' => 'Message'], function () {
     Route::resource('company_profile', 'Company\CompanyProfileController');
     Route::get('/company/setup-profile', 'Company\CompanyProfileController@index');
     Route::get('/company/setup-profile/{id}', 'Company\CompanyProfileController@edit');
+    Route::get('/company/view-company-profile', 'Company\CompanyProfileController@show');
 });
 
 /*
@@ -275,7 +276,7 @@ Route::get('/blogview/designed-panel/home', 'FrontendController@designed_panels_
 
 /* blogs for the Jobseekers */
 Route::get('/blogview/career', 'FrontendController@jobseeker_profiles')->name('jobseeker_profiles');
-Route::get('/my_career_profile/{id}', 'JobSeekerProfile\JobSeekerProfilesController@show_my_profile');
+Route::get('/jobseekers/view-profile/{id}', 'JobSeekerProfile\JobSeekerProfilesController@show_my_profile');
 
 /* blogs for the career post */
 

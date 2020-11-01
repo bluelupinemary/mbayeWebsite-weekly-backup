@@ -11,8 +11,10 @@ var alldata=[];
       });
   });
   // SELECTING THE COUNTRY AND FETCHING THE STATES
+  
   $('#countryId').change(function(){
      var c_check = $('#countryId').val();
+     let state_count = 0;
      $('#stateId').html('');
      $('#cityId').html('');
      $.each( alldata, function( key, val ) {
@@ -21,7 +23,21 @@ var alldata=[];
          if(val.states.length)
          {
            $.each( val.states , function( key_c, val_c ) {
-             $('#stateId').append("<option value='" + val_c.name + "'>" + val_c.name + "</option>");
+             if(state_count == 0 ){
+                $('#stateId').append("<option value='" + val_c.name + "'  selected>" + val_c.name + "</option>");
+                
+                //for the first state in the country, get all cities for that state
+                let city_count = 0;
+                $.each( val_c.cities , function( key_c, val_city ) {
+                    if(city_count == 0) $('#cityId').append("<option value='" + val_city.name + "' selected>" + val_city.name + "</option>");
+                    else $('#cityId').append("<option value='" + val_city.name + "'>" + val_city.name + "</option>");
+                    city_count++;
+                });
+
+             }
+             else $('#stateId').append("<option value='" + val_c.name + "'>" + val_c.name + "</option>");
+ 
+              state_count++;
            })
          }
          else
@@ -40,8 +56,7 @@ var alldata=[];
       $.each( val.states , function( key_c, val_c ) {
         if(val_c.name === c_check)
         { 
-          // console.log(c_check);
-         //  console.log(val_c.cities.length);
+          
          if(val_c.cities.length)
          {
            $.each( val_c.cities , function( key_c1, val_c1 ) {

@@ -1,3 +1,4 @@
+  var valideemail;
   // A button for taking snaps
   window.onload = function() 
   {
@@ -6,8 +7,11 @@
 
   // Get old selected gender, country, organization type;
   $(document).ready(function() {
-   
-      
+
+    $('#Email').focus(function(){
+      $('#Email').removeClass('success-alter');
+      $('#Email').removeClass('danger-alter');
+    });
 
     $("#MyForm input#text_occupation_astro").keyup(function(){
       var value = $(this).val();
@@ -294,7 +298,7 @@
     });
     
     $(".btn_occ_submit").click(function(e){
-         alert('coing eree');
+         
         var occ_astro=$("#text_occupation_astro").val();
         
         if(occ_astro=='' || occ_astro==null)
@@ -376,8 +380,6 @@
     //Function for age calculation
     function calculate_age()
     {
-      $("#sname").removeAttr('required');
-      $("#sponser_email").removeAttr('required');
       $("#age").val(' ');
 
       $('.text_Aquaris').css({'display':'none'});
@@ -498,16 +500,12 @@
             if(age < 18)
             {
               $("#sname").show();
-              $("#sponser_email").show();
-              document.getElementById("sname").required = true;
-              document.getElementById("sponser_email").required = true;
+              $("#sponsor_email").show();
             }
             else
             {
               $("#sname").hide();
-              $("#sponser_email").hide();
-              $("#sname").removeAttr('required');
-              $("#sponser_email").removeAttr('required');
+              $("#sponsor_email").hide();
             }
           }
         }
@@ -734,6 +732,7 @@
         if(!emailReg.test(email) && email == '') {
             custom_swal("Error!","Please Enter Valid Email Id","Email");
             $('#Email').tooltip();
+            $('#Email').focus();
             return false;
         }
         else if ( emailReg.test(email) && email !='')
@@ -750,16 +749,17 @@
               if (responce.status == 'exist') 
               {
                 custom_swal("Already Exist!","login into to your account","Email");
+                $('#Email').removeClass('success-alter');
                 $('#Email').addClass('danger-alter');
                 $('#Email').tooltip();
+                $('#Email').focus();
                 valideemail=false;
                 return false;
               }
               if (responce.status == 'not-exist') 
               {
                 $('#Email').removeClass('danger-alter');
-                  $('#Email').addClass('success-alter');
-                  valideemail=true;
+                $('#Email').addClass('success-alter');
               }
               // console.log('success :'+ responce);
             }
@@ -767,22 +767,20 @@
         }
       }
 
-      function email_formate()
+      function email_formate(emailIdFeild)
       {
-        var email=$("#Email").val(); 
+        var email=$("#"+emailIdFeild).val(); 
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var blnValidate=re.test(String(email).toLowerCase());
         
-        if (valideemail == false ) 
+        
+        if(blnValidate==false)
         {
           custom_swal("Already Exist!","login into to your account","Email");
           $('#Email').addClass('danger-alter');
           $('#Email').tooltip();
           return false;
-        }
-        if(blnValidate==false)
-        {
-          return false;
+
         }
         else
         {
@@ -1007,7 +1005,7 @@
         // LOGIN DETAILS SECTION JS START
         if (current_fs.attr('attr-tab-id') == 1) 
         {
-          var check1 = email_formate();
+          var check1 = email_formate('Email');
           var check2 = validatePassword('password');
           var check3 = validateConfirmpass();
           
@@ -1101,6 +1099,27 @@
           {
             custom_swal("Required !","Enter Organization Name!","org_name");
             return false; 
+          }
+          if($('#age').val() < 18)
+          {
+            var check_1 = email_formate('sponsor_email');
+            
+            if ($('#sname').val() == '')
+            {
+              custom_swal("Required !","Enter Sponsor Name!","sname");
+              return false; 
+            }
+            if (check_1 == false) 
+            {
+              custom_swal("Error!","Please Enter Valid Email Id","sponsor_email");
+              $('#sponsor_email').tooltip();
+              return false;
+            } 
+            if ($('#sponsor_email').val() == '')
+            {
+              custom_swal("Required !","Enter Sponsor Email!","sponsor_email");
+              return false; 
+            }
           }
           
           
@@ -1199,10 +1218,6 @@
           $('#myModal').modal({ show: true });
           return false; 
         }
-          
-
-
-
       })
 
 

@@ -20,6 +20,39 @@
         .mbaye_body{
             justify-content: normal !important;
         }
+        .fa-edit-span{
+            display:none;
+            font-size: 1rem;
+            width: 7.5vw;
+            padding: 10%;
+            text-align: center;
+            border-radius: 7%;
+            font-family: Nasalization;
+            transform: translate(-17%, -333%);
+            background-color: rgb(23, 162, 184);
+            color: white;
+        }
+        .vertical-alignment-helper {
+            display:table;
+            height: 100%;
+            width: 100%;
+            pointer-events:none;}
+
+            .vertical-align-center {
+            /* To center vertically */
+            display: table-cell !important;
+            vertical-align: middle;
+            pointer-events:none;}
+
+            .modal-content {
+            /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+            width:inherit;
+            max-width:inherit; /* For Bootstrap 4 - to avoid the modal window stretching 
+            full width */
+            height:inherit;
+            /* To center horizontally */
+            margin: 0 auto;
+            pointer-events:all;}
 
     </style>
 
@@ -56,150 +89,730 @@
 
 @section('content')
 {{-- <h1>Testing</h1>     --}}
-<div class="slider">
+<div class="slider" id="slider">
     <h2 class="sidenav-heading"  onclick="openNav()">SETUP&nbsp;PROFILE</h2>
 </div>
     <div id="page-content">
-        {{-- <div class="app">  --}}
+       
             <form action="" id="aboutme-form" enctype="multipart/form-data" method="POST">
-                @csrf
-            <div class="bg-div">
-               
-                <div class="featured-img" ></div>
-                    <label for="file" id="featured-image-label">
+                    @csrf
+                    <div class="bg-div">
                     
-                    <!--changed id of img from outputImage to featured-image-previewimg-->
-                    
-                        <img src="{{ asset('storage/career/employee/'.$profile->featured_image) }}"  id="featured-image-previewimg"  alt="input image" style=" max-width:100%; max-height:100%;">
-                    
-                        <div class="middle" id="middle" style="background-color: black;">
-                            <div id="middleText">Update Featured Image</div>
-                        </div>
-                    
-                    
-                    </label>
-                    {{-- <button type="button" class="" id="edit_uploaded_image" style="">Edit Image</button>  --}}
-
-                    
-                        <i id="edit_uploaded_image" class="far fa-image btn_pointer" style="color:#16aedc; display:block"> <span style="display:none;font-size: 1rem;width: 6.5vw;padding: 10%;
-                            font-family: Nasalization;transform: translate(-17%, -280%);background-color: rgb(23, 162, 184);
-                            color: white;" >Edit photo</span></i>
-                    
-
-                   {{-- <button class="btn" id="edit_uploaded_image"> --}}
-
-                   
-                        <input id="file"  onchange="loadFile(event)"  type="file"  name="featured_image" value="{{ $profile->featured_image ?? '' }}"  style=" min-width:100%;min-height: 100%;">
-                    
-
-            </div>
-            {{-- --------------------------------------------------------------------- --}}
-            <div class="modal" id="AboutMeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">About Me</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    {{-- <div class="app" style="display: none;">
-                      
-                    </div> --}}
-                    <div class="modal-body">
-                        <div class="aboutme-body">
-                            <fieldset>
-                                
-                               
-                                <div class="form-row">
-                                    
-                                        <div class="form-group col-md-12 input-group-sm">
-                                            <label for="fName"> First Name</label>
-                                            <input type="text"  class="form-control disabled_field" id="fName" disabled value="{{ $user->first_name }}">
-                                        </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="lName">Last Name</label>
-                                        <input type="text" class="form-control disabled_field" id="lName" disabled value="{{ $user->last_name }}">
-                                      </div>
-                                      
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="dob">Date Of Birth</label>
-                                        <input type="text" class="form-control disabled_field" id="dob" disabled value="{{ $user->dob }}">
-                                      </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="age">Age</label>
-                                        <input type="text" class="form-control disabled_field" id="age" disabled value="{{ $user->age }}">
-                                      </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="gender">Gender</label>
-                                        <input type="text" class="form-control disabled_field" id="gender" disabled value="{{ $user->gender }}">
-                                      </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="Address"> Registered Address</label>
-                                        <input type="text" class="form-control disabled_field" id="my_Address" disabled value="{{ $user->address }}">
-                                      </div>
-                                       <div class="form-group col-md-12 input-group-sm">
-                                        <label for="Country">Country</label>
-                                        <input type="text" class="form-control disabled_field" id="Country" disabled value="{{ $user->country }}">
-                                      </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="objective">Objective</label>
-                                        <textarea type="text" class="form-control" name="objective" id="objective" maxlength="250">{{ $profile->objective }}</textarea>
-                                      </div>
-                                      <br/><br/>
-                                      {{-- <div class="form-group col-md-12 input-group-sm">
-                                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                     Add Current Address
-                                      </button>
-                                      </div>
-                                    <br>  <br> --}}
-                                      {{-- <div class="collapse" id="collapseExample"> --}}
-                                            <div class="form-group col-md-12 input-group-sm ">
-                                                <label for="country">Present Country</label>
-                                                <select class="countries form-control" name="present_country" id="countryId" required>&#x25BC;
-                                                    {{-- <option value="">Select</option> --}}
-                                                    <option value="{{ $profile->present_country ?? '' }}">{{ $profile->present_country }}</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-12 input-group-sm">
-                                                <label for="state">Present State</label>
-                                                <select id="stateId" class="states form-control" name="state" required>
-                                                    {{-- <option value="">Select State</option> --}}
-                                                    <option value="{{ $profile->state ?? '' }}" >{{ $profile->state }}</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-12 input-group-sm">
-                                                <label for="city">Present City</label>
-                                                <select id="cityId" class="cities form-control" name="present_city" required>
-                                                    {{-- <option value="">Select City</option> --}}
-                                                    <option value="{{ $profile->present_city ?? '' }}" >{{ $profile->present_city }}</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-12 input-group-sm">
-                                                <label for="pAddress">Present Address</label>
-                                                <input type="text" class="form-control" value="{{ $profile->present_address ?? '' }}" name="present_address" id="pAddress" >
-                                            </div>
-                                      {{-- </div> --}}
-                                     
-                                      {{-- <input type="hidden" name="user_id" value="{{Auth::user()->id}}"> --}}
-                                      
-                                    </div>    
-
-                                    <input type="hidden" name="edited_featured_image" id="edited_featured_image">
-                                
-                            </fieldset>
+                        <div class="featured-img" ></div>
+                            <label for="file" id="featured-image-label">
+                            
+                            <!--changed id of img from outputImage to featured-image-previewimg-->
+                            
+                                <img src="{{ asset('storage/career/employee/'.$profile->featured_image) }}"  id="featured-image-previewimg"  alt="input image" style=" max-width:100%; max-height:100%;">
+                            
+                                <div class="middle" id="middle" style="background-color: black;">
+                                    <div id="middleText">Update Featured Image</div>
+                                </div>
                             
                             
+                            </label>
+                            {{-- <button type="button" class="" id="edit_uploaded_image" style="">Edit Image</button>  --}}
+
+                            
+                                <i id="edit_uploaded_image" class="far fa-image btn_pointer" style="color:#16aedc; display:block"> <span class="fa-edit-span">Edit photo</span></i>
+                            
+                            {{-- display: none;
+                            right: 0;
+                            top: -1vh;
+                            position: absolute;
+                            font-size: 2em;
+                            border: none;
+                            color: white;
+                            padding: 12px 16px;
+                            width: 5vw;
+                            cursor: pointer; --}}
+                        {{-- <button class="btn" id="edit_uploaded_image"> --}}
+
+                        
+                                <input id="file"  onchange="loadFile(event)"  type="file"  name="featured_image" value="{{ $profile->featured_image ?? '' }}"  style=" min-width:100%;min-height: 100%;">
+                            
+                                
+                    </div>
+                {{-- --------------------------------------------------------------------- --}}
+                <div class="modal" id="AboutMeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">About Me</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                        
+                                <div class="modal-body">
+                                    <div class="aboutme-body">
+                                        <fieldset>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                        <label for="fName"> First Name</label>
+                                                        <input type="text"  class="form-control disabled_field" id="fName" disabled value="{{ $user->first_name }}">
+                                                </div>
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="lName">Last Name</label>
+                                                    <input type="text" class="form-control disabled_field" id="lName" disabled value="{{ $user->last_name }}">
+                                                </div>
+                                                
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="dob">Date Of Birth</label>
+                                                    <input type="text" class="form-control disabled_field" id="dob" disabled value="{{ $user->dob }}">
+                                                </div>
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="age">Age</label>
+                                                    <input type="text" class="form-control disabled_field" id="age" disabled value="{{ $user->age }}">
+                                                </div>
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="gender">Gender</label>
+                                                    <input type="text" class="form-control disabled_field" id="gender" disabled value="{{ $user->gender }}">
+                                                </div>
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="Address"> Registered Address</label>
+                                                    <input type="text" class="form-control disabled_field" id="my_Address" disabled value="{{ $user->address }}">
+                                                </div>
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="Country">Country</label>
+                                                    <input type="text" class="form-control disabled_field" id="Country" disabled value="{{ $user->country }}">
+                                                </div>
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="objective">Objective</label>
+                                                    <textarea type="text" class="form-control" name="objective" id="objective" maxlength="250">{{ $profile->objective }}</textarea>
+                                                </div>
+                                                <br/><br/>
+                                                {{-- <div class="form-group col-md-12 input-group-sm">
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                Add Current Address
+                                                </button>
+                                                </div>
+                                                <br>  <br> --}}
+                                                {{-- <div class="collapse" id="collapseExample"> --}}
+                                                        <div class="form-group col-md-12 input-group-sm ">
+                                                            <label for="country">Present Country</label>
+                                                            <select class="countries form-control" name="present_country" id="countryId" required>&#x25BC;
+                                                                {{-- <option value="">Select</option> --}}
+                                                                <option value="{{ $profile->present_country ?? '' }}">{{ $profile->present_country }}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-12 input-group-sm">
+                                                            <label for="state">Present State</label>
+                                                            <select id="stateId" class="states form-control" name="state" required>
+                                                                {{-- <option value="">Select State</option> --}}
+                                                                <option value="{{ $profile->state ?? '' }}" >{{ $profile->state }}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-12 input-group-sm">
+                                                            <label for="city">Present City</label>
+                                                            <select id="cityId" class="cities form-control" name="present_city" required>
+                                                                {{-- <option value="">Select City</option> --}}
+                                                                <option value="{{ $profile->present_city ?? '' }}" >{{ $profile->present_city }}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-12 input-group-sm">
+                                                            <label for="pAddress">Present Address</label>
+                                                            <input type="text" class="form-control" value="{{ $profile->present_address ?? '' }}" name="present_address" id="pAddress" >
+                                                        </div>
+                                                {{-- </div> --}}
+                                                
+                                                {{-- <input type="hidden" name="user_id" value="{{Auth::user()->id}}"> --}}
+                                                
+                                                </div>    
+
+                                                <input type="hidden" name="edited_featured_image" id="edited_featured_image">
+                                            
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <input type="submit"  class="btn btn-primary aboutme-done" value="Update"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                      {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-                      <button type="button" class="btn btn-primary aboutme-done">Update</button>
-                    </div>
-                  </div>
                 </div>
-                </form>
+            </form>
+
+
+            <div id="mySidenav" class="sidenav">
+                <div class="navbar-tabs">
+                   {{-- <h3 class="heading_setup">Edit Profile</h3>
+                     <a href="" class="AboutMeTab" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
+                    <a href="" class="tab" id="professionTab"  data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
+                    <a href="" class="tab" id="educationTab" data-toggle="modal" data-target="#EducationModal">Education</a>
+                    <div class="slider-close-button">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
+                    </div>
+                    <a href="" class="tab" id="workExperienceTab" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
+                    <a href="" class="tab" id="contactTab" data-toggle="modal" data-target="#ContactModal">Contact</a>
+                    <a href="" class="tab" id="characterRefTab" data-toggle="modal" data-target="#CharacterReferencesModal" style="border-bottom: 1px solid gray">Character References</a>
+                    <hr style="background-color:white; ">
+                    <a href="{{ url('jobseekers/view-profile/'.Auth::user()->id)}}" class="view-car-profile" style="color: rgb(22, 174, 220);text-align:center;">Go To My<br> Jobseeker Profile</a> --}}
+                     <h3 class="heading_setup">Edit Profile</h3>
+                    <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
+                    <a href="" class="profession" data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
+                    <a href="" class="education" data-toggle="modal" data-target="#EducationModal">Education</a>
+                    <div class="slider-close-button">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav();">&#8810;</a>
+                    </div>
+                    <a href="" class="work-experience" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
+                    <a href="" class="contacts" data-toggle="modal" data-target="#ContactModal">Contact</a>
+                    <a href="" class="reference" data-toggle="modal" data-target="#CharacterReferencesModal" style="border-bottom: 1px solid gray">Character References</a>
+                    
+                    <a href="{{ url('jobseekers/view-profile/'.Auth::user()->id)}}" class="view-car-profile" style="color: rgb(22, 174, 220);text-align:center;">Go To My<br> Jobseeker Profile</a>
+                </div>
+                {{-- <h3 class="heading_setup">Edit Profile</h3>
+                <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
+                <a href="" class="profession" data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
+                <a href="" class="education" data-toggle="modal" data-target="#EducationModal">Education</a>
+                <div class="slider-close-button">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
+                </div>
+                <a href="" class="work-experience" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
+                <a href="" class="contacts" data-toggle="modal" data-target="#ContactModal">Contact</a>
+                <a href="" class="reference" data-toggle="modal" data-target="#CharacterReferencesModal">Character References</a> --}}
+            
+                
+            </div>
+            
+            <form method="POST" action="" id="profession-form" enctype="multipart/form-data">
+                @csrf
+              
+                <div class="modal" id="ProfessionSkillModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                  {{-- <div class="profession_form-block">  --}}
+
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Profession And Skills</h5>
+            
+                                
+                                
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                
+                                </div>
+                                {{-- <div class="app" style="display: none;">
+                                </div> --}} 
+                                <div class="modal-body ">
+                                    <div class="profession-body" id="Profession-body">
+                                        {{-- <form method="POST" action="" id="profession-form" enctype="multipart/form-data">
+                                            @csrf --}}
+                                        <fieldset>
+                                        
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="Profession">Profession<span style="color:red">*</span></label>
+                                                    <select id="Profession" class="form-control" name="profession_id" required>&#x25BC;
+                                                            <option value="public" selected disabled>Select</option>
+                                                            @foreach($profession as $profession)
+                                                            <option value="{{$profession->id}}"{{$profile->profession_id == $profession->id  ? 'selected' : ''}}>{{$profession->profession_name}}</option>
+                                                            @endforeach
+                                                    </select>
+                                                    {{-- <input type="text" class="form-control" id="Profession"  name="Profession" >
+                                                    <button type="button"  class="dropdown-btn" >
+                                                        <span aria-hidden="true" class="btn-down"><i class="fas fa-angle-down"></i></span>
+                                                    </button> --}}
+                                                    
+                                                    </div>
+                                                    <div id="profession_list"></div>      
+                                                </div>
+
+                                                <div class="form-row"> 
+                                                <div class="form-group col-md-12 col-lg-12 input-group-sm">
+                                                    <label for="skills">Skills<span style="color:red">*</span></label>
+                                                    <textarea  id="skills"  name="skills">{{ $profile->skills ?? '' }}</textarea>
+                                                </div>  
+                                                </div>
+                                        
+                                        </fieldset>
+                                    </div>  
+                        
+                                </div><!--end of div-->  
+                        
+                
+                                <div class="modal-footer">
+                                <input type="submit"  class="btn btn-primary profession-done" value="Update" id="submit_profession"/>
+                                </div>
+                            </div><!-- end of modal content-->
+                    </div> <!--end of modal dialog-->
+           
+                  </div>
+                </div><!--end of profession modal-->
+            </form>
+
+
+            <form method="POST" action="" id="education-form" enctype="multipart/form-data">
+                @csrf
+                <div class="modal" id="EducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-dialog-centered modal-lg vertical-align-center" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Education</h5>
+                                    <button type="button" class="close" data-dismiss="modal"   aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {{-- <div class="app" style="display: none;">
+                                
+                                </div> --}}
+                                @php 
+                                    $educ_div_cnt=$educations->count(); 
+                                @endphp
+                                <div class="modal-body education-modal-body">
+                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
+                                    {{-- ---------------------------------------------------------------------------------- --}}
+                                    @if ($educ_div_cnt < 1)
+                                        <div class="education-body main_education_div div_0"> 
+                                            <fieldset>
+                                            
+                                                <div style="position: relative;">
+                                                    {{-- <button type="button"  class="close remove-btn-education" id="remove_educ_btn_{{$cnt}}" title="Remove Education " aria-label="Clone" onclick="remove(this)">
+                                                        <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                                    </button> --}}
+                                                <button type="button" class="close remove-btn-education" title="Remove Education" id="remove_educ_btn_0" aria-label="Clone" onclick="remove_education(this);"> <span class="btn-remove" ><i class="fas fa-minus-circle"></i></span> </button>
+                                                </div>
+                                            
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-12 input-group-sm" id="education_dropdown_0">
+                                                            <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
+                                                                <select class="form-control" name="education_level[]" id="educationLevel_0" required>
+                                                                    <option value="Doctorate" > Doctorate</option>
+                                                                    <option value="Master" >Master's Degree</option>
+                                                                    <option value="Bachelor" >Bachelor's Degree</option>
+                                                                    <option value="Associate" >Associate Degree</option>
+                                                                    <option value="SomeCollege" >Some College</option>
+                                                                    <option value="Vocational" >Vocational</option>
+                                                                    <option value="HighSchool" >High School Graduate</option>    
+                                                                </select>
+                                                        </div> 
+    
+    
+                                                        <input type="hidden" name="id[]" class="job_id" id="id_0" value="">
+                                                        <div class="form-group col-md-12 input-group-sm">
+                                                            <label for="SchoolName">School Name<span style="color:red">*</span></label>
+                                                            <input type="text" class="form-control" id="SchoolName_0" name="school_name[]" value=""  required>
+                                                        </div>
+                                                        <div class="form-group col-md-12 input-group-sm">
+                                                            <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
+                                                            <input type="text" class="form-control" id="FieldOfStudy_0"  name="field_of_study[]" value="" required>
+                                                        </div>
+                                                        <div class="form-group col-md-12 input-group-sm">
+                                                            <label for="Description">Description<span style="color:red">*</span></label><br>
+                                                            <textarea id="Description_0" name="description[]" required style="width:100%;resize:none;"> </textarea>
+                                                        </div>
+                                                        <div class="form-group col-md-4 input-group-sm">
+                                                            <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
+                                                            <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="StartDate_0" placeholder="Date" value=""  name="start_date[]" required >
+                                                        </div>
+                                                        <div class="form-group col-md-4 input-group-sm">
+                                                            
+                                                        </div>
+                                                        <div class="form-group col-md-4 input-group-sm">
+                                                            <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                            <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="EndDate_0" value="" name="end_date[]" required >
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <div style="position: relative;">
+                                                            <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
+                                                                <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
+                                                            </button>
+                                                        </div>
+                                            </fieldset>
+                                            
+                                        
+                                        </div>
+                                    @else
+                                    {{-- --------------------------------------------------------------------------------------- --}}
+                                        @foreach($educations as $cnt=>$education){   
+                                            <div class="education-body main_education_div div_{{$cnt}}"> 
+                                                <fieldset>
+                                                
+                                                    <div style="position: relative;">
+                                                        {{-- <button type="button"  class="close remove-btn-education" id="remove_educ_btn_{{$cnt}}" title="Remove Education " aria-label="Clone" onclick="remove(this)">
+                                                            <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                                        </button> --}}
+                                                    <button type="button" class="close remove-btn-education" title="Remove Education" id="remove_educ_btn_{{ $cnt }}" aria-label="Clone" onclick="remove_education(this);"> <span class="btn-remove" ><i class="fas fa-minus-circle"></i></span> </button>
+                                                    </div>
+                                                
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-12 input-group-sm" id="education_dropdown_{{$cnt}}">
+                                                                <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
+                                                                    <select class="form-control" name="education_level[]" id="educationLevel_{{$cnt}}" required>
+                                                                        <option value="Doctorate" {{ ( $education->education_level == "Doctorate") ? 'selected' : '' }} > Doctorate</option>
+                                                                        <option value="Master" {{ ( $education->education_level == "Master") ? 'selected' : '' }}>Master's Degree</option>
+                                                                        <option value="Bachelor" {{ ( $education->education_level == "Bachelor") ? 'selected' : '' }}>Bachelor's Degree</option>
+                                                                        <option value="Associate" {{ ( $education->education_level == "Associate") ? 'selected' : '' }}>Associate Degree</option>
+                                                                        <option value="SomeCollege" {{ ( $education->education_level == "SomeCollege") ? 'selected' : '' }}>Some College</option>
+                                                                        <option value="Vocational" {{ ( $education->education_level == "Vocational") ? 'selected' : '' }}>Vocational</option>
+                                                                        <option value="HighSchool" {{ ( $education->education_level == "HighSchool") ? 'selected' : '' }}>High School Graduate</option>    
+                                                                    </select>
+                                                            </div> 
+    
+    
+                                                            <input type="hidden" name="id[]" class="job_id" id="id_{{$cnt}}" value="{{ $education->id ?? '' }}">
+                                                            <div class="form-group col-md-12 input-group-sm">
+                                                                <label for="SchoolName">School Name<span style="color:red">*</span></label>
+                                                                <input type="text" class="form-control" id="SchoolName_{{$cnt}}" name="school_name[]" value="{{ $education->school_name ?? '' }}"  required>
+                                                            </div>
+                                                            <div class="form-group col-md-12 input-group-sm">
+                                                                <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
+                                                                <input type="text" class="form-control" id="FieldOfStudy_{{$cnt}}"  name="field_of_study[]" value="{{ $education->field_of_study ?? '' }}" required>
+                                                            </div>
+                                                            <div class="form-group col-md-12 input-group-sm">
+                                                                <label for="Description">Description<span style="color:red">*</span></label><br>
+                                                                <textarea id="Description_{{$cnt}}" name="description[]" required style="width:100%;resize:none;"> {{ $education->description ?? '' }}</textarea>
+                                                            </div>
+                                                            <div class="form-group col-md-4 input-group-sm">
+                                                                <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
+                                                                <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="StartDate_{{$cnt}}" placeholder="Date" value="{{ strftime('%Y-%m-%d',strtotime($education['start_date'])) }}"  name="start_date[]" required >
+                                                            </div>
+                                                            <div class="form-group col-md-4 input-group-sm">
+                                                                
+                                                            </div>
+                                                            <div class="form-group col-md-4 input-group-sm">
+                                                                <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                                <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="EndDate_{{$cnt}}" value="{{ strftime('%Y-%m-%d',strtotime($education['end_date'])) }}" name="end_date[]" required >
+                                                                </div>
+                                                            </div>
+                                                        
+                                                            <div style="position: relative;">
+                                                                <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
+                                                                    <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
+                                                                </button>
+                                                            </div>
+                                                </fieldset>
+                                            </div>
+                                        
+                                        }
+                                        @endforeach
+                                    @endif
+                                </div>
+                            
+                        
+                                <div class="education-clone"></div>
+                                <div class="modal-footer">
+                                    <input type="submit"  class="btn btn-primary education-done" value="Update" id="submit_education"/>
+                                </div>
+                            </div><!--end of content modal-->
+                    </div><!--end of dialog-->
+               
+           
+                    </div><!--end of vertical align helper-->
+                </div>
+            </form>
+
+
+            <form method="POST" action="" id="work-experience-form"  enctype="multipart/form-data">
+                @csrf
+                 <div class="modal" id="WorkExperienceModal"  class="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Work Experiences</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                @php 
+                                    $work_div_cnt=$workExperience->count(); 
+                                @endphp
+                                {{-- <div class="app" style="display: none;">
+                                </div> --}}
+                                <div class="modal-body work-modal-body">
+                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
+                                    {{-- --------------------------------------------------------------------------------------------- ---------}}
+                                    @if ($work_div_cnt < 1)
+                                        <div class="work-experience-body main_work_experience_div div_0">
+                                            <fieldset>
+                                            
+                                                <div style="position: relative;">
+                                                    <button type="button"  class="close remove-btn-workexperience" id="remove_work_btn_0"  title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
+                                                    <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                                    </button>
+                                                </div>
+                                                <input type="hidden" name="id[]" class="work_id" id="id_0" value="">
+                                                    <div class="form-row">
+                                                        
+                                                        <div class="form-group col-md-6 input-group-sm">
+                                                        <label for="StartDate">Start Date<span style="color:red">*</span></label>
+                                                        <input type="date" class="form-control" id="StartDate_0"  value="" name="start_date[]" >
+                                                        </div>
+                                                        <div class="form-group col-md-6 input-group-sm">
+                                                        <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                        <input type="date" class="form-control" value="" id="EndDate_0" name="end_date[]" >
+                                                        </div>
+                                                    </div>
+                                                    
+                                                        <div class="form-group input-group-sm">
+                                                            <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                        <input type="text" class="form-control" id="company_name_0" name="company_name[]" value="" placeholder="">
+                                                        </div>
+                                                        <div class="form-group input-group-sm">
+                                                            <label for="Address">Company Address<span style="color:red">*</span></label>
+                                                            <input type="text" class="form-control" id="Address_0" name="address[]" value="" placeholder="">
+                                                        </div>
+                                                    <div class="form-group input-group-sm">
+                                                        <label for="CompRole">Role<span style="color:red">*</span></label>
+                                                        <textarea type="text" class="form-control" id="CompRole_0" name="role[]"  placeholder=""></textarea>
+                                                    </div>
+                                                    <div class="form-group input-group-sm">
+                                                        <label for="CompDesig">Designation<span style="color:red">*</span></label>
+                                                        <input type="text" class="form-control" id="CompDesig_0" name="designation[]" value="" placeholder="">
+                                                    </div>
+                                                    <div class="form-group input-group-sm">
+                                                        <label for="Contact">Contact<span style="color:red">*</span></label>
+                                                        <input type="text" class="form-control" id="Contact_0" name="contact_no[]" value="" placeholder="">
+                                                    </div>
+                                                    
+                                                    <div style="position: relative;">
+                                                        <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
+                                                            <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                                        </button>
+                                                    </div>
+                                            </fieldset><br>
+                                        </div>
+                                    @else
+                                    {{-- ---------------------------------------------------------------------------------------------------- --}}
+                                    @foreach($workExperience as $cnt=>$workExperience){ 
+                                        <div class="work-experience-body main_work_experience_div div_{{$cnt}}">
+                                            <fieldset>
+                                            
+                                                <div style="position: relative;">
+                                                    <button type="button"  class="close remove-btn-workexperience" id="remove_work_btn_{{ $cnt }}"  title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
+                                                    <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                                    </button>
+                                                </div>
+                                                <input type="hidden" name="id[]" class="work_id" id="id_{{$cnt}}" value="{{ $workExperience->id ?? '' }}">
+                                                    <div class="form-row">
+                                                        
+                                                        <div class="form-group col-md-6 input-group-sm">
+                                                        <label for="StartDate">Start Date<span style="color:red">*</span></label>
+                                                        <input type="date" class="form-control" id="StartDate_{{$cnt}}"  value="{{ strftime('%Y-%m-%d',strtotime($workExperience['start_date'])) }}" name="start_date[]" >
+                                                        </div>
+                                                        <div class="form-group col-md-6 input-group-sm">
+                                                        <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                        <input type="date" class="form-control" value="{{ strftime('%Y-%m-%d',strtotime($workExperience['end_date'])) }}" id="EndDate_{{$cnt}}" name="end_date[]" >
+                                                        </div>
+                                                    </div>
+                                                    
+                                                        <div class="form-group input-group-sm">
+                                                            <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                        <input type="text" class="form-control" id="company_name_{{$cnt}}" name="company_name[]" value="{{ $workExperience->company_name ?? '' }}" placeholder="">
+                                                        </div>
+                                                        <div class="form-group input-group-sm">
+                                                            <label for="Address">Company Address<span style="color:red">*</span></label>
+                                                            <input type="text" class="form-control" id="Address_{{$cnt}}" name="address[]" value="{{ $workExperience->address ?? '' }}" placeholder="">
+                                                        </div>
+                                                    <div class="form-group input-group-sm">
+                                                        <label for="CompRole">Role<span style="color:red">*</span></label>
+                                                        <textarea type="text" class="form-control" id="CompRole_{{$cnt}}" name="role[]"  placeholder="">{{ $workExperience->role ?? '' }}</textarea>
+                                                    </div>
+                                                    <div class="form-group input-group-sm">
+                                                        <label for="CompDesig">Designation<span style="color:red">*</span></label>
+                                                        <input type="text" class="form-control" id="CompDesig_{{$cnt}}" name="designation[]" value="{{ $workExperience->designation ?? '' }}" placeholder="">
+                                                    </div>
+                                                    <div class="form-group input-group-sm">
+                                                        <label for="Contact">Contact<span style="color:red">*</span></label>
+                                                        <input type="text" class="form-control" id="Contact_{{$cnt}}" name="contact_no[]" value="{{ $workExperience->contact_no ?? '' }}" placeholder="">
+                                                    </div>
+                                                    
+                                                    <div style="position: relative;">
+                                                        <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
+                                                            <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                                        </button>
+                                                    </div>
+                                            </fieldset><br>
+                                        </div>
+                                    }
+                                    @endforeach
+                                @endif
+                                </div> <!--end of body-->
+                                <div class="work_experience-clone"></div>
+                                <div class="modal-footer">
+                                    <input type="submit"  class="btn btn-primary work-experience-done" value="Update"/>
+                                </div>
+                            </div> 
+                        </div>
+                    </div><!--end of vertical align helper-->
+               </div>
+            </form>
+
+            <form method="POST" action="" id="contact-form" enctype="multipart/form-data">
+                @csrf
+              <div class="modal" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Contact Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                {{-- <div class="app" style="display: none;">
+                                
+                                </div> --}}
+                                <div class="modal-body">
+                                    <div class="contact-body">
+                                        <fieldset>
+                                            
+                                            <div class="form-row">
+                                                    <div class="form-group col-md-12 input-group-sm">
+                                                        <label for="pEmail"> Primary Email</label>
+                                                        <input type="text"  class="form-control disabled_field" id="pEmail" name="email" disabled value="{{ $user->email }}" >
+                                                    </div>
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="pMobNumber">Primary Mobile Number</label>
+                                                    <input type="text" class="form-control disabled_field" id="pMobNumber" name="mobile_number" disabled value="{{ $user->mobile_number }}" >
+                                                </div>
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="sEmail">Secondary Email</label>
+                                                    <input type="email" class="form-control" id="sEmail" value="{{ $profile->secondary_email ?? '' }}" name="secondary_email" >
+                                                </div>
+                                                <div class="form-group col-md-12 input-group-sm">
+                                                    <label for="sMobNumber">Secondary  Mobile Number</label>
+                                                    <input type="text" class="form-control" id="sMobNumber" value="{{ $profile->secondary_mobile_number ?? '' }}" name="secondary_mobile_number" >
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-primary contact-done">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
               </div>
+            </form> 
+
+            <form method="POST" action="" id="reference-form"  enctype="multipart/form-data">
+                @csrf
+                  <div class="modal" id="CharacterReferencesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-dialog-centered  modal-lg vertical-align-center" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Character References</h5>
+                
+                        
+                
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        {{-- <div class="app" style="display: none;">
+                          
+                        </div> --}}
+                        @php 
+                        $refr_div_cnt=$characterRefrence->count(); 
+                        @endphp
+                
+                        <div class="modal-body reference-modal-body">
+                           <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
+                            @if($refr_div_cnt < 1)
+                                <div class="reference-body  main_reference_div div_0">
+                                    <fieldset> 
+                                                <div style="position: relative;">
+                                                    <button type="button"  class="close remove-btn-reference" id="remove_refr_btn_0" aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
+                                                        <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                                    </button>
+                                                </div>
+                        
+                                                <div class="form-group input-group-sm">
+                                                    <label for="Name"> Name<span style="color:red">*</span></label>
+                                                    <input type="text" class="form-control" value="" id="Name_0" name="name[]" placeholder="">
+                                                </div>
+                        
+                                                <div class="form-group input-group-sm">
+                                                    <label for="Email">Email<span style="color:red">*</span></label>
+                                                    <input type="email" class="form-control" id="Email_0" value=""  name="email[]" placeholder="">
+                                                </div>
+                        
+                                                <div class="form-group input-group-sm">
+                                                    <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                    <input type="text" class="form-control" id="CompName_0"  name="company_name[]" value="" placeholder="">
+                                                </div>
+                        
+                                                <div class="form-group input-group-sm">
+                                                    <label for="Designation">Designation<span style="color:red">*</span></label>
+                                                    <input type="text" class="form-control" id="Designation_0"  name="designation[]" value="" placeholder="">
+                                                </div>
+                        
+                                                <div style="position: relative;">
+                                                    <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
+                                                        <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                                    </button>
+                                                </div>
+                                    </fieldset><br>
+                                </div>
+                            @else
+                                @foreach($characterRefrence as $cnt=>$characterRefrence){ 
+                                        <div class="reference-body  main_reference_div div_{{$cnt}}">
+                                                <fieldset> 
+                                                        <div style="position: relative;">
+                                                            <button type="button"  class="close remove-btn-reference" id="remove_refr_btn_{{ $cnt }}" aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
+                                                                <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
+                                                            </button>
+                                                        </div>
+                    
+                                                        <div class="form-group input-group-sm">
+                                                            <label for="Name"> Name<span style="color:red">*</span></label>
+                                                        <input type="text" class="form-control" value="{{ $characterRefrence->name ?? '' }}" id="Name_{{$cnt}}" name="name[]" placeholder="">
+                                                        </div>
+                    
+                                                        <div class="form-group input-group-sm">
+                                                            <label for="Email">Email<span style="color:red">*</span></label>
+                                                            <input type="email" class="form-control" id="Email_{{$cnt}}" value="{{ $characterRefrence->email ?? '' }}"  name="email[]" placeholder="">
+                                                        </div>
+                    
+                                                        <div class="form-group input-group-sm">
+                                                            <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                            <input type="text" class="form-control" id="CompName_{{$cnt}}"  name="company_name[]" value="{{ $characterRefrence->company_name ?? '' }}" placeholder="">
+                                                        </div>
+                    
+                                                        <div class="form-group input-group-sm">
+                                                            <label for="Designation">Designation<span style="color:red">*</span></label>
+                                                            <input type="text" class="form-control" id="Designation_{{$cnt}}"  name="designation[]" value="{{ $characterRefrence->designation ?? '' }}" placeholder="">
+                                                        </div>
+                    
+                                                        <div style="position: relative;">
+                                                            <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
+                                                                <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
+                                                            </button>
+                                                        </div>
+                                            </fieldset><br>
+                                    </div>
+                                }
+                                @endforeach
+                            @endif
+                        </div> <!-- end of modal body -->
+                        
+                        <div class="reference-clone"></div>
+                        <div class="modal-footer">
+                            <input type="submit"  class="btn btn-primary characterRederences-done" value="Update" id="submit_reference"/>
+                        </div>
+                     </div><!--end of modal content-->
+                    </div><!--end of modal dialog-->
+                  </div>
+                </div><!--end of modal-->
+                {{-- </div>   --}}
+                
+                </form> 
+
+           
+              
 
             {{-- ---------------------------------------------------------------------------- --}}
              
@@ -211,21 +824,7 @@
                 <h1>EDIT JOBSEEKER PROFILE</h1>
             </div>
 
-            <div id="mySidenav" class="sidenav">
-               
-                <h3 class="heading_setup">Edit Profile</h3>
-                <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
-                <a href="" class="profession" data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
-                <a href="" class="education" data-toggle="modal" data-target="#EducationModal">Education</a>
-                <div class="slider-close-button">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
-                </div>
-                <a href="" class="work-experience" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
-                <a href="" class="contacts" data-toggle="modal" data-target="#ContactModal">Contact</a>
-                <a href="" class="reference" data-toggle="modal" data-target="#CharacterReferencesModal">Character References</a>
             
-                
-            </div>
 
             {{-- <div class="slider" id="slider">
             </div> --}}
@@ -238,456 +837,15 @@
                 {{-- </div> --}}
                 {{-- </div>  --}}
 
-            <div class="sidenav-right">
+            {{-- <div class="sidenav-right">
             <!-- right controls -->
-            </div>
+            </div> --}}
 
-            
-        <form method="POST" action="" id="work-experience-form"  enctype="multipart/form-data">
-            @csrf
-             <div class="modal" id="WorkExperienceModal"  class="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                {{-- <div class="form-block">  --}}
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Work Experiences</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    @php 
-                        $work_div_cnt=$workExperience->count(); 
-                    @endphp
-                    {{-- <div class="app" style="display: none;">
-                    </div> --}}
-                    <div class="modal-body work-modal-body">
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
-                        @foreach($workExperience as $cnt=>$workExperience){ 
-                            <div class="work-experience-body main_work_experience_div div_{{$cnt}}">
-                                <fieldset>
-                                
-                                    <div style="position: relative;">
-                                        <button type="button"  class="close remove-btn-workexperience" id="remove_work_btn_{{ $cnt }}"  title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
-                                        <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
-                                        </button>
-                                    </div>
-                                    <input type="hidden" name="id[]" class="work_id" id="id_{{$cnt}}" value="{{ $workExperience->id ?? '' }}">
-                                        <div class="form-row">
-                                            
-                                            <div class="form-group col-md-6 input-group-sm">
-                                            <label for="StartDate">Start Date<span style="color:red">*</span></label>
-                                            <input type="date" class="form-control" id="StartDate_{{$cnt}}"  value="{{ strftime('%Y-%m-%d',strtotime($workExperience['start_date'])) }}" name="start_date[]" >
-                                            </div>
-                                            <div class="form-group col-md-6 input-group-sm">
-                                            <label for="EndDate">End Date<span style="color:red">*</span></label>
-                                            <input type="date" class="form-control" value="{{ strftime('%Y-%m-%d',strtotime($workExperience['end_date'])) }}" id="EndDate_{{$cnt}}" name="end_date[]" >
-                                            </div>
-                                        </div>
-                                        
-                                            <div class="form-group input-group-sm">
-                                                <label for="CompName">Company Name<span style="color:red">*</span></label>
-                                            <input type="text" class="form-control" id="company_name_{{$cnt}}" name="company_name[]" value="{{ $workExperience->company_name ?? '' }}" placeholder="">
-                                            </div>
-                                            <div class="form-group input-group-sm">
-                                                <label for="Address">Company Address<span style="color:red">*</span></label>
-                                                <input type="text" class="form-control" id="Address_{{$cnt}}" name="address[]" value="{{ $workExperience->address ?? '' }}" placeholder="">
-                                            </div>
-                                        <div class="form-group input-group-sm">
-                                            <label for="CompRole">Role<span style="color:red">*</span></label>
-                                            <textarea type="text" class="form-control" id="CompRole_{{$cnt}}" name="role[]"  placeholder="">{{ $workExperience->role ?? '' }}</textarea>
-                                        </div>
-                                        <div class="form-group input-group-sm">
-                                            <label for="CompDesig">Designation<span style="color:red">*</span></label>
-                                            <input type="text" class="form-control" id="CompDesig_{{$cnt}}" name="designation[]" value="{{ $workExperience->designation ?? '' }}" placeholder="">
-                                        </div>
-                                        <div class="form-group input-group-sm">
-                                            <label for="Contact">Contact<span style="color:red">*</span></label>
-                                            <input type="text" class="form-control" id="Contact_{{$cnt}}" name="contact_no[]" value="{{ $workExperience->contact_no ?? '' }}" placeholder="">
-                                        </div>
-                                        
-                                        <div style="position: relative;">
-                                            <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
-                                                <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
-                                            </button>
-                                        </div>
-                                </fieldset><br>
-                            </div>
-                    }
-                    @endforeach
-                    </div>
-                    <div class="work_experience-clone"></div>
-                    <div class="modal-footer">
-                        <input type="submit"  class="btn btn-primary work-experience-done" value="Update" id="submit"/>
-                    </div>
-                </div>
-            </div>
-           {{-- </div> --}}
-         </div>
-        </form>
+        
+
+    </div>    
 
 
-        <form method="POST" action="" id="education-form" enctype="multipart/form-data">
-            @csrf
-            <div class="modal" id="EducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-              {{-- <div class="education_form-block">  --}}
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Education</h5>
-
-                     
-                     
-                      <button type="button" class="close" data-dismiss="modal"   aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      
-                    </div>
-                    {{-- <div class="app" style="display: none;">
-                      
-                    </div> --}}
-                    @php 
-                        $educ_div_cnt=$educations->count(); 
-                    @endphp
-                    <div class="modal-body education-modal-body">
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
-                        {{-- ---------------------------------------------------------------------------------- --}}
-                        @if ($educ_div_cnt < 1)
-                            <div class="education-body main_education_div div_0"> 
-                                <fieldset>
-                                
-                                    <div style="position: relative;">
-                                        {{-- <button type="button"  class="close remove-btn-education" id="remove_educ_btn_{{$cnt}}" title="Remove Education " aria-label="Clone" onclick="remove(this)">
-                                            <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
-                                        </button> --}}
-                                    <button type="button" class="close remove-btn-education" title="Remove Education" id="remove_educ_btn_0" aria-label="Clone" onclick="remove_education(this);"> <span class="btn-remove" ><i class="fas fa-minus-circle"></i></span> </button>
-                                    </div>
-                                
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12 input-group-sm" id="education_dropdown_0">
-                                                <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
-                                                    <select class="form-control" name="education_level[]" id="educationLevel_0" required>
-                                                        <option value="Doctorate" > Doctorate</option>
-                                                        <option value="Master" >Master's Degree</option>
-                                                        <option value="Bachelor" >Bachelor's Degree</option>
-                                                        <option value="Associate" >Associate Degree</option>
-                                                        <option value="SomeCollege" >Some College</option>
-                                                        <option value="Vocational" >Vocational</option>
-                                                        <option value="HighSchool" >High School Graduate</option>    
-                                                    </select>
-                                            </div> 
-
-
-                                            <input type="hidden" name="id[]" class="job_id" id="id_0" value="">
-                                            <div class="form-group col-md-12 input-group-sm">
-                                                <label for="SchoolName">School Name<span style="color:red">*</span></label>
-                                                <input type="text" class="form-control" id="SchoolName_0" name="school_name[]" value=""  required>
-                                            </div>
-                                            <div class="form-group col-md-12 input-group-sm">
-                                                <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
-                                                <input type="text" class="form-control" id="FieldOfStudy_0"  name="field_of_study[]" value="" required>
-                                            </div>
-                                            <div class="form-group col-md-12 input-group-sm">
-                                                <label for="Description">Description<span style="color:red">*</span></label><br>
-                                                <textarea id="Description_0" name="description[]" required style="width:100%;resize:none;"> </textarea>
-                                            </div>
-                                            <div class="form-group col-md-4 input-group-sm">
-                                                <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
-                                                <input type="date" class="form-control" id="StartDate_0" placeholder="Date" value=""  name="start_date[]" required >
-                                            </div>
-                                            <div class="form-group col-md-4 input-group-sm">
-                                                
-                                            </div>
-                                            <div class="form-group col-md-4 input-group-sm">
-                                                <label for="EndDate">End Date<span style="color:red">*</span></label>
-                                                <input type="date" class="form-control" id="EndDate_0" value="" name="end_date[]" required >
-                                                </div>
-                                            </div>
-                                        
-                                            <div style="position: relative;">
-                                                <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
-                                                    <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
-                                                </button>
-                                            </div>
-                                </fieldset>
-                            </div>
-                    
-                        @else
-                        {{-- --------------------------------------------------------------------------------------- --}}
-                            @foreach($educations as $cnt=>$education){   
-                                <div class="education-body main_education_div div_{{$cnt}}"> 
-                                    <fieldset>
-                                    
-                                        <div style="position: relative;">
-                                            {{-- <button type="button"  class="close remove-btn-education" id="remove_educ_btn_{{$cnt}}" title="Remove Education " aria-label="Clone" onclick="remove(this)">
-                                                <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
-                                            </button> --}}
-                                        <button type="button" class="close remove-btn-education" title="Remove Education" id="remove_educ_btn_{{ $cnt }}" aria-label="Clone" onclick="remove_education(this);"> <span class="btn-remove" ><i class="fas fa-minus-circle"></i></span> </button>
-                                        </div>
-                                      
-                                            <div class="form-row">
-                                                <div class="form-group col-md-12 input-group-sm" id="education_dropdown_{{$cnt}}">
-                                                    <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
-                                                        <select class="form-control" name="education_level[]" id="educationLevel_{{$cnt}}" required>
-                                                            <option value="Doctorate" {{ ( $education->education_level == "Doctorate") ? 'selected' : '' }} > Doctorate</option>
-                                                            <option value="Master" {{ ( $education->education_level == "Master") ? 'selected' : '' }}>Master's Degree</option>
-                                                            <option value="Bachelor" {{ ( $education->education_level == "Bachelor") ? 'selected' : '' }}>Bachelor's Degree</option>
-                                                            <option value="Associate" {{ ( $education->education_level == "Associate") ? 'selected' : '' }}>Associate Degree</option>
-                                                            <option value="SomeCollege" {{ ( $education->education_level == "SomeCollege") ? 'selected' : '' }}>Some College</option>
-                                                            <option value="Vocational" {{ ( $education->education_level == "Vocational") ? 'selected' : '' }}>Vocational</option>
-                                                            <option value="HighSchool" {{ ( $education->education_level == "HighSchool") ? 'selected' : '' }}>High School Graduate</option>    
-                                                        </select>
-                                                </div> 
-
-
-                                                <input type="hidden" name="id[]" class="job_id" id="id_{{$cnt}}" value="{{ $education->id ?? '' }}">
-                                                <div class="form-group col-md-12 input-group-sm">
-                                                    <label for="SchoolName">School Name<span style="color:red">*</span></label>
-                                                    <input type="text" class="form-control" id="SchoolName_{{$cnt}}" name="school_name[]" value="{{ $education->school_name ?? '' }}"  required>
-                                                </div>
-                                                <div class="form-group col-md-12 input-group-sm">
-                                                    <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
-                                                    <input type="text" class="form-control" id="FieldOfStudy_{{$cnt}}"  name="field_of_study[]" value="{{ $education->field_of_study ?? '' }}" required>
-                                                </div>
-                                                <div class="form-group col-md-12 input-group-sm">
-                                                    <label for="Description">Description<span style="color:red">*</span></label><br>
-                                                    <textarea id="Description_{{$cnt}}" name="description[]" required style="width:100%;resize:none;"> {{ $education->description ?? '' }}</textarea>
-                                                </div>
-                                                <div class="form-group col-md-4 input-group-sm">
-                                                    <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
-                                                    <input type="date" class="form-control" id="StartDate_{{$cnt}}" placeholder="Date" value="{{ strftime('%Y-%m-%d',strtotime($education['start_date'])) }}"  name="start_date[]" required >
-                                                </div>
-                                                <div class="form-group col-md-4 input-group-sm">
-                                                    
-                                                </div>
-                                                <div class="form-group col-md-4 input-group-sm">
-                                                    <label for="EndDate">End Date<span style="color:red">*</span></label>
-                                                    <input type="date" class="form-control" id="EndDate_{{$cnt}}" value="{{ strftime('%Y-%m-%d',strtotime($education['end_date'])) }}" name="end_date[]" required >
-                                                    </div>
-                                                </div>
-                                            
-                                                <div style="position: relative;">
-                                                    <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
-                                                        <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
-                                                    </button>
-                                                </div>
-                                    </fieldset>
-                                </div>
-                            
-                            }
-                            @endforeach
-                        @endif
-                    </div>
-              
-                    <div class="education-clone"></div>
-                    <div class="modal-footer">
-                     <input type="submit"  class="btn btn-primary education-done" value="Update" id="submit_education"/>
-                    </div>
-                </div>
-           
-       
-              </div>
-            </div>
-         </form>
-
-
-         <form method="POST" action="" id="reference-form"  enctype="multipart/form-data">
-            @csrf
-              <div class="modal" id="CharacterReferencesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                {{-- <div class="reference_form-block "> --}}
-                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Character References</h5>
-
-                    
-
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    {{-- <div class="app" style="display: none;">
-                      
-                    </div> --}}
-                    @php 
-                    $refr_div_cnt=$characterRefrence->count(); 
-                    @endphp
-
-                    <div class="modal-body reference-modal-body">
-                       <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
-                       @foreach($characterRefrence as $cnt=>$characterRefrence){ 
-                            <div class="reference-body  main_reference_div div_{{$cnt}}">
-                                    <fieldset> 
-                                                <div style="position: relative;">
-                                                    <button type="button"  class="close remove-btn-reference" id="remove_refr_btn_{{ $cnt }}" aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
-                                                        <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
-                                                    </button>
-                                                </div>
-
-                                                <div class="form-group input-group-sm">
-                                                    <label for="Name"> Name<span style="color:red">*</span></label>
-                                                <input type="text" class="form-control" value="{{ $characterRefrence->name ?? '' }}" id="Name_{{$cnt}}" name="name[]" placeholder="">
-                                                </div>
-
-                                                <div class="form-group input-group-sm">
-                                                    <label for="Email">Email<span style="color:red">*</span></label>
-                                                    <input type="email" class="form-control" id="Email_{{$cnt}}" value="{{ $characterRefrence->email ?? '' }}"  name="email[]" placeholder="">
-                                                </div>
-
-                                                <div class="form-group input-group-sm">
-                                                    <label for="CompName">Company Name<span style="color:red">*</span></label>
-                                                    <input type="text" class="form-control" id="CompName_{{$cnt}}"  name="company_name[]" value="{{ $characterRefrence->company_name ?? '' }}" placeholder="">
-                                                </div>
-
-                                                <div class="form-group input-group-sm">
-                                                    <label for="Designation">Designation<span style="color:red">*</span></label>
-                                                    <input type="text" class="form-control" id="Designation_{{$cnt}}"  name="designation[]" value="{{ $characterRefrence->designation ?? '' }}" placeholder="">
-                                                </div>
-
-                                                <div style="position: relative;">
-                                                    <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
-                                                        <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
-                                                    </button>
-                                                </div>
-                                    </fieldset><br>
-                            </div>
-                        }
-                        @endforeach
-                    </div>
-           
-                    <div class="reference-clone"></div>
-                    <div class="modal-footer">
-                        <input type="submit"  class="btn btn-primary characterRederences-done" value="Update" id="submit_reference"/>
-                    </div>
-                </div>
-            </div>
-        {{-- </div>   --}}
-        </div>
-       </form>  
-
-        <!--PART TO ADD THE FORM FOR SUBMITTING THE PROFILE'S FEATURED IMAGE-->
-        {{-- <input type="text" name=jobseeker_featured_image" id="jobseeker_featured_image" style="position:absolute;left:0;top:0;width:10vw;height:2vw;z-index:500;"> --}}
-
-        <!--END OF PART TO ADD THE FORM FOR SUBMITTING THE PROFILE'S FEATURED IMAGE-->
-       
-              
-            
-
-              <form action="" id="contact-form">
-                @csrf
-              <div class="modal" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Contact Details</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    {{-- <div class="app" style="display: none;">
-                      
-                    </div> --}}
-                    <div class="modal-body">
-                        <div class="contact-body">
-                            <fieldset>
-                                
-                                <div class="form-row">
-                                        <div class="form-group col-md-12 input-group-sm">
-                                            <label for="pEmail"> Primary Email</label>
-                                            <input type="text"  class="form-control disabled_field" id="pEmail" name="email" disabled value="{{ $user->email }}" >
-                                        </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="pMobNumber">Primary Mobile Number</label>
-                                        <input type="text" class="form-control disabled_field" id="pMobNumber" name="mobile_number" disabled value="{{ $user->mobile_number }}" >
-                                      </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="sEmail">Secondary Email</label>
-                                        <input type="email" class="form-control" id="sEmail" value="{{ $profile->secondary_email ?? '' }}" name="secondary_email" >
-                                      </div>
-                                      <div class="form-group col-md-12 input-group-sm">
-                                        <label for="sMobNumber">Secondary  Mobile Number</label>
-                                        <input type="text" class="form-control" id="sMobNumber" value="{{ $profile->secondary_mobile_number ?? '' }}" name="secondary_mobile_number" >
-                                      </div>
-                                </div>
-                            </fieldset>
-                            
-                            
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary contact-done">Update</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-        </form>
-
-    
-              
-                <div class="modal" id="ProfessionSkillModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                  {{-- <div class="profession_form-block">  --}}
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Profession And Skills</h5>
-    
-                         
-                         
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                          
-                        </div>
-                        {{-- <div class="app" style="display: none;">
-                        </div> --}}
-                        <div class="modal-body ">
-                            <div class="profession-body" id="Profession-body">
-                                <form method="POST" action="" id="profession-form" enctype="multipart/form-data">
-                                    @csrf
-                                <fieldset>
-                                   
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12 input-group-sm">
-                                              <label for="Profession">Profession<span style="color:red">*</span></label>
-                                              <select id="Profession" class="form-control" name="profession_id" required>&#x25BC;
-                                                    <option value="public" selected disabled>Select</option>
-                                                    @foreach($profession as $profession)
-                                                    <option value="{{$profession->id}}"{{$profile->profession_id == $profession->id  ? 'selected' : ''}}>{{$profession->profession_name}}</option>
-                                                    @endforeach
-                                               </select>
-                                              {{-- <input type="text" class="form-control" id="Profession"  name="Profession" >
-                                              <button type="button"  class="dropdown-btn" >
-                                                <span aria-hidden="true" class="btn-down"><i class="fas fa-angle-down"></i></span>
-                                              </button> --}}
-                                              
-                                            </div>
-                                            <div id="profession_list"></div>      
-                                        </div>
-
-                                        <div class="form-row"> 
-                                          <div class="form-group col-md-12 col-lg-12 input-group-sm">
-                                            <label for="skills">Skills<span style="color:red">*</span></label>
-                                            <textarea  id="skills"  name="skills">{{ $profile->skills ?? '' }}</textarea>
-                                          </div>  
-                                        </div>
-                                  
-                                </fieldset>
-                            </div>  
-                 
-                        </div>
-                  
-         
-                        <div class="modal-footer">
-                         <input type="submit"  class="btn btn-primary profession-done" value="Update" id="submit_profession"/>
-                        </div>
-                    </div>
-                {{-- </div> --}}
-           
-                  </div>
-                </div>
-             </form>
-        {{-- </div> <!--end of app--> --}}   
-</div>
 
 <div class="app">
     <!------------------------DIV FOR THE IMAGE EDITOR 1----------------------->
@@ -855,6 +1013,12 @@ document.getElementById("Profession").selectedIndex = "52";
             }else{
                 $(".education-body.main_education_div.div_"+i+" #Description_"+i).css('border-color', 'white');
             }
+            if ((Date.parse(end_date) <= Date.parse(start_date))) {
+                    alert_status = true;
+                     message = 'End Date should not be less than Start Date';
+                     err_message[message] = null;
+                     $("education-body.main_education_div.div_"+i+" #EndDate_"+i).css('border-color', 'red');
+            }
         }//end of for loop
         
         //if there's an error
@@ -937,8 +1101,8 @@ document.getElementById("Profession").selectedIndex = "52";
                     }).then((res) => {
                         //clear the fields set with changed values
                         if(res){
-                            $('#EducationModal').modal('hide');
-                            $('#WorkExperienceModal').modal('show');
+                            // $('#EducationModal').modal('hide');
+                            // $('#WorkExperienceModal').modal('show');
                             $('.modal-backdrop').remove();
                         }
                     });
@@ -1214,6 +1378,12 @@ document.getElementById("Profession").selectedIndex = "52";
                 }else{
                     $(".work-experience-body.main_work_experience_div.div_"+i+" #Address_"+i).css('border-color', 'white');
                 }
+                if ((Date.parse(end_date) <= Date.parse(start_date))) {
+                    alert_status = true;
+                     message = 'End Date should not be less than Start Date';
+                     err_message[message] = null;
+                     $(".work-experience-body.main_work_experience_div.div_"+i+" #EndDate_"+i).css('border-color', 'red');
+                }
             }   //end for loop
           
    //if there's an error
@@ -1297,8 +1467,8 @@ document.getElementById("Profession").selectedIndex = "52";
                     }).then((res) => {
                         //clear the fields set with changed values
                         if(res){
-                            $('#WorkExperienceModal').modal('hide');
-                            $('#ContactModal').modal('show');
+                            // $('#WorkExperienceModal').modal('hide');
+                            // $('#ContactModal').modal('show');
                             $('.modal-backdrop').remove();
                         }
                     });
@@ -1512,7 +1682,7 @@ document.getElementById("Profession").selectedIndex = "52";
                     }).then((res) => {
                         //clear the fields set with changed values
                         if(res){
-                            window.location.href = url+'/my_career_profile/'+ id;
+                            window.location.href = url+'/jobseekers/view-profile/'+ id;
                         }
                     });
                 },
@@ -1553,23 +1723,23 @@ document.getElementById("Profession").selectedIndex = "52";
             var $form = $('form#contact-form');
             var post_data = new FormData($form[0]);
             var alert_status;
-                    var secondary_email = $("form#contact-form #sEmail").val();
-                    var secondary_mobNumber = $("form#contact-form #sMobNumber").val();
+                    // var secondary_email = $("form#contact-form #sEmail").val();
+                    // var secondary_mobNumber = $("form#contact-form #sMobNumber").val();
                 
-                    if(secondary_email==''){
-                        alert_status = true;
-                        message = 'Secondary Email is required';
-                        $("form#contact-form  #sEmail").focus();
-                    }
-                    if(secondary_mobNumber==''){
-                        alert_status = true;
-                        message = 'Secondary Mobile Number is required';
-                        $("form#contact-form  #sEmail").focus();
-                    }
+                    // if(secondary_email==''){
+                    //     alert_status = true;
+                    //     message = 'Secondary Email is required';
+                    //     $("form#contact-form  #sEmail").focus();
+                    // }
+                    // if(secondary_mobNumber==''){
+                    //     alert_status = true;
+                    //     message = 'Secondary Mobile Number is required';
+                    //     $("form#contact-form  #sEmail").focus();
+                    // }
                     if(alert_status) {
                     Swal.fire({
                         title: 'Discard Changes',
-                        text: message,
+                        // text: message,
                         imageUrl: '../../front/icons/alert-icon.png',
                         imageWidth: 80,
                         imageHeight: 80,
@@ -1616,8 +1786,9 @@ document.getElementById("Profession").selectedIndex = "52";
                         background: 'rgba(8, 64, 147, 0.62)',
                         allowOutsideClick: false
                     }).then((res) => {
-                        $('#ContactModal').modal('hide');
-                        $('#CharacterReferencesModal').modal('show');
+                        // $('#ContactModal').modal('hide');
+                        // $('#CharacterReferencesModal').modal('show');
+                        $('.modal-backdrop').remove();
                         
                         // window.open(url+'/single_blog/'+data.data.id);
                         //window.location.href = url+'/single_general_blog/'+data.data.id;
@@ -1727,10 +1898,10 @@ document.getElementById("Profession").selectedIndex = "52";
                             }).then((res) => {
                                 if (res.value) {
                                     // document.getElementByClassName("profession").click;
-                                    $('#AboutMeModal').modal('hide');
+                                    // $('#AboutMeModal').modal('hide');
                                     $('.modal-backdrop').remove();
                                     // $('#ProfessionSkillModal').show();
-                                    $("#ProfessionSkillModal").modal('show');
+                                    // $("#ProfessionSkillModal").modal('show');
                         }
                                 
                                 // $('#Profession-body').parent().parent().show();
@@ -1854,8 +2025,10 @@ document.getElementById("Profession").selectedIndex = "52";
                                         background: 'rgba(8, 64, 147, 0.62)',
                                         allowOutsideClick: false
                                     }).then((res) => {
-                                        $('#ProfessionSkillModal').modal('hide');
-                                        $('#EducationModal').modal('show');
+                                        // $('#ProfessionSkillModal').modal('hide');
+                                        // $('#EducationModal').modal('show');
+                                    $('.modal-backdrop').remove();
+
                                         // window.open(url+'/single_blog/'+data.data.id);
                                         //window.location.href = url+'/single_general_blog/'+data.data.id;
                                         // resetGeneralBlogForm();
@@ -1924,7 +2097,7 @@ document.getElementById("Profession").selectedIndex = "52";
 
             function openNav(){  
                 document.getElementById("mySidenav").style.width = "14vw";
-                document.getElementsById("slider").style.display = "none";
+                document.getElementById("slider").style.display = "none";
                 document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
             }
 

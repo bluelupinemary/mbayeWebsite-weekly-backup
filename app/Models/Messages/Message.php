@@ -3,6 +3,7 @@
 namespace App\Models\Messages;
 
 use App\Models\Access\User\User;
+use App\Models\Messages\ChatMedia;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
@@ -31,6 +32,6 @@ class Message extends Model
 
     public function chatmedia()
     {
-        return $this->hasMany(ChatMedia::class)->where('message_type',Message::class);
+        return $this->hasOne(ChatMedia::class)->where('message_type',Message::class);
     }
 }

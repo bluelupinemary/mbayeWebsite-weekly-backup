@@ -43,14 +43,14 @@ class MessagesController extends Controller
     public function fetchMessages($id)
     {
 
-        return GroupMessage::where('group_id',$id)->get();
+        return GroupMessage::with('chatmedia')->where('group_id',$id)->get();
     }
 
     public function fetchprivateMessages(User $user)
     {
         // return $user;
         $con = Conversation::where(['user1_id' => auth::id(),'user2_id' => $user->id])->orWhere(['user2_id'=>auth::id(),'user1_id'=>$user->id])->first();
-        $privateCommunication = Message::where('conversation_id', $con->id)->get();
+        $privateCommunication = Message::with('chatmedia')->where('conversation_id', $con->id)->get();
         return $privateCommunication;
     }
 
@@ -85,11 +85,28 @@ class MessagesController extends Controller
     public function sendMessage(Request $request,$id)
     {
         // dd($id);
-        $message = auth()->user()->messages()->create([
+        $input=request()->all();
+        // dd($input);
+        if(request()->has('file')){
+            $extension = $input['file']->extension();
+            $filename = $this->uploadImage($input['file']);
+            // dd($filename);
+            $message=auth()->user()->groupmessages()->create([
+                // 'message' => $input['message'],
+                'group_id'=> $id,
+            ]);
+            $message->chatmedia()->create([
+                'filename' => $filename,
+                'filetype' => $extension,
+                'message_type' => GroupMessage::class,
+            ]);
+        }
+        else{
+        $message = auth()->user()->groupmessages()->create([
             'message' => $request->message,
             'group_id'=> $id,
         ]);
-
+    }
         broadcast(new MessageSent($message->load('user')))->toOthers();
 
         return ['status' => 'success'];

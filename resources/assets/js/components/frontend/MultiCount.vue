@@ -72,12 +72,12 @@
                                 <span class="blog-date">{{blog.publish_datetime | moment('MMMM D, YYYY')}}</span>
                                 
                                 <p class="blog-name">{{blog.name}}</p>
-                                <span  class="blog-tags">
+                                <div class="blog-tags">
                                     <ul class="tags">
-                                        <li v-for="(tag,index) in blog.firstTwoTags" :key="index" class="tag"><i class="fas fa-tag"></i> {{tag.name}}</li>
-                                        <li v-if="blog.remainingTagCount > 0" class="tag"><i class="fas fa-plus"></i> {{blog.remainingTagCount}}</li>
+                                        <li v-for="(tag,index) in blog.firstTwoTags" :key="index" class="tag"><i class="fas fa-tag"></i> <span>{{tag.name}}</span></li>
+                                        <li v-if="blog.remainingTagCount > 0" class="tag"><i class="fas fa-plus"></i> <span>{{blog.remainingTagCount}}</span></li>
                                     </ul>
-                                </span>
+                                </div>
                                 <div class="blog-buttons">
                                     <div class="button-div hotIcon">
                                         <button><img src="/front/icons/hotNew.png"/></button>
@@ -135,8 +135,8 @@
                                 <p class="blog-name">{{blog.name}}</p>
                                 <span  class="blog-tags">
                                     <ul class="tags">
-                                        <li v-for="(tag,index) in blog.firstTwoTags" :key="index" class="tag"><i class="fas fa-tag"></i> {{tag.name}}</li>
-                                        <li v-if="blog.remainingTagCount > 0" class="tag"><i class="fas fa-plus"></i> {{blog.remainingTagCount}}</li>
+                                        <li v-for="(tag,index) in blog.firstTwoTags" :key="index" class="tag"><i class="fas fa-tag"></i> <span>{{tag.name}}</span></li>
+                                        <li v-if="blog.remainingTagCount > 0" class="tag"><i class="fas fa-plus"></i> <span>{{blog.remainingTagCount}}</span></li>
                                     </ul>
                                 </span>
                                <div class="blog-buttons">
@@ -192,6 +192,20 @@
                 <h2 class="no-result">Fetching blogs...</h2>
             </template>
         </div>
+
+        <nav v-if="pageCount > 1 && blogs.length > 0" class="pagination-div">
+            <paginate 
+            v-model="currentPage"
+            :pageCount="pageCount"
+            :page-range="3"
+            :containerClass="'pagination'"
+            :page-class="'page-item'"
+            :page-link-class="'page-link'"
+            :prev-link-class="'page-link'"
+            :next-link-class="'page-link'"
+            :clickHandler="clickCallback">
+            </paginate>
+        </nav>
     </div>
     <!-- Next and Previous buttons -->
         <!-- <div v-if="last_page > 0">
@@ -203,19 +217,7 @@
         </div>
         </div> -->
     <!-- Next and Previous buttons -->
-    <nav v-if="pageCount > 1 && blogs.length > 0" class="pagination-div">
-        <paginate 
-        v-model="currentPage"
-        :pageCount="pageCount"
-        :page-range="3"
-        :containerClass="'pagination'"
-        :page-class="'page-item'"
-        :page-link-class="'page-link'"
-        :prev-link-class="'page-link'"
-        :next-link-class="'page-link'"
-        :clickHandler="clickCallback">
-        </paginate>
-    </nav>
+    
 </div>
 </template>
 <script>
@@ -328,7 +330,6 @@ export default {
             that.blogs = [];
             $('.no-result').text('Fetching blogs...');
             
-
             axios.post("/getblogs", {
                 search: that.search,
                 sort: that.sorted_by,
@@ -422,7 +423,7 @@ export default {
                 imageWidth: 80,
                 imageHeight: 80,
                 imageAlt: 'Mbaye Logo',
-                width: '30%',
+                // width: '30%',
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.78)',
                 showCancelButton: true,
@@ -453,7 +454,7 @@ export default {
                             imageWidth: 80,
                             imageHeight: 80,
                             imageAlt: 'Mbaye Logo',
-                            width: '30%',
+                            // width: '30%',
                             padding: '1rem',
                             background: 'rgb(8 64 147 / 89%)'
                         })

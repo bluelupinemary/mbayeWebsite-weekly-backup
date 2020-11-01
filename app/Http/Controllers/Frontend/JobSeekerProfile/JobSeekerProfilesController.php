@@ -39,16 +39,16 @@ class JobSeekerProfilesController extends Controller
    
     public function index(Request $request)
     {
-       // dd(JobSeekerProfile::find(1)->charref);
-    //   $user = Auth::user();
-      $user = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
+     
+    //   $jobId = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
+      $user = User::where('id',Auth::user()->id)->first();
       $profession = Profession::all();
-      if ($user === null) {
+    //   if ($jobId === null) {
       return view('frontend.user.setup_jobseeker_profile',compact('user','profession'));
-    }
-    else{
-        return redirect('jobseekers/edit-setup-profile');
-    }
+    // }
+    // else{
+    //     return redirect('jobseekers/edit-setup-profile');
+    // }
 }
     public function edit_profile(Request $request)
     {
@@ -131,73 +131,110 @@ class JobSeekerProfilesController extends Controller
      * Function to save details into work experinece 
      */
     public function save_work_experience(Request $request){
-    //  dd(count($request->start_date));
-    // dd($request);
-       
-            $JobSeekerProfile = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
-          
-
-            for($counter = 0; $counter < count($request->start_date); $counter++){
-                $work_experience = new WorkExperience();
-                $work_experience->designation = $request->designation[$counter];
-                $work_experience->company_name = $request->company_name[$counter];
-                $work_experience->address = $request->address[$counter];
-                $work_experience->role = $request->role[$counter];
-                $work_experience->contact_no = $request->contact_no[$counter];
-                $work_experience->start_date = $request->start_date[$counter];
-                $work_experience->end_date = $request->end_date[$counter];
-                $work_experience->jobseeker_profile_id = $JobSeekerProfile->id;
-                $work_experience->created_at = date('Y-m-d H:i:s');
-                $work_experience->save();
-               
-            }
-
-          
+        $user_id = Auth::user()->id;        //for each entry in the entries changed array / all the fields modified
+        // dd($user_id);
+            //delete all existing education entries for the current jobseeker profile
+            $jobseeker_profile_id = JobSeekerProfile::where('user_id',$user_id)->first()->id;
             
+            $work_experience = WorkExperience::where('jobseeker_profile_id', $jobseeker_profile_id);
+            // dd($work_experience);
+            if($work_experience) $work_experience->delete();
+            
+            for($i=0; $i<count($request->start_date); $i++){
+                    $start_date = $request['start_date'][$i];
+                    // 
+                    $end_date = $request['end_date'][$i];
+                    
+                    $company_name = $request['company_name'][$i];
+                    $description = $request['address'][$i];
+                    $role = $request['role'][$i];
+                    $contact_no = $request['contact_no'][$i];
+                    $designation = $request['designation'][$i];
+                    $address = $request['address'][$i];
+                   
+                    //create new entries for each
+                    $work_data = new WorkExperience();
+                    // dd($work_data);
+                    $work_data->start_date = $start_date;
+                    
+                    $work_data->end_date = $end_date;
+                    $work_data->company_name = $company_name; 
+                    $work_data->address = $address;
+                    $work_data->role = $role; 
+                    $work_data->contact_no = $contact_no;
+                    $work_data->designation = $designation;
+                    $work_data->jobseeker_profile_id = $jobseeker_profile_id;
+                    
+                    $work_data->save();
+            }//end of foreach
            
         }
         /**
      * Function to save details into education
      */
     public function save_education(Request $request){
+        $user_id = Auth::user()->id;
+        $jobseeker_profile_id = JobSeekerProfile::where('user_id',$user_id)->first()->id;
+        $jobseeker_education = Education::where('jobseeker_profile_id', $jobseeker_profile_id);
+        if($jobseeker_education) $jobseeker_education->delete();
+        
+        for($i=0; $i<count($request->education_level); $i++){
+                $education_level = $request['education_level'][$i];
+                $school_name = $request['school_name'][$i];
+                $field_of_study = $request['field_of_study'][$i];
+                $description = $request['description'][$i];
+                $start_date = $request['start_date'][$i];
+                $end_date = $request['end_date'][$i];
+              
+                //create new entries for each
+                $education_data = new Education();
+                $education_data->education_level = $education_level;
+                $education_data->school_name = $school_name;
+                $education_data->field_of_study = $field_of_study; 
+                $education_data->description = $description;
+                $education_data->start_date = $start_date; 
+                $education_data->end_date = $end_date;
+                $education_data->jobseeker_profile_id = $jobseeker_profile_id;
+                $education_data->save();
+        }//end of foreach
    
-        // $JobSeekerProfile = JobSeekerProfile::find(Auth::user()->id);
-        $JobSeekerProfile = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
-        // dd($JobSeekerProfile);
-        // $id = DB::table('job_seeker_profiles')->where('user_id',Auth::user()->get('id'))->first();
-        // dd($id);
-        for($counter = 0; $counter < count($request->start_date); $counter++){
-            $education = new Education();
-            $education->school_name = $request->school_name[$counter];
-            $education->field_of_study = $request->field_of_study[$counter];
-            $education->start_date = $request->start_date[$counter];
-            $education->end_date = $request->end_date[$counter];
-            $education->description = $request->description[$counter];
-            $education->education_level = $request->education_level[$counter];
-            $education->jobseeker_profile_id =$JobSeekerProfile->id;
-            $education->created_at = date('Y-m-d H:i:s');
-            $education->save();
-        }
     }
     /**
      * Function to save character references
      */
     public function save_character_references(Request $request){
-     
-
-     
-        $JobSeekerProfile = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
-        for($counter = 0; $counter < count($request->name); $counter++){
-            $reference = new CharacterReferences();
-            $reference->name = $request->name[$counter];
-            $reference->email = $request->email[$counter];
-            $reference->company_name = $request->company_name[$counter];
-            $reference->designation = $request->designation[$counter];
-            $reference->jobseeker_profile_id =$JobSeekerProfile->id;
-            $reference->created_at = date('Y-m-d H:i:s');
-            $reference->save();
-        }
+        $user_id = Auth::user()->id;        //for each entry in the entries changed array / all the fields modified
+        // dd($user_id);
+        //delete all existing education entries for the current jobseeker profile
+        $jobseeker_profile_id = JobSeekerProfile::where('user_id',$user_id)->first()->id;
+        
+        $reference = CharacterReferences::where('jobseeker_profile_id', $jobseeker_profile_id);
+        // dd($work_experience);
+        if($reference) $reference->delete();
+        
+        for($i=0; $i<count($request->name); $i++){
+                $name = $request['name'][$i];
+                // 
+                $email = $request['email'][$i];
+                
+                $company_name = $request['company_name'][$i];
+                $designation = $request['designation'][$i];
+               
+               
+                //create new entries for each
+                $reference_data = new CharacterReferences();
+                // dd($reference_data);
+                $reference_data->name = $name;
+                
+                $reference_data->email = $email;
+                $reference_data->company_name = $company_name; 
+                $reference_data->designation = $designation;
+                $reference_data->jobseeker_profile_id = $jobseeker_profile_id;
+                
+                $reference_data->save();
+        }//end of foreach
     }
+    
     public function save_contact_details(Request $request){
         $JobSeekerProfile = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
         if($JobSeekerProfile != ''){
@@ -285,14 +322,16 @@ class JobSeekerProfilesController extends Controller
         }
        
     }
-    public function update_aboutme_details(Request $request){
-        // dd($request);
+    public function update_aboutme_details(Request $request, JobSeekerProfile $profile){
+        // dd($request->all());
         // $request['user_id'] = Auth::id();
         // $save_aboutme_details = JobSeekerProfile::create($request->except('_token'));
         $JobSeekerProfile = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
-        if($JobSeekerProfile != ''){
-            $JobSeekerProfile->update(['objective'=>$request['objective'],'present_country'=>$request['present_country'],'state'=>$request['state'],'present_city'=>$request['present_city'],'present_address'=>$request['present_address']]);
-        }
+        // if(!$JobSeekerProfile){
+            $this->profile->update($JobSeekerProfile, $request->except('_token'));
+            
+            // $JobSeekerProfile->update(['objective'=>$request['objective'],'present_country'=>$request['present_country'],'state'=>$request['state'],'present_city'=>$request['present_city'],'present_address'=>$request['present_address']]);
+        // }
     }
      
     public function update_education_details(Request $request){
@@ -404,7 +443,7 @@ class JobSeekerProfilesController extends Controller
                
                 //create new entries for each
                 $reference_data = new CharacterReferences();
-                // dd($work_data);
+                // dd($reference_data);
                 $reference_data->name = $name;
                 
                 $reference_data->email = $email;
@@ -418,38 +457,15 @@ class JobSeekerProfilesController extends Controller
     } 
 
     
-public function show_my_profile($id)
-{
-    // $user = Auth::user
-    // $hashids = new Hashids();
-    // $profile = JobSeekerProfile::where('user_id',$id)->first();
-    $user = Auth::user();
-    $profession = Profession::all();
-    $profile = JobSeekerProfile::where('user_id',$id)->first();
-    // dd($profile);
-    // $education = Education::where('jobseeker_profile_id',$profile->id)->get();
-    //   dd($education);
-    // $workExperience = WorkExperience::where('jobseeker_profile_id',$profile->id)->get();
-  
-    // $characterRefrence = CharacterReferences::where('jobseeker_profile_id',$profile->id)->get();
-    //  dd($characterRefrence);
-    // dd($profile);
-    return  view('frontend.blog.blogview.career.my_career_profile',compact('user','profession','profile'));
-}
-
-// public function get_career_details(Request $request){
-
-//     $profile_id= $request->profile_id;
-//     $user_id= $request->user_id;
-//     $User_details = User::find($user_id);
-//     $JobSeekerProfile_details = JobSeekerProfile::find($profile_id);
-//     $Reference_details= CharacterReferences::where('jobseeker_profile_id', '=', $profile_id)->get();
-//     $work_experience= WorkExperience::where('jobseeker_profile_id', '=', $profile_id)->get();
-//     $Education_details= Education::where('jobseeker_profile_id', '=', $profile_id)->get();
-// //  dd($Education_details);
-//     $resultData=array('User_details'=>$User_details,'JobSeekerProfile_details'=>$JobSeekerProfile_details,'Reference_details'=>$Reference_details,'work_experience'=>$work_experience,'Education_details'=>$Education_details);
-//     return  $resultData;
-//     // dd( $User_details);
-    
-// }
+    public function show_my_profile($id)
+    {
+        
+        $user = Auth::user();
+        $profession = Profession::all();
+        $profile = JobSeekerProfile::where('user_id',$id)->first();
+        // dd($profile);
+        return  view('frontend.blog.blogview.career.my_career_profile',compact('user','profession','profile'));
     }
+
+
+}
