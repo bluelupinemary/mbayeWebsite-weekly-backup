@@ -1,5 +1,8 @@
-@extends('frontend.layouts.app')
-@section('before-styles')
+@extends('frontend.layouts.registeration_layout')
+@section('after-styles')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('front/CSS/profile_edit_style.css') }}">
   <style>
     
     .danger-alter 
@@ -11,12 +14,21 @@
       input::-ms-clear {
         display: none;
       }
+    .tooltip > .tooltip-inner 
+    {
+      font-size: 10px;
+    }
+    .notifyjs-bootstrap-base
+    {
+      white-space: inherit !important;
+    }
+
   </style>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="{{ asset('front/CSS/profile_edit_style.css') }}">
-@endsection
+  @endsection
 @section('content')
-    <div  id="block_land"  >
+<div class="app"></div>    
+<div  id="block_land"  >
+      
         <div class="content">
             <h1 class="text-glow">Turn your device in landscape mode.</h1>
             <div><img src="{{ asset('front') }}/images/rotate-screen.gif" alt=""></div>
@@ -68,10 +80,6 @@
                   $snapshot[]=$error;
                 }
               }
-              // print_r($login);
-              
-              
-              
              
             }    
             // print_r($profile);
@@ -96,7 +104,7 @@
               <div class="page-header">
                 <h1 class=" head_1" style="">Manage Your Profile</h1>
               </div>
-              {{  Form::open(['files'=>true , 'class' => '', 'method' => 'PATCH', 'id'=>'MyForm','onsubmit' => 'event.preventDefault(); validateMyForm();']) }}
+              {{  Form::open(['files'=>true , 'class' => '', 'method' => 'PATCH', 'id'=>'MyForm']) }}
               <div class="tab-content" id="v-pills-tabContent">
                 {{-- LOGIN DETAILS SECTION --}}
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
@@ -105,28 +113,28 @@
                     <div class="row text-center">
                       <div class="col-md-12">
                         <div class="form-group">
-                          <input type="email" class="form-control" id="Email" value="{{ $user->email }}" placeholder="Enter Email"  name="email" readonly/>
-                          <input type="hidden" name="login_details" value="">
+                          <input type="email" class="form-control" id="Email" value="{{ $user->email }}" placeholder="Enter Email"  name="email" data-toggle="tooltip" title="Email is Required!" data-placement="right" data-original-title="Email is Required!" readonly/>
+                          <input type="hidden" name="login_details">
                         </div>
                       </div>
                       {{-- password update div --}}
                       <div class="col-md-12" id="passsword_div" style="display:none">
                         <div class="input-group" id="show_old_password">
-                          <input type="password" placeholder="Old Password" data-toggle="tooltip" title="Password is Required!" data-placement="left" class="form-control @error('old_password') danger-alter @enderror" placeholder="Password" id="password" name="old_password" autocomplete="off" value="{{ old('old_password') }}">
+                          <input type="password" placeholder="Old Password" class="form-control @error('old_password') danger-alter @enderror" id="password" name="old_password" autocomplete="off" value="{{ old('old_password') }}" data-toggle="tooltip" data-placement="left" data-original-title="Old Password is Required if you want to change Password!">
                           <div class="input-group-append">
                             <span class="input-group-text" onclick="showpassword('show_old_password')"><i class="fa fa-eye"></i></span>
                           </div>
                         </div>
     
                         <div class="input-group" id="show_new_password">
-                          <input type="password" data-toggle="tooltip" value="{{ old('new_password') }}" placeholder="New Password" title="Confirm password is Required!" data-placement="left" class="form-control @error('c_password') danger-alter @enderror" placeholder="Confirm Password" id="new_password" name="new_password" >
+                          <input type="password" value="{{ old('new_password') }}" placeholder="New Password" class="form-control @error('c_password') danger-alter @enderror" placeholder="Confirm Password" id="new_password" name="new_password" data-toggle="tooltip" data-placement="left" data-original-title="New Password is Required!">
                           <div class="input-group-append">
                             <span class="input-group-text" onclick="showpassword('show_new_password')"><i class="fa fa-eye"></i></span>
                           </div>
                         </div>
     
                         <div class="input-group" id="show_new_cpassword">
-                          <input type="password" data-toggle="tooltip" title="Confirm password is Required!" data-placement="left" class="form-control @error('c_password') danger-alter @enderror" placeholder="Confirm Password" id="c_password" name="c_password" >
+                          <input type="password" class="form-control @error('c_password') danger-alter @enderror" placeholder="Confirm Password" id="c_password" name="c_password" data-toggle="tooltip" data-placement="left" data-original-title="Confirm New Password !">
                           <div class="input-group-append">
                             <span class="input-group-text" onclick="showpassword('show_new_cpassword')"><i class="fa fa-eye"></i></span>
                           </div>
@@ -145,19 +153,19 @@
                   <div class="form-feilds">
                     
                         <div class="form-group">
-                          <input  class="form-control @error('first_name') is-invalid @enderror" type="text" id="fname" placeholder="First Name" name="first_name"  value="{{ $user->first_name }}"/>
+                          <input  class="form-control @error('first_name') is-invalid @enderror" type="text" id="fname" placeholder="First Name" name="first_name"  value="{{ $user->first_name }}" data-toggle="tooltip" data-placement="right" data-original-title="First Name is Required!"/>
                           <input type="hidden" name="profile_details" value="">
                         </div>
                         <div class="form-group">
-                          <input type="text" class="form-control" placeholder="Last Name" id="lname" name="last_name"  value="{{ $user->last_name }}"/>
+                          <input type="text" class="form-control" placeholder="Last Name" id="lname" name="last_name"  value="{{ $user->last_name }}" data-toggle="tooltip" data-placement="right" data-original-title="Last Name is Required!"/>
                         </div>
                         <div class="form-group">
-                          <input type="text" class="form-control" placeholder="ID Number" type="text" id="id_number" value="{{ $user->id_number }}" name="id_number"/>
+                          <input type="text" class="form-control" placeholder="ID Number" type="text" id="id_number" value="{{ $user->id_number }}" name="id_number" data-toggle="tooltip" data-placement="right" data-original-title="ID Number is Optional!"/>
                         </div>
                         <div class="row">
                           <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                              <select name="gender" value="{{ $user->gender }}" class="form-control lbl_text" style="text-transform: capitalize;" id="genders">
+                              <select name="gender" value="{{ $user->gender }}" class="form-control lbl_text" style="text-transform: capitalize;" id="genders" data-toggle="tooltip" data-placement="left" data-original-title="Gender is Required!">
                                 <option value="">Select Gender</option>
                                 <option value="male" {{($user->gender == "male") ? 'selected' : ''}}>Male</option>
                                 <option value="female" {{($user->gender == "female") ? 'selected' : ''}}>Female</option>
@@ -166,8 +174,13 @@
                             </div>
                           </div>
                           <div class="col-md-6 col-sm-6" >
+                            <div class="input-group">
+                              <input type="text" class="form-control lbl_text" id="date" readonly name="dob" placeholder="YYYY-MM-DD" type="text" value="{{$user->dob }}" onchange="calculate_age('true')" data-toggle="tooltip" data-placement="right" data-original-title="DOB is Required!">
+                              <div class="input-group-append">
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                              </div>
+                            </div>
                             <div class="form-group">
-                              <input class="form-control lbl_text datepicker" id="date" name="dob" placeholder="YYYY-MM-DD" type="text" value="{{ $user->dob }}" onchange="calculate_age()"/>
                               <input  class="form-control lbl_text" type="hidden" id="age" value="{{ old('age') }}" name="age" readonly>
                             </div>
                           </div>
@@ -180,31 +193,33 @@
                   <h2 class="col_white">Location Details</h2>
                   <div class="form-feilds">
                     <div class="form-group">
-                      <input  class="form-control lbl_text" type="text" id="address" value="{{ $user->address }}" placeholder="Address" name="address"/>
+                      <input  class="form-control lbl_text" type="text" id="address" value="{{ $user->address }}" placeholder="Address" name="address" data-toggle="tooltip" data-placement="right" data-original-title="Address is Required!"/>
                       <input type="hidden" name="location_details" value="">
                     </div>
                     <div class="form-group">
                       <select id="countryId" data-toggle="tooltip" title="Country is Required!" data-placement="right"  name="country" value="{{ old('country') }}" class="form-control @error('country') danger-alter @enderror countries order-alpha">
-                        
+                        <option value="{{$user->country }}">{{$user->country }}</option>
                       </select>
                     </div>
                     <div class="row">
                       <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                           <select name="state" class="form-control @error('state') danger-alter @enderror states order-alpha" data-toggle="tooltip" title="state is Required!" data-placement="left" id="stateId">
-                            
+                            <option value="{{$user->state }}">{{$user->state }}</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                           <select name="city" class="cities order-alpha form-control @error('city') danger-alter @enderror" id="cityId" data-toggle="tooltip" title="City is Required!" data-placement="right">
+                            <option value="{{$user->city }}">{{$user->city }}</option>
                           </select>
                         </div>
                       </div>
                     </div>
                     <div class="form-group">
-                      <input type="number" class="form-control lbl_text" type="number" id="mob_no" value="{{ $user->mobile_number }}" placeholder="Phone Number" name="mobile_number"/>
+                      <input type="number" class="form-control lbl_text" type="number" id="mob_no" value="{{ $user->mobile_number }}" placeholder="Phone Number" name="mobile_number" data-toggle="tooltip" data-placement="right" data-original-title="Phone is Required!" onkeydown="javascript: return event.keyCode === 8 ||
+                      event.keyCode === 46 ? true : !isNaN(Number(event.key))"/>
                     </div>
                   </div> 
                 </div>
@@ -213,7 +228,7 @@
                   <h2 class="col_white">Organizational Details</h2>
                   <div class="form-feilds">
                     <div class="form-group">
-                      <select name="org_type" value="{{ $user->org_type }}" class=" form-control lbl_text" id="org_types" >
+                      <select name="org_type" value="{{ $user->org_type }}" class=" form-control lbl_text" id="org_types" data-toggle="tooltip" data-placement="right" data-original-title="Organization Type is Required!">
                         <option value="School" {{($user->org_type == "School") ? 'selected' : ''}}>School</option>
                         <option value="Club" {{($user->org_type == "Club") ? 'selected' : ''}}>Club</option>
                         <option value="Company" {{($user->org_type == "Company") ? 'selected' : ''}}>Company</option>
@@ -225,13 +240,13 @@
                     <input type="hidden" name="organizational_details" value="">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control lbl_text" id="org_name" value="{{ $user->org_name }}" placeholder="Organization Name" name="org_name"/>
+                      <input type="text" class="form-control lbl_text" id="org_name" value="{{ $user->org_name }}" placeholder="Organization Name" name="org_name" data-toggle="tooltip" data-placement="right" data-original-title="Organization Name is Required!"/>
                     </div>
                     <div class="form-group">
-                      <input  class="form-control" type="text" id="sname"  value="{{ $user->sponser_name }}" placeholder="Sponsor Name" name="sponsor_name"/>
+                      <input  class="form-control" type="text" id="sname"  value="{{ $user->sponser_name }}" placeholder="Sponsor Name" name="sponsor_name" data-toggle="tooltip" data-placement="right" data-original-title="Sponsor Name is Required!"/>
                     </div>
                     <div class="form-group">
-                      <input type="email" class="form-control" id="sponsor_email"  value="{{ $user->sponser_email }}" placeholder="Sponsor Email" name="sponsor_email"/>
+                      <input type="email" class="form-control" id="sponsor_email"  value="{{ $user->sponser_email }}" placeholder="Sponsor Email" name="sponsor_email" data-toggle="tooltip" data-placement="right" data-original-title="Sponsor Email is Required!"/>
                     </div>
                   </div> 
                 </div>
@@ -243,7 +258,7 @@
                       <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                         {{-- <input type="text" name="occupation" id="list_occupation" readonly data-toggle="tooltip" class="form-control @error('occupation') danger-alter @enderror" title="Occupation is Required!" data-placement="right" onclick="load_animation_astronut()" value="{{ $user->occupation }}" class="form-control" placeholder="Occupation"> --}}
-                        <textarea name="occupation" id="list_occupation" style="resize: none;" readonly data-toggle="tooltip" class="form-control @error('occupation') danger-alter @enderror" title="{{ $user->occupation }}" data-placement="right" onclick="load_animation_astronut()" class="form-control" placeholder="Occupation">{{ $user->occupation }}</textarea>
+                        <textarea name="occupation" id="list_occupation" style="resize: none;" readonly data-toggle="tooltip" class="form-control @error('occupation') danger-alter @enderror" title="Occupation is Required" data-placement="right" onclick="load_animation_astronut()" class="form-control" placeholder="Occupation">{{ $user->occupation }}</textarea>
                         <input type="hidden" name="snap_details" value="">
                         </div>
                         <p class="warning-text"><small>If your snapshot is inappropiate or irrelevent we will block</small></p>
@@ -290,7 +305,7 @@
             </div>
             <div class="col-md-2 col-sm-2">
               <div class="btn-div padding-0">
-                <button class="btn btn-primary custom-button submit-btn">Submit</button>
+                <button id="edit_submit_btn" class="btn btn-primary custom-button submit-btn">Submit</button>
                 {{-- <button class="btn btn-danger custom-button reset-btn">Reset</button> --}}
               </div>
               {{ Form::close() }}
@@ -390,7 +405,7 @@
         <br>you should be able to note <br> here on your site.
         <br><br>The record of your occupations <br> will stay here forever.
         <br><br>So if your occupation is, example; <br> shoveling poo from a
-        <span style="color:#c6552b" onClick="show_cuckoo()" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
+        <span style="color:#c6552b" onClick="show_cuckoo00000()" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
         <br><br>And then you become an astronaut.
         <br><br>It will be always on your profile.
         <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
@@ -607,28 +622,31 @@
 
 @section('after-scripts')
   <!-------------   script section -------------------->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  
   <!-- <script type="text/javascript" src="webcamjs/webcam.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
   <script src="{{ asset('front') }}/JS/webcam.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
-  {{-- <script src="{{ asset('front') }}/JS/bootstrap-datepicker.min.js"></script> --}}
-  <script src="{{ asset('front/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
-  <script src="{{ asset('js/notify.min.js') }}"></script>
   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+  <script src="{{ asset('front/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+  {{-- <script src="{{ asset('front') }}/JS/bootstrap-datepicker.min.js"></script> --}}
+  <script src="{{ asset('js/notify.min.js') }}"></script>
   
   
       <!-- Webcam.min.js -->
   <!--------------- For camera------------------------->
 
 <script language="JavaScript">
+  
    var occ_details;
    
 // When list occupation modified
   $('#change_pass').click(function(){
+    
     if($('#passsword_div').is(":visible"))
     {
       $('#passsword_div').hide();
@@ -797,10 +815,9 @@
 </script>
     <!--------------------------------------- Manual script ------------------------------------------>
  <script>
-
   // Calculating age every reload
   window.onload = function() {
-        calculate_age();
+      calculate_age('false');
   }
 
 //Get selected gender, country, organization type;
@@ -852,12 +869,17 @@
         }
       }
   $(document).ready(function () {
+    
+    
+    $('[data-toggle="tooltip"]').tooltip();
+    
+    // $('#Email').tooltip('show');
 
-    $('.datepicker').datepicker({
-      dateFormat: "yy-mm-dd"
+    $('#date').datepicker({
+      format: 'yyyy-mm-dd'
     });
 
-    var elem = document.documentElement;
+      var elem = document.documentElement;
         if(window.innerWidth < 991 )
         {
             Swal.fire({
@@ -885,7 +907,6 @@
             testOrientation();
         }, false);
 
-        
         function testOrientation() 
         {
             document.getElementById('block_land').style.display = (screen.width > screen.height) ? 'none' : 'block';
@@ -947,22 +968,8 @@
             );
         }
         // .................................... //
-    
     //for identifying zordiac sign in the edit mode
-    //$("#list_occupation ").hide();
     $(".close_btn ").hide();
-
-  /*$("#list_occupation").show();
-  $("#list_occupation ").html(occupation);
-  if(occupation!='')
-  $("#list_occupation ").val(occupation.split(",").join("\n"));
-  global_occupation=occupation;*/
-  /*var encodedString='dummy';
-  var img_src='';
-  var img_src=decodeURIComponent(encodedString);
-  document.getElementById('my_camera').innerHTML =
-       '<div id="captured_img" class="camera_alignment"><img  name="photo" id="img_photo" style="display: block; height:240; width:240;" src="'+img_src+'"/></div>'; */
-    //For the name  of zordiac signs
     $(".text_Aquaris ").removeClass("ani-rollouttext_Aquaris");
     $(".text_Pisces").removeClass("ani-rollouttext_Pisces");
     $(".text_Aries ").removeClass("ani-rollouttext_Aries");
@@ -1001,36 +1008,36 @@
     $(".text_Capricorn ").removeClass("ani-rollouttext_Capricorn");
     $('.text_Capricorn').css({'display':'none'});
     $("#sname").hide(); //for hiding sponser name and sponser id
-    calculate_age();
+    
     // Date time picker change value
     $('#date').change(function(){
     $(this).attr('value', $('#date').val());
   });
 });
 
-            /*
-            Button click function for registration
-            */
-            $('#btn_Register').click(function(){
+  /*
+  Button click function for registration
+  */
+  $('#btn_Register').click(function(){
 
-             /* var str_occupation= $("#text_occupation_astro").val();   */
-             /* $("#occupation_txt").val(str_occupation); */
-             var str = $("form").serializeArray();
+    /* var str_occupation= $("#text_occupation_astro").val();   */
+    /* $("#occupation_txt").val(str_occupation); */
+    var str = $("form").serializeArray();
 
-                     $.ajax({
-                        type: "POST",
-                        url: "http://localhost/Mbaye/index.php/home/Save_registration_details",
-                        data: str,
-                        dataType: "json",
-                        success: function (result) {
-                          var msg =  result;
-                          alert(msg);
+            $.ajax({
+              type: "POST",
+              url: "http://localhost/Mbaye/index.php/home/Save_registration_details",
+              data: str,
+              dataType: "json",
+              success: function (result) {
+                var msg =  result;
+                alert(msg);
 
-                        },
-                        error: function () {
-                         alert("Error while Registering!!");
-                        }
-                    });
+              },
+              error: function () {
+                alert("Error while Registering!!");
+              }
+          });
 
 
                   });
@@ -1056,9 +1063,12 @@
 
             $(".btn_occ_submit").click(function(e){
               $(".astro_occupation ").removeClass("img_astro_down");
-              var occ_astro=$("#occupation").val();
-              if(occ_astro=='' || occ_astro==null)
+              var occ_astro=$("#text_occupation_astro").val();
+              
+              occ_astro = occ_astro.trim(); 
+              if(occ_astro == '' || occ_astro==null)
               {
+                alert('Occupation feild is empty');return false;
                 var new_occ = document.getElementById("text_occupation_astro").value;
                 $("#MyForm input#occupation").val(new_occ);
                 $("#list_occupation").html('');
@@ -1066,14 +1076,11 @@
               }
               else
               {
-                var str_occupation= $("#text_occupation_astro").val();
-                var occ_astro=$("#text_occupation_astro").val();
                 var new_occ = document.getElementById("text_occupation_astro").value;
                 var curr_occlist = $('#occupation').val();
                 var new_occlist = new_occ + "," + curr_occlist;
-                $("#list_occupation").html('');
+                $("#list_occupation").html(''); 
                 $("#list_occupation").html(new_occlist);
-                $("#list_occupation").val(new_occ);
                 add_occ(); 
               }
 
@@ -1086,9 +1093,9 @@
                 $('.txtarea_occup').css({'display':'block'});
 
                 //for playing audio
-                var audio = document.getElementById("audio_cuckoo");
-                audio.playbackRate =1;
-                audio.play();
+                // var audio = document.getElementById("audio_cuckoo");
+                // audio.playbackRate =1;
+                // audio.play();
 
                 $('.div_for_astro').css({'display':'none'});
                 $(".astro_occupation ").addClass("img_astro_down");
@@ -1153,205 +1160,218 @@
 
             // Update photo and enables webcam
 
-            function update_photo() {
-            if (document.getElementById('currentimg')) {
-
-                if (document.getElementById('currentimg').style.display == 'none') {
-                    document.getElementById('currentimg').style.display = 'block';
-                    document.getElementById('my_camera').style.display = 'none';
-                    document.getElementById('capture').style.display = 'none';
-                    document.getElementById('reset').style.display = 'none';
-                    document.getElementById('cancel_capture').style.display = 'none';
+            function update_photo() 
+            {
+              if (document.getElementById('currentimg')) 
+              {
+                if (document.getElementById('currentimg').style.display == 'none') 
+                {
+                  document.getElementById('currentimg').style.display = 'block';
+                  document.getElementById('my_camera').style.display = 'none';
+                  document.getElementById('capture').style.display = 'none';
+                  document.getElementById('reset').style.display = 'none';
+                  document.getElementById('cancel_capture').style.display = 'none';
                 }
-                else {
-                    document.getElementById('currentimg').style.display = 'none';
-                    document.getElementById('my_camera').style.display = 'block';
-                    document.getElementById('capture').style.display = 'block';
-                    document.getElementById('reset').style.display = 'block';
-                    document.getElementById('cancel_capture').style.display = 'block';
+                else 
+                {
+                  document.getElementById('currentimg').style.display = 'none';
+                  document.getElementById('my_camera').style.display = 'block';
+                  document.getElementById('capture').style.display = 'block';
+                  document.getElementById('reset').style.display = 'block';
+                  document.getElementById('cancel_capture').style.display = 'block';
                 }
+              }
             }
-                                }
-
             // cancels updating photo
-
-            function cancel_capture() {
-            if (document.getElementById('my_camera')) {
-
-                if (document.getElementById('currentimg').style.display == 'none') {
-                    document.getElementById('currentimg').style.display = 'block';
-                    document.getElementById('my_camera').style.display = 'none';
-                    document.getElementById('capture').style.display = 'none';
-                    document.getElementById('reset').style.display = 'none';
-                    document.getElementById('cancel_capture').style.display = 'none';
+            function cancel_capture() 
+            {
+              if (document.getElementById('my_camera')) 
+              {
+                if (document.getElementById('currentimg').style.display == 'none') 
+                {
+                  document.getElementById('currentimg').style.display = 'block';
+                  document.getElementById('my_camera').style.display = 'none';
+                  document.getElementById('capture').style.display = 'none';
+                  document.getElementById('reset').style.display = 'none';
+                  document.getElementById('cancel_capture').style.display = 'none';
                 }
-                else {
-                    document.getElementById('currentimg').style.display = 'none';
-                    document.getElementById('my_camera').style.display = 'block';
-                    document.getElementById('capture').style.display = 'block';
-                    document.getElementById('reset').style.display = 'block';
-                    document.getElementById('cancel_capture').style.display = 'block';
+                else 
+                {
+                  document.getElementById('currentimg').style.display = 'none';
+                  document.getElementById('my_camera').style.display = 'block';
+                  document.getElementById('capture').style.display = 'block';
+                  document.getElementById('reset').style.display = 'block';
+                  document.getElementById('cancel_capture').style.display = 'block';
                 }
+              }
             }
-                                }
 
             //Function for age calculation
-            function calculate_age()
+            function calculate_age(checkCall)
             {
+              console.log(checkCall);
               //DATE validation
               var dob=$("#date").val();
               $("#age").val(' ');
               var zordiac=check_zordiac(dob); // Checking zordiac signs
+              //$('.img_2').css({'display':'none'});
+              $('.img_1').css({'display':'block'});
+              $(".text_Aquaris ").removeClass("ani-rollouttext_Aquaris");
+              $('.text_Aquaris').css({'display':'none'});
+              $('.aq_normal').css({'filter': 'none'});
+              $(".text_Pisces ").removeClass("ani-rollouttext_Pisces");
+              $('.text_Pisces').css({'display':'none'});
+              $('.p_normal').css({'filter': 'none'});
+              $(".text_Aries ").removeClass("ani-rollouttext_Aries");
+              $('.text_Aries').css({'display':'none'});
+              $('.ar_normal').css({'filter': 'none'});
+              $(".text_Taurus ").removeClass("ani-rollouttext_Taurus");
+              $('.text_Taurus').css({'display':'none'});
+              $('.t_normal').css({'filter': 'none'});
+              $(".text_Gemini ").removeClass("ani-rollouttext_Gemini");
+              $('.text_Gemini').css({'display':'none'});
+              $('.gm_normal').css({'filter': 'none'});
+              $(".text_Cancer ").removeClass("ani-rollouttext_Cancer");
+              $('.text_Cancer').css({'display':'none'});
+              $('.c_normal').css({'filter': 'none'});
+              $(".text_Leo ").removeClass("ani-rollouttext_Leo");
+              $('.text_Leo').css({'display':'none'});
+              $('.le_normal').css({'filter': 'none'});
+              $(".text_Virgo ").removeClass("ani-rollouttext_Virgo");
+              $('.text_Virgo').css({'display':'none'});
+              $('.v_normal').css({'filter': 'none'});
+              $(".text_Libra ").removeClass("ani-rollouttext_Libra");
+              $('.text_Libra').css({'display':'none'});
+              $('.li_normal').css({'filter': 'none'});
+              $(".text_Scorpio ").removeClass("ani-rollouttext_Scorpio");
+              $('.text_Scorpio').css({'display':'none'});
+              $('.sc_normal').css({'filter': 'none'});
+              $(".text_Sagittarius ").removeClass("ani-rollouttext_Sagittarius");
+              $('.text_Sagittarius').css({'display':'none'});
+              $('.sg_normal').css({'filter': 'none'});
+              $(".text_Capricorn ").removeClass("ani-rollouttext_Capricorn");
+              $('.text_Capricorn').css({'display':'none'});
+              $('.cp_normal').css({'filter': 'none'});
 
-                //$('.img_2').css({'display':'none'});
-                $('.img_1').css({'display':'block'});
-
-                $(".text_Aquaris ").removeClass("ani-rollouttext_Aquaris");
-                $('.text_Aquaris').css({'display':'none'});
-                $('.aq_normal').css({'filter': 'none'});
-                $(".text_Pisces ").removeClass("ani-rollouttext_Pisces");
-                $('.text_Pisces').css({'display':'none'});
-                $('.p_normal').css({'filter': 'none'});
-                $(".text_Aries ").removeClass("ani-rollouttext_Aries");
-                $('.text_Aries').css({'display':'none'});
-                $('.ar_normal').css({'filter': 'none'});
-                $(".text_Taurus ").removeClass("ani-rollouttext_Taurus");
-                $('.text_Taurus').css({'display':'none'});
-                $('.t_normal').css({'filter': 'none'});
-                $(".text_Gemini ").removeClass("ani-rollouttext_Gemini");
-                $('.text_Gemini').css({'display':'none'});
-                $('.gm_normal').css({'filter': 'none'});
-                $(".text_Cancer ").removeClass("ani-rollouttext_Cancer");
-                $('.text_Cancer').css({'display':'none'});
-                $('.c_normal').css({'filter': 'none'});
-                $(".text_Leo ").removeClass("ani-rollouttext_Leo");
-                $('.text_Leo').css({'display':'none'});
-                $('.le_normal').css({'filter': 'none'});
-                $(".text_Virgo ").removeClass("ani-rollouttext_Virgo");
-                $('.text_Virgo').css({'display':'none'});
-                $('.v_normal').css({'filter': 'none'});
-                $(".text_Libra ").removeClass("ani-rollouttext_Libra");
-                $('.text_Libra').css({'display':'none'});
-                $('.li_normal').css({'filter': 'none'});
-                $(".text_Scorpio ").removeClass("ani-rollouttext_Scorpio");
-                $('.text_Scorpio').css({'display':'none'});
-                $('.sc_normal').css({'filter': 'none'});
-                $(".text_Sagittarius ").removeClass("ani-rollouttext_Sagittarius");
-                $('.text_Sagittarius').css({'display':'none'});
-                $('.sg_normal').css({'filter': 'none'});
-                $(".text_Capricorn ").removeClass("ani-rollouttext_Capricorn");
-                $('.text_Capricorn').css({'display':'none'});
-                $('.cp_normal').css({'filter': 'none'});
-
-            if(dob!=''){
-                if(zordiac=='Aquarius')
-                {
-                  $('.text_Aquaris').css({'display':'block'});
-                  $(".text_Aquaris ").addClass("ani-rollouttext_Aquaris");
-                  $('.aq_normal').css({'filter': 'drop-shadow(0px 2px 3px #3700ed)'});
-                }
-                else if(zordiac=='Pisces')
-                {
-                  $('.text_Pisces').css({'display':'block'});
-                  $(".text_Pisces ").addClass("ani-rollouttext_Pisces");
-                  $('.p_normal').css({'filter': 'drop-shadow(0px 2px 3px #00a323)'});
-                }
-                else if(zordiac=='Cancer')
-                {
-                  $(".text_Cancer ").addClass("ani-rollouttext_Cancer");
-                  $('.text_Cancer').css({'display':'block'});
-                  $('.c_normal').css({'filter': 'drop-shadow(0px 2px 3px #2b4fff)'});
-                }
-                else if(zordiac=='Taurus')
-                {
-                  $(".text_Taurus ").addClass("ani-rollouttext_Taurus");
-                  $('.text_Taurus').css({'display':'block'});
-                  $('.t_normal').css({'filter': 'drop-shadow(0px 2px 3px #3700ed)'});
-                }
-                else if(zordiac=='Gemini')
-                {
-                  $(".text_Gemini ").addClass("ani-rollouttext_Gemini");
-                  $('.text_Gemini').css({'display':'block'});
-                  $('.gm_normal').css({'filter': 'drop-shadow(0px 2px 3px #b905f5)'});
-                }
-                else if(zordiac=='Aries')
-                {
-                   $(".text_Aries ").addClass("ani-rollouttext_Aries");
-                   $('.text_Aries').css({'display':'block'});
-                   $('.ar_normal').css({'filter': 'drop-shadow(0px 2px 3px #e00202)'});
-                }
-                else if(zordiac=='Leo')
-                {
-                  $(".text_Leo ").addClass("ani-rollouttext_Leo");
-                  $('.text_Leo').css({'display':'block'});
-                  $('.le_normal').css({'filter': 'drop-shadow(0px 2px 3px #f5dc00)'});
-                }
-                else if(zordiac=='Virgo')
-                {
-                  $(".text_Virgo ").addClass("ani-rollouttext_Virgo");
-                  $('.text_Virgo').css({'display':'block'});
-                  $('.v_normal').css({'filter': 'drop-shadow(0px 2px 3px #00f234)'});
-                }
-                else if(zordiac=='Libra')
-                {
-                  $(".text_Libra ").addClass("ani-rollouttext_Libra");
-                  $('.text_Libra').css({'display':'block'});
-                  $('.li_normal').css({'filter': 'drop-shadow(0px 2px 3px #3700ed)'});
-
-
-
-                }
-                else if(zordiac=='Scorpio')
-                {
-                  $(".text_Scorpio ").addClass("ani-rollouttext_Scorpio");
-                  $('.text_Scorpio').css({'display':'block'});
-                  $('.sc_normal').css({'filter': 'drop-shadow(0px 2px 3px #bd0202)'});
-                }
-                else if(zordiac=='Sagittarius')
-                {
-                  $(".text_Sagittarius ").addClass("ani-rollouttext_Sagittarius");
-                  $('.text_Sagittarius').css({'display':'block'});
-                  $('.sg_normal').css({'filter': 'drop-shadow(0px 2px 3px #8502bd)'});
-                }
-                else // Capricorn
-                {
-                  $(".text_Capricorn ").addClass("ani-rollouttext_Capricorn");
-                  $('.text_Capricorn').css({'display':'block'});
-                  $('.cp_normal').css({'filter': 'drop-shadow(0px 2px 3px #00a323)'});
-                }
+            if(dob!='')
+            {
+              if(zordiac=='Aquarius')
+              {
+                $('.text_Aquaris').css({'display':'block'});
+                $(".text_Aquaris ").addClass("ani-rollouttext_Aquaris");
+                $('.aq_normal').css({'filter': 'drop-shadow(0px 2px 3px #3700ed)'});
               }
-
-
-
+              else if(zordiac=='Pisces')
+              {
+                $('.text_Pisces').css({'display':'block'});
+                $(".text_Pisces ").addClass("ani-rollouttext_Pisces");
+                $('.p_normal').css({'filter': 'drop-shadow(0px 2px 3px #00a323)'});
+              }
+              else if(zordiac=='Cancer')
+              {
+                $(".text_Cancer ").addClass("ani-rollouttext_Cancer");
+                $('.text_Cancer').css({'display':'block'});
+                $('.c_normal').css({'filter': 'drop-shadow(0px 2px 3px #2b4fff)'});
+              }
+              else if(zordiac=='Taurus')
+              {
+                $(".text_Taurus ").addClass("ani-rollouttext_Taurus");
+                $('.text_Taurus').css({'display':'block'});
+                $('.t_normal').css({'filter': 'drop-shadow(0px 2px 3px #3700ed)'});
+              }
+              else if(zordiac=='Gemini')
+              {
+                $(".text_Gemini ").addClass("ani-rollouttext_Gemini");
+                $('.text_Gemini').css({'display':'block'});
+                $('.gm_normal').css({'filter': 'drop-shadow(0px 2px 3px #b905f5)'});
+              }
+              else if(zordiac=='Aries')
+              {
+                  $(".text_Aries ").addClass("ani-rollouttext_Aries");
+                  $('.text_Aries').css({'display':'block'});
+                  $('.ar_normal').css({'filter': 'drop-shadow(0px 2px 3px #e00202)'});
+              }
+              else if(zordiac=='Leo')
+              {
+                $(".text_Leo ").addClass("ani-rollouttext_Leo");
+                $('.text_Leo').css({'display':'block'});
+                $('.le_normal').css({'filter': 'drop-shadow(0px 2px 3px #f5dc00)'});
+              }
+              else if(zordiac=='Virgo')
+              {
+                $(".text_Virgo ").addClass("ani-rollouttext_Virgo");
+                $('.text_Virgo').css({'display':'block'});
+                $('.v_normal').css({'filter': 'drop-shadow(0px 2px 3px #00f234)'});
+              }
+              else if(zordiac=='Libra')
+              {
+                $(".text_Libra ").addClass("ani-rollouttext_Libra");
+                $('.text_Libra').css({'display':'block'});
+                $('.li_normal').css({'filter': 'drop-shadow(0px 2px 3px #3700ed)'});
+              }
+              else if(zordiac=='Scorpio')
+              {
+                $(".text_Scorpio ").addClass("ani-rollouttext_Scorpio");
+                $('.text_Scorpio').css({'display':'block'});
+                $('.sc_normal').css({'filter': 'drop-shadow(0px 2px 3px #bd0202)'});
+              }
+              else if(zordiac=='Sagittarius')
+              {
+                $(".text_Sagittarius ").addClass("ani-rollouttext_Sagittarius");
+                $('.text_Sagittarius').css({'display':'block'});
+                $('.sg_normal').css({'filter': 'drop-shadow(0px 2px 3px #8502bd)'});
+              }
+              else // Capricorn
+              {
+                $(".text_Capricorn ").addClass("ani-rollouttext_Capricorn");
+                $('.text_Capricorn').css({'display':'block'});
+                $('.cp_normal').css({'filter': 'drop-shadow(0px 2px 3px #00a323)'});
+              }
+            }
             //  var dat_Validation=isValidDate(dob); //commented for now
             var dat_Validation=true;
-                if(dat_Validation==true)
-                 {
-                     var dob=$("#date").val();
-                     d1=new Date(dob);
-                     d2 = new Date();
-                      var diff = d2.getTime() - d1.getTime();
-                      age= Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-                      if(age<0)
-                        age=0;
-                      $("#age").val(age);
+            if(dat_Validation==true)
+              {
+                var dob=$("#date").val();
+                d1=new Date(dob);
+                d2 = new Date();
+                var diff = d2.getTime() - d1.getTime();
+                age= Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+                if(age<0)
+                  age=0;
+                $("#age").val(age);
 
-                      if(age < 18)
-                      {
-                       $("#sname").show();
-                       $("#sponsor_email").show();
-
-                       }
-                      else{
-                        $("sname").hide();
-                        $("#sponsor_email").hide();
-                      }
-
+                if(age < 18)
+                { 
+                  if(checkCall=='true')
+                  {
+                    if($('#v-pills-settings-tab').children().length == 0)
+                    {
+                      $('#v-pills-settings-tab').html("<span class='badge badge-danger'>2</span>");
+                    }
+                    if($('#v-pills-settings-tab').children().length >= 1)
+                    {
+                      $('#v-pills-settings-tab').html("Organization Details <span class='badge badge-danger'>2</span>");
+                    }
+                    
+                    $.notify('Sponsor Name is required', "warn");
+                    $.notify('Sponsor Email is required', "warn");
+                  }
+                  
+                  $("#sname").show();
+                  $("#sponsor_email").show();
                 }
-                else{
-                  alert("Invalid DOB!");
-                  $("#date").val('');
+                else
+                {
+                  $("sname").hide();
+                  $("#sponsor_email").hide();
                 }
+              }
+              else
+              {
+                alert("Invalid DOB!");
+                $("#date").val('');
+              }
             }
 
 
@@ -1556,7 +1576,7 @@
       var screen_width = window.innerWidth;
       var screen_height = window.innerHeight;
       // alert('Width of th device : '+screen_width+" , height of the view Port: "+screen_height);
-      if (screen_height == 500 || screen_height < 500) 
+      if ( screen_height <= 500  && screen_height > 360) 
       {
         Webcam.set({
           width: 120,
@@ -1566,17 +1586,7 @@
         });
         Webcam.attach( '#my_camera' );
       }
-      else if((screen_height == 360 || screen_height < 360) && screen_height > 360 )
-      {
-        Webcam.set({
-          width: 120,
-          height: 130,
-          image_format: 'jpeg',
-          jpeg_quality: 90
-        });
-        Webcam.attach( '#my_camera' );
-      }
-      else if((screen_height == 320 || screen_height < 320) && screen_height > 360 )
+      else if(screen_height <= 360 )
       {
         Webcam.set({
           width: 90,
@@ -1665,14 +1675,8 @@
                     var div = document.getElementById("Div_for_wiki");
                     var page = document.getElementById("wikiPage");
                     page.data = "";
-
-
                     $(".close_btn ").hide();
-
-
                     div.style.visibility = "hidden";
-
-
                 }
 
             function goto_wiki2(){
@@ -1740,10 +1744,68 @@
                 /**
                 Function to validate form
                 */
-                function validateMyForm(){
+               $("#MyForm").submit(function(e){
+                    e.preventDefault();
+                    age = $("#age").val();
+                    // alert(age);
+                    if(age < 18)
+                    {
+                      sponsor_name = $("#sname").val();
+                      sponsor_email = $("#sponsor_email").val();
+                      if(sponsor_name == '')
+                      {
+                        Swal.fire({
+                            imageUrl: '../front/icons/alert-icon.png',
+                            imageWidth: 80,
+                            imageHeight: 80,
+                            imageAlt: 'Mbaye Logo',
+                            title: "<span id='success'>Required Feild!</span>",
+                            html:"Sponsor Name is required" ,
+                            padding: '1rem',
+                            background: 'rgba(8, 64, 147, 0.62)'
+                          });
+                          return false;
+                      }
+                      if(sponsor_email == '')
+                      {
+                        Swal.fire({
+                            imageUrl: '../front/icons/alert-icon.png',
+                            imageWidth: 80,
+                            imageHeight: 80,
+                            imageAlt: 'Mbaye Logo',
+                            title: "<span id='success'>Required Feild!</span>",
+                            html:"Sponsor Email is required" ,
+                            padding: '1rem',
+                            background: 'rgba(8, 64, 147, 0.62)'
+                          });
+                          return false;
+                      }
+                    }
+                    Swal.fire({
+                      imageUrl: '../../front/icons/alert-icon.png',
+                      imageWidth: 80,
+                      imageHeight: 80,
+                      imageAlt: 'Mbaye Logo',
+                      html: '<h4 style="font:inherit; color:white">Are you sure you want to save the changes?</h4>',
+                      padding: '30px',
+                      background: 'rgba(8, 64, 147, 0.62)',
+                      showCancelButton: true,
+                      showCancelButton: true,
+                      confirmButtonColor: 'auto',
+                      cancelButtonColor: 'red',
+                      confirmButtonText: 'Yes, save it!'
+                    }).then((result) => {
+                        if (result.value) 
+                        {
+                          document.getElementById("MyForm").submit();
+                        }
+                        else
+                        {
 
-                    document.getElementById("MyForm").submit();
-                }
+                        }
+                    });
+               });
+                
             /**
             Click function for agree button
             */
@@ -1783,7 +1845,6 @@
             imageAlt: 'Mbaye Logo',
             title: "<span id='success' style='color:green;'>Data Updated!</span>",
             html:"{{ session('success') }}" ,
-            width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)'
           });
@@ -1796,7 +1857,7 @@
             imageAlt: 'Mbaye Logo',
             title: "<span id='success'>Went Wrong!</span>",
             html:"{{ session('flash_danger') }}" ,
-            width: '30%',
+            // width: '30%',
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)'
           });
@@ -1828,7 +1889,7 @@
             imageAlt: 'Mbaye Logo',
             title: "<span id='error'>Failed!</span>",
             html: sweetMessage,
-            width: '30%',
+            
             padding: '1rem',
             background: 'rgba(8, 64, 147, 0.62)'
           });

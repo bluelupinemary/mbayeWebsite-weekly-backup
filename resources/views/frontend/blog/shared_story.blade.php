@@ -469,10 +469,10 @@
                         if(naff_fart_animation) {
                             animateNaffFart();
                             naff_fart_animation = !naff_fart_animation;
-                        } else {
-                            naff_fart_animation = false;
                         }
                     });
+                } else {
+                    naff_fart_animation = false;
                 }
             });
         });

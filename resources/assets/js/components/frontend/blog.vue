@@ -133,9 +133,9 @@
         <p>No posts available.</p>
     </div>
     <div :class="'astro-div navigator-div '+getUserGender(user.gender)">
-        <img v-if="user.gender == 'female'" src="/front/images/astronut/Thomasina_blog.png"  class="img_astro" alt="">
-        <img v-else src="/front/images/astronut/Tom_blog.png" alt="" class="img_astro">
-        <div class="tos-div thomasina">
+        <img v-if="user.gender == 'female'" src="/front/images/astronut/Thomasina_blog.png"  class="astronaut-img" alt="">
+        <img v-else src="/front/images/astronut/Tom_blog.png" alt="" class="astronaut-img">
+        <div :class="'tos-div '+getUserGender(user.gender)">
             <button class="tos-btn tooltips right">
                 <img class="btn_pointer" src="/front/images/astronut/navigator-buttons/tosBtn.png" alt="">
                 <span class="tooltiptext">Terms of Services</span>
@@ -143,6 +143,15 @@
         </div>
         <div :class="'user-photo '+(user.gender != null ? user.gender: 'male')">
             <img :src="'/storage/profilepicture/'+(user.photo == null ? 'default.png' : (user.photo.includes('-cropped') ? 'crop/'+user.photo : user.photo))">
+        </div>
+        <div :class="'tag-title '+user.gender+' '+tag">
+            <img v-if="tag == 'films'" :src="'/front/images/planets/Venus.png'"/>
+            <img v-else-if="tag == 'sports'" :src="'/front/images/planets/Moon.png'"/>
+            <img v-else-if="tag == 'mountains_and_seas'" :src="'/front/images/planets/Mars.png'"/>
+            <img v-else-if="tag == 'music'" :src="'/front/images/planets/saturn.png'"/>    
+            <img v-else-if="tag == 'politics'" :src="'/front/images/planets/Uranus.png'"/>  
+            <img v-else-if="tag == 'family_and_friends'" :src="'/front/images/planets/sun.png'"/>  
+            <img v-else-if="tag == 'travel'" :src="'/front/images/planets/Pluto.png'"/>
         </div>
         <div class="navigator-buttons">
             <div class="column column-1">
@@ -155,38 +164,40 @@
                 <button class="editphoto-btn tooltips top"><img class="btn_pointer" src="/front/images/astronut/navigator-buttons/greenButtons.png" alt=""><span class="">Edit Profile Photo</span></button>
             </div>
             <div class="column column-3">
-                <button class="tooltips right ">
-                <img class="btn_pointer" src="/front/images/astronut/navigator-buttons/freeBtn.png" alt=""></button>
+                <button class="participate-btn tooltips right">
+                    <img class="btn_pointer" src="/front/images/astronut/navigator-buttons/freeBtn.png" alt="">
+                    <span class="tooltiptext">Participate</span>
+                </button>
                 <button class="profile-btn tooltips right">
                     <img class="btn_pointer" src="/front/images/astronut/navigator-buttons/profileBtn.png" alt="">
                     <span class="tooltiptext">User Profile</span>
                 </button>
             </div>
         </div>
-        <button class="zoom-btn zoom-in "><i class="fas fa-search-plus"></i></button>
-        <!-- <button class="navigator-zoom navigator-zoomin"></button>-->
+        <button class="zoom-btn zoom-in zoom-in-out tooltips">
+            <i class="fas fa-search-plus"></i>
+            <span>Zoom In</span>
+        </button>
         <div class="instructions-div btn_pointer tooltips right">
             <button class="instructions-btn tooltips right">
                 <img class="btn_pointer" src="/front/images/astronut/navigator-buttons/instructionsBtn.png" alt="">
                 <span class="tooltiptext">Instructions</span>
             </button>
         </div>
-        <div class="communicator-div tooltips right">
+        <div class="communicator-div tooltips top">
             <span class="tooltiptext">Communicator</span>
             <button class="communicator-button"></button>
         </div>
-        <div class="new-posts-div">
+        <div v-if="type != ''" class="new-posts-div">
             <img src="/front/images/notification-hologram/hologram.png" alt="" class="hologram">
             <button class="new-posts" @click.prevent="fetchblogs" :disabled="(k == 0 ? true : false)">
                 <span v-if="k > 0" class="light"></span>
                 New Posts
             </button>
         </div>
-        <button class="music-volume-div tooltips top btn_pointer">
-            <span>Music Volume Up/Down</span>
-        </button>
-        <button class="navigator-zoomout-btn">
+        <button class="navigator-zoomout-btn zoom-in-out tooltips">
             <i class="fas fa-undo-alt"></i>
+            <span>Zoom Out</span>
         </button>
     </div>
 </div>
@@ -864,9 +875,8 @@ export default {
            
         
         $(".div_overlay_"+that.i).css({width:width, height:height,
-                                                "position":"absolute",
-                                                 left:left,top:top});
-        $(".div_title_"+that.i).css({'display':'none',width:width, height:height_title,
+                                                "position":"absolute",top:top});
+        $(".div_img_"+that.i+" .overlay").css({'display':'none',width:width, height:height_title,
                                                 "position":"absolute",
                                                  left:left,top:top}); 
         $(".div_counts_"+that.i).css({'display':'none',width:width, height:height,
@@ -1259,7 +1269,14 @@ export default {
             'bottom': Math.round((cheight - iheight) / 2) + "px"
         });
 
-        $('.'+img_class).closest('.cell').find('.div_overlay').css({
+        // $('.'+img_class).closest('.cell').find('.div_overlay').css({
+        //     'width': Math.round(iwidth) + "px",
+        //     'height': Math.round(iheight) + "px",
+            // 'top': Math.round((cheight - iheight) / 2) + "px",
+            // 'left': Math.round((cwidth - iwidth) / 2) + "px",
+        // });
+
+        $('.'+img_class).closest('.cell').find('.overlay').css({
             'width': Math.round(iwidth) + "px",
             'height': Math.round(iheight) + "px",
             'top': Math.round((cheight - iheight) / 2) + "px",

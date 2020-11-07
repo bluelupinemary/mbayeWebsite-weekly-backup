@@ -22,8 +22,8 @@
 @endsection
 
 @section('after-scripts')
-<script src="{{asset('front')}}/babylonjs/scenes/ContactsPage/contactsMap.js"></script>
-<script src="{{asset('front')}}/babylonjs/scenes/instructions/instructions.js"></script>
+<script src="{{asset('front/babylonjs/scenes/ContactsPage/contactsMap.js')}}"></script>
+<script src="{{asset('front/babylonjs/scenes/instructions/sampleInstructions.js')}}"></script>
   <script>
    
   </script>

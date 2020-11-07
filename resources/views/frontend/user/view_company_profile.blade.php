@@ -35,7 +35,7 @@
 .swal2-content {
     color: #17a2b8 !important;
     font-size: 1.1vw !important;
-    font-family: 'Nasalization';
+    font-family: 'Arial';
 }
 .company-detail{
     padding: 1%;
@@ -62,8 +62,12 @@
     /* border: 1px solid blue; */
     /* text-align: center; */
 }
-
-
+/* #userDashboard{
+    cursor: pointer;
+}
+#userDashboard:hover{
+    color:red;
+} */
 </style>
     
 <link rel="stylesheet" type="text/css" href="{{asset('front/CSS/view-company-profile.css')}}"/>
@@ -112,19 +116,19 @@
             <div class="screen"><br/><br/>
                 
                     <div class="row">
-                            <div class="" style="padding-left:5vw;">
+                            <div class="feature-image-column">
                                 
-                                <h1 class="heading" style="color:#efad0c;font-size:2.5vw;text-align:center;">Company Profile</h1>
+                                <h1 class="heading">Company Profile</h1>
                                     <div class="user-upload-img" id="userImageUpload" >
 
                                             
                                            
-                                                <img src="{{ asset('storage/career/company/'.$company->featured_image) }}"  id="featured-image-previewimg"  alt="input image" style=" width: 100%;">
+                                                <img src="{{ asset('storage/career/company/'.$company->featured_image) }}"  id="featured-image-previewimg"  alt="input image">
                                             
                                                
-                                            <div class="view-profile-button" style="" >
-                                
-                                                <i class="fas fa-ellipsis-h" onclick="zoomImage();" style="position:relative; font-size:3vw; color:white; float:right; right:5%;"></i>
+                                            <div class="view-profile-button tooltipps right">
+                                                <span>View Image</span>
+                                                <i class="fas fa-ellipsis-h" onclick="zoomImage();"></i>
                                                 
                                             </div>
 
@@ -135,41 +139,49 @@
                                     <!--changed button class name from img-edit-button to edit_image-->
                                     {{-- <button type="button" class="" id="">Edit Image</button> --}}
                                     
+
                                     
                                 {{-- ----------------------------------END---------------------------------------------------- --}}
                             </div>
+
                             <!-- ---------------------Form code start-------------------------------------------- -->
 
+                            
                             <div class="column2">
                                 <div class="edit-buttons">
-                                    <button class="edit" data-toggle="tooltip" title="Edit Profile" data-placement="top" onclick="edit_profile();" style="border:0;background: transparent;"><i class="fas fa-edit"  style="font-size:2em; color:#c5a739; "></i></button>
+                                    <button class="edit tooltips top" onclick="edit_profile();">
+                                        <i class="fas fa-edit"></i>
+                                        <span>Edit Profile</span>
+                                    </button>
+                                </div>
+                              
+                                <div class="company-details-parent-div">
+                                    <div class="company-detail">
+                                        <div class="company-title">Company Name :</div>
+                                        <div class="spn_value">{{ $company->company_name ?? '' }}</div>
+                                    </div>
+                                    <div class="company-detail">
+                                            <div class="company-title">Company Email :</div>
+                                            <div class="spn_value">{{ $company->company_email ?? '' }}</div>
+                                        </div>
+                                        <div class="company-detail">
+                                            <div class="company-title">Company Address :</div>
+                                            <div class="spn_value">{{ $company->address ?? '' }}</div>
+                                        </div>
+                                        <div class="company-detail">
+                                            <div class="company-title">Mobile No :</div>
+                                            <div class="spn_value">{{ $company->company_phone_number ?? '' }}</div>
+                                        </div>
+                                        <div class="company-detail">
+                                            <div class="company-title">Industry :</div>
+                                            <div class="spn_value">{{ Auth::user()->company->industry->industry_name ?? '' }}</div>
+                                        </div>
+                                        <div class="company-detail">
+                                            <div class="company-title">Created By :</div>
+                                            <div class="spn_value" id="userDashboard">{{ Auth::user()->first_name .' '.Auth::user()->last_name ?? '' }}</div>
+                                        </div>
+                                </div><!--end of company details div-->
                                     
-                                </div>
-                               <div class="company-detail">
-                                   <div class="company-title">Company Name :</div>
-                                   <div class="spn_value">{{ $company->company_name ?? '' }}</div>
-                               </div>
-                               <div class="company-detail">
-                                    <div class="company-title">Company Email :</div>
-                                    <div class="spn_value">{{ $company->company_email ?? '' }}</div>
-                                </div>
-                                <div class="company-detail">
-                                    <div class="company-title">Company Address :</div>
-                                    <div class="spn_value">{{ $company->address ?? '' }}</div>
-                                </div>
-                                <div class="company-detail">
-                                    <div class="company-title">Mobile No :</div>
-                                    <div class="spn_value">{{ $company->company_phone_number ?? '' }}</div>
-                                </div>
-                                <div class="company-detail">
-                                    <div class="company-title">Industry :</div>
-                                    <div class="spn_value">{{ Auth::user()->company->industry->industry_name ?? '' }}</div>
-                                </div>
-                                <div class="company-detail">
-                                    <div class="company-title">Created By :</div>
-                                    <div class="spn_value">{{ Auth::user()->first_name .' '.Auth::user()->last_name ?? '' }}</div>
-                                </div>
-                               
                             </div>
                     </div>   
                                 
@@ -221,8 +233,8 @@
                                             <span class="tooltiptext">User Profile</span></button>
                                     </div>
                                 </div>
-                             <button class="zoom-btn zoom-in" ><i class="fas fa-search-plus"></i>
-                                    {{-- <span>Zoom Out</span> --}}
+                             <button class="zoom-btn zoom-in tooltips top" ><i class="fas fa-search-plus"></i>
+                                    {{-- <span>Zoom In</span> --}}
                                 
                             </button>
                                  <!-- <button class="navigator-zoom navigator-zoomin"></button>-->
@@ -241,9 +253,9 @@
                                 <button class="music-volume-div tooltips top btn_pointer">
                                     <span>Music Volume Up/Down</span>
                                 </button>
-                               <button class="navigator-zoomout-btn">
+                               <button class="navigator-zoomout-btn tooltips top">
                                     <i class="fas fa-undo-alt"></i>
-                                    {{-- <span>Zoom Out</span> --}}
+                                    <span>Zoom Out</span>
                                 </button>
                                 {{-- <button class="navigator-zoomout-btn tooltips zoom-in-out">
                                     <span>Zoom Out</span>
@@ -323,7 +335,7 @@
         <div class="zoomed_image_div" id="userImageUpload" >
             <img src="{{ asset('storage/career/company/'.$company->featured_image) }}"  id="featured-zoomed-image"  alt="input image">
             <div class="view-profile-button" style="" >
-                <i class="fas fa-ellipsis-h" onclick="zoomImageBack();" style="position:relative; font-size:3vw; color:white; float:right; right:5%;"></i>
+                <i class="fas fa-ellipsis-h" onclick="zoomImageBack();"></i>
             </div>
         </div>
     </div>
@@ -358,6 +370,10 @@
         
     // Show title on hover
 
+        // $('.column2 .edit-buttons').hover(function(){
+        //     $('.edit-buttons span').css('display','inline');
+        // });
+
     
             $('.communicator-div').click( function() {
                 window.location.href = url+'/communicator';
@@ -383,7 +399,9 @@
             var audio =  document.getElementById('1');
             audio.play();
             });
-        
+            $('#userDashboard').click( function() {
+                window.location.href = url+'/dashboard';
+            });
         
         // var astronaut_zoom = 0;
 

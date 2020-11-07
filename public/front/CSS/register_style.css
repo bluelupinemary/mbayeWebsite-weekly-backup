@@ -112,60 +112,8 @@ ul{
         background:rgba(8, 64, 147, 0.62);
         box-shadow: 0px 0px 20px #17a2b8;
 }
-.swal2-popup {
-    box-shadow: 0px 0px 20px #17a2b8;
-    /* width: 27vw !important; */
-    padding: 1vw !important;
-  }
-  /* 
-  .swal2-image {
-    width: 6vw !important;
-    height: 6vw !important;
-    margin: 1.25vh auto !important;
-  } */
+
   
-  .swal2-title {
-    font-family: 'Nasalization';
-    font-size: 1.5vw !important;
-    color: #df1613 !important;
-  }
-  
-  .swal2-content {
-    color: #17a2b8 !important;
-    font-size: 1.1vw !important;
-    font-family: 'Nasalization';
-  }
-  
-  .swal2-title span.success {
-    color: #25d365 !important;
-  }
-  
-  .swal2-styled {
-    font-size: 1.3vw !important;
-    padding: 0.5vw 2vw !important;
-  }
-  
-  .swal2-actions {
-    margin: 1.25vw auto 0 !important;
-  }
-  .swal2-popup {
-    box-shadow: 0px 0px 20px #17a2b8;
-    /* width: 27vw !important;
-    padding: 1vw !important; */
-  }
-  
-  .swal2-html-container {
-    color: #17a2b8 !important;
-    font-size: 1.1vw !important;
-    font-family: 'Nasalization';
-  }
-  
-  
-#error {
-    font-family: "Nasalization";
-    font-size: 1.5vw !important;
-    color: #df1613 !important;
-}
 .cls_zc {
     z-index: 1000
 }
@@ -174,9 +122,7 @@ ul{
     z-index: 10000
 }
 
-.swal2-container{
-    z-index: 1000000;
-}
+
 
 .sub_container {
     position: relative;
@@ -1456,10 +1402,7 @@ border:0px ;
     {
         font-size: 10px;
     }
-    .swal-wide
-    {
-        width: 30%;
-    }
+    
 
     #terms_label
     {

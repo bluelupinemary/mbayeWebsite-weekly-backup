@@ -34,7 +34,7 @@
         // portrait
         if(width < height) {
             isFullScreen = 0;
-            $('#page-content').hide();
+            $('#page-content').css('opacity', '0');
             $('#block_land').show();
         } else { // landscape
             // check if mobile device
@@ -42,7 +42,7 @@
             if(width < 991){ 
                 if(!isFullScreen) {
                     $('#block_land').hide();
-                    $('#page-content').hide();
+                    $('#page-content').css('opacity', '0');
                     Swal.fire({
                         imageUrl: '../../front/icons/alert-icon.png',
                         imageWidth: 80,
@@ -70,7 +70,7 @@
 
     // show page content
     function contentDisplay() {
-        $('#page-content').fadeIn();
+        $('#page-content').css('opacity', '1');
         $('#block_land').hide();
     }
     // End Force landscape orientation

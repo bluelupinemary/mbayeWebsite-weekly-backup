@@ -46,34 +46,38 @@ function createSelectedFlowerScene(){
 
 function create_selected_flower_camera(){
   //create the camera
-    selectedFlowerCamera = new BABYLON.ArcRotateCamera("selectedFlowerCamera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-165.11,57.58,97.05), selectedFlowerScene);
+    selectedFlowerCamera = new BABYLON.ArcRotateCamera("selectedFlowerCamera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-160.247,78.31,86.79), selectedFlowerScene);
     selectedFlowerCamera.checkCollisions = true;
     selectedFlowerCamera.panningSensibility = 500;
     selectedFlowerCamera.fovMode = BABYLON.Camera.FOVMODE_HORIZONTAL_FIXED;
     selectedFlowerCamera.fov = 1.4;
+    selectedFlowerCamera.maxZ = 21000;;
     
     selectedFlowerCamera.lowerRadiusLimit = 35;
     selectedFlowerCamera.upperRadiusLimit = 400;
     selectedFlowerCamera.wheelPrecision = 10;   
     selectedFlowerCamera.angularSensibilityX = 2000;
     selectedFlowerCamera.angularSensibilityY = 2000;
-    selectedFlowerCamera.alpha = 2.61;
-    selectedFlowerCamera.beta = 1.27;
+    selectedFlowerCamera.alpha = 2.44;
+    selectedFlowerCamera.beta = 1.15;
+
+
+    // selectedFlowerCamera.alpha = 2.61;
+    // selectedFlowerCamera.beta = 1.27;
 }
 
 function reset_selected_flower_camera(){
-    // selectedFlowerCamera =  new BABYLON.ArcRotateCamera("selectedFlowerCamera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-165.11,57.58,97.05), selectedFlowerScene);
-    // selectedFlowerCamera.position = new BABYLON.Vector3(-165.11,57.58,97.05);
+    // selectedFlowerCamera.position = new BABYLON.Vector3(-157.38,81.72,92.44);
     // selectedFlowerCamera.alpha = 2.61;
-    // selectedFlowerCamera.beta = 1.27;
-    selectedFlowerCamera.position = new BABYLON.Vector3(-157.38,81.72,92.44);
-    selectedFlowerCamera.alpha = 2.61;
-    selectedFlowerCamera.beta = 1.14;
-    selectedFlowerCamera.radius = 200;
-    selectedFlowerCamera.target = new BABYLON.Vector3(0,0,0);
-    // selectedFlowerCamera.attachControl();
+    // selectedFlowerCamera.beta = 1.14;
     // selectedFlowerCamera.radius = 200;
-   console.log("camera: ", selectedFlowerCamera.position);
+    // selectedFlowerCamera.target = new BABYLON.Vector3(0,0,0);
+  
+    selectedFlowerCamera.position = new BABYLON.Vector3(-164.375,75.92, 80.21);
+    selectedFlowerCamera.alpha = 2.48;
+    selectedFlowerCamera.beta = 1.17;
+    selectedFlowerCamera.radius = 200;
+    selectedFlowerCamera.target = new BABYLON.Vector3(-18.22,-1.59,-32.20);
 }
 
 let nuvola_obj, solar_obj,book_obj;
@@ -149,10 +153,13 @@ function load_earth_with_flowers_mesh(){
                     bookRightPages = a;
                     light2.includedOnlyMeshes.push(bookRightPages);
                 }else if(a.name === "wood001_primitive0" || a.name === "Home" || a.name === "MbayeFeet" || a.name === "MbayeHead" || a.name === "DesignAPanel"){
-                    console.log(a.material);
                     bookPartsMap.set(a.name,null);
                     add_obj_action_mgr(a);
                 }
+
+               
+
+                
             });
             bookTask = result;
             result.animationGroups[0].loopAnimation = false;
@@ -160,10 +167,16 @@ function load_earth_with_flowers_mesh(){
             // result.meshes[0].scaling =  new BABYLON.Vector3(0.05,0.05,-0.05);
             result.meshes[0].scaling =  new BABYLON.Vector3(0.07,0.07,-0.07);
             // result.meshes[0].position = new BABYLON.Vector3( -92.64,27.76,33.34);
-            result.meshes[0].position = new BABYLON.Vector3( -78.87,23.71,23.35);
-            result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0846,0.8822,-0.0874, 0.4546);
-            result.meshes[0].isPickable = false;
+            // {x: -96.7872, y: 0.3925171, z: -10.6000977} e {x: 8.42937453e-8, y: -0.7071068, z: 0.7071068, w: -1.46110992e-7}
+
+            // result.meshes[0].position = new BABYLON.Vector3( -78.87,23.71,23.35);
+           
+            result.meshes[0].position = new BABYLON.Vector3( -82.56,24.73,25.66);
+            result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0421,0.8852,-0.1091, 0.4498);
+            // result.meshes[0].isPickable = false;
             book_obj = result.meshes[0];
+
+           
             
         }),
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", selectedFlowerScene).then(function (result) {
@@ -211,7 +224,7 @@ function load_earth_with_flowers_mesh(){
 
         set_scene_active_meshes(selectedFlowerScene,false);
         
-
+        // enable_gizmo2(book_obj);
         // create_3D_flower("2Sunflower"); 
         // selectedFlowerScene.debugLayer.show();
         // enable_gizmo2(nuvolaSpeech1);
@@ -232,6 +245,14 @@ function enable_gizmo2(theFlower){
     // homeGizmo = new BABYLON.RotationGizmo(designUtilLayer);
     homeGizmo2.attachedMesh = theFlower;
     homeGizmo2.scaleRatio = 2;
+
+    homeGizmo.onDragStartObservable.add(()=>{
+        console.log("rotate ", book_obj.rotationQuaternion);
+    })
+    homeGizmo2.onDragStartObservable.add(()=>{
+        console.log("pos ", book_obj.position);
+    })
+    // console.log(homeGizmo);
 }
 
 
@@ -276,7 +297,7 @@ function open_book_of_flowers(theFlowerName){
         //start animation of the book of flowers
         // bookTask.animationGroups[0].reset();
         bookTask.animationGroups[0].play();
-
+        
        
         // //show book of flowers
         // book_obj.setEnabled(true);
@@ -317,6 +338,8 @@ function set_carpet_countries(theFlowerName){
     locatedCarpetMatl.diffuseTexture.vScale = -1;
     locatedCarpetMatl.diffuseTexture.uScale = -1;
     locatedCarpetMatl.specularColor = new BABYLON.Color3(0, 0, 0);
+
+    console.log(nuvola_carpet);
 
     solar_carpet.material = grownCarpetMatl;
     nuvola_carpet.material = locatedCarpetMatl;
@@ -594,16 +617,19 @@ function add_mouse_listener_selected_flower(){
         //check if the world of flowers mesh should be draggable/modified
         if (pickInfo.hit && evt.button === 0) {
             var theMeshClicked = pickInfo.pickedMesh;
-            // console.log("inside the selected flower scene", theMeshClicked, theMeshClicked.position, theMeshClicked.rotationQuaternion);
+            // console.log(selectedFlowerCamera.radius, selectedFlowerCamera.alpha, selectedFlowerCamera.beta, selectedFlowerCamera.position, selectedFlowerCamera.target);
+            console.log("inside the selected flower scene", theMeshClicked, theMeshClicked.position, theMeshClicked.rotationQuaternion);
            
             if(showSelectedFlowerScene){     
                 if(theMeshClicked.name === "solarLamp"){
                     if(isVideoEnabled){
                         // document.getElementById("player").style.visibility = "hidden";
-                        $(".music-player-parent-div").hide();
+                        $("#musicVideoDiv").hide();
                         isVideoEnabled = false;
                     }
-                    hidePage(3); //hide wiki
+                    // hidePage(3); //hide wiki
+                    //hide wiki
+                    $('#flowersWikipediaDiv').hide();
                     currScene = "flowersScene";
                     isFlowerClicked = false;
                     flowersCamera.attachControl(canvas,true);
@@ -615,14 +641,17 @@ function add_mouse_listener_selected_flower(){
                     isShowFlowerScene = true;
                     set_scene_active_meshes(selectedFlowerScene,false);
                     set_scene_active_meshes(flowersScene,true);
+                    //hide wiki icon
+                    $('#wikipediaIcon').hide();
                 }else if(theMeshClicked.name === "wood001_primitive0"){            //show video function enable/disable
                     if(!isVideoEnabled){
                         isVideoEnabled = true;
                         // document.getElementById("player").style.visibility = "visible";
-                        $(".music-player-parent-div").show();
+                        // $("#musicVideoDiv").show();
+                        $('#musicVideoDiv').css('display','flex');
                     }else{
                         // document.getElementById("player").style.visibility = "hidden";
-                        $(".music-player-parent-div").hide();
+                        $("#musicVideoDiv").hide();
                         isVideoEnabled = false;
                     }
                 }else if(theMeshClicked.name === "Home"){
@@ -803,8 +832,5 @@ function show_alert_box(titleText,path){
 
 
 
-function showFlowerModelDiv(theFlowerName){
-    document.getElementById("flowerViewer").src = "front/objects/flowersMbayeScene/flowers3D/"+theFlowerName+".glb";
-    document.getElementById("flowerModelDiv").style.visibility = "visible";
-    // $('#flowerModelDiv').show();
-}//end of showCharDescDiv function
+
+

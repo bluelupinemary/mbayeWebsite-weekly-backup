@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Company\DemoCompany;
 use App\Http\Controllers\Controller;
 use App\Models\JobSeekerProfile\Profession;
+use App\Models\Company\CompanyProfile;
+use App\Models\CompanyProfile\Industry;
+// use App\Models\JobSeekerProfile\Profession;
 use App\Repositories\Frontend\CompanyProfile\CompanyProfilesRepository;
 
 class DemoFormsubmit extends Controller
@@ -29,6 +32,7 @@ class DemoFormsubmit extends Controller
     {
         $industry = Industry::all();
         $industry->toArray();
+        // print_r($industry);
         return $industry;
 
         

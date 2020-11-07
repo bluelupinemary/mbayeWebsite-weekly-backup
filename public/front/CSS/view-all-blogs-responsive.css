@@ -974,6 +974,10 @@ and (orientation : landscape) {
     .status-div, .sort-div, .tag-div {
         flex: 50%;
     }
+
+    .cloud-message {
+        width: 22vw;
+    }
 }
 
 /* Iphone X */

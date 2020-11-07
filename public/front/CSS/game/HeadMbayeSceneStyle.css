@@ -3,7 +3,6 @@
     width:20vw;
     height:13vw;
     right:0;
-    top:0.5vw;
     background:black;
 }
 
@@ -80,7 +79,7 @@
     left: 2.5vw;
     top: 6.5vw;
 }
-
+/* 
 #musicVideoDiv #player{
     width:20vw;
     height: 12vw;
@@ -114,20 +113,89 @@
   visibility:hidden;
   filter: drop-shadow(2px 4px 6px black);
 
+} */
+
+#musicVideoDiv #player{
+    width:20vw;
+    height: 12vw;
+    right: 0;
+    top:0;
+    position: relative;
 }
+
+#musicVideoDiv #close-btn, #musicVideoDiv #fullscreen-btn, #musicVideoDiv #minimize-btn,
+#flowerModelDiv #close-btn, #flowerModelDiv #fullscreen-btn, #flowerModelDiv #minimize-btn{
+    height: 100%;
+    width: auto;
+    position: relative;
+    float: right;
+}
+
+
+#musicVideoDivHeader, #flowerModelDivHeader{
+    position: relative;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    height: 5vh;
+    width: 100%;
+}
+
+/* #musicVideoDiv{
+  position: absolute;
+  width: 20vw;
+  height: 20vh;
+  visibility:hidden;
+ 
+
+} */
+#close-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-top: 0 !important;
+    padding-right: 1%;
+}
+#fullscreen-btn, #minimize-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-right: 3%;
+    padding-top: 0 !important;
+}
+  
+
+#musicVideoDiv{
+    position: absolute;
+    width:20vw;
+    height:13vw;
+    right:0;
+    top:0;
+    display:none;
+    background:black;
+    filter: drop-shadow(2px 4px 6px black);
+    flex-direction: column;
+}
+
+
 
 /*extra small and small screens*/
 @media (min-width : 320px) and (max-width : 1024px) and (orientation : landscape) { 
-    #musicVideoDiv #player{
+    #musicVideoDiv #player, #flowerModelDiv{
         width:30vw;
         height:18vw;
     }
     #musicVideoDivHeader{
-        height:40%;
+        height: 10vh;
+    }
+
+
+    #musicVideoDiv{
+        width:30vw;
     }
    
 }
-
-
 
 

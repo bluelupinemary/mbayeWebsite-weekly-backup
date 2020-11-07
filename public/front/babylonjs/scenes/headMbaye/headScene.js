@@ -267,7 +267,7 @@ function add_mouse_listener(){
             if(theMesh.name!=currFlower){
                 load_flower_music(videoId, startTime);          //load the music video
                 currFlower = theMesh.name;
-            }else if(theMesh.name==currFlower) document.getElementById("musicVideoDiv").style.visibility = "visible";
+            }else if(theMesh.name==currFlower) $("#musicVideoDiv").css('display','flex');
           }//end of if
     }else{
         if(!isPointerDown){
@@ -650,10 +650,6 @@ theScene.executeWhenReady(function () {
     options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
     var optimizer = new BABYLON.SceneOptimizer(theScene, options);
 
-    //if the current screen is a mobile/tablet device
-    if(isSmallDevice() || isMobile()){
-        alert_fullscreen();
-    }
 
     engine.runRenderLoop(function(){
       if(theScene){
@@ -670,8 +666,12 @@ window.addEventListener("resize", function () {
     testFullscreen();
 });
 
-$( document ).ready(function() {
+window.addEventListener("orientationchange", function(event) {
   testOrientation();
+}, false); 
+
+$( document ).ready(function() {
+    testOrientation();
 });
 
 
@@ -720,7 +720,8 @@ $( document ).ready(function() {
       $('.player').empty();
       yt_player.loadVideoById(videoId,start);
       yt_player.playVideo();
-      document.getElementById("musicVideoDiv").style.visibility = "visible";
+      // document.getElementById("musicVideoDiv").style.visibility = "visible";
+      $('#musicVideoDiv').css('display','flex');
   }
 
 
@@ -732,44 +733,102 @@ $( document ).ready(function() {
 /*################################################### END OF SETUP YOUTUBE PLAYER FUNCTION ############################################## */
 
 /*################################################### MUSIC VIDEO SECTIONFUNCTIONS         ############################################## */
-$('#musicVideoDiv #close-btn').on("click", function (e) {
-    // $('#flowerModelDiv').hide();
-    document.getElementById("musicVideoDiv").style.visibility = "hidden";
- });
+// $('#musicVideoDiv #close-btn').on("click", function (e) {
+//     // $('#flowerModelDiv').hide();
+//     document.getElementById("musicVideoDiv").style.visibility = "hidden";
+//  });
 
 
-let isFlowerFullscreen = false;
-$('#musicVideoDivHeader #fullscreen-btn, #musicVideoDivHeader #minimize-btn').on("click", function (e) {
-   if(!isFlowerFullscreen){
-       $('#musicVideoDiv #player').css({ 
-           width :'100vw',
-           height: '100vh'
-       });
-       $("#musicVideoDivHeader #fullscreen-btn").hide();
-       $("#musicVideoDivHeader #minimize-btn").show();
-   }else{
-        if(isMobile() || isSmallDevice()){
-          $('#musicVideoDiv #player').css({ 
-            width: '30vw',
-            height: '18vw'
-          });
-        }else{
-          $('#musicVideoDiv #player').css({ 
-              width: '20vw',
-              height: '12vw'
-          });
-        }
+// let isFlowerFullscreen = false;
+// $('#musicVideoDivHeader #fullscreen-btn, #musicVideoDivHeader #minimize-btn').on("click", function (e) {
+//    if(!isFlowerFullscreen){
+//        $('#musicVideoDiv #player').css({ 
+//            width :'100vw',
+//            height: '100vh'
+//        });
+//        $("#musicVideoDivHeader #fullscreen-btn").hide();
+//        $("#musicVideoDivHeader #minimize-btn").show();
+//    }else{
+//         if(isMobile() || isSmallDevice()){
+//           $('#musicVideoDiv #player').css({ 
+//             width: '30vw',
+//             height: '18vw'
+//           });
+//         }else{
+//           $('#musicVideoDiv #player').css({ 
+//               width: '20vw',
+//               height: '12vw'
+//           });
+//         }
        
-       $("#musicVideoDivHeader #fullscreen-btn").show();
-       $("#musicVideoDivHeader #minimize-btn").hide();
-   }
-   isFlowerFullscreen = !isFlowerFullscreen;
+//        $("#musicVideoDivHeader #fullscreen-btn").show();
+//        $("#musicVideoDivHeader #minimize-btn").hide();
+//    }
+//    isFlowerFullscreen = !isFlowerFullscreen;
+// });
+
+$('#musicVideoDivHeader #close-btn').on("click", function (e) {
+  $('#musicVideoDiv').hide();
 });
 
 
+let isMusicFullscreen = false;
+$('#musicVideoDivHeader #fullscreen-btn, #musicVideoDivHeader #minimize-btn').on("click", function (e) {
+  if(!isMusicFullscreen){
+      resize_window('full', 'youtube');
+      $("#musicVideoDivHeader #fullscreen-btn").hide();
+      $("#musicVideoDivHeader #minimize-btn").show();
+  }else{
+      resize_window('window', 'youtube');
+      $("#musicVideoDivHeader #fullscreen-btn").show();
+      $("#musicVideoDivHeader #minimize-btn").hide();
+  }
+  isMusicFullscreen = !isMusicFullscreen;
+});
+
+
+function resize_window(size, section){
+  let theSection;
+  if(section === 'youtube'){
+    theSection = $('#musicVideoDiv #player');
+  }
+
+
+  if(size === 'full'){
+      theSection.css({ 
+        width :'100vw',
+        height: '95vh'
+      });
+      if(section === 'youtube') $('#musicVideoDiv').css({width:'100vw', height:'auto'});
+      $('#minimize-btn').css('padding-right','1%');
+  }else{ //if windowed size
+      if(isMobile() || isSmallDevice()){
+        theSection.css({ 
+          width: '30vw',
+          height: '18vw'
+        });
+        if(section === 'youtube'){  
+          $('#musicVideoDiv').css('width','30vw');
+        }
+      }else{
+        theSection.css({ 
+            width: '20vw',
+            height: '12vw'
+        });
+        if(section === 'youtube'){
+          $('#musicVideoDiv').css('width','20vw');
+        }
+      }
+  }
+}
+
+
+
+
 $('#loadingScreenOverlay').on('click', function(evt){
-  $(this).remove();
-  $('#loadingScreenDiv').remove();
-  document.getElementById("loadingScreenPercent").style.visibility = "hidden"; 
-  // scene.debugLayer.show();
+    $(this).remove();
+    $('#loadingScreenDiv').remove();
+    document.getElementById("loadingScreenPercent").style.visibility = "hidden";
+    openFullscreen();
+    $('#fullscreenIcon').hide();
 });

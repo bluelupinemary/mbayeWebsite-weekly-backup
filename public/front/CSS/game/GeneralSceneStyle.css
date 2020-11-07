@@ -139,17 +139,7 @@ html, body {
          
     }
     
-    #flowersWikipediaDiv, #carpetsWikipediaDiv{
-        background-color: black; 
-        visibility: hidden;
-         position: absolute;
-          top:0;
-          left: 0;
-          width: 25vw;
-          height:100vh;
-          border: 2px solid gray;
-         
-    }
+   
 
     .spanLbl{
         font-size:1vw;
@@ -202,7 +192,7 @@ html, body {
         display:flex;
         height:85%;
         margin-left:auto; 
-        margin-right:0;
+        margin-right:2%;
     }
 
     .bg-image {
@@ -407,8 +397,6 @@ html, body {
  }
  
 
-
- 
 #inOurEyesDiv::-webkit-scrollbar{
     width: 0.6em;
     background: #c1d7e491;
@@ -503,6 +491,48 @@ html, body {
 
 
 
+ /***************************** STYLE FOR THE MAIN SCENE SCREENSHOT ICON TOOLTIP ***********************************/
+ .tooltips {
+    position: relative;
+    display: inline;
+}
+
+.tooltips span {
+   display:none;
+    font-family: arial;
+    position: relative;
+    left: -2vw;
+    top: 1vw;
+    /* opacity: 0.8; */
+    /* -webkit-transform: translate(20%, -50%); */
+    -moz-transform: translate(20%, -50%);
+    -ms-transform: translate(20%, -50%);
+    /* transform: translate(31%, -53%); */
+    /* left: 70%; */
+    /* top: 50%; */
+    /* margin-top: -36px; */
+    /* margin-left: 15px; */
+    z-index: 10;
+    width: 13vw;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 3px #000000;
+    background: #0b91c3a3;
+    /* height: 72px; */
+    /* line-height: 1em; */
+    text-align: center;
+    /* display: none; */
+    border-radius: 12px;
+    -webkit-box-shadow: 0px 3px 4px #000000;
+    box-shadow: 0px 3px 4px #000000;
+    font-size: 0.9em;
+    word-wrap: break-word;
+    padding: 10%;
+    outline: 0;
+    border: 0;
+}
+
+
+
 /*extra small and small screens*/
 @media (min-width : 320px) and (max-width : 1024px) and (orientation : landscape) {
     #wikipediaDiv{
@@ -518,6 +548,10 @@ html, body {
     }
     #close-btn, #fullscreen-btn, #minimize-btn{
         width:3vw;
+    }
+
+    #fullscreenImg{
+        width:10vh;
     }
 }
 

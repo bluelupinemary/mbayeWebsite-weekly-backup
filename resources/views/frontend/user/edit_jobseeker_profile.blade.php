@@ -27,7 +27,7 @@
             padding: 10%;
             text-align: center;
             border-radius: 7%;
-            font-family: Nasalization;
+            font-family: Arial;
             transform: translate(-17%, -333%);
             background-color: rgb(23, 162, 184);
             color: white;
@@ -53,6 +53,9 @@
             /* To center horizontally */
             margin: 0 auto;
             pointer-events:all;}
+            #characterRefTab{
+                border-bottom: 1px solid gray;
+            }
 
     </style>
 
@@ -103,9 +106,9 @@
                             
                             <!--changed id of img from outputImage to featured-image-previewimg-->
                             
-                                <img src="{{ asset('storage/career/employee/'.$profile->featured_image) }}"  id="featured-image-previewimg"  alt="input image" style=" max-width:100%; max-height:100%;">
+                                <img src="{{ asset('storage/career/employee/'.$profile->featured_image) }}" class="featured-Image-edit"  id="featured-image-previewimg"  alt="input image">
                             
-                                <div class="middle" id="middle" style="background-color: black;">
+                                <div class="middle" id="middle">
                                     <div id="middleText">Update Featured Image</div>
                                 </div>
                             
@@ -114,22 +117,9 @@
                             {{-- <button type="button" class="" id="edit_uploaded_image" style="">Edit Image</button>  --}}
 
                             
-                                <i id="edit_uploaded_image" class="far fa-image btn_pointer" style="color:#16aedc; display:block"> <span class="fa-edit-span">Edit photo</span></i>
+                                <i id="edit_uploaded_image" class="far fa-image btn_pointer edit-photo-update"> <span class="fa-edit-span">Edit photo</span></i>
                             
-                            {{-- display: none;
-                            right: 0;
-                            top: -1vh;
-                            position: absolute;
-                            font-size: 2em;
-                            border: none;
-                            color: white;
-                            padding: 12px 16px;
-                            width: 5vw;
-                            cursor: pointer; --}}
-                        {{-- <button class="btn" id="edit_uploaded_image"> --}}
-
-                        
-                                <input id="file"  onchange="loadFile(event)"  type="file"  name="featured_image" value="{{ $profile->featured_image ?? '' }}"  style=" min-width:100%;min-height: 100%;">
+                             <input id="file"  onchange="loadFile(event)"  type="file"  name="featured_image" value="{{ $profile->featured_image ?? '' }}">
                             
                                 
                     </div>
@@ -239,19 +229,7 @@
 
             <div id="mySidenav" class="sidenav">
                 <div class="navbar-tabs">
-                   {{-- <h3 class="heading_setup">Edit Profile</h3>
-                     <a href="" class="AboutMeTab" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
-                    <a href="" class="tab" id="professionTab"  data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
-                    <a href="" class="tab" id="educationTab" data-toggle="modal" data-target="#EducationModal">Education</a>
-                    <div class="slider-close-button">
-                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&#8810;</a>
-                    </div>
-                    <a href="" class="tab" id="workExperienceTab" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
-                    <a href="" class="tab" id="contactTab" data-toggle="modal" data-target="#ContactModal">Contact</a>
-                    <a href="" class="tab" id="characterRefTab" data-toggle="modal" data-target="#CharacterReferencesModal" style="border-bottom: 1px solid gray">Character References</a>
-                    <hr style="background-color:white; ">
-                    <a href="{{ url('jobseekers/view-profile/'.Auth::user()->id)}}" class="view-car-profile" style="color: rgb(22, 174, 220);text-align:center;">Go To My<br> Jobseeker Profile</a> --}}
-                     <h3 class="heading_setup">Edit Profile</h3>
+                   <h3 class="heading_setup">Edit Profile</h3>
                     <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
                     <a href="" class="profession" data-toggle="modal" data-target="#ProfessionSkillModal">Profession And Skills</a>
                     <a href="" class="education" data-toggle="modal" data-target="#EducationModal">Education</a>
@@ -260,9 +238,9 @@
                     </div>
                     <a href="" class="work-experience" data-toggle="modal" data-target="#WorkExperienceModal">Work Experience</a>
                     <a href="" class="contacts" data-toggle="modal" data-target="#ContactModal">Contact</a>
-                    <a href="" class="reference" data-toggle="modal" data-target="#CharacterReferencesModal" style="border-bottom: 1px solid gray">Character References</a>
+                    <a href="" class="reference" data-toggle="modal" data-target="#CharacterReferencesModal" id="characterRefTab">Character References</a>
                     
-                    <a href="{{ url('jobseekers/view-profile/'.Auth::user()->id)}}" class="view-car-profile" style="color: rgb(22, 174, 220);text-align:center;">Go To My<br> Jobseeker Profile</a>
+                    <a href="{{ url('jobseekers/view-profile/'.Auth::user()->id)}}" class="view-car-profile">Go To My<br> Jobseeker Profile</a>
                 </div>
                 {{-- <h3 class="heading_setup">Edit Profile</h3>
                 <a href="" class="AboutMe" data-toggle="modal" data-target="#AboutMeModal">About Me</a>
@@ -307,7 +285,7 @@
                                         
                                                 <div class="form-row">
                                                     <div class="form-group col-md-12 input-group-sm">
-                                                    <label for="Profession">Profession<span style="color:red">*</span></label>
+                                                    <label for="Profession">Profession<span class="mandatory-field-span">*</span></label>
                                                     <select id="Profession" class="form-control" name="profession_id" required>&#x25BC;
                                                             <option value="public" selected disabled>Select</option>
                                                             @foreach($profession as $profession)
@@ -320,12 +298,12 @@
                                                     </button> --}}
                                                     
                                                     </div>
-                                                    <div id="profession_list"></div>      
+                                                          
                                                 </div>
 
                                                 <div class="form-row"> 
                                                 <div class="form-group col-md-12 col-lg-12 input-group-sm">
-                                                    <label for="skills">Skills<span style="color:red">*</span></label>
+                                                    <label for="skills">Skills<span class="mandatory-field-span">*</span></label>
                                                     <textarea  id="skills"  name="skills">{{ $profile->skills ?? '' }}</textarea>
                                                 </div>  
                                                 </div>
@@ -372,7 +350,7 @@
                                         <div class="education-body main_education_div div_0"> 
                                             <fieldset>
                                             
-                                                <div style="position: relative;">
+                                                <div class="remove-btn-cls">
                                                     {{-- <button type="button"  class="close remove-btn-education" id="remove_educ_btn_{{$cnt}}" title="Remove Education " aria-label="Clone" onclick="remove(this)">
                                                         <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                                     </button> --}}
@@ -381,7 +359,7 @@
                                             
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12 input-group-sm" id="education_dropdown_0">
-                                                            <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
+                                                            <label for="education_level">Level Of  Education<span class="mandatory-field-span">*</span></label>
                                                                 <select class="form-control" name="education_level[]" id="educationLevel_0" required>
                                                                     <option value="Doctorate" > Doctorate</option>
                                                                     <option value="Master" >Master's Degree</option>
@@ -396,36 +374,36 @@
     
                                                         <input type="hidden" name="id[]" class="job_id" id="id_0" value="">
                                                         <div class="form-group col-md-12 input-group-sm">
-                                                            <label for="SchoolName">School Name<span style="color:red">*</span></label>
+                                                            <label for="SchoolName">School Name<span class="mandatory-field-span">*</span></label>
                                                             <input type="text" class="form-control" id="SchoolName_0" name="school_name[]" value=""  required>
                                                         </div>
                                                         <div class="form-group col-md-12 input-group-sm">
-                                                            <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
+                                                            <label for="FieldOfStudy">Field Of Study<span class="mandatory-field-span">*</span></label>
                                                             <input type="text" class="form-control" id="FieldOfStudy_0"  name="field_of_study[]" value="" required>
                                                         </div>
                                                         <div class="form-group col-md-12 input-group-sm">
-                                                            <label for="Description">Description<span style="color:red">*</span></label><br>
-                                                            <textarea id="Description_0" name="description[]" required style="width:100%;resize:none;"> </textarea>
+                                                            <label for="Description">Description<span class="mandatory-field-span">*</span></label><br>
+                                                            <textarea id="Description_0" class="description-textArea" name="description[]" required> </textarea>
                                                         </div>
                                                         <div class="form-group col-md-4 input-group-sm">
-                                                            <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
+                                                            <label for="StartDate">Start Date<span class="mandatory-field-span">*</span><span></span></label>
                                                             <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="StartDate_0" placeholder="Date" value=""  name="start_date[]" required >
                                                         </div>
                                                         <div class="form-group col-md-4 input-group-sm">
                                                             
                                                         </div>
                                                         <div class="form-group col-md-4 input-group-sm">
-                                                            <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                            <label for="EndDate">End Date<span class="mandatory-field-span">*</span></label>
                                                             <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="EndDate_0" value="" name="end_date[]" required >
                                                             </div>
                                                         </div>
                                                     
-                                                        <div style="position: relative;">
+                                                        <div class="remove-btn-cls">
                                                             <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
                                                                 <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
                                                             </button>
                                                         </div>
-                                            </fieldset>
+                                            </fieldset><br>
                                             
                                         
                                         </div>
@@ -435,7 +413,7 @@
                                             <div class="education-body main_education_div div_{{$cnt}}"> 
                                                 <fieldset>
                                                 
-                                                    <div style="position: relative;">
+                                                    <div class="remove-btn-cls">
                                                         {{-- <button type="button"  class="close remove-btn-education" id="remove_educ_btn_{{$cnt}}" title="Remove Education " aria-label="Clone" onclick="remove(this)">
                                                             <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                                         </button> --}}
@@ -444,7 +422,7 @@
                                                 
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12 input-group-sm" id="education_dropdown_{{$cnt}}">
-                                                                <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
+                                                                <label for="education_level">Level Of  Education<span class="mandatory-field-span">*</span></label>
                                                                     <select class="form-control" name="education_level[]" id="educationLevel_{{$cnt}}" required>
                                                                         <option value="Doctorate" {{ ( $education->education_level == "Doctorate") ? 'selected' : '' }} > Doctorate</option>
                                                                         <option value="Master" {{ ( $education->education_level == "Master") ? 'selected' : '' }}>Master's Degree</option>
@@ -459,36 +437,36 @@
     
                                                             <input type="hidden" name="id[]" class="job_id" id="id_{{$cnt}}" value="{{ $education->id ?? '' }}">
                                                             <div class="form-group col-md-12 input-group-sm">
-                                                                <label for="SchoolName">School Name<span style="color:red">*</span></label>
+                                                                <label for="SchoolName">School Name<span class="mandatory-field-span">*</span></label>
                                                                 <input type="text" class="form-control" id="SchoolName_{{$cnt}}" name="school_name[]" value="{{ $education->school_name ?? '' }}"  required>
                                                             </div>
                                                             <div class="form-group col-md-12 input-group-sm">
-                                                                <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
+                                                                <label for="FieldOfStudy">Field Of Study<span class="mandatory-field-span">*</span></label>
                                                                 <input type="text" class="form-control" id="FieldOfStudy_{{$cnt}}"  name="field_of_study[]" value="{{ $education->field_of_study ?? '' }}" required>
                                                             </div>
                                                             <div class="form-group col-md-12 input-group-sm">
-                                                                <label for="Description">Description<span style="color:red">*</span></label><br>
-                                                                <textarea id="Description_{{$cnt}}" name="description[]" required style="width:100%;resize:none;"> {{ $education->description ?? '' }}</textarea>
+                                                                <label for="Description">Description<span class="mandatory-field-span">*</span></label><br>
+                                                                <textarea id="Description_{{$cnt}}" class="description-textArea" name="description[]" required> {{ $education->description ?? '' }}</textarea>
                                                             </div>
                                                             <div class="form-group col-md-4 input-group-sm">
-                                                                <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
+                                                                <label for="StartDate" >Start Date<span class="mandatory-field-span">*</span><span></span></label>
                                                                 <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="StartDate_{{$cnt}}" placeholder="Date" value="{{ strftime('%Y-%m-%d',strtotime($education['start_date'])) }}"  name="start_date[]" required >
                                                             </div>
                                                             <div class="form-group col-md-4 input-group-sm">
                                                                 
                                                             </div>
                                                             <div class="form-group col-md-4 input-group-sm">
-                                                                <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                                <label for="EndDate">End Date<span class="mandatory-field-span">*</span></label>
                                                                 <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="EndDate_{{$cnt}}" value="{{ strftime('%Y-%m-%d',strtotime($education['end_date'])) }}" name="end_date[]" required >
                                                                 </div>
                                                             </div>
                                                         
-                                                            <div style="position: relative;">
+                                                            <div class="remove-btn-cls">
                                                                 <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
                                                                     <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
                                                                 </button>
                                                             </div>
-                                                </fieldset>
+                                                </fieldset><br>
                                             </div>
                                         
                                         }
@@ -534,7 +512,7 @@
                                         <div class="work-experience-body main_work_experience_div div_0">
                                             <fieldset>
                                             
-                                                <div style="position: relative;">
+                                                <div class="remove-btn-cls">
                                                     <button type="button"  class="close remove-btn-workexperience" id="remove_work_btn_0"  title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
                                                     <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                                     </button>
@@ -543,37 +521,37 @@
                                                     <div class="form-row">
                                                         
                                                         <div class="form-group col-md-6 input-group-sm">
-                                                        <label for="StartDate">Start Date<span style="color:red">*</span></label>
+                                                        <label for="StartDate">Start Date<span class="mandatory-field-span">*</span></label>
                                                         <input type="date" class="form-control" id="StartDate_0"  value="" name="start_date[]" >
                                                         </div>
                                                         <div class="form-group col-md-6 input-group-sm">
-                                                        <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                        <label for="EndDate">End Date<span class="mandatory-field-span">*</span></label>
                                                         <input type="date" class="form-control" value="" id="EndDate_0" name="end_date[]" >
                                                         </div>
                                                     </div>
                                                     
                                                         <div class="form-group input-group-sm">
-                                                            <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                            <label for="CompName">Company Name<span class="mandatory-field-span">*</span></label>
                                                         <input type="text" class="form-control" id="company_name_0" name="company_name[]" value="" placeholder="">
                                                         </div>
                                                         <div class="form-group input-group-sm">
-                                                            <label for="Address">Company Address<span style="color:red">*</span></label>
+                                                            <label for="Address">Company Address<span class="mandatory-field-span">*</span></label>
                                                             <input type="text" class="form-control" id="Address_0" name="address[]" value="" placeholder="">
                                                         </div>
                                                     <div class="form-group input-group-sm">
-                                                        <label for="CompRole">Role<span style="color:red">*</span></label>
+                                                        <label for="CompRole">Role<span class="mandatory-field-span">*</span></label>
                                                         <textarea type="text" class="form-control" id="CompRole_0" name="role[]"  placeholder=""></textarea>
                                                     </div>
                                                     <div class="form-group input-group-sm">
-                                                        <label for="CompDesig">Designation<span style="color:red">*</span></label>
+                                                        <label for="CompDesig">Designation<span class="mandatory-field-span">*</span></label>
                                                         <input type="text" class="form-control" id="CompDesig_0" name="designation[]" value="" placeholder="">
                                                     </div>
                                                     <div class="form-group input-group-sm">
-                                                        <label for="Contact">Contact<span style="color:red">*</span></label>
+                                                        <label for="Contact">Contact<span class="mandatory-field-span">*</span></label>
                                                         <input type="text" class="form-control" id="Contact_0" name="contact_no[]" value="" placeholder="">
                                                     </div>
                                                     
-                                                    <div style="position: relative;">
+                                                    <div class="remove-btn-cls">
                                                         <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
                                                             <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
                                                         </button>
@@ -586,7 +564,7 @@
                                         <div class="work-experience-body main_work_experience_div div_{{$cnt}}">
                                             <fieldset>
                                             
-                                                <div style="position: relative;">
+                                                <div class="remove-btn-cls">
                                                     <button type="button"  class="close remove-btn-workexperience" id="remove_work_btn_{{ $cnt }}"  title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
                                                     <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                                     </button>
@@ -595,37 +573,37 @@
                                                     <div class="form-row">
                                                         
                                                         <div class="form-group col-md-6 input-group-sm">
-                                                        <label for="StartDate">Start Date<span style="color:red">*</span></label>
+                                                        <label for="StartDate">Start Date<span class="mandatory-field-span">*</span></label>
                                                         <input type="date" class="form-control" id="StartDate_{{$cnt}}"  value="{{ strftime('%Y-%m-%d',strtotime($workExperience['start_date'])) }}" name="start_date[]" >
                                                         </div>
                                                         <div class="form-group col-md-6 input-group-sm">
-                                                        <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                        <label for="EndDate">End Date<span class="mandatory-field-span">*</span></label>
                                                         <input type="date" class="form-control" value="{{ strftime('%Y-%m-%d',strtotime($workExperience['end_date'])) }}" id="EndDate_{{$cnt}}" name="end_date[]" >
                                                         </div>
                                                     </div>
                                                     
                                                         <div class="form-group input-group-sm">
-                                                            <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                            <label for="CompName">Company Name<span class="mandatory-field-span">*</span></label>
                                                         <input type="text" class="form-control" id="company_name_{{$cnt}}" name="company_name[]" value="{{ $workExperience->company_name ?? '' }}" placeholder="">
                                                         </div>
                                                         <div class="form-group input-group-sm">
-                                                            <label for="Address">Company Address<span style="color:red">*</span></label>
+                                                            <label for="Address">Company Address<span class="mandatory-field-span">*</span></label>
                                                             <input type="text" class="form-control" id="Address_{{$cnt}}" name="address[]" value="{{ $workExperience->address ?? '' }}" placeholder="">
                                                         </div>
                                                     <div class="form-group input-group-sm">
-                                                        <label for="CompRole">Role<span style="color:red">*</span></label>
+                                                        <label for="CompRole">Role<span class="mandatory-field-span">*</span></label>
                                                         <textarea type="text" class="form-control" id="CompRole_{{$cnt}}" name="role[]"  placeholder="">{{ $workExperience->role ?? '' }}</textarea>
                                                     </div>
                                                     <div class="form-group input-group-sm">
-                                                        <label for="CompDesig">Designation<span style="color:red">*</span></label>
+                                                        <label for="CompDesig">Designation<span class="mandatory-field-span">*</span></label>
                                                         <input type="text" class="form-control" id="CompDesig_{{$cnt}}" name="designation[]" value="{{ $workExperience->designation ?? '' }}" placeholder="">
                                                     </div>
                                                     <div class="form-group input-group-sm">
-                                                        <label for="Contact">Contact<span style="color:red">*</span></label>
+                                                        <label for="Contact">Contact<span class="mandatory-field-span">*</span></label>
                                                         <input type="text" class="form-control" id="Contact_{{$cnt}}" name="contact_no[]" value="{{ $workExperience->contact_no ?? '' }}" placeholder="">
                                                     </div>
                                                     
-                                                    <div style="position: relative;">
+                                                    <div class="remove-btn-cls">
                                                         <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
                                                             <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
                                                         </button>
@@ -724,33 +702,33 @@
                             @if($refr_div_cnt < 1)
                                 <div class="reference-body  main_reference_div div_0">
                                     <fieldset> 
-                                                <div style="position: relative;">
+                                                <div class="remove-btn-cls">
                                                     <button type="button"  class="close remove-btn-reference" id="remove_refr_btn_0" aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
                                                         <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                                     </button>
                                                 </div>
                         
                                                 <div class="form-group input-group-sm">
-                                                    <label for="Name"> Name<span style="color:red">*</span></label>
+                                                    <label for="Name"> Name<span class="mandatory-field-span">*</span></label>
                                                     <input type="text" class="form-control" value="" id="Name_0" name="name[]" placeholder="">
                                                 </div>
                         
                                                 <div class="form-group input-group-sm">
-                                                    <label for="Email">Email<span style="color:red">*</span></label>
+                                                    <label for="Email">Email<span class="mandatory-field-span">*</span></label>
                                                     <input type="email" class="form-control" id="Email_0" value=""  name="email[]" placeholder="">
                                                 </div>
                         
                                                 <div class="form-group input-group-sm">
-                                                    <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                    <label for="CompName">Company Name<span class="mandatory-field-span">*</span></label>
                                                     <input type="text" class="form-control" id="CompName_0"  name="company_name[]" value="" placeholder="">
                                                 </div>
                         
                                                 <div class="form-group input-group-sm">
-                                                    <label for="Designation">Designation<span style="color:red">*</span></label>
+                                                    <label for="Designation">Designation<span class="mandatory-field-span">*</span></label>
                                                     <input type="text" class="form-control" id="Designation_0"  name="designation[]" value="" placeholder="">
                                                 </div>
                         
-                                                <div style="position: relative;">
+                                                <div class="remove-btn-cls">
                                                     <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
                                                         <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
                                                     </button>
@@ -761,33 +739,33 @@
                                 @foreach($characterRefrence as $cnt=>$characterRefrence){ 
                                         <div class="reference-body  main_reference_div div_{{$cnt}}">
                                                 <fieldset> 
-                                                        <div style="position: relative;">
+                                                        <div class="remove-btn-cls">
                                                             <button type="button"  class="close remove-btn-reference" id="remove_refr_btn_{{ $cnt }}" aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
                                                                 <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                                             </button>
                                                         </div>
                     
                                                         <div class="form-group input-group-sm">
-                                                            <label for="Name"> Name<span style="color:red">*</span></label>
+                                                            <label for="Name"> Name<span class="mandatory-field-span">*</span></label>
                                                         <input type="text" class="form-control" value="{{ $characterRefrence->name ?? '' }}" id="Name_{{$cnt}}" name="name[]" placeholder="">
                                                         </div>
                     
                                                         <div class="form-group input-group-sm">
-                                                            <label for="Email">Email<span style="color:red">*</span></label>
+                                                            <label for="Email">Email<span class="mandatory-field-span">*</span></label>
                                                             <input type="email" class="form-control" id="Email_{{$cnt}}" value="{{ $characterRefrence->email ?? '' }}"  name="email[]" placeholder="">
                                                         </div>
                     
                                                         <div class="form-group input-group-sm">
-                                                            <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                            <label for="CompName">Company Name<span class="mandatory-field-span">*</span></label>
                                                             <input type="text" class="form-control" id="CompName_{{$cnt}}"  name="company_name[]" value="{{ $characterRefrence->company_name ?? '' }}" placeholder="">
                                                         </div>
                     
                                                         <div class="form-group input-group-sm">
-                                                            <label for="Designation">Designation<span style="color:red">*</span></label>
+                                                            <label for="Designation">Designation<span class="mandatory-field-span">*</span></label>
                                                             <input type="text" class="form-control" id="Designation_{{$cnt}}"  name="designation[]" value="{{ $characterRefrence->designation ?? '' }}" placeholder="">
                                                         </div>
                     
-                                                        <div style="position: relative;">
+                                                        <div class="remove-btn-cls">
                                                             <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
                                                                 <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
                                                             </button>
@@ -832,7 +810,7 @@
             <!-- left controls -->
          
                 {{-- <div id="main"> --}}
-                    {{-- <span  class="arrows" style="font-size:17px;font-family:Nasalization;cursor:pointer" onclick="openNav()">S<br>E<br>T</span> --}}
+                    {{-- <span  class="arrows" style="font-size:17px;font-family:Arial;cursor:pointer" onclick="openNav()">S<br>E<br>T</span> --}}
                     {{-- <h2 class="sidenav-heading"  onclick="openNav()">EDIT&nbsp;PROFILE</h2> --}}
                 {{-- </div> --}}
                 {{-- </div>  --}}
@@ -1823,6 +1801,7 @@ document.getElementById("Profession").selectedIndex = "52";
                 }    
                 }); 
 
+
                 //About me save
                 $('.aboutme-done').click(function(e) {
                     
@@ -1836,19 +1815,71 @@ document.getElementById("Profession").selectedIndex = "52";
                     var post_data = new FormData($form[0]);
                     // post_data.append('featured_image', feature_image);
                     var alert_status;
+                    var err_message = {};
+                    var objective = $("form#aboutme-form #objective").val();
+                    var country = $("form#aboutme-form #countryId").val();
+                    var state = $("form#aboutme-form #stateId").val();
+                    var city = $("form#aboutme-form #cityId").val();
                     var present_address = $("form#aboutme-form #pAddress").val();
                     
                     // alert(feature_image);
                     // return false;
-                    if(present_address==''){
+                    if(objective==''){
+                        alert_status = true;
+                        message = 'objective is required';
+                        err_message[message] = null;
+                        // $("form#aboutme-form  #objective").focus();
+                        $("#objective").css('border-color', 'red');
+                    }
+                    else{
+                        $("#objective").css('border-color', 'white');
+                        }
+                   
+                    if(country==''){
+                        alert_status = true;
+                        message = 'country is required';
+                        err_message[message] = null;
+                        $("#countryId").css('border-color', 'red');
+                    }
+                    else{
+                        $("#countryId").css('border-color', 'white');
+                        }
+                    if(state==''){
+                        alert_status = true;
+                        message = 'state is required';
+                        err_message[message] = null;
+                        $("#stateId").css('border-color', 'red');
+                    }
+                    else{
+                        $("#stateId").css('border-color', 'white');
+                        }
+                    if(city==''){
+                        alert_status = true;
+                        message = 'city is required';
+                        err_message[message] = null;
+                        $("#cityId").css('border-color', 'red');
+                    }
+                    else{
+                        $("#cityId").css('border-color', 'white');
+                        }
+                     if(present_address==''){
                         alert_status = true;
                         message = 'Present address is required';
-                        $("form#aboutme-form  #pAddress").focus();
+                        err_message[message] = null;
+                        $("#pAddress").css('border-color', 'red');
                     }
+                    else{
+                        $("#pAddress").css('border-color', 'white');
+                        }
+                    
                     if(alert_status) {
+                        let errors = "The following fields are required: ";
+                            for (var k in err_message) {
+                            errors = errors + "<br/>" +k;
+                            }
                     Swal.fire({
                         title: 'Discard Changes',
-                        text: message,
+                        html: errors,
                         imageUrl: '../../front/icons/alert-icon.png',
                         imageWidth: 80,
                         imageHeight: 80,
@@ -1867,9 +1898,8 @@ document.getElementById("Profession").selectedIndex = "52";
                         cancelButtonColor: '#d33',
                     }).then((res) => {
                         if (res.value) {
-                            if(action) {
-                                window.location.href = action;
-                            }
+                            err_message = {}; 
+                            return false;
                         }
                     });
                 } else {
@@ -2103,7 +2133,10 @@ document.getElementById("Profession").selectedIndex = "52";
 
             function closeNav(){
                 document.getElementById("mySidenav").style.width = "0";
-                document.getElementById("main").style.marginLeft= "0";
+                // document.getElementById("main").style.marginLeft= "0";
+               document.getElementById("slider").style.display = "block";
+                // console.log($('#slider'));
+                // document.getElementById("slider").style.width = "3vw";
                 document.body.style.backgroundColor = "white";
             }
             
@@ -2407,6 +2440,22 @@ document.getElementById("Profession").selectedIndex = "52";
 
    
 </script>
-
+<script>
+    function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("option");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+</script>
 
 @endsection

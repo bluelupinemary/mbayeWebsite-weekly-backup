@@ -601,7 +601,7 @@ header{
   color: #212529;
   text-align: left;
   list-style: none;
-  background: none !important;
+  background: none ;
   background-clip: padding-box;
   border: none;
   border-radius: .25rem;
@@ -2542,10 +2542,46 @@ div::-webkit-scrollbar-thumb {
   background: #047999;
 }
 
-/* div {
-  scrollbar-color: #047999 #c1d7e491;
-  scrollbar-width: thin;
-} */
+/* sweet alert */
+
+.swal2-popup 
+{
+  box-shadow: 0px 0px 20px #17a2b8;
+}
+
+.swal2-image {
+    margin: 1.25vh auto !important;
+}
+
+.swal2-title {
+    font-family: 'Nasalization';
+    color: #df1613 !important;
+}
+
+.swal2-content {
+    color: #17a2b8 !important;
+    font-family: 'Nasalization';
+}
+
+.swal2-title span.success {
+    color: #25d365 !important;
+}
+.swal2-html-container{
+    color: #17a2b8 !important;
+    font-family: 'Nasalization';
+}
+.swal2-actions {
+    margin: 1.25vw auto 0 !important;
+}
+
+#f-screen {
+    margin: 15px 0px;
+}
+
+#error{
+  font-family: 'Nasalization';
+  color: #df1613 !important;
+}
 ﻿.err_msg {
     color: white;
     position: fixed;

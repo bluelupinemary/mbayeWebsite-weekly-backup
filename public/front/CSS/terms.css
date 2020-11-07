@@ -1017,7 +1017,6 @@ ol li{
   z-index: 1000;
   transform: translate(-62%,-45%);
 }
-
 .full_form_full{
   display:none;
 }
@@ -1160,13 +1159,11 @@ ol li{
   }
 }
 
-
-
 /*---------------------------------------------------------------------------------*/
 /*// Small devices (landscape phones, 576px and up)*/
 /*---------------------------------------------------------------------------------*/
 @media (min-width: 576px) and (max-width: 767.98px) {
-  .terms_and_conditions_full .col_white,.privacy_policy_full .col_white,.copy_right_claims_full .col_white,.sra_full .col_white.head_div title,.label-div_full .next_label_full,.label-div_full .prev_label_full  {
+  .terms_and_conditions_full .col_white,.privacy_policy_full .col_white,.copy_right_claims_full .col_white,.sra_full .col_white.head_div title,.label-div_full .next_label_full  {
     font-size: 2vw;
   }
   .terms_and_conditions_full ul li ,.privacy_policy_full ul li,.copy_right_claims_full ul li,.sra_full ul li{
@@ -1181,7 +1178,7 @@ ol li{
 /*// Medium devices (tablets, 768px and up)*/
 /*---------------------------------------------------------------------------------*/
 @media (min-width: 768px) and (max-width: 991.98px) { 
-  .terms_and_conditions_full .col_white,.privacy_policy_full .col_white,.copy_right_claims_full .col_white,.sra_full .col_white.head_div title,.label-div_full .next_label_full,.label-div_full .prev_label_full  {
+  .terms_and_conditions_full .col_white,.privacy_policy_full .col_white,.copy_right_claims_full .col_white,.sra_full .col_white.head_div title,.label-div_full .next_label_full  {
     font-size: 2vw;
   }
   .terms_and_conditions_full ul li ,.privacy_policy_full ul li,.copy_right_claims_full ul li,.sra_full ul li{
@@ -1190,8 +1187,208 @@ ol li{
   .terms_and_conditions_full ol li,.privacy_policy_full ol li,.copy_right_claims_full ol li,.sra_full ol li{
     font-size: 2vw;
   }
+  /*.form-fullview {
+    position: absolute;
+    width: 100vw;
+    left: 62%;
+    top: 45%;
+    background: url(../images/skybox_bg1-1.jpg);
+    
+    height: 100vh;
+    padding: 1% 2%;
+    display: none;
+    z-index: 1000;
+    transform: translate(-62%,-45%);
+  }
+  .head-div_full p {
+    text-align: center;
+    font-family: 'Space Age';
+    color: #28e9e2 !important;
+    font-size: 3vw;
+    vertical-align: middle;
+    line-height: 0.5vw;
 }
-
+.label-div_full .prev_label_full {
+  font-family: 'Space Age';
+  color: white;
+  font-size: 2.5vw;
+  border: 0px solid white;
+  width: 30vw;
+  position: absolute;
+  top: 50%;
+  left: 32%;
+  transform: translate(-93%,-12%);
+  text-align: left;
+}
+.label-div_full .next_label_full {
+  text-align: right;
+  font-family: 'Space Age';
+  color: white;
+  font-size: 2.5vw;
+  border: 0px solid white;
+  width: 38vw;
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-8%,-13%);
+}
+.head-div_full {
+  position: absolute;
+  top: 39%;
+  left: 50%;
+  -webkit-transform: translate(-53%, -807%);
+  -moz-transform: translate(-53%, -807%);
+  transform: translate(-53%, -807%);
+  width: 46.8vw;
+  height: 2.5vw;
+  opacity: 2;
+}
+.slide-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 812%);
+  width: 74vw;
+  height: 2.8vw;
+  border: 0px solid white;
+  z-index: 10000000;
+}
+.slide-div_full .prev_full {
+  position: absolute;
+  top: 50%;
+  left: 27%;
+  font-family: 'Space Age';
+  color: #28e9e2 !important;
+  transform: translate(-1584%, -21%);
+  width: 2vw;
+  text-align: center;
+  font-size: 2em;
+  z-index: 10000;
+}
+.slide-div_full .next_full {
+  position: absolute;
+  top: 50%;
+  left: 73%;
+  font-family: 'Space Age';
+  color: #28e9e2 !important;
+  transform: translate(1453%, -26%);
+  width: 2vw;
+  text-align: center;
+  font-size: 2em;
+  z-index: 10000;
+}
+.label-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 823%);
+  width: 99vw;
+  height: 2.77vw;
+  border: 0px solid blue;
+}
+.terms_form_full {
+  width: 99%;
+  height: 47vw;
+  border: 1px solid grey;
+  overflow-y: scroll;
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%,-59%);
+  padding: 1.6% 3%;
+}*/
+}
+/*---------------------------------------------------------------------------------*/
+/*// Medium devices (Mobiles, 360px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 360px) and (max-width: 767.98px) { 
+  .form-fullview {
+    position: absolute;
+    width: 100vw;
+    left: 62%;
+    top: 45%;
+    background: url(../images/skybox_bg1-1.jpg);
+    height: 100vh;
+    padding: 2%;
+    display: none;
+    z-index: 1000;
+    transform: translate(-62%,-45%);
+  }
+  .label-div_full .next_label_full {
+    text-align: right;
+    font-family: 'Space Age';
+    color: white;
+    font-size: 2.5vw;
+    border: 0px solid white;
+    width: 38vw;
+    position: absolute;
+    top: 50%;
+    left: 42%;
+    transform: translate(-8%,-13%);
+  }
+  .label-div_full .prev_label_full {
+    font-family: 'Space Age';
+    color: white;
+    font-size: 2.5vw;
+    border: 0px solid white;
+    width: 30vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-93%,-12%);
+    text-align: left;
+  }
+  .head-div_full p {
+    text-align: center;
+    font-family: 'Space Age';
+    color: #28e9e2 !important;
+    font-size: 3vw;
+    vertical-align: middle;
+    line-height: 0.5vw;
+}
+.head-div_full {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  -webkit-transform: translate(-53%, -807%);
+  -moz-transform: translate(-53%, -807%);
+  transform: translate(-53%, -807%);
+  /* border: 1px solid red; */
+  width: 46.8vw;
+  height: 2.5vw;
+  opacity: 2;
+}
+.slide-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 812%);
+  width: 74vw;
+  height: 2.2vw;
+  border: 0px solid white;
+  z-index: 10000000;
+}
+.label-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 823%);
+  width: 99vw;
+  height: 2.2vw;
+  border: 0px solid blue;
+}
+.terms_form_full {
+  width: 99%;
+  height: 37vw;
+  border: 1px solid grey;
+  overflow-y: scroll;
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%,-59%);
+  padding: 4%;
+}
+}
 /*---------------------------------------------------------------------------------*/
 /*// Large devices (desktops, 992px and up)*/
 /*---------------------------------------------------------------------------------*/

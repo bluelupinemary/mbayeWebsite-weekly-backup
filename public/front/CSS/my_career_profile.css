@@ -84,6 +84,7 @@
     max-inline-size: fit-content;
     height: 66vh;
     max-width: 100%;
+    max-height: 100%;
 } 
 .tooltips {
     position: relative;
@@ -213,7 +214,7 @@
     display: flex;
     justify-content: space-evenly;
     width: 100%;
-    height: auto;
+    height: 14%;
     /* top: -10%; */
     position: absolute;
     bottom: 0;
@@ -234,7 +235,8 @@ border:none;
 }
 .view-profile-button button img{
 width:100%;
-padding: 5%;
+/* padding: 5%; */
+height: -webkit-fill-available;
 }
 .view-profile-button button.more-icon{
 background-color: #e09135;
@@ -351,6 +353,9 @@ box-shadow: 1px 1px 11px #0000005e;
 .fa-ellipsis-h{
     color: #00bff3;
     font-size: calc(1vw + 10px ) !important;
+    position:relative; 
+    float:right; 
+    right:5%;
 }
 .bg-div{
     position: absolute;
@@ -455,28 +460,30 @@ box-shadow: 1px 1px 11px #0000005e;
     /* margin: 0 auto; */
     /* overflow: hidden; */
     display: flex;
+    flex-direction:column;
     border: 0;
     background-color: transparent;
     box-shadow: 2px 2px 14px #ded9e044;
     display: none;
     background: #0072bc33;
     border-radius: 3%;
-    padding: 2%;
+    /* padding: 2%; */
     overflow-y: scroll;
+    padding:0 !important;
 }
 .lbl_title{
     color:#efad0c !important;
     text-shadow: 0px 0px 3px #000000;
     font-family: 'arial';
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding: 1%;
-    width: 15vw;
+    width: 18vw;
 }
 .lbl_titile{
     color:#efad0c !important;
     text-shadow: 0px 0px 3px #000000;
     font-family: 'arial';
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding: 1%;
    
 }
@@ -487,10 +494,10 @@ box-shadow: 1px 1px 11px #0000005e;
     font-size: 1.2rem;
 }
 .spn_value{
-    color:#8e9898;
+    color:#bfd3dc;
     text-shadow: 0px 0px 3px #000000;
     font-family: 'arial';
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding-left:8%;
    
 }
@@ -498,8 +505,9 @@ box-shadow: 1px 1px 11px #0000005e;
     color:#f8f9fabf;
     text-shadow: 0px 0px 3px #000000;
     font-family: 'arial';
-    font-size: 1rem;
+    font-size: 1.2rem;
     /* padding-left:8%; */
+    text-align: justify-all;
    
 }
 .modal_spn_value{
@@ -507,6 +515,7 @@ box-shadow: 1px 1px 11px #0000005e;
     text-shadow: 0px 0px 3px #000000;
     font-family: 'arial';
     font-size: 1.2rem;
+    text-align: justify-all
     /* padding-left:8%; */
    
 }
@@ -518,6 +527,18 @@ box-shadow: 1px 1px 11px #0000005e;
     font-size: 1rem;
     text-align: justify-all;
     padding-left: 7%;
+}
+.jobDesRole{
+    /* padding: 1%;
+    width: 228.47px; */
+    margin-left: 1%;
+}
+.work-dates{
+    color: #efad0c !important;
+    text-shadow: 0px 0px 3px #000000;
+    font-family: 'arial';
+    font-size: 1.2rem;
+    padding: 1%;
 }
 .job-dates{
     color:#efad0c;
@@ -534,14 +555,14 @@ box-shadow: 1px 1px 11px #0000005e;
     color: #efad0c !important;
     text-shadow: 0px 0px 3px #000000;
     font-family: 'arial';
-    font-size: 1rem;
-    /* padding: 0px; */
+    font-size: 1.5rem;
     left: 0;
     text-align: center;
-    /* width: 16vw; */
     top: 0;
     right: 0;
-    /* transform: translate(4vw, -3vh); */
+    position:relative;
+    width:100%;
+    text-align:center;
 }
 .sub-section{
     position:relative;width:100%;padding-top:1%;padding-left:6%;
@@ -1735,4 +1756,34 @@ img {
     font-size: calc(1.5vw + 1px);
     font-family: arial regular;
     text-shadow: 2px 2px 11px #25e2f5e6;
+    }
+    .objective{
+        text-align: center;
+        color:white; 
+        position: relative; 
+        display:none; 
+        height:30%;
+    }
+    .objective p{
+        font-size: calc(1vw + 5px);
+    }
+    .fa-edit{
+        font-size:2em; 
+        color:#c5a739;
+    }
+    .view-more-detail-icon{
+        position: relative;
+        width: 100%;
+    }
+
+    .modal-title{
+        color: #efad0c;
+        width:66vw;
+    }
+    .about-me-objective{
+        display: flex;
+    }
+    .about-Me-Objective-title{
+        padding: 1%;
+        width: 18vw;
     }

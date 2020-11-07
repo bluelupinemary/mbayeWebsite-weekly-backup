@@ -17888,6 +17888,18 @@ var PusherChannel = /*#__PURE__*/function (_Channel) {
       return this;
     }
     /**
+     * Register a callback to be called anytime a subscription succeeds.
+     */
+
+  }, {
+    key: "subscribed",
+    value: function subscribed(callback) {
+      this.on('pusher:subscription_succeeded', function () {
+        callback();
+      });
+      return this;
+    }
+    /**
      * Register a callback to be called anytime a subscription error occurs.
      */
 
@@ -18125,6 +18137,18 @@ var SocketIoChannel = /*#__PURE__*/function (_Channel) {
       return this;
     }
     /**
+     * Register a callback to be called anytime a subscription succeeds.
+     */
+
+  }, {
+    key: "subscribed",
+    value: function subscribed(callback) {
+      this.on('connect', function (socket) {
+        callback(socket);
+      });
+      return this;
+    }
+    /**
      * Register a callback to be called anytime an error occurs.
      */
 
@@ -18338,6 +18362,15 @@ var NullChannel = /*#__PURE__*/function (_Channel) {
   }, {
     key: "stopListening",
     value: function stopListening(event) {
+      return this;
+    }
+    /**
+     * Register a callback to be called anytime a subscription succeeds.
+     */
+
+  }, {
+    key: "subscribed",
+    value: function subscribed(callback) {
       return this;
     }
     /**
@@ -98717,9 +98750,9 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\GITHUB\mbayeWebsite\resources\assets\js\backend\app.js */"./resources/assets/js/backend/app.js");
-__webpack_require__(/*! D:\GITHUB\mbayeWebsite\resources\assets\js\plugin\sweetalert\sweetalert.min.js */"./resources/assets/js/plugin/sweetalert/sweetalert.min.js");
-module.exports = __webpack_require__(/*! D:\GITHUB\mbayeWebsite\resources\assets\js\plugins.js */"./resources/assets/js/plugins.js");
+__webpack_require__(/*! C:\Users\inox arabia\Documents\mbayeWebsiteV2\mbayeWebsite\resources\assets\js\backend\app.js */"./resources/assets/js/backend/app.js");
+__webpack_require__(/*! C:\Users\inox arabia\Documents\mbayeWebsiteV2\mbayeWebsite\resources\assets\js\plugin\sweetalert\sweetalert.min.js */"./resources/assets/js/plugin/sweetalert/sweetalert.min.js");
+module.exports = __webpack_require__(/*! C:\Users\inox arabia\Documents\mbayeWebsiteV2\mbayeWebsite\resources\assets\js\plugins.js */"./resources/assets/js/plugins.js");
 
 
 /***/ })

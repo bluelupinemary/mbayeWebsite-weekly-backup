@@ -2,6 +2,8 @@
 @section('before-styles')
 <link href="{{asset('front/CSS/game/GeneralSceneStyle.css')}}" rel="stylesheet"/>
 <link href="{{asset('front/CSS/game/HeadMbayeSceneStyle.css')}}" rel="stylesheet"/>
+<link rel="preload" as="font" href="{{asset('fonts/Courgette-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="{{asset('fonts/NasalizationRg-Regular.woff')}}" type="font/woff2" crossorigin="anonymous">
 <script src="https://www.youtube.com/iframe_api"></script>   
   <style>
     
@@ -26,6 +28,12 @@
           Mbaye’s face.</span>
       </div>
     </div>
+
+    <div id="fullscreenIcon">
+      <img id="fullscreenImg" src="{{asset('front')}}/images3D/fullscreen-btn.png" alt="fullscreen-img" >
+    </div>
+
+
     <div id="block_land">
       <div class="content">
           <h1 class="text-glow">Turn your device in landscape mode.</h1>

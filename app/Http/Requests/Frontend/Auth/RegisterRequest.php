@@ -37,7 +37,6 @@ class RegisterRequest extends Request
             'occupation'           => 'required',
             'email'                => ['required', 'email', 'max:255', Rule::unique('users')],
             'photo'                => 'required',
-            // 'username'             => ['required', Rule::unique('users')],
             'password'             => 'required|min:8|regex:"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"',
            // 'is_term_accept'       => 'required',
             'g-recaptcha-response' => 'required_if:captcha_status,true|captcha',

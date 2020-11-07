@@ -206,6 +206,7 @@ Route::group(['namespace' => 'Message'], function () {
     Route::get('/company/setup-profile', 'Company\CompanyProfileController@index');
     Route::get('/company/setup-profile/{id}', 'Company\CompanyProfileController@edit');
     Route::get('/company/view-company-profile', 'Company\CompanyProfileController@show');
+    Route::post('validateemail', 'Company\CompanyProfileController@validateEmail')->name('validateemail');
 });
 
 /*

@@ -44,6 +44,9 @@
             /* To center horizontally */
             margin: 0 auto;
             pointer-events:all;}
+            #characterRefTab{
+                border-bottom: 1px solid gray;
+            }
     </style>
 
     <!-- Fonts -->
@@ -88,9 +91,9 @@
                     
                     <!--changed id of img from outputImage to featured-image-previewimg-->
                     
-                        <img src=""  id="featured-image-previewimg"  alt="input image" style=" max-width:100%; max-height:100%; display:none;">
+                        <img src=""  id="featured-image-previewimg" class="featured-Image-create" alt="input image">
                     
-                        <div class="middle" id="middle" style="background-color: black;">
+                        <div class="middle" id="middle">
                             <div id="middleText">Upload Featured Image</div>
                         </div>
                     
@@ -99,16 +102,13 @@
                     {{-- <button type="button" class="" id="edit_uploaded_image" style="">Edit Image</button>  --}}
 
                     
-                        <i id="edit_uploaded_image" class="far fa-image btn_pointer" style="color:#16aedc;"> <span style="display:none;font-size: 1.2rem;width: 6.5vw;padding: 10%;
-                            transform: translate(10%, -280%);
-                            background-color: rgb(23, 162, 184);
-                            color: white;" >Edit photo</span></i>
+                        <i id="edit_uploaded_image" class="far fa-image btn_pointer edit-photo-create"> <span class="edit-photo-span">Edit photo</span></i>
                     
 
                    {{-- <button class="btn" id="edit_uploaded_image"> --}}
 
                    
-                        <input id="file"  onchange="loadFile(event)"  type="file"  name="featured_image" value=""  style=" min-width:100%;min-height: 100%;">
+                        <input id="file"  onchange="loadFile(event)"  type="file"  name="featured_image" value="">
                     
 
             </div>
@@ -243,9 +243,8 @@
                     </div>
                     <a href="" class="tab" id="workExperienceTab">Work Experience</a>
                     <a href="" class="tab" id="contactTab" >Contact</a>
-                    <a href="" class="tab" id="characterRefTab" style="border-bottom: 1px solid gray">Character References</a>
-                    <hr style="background-color:white; ">
-                    <a href="{{ url('jobseekers/view-profile/'.Auth::user()->id)}}" class="view-car-profile" style="color: rgb(22, 174, 220);text-align:center">Go To My<br> Jobseeker Profile</a>
+                    <a href="" class="tab" id="characterRefTab">Character References</a>
+                    <a  id="viewJobseeker" class="view-car-profile">Go To My<br> Jobseeker Profile</a>
                      
                 </div>
             </div>
@@ -284,44 +283,44 @@
                             <div class="modal-body work-modal-body">
                                 <div class="work-experience-body main_work_experience_div workDiv_1">
                                     <fieldset>
-                                        <div style="position: relative;">
+                                        <div class="remove-btn-cls">
                                             <button type="button"  class="close remove-btn-workexperience"   title="Remove Work Experience "aria-label="Clone" onclick="remove_work_experience(this)">
                                                 <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                             </button>
                                         </div>
                                             <div class="form-row">
                                                 <div class="form-group col-md-6 input-group-sm">
-                                                <label for="StartDate">Start Date<span style="color:red">*</span></label>
+                                                <label for="StartDate">Start Date<span class="mandatory-field-span">*</span></label>
                                                 <input type="date" class="form-control" id="start_date" value="" name="start_date[]" >
                                                 </div>
                                                 <div class="form-group col-md-6 input-group-sm">
-                                                <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                <label for="EndDate">End Date<span class="mandatory-field-span">*</span></label>
                                                 <input type="date" class="form-control" value="" id="end_date" name="end_date[]" >
                                                 </div>
                                             </div>
                                                 <div class="form-group input-group-sm">
-                                                    <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                    <label for="CompName">Company Name<span class="mandatory-field-span">*</span></label>
                                                     <input type="text" class="form-control" id="company_name" name="company_name[]" placeholder="">
                                                 </div>
                                                 <div class="form-group input-group-sm">
-                                                    <label for="Address">Company Address<span style="color:red">*</span></label>
+                                                    <label for="Address">Company Address<span class="mandatory-field-span">*</span></label>
                                                     <input type="text" class="form-control" id="Address" name="address[]" placeholder="">
                                                 </div>
                                             <div class="form-group input-group-sm">
-                                                <label for="CompDesig">Designation<span style="color:red">*</span></label>
+                                                <label for="CompDesig">Designation<span class="mandatory-field-span">*</span></label>
                                                 <input type="text" class="form-control" id="CompDesig" name="designation[]" placeholder="">
                                             </div>
                                             <div class="form-group  input-group-sm">
-                                                <label for="CompRole">Role<span style="color:red">*</span></label>
+                                                <label for="CompRole">Role<span class="mandatory-field-span">*</span></label>
                                                 {{-- <input type="text" class="form-control" id="CompRole" name="role[]" placeholder=""> --}}
                                                 <textarea class="form-control" id="CompRole" name="role[]" placeholder="" maxlength="250"></textarea>
                                             </div>
                                             <div class="form-group input-group-sm">
-                                                <label for="Contact">Contact Person<span style="color:red">*</span></label>
+                                                <label for="Contact">Contact Person<span class="mandatory-field-span">*</span></label>
                                                 <input type="text" class="form-control" id="Contact" name="contact_no[]" placeholder="">
                                             </div>
                                             
-                                            <div style="position: relative;">
+                                            <div class="remove-btn-cls">
                                                 <button type="button"  class="close clone-btn-workexperience"  title="Add More Work Experience " aria-label="Clone">
                                                     <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
                                                 </button>
@@ -360,7 +359,7 @@
                                 
                                     <fieldset>
                                         
-                                        <div style="position: relative;">
+                                        <div class="remove-btn-cls">
                                             <button type="button"  class="close remove-btn-education"  title="Remove Education " aria-label="Clone" onclick="remove(this)">
                                                 <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                             </button>
@@ -368,7 +367,7 @@
                                         
                                             <div class="form-row">
                                                 <div class="form-group col-md-12 input-group-sm" id="education_dropdown">
-                                                    <label for="education_level">Level Of  Education<span style="color:red">*</span></label>
+                                                    <label for="education_level">Level Of  Education<span class="mandatory-field-span">*</span></label>
                                                         <select class="form-control" name="education_level[]" id="xyz"  required>
                                                             <option value="Doctorate" > Doctorate</option>
                                                             <option value="Master" >Master's Degree</option>
@@ -380,32 +379,32 @@
                                                         </select>
                                                 </div> 
                                                 <div class="form-group col-md-12 input-group-sm">
-                                                    <label for="SchoolName">School Name<span style="color:red">*</span></label>
+                                                    <label for="SchoolName">School Name<span class="mandatory-field-span">*</span></label>
                                                     <input type="text" class="form-control" id="SchoolName" name="school_name[]"  required>
                                                 </div>
                                             <div class="form-group col-md-12 input-group-sm">
-                                                <label for="FieldOfStudy">Field Of Study<span style="color:red">*</span></label>
+                                                <label for="FieldOfStudy">Field Of Study<span class="mandatory-field-span">*</span></label>
                                                 <input type="text" class="form-control" id="FieldOfStudy"  name="field_of_study[]"  required>
                                             </div>
                                             <div class="form-group col-md-12 input-group-sm">
-                                                <label for="Description">Description<span style="color:red">*</span></label><br>
+                                                <label for="Description">Description<span class="mandatory-field-span">*</span></label><br>
                                                 <textarea id="Description" class="form-control" name="description[]" maxlength="250" required></textarea>
                                             </div>
                                                 <div class="form-group col-md-4 input-group-sm">
-                                                <label for="StartDate" style="">Start Date<span style="color:red">*</span><span></span></label>
+                                                <label for="StartDate">Start Date<span class="mandatory-field-span">*</span><span></span></label>
                                                 <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="StartDate" placeholder="Date"  name="start_date[]" required >
                                                 </div>
                                                 <div class="form-group col-md-4 input-group-sm">
                                                 
                                                 </div>
                                                 <div class="form-group col-md-4 input-group-sm">
-                                                    <label for="EndDate">End Date<span style="color:red">*</span></label>
+                                                    <label for="EndDate">End Date<span class="mandatory-field-span">*</span></label>
                                                     <input type="date" max="9999-12-31" min="1940-01-02" maxlength="" class="form-control" id="EndDate" name="end_date[]" required >
                                                 </div>
                                             </div>
                                             
 
-                                            <div style="position: relative;">
+                                            <div class="remove-btn-cls">
                                                 <button type="button"  class="close clone-btn-education"  title="Add More Education" aria-label="Clone">
                                                     <span aria-hidden="true" class="btn-plus" ><i class="fas fa-plus-circle"></i></span>
                                                 </button>
@@ -442,33 +441,33 @@
                                     <div class="modal-body reference-modal-body">
                                         <div class="reference-body  main_reference_div referenceDiv_1">
                                                 <fieldset> 
-                                                            <div style="position: relative;">
+                                                            <div class="remove-btn-cls">
                                                                 <button type="button"  class="close remove-btn-reference"  aria-label="Clone" title="Remove Character Reference" onclick="remove_reference(this)">
                                                                     <span aria-hidden="true" class="btn-remove" ><i class="fas fa-minus-circle"></i></span>
                                                                 </button>
                                                             </div>
 
                                                             <div class="form-group input-group-sm">
-                                                                <label for="Name"> Name<span style="color:red">*</span></label>
+                                                                <label for="Name"> Name<span class="mandatory-field-span">*</span></label>
                                                                 <input type="text" class="form-control" id="Name" name="name[]" placeholder="">
                                                             </div>
 
                                                             <div class="form-group input-group-sm">
-                                                                <label for="Email">Email<span style="color:red">*</span></label>
+                                                                <label for="Email">Email<span class="mandatory-field-span">*</span></label>
                                                                 <input type="email" class="form-control" id="Email"  name="email[]" placeholder="">
                                                             </div>
 
                                                             <div class="form-group input-group-sm">
-                                                                <label for="CompName">Company Name<span style="color:red">*</span></label>
+                                                                <label for="CompName">Company Name<span class="mandatory-field-span">*</span></label>
                                                                 <input type="text" class="form-control" id="CompName"  name="company_name[]" placeholder="">
                                                             </div>
 
                                                             <div class="form-group input-group-sm">
-                                                                <label for="Designation">Designation<span style="color:red">*</span></label>
+                                                                <label for="Designation">Designation<span class="mandatory-field-span">*</span></label>
                                                                 <input type="text" class="form-control" id="Designation"  name="designation[]" placeholder="">
                                                             </div>
 
-                                                            <div style="position: relative;">
+                                                            <div class="remove-btn-cls">
                                                                 <button type="button"  class="close clone-btn-reference"  title="Add More Character Reference "aria-label="Clone">
                                                                     <span aria-hidden="true" class="btn-plus"><i class="fas fa-plus-circle"></i></span>
                                                                 </button>
@@ -568,7 +567,7 @@
                                         
                                                 <div class="form-row">
                                                     <div class="form-group col-md-12 input-group-sm">
-                                                    <label for="Profession">Profession<span style="color:red">*</span></label>
+                                                    <label for="Profession">Profession<span class="mandatory-field-span">*</span></label>
                                                     <select id="Profession" class="form-control" name="profession_id" required>&#x25BC;
                                                             <option value="" >Select</option>
                                                             @foreach($profession as $profession)
@@ -586,7 +585,7 @@
 
                                                 <div class="form-row"> 
                                                     <div class="form-group col-md-12 col-lg-12 input-group-sm">
-                                                        <label for="skills">Skills<span style="color:red">*</span></label>
+                                                        <label for="skills">Skills<span class="mandatory-field-span">*</span></label>
                                                         <textarea class="form-control" id="skills" name="skills"></textarea>
                                                     </div>  
                                                 </div>
@@ -596,6 +595,7 @@
                                     </div>
                                 </div>
                         
+
                 
                                 <div class="modal-footer">
                                     <input type="submit"  class="btn btn-primary profession-done" value="Done" id="submit_profession"/>
@@ -1569,11 +1569,13 @@ document.getElementById("Profession").selectedIndex = "52";
                                     $('.navbar-tabs #workExperienceTab').css({'pointer-events':'auto','cursor':'pointer'});
                                     $('.navbar-tabs #contactTab').css({'pointer-events':'auto','cursor':'pointer'});
                                     $('.navbar-tabs #characterRefTab').css({'pointer-events':'auto','cursor':'pointer'});
+                                    $('.navbar-tabs #viewJobseeker').css({'pointer-events':'auto','cursor':'pointer'});
                                     $('.navbar-tabs #professionTab').attr('data-toggle', 'modal');
                                     $('.navbar-tabs #educationTab').attr('data-toggle', 'modal');
                                     $('.navbar-tabs #workExperienceTab').attr('data-toggle', 'modal');
                                     $('.navbar-tabs #contactTab').attr('data-toggle', 'modal');
                                     $('.navbar-tabs #characterRefTab').attr('data-toggle', 'modal');
+                                    $('.navbar-tabs #viewJobseeker').attr('href', '{{ url('jobseekers/view-profile/'.Auth::user()->id)}}');
 
                                     $('.navbar-tabs #professionTab').attr('data-target', '#ProfessionSkillModal');
                                     $('.navbar-tabs #educationTab').attr('data-target', '#EducationModal');
@@ -2088,6 +2090,7 @@ document.getElementById("Profession").selectedIndex = "52";
             isNewImg = true;
         }
         $('.sidenav-heading').click();
+        $('.view-car-profile').css({'cursor':'not-allowed'});
         $('.tab').css({'cursor':'not-allowed'});
         // cursor: not-allowed;
     };

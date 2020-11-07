@@ -16,6 +16,7 @@ class ProfessionTableSeeder extends Seeder
     public function run()
     {
     
+        
         // DB::table('professions')->truncate();
         $tags = [
             

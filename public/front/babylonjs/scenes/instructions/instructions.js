@@ -7,6 +7,7 @@ let insCamera;
 let cameraInitState = {position:null,a:null,b:null,r:null,upperA:null, lowerA:null, upperB:null, lowerB:null,upperR:null, lowerR:null,angularY:null};
 let astroInitState = {x:0,y:0,z:0};
 let hl,starColor;
+
 let createContactScene = function(){
     canvas = document.getElementById('canvas');
     engine = new BABYLON.Engine(canvas, true,{ preserveDrawingBuffer: true, stencil: true });
@@ -256,9 +257,6 @@ function add_mouse_listener(){
 }//end of listen to mouse function
 
 /*################################################### END OF MOUSE EVENT FUNCTION ############################################## */
-
-
-
 
 
 

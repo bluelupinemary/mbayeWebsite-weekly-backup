@@ -788,7 +788,7 @@ let rFootFlowersMap = new Map(
        
         ["48Fuchsia",[ {x: 12.956088411987299, y: -23.06896485008117, z: -52.108087505529674},'r','2A' ]],
         ["49BoatOrchid",[{x: 16.138624378362785, y: -12.222221075843681, z: 64.34050432131943},'b','2A' ]],
-        ["4ColoradoBlueColumbine",[{x: -11.37351763097359, y: -3.2049237217630395, z: -19.272586558876352},'r','2A' ]],
+        ["4ColoradoBlueColumbine",[{x: -11.37351763097359, y: -7.2049237217630395, z: -19.272586558876352},'r','2A' ]],
         ["52Hollyhocks",[{x: 34.03557538392426, y: 32.4498301588455, z: 27.210164258716922},'l','2A' ]],
         ["53Rose",[{x: 10.26095550119993, y: -11.473000651279678, z: -60.56693873898739},'l','2A' ]],
         ["54GardeniaThunbergia",[{x: 9.328998159731588, y: 41.57473282292436, z: -64.86997656044842},'b','2A' ]],
@@ -836,11 +836,11 @@ let rFoot3DFlowersMap = new Map(
     [                                                       
         ["10Poppy",['10A']],
         ["11ArnicaMontana",['11A']],
-        ["115PlumBlossom",['115A','115B','115C']],
+        ["115PlumBlossom",['115B']],
         ["122BayahibeRose",['122A']],
         ["123Hibiscus",['123B']],
        
-        ["138Paeony",['138A','138B']],
+        ["138Paeony",['138B']],
         ["12Buttercup",['12A']],
         ["13PinkCampion",['13A']],
         
@@ -852,7 +852,7 @@ let rFoot3DFlowersMap = new Map(
         
         ["19MorningGlory",['19A']],
         ["1Protea",['1A','1B']],
-        ["21Malva",['21A','21B']],
+        ["21Malva",['21A']],
         ["22Cuckoo",['22A']],
         ["23WesternColumbine",['23A']],
         
@@ -884,7 +884,7 @@ let rFoot3DFlowersMap = new Map(
         ["49BoatOrchid",['49A']],
         ["4ColoradoBlueColumbine",['4A']],
         ["52Hollyhocks",['52A']],
-        ["53Rose",['53A','53C','53D','53E']],
+        ["53Rose",['53C','53D','53E']],
         ["54GardeniaThunbergia",['54A','54B']],
 
         ["55BlueEyedGrass",['55A']],

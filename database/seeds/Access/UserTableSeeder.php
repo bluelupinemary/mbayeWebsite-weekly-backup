@@ -25,8 +25,9 @@ class UserTableSeeder extends Seeder
         $this->truncate(config('access.users_table'));
 
         //Add the master administrator, user id of 1
-        $users = factory(User::class, 1000)->create();
-        DB::table(config('access.users_table'))->insert($users);
+        $users = factory(User::class, 15)->create();
+        // dd($users);
+        // DB::table(config('access.users_table'))->insert($users);
 
         $this->enableForeignKeys();
     }

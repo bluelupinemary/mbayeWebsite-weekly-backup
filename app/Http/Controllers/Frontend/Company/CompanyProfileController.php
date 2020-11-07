@@ -48,7 +48,7 @@ class CompanyProfileController extends Controller
             //
         }
         else{
-            return redirect('dashboard')->with('status', 'Profile updated!');
+            return redirect('company/setup-profile/'.Auth::user()->id)->with('status', 'Profile updated!');
         }
     }   
 
@@ -80,7 +80,7 @@ class CompanyProfileController extends Controller
         
 
         $user = User::find($request->owner_id);
-        return redirect('communicator')->with('status', 'Profile updated!');
+        return redirect('company/view-company-profile')->with('status', 'Profile updated!');
         // if($user->roles[0]->name == 'User') {
         //     dd('PPPP');
         //     return redirect('communicator')->with('status', 'Profile updated!');
@@ -146,14 +146,14 @@ class CompanyProfileController extends Controller
         $company_profile = CompanyProfile::where('owner_id',Auth::user()->id)->first();
         // dd($company_profile);
         $saved_company_profile = $this->company_profile->update($company_profile, $request->except('_token'));
-        // dd($saved_company_profile);
-        $user = User::find($request->owner_id);
+        // // dd($saved_company_profile);
+        // $user = User::find($request->owner_id);
 
-        if($user->roles[0]->name == 'User') {
-            return redirect('communicator')->with('status', 'Profile updated!');
-        } else {
-            // return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
-        }
+        // if($user->roles[0]->name == 'User') {
+            return redirect('company/view-company-profile')->with('status', 'Profile updated!');
+        // } else {
+        //     // return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
+        // }
     }
 
     /**
@@ -167,5 +167,25 @@ class CompanyProfileController extends Controller
         $company_profile = CompanyProfile::find($id)->delete();
 
         return array('status' => 'success', 'message' => 'Company Profile deleted successfully!');
+    }
+
+    public function validateEmail(Request $request)
+    {
+        $company = CompanyProfile::where('company_email', $request->company_email)->first();
+        // dd($company);
+        if ($company) 
+        {
+            return response()->json([
+                    'status' => 'exist',
+                    'message' => 'email is already in database'
+                ], 200); 
+        }
+        if($company==null)
+        {
+            return response()->json([
+                    'status' => 'not-exist',
+                    'message' => 'email is not present in database'
+                ], 200);   
+        }
     }
 }

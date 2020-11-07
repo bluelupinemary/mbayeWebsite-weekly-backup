@@ -25,7 +25,18 @@
     font-size: 1.1vw !important;
     font-family: 'Arial';
 }
-
+.swal2-title {
+    position: relative;
+    max-width: 100%;
+    margin: 0 0 .4em;
+    padding: 0;
+    color: red !important;
+    font-size: 1.875em;
+    font-weight: 600;
+    text-align: center;
+    text-transform: none;
+    word-wrap: break-word;
+}
 
 </style>
     
@@ -75,9 +86,9 @@
             <div class="screen"><br/><br/>
                 
                     <div class="row">
-                            <div class="" style="padding-left:5vw;">
+                            <div class="feature-image-column">
                                 
-                                <form action="@if(!empty($company_profile)){{ route('frontend.company_profile.update',$company_profile->id)}}@else{{ route('frontend.company_profile.store') }}@endif " method="POST" enctype="multipart/form-data">
+                                <form action="@if(!empty($company_profile)){{ route('frontend.company_profile.update',$company_profile->id)}}@else{{ route('frontend.company_profile.store') }}@endif " method="POST" id="xyz" enctype="multipart/form-data">
                                     
                                     @csrf
                                     @if($company_profile ?? '')
@@ -89,16 +100,16 @@
                                             @if(!empty($company_profile))
                                             <!--changed id of img from outputImage to featured-image-previewimg-->
                                             {{-- <img src="{{asset('front/images/image-add.jpg')}}"  id="featured-image-previewimg"  alt="input image" class="inox img-resize"> --}}
-                                                <img src="{{ asset('storage/career/company/'.$company_profile->featured_image) }}"  id="featured-image-previewimg"  alt="input image" style=" width: 100%;">
+                                                <img src="{{ asset('storage/career/company/'.$company_profile->featured_image) }}" class="featuredImageEdit" id="featured-image-previewimg"   alt="Feature Image">
                                                 
                                                 <div class="middle" id="middle">
-                                                    <div id="middleText" style="font-size: calc(1vw + 1px)"></div>
+                                                    <div id="middleText" class="middle-text"></div>
                                                 </div>
                                             @else
-                                                <img src=""  id="featured-image-previewimg"  alt="input image" style=" width: 100%; display:none;">
+                                                <img src=""  id="featured-image-previewimg" class="featuredImageCreate"  alt="Feature Image">
                                             
-                                                <div class="middle" id="middle" style="background-color: black;">
-                                                    <div id="middleText" style="font-size: calc(1vw + 1px)">Upload Featured Image</div>
+                                                <div class="middle" id="middle">
+                                                    <div id="middleText">Upload Featured Image</div>
                                                 </div>
                                             
                                             @endif
@@ -106,17 +117,17 @@
                                             {{-- <button type="button" class="" id="edit_uploaded_image" style="">Edit Image</button>  --}}
 
                                             @if(!empty($company_profile))
-                                                <i id="edit_uploaded_image" class="far fa-image btn_pointer  tooltips right" style="color:#16aedc; display:block;"> <span style="display:none;font-size:calc(0.8vw + 1px); width:6vw;padding:10%; transform: translate(-49%, -209%);" >Edit photo</span></i>
+                                                <i id="edit_uploaded_image" class="far fa-image btn_pointer tooltips top edit-updated-image"> <span class="edit-photo-span">Edit photo</span></i>
                                             @else
-                                                <i id="edit_uploaded_image" class="far fa-image btn_pointer  tooltips right" style="color:#16aedc;"> <span style="display:none;font-size:calc(0.8vw + 1px); width:6vw;padding:10%; transform: translate(-49%, -209%);" >Edit photo</span></i>
+                                                <i id="edit_uploaded_image" class="far fa-image btn_pointer tooltips top edit-image"> <span class="edit-photo-span">Edit photo</span></i>
                                             @endif
 
                                            {{-- <button class="btn" id="edit_uploaded_image"> --}}
 
                                             @if(!empty($company_profile))
-                                                <input id="file"  onchange="loadFile(event)"  type="file" name="featured_image" value="{{ $company_profile->featured_image ?? '' }}"  style=" min-width:100%;min-height: 100%;">
+                                                <input id="file"  onchange="loadFile(event)"  type="file" name="featured_image" value="{{ $company_profile->featured_image ?? '' }}" >
                                             @else
-                                                <input id="file"  onchange="loadFile(event)"  type="file" name="featured_image" value=""  style=" min-width:100%;min-height: 100%;">
+                                                <input id="file"  onchange="loadFile(event)"  type="file"  name="featured_image" value="">
                                             @endif
 
                                             <!--for the image editor-->
@@ -131,9 +142,9 @@
                                             
 
                                     </div>
-                                    @if(empty($company_profile))
+                                    {{-- @if(empty($company_profile))
                                     <small class="error">{{ $errors->first('featured_image') }}</small>
-                                    @endif
+                                    @endif --}}
                                     {{-- ----------------------------------Image Edit Code------------------------------------- --}}
                                     {{-- <div class="user-upload-img"></div> --}}
                                     <!--changed button class name from img-edit-button to edit_image-->
@@ -146,39 +157,37 @@
 
                             <div class="column2">
                                 @if(!empty($company_profile))
-                                    <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;font-family: Arial;
-                                    height: 5vh;padding: 4px 0px 0px 0px">EDIT COMPANY PROFILE</h2></div>
+                                    <div class="heading"><h2>EDIT COMPANY PROFILE</h2></div>
                                 @else
-                                    <div class="heading"><h2 style="color:white; background-color:#082545; text-align:center;font-family: Arial;
-                                    height: 5vh;padding: 4px 0px 0px 0px">CREATE COMPANY PROFILE</h2></div>
+                                    <div class="heading"><h2>CREATE COMPANY PROFILE</h2></div>
                                 @endif        
                                  <div class="form">
                                     
                                             <div class="input-fields">
                                                 
-                                                    <label for="Cname">Company Name :<span style="color:red">*</span></label>
+                                                    <label for="Cname">Company Name :<span class="input-span">*</span></label>
                                                     @if(!empty($company_profile))
                                                     <input type="text" id="company_name" name="company_name" value="{{ $company_profile->company_name ?? '' }}" required>
                                                 
                                                     @else
                                                         {{-- <label for="Cname">Company Name :<span style="color:red">*</span></label> --}}
-                                                        <input type="text" id="company_name" name="company_name" value="" required>
+                                                        <input type="text" id="company_name" name="company_name" value="{{old('company_name')}}" required>
                                                     
                                                     @endif
                                             </div>
                                             <div>
-                                                <label for="CEmail">Company Email :<span style="color:red">*</span></label>
+                                                <label for="CEmail">Company Email :<span class="input-span">*</span></label>
                                                 @if(!empty($company_profile))
                                                     <input type="email"  value="{{ $company_profile->company_email ?? '' }}" id="company_email" name="company_email" required>
                                                 @else
-                                                <input type="email"  value="" id="company_email" name="company_email" required>
+                                                <input type="email"  value="{{old('company_email')}}" class="form-control @error('company_email') danger-alter @enderror" id="company_email" onchange="validateEmail()" name="company_email" required>
                                                 @endif
 
-                                                {{-- @if ($errors->has('company_email'))
+                                                @if ($errors->has('company_email'))
                                                 <div class="error">
                                                     {{ 'Email is already taken' }}
                                                 </div>
-                                                @endif --}}
+                                                @endif
                                                 {{-- <small class="error">{{ $errors->first('company_email') }}</small> --}}
                     
                                                
@@ -186,52 +195,61 @@
                                             
                                             
                                             <div>
-                                                <label for="company">Company Address :<span style="color:red">*</span></label>
+                                                <label for="company">Company Address :<span class="input-span">*</span></label>
                                                 @if(!empty($company_profile))
                                                     <input type="text" id="company_address" name="address" value="{{ $company_profile->address ?? '' }}" required>
                                                 @else
-                                                    <input type="text" id="company_address" name="address" value="" required>
+                                                    <input type="text" id="company_address" name="address" value="{{old('address')}}" required>
                                                 @endif
                                             </div>
                                         
                                             <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="country">Country :<span style="color:red">*</span></label>
-                                                        <select class="countries" name="country" id="countryId"  required>&#x25BC;
+                                                        <label for="country">Country :<span  class="input-span">*</span></label>
+                                                        <select class="countries" name="country" id="countryId" required>&#x25BC;
                                                             @if(!empty($company_profile))
                                                             <option value="{{ $company_profile->country ?? '' }}" >{{ $company_profile->country }}</option>
                                                             @else
-                                                            <option id="initCountry" value="" selected disabled>Select Country</option>
+                                                            <option value="select country" selected disabled>Select Country</option>
+                                                            {{-- <option id="initCountry" value="@if(!empty(old('country'))){{ old('country')}} @else Select Year @endif">Select Year</option> --}}
                                                             @endif
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="state">State :<span style="color:red">*</span></label>
+                                                        <label for="state">State :<span class="input-span">*</span></label>
                                                         <select id="stateId" class="states" name="state" required>
                                                             @if(!empty($company_profile))
                                                             
                                                             <option value="{{ $company_profile->state ?? '' }}" >{{ $company_profile->state }}</option>
                                                             @else
-                                                            <option value="" selected disabled>Select State</option>
+                                                            <option value="select state" selected disabled>Select State</option>
+                                                            {{-- <option value="{{ old('state')}}">{{ old('state') }}</option> --}}
                                                             @endif
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="city">City :<span style="color:red">*</span></label>
+                                                        <label for="city">City :<span class="input-span">*</span></label>
                                                         <select id="cityId" class="cities" name="city" required>
                                                             @if(!empty($company_profile))
                                                             <option value="{{ $company_profile->city ?? '' }}" >{{ $company_profile->city }}</option>
                                                             @else
-                                                            <option value="" selected disabled>Select City</option>
+                                                            <option value="select city" selected disabled>Select City</option>
+                                                            {{-- <option value="{{old('city')}}">{{ old('city') }}</option> --}}
                                                             @endif
                                                         </select>
                                                     </div>
                                             </div>
                                                     <div class="mobile-no">
-                                                            <label for="mobile">Mobile :<span style="color:red">*</span></label>
+                                                            <label for="mobile">Mobile :<span class="input-span">*</span></label>
+                                                            @if(!empty($company_profile))
                                                             <input type="number" class="form-control {{ $errors->has('company_phone_number') ? 'error' : '' }}" value="{{ $company_profile->company_phone_number ?? '' }}" id="mob_no" name="company_phone_number" required>
                                                             <small class="error">{{ $errors->first('company_phone_number') }}</small>
-
+                                                            
+                                                            @else
+                                                                <input type="number" class="form-control {{ $errors->has('company_phone_number') ? 'error' : '' }}" value="{{ old('company_phone_number') }}" id="mob_no" name="company_phone_number" required>
+                                                                 <small class="error">{{ $errors->first('company_phone_number') }}</small>
+                                                            
+                                                            @endif
                                                     </div>
                                                     {{-- @if ($errors->has('company_phone_number'))
                                                     <div class="error">
@@ -240,7 +258,7 @@
                                                     @endif --}}
                                                     
                                                         <div class="industry">
-                                                            <label for="industry">Industry :<span style="color:red">*</span></label>
+                                                            <label for="industry">Industry :<span class="input-span">*</span></label>
                                                             <select id="industry" class="" name="industry_id" required>&#x25BC;
                                                                 <option value="select" selected disabled>Select industry</option>
                                                                 @if(!empty($company_profile)){
@@ -249,15 +267,17 @@
                                                                 @endforeach
                                                                 }@else{
                                                                     @foreach($industry as $industry)
-                                                                    <option value="{{$industry->id}}">{{$industry->industry_name}}</option>
+                                                                    <option value="{{$industry->id}} {{ (collect(old('industry'))->contains($industry->id)) ? 'selected':'' }}">{{$industry->industry_name}}</option>
                                                                     @endforeach
                                                                 }
                                                                 @endif
+                                                                {{-- <option value="{{ $game->id }}" @if(old('game_type_id') == $game->id) {{ 'selected' }} @endif>{{ $game->name }}</option> --}}
+                                                                {{-- <option value="{{ $option->id }}" {{ (collect(old('options'))->contains($option->id)) ? 'selected':'' }}>{{ $option->name }}</option> --}}
                                                             </select>
                                                         </div><br>
                                                         <input type="hidden" name="owner_id" value="{{Auth::user()->id}}">
                                             <div class="form-btn">
-                                                <button type="submit"  class="button-done">Submit</button>
+                                                <button type="submit" id="submit" class="button-done">Submit</button>
                                             </div>
                                         </form>
                                         
@@ -328,9 +348,9 @@
                                 <button class="music-volume-div tooltips top btn_pointer">
                                     <span>Music Volume Up/Down</span>
                                 </button>
-                               <button class="navigator-zoomout-btn">
+                               <button class="navigator-zoomout-btn tooltips top">
                                     <i class="fas fa-undo-alt"></i>
-                                    {{-- <span>Zoom Out</span> --}}
+                                    <span>Zoom Out</span>
                                 </button>
                                 {{-- <button class="navigator-zoomout-btn tooltips zoom-in-out">
                                     <span>Zoom Out</span>
@@ -436,7 +456,115 @@
 <script src="{{asset('front/JS/countrystatecity.js')}}"></script>
 
  
-    
+ <script>
+        // var featureImage = $("form#xyz #file").val();
+        
+            $(document).ready(function(){
+                $('button#submit').on('click', function(event ){
+                    var featureImage = $("#featured-image-previewimg").attr('src');
+                    
+                    // console.log('kkk',featureImage);
+                    if(featureImage==''){
+                        event.preventDefault();
+                            alert_status = true;
+                            message = 'Please upload a featured image';
+                            // err_message[message] = null;
+                            // $("form#aboutme-form  #objective").focus();
+                            $("#file").css('border-color', 'red');
+                            Swal.fire({
+                                title: 'Discard Changes',
+                                text: message,
+                                imageUrl: '../../front/icons/alert-icon.png',
+                                imageWidth: 80,
+                                imageHeight: 80,
+                                imageAlt: 'Mbaye Logo',
+                                width: '30%',
+                                padding: '1rem',
+                                background: 'rgba(8, 64, 147, 0.62)',
+                                showCloseButton: true,
+                                showCancelButton: true,
+                                focusConfirm: true,
+                                confirmButtonText:
+                                    'Discard Changes',
+                                cancelButtonText:
+                                    'Cancel',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                            });
+                    }
+                   
+                });
+            }); 
+
+
+            function validateEmail() 
+                {
+                    var email=$("#company_email").val(); 
+                    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                    
+                    if(!emailReg.test(email) && email == '') {
+                        custom_swal("Error!","Please Enter Valid Email Id","Email");
+                        $('#company_email').tooltip();
+                        $('#company_email').focus();
+                        return false;
+                    }
+                    else if ( emailReg.test(email) && email !='')
+                    {
+                    $.ajax({
+                        type: "POST",
+                        url: url+'/validateemail',
+                        data:{company_email:email},
+                        headers: {
+                                'X-CSRF-Token': $('input[name="_token"]').val() 
+                        },
+                        success: function(responce) {
+                        // console.log(responce);
+                        if (responce.status == 'exist') 
+                        {
+                            // custom_swal("Already Exist!","login into to your account","Email");
+                            event.preventDefault();
+                            
+                            alert_status = true;
+                            message = 'Email Already Present';
+                            Swal.fire({
+                                title: 'Discard Changes',
+                                text: message,
+                                imageUrl: '../../front/icons/alert-icon.png',
+                                imageWidth: 80,
+                                imageHeight: 80,
+                                imageAlt: 'Mbaye Logo',
+                                width: '30%',
+                                padding: '1rem',
+                                background: 'rgba(8, 64, 147, 0.62)',
+                                showCloseButton: true,
+                                showCancelButton: true,
+                                focusConfirm: true,
+                                confirmButtonText:
+                                    'Discard Changes',
+                                cancelButtonText:
+                                    'Cancel',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                            });
+                            $('#company_email').removeClass('success-alter');
+                            $('#company_email').addClass('danger-alter');
+                            $('#company_email').tooltip();
+                            $('#company_email').css('border','2px solid red');
+                            valideemail=false;
+                            return false;
+                        }
+                        if (responce.status == 'not-exist') 
+                        {
+                            $('#company_email').removeClass('danger-alter');
+                            $('#company_email').addClass('success-alter');
+                            $('#company_email').css('border','1px solid white');
+                        }
+                        // console.log('success :'+ responce);
+                        }
+                    });
+                    }
+                } 
+ </script>   
 
 <script type="text/javascript">
     var url = $('meta[name="url"]').attr('content');
@@ -922,6 +1050,7 @@
     
     
 </script>
+
 
 
 @endsection

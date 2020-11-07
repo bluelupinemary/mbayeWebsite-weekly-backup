@@ -575,7 +575,7 @@ $('.download-btn').click(()=>{
                     imageAlt: 'Mbaye Logo',
                     title: "<span id='error'>Error!</span>",
                     html: "There was an Error While Processing your Request.",
-                    width: '30%',
+                    // width: '30%',
                     padding: '1rem',
                     background: 'rgba(8, 64, 147, 0.62)'
                 });

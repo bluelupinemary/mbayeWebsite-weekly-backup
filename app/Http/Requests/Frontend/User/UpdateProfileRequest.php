@@ -62,15 +62,18 @@ class UpdateProfileRequest extends Request
         $validator->after(function ($validator) {
             if($this->has('old_password'))
             {
-                if($this->get('old_password')!='')
+                if($this->get('old_password')!='') //IF USER HAS OLD PASSWORD THEN VALIDATTE
                 {
-                    if($this->has('new_password') && $this->get('new_password')!='')
+                    //IF NEW PASSWORD IS THERE
+                    if($this->has('new_password') && $this->get('new_password')!='') 
                     {
+                        // VALIDATE THE PASSOWORD
                         if(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/", $this->get('new_password')))
                         {
-                            $validator->errors()->add('new_password', 'The password must contain at least one number and both uppercase and lowercase letters.The password must be at least 8 characters.');    
+                            $validator->errors()->add('new_password', 'The password must be 8 characters long containing at least one number and both uppercase and lowercase letters.');    
                             
                         }
+                        // VALIDATE CONFIRM PASSWORD
                         if($this->has('c_password'))
                         {
                             if($this->get('c_password') !='')
@@ -88,8 +91,24 @@ class UpdateProfileRequest extends Request
                     }
                     else
                     {
+                        // IF NEW PASSOWRD FEILD IS EMPTY
                         $validator->errors()->add('new_password', 'Enter a Valid New Password');
                     }
+                }
+                else
+                {
+                    // IF PASSWORD IS NOT THERE BUT NEW PASSOWORD IF THERE 
+                    if($this->has('new_password') && $this->get('new_password')!='')
+                    {
+                        $validator->errors()->add('old_password', 'Enter the Old Password');
+                    }
+                    if($this->has('c_password'))
+                        {
+                            if($this->get('c_password') !='')
+                            {
+                                $validator->errors()->add('old_password', 'Enter the Old Password');
+                            }
+                        }
                 }
             }
             if($this->has('age'))

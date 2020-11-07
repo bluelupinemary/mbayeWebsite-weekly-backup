@@ -99,6 +99,9 @@
         -ms-transform: translate(33%, -45%) !important;
         transform: translate(33%, -45%) !important; */
     }
+    .tooltipps span{
+        font-size: 15px;
+    }
 }
 
 @media (max-width : 896px)
@@ -139,6 +142,12 @@ and (orientation : landscape) {
         width:100%;
         height:auto;
     }
+    #middleText {
+        /* background-color: #082545; */
+        /* border: 1px solid red; */
+        height: 5vh;
+        font-size: calc(1vw + 9px);
+    }
 
     .navigator-div-zoomed-in .tooltips span, .navigator-div-zoomed-in .navigator-buttons .tooltips span, .navigator-div-zoomed-in .communicator-div.tooltips span {
         font-size: 0.5rem;
@@ -169,6 +178,9 @@ and (orientation : landscape) {
         border-radius: 3px;
         width: 100%;
         font-family: 'Arial';
+    }
+    .tooltipps span{
+        font-size: 15px;
     }
    
 }
@@ -219,6 +231,12 @@ and (min-width: 375px) {
         width:100%;
         height:auto;
     }
+    #middleText {
+        /* background-color: #082545; */
+        /* border: 1px solid red; */
+        height: 5vh;
+        font-size: calc(1vw + 9px);
+    }
     .screen input, .text-editor-fullview input, select, .designs-blog-form select {
         margin-bottom: 0.5em;
         background: #ffffff;
@@ -230,6 +248,9 @@ and (min-width: 375px) {
         border-radius: 3px;
         width: 100%;
         font-family: 'Arial';
+    }
+    .tooltipps span{
+        font-size: 15px;
     }
 }
 
@@ -301,6 +322,15 @@ and (orientation : landscape) {
         width: 100%;
         font-family: 'Arial';
     }
+    #middleText {
+        /* background-color: #082545; */
+        /* border: 1px solid red; */
+        height: 5vh;
+        font-size: calc(1vw + 7px);
+    }
+    .tooltipps span{
+        font-size: 15px;
+    }
 }
 
 @media (min-width : 320px) 
@@ -351,6 +381,12 @@ and (orientation : landscape) {
         transform: translate(-50%, -175%);
         width: 29vw;
         height: 17vw; 
+    }
+    #middleText {
+        /* background-color: #082545; */
+        /* border: 1px solid red; */
+        height: 5vh;
+        font-size: calc(1vw + 6px);
     }
 
     .notifications-list {

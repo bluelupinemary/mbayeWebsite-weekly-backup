@@ -829,17 +829,6 @@ ul.music {
 }
 
 .sidenav {
-    /* display: flex;
-    flex-direction: column;
-    
-    width: 0;
-    position: fixed;
-    z-index: 10;
-    top: 21%;
-    left: 0;
-    background-color: #111;
-    overflow: hidden !important;
-    transition: 0.5s; */
     display: flex;
     flex-direction: column;
     height: 58vh;
@@ -860,6 +849,9 @@ ul.music {
     display: flex;
     flex-direction: column;
 
+  }
+  .remove-btn-cls{
+      position: relative;
   }
   .sidenav a {
     padding-left: 4%;
@@ -1067,12 +1059,21 @@ background-position: center;
 padding-top:1.5%;
 margin-left: auto;
 margin-right: auto;
-display: block;
+/* display: block; */
 object-fit: contain;
 max-inline-size: fit-content;
 height: 66vh;
-max-width: 100%;
+max-width:100%;
+max-height:100%; 
+/* display:none; */
 } 
+.featured-Image-create{
+    display: none;
+}
+.featured-Image-edit{
+    display: block;
+}
+
 #featured-image-previewimg:hover{
 opacity: 0.5;
 }
@@ -1082,16 +1083,22 @@ margin-right: auto;
 display: block;
 }
 #edit_uploaded_image {
-display: none;
+/* display: none; */
 right: 0;
 top: -1vh;
 position: absolute;
 font-size: 2em;
 border: none;
-color: white;
+color:#16aedc;
 padding: 12px 16px;
 width: 5vw;
 cursor: pointer;
+}
+.edit-photo-update{
+    display: block;
+}
+.edit-photo-create{
+    display: none;
 }
 .far:hover {
 text-shadow: 0px 0px 20px yellow;
@@ -1104,14 +1111,23 @@ width: 100%;
 height: 67vh;
 opacity: 0.6;
 transition: .5s ease;
-/* background-color:black; */
+background-color:black;
 display: block;
 color:white;
 font-size:1.5rem;
 border-radius:2vh;
 
 }
-
+.edit-photo-span{
+    display: none;
+    font-size: 1rem;
+    width: 6.5vw;
+    padding: 10%;
+    transform: translate(10%, -280%);
+    background-color: rgb(23, 162, 184);
+    color: white;
+    text-align: center;
+}
 
 .middle:hover{
 opacity: 0.5 !important;
@@ -1146,7 +1162,8 @@ text-align: center;
 } */
 #file{
 display:none;
-
+min-width:100%;
+min-height: 100%;
 }
 
 .work-experience-body,.education-body ,.reference-body,.aboutme-body,.profession-body,.contact-body{
@@ -1217,10 +1234,66 @@ width: 32%;
 display:none;
 }
 
-  @media screen and (max-height: 450px) {
+  /* @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 9px;}
-  }
+    .sidenav a {font-size: 10px;}
+    .heading_setup {
+        color: gold;
+        
+        transition: 0.3s;
+        font-family: arial regular;
+        text-align: center;
+        font-size: 1rem !important;
+        padding: 10px;
+    }
+    #edit_uploaded_image {
+        display: none;
+        right: 3%;
+        top: -1vh;
+        position: absolute;
+        font-size: 2em;
+        border: none;
+        color: white;
+        padding: 12px 16px;
+        width: 5vw;
+        cursor: pointer;
+    }
+    .fa-edit-span {
+        display: block;
+        font-size: 1rem;
+        width: 10vw;
+        padding: 10%;
+        text-align: center;
+        border-radius: 7%;
+        font-family: Arial;
+        transform: translate(-17%, -333%);
+        background-color: rgb(23, 162, 184);
+        color: white;
+    }
+    .clone-btn-education, .clone-btn-workexperience {
+       
+        transform: translate(-2px, 16px);
+       
+    }
+    .slider{
+        height: 65vh;
+    }
+  } */
+  /* @media screen and (max-height: 360px) {
+  .fa-edit-span {
+    display: block;
+    font-size: 1rem;
+    width: 14vw;
+    padding: 10%;
+    text-align: center;
+    border-radius: 7%;
+    font-family: Arial;
+    transform: translate(-17%, -378%);
+    background-color: rgb(23, 162, 184);
+    color: white;
+}
+  } */
+ 
 .modal-box{
 
 }
@@ -1263,6 +1336,14 @@ overflow-x: hidden;
 /* background-size: cover; */
 /* margin-top: 8%; */
 }
+.contact-body{
+    height: 20vw;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* display: flex; */
+    /* background-size: cover; */
+    /* margin-top: 8%; */
+    }
 .work-modal-body{
 height: 25vw;
 overflow-y: auto;
@@ -1414,4 +1495,15 @@ height: 240px;
 
 max-width: 320px;
 max-height: 240px;
+}
+.view-car-profile{
+    color: rgb(22, 174, 220) !important;
+    text-align:center;
+}
+.mandatory-field-span{
+    color: red;
+}
+.description-textArea{
+    width:100%;
+    resize:none;
 }

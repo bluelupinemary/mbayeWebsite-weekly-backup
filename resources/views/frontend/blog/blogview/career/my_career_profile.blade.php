@@ -2,7 +2,39 @@
 
 @section('before-styles')
 
+<style>
+     .swal2-popup {
+    display: none;
+    position: relative;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    width: 32em;
+    max-width: 100%;
+    padding: 1.25em;
+    box-shadow: 0px 0px 20px #17a2b8 !important;
+    border: none;
+    border-radius: .3125em;
+    background: #fff;
+    font-family: inherit;
+    font-size: 1rem;
+}
+.swal2-content {
+    color: #17a2b8 !important;
+    font-size: 1.1vw !important;
+    font-family: 'Arial';
+}
+.modal-header{ 
+    background:#0f093c;
+    border:none;
+}
+.modal-body{
+    background-color: rgb(5 26 57); 
+    height:50vh;
+    overflow-y:scroll;
+}
 
+</style>
 <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
 <link rel="stylesheet"
     href="{{ asset('front/owl-carousel/dist/assets/owl.carousel.min.css') }}">
@@ -11,6 +43,7 @@
 
 {{-- <link rel="stylesheet" href="{{ asset('front/CSS/single_blog.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('front/CSS/my_career_profile.css') }}">
+<link rel="stylesheet" href="{{ asset('front/CSS/my_career_profile_responsive.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/single_blog-responsive.css') }}">
 @endsection
 
@@ -32,14 +65,14 @@
             
             <div class="bg-div">
                 
-                    <div class="objective" style="text-align: center;color:white; position: relative; display:none; height:30%;">
+                    <div class="objective">
                         
-                        <p style="font-size: calc(1vw + 7px);">{{ $profile->objective }}</p>
+                        <p>{{ $profile->objective }}</p>
                     </div>
                     
                     
                     <div class="featured-img" >
-                        <img src="{{ asset('storage/career/employee/'.$profile->featured_image) }}"  id="featured-image-previewimg"  alt="input image" style=" max-width:100%; max-height:100%;">
+                        <img src="{{ asset('storage/career/employee/'.$profile->featured_image) }}"  id="featured-image-previewimg"  alt="input image">
                            
                         {{-- </label> --}}
                     </div>
@@ -53,6 +86,7 @@
                                 </button>
                                 
                             </div>
+                            
                             <div class="planet-buttons">
                                 
                                 <button class="view tooltips top" onclick="goto_dashboard({{$profile->user_id}})"><img src="{{asset('front/icons/view.png')}}" alt="">
@@ -70,7 +104,7 @@
                             </div>
                     @else
                         <div class="edit-buttons">
-                            <button class="edit tooltips top" onclick="edit_profile();"><i class="fas fa-edit"  style="font-size:2em; color:#c5a739;"></i><span class="">Edit My Profile</span></button>
+                            <button class="edit tooltips top" onclick="edit_profile();"><i class="fas fa-edit"></i><span class="">Edit My Profile</span></button>
                             
                         </div>
                         <div class="view-profile-button" >
@@ -84,39 +118,7 @@
                     
             </div>
         
-        {{-- <button class="test" onclick="goto_dashboard({{$profile->user_id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button> --}}
-        
-{{--</div>--}}
-     {{-- @if(Auth::user()->id != $profile->user_id)
-     <div class="view-profile-button">
-        
-        <button class="more-icon" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt=""></button>
-        
     </div>
-        <div class="planet-buttons">
-            
-            <button class="view" onclick="goto_dashboard({{$profile->user_id}})"><img src="{{asset('front/icons/view.png')}}" alt=""></button>
-            <button class="save" data-tag="careers"><img src="{{asset('front/icons/save.png')}}" alt=""></button>
-            <button class="call" onclick="connect_mail({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/call.png')}}" alt=""></button>
-            <button class="messenger" onclick="connect_mail({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/messengerIcon.png')}}" alt="message-icon"></button>
-            
-        </div>
-        @endif --}}
-    </div>
-    
-    {{-- @if(Auth::user()->id == $profile->user_id)
-    <div class="edit-buttons" style="left:53%;top:21%;">
-        <button class="edit" onclick="edit_profile();"><i class="fas fa-edit"  style="font-size:1rem;font-size: calc(2vw + 1px ); color:#c5a739;"></i></button>
-        
-    </div>
-    <div class="view-profile-button" >
-        
-        <button class="more-icon" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt=""></button>
-        
-    </div>
-    @endif    --}}
-   
-    
     
     <div class="navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif" >
         @if(Auth::user()->gender != null && Auth::user()->gender == 'female')
@@ -200,7 +202,7 @@
                 <button class="communicator-button"></button>
                 <span>Communicator</span>
             </div>
-            <button class="navigator-zoomout-btn tooltips zoom-in-out">
+            <button class="navigator-zoomout-btn tooltips top zoom-in-out">
                 <span>Zoom Out</span>
                 <i class="fas fa-undo-alt"></i>
             </button>
@@ -211,7 +213,7 @@
 </div>
 {{-- <div class="abc"> --}}
     <div class="about abc" id="aboutMeDetails">
-        <div class="titile" style="position:relative;width:100%;text-align:center;">About me</div>
+        <div class="titile">About me</div>
         {{-- <label class="titile">About Me</label><br> --}}
         <div class="sub-section">
         
@@ -219,15 +221,15 @@
                 <label class="lbl_titile">DOB : </label><span class="spn_value"> {{ $profile->user->dob ?? '' }} </span><br>
                 <label class="lbl_titile">Address : </label> <span class="spn_value" > {{ $profile->user->address ?? '' }}</span>
         </div>
-        <div data-toggle="modal" data-target="#AboutMeModal" style="position: relative;width: 100%;">
-            <i class="fas fa-ellipsis-h" style="position:relative; float:right; right:5%;"></i>
+        <div class="view-more-detail-icon" data-toggle="modal" data-target="#AboutMeModal">
+            <i class="fas fa-ellipsis-h"></i>
         </div>
         
     </div>
 {{-- </div> --}}
 {{-- <div class="abc"> --}}
-        <div class="education abc" id="educationDetails" style="">
-            <div class="titile" style="position:relative;width:100%;text-align:center;">Education</div>
+        <div class="education abc" id="educationDetails">
+            <div class="titile">Education</div>
             @foreach($profile->education as $education)
                 <div class="sub-section">
         
@@ -238,8 +240,8 @@
             
             @endforeach
             
-        <div data-toggle="modal" data-target="#EducationModal" style="position: relative;width: 100%;">
-            <i class="fas fa-ellipsis-h" style="position:relative; float:right; right:5%;"></i>
+        <div class="view-more-detail-icon" data-toggle="modal" data-target="#EducationModal">
+            <i class="fas fa-ellipsis-h"></i>
         </div>
         
             {{-- <div class="sub-section"></div> --}}
@@ -256,15 +258,15 @@
 {{-- </div> --}}
 
 {{-- <div class="abc"> --}}
-    <div class="contacts abc" id="contactDetails" style="">
-        <div class="titile" style="position:relative;width:100%;text-align:center;">Contact</div>
+    <div class="contacts abc" id="contactDetails">
+        <div class="titile">Contact</div>
             <div class="sub-section">
-                <span class="spn_value" style="padding-left: 2%;"> {{ $user->email ?? '' }} </span><br>
-                <span class="spn_value" style="padding-left: 2%;"> {{ $profile->secondary_email ?? '' }} </span><br><br>
-                <span class="spn_value" style="padding-left: 2%;"> {{ $user->mobile_number ?? '' }} </span><br>
-                <span class="spn_value" style="padding-left: 2%;"> {{ $profile->secondary_mobile_number ?? '' }} </span>
-                <div data-toggle="modal" data-target="#ContactModal" style="float: right;position: relative;width: 15%;top: 11%;left: 0;">
-                    <i class="fas fa-ellipsis-h" ></i>
+                <span class="spn_value" > {{ $user->email ?? '' }} </span><br>
+                <span class="spn_value" > {{ $profile->secondary_email ?? '' }} </span><br><br>
+                <span class="spn_value" > {{ $user->mobile_number ?? '' }} </span><br>
+                <span class="spn_value" > {{ $profile->secondary_mobile_number ?? '' }} </span>
+                <div class="view-more-detail-icon" data-toggle="modal" data-target="#ContactModal">
+                    <i class="fas fa-ellipsis-h"></i>
                 </div>
             </div>    
         {{-- <span class="primary 3 spn_value"></span><br>
@@ -273,8 +275,8 @@
     </div>
 {{-- </div><br/> --}}
 {{-- <div class="abc"> --}}
-    <div class="character_refernces abc" id="refrenceDetails" style="">
-        <div class="titile" style="position:relative;width:100%;text-align:center;">Character Reference</div>
+    <div class="character_refernces abc" id="refrenceDetails" >
+        <div class="titile">Character Reference</div>
             @foreach($profile->charref as $refrence){
                 <div class="sub-section">
         
@@ -285,15 +287,15 @@
             }
             @endforeach
             
-        <div data-toggle="modal" data-target="#RefrenceModal" style="position: relative;width: 100%;">
-            <i class="fas fa-ellipsis-h" style="position:relative; float:right; right:5%;"></i>
+        <div class="view-more-detail-icon" data-toggle="modal" data-target="#RefrenceModal">
+            <i class="fas fa-ellipsis-h"></i>
         </div>
         {{-- <div class="titile" style="position:relative;width:100%;text-align:center;">Character Reference</div> --}}
     </div>
 {{-- </div> --}}
 
-<div class="job_description" id="jobDetails" style="display:flex;flex-direction:column;padding:0 !important;">
-    <div class="titile" style="position:relative;width:100%;text-align:center;">Work Experience</div>
+<div class="job_description" id="jobDetails">
+    <div class="titile">Work Experience</div>
         @foreach($profile->workexp as $workExperience)
             <div class="sub-section">
             <label class="lbl_titile">{{ \Carbon\Carbon::parse($workExperience->start_date)->format('F Y') }} - {{ \Carbon\Carbon::parse($workExperience->end_date)->format('F Y') }}</label><br>
@@ -303,11 +305,11 @@
                 {{-- <label class="lbl_titile">DOB : </label><span class="dob spn_value"></span>
                 <label class="lbl_titile">Address : </label> <span class="address spn_value" ></span> --}}
             </div>
-        <hr>
+        
         @endforeach
     
-    <div data-toggle="modal" data-target="#WorkModal" style="position: relative;width: 100%;">
-        <i class="fas fa-ellipsis-h" style="position:relative; float:right; right:5%;"></i>
+    <div class="view-more-detail-icon" data-toggle="modal" data-target="#WorkModal">
+        <i class="fas fa-ellipsis-h"></i>
     </div>
 
 </div>
@@ -316,8 +318,8 @@
 <div class="modal" id="AboutMeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header" style="background:#0f093c;border:none;">
-          <h5 class="modal-title" id="exampleModalLongTitle" style="color: #efad0c;width:66vw;">About Me</h5>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">About Me</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -325,7 +327,7 @@
         {{-- <div class="app" style="display: none;">;
           
         </div> --}}
-        <div class="modal-body" style="background-color: rgb(5 26 57); height:50vh;overflow-y:scroll;">
+        <div class="modal-body">
             <div class="aboutme-body">
                 <label class="lbl_title">Name : </label><span class="modal_spn_value"> {{ $profile->user->first_name ?? '' }} &nbsp;{{ $profile->user->last_name ?? '' }}</span><br/>
                 <label class="lbl_title">Profession : </label><span class="modal_spn_value">{{$profile->profession->profession_name ?? ''}}</span><br/>
@@ -334,10 +336,10 @@
                 <label class="lbl_title">Age : </label> <span class="modal_spn_value" >{{ $profile->user->age ?? '' }}</span><br/>
                 <label class="lbl_title">Gender : </label> <span class="modal_spn_value" >{{ $profile->user->gender ?? '' }}</span><br/>
                 <label class="lbl_title">Present Address : </label> <span class="modal_spn_value" >{{ $profile->present_address ?? '' }}</span><br/>
-                <div style="display: flex">
-                    <div style="padding: 1%;width: 15vw;"><label class="lbl_title">Objective : </label></div>
+                <div class="about-me-objective">
+                    <div class="about-Me-Objective-title"><label class="lbl_title">Objective : </label></div>
                     <div>
-                        <span class="modal_spn_value" style="text-align: justify-all" >{{ $profile->objective ?? '' }}</span><br/>
+                        <span class="modal_spn_value"  >{{ $profile->objective ?? '' }}</span><br/>
                     </div>
 
                 </div>
@@ -356,8 +358,8 @@
   <div class="modal" id="EducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
             <div class="modal-content">
-                    <div class="modal-header" style="background:#0f093c;border:none;">
-                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: #efad0c;width:66vw;">Education</h5>
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Education</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -365,10 +367,10 @@
                     {{-- <div class="app" style="display: none;">;
                     
                     </div> --}}
-                    <div class="modal-body" style="background-color: rgb(5 26 57);height:50vh;overflow-y:scroll;">
+                    <div class="modal-body">
                         
                         <div class="education-body">
-                            @if(empty($profile->education))
+                            @if(sizeof($profile->education) ==0)
                                 <label class="lbl_title">Level of Education : </label><span class="modal_spn_value"></span><br/>
                                 <label class="lbl_title">Field of Study : </label><span class="modal_spn_value"></span><br/>
                                 <label class="lbl_title">School Name : </label><span class="modal_spn_value"></span><br/>
@@ -381,7 +383,7 @@
                                 <label class="lbl_title">School Name : </label><span class="modal_spn_value">{{ $education->school_name ?? ''}}</span><br/>
                                 <label class="lbl_title">Year Attended : </label> <span class="modal_spn_value" >{{ \Carbon\Carbon::parse($education->start_date)->format('F Y') }} - {{ \Carbon\Carbon::parse($education->end_date)->format('F Y') }}</span><br/>
                                 <label class="lbl_title">Description : </label> <span class="modal_spn_value" >{{ $education->description ?? ''}}</span><br/>
-                                <hr style="background-color: white;">
+                                
                                 @endforeach
                             @endif
                         </div>
@@ -398,8 +400,8 @@
   <div class="modal" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header" style="background:#0f093c;border:none;">
-          <h5 class="modal-title" id="exampleModalLongTitle" style="color: #efad0c;width:66vw;">Contact Details</h5>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Contact Details</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -407,7 +409,7 @@
         {{-- <div class="app" style="display: none;">;
           
         </div> --}}
-        <div class="modal-body" style="background-color: rgb(5 26 57);height:50vh;overflow-y:scroll;">
+        <div class="modal-body">
             <div class="contact-body">
                 <span class="modal_spn_value">{{ $user->email ?? '' }}</span><br/>
                 <span class="modal_spn_value">{{ $profile->secondary_email ?? '' }}</span><br/><br><br>
@@ -427,8 +429,8 @@
   <div class="modal" id="WorkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header" style="background:#0f093c;border:none;">
-          <h5 class="modal-title" id="exampleModalLongTitle" style="color: #efad0c;width:66vw;">Work Experience</h5>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Work Experience</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -436,35 +438,35 @@
         {{-- <div class="app" style="display: none;">;
           
         </div> --}}
-        <div class="modal-body" style="background-color: rgb(5 26 57);height:50vh;overflow-y:scroll;">
+        <div class="modal-body">
             <div class="work-body">
-                @if(empty($profile->workexp))
+                @if(sizeof($profile->workexp) ==0)
                     <label class="lbl_title"></label><br>
                         <label class="lbl_title">Company Name : </label><span class="spn_valuee"> </span><br>
                         <label class="lbl_title">Designation : </label><span class="spn_valuee"></span><br>
                         <label class="lbl_title">Contact Number : </label><span class="spn_valuee"></span><br>
                         <label class="lbl_title">Company Address : </label><span class="spn_valuee"></span><br>
-                        <div style="display: flex">
-                            <div style="padding: 1%;width: 15vw;"><label class="lbl_title">Role : </label></div>
+                        <div class="about-me-objective">
+                            <div class="jobDesRole"><label class="lbl_title">Role : </label></div>
                             <div>
-                                <span class="spn_valuee" style="text-align: justify-all" ></span><br/>
+                                <span class="spn_valuee"></span><br/>
                             </div>
                         </div>
                 @else
                     @foreach($profile->workexp as $workExperience)
-            
-                        <label class="lbl_title">{{ \Carbon\Carbon::parse($workExperience->start_date)->format('F Y') }} - {{ \Carbon\Carbon::parse($workExperience->end_date)->format('F Y') }}</label><br>
+                        <div class="work-dates">{{ \Carbon\Carbon::parse($workExperience->start_date)->format('F Y') }} - {{ \Carbon\Carbon::parse($workExperience->end_date)->format('F Y') }}</div>
+                        {{-- <label class="lbl_title">{{ \Carbon\Carbon::parse($workExperience->start_date)->format('F Y') }} - {{ \Carbon\Carbon::parse($workExperience->end_date)->format('F Y') }}</label><br> --}}
                         <label class="lbl_title">Company Name : </label><span class="spn_valuee"> {{ $workExperience->company_name ?? '' }}</span><br>
                         <label class="lbl_title">Designation : </label><span class="spn_valuee"> {{ $workExperience->designation ?? '' }} </span><br>
                         <label class="lbl_title">Contact Number : </label><span class="spn_valuee"> {{ $workExperience->contact_no ?? '' }}</span><br>
                         <label class="lbl_title">Company Address : </label><span class="spn_valuee"> {{ $workExperience->address ?? '' }}  </span><br>
-                        <div style="display: flex">
-                            <div style="padding: 1%;width: 15vw;"><label class="lbl_title">Role : </label></div>
+                        <div class="about-me-objective">
+                            <div class="jobDesRole"><label class="lbl_title">Role : </label></div>
                             <div>
-                                <span class="spn_valuee" style="text-align: justify-all" >{{ $workExperience->role ?? '' }}</span><br/>
+                                <span class="spn_valuee">{{ $workExperience->role ?? '' }}</span><br/>
                             </div>
                         </div>
-                        <hr style="background-color: #8e9898">
+                        
                     @endforeach
                 @endif
             </div>
@@ -478,8 +480,8 @@
   <div class="modal" id="RefrenceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header" style="background:#0f093c;border:none;">
-          <h5 class="modal-title" id="exampleModalLongTitle" style="color: #efad0c;width:66vw;">character Reference</h5>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">character Reference</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -487,8 +489,8 @@
         {{-- <div class="app" style="display: none;">;
           
         </div> --}}
-        <div class="modal-body" style="background-color: rgb(5 26 57);height:50vh;overflow-y:scroll;">
-            <div class="work-body">
+        <div class="modal-body">
+            <div class="reference-body">
                 @foreach($profile->charref as $refrence)
                     <label class="lbl_title">Name : </label><span class="spn_valuee"> {{ $refrence->name ?? '' }}</span><br>
                     <label class="lbl_title">Email Address : </label><span class="spn_valuee"> {{ $refrence->email ?? '' }} </span><br>
@@ -503,7 +505,7 @@
                         {{-- <label class="lbl_titile">DOB : </label><span class="dob spn_value"></span>
                         <label class="lbl_titile">Address : </label> <span class="address spn_value" ></span> --}}
                     
-                <hr style="background-color: #8e9898">
+               
                 @endforeach
                 
             </div>

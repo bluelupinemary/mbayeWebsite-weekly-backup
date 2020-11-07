@@ -24,7 +24,6 @@ let createContactScene = function(){
     footCamera = create_camera();
     create_light();
     // create_contacts_gui();
-    
 
     hl = new BABYLON.HighlightLayer("hl1", scene);
     starColor = new BABYLON.HighlightLayer("starColor", scene);
@@ -146,6 +145,7 @@ function load_3D_mesh(){
 
                 result.meshes.forEach(function(m) {
                     m.isPickable = true;
+                    if(m.name === "25PilosellaAurantica") m.name = "25PilosellaAurantiaca";
                 });
 
             }),
@@ -153,7 +153,7 @@ function load_3D_mesh(){
       ]).then(() => {
         add_mouse_listener();
         
-        setup_music_player();
+        
 
         for(const [key,val] of marblePhotos.entries()){
           init_flower_photo(key,val[0],val[1],val[2]);
@@ -163,7 +163,7 @@ function load_3D_mesh(){
         init_foot_heart_label();
         add_action_mgr(rfoot_obj);
 
-       
+        setup_music_player();
       
 
           
@@ -256,7 +256,8 @@ function add_mouse_listener(){
                     // $('#musicVideoDiv').show();
 
                     currFlower = theMesh.name;
-                  }else if(theMesh.name==currFlower) document.getElementById("musicVideoDiv").style.visibility = "visible";
+                  }else if(theMesh.name==currFlower) $("#musicVideoDiv").css('display','flex');
+                  //document.getElementById("musicVideoDiv").style.visibility = "visible";
               }//end of if has parent
               
               
@@ -332,6 +333,7 @@ function get_foot_mesh(theMesh,camAngle){
     // console.log(theMesh);
     rfoot_meshes.forEach(function(m) {
       if (m.name === theMesh) {
+        console.log(m.material.state, ctr);
           litFlowersMap.set(m,m.material);
           if(ctr == 0){
               set_camera_specs(camAngle);
@@ -488,7 +490,7 @@ function init_foot_label(){
 }
 
 function init_foot_heart_label(){
-  let plane = BABYLON.MeshBuilder.CreatePlane("footHeartLbl", {width:20,height:17}, scene);
+  let plane = BABYLON.MeshBuilder.CreatePlane("footHeartLbl", {width:24,height:21}, scene);
   plane.isVisible = false;
   plane.position = new BABYLON.Vector3(-2.20,0.40,-21.28);
   plane.rotationQuaternion = new BABYLON.Quaternion(0,-0.8200,0,-0.5721);
@@ -550,13 +552,15 @@ var onOverFlower =(meshEvent)=>{
           let a = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
           let b = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
           let c = (Math.random() * (0.99 - 0.01) + 0.01).toFixed(1);
-          hl.addMesh(meshEvent.source, new BABYLON.Color3(a,b,c));
+
+          let res = testBrowser();
+          if(res === 'Safari') meshEvent.source.material.emissiveColor = new BABYLON.Color3(0.4,0.7,0.4);
+          else hl.addMesh(meshEvent.source, new BABYLON.Color3(a,b,c));
 
           flowerLbl = document.createElement("span");
           flowerLbl.setAttribute("id", "flowerLbl");
           var sty = flowerLbl.style;
           sty.position = "absolute";
-          sty.lineHeight = "1.2em";
           sty.padding = "0.5%";
           sty.color = "#00BFFF  ";
           sty.fontFamily = "Courgette-Regular";
@@ -564,9 +568,8 @@ var onOverFlower =(meshEvent)=>{
           sty.left = (scene.pointerX+20) + "px";
           sty.cursor = "pointer";
           sty.textShadow = "2px 0px 5px black"; 
+          sty.fontSize = "2em";
 
-          if(isMobile() || isSmallDevice()) sty.fontSize = "1.7em";
-          else sty.fontSize = "2em";
           
           let theName =  meshEvent.meshUnderPointer.name;
           document.body.appendChild(flowerLbl);
@@ -595,8 +598,12 @@ var onOutFlower =(meshEvent)=>{
         foot_heart_label.isVisible = false;
       }else{
         //floating flowers
+        let res = testBrowser();
+        if(res === 'Safari') meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,0,0);
+        else hl.removeMesh(meshEvent.source);
+
         meshEvent.source.scaling = origScaling;
-        hl.removeMesh(meshEvent.source);
+        
       }
      
     }else{
@@ -662,16 +669,15 @@ function set_gallery_visible(isSet){
 
 
 
-
-
-
-
   //function that will render the scene on loop
+
   var theScene = createContactScene();
+
     
   theScene.executeWhenReady(function () {    
     $('#loadingScreenDiv').css('display', 'none');
     $('#loadingScreenPercent').css('display', 'none');
+     testFullscreen();
 
     //scene optimizer
     var options = new BABYLON.SceneOptimizerOptions();
@@ -679,9 +685,9 @@ function set_gallery_visible(isSet){
     var optimizer = new BABYLON.SceneOptimizer(theScene, options);
 
     //if the current screen is a mobile/tablet device
-    if(isSmallDevice() || isMobile()){
-        alert_fullscreen();
-    }
+    // if(isSmallDevice() || isMobile()){
+    //     alert_fullscreen();
+    // }
 
 
     engine.runRenderLoop(function(){
@@ -691,6 +697,7 @@ function set_gallery_visible(isSet){
     });//end of renderloop
   
   });//end of execute ready fxn
+
 
 
   // window resize handler
@@ -751,7 +758,7 @@ function set_gallery_visible(isSet){
       $('.player').empty();
       yt_player.loadVideoById(videoId,start);
       yt_player.playVideo();
-      $('#musicVideoDiv').show();
+      $('#musicVideoDiv').css('display','flex');
       // document.getElementById("musicVideoDiv").style.visibility = "visible";
 
   }
@@ -791,24 +798,37 @@ $('#musicVideoDivHeader #fullscreen-btn, #musicVideoDivHeader #minimize-btn').on
 
 function resize_window(size, section){
     let theSection;
-    if(section === 'youtube') theSection = $('#musicVideoDiv #player');
-    else if(section === '3dflower') theSection = $('#flowerModelDiv'); 
+    if(section === 'youtube'){
+      theSection = $('#musicVideoDiv #player');
+    }else if(section === '3dflower') theSection = $('#flowerModelDiv'); 
+
+
     if(size === 'full'){
         theSection.css({ 
           width :'100vw',
-          height: '100vh'
+          height: '95vh'
         });
-    }else{
+        if(section === 'youtube') $('#musicVideoDiv').css({width:'100vw', height:'auto'});
+        if(section === '3dflower') theSection.css('height','100vh');
+        $('#minimize-btn').css('padding-right','1%');
+        $('#flowerModelDiv #minimize-btn').css('padding-right','1%');
+    }else{ //if windowed size
         if(isMobile() || isSmallDevice()){
           theSection.css({ 
             width: '30vw',
             height: '18vw'
           });
+          if(section === 'youtube'){  
+            $('#musicVideoDiv').css('width','30vw');
+          }
         }else{
           theSection.css({ 
               width: '20vw',
               height: '12vw'
           });
+          if(section === 'youtube'){
+            $('#musicVideoDiv').css('width','20vw');
+          }
         }
     }
 }
@@ -817,7 +837,6 @@ function resize_window(size, section){
 /*################################################### 3D FLOWERS SECTION FUNCTIONS ############################################## */
 
 $('#flowerModelDiv #close-btn').on("click", function (e) {
-    // $('#flowerModelDiv').hide();
     document.getElementById("flowerModelDiv").style.visibility = "hidden";
     $('.modelArrow').css('display','none');
 });
@@ -829,15 +848,12 @@ $('#flowerModelDivHeader #fullscreen-btn, #flowerModelDivHeader #minimize-btn').
         $("#flowerModelDivHeader").css('height','6%');
         $("#flowerModelDivHeader #fullscreen-btn").hide();
         $("#flowerModelDivHeader #minimize-btn").show();
-        //hide the music div
-        $('#musicVideoDiv').hide();
+        
     }else{
         resize_window('window', '3dflower');
         $("#flowerModelDivHeader").css('height','25%');
         $("#flowerModelDivHeader #fullscreen-btn").show();
         $("#flowerModelDivHeader #minimize-btn").hide();
-        //show the music div
-        $('#musicVideoDiv').show();
     }
     isFlowerFullscreen = !isFlowerFullscreen;
 });
@@ -878,12 +894,10 @@ $('#flowerModelDiv #rightArrow').on("click", function(e){
        modelCount = 0;
        showFlowerModelDiv(val[modelCount]);
     }
-    
-    console.log(modelCount);
 });
 
 $('#flowerModelDiv #leftArrow').on("click", function(e){
-    console.log("left arrow");
+  
     modelCount--;
     let val = rFoot3DFlowersMap.get(currFootFlower);
     let len = val.length;
@@ -900,7 +914,7 @@ $('#flowerModelDiv #leftArrow').on("click", function(e){
 });
 
  function showFlowerModelDiv(theFlowerName){
-   console.log("this is called",theFlowerName);
   document.getElementById("flowerViewer").src = "front/objects/flowersMbayeScene/flowers3D/"+theFlowerName+".glb";
   document.getElementById("flowerModelDiv").style.visibility = "visible";
 }//end of showCharDescDiv function
+

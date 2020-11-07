@@ -773,7 +773,7 @@ outline: 0;
     width: 13vw;
     color: #FFFFFF;
     text-shadow: 0px 0px 3px #000000;
-    font-family: 'Nasalization';
+    font-family: 'Arial';
     background: #0b91c3a3;
     line-height: 1em;
     text-align: center;
@@ -839,7 +839,7 @@ outline: 0;
     width: 13vw;
     color: #FFFFFF;
     text-shadow: 0px 0px 3px #000000;
-    font-family: 'Nasalization';
+    font-family: 'Arial';
     background: #0b91c3a3;
     line-height: 1em;
     text-align: center;
@@ -902,7 +902,7 @@ outline: 0;
     z-index: 999;
     color: #FFFFFF;
     text-shadow: 0px 0px 3px #000000;
-    font-family: 'Nasalization';
+    font-family: 'Arial';
     background: #0b91c3a3;
     
     text-align: center;
@@ -1029,8 +1029,8 @@ outline: 0;
 }
 
 .navigator-div button.tooltips {
-    width: 100%;
-    height: 100%;
+    /* width: 100%;
+    height: 100%; */
     background: transparent;
     border: 0;
     padding: 0;
@@ -2409,6 +2409,19 @@ div.cell.reflection2 img
         display: flex;
         justify-content: center;
     }
+    .user-photo.male img {
+        border-radius: 21% 21% 30% 30%;
+        cursor: pointer;
+        position: absolute;
+        z-index: 5000;
+        /* border-radius: 21% 21% 35% 35%; */
+        top: 50%;
+        height: 16vh;
+        left: 50%;
+        /* z-index: 500000; */
+        /* transform: translate(10px, 10px); */
+        transform: translate(-57%, -33%);
+    }
     .astro-div .img_astro {
         width: 100%;
         /* height: 33vw; */
@@ -2497,7 +2510,8 @@ div.cell.reflection2 img
     -webkit-transform: translate(-739%, 586%);
     -moz-transform:translate(-739%, 586%);
         -ms-transform: translate(-739%, 586%);
-        transform: translate(-586%, 586%);
+        /* transform: translate(-586%, 586%); */
+        transform: translate(-586%, 501%);
 }
 
 .navigator-zoomout-btn:active, .navigator-zoomout-btn:focus {
@@ -2517,7 +2531,7 @@ div.cell.reflection2 img
     height: 2.5vw;
     border-radius: 3px;
     width: 100%;
-    font-family: 'Nasalization';
+    font-family: 'Arial';
 }
 .navigator-div-zoomed-in .communicator-div {
    

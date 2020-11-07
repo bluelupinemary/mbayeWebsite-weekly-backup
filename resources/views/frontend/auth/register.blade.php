@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('front/CSS/register_style.css') }}">
   @endsection
+  @section('after-styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+  @endsection
 
 @section('content')
     <div  id="block_land" >
@@ -31,7 +35,7 @@
                     <h2 class="fs-title">Login Details</h2>
                     <input type="hidden" name="">
                     <div class="form-group">
-                      <input type="email"  data-toggle="tooltip" title="Email is Required!" data-placement="right"  class="form-control @error('email') danger-alter @enderror" id="Email" value="{{ old('email') }}"  onchange="validateEmail()" required name="email" placeholder="Email">
+                      <input type="email"  data-toggle="tooltip" title="Email is Required!" data-placement="right"  class="form-control @error('email') danger-alter @enderror" id="Email" value="{{ old('email') }}" required name="email" placeholder="Email">
                     </div>
 
                     <div class="input-group" id="show_hide_password">
@@ -81,8 +85,13 @@
                           </div>    
                       </div>
                       <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                          <input type="date" id="date" data-toggle="tooltip" title="DOB is Required!" data-placement="right" name="dob" value="{{ old('dob') }}" required onchange="calculate_age()" class="form-control @error('dob') danger-alter @enderror" placeholder="MM/DD/YYYY">
+                        <div class="form-group"> 
+                          <div class="input-group">
+                            <input type="text" class="form-control @error('dob') danger-alter @enderror" id="date" readonly name="dob" placeholder="YYYY-MM-DD" type="text" value="{{ old('dob') }}" onchange="calculate_age()" data-toggle="tooltip" data-placement="right" data-original-title="DOB is Required!">
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                          </div>
                           <input  class="form-control lbl_text" type="hidden" id="age" value="{{ old('age') }}" name="age" readonly>
                         </div>    
                       </div>
@@ -259,7 +268,7 @@
         <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
       </p>
       <br>
-      <center><div class="txtocp"><input type="text" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation" value="{{ old('occupation') }}"/></div></center>
+      <center><div class="txtocp"><input type="text" pattern=".{3,}" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation" value="{{ old('occupation') }}"/></div></center>
       <br class="">
       <button type="button" class="btn btn-info btn_occ_submit">Submit</button>
       </div>
@@ -600,8 +609,7 @@
 
 @section('after-scripts')
     <!-----------------------------------   script section ------------------------------------------>
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
    
@@ -610,7 +618,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
     <script src="{{ asset('front') }}/JS/webcam.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
-    <script src="{{ asset('front') }}/JS/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
     <script src="{{ asset('front/sweetalert/dist/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('front') }}/JS/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
@@ -621,7 +629,8 @@
 
     @if(session('success'))
     <script>
-        $(document).ready(function(){                  
+        $(document).ready(function(){       
+                    
           Swal.fire({
               imageUrl: '../front/icons/alert-icon.png',
               imageWidth: 80,
@@ -629,7 +638,7 @@
               imageAlt: 'Mbaye Logo',
               title: "<span id='success' style='color:green;'>Congratulations!</span>",
               html: "Registration completed. We have sent an activation link to your email address . Please verify your account.",
-              width: '30%',
+              // width: '30%',
               padding: '1rem',
               background: 'rgba(8, 64, 147, 0.62)'
         });                                        
@@ -639,10 +648,10 @@
  <script>
  
    $(document).ready(function(){
-
     
-   
-
+    $('#date').datepicker({
+        format: 'yyyy-mm-dd'
+    }); 
     if({{count($errors) }} > 0)
     {
       var errorMessage = {!! html_entity_decode($errors, ENT_QUOTES, 'UTF-8') !!};
@@ -667,7 +676,7 @@
           imageAlt: 'Mbaye Logo',
           title: "<span id='error'>Registration Failed!</span>",
           html: sweetMessage,
-          width: '30%',
+          // width: '30%',
           padding: '1rem',
           background: 'rgba(8, 64, 147, 0.62)'
                 });

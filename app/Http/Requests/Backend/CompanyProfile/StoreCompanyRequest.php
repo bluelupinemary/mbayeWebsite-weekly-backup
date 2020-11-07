@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backend\CompanyProfile;
 
 use App\Http\Requests\Request;
+use Illuminate\Validation\Rule;
 
 class StoreCompanyRequest extends Request
 {
@@ -25,7 +26,8 @@ class StoreCompanyRequest extends Request
     {
         return [
             'company_name' => 'required',
-            'company_email' => 'required',
+            // 'company_email' => 'required',
+            'company_email' => ['required', 'email', 'max:255', Rule::unique('company_profiles')],
             'company_phone_number' => 'required|regex:/^[0-9]+$/i',
             'featured_image' => 'required',
             'industry_id' => 'required',

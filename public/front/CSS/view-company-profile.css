@@ -21,17 +21,53 @@
     /* top: 78%; */
     /* left: 27%; */
 }
+.edit-buttons .tooltips:hover span {
+    display: inline;
+}
+
 .view-profile-button{
     border: 1px solid white;
     width: 3.3vw;
     border-radius: 50%;
-    background: #00bff3;
+    background: #e09135;
     float: right;
     /* bottom: 12vh; */
     top: 0;
     left: 0;
     bottom: 0;
     transform: translate(-23%, -94%);
+}
+.view-profile-button.tooltipps:hover span {
+    display: inline;
+}
+
+.tooltipps span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(20%, -50%);
+    -moz-transform: translate(20%, -50%);
+    -ms-transform: translate(20%, -50%);
+    transform: translate(-59%, 136%);
+    border-radius: 6%;
+    z-index: 999;
+    width: 8vw;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 3px #000000;
+    font-family: 'Nasalization';
+    background: #0b91c3a3;
+    line-height: 1em;
+    text-align: center;
+    display: none;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 3px 4px #000000;
+    box-shadow: 0px 3px 4px #000000;
+    font-size: 1em;
+    word-wrap: break-word;
+    padding: 10%;
+    outline: 0;
+    border: 0;
+    border: 0px solid white;
 }
 
 #edit_uploaded_image{
@@ -54,6 +90,7 @@
     max-inline-size: fit-content;
     height: 27vh;
     max-width: 100%;
+    width: 100%;
 }
 
 
@@ -465,7 +502,7 @@ cursor: not-allowed;
     width: 100%;
     height: 100%;
     background-size: cover;
-    background-color: #001525d1;
+    background-color: #08254536;
     border-radius:2vh;
 }
 #featured-zoomed-image{
@@ -529,6 +566,7 @@ cursor: not-allowed;
    display:none;
 
 }
+
 .column2{
     width: 60vw;
     height: 78vh;
@@ -538,8 +576,8 @@ cursor: not-allowed;
     /* margin-left: 5%; */
     background-color: #08254536;
     border-radius: 10px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* overflow-y: auto;
+    overflow-x: hidden; */
     padding: 0;
     border: 1px solid #082545;
 }
@@ -658,6 +696,9 @@ cursor: not-allowed;
         .button-done{
             width: 10vw !important;
         }
+        .tooltipps span{
+            font-size: 15px;
+        }
      }
     
 
@@ -706,6 +747,7 @@ cursor: not-allowed;
         border-top: 8px solid transparent;
         border-bottom: 8px solid transparent;
     }
+    
    
     .navigator-div img {
         cursor: pointer;
@@ -749,7 +791,8 @@ cursor: not-allowed;
         border: 0;
         border: 0px solid white;
     }
-    
+
+   
     .navigator-buttons {
         position: absolute;
         top: 50%;
@@ -784,6 +827,9 @@ cursor: not-allowed;
         .btn_pointer {
             /* pointer-events: none; */
             cursor: pointer;
+        }
+        .tooltipps span{
+            font-size: 15px;
         }
     }
     .navigator-div .tooltips.left span {
@@ -856,7 +902,9 @@ cursor: not-allowed;
     .instructions-div .tooltips span {
         transform: translate(33%, -50%) !important;
     }
- 
+    .tooltipps span{
+        font-size: 15px;
+    }
     
  
     
@@ -951,11 +999,16 @@ cursor: not-allowed;
         column-gap: 4em;
         /* display: flex !important; */
     }
+    .tooltipps span{
+        font-size: 15px;
+    }
   
 }
-/* .heading h2{
-    font-size:calc(1.5vw + 1px) !important;
-} */
+.heading{
+    color:#efad0c;
+    font-size:2.5vw;
+    text-align:center;
+}
 
 /* @media only screen and (max-width:568px){
     .button-done{
@@ -1002,6 +1055,9 @@ cursor: not-allowed;
     .inox{
         height: 24vh;
     }
+    .tooltipps span{
+            font-size: 15px;
+        }
 }
 
 /* --------------------------navigator zoom in---------------------------------------------------- */
@@ -1736,4 +1792,37 @@ cursor: not-allowed;
 
 .navigator-div-zoomed-in .notifications-list li:not(:last-child) {
 	border-bottom: 0.2px solid #1c3c41;
+}
+
+
+
+/*css for the company details parent div*/
+.company-details-parent-div{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.feature-image-column{
+    padding-left:5vw;
+}
+.fa-ellipsis-h{
+    position:relative;
+    font-size:3vw; 
+    color:white; 
+    float:right; 
+    right:5%;
+}
+.fas{
+    position:relative;
+    font-size:2.8vw; 
+    color:white; 
+    float:right; 
+    right:5%;
+}
+.edit{
+    border:0;
+    background:transparent;
+}
+.fa-edit{
+    font-size:2em; 
+    color:#c5a739;
 }

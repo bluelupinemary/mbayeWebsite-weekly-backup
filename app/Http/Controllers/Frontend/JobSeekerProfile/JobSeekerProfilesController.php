@@ -40,15 +40,15 @@ class JobSeekerProfilesController extends Controller
     public function index(Request $request)
     {
      
-    //   $jobId = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
+      $jobId = JobSeekerProfile::where('user_id',Auth::user()->id)->first();
       $user = User::where('id',Auth::user()->id)->first();
       $profession = Profession::all();
-    //   if ($jobId === null) {
+      if ($jobId === null) {
       return view('frontend.user.setup_jobseeker_profile',compact('user','profession'));
-    // }
-    // else{
-    //     return redirect('jobseekers/edit-setup-profile');
-    // }
+    }
+    else{
+        return redirect('jobseekers/edit-setup-profile');
+    }
 }
     public function edit_profile(Request $request)
     {

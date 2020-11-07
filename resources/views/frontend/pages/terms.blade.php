@@ -439,7 +439,7 @@
                                     <br>
                               
                                     <li>
-                                      c.	Your use of an SRA is terminable by us at will for any reason and at our sole discretion, with or without prior notice. Upon termination, we may, but shall not be obligated to: (i) delete or deactivate your Account, and/or (ii) block your e-mail and/or IP addresses or otherwise terminate your use of and ability to use an SRA. You agree not to use or attempt to use an SRA after said termination. Upon termination, the grant of your right to use an SRA shall terminate, but all other portions of these Terms shall survive. You acknowledge that we are not responsible to you or any third party for the termination of your grant of use of an SRA.
+                                      	Your use of an SRA is terminable by us at will for any reason and at our sole discretion, with or without prior notice. Upon termination, we may, but shall not be obligated to: (i) delete or deactivate your Account, and/or (ii) block your e-mail and/or IP addresses or otherwise terminate your use of and ability to use an SRA. You agree not to use or attempt to use an SRA after said termination. Upon termination, the grant of your right to use an SRA shall terminate, but all other portions of these Terms shall survive. You acknowledge that we are not responsible to you or any third party for the termination of your grant of use of an SRA.
                                     </li>
                                   </ol>
                                 </li>
@@ -1015,7 +1015,7 @@
                       <br>
                 
                       <li>
-                        c.	Your use of an SRA is terminable by us at will for any reason and at our sole discretion, with or without prior notice. Upon termination, we may, but shall not be obligated to: (i) delete or deactivate your Account, and/or (ii) block your e-mail and/or IP addresses or otherwise terminate your use of and ability to use an SRA. You agree not to use or attempt to use an SRA after said termination. Upon termination, the grant of your right to use an SRA shall terminate, but all other portions of these Terms shall survive. You acknowledge that we are not responsible to you or any third party for the termination of your grant of use of an SRA.
+                        	Your use of an SRA is terminable by us at will for any reason and at our sole discretion, with or without prior notice. Upon termination, we may, but shall not be obligated to: (i) delete or deactivate your Account, and/or (ii) block your e-mail and/or IP addresses or otherwise terminate your use of and ability to use an SRA. You agree not to use or attempt to use an SRA after said termination. Upon termination, the grant of your right to use an SRA shall terminate, but all other portions of these Terms shall survive. You acknowledge that we are not responsible to you or any third party for the termination of your grant of use of an SRA.
                       </li>
                     </ol>
                   </li>

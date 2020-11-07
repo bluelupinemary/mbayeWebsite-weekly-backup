@@ -1,0 +1,238 @@
+#flowersWikipediaDiv, #carpetsWikipediaDiv{
+    background-color: black; 
+    /* visibility: hidden; */
+    display: none;
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100vw;
+    height:100vh;
+    border: 2px solid gray;
+    z-index: 100;
+}
+
+.spanLbl{
+    color:gray !important;
+}
+/* 
+#flowerModelDiv{
+    border:1px solid gray;
+    position:absolute;
+    width:20vw;
+    height:20vh;
+    bottom:0vw;
+    left:26vw;
+    visibility: hidden;
+}
+#flowerModelDiv #close-btn{
+    position: absolute;
+    right:0;
+}
+#flowerModelDiv #fullscreen-btn{
+    position: absolute;
+    right:1.5vw;
+}
+#flowerModelDiv #minimize-btn{
+    position: absolute;
+    right:1.5vw;
+}
+
+#flowerViewer{
+    position: absolute;
+    width:100%;
+    height:100%;
+} */
+/* 
+.music-player-parent-div{
+    position: absolute;
+    left: 26vw;
+    top: 0.7vw;
+    width: 20vw;
+    height: 20vh;
+    
+}
+
+.music-close-btn{
+    height: 2vw;
+    width: 2vw;
+    position: relative;
+    float:right;
+    padding:1%;
+} */
+
+#wikipediaIcon{
+    display:none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#wikipediaIconImg:hover{
+    filter: drop-shadow(2px 2px 5px white);
+}
+
+#wikipediaIconImg{
+    width: 5rem;
+}
+
+
+.wikiIcon img{
+    height: 4rem;
+    width: auto;
+    /* border: 1px solid gray; */
+}
+
+
+
+.wikiLabel{
+    display:none;
+    position: absolute;
+    color: white;
+    transform: translate(3%, 0%);
+    font-size: 1.2rem;
+    text-shadow: 0px 0px 3px #000000;
+    background: #0b91c3a3;
+    font-family: 'Nasalization Rg';
+    width: 10vw;
+    height: 3.5vh;
+    text-align: center;
+    border-radius: 12px
+}
+
+.wikiIcon:hover span{
+    display:inline-block;
+}
+
+
+#musicVideoDiv #player{
+    width:20vw;
+    height: 12vw;
+    right: 0;
+    top:0;
+    position: relative;
+}
+
+#musicVideoDiv #close-btn, #musicVideoDiv #fullscreen-btn, #musicVideoDiv #minimize-btn,
+#flowerModelDiv #close-btn, #flowerModelDiv #fullscreen-btn, #flowerModelDiv #minimize-btn,
+#flowersWikiDivHeader #close-btn, #flowersWikiDivHeader #fullscreen-btn, #flowersWikiDivHeader #minimize-btn{
+    height: 100%;
+    width: auto;
+    position: relative;
+    float: right;
+}
+
+
+#musicVideoDivHeader, #flowerModelDivHeader,#flowersWikiDivHeader{
+    position: relative;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    height: 5vh;
+    width: 100%;
+}
+
+/* #musicVideoDiv{
+  position: absolute;
+  width: 20vw;
+  height: 20vh;
+  visibility:hidden;
+ 
+
+} */
+/* #close-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-top: 0 !important;
+    padding-right: 1%;
+}
+#fullscreen-btn, #minimize-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-right: 3%;
+    padding-top: 0 !important;
+}
+   */
+#close-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-top: 0 !important;
+    padding-right: 1%;
+}
+#fullscreen-btn, #minimize-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-right: 3%;
+    padding-top: 0 !important;
+}
+  
+
+
+#musicVideoDiv{
+    position: absolute;
+    width:20vw;
+    height:13vw;
+    right:0;
+    top:0;
+    display:none;
+    background:black;
+    filter: drop-shadow(2px 4px 6px black);
+    flex-direction: column;
+    z-index: 100;
+}
+
+
+
+/*=================================3D Flower Viewer=========================*/
+#flowerModelDiv{
+    border:1px solid gray;
+    position:absolute;
+    width:20vw;
+    height:12vw;
+    bottom:0;
+    left:0;
+    display:flex;
+    filter:drop-shadow(3px 0px 6px black);
+    visibility: hidden;
+    z-index: 100;
+}
+
+#flowerModelDiv #flowerViewer{
+    position: absolute;
+    width:100%;
+    height:100%;
+}
+
+
+
+
+/*extra small and small screens*/
+@media (min-width : 320px) and (max-width : 1024px) and (orientation : landscape) { 
+    #musicVideoDiv #player, #flowerModelDiv{
+        width:30vw;
+        height:18vw;
+    }
+    #musicVideoDivHeader{
+        height: 10vh;
+    }
+
+    #flowerModelDivHeader{
+        height:25%;
+    }
+
+    #flowersWikiDivHeader{
+        height:10vh;
+    }
+
+    #musicVideoDiv{
+        width:30vw;
+    }
+   
+}

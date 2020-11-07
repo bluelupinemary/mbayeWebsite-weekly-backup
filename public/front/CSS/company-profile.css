@@ -22,7 +22,7 @@ label{
     position: absolute;
     font-size: 2em;
     border: none;
-    color: white;
+    /* color: white; */
     padding: 12px 16px;
     cursor: pointer;
 }
@@ -30,14 +30,20 @@ label{
     padding-top:1.5%;
     margin-left: auto;
     margin-right: auto;
-    display: block;
+    /* display: block; */
     object-fit: contain;
     max-inline-size: fit-content;
     height: 27vh;
+    width: 100%; 
+    /* display:none; */
     max-width: 100%;
 }
-
-
+.featuredImageCreate{
+display: none;
+}
+.featuredImageEdit{
+    display: block;
+}
 
 #featured-image-label{
     margin-left: auto;
@@ -471,26 +477,56 @@ cursor: not-allowed;
     opacity: 0.5 !important;
 }
 
+.middle-text-active{
+    background-color: black;
+}
 #featured-image-previewimg:hover{
     opacity: 0.5;
+}
+.feature-image-column{
+    padding-left:5vw;
 }
 
 
 #middleText {
     /* background-color: #082545; */
+    /* border: 1px solid red; */
+    height: 5vh;
+    font-size: calc(1vw + 5px);
     color: white;
     font-size: 1.2rem;
     top: 50%;
     left: 50%;
     /* padding: 16px 70px; */
-    position: absolute;
+    position: relative;
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
 }
+.middle-text{
+    font-size: calc(1vw + 1px);
+}
+.edit-image{
+    /* display: none; */
+    color:#16aedc;
+
+}
+.edit-updated-image{
+    display:block !important;
+    color:#16aedc;
+}
+.edit-photo-span{
+    display:none;
+    font-size:calc(0.8vw + 1px) !important;
+     width:6vw !important;
+     padding:10%; 
+     transform: translate(-49%, -209%);
+}
 #file{
    display:none;
+   min-width:100%;
+   min-height: 100%;
 
 }
      .column2{
@@ -912,6 +948,15 @@ cursor: not-allowed;
 }
 .heading h2{
     font-size:calc(1.5vw + 1px) !important;
+    color:white;
+    background-color:#082545;
+    text-align:center;
+    font-family: Arial;
+    height: 5vh;
+    padding: 8px 0px 0px 0px;
+}
+.input-span{
+    color: red;
 }
 
 /* @media only screen and (max-width:568px){

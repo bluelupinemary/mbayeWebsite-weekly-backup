@@ -7,6 +7,7 @@ use App\Models\BlogTags\BlogTag;
 use App\Models\Like\GeneralLike;
 use App\Models\Comment\GeneralComment;
 use App\Models\BlogPrivacy\BlogPrivacy;
+use App\Models\BlogShares\BlogShare;
 use App\Models\GeneralBlogShares\GeneralBlogShare;
 use App\Models\GeneralBlogVideos\GeneralBlogVideo;
 
@@ -57,6 +58,13 @@ trait GeneralBlogRelationship
         return $this->hasMany(GeneralBlogShare::class, 'general_blog_id');
     }
 
+    public function shares_count(){
+        // dd($id);
+        $generalsharecount = GeneralBlogShare::where('general_blog_id',$this->id)->count();
+        $regularsharecount = Blogshare::where('blog_id',$this->id)->where('blog_type','App\Models\GeneralBlogs\GeneralBlog')->count();
+        return $sharecount = $generalsharecount+$regularsharecount;
+    }
+
     // override the toArray function (called by toJson)
     public function toArray() {
         // get the original array to be displayed
@@ -89,7 +97,7 @@ trait GeneralBlogRelationship
         $data['coolcount']     = $this->likes->where('emotion',1)->count();
         $data['naffcount']     = $this->likes->where('emotion',2)->count();
         $data['commentcount']  = $this->comments->count();
-        $data['sharecount']  = $this->share->count();
+        $data['sharecount']  = $this->shares_count();
         $data['most_reaction'] = $this->mostReaction();
         $data['editurl'] = url('/communicator?action=edit_general_blog&blog_id='.$this->id.'&section=general_blog');
         $data['nearexpire'] = $this->isNearlyExpired();

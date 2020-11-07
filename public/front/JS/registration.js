@@ -1,4 +1,4 @@
-  var valideemail;
+  var valideemail = false ;
   // A button for taking snaps
   window.onload = function() 
   {
@@ -8,9 +8,9 @@
   // Get old selected gender, country, organization type;
   $(document).ready(function() {
 
-    $('#Email').focus(function(){
-      $('#Email').removeClass('success-alter');
-      $('#Email').removeClass('danger-alter');
+    $('#Email').change(function(){
+      // $('#Email').removeClass('success-alter');
+      // $('#Email').removeClass('danger-alter');
     });
 
     $("#MyForm input#text_occupation_astro").keyup(function(){
@@ -50,9 +50,6 @@
       });
       Webcam.attach( '#my_camera' ); 
     }
-     
-
-    
     if (screen_height == 320 || screen_height < 320) 
     {
       $('.col-md-6').css({"width":"50%"});
@@ -61,158 +58,153 @@
       $("#MyForm input").css({"font-size" :"1.5vw","padding": "2% 3%"});
       $(".form-groupt").css({"margin-bottom" :".5rem"});
     }
-      $("input").focus(function(){
-        $(this).removeClass('danger-alter');
-      });
-      $("select").focus(function(){
-        $(this).removeClass('danger-alter');
-      });
-        
-      var url = $('meta[name="url"]').attr('content');
-
-      // $("#date").datepicker({
-      //   constrainInput:"true",
-      //   dateFormat:"mm/dd/yy"
-      // });
-      var maskConfig ={
-                        leapday: "29-02-",
-                        separator: "/",
-                        showMaskOnHover: false,
-                        showMaskOnFocus: false,
-                        placeholder: "__/__/____"
-                      }
-      // $('#date').inputmask('mm/dd/yyyy',maskConfig);
-      $(".datepicker").css({'display':'none'});
-      //   $('#date').on('change', function() {
-      //     if(this.value){
-      //       $(this).attr('data-date', moment(this.value, 'MM/DD/YYYY').format($(this).attr('data-dateformat')));
-      //     } else{
-      //       $(this).attr('data-date', '');
-      //     }
-
-      // });
-      var elem = document.documentElement;
-      function openFullscreen()
-      {
-        if (elem.mozRequestFullScreen) 
-          {  /* Firefox */
-            elem.mozRequestFullScreen(); 
-            contentDisplay();
-          } 
-        else if (elem.webkitRequestFullscreen) 
-          { /* Chrome, Safari & Opera */
-            elem.webkitRequestFullscreen();
-            contentDisplay();
-          } 
-        else if (elem.msRequestFullscreen) 
-          { /* IE/Edge */
-            elem.msRequestFullscreen();
-            contentDisplay();
-          }
-        else if (elem.requestFullscreen) 
-          {
-            elem.requestFullscreen();
-            contentDisplay();
-          } 
-        else
-          { 
-            contentDisplay();
-          }
-        }
-
-      if(window.innerWidth < 991 )
-      {
-        $(document).ready(()=>{
-            Swal.fire({
-                  imageUrl: '../../front/icons/alert-icon.png',
-                  imageWidth: 160,
-                  imageHeight: 120,
-                  html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
-                  padding: '15px',
-                  background: 'rgba(8, 64, 147, 0.62)',
-                  allowOutsideClick: false
-                }).then((result) => {
-                    if (result.value) 
-                    {
-                      openFullscreen()
-                    }
-                  });
-              });
+    $("input").change(function(){
+      $(this).removeClass('danger-alter');
+    });
+    $("select").change(function(){
+      $(this).removeClass('danger-alter');
+    });
+    $(".datepicker").css({'display':'none'});
+    //   $('#date').on('change', function() {
+    //     if(this.value){
+    //       $(this).attr('data-date', moment(this.value, 'MM/DD/YYYY').format($(this).attr('data-dateformat')));
+    //     } else{
+    //       $(this).attr('data-date', '');
+    //     }
+    // });
+    var elem = document.documentElement;
+    function openFullscreen()
+    {
+      if (elem.mozRequestFullScreen) 
+      {  /* Firefox */
+        elem.mozRequestFullScreen(); 
+        contentDisplay();
+      } 
+      else if (elem.webkitRequestFullscreen) 
+      { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+        contentDisplay();
+      } 
+      else if (elem.msRequestFullscreen) 
+      { /* IE/Edge */
+        elem.msRequestFullscreen();
+        contentDisplay();
       }
-      else  contentDisplay();
+      else if (elem.requestFullscreen) 
+      {
+        elem.requestFullscreen();
+        contentDisplay();
+      } 
+      else
+      { 
+        contentDisplay();
+      }
+    }
+
+    if(window.innerWidth < 991 )
+    {
+      $(document).ready(()=>{
+          Swal.fire({
+                imageUrl: '../../front/icons/alert-icon.png',
+                imageWidth: 160,
+                imageHeight: 120,
+                html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
+                padding: '15px',
+                background: 'rgba(8, 64, 147, 0.62)',
+                allowOutsideClick: false
+              }).then((result) => {
+                  if (result.value) 
+                  {
+                    openFullscreen()
+                  }
+                });
+            });
+    }
+    else  contentDisplay();
 
     function contentDisplay() 
     {   
       $(".sub_container").show();
     } 
-    
-    
-    
-    
   });
 
-
-   // COUNTRIES AND STATE AND SITIES
-   var countires;
-   var states = [];
-   var allcities = [];
-   var alldata=[];
+  // COUNTRIES AND STATE AND SITIES
+  var countires;
+  var states = [];
+  var allcities = [];
+  var alldata=[];
    // FETCHING THE OBJECT OF COUNTRIES AND CITIES AND STATE
-     $.getJSON( "/front/json/reg-countries-states-cities.json", function( data ) {
-       alldata = data;
-         $.each( data, function( key, val ) {
-           $('#countryId').append("<option value='" + val.name + "'>" + val.name + "</option>");
-         });
-     });
-     // SELECTING THE COUNTRY AND FETCHING THE STATES
-     $('#countryId').change(function(){
-        var c_check = $('#countryId').val();
-        $('#stateId').html('');
-        $('#cityId').html('');
-        $.each( alldata, function( key, val ) {
-          if(val.name === c_check)
-          {
-            if(val.states.length)
-            {
-              $.each( val.states , function( key_c, val_c ) {
-                $('#stateId').append("<option value='" + val_c.name + "'>" + val_c.name + "</option>");
-              })
-            }
-            else
-            {
-              $('#stateId').append("<option value='" + c_check + "'>" + c_check + "</option>");
-            }
-          }
+  $.getJSON( "/front/json/reg-countries-states-cities.json", function( data ) {
+      alldata = data;
+        $.each( data, function( key, val ) {
+          $('#countryId').append("<option value='" + val.name + "'>" + val.name + "</option>");
         });
-      });
+    });
+    // SELECTING THE COUNTRY AND FETCHING THE STATES
+    $('#countryId').change(function(){
+      var country_check = $('#countryId').val();
+      $('#stateId').html(''); //RESET STATE FEILD
+      $('#cityId').html(''); //RESET CITY FEILD
+      //ALL DATA COUNTRY STATE CITY
+      $.each( alldata, function( country_key, country_val ) {   
+        // IF THE COUNTRY HAS USERS SELECTED VALUE
+        if(country_val.name === country_check)
+        {
+          // CHECK ID COUNTRY HAS STATES
+          if(country_val.states.length)
+          {
+            // ITERATE THROUGHT THE STATES
+            $.each( country_val.states , function( state_key, state_val ) {
+              $('#stateId').append("<option value='" + state_val.name + "'>" + state_val.name + "</option>");
+              if(state_val.cities.length)
+              {
+                $.each( state_val.cities , function( city_key, city_val )
+                {
+                  if($('#stateId').val() == state_val.name)
+                  {
+                    $('#cityId').append("<option value='" + city_val.name + "'>" + city_val.name + "</option>");
+                  }
+                });
+              }
+              else
+              {
+                $('#cityId').append("<option value='" + state_val.name + "'>" + state_val.name + "</option>");
+              }
+            });
+            
+          }
+          else
+          {
+            $('#stateId').append("<option value='" + country_val + "'>" + country_val + "</option>");
+            $('#cityId').append("<option value='" + country_val + "'>" + country_val + "</option>");
+          }
+        }
+      }); //COUNTRIES ITERATION VARIABLE IS FINISHED
+    });
      // SECLTING THE STATE TO GET THE CITIES
-     $('#stateId').change(function(){
-       var c_check = $('#stateId').val();
-       $('#cityId').html('');
-       
-       $.each( alldata, function( key, val ) {
-         $.each( val.states , function( key_c, val_c ) {
-           if(val_c.name === c_check)
-           { 
-             // console.log(c_check);
-            //  console.log(val_c.cities.length);
-            if(val_c.cities.length)
-            {
-              $.each( val_c.cities , function( key_c1, val_c1 ) {
-                $('#cityId').append("<option value='" + val_c1.name + "'>" + val_c1.name + "</option>");
-             })
-            }
-            else{
-              $('#cityId').append("<option value='" + c_check + "'>" + c_check + "</option>");
-            }
-             
-           }
-
-         })
-         
-       });
-
-     });
+    $('#stateId').change(function(){
+      var c_check = $('#stateId').val();
+      $('#cityId').html('');
+      
+      $.each( alldata, function( key, val ) {
+        $.each( val.states , function( key_c, val_c ) {
+          if(val_c.name === c_check)
+          { 
+            // console.log(c_check);
+          //  console.log(val_c.cities.length);
+          if(val_c.cities.length)
+          {
+            $.each( val_c.cities , function( key_c1, val_c1 ) {
+              $('#cityId').append("<option value='" + val_c1.name + "'>" + val_c1.name + "</option>");
+            })
+          }
+          else{
+            $('#cityId').append("<option value='" + c_check + "'>" + c_check + "</option>");
+          } 
+          }
+        })
+      });
+    });
      
   //var global_occupation='';
   // for showing message to turn to landscape
@@ -297,44 +289,48 @@
         load_animation_astronut();
     });
     
-    $(".btn_occ_submit").click(function(e){
-         
-        var occ_astro=$("#text_occupation_astro").val();
-        
-        if(occ_astro=='' || occ_astro==null)
-        {
-          alert("Please Enter Your Occupation !!");
-        }
-        else
-        {
-          /* var str_occupation= $("#text_occupation_astro").val();
-          var occ_astro=$("#text_occupation_astro").val(); */
-          $("#list_occupation ").html('');
-          $("#list_occupation ").html(occ_astro);
-          $("#list_occupation").val(occ_astro);
-          $("#occupation").val(occ_astro);
-          // hidePage();
-          // hidePage2();
-          // $("#text_occupation_astro").val()
-          $('.occ_description').css({'display':'none'});
-          $('.text_occup').css({'display':'none'});
-          $('.btn_occ_submit').css({'display':'none'});
-          $('.div_clock').css({'display':'none'});
-          $('.div_helmet').css({'display':'none'});
-          $('.txtarea_occup').css({'display':'block'});
-          //for playing audio
-          var audio = document.getElementById("audio_cuckoo");
-          audio.playbackRate =1;
-          audio.play();
-          $('.div_for_astro').css({'display':'none'});
-          $(".astro_occupation ").addClass("img_astro_down");
-          setTimeout(function(){
-              $('.astro_occupation').css({'display':'none'});
-              $(".astro_occupation ").removeClass("img_astro_down");
-            });
-        }
-        //load_animation_astronut();
-      });
+    $(".btn_occ_submit").click(function(e){   
+      var occ_astro= $("#text_occupation_astro").val();
+      occ_astro = occ_astro.trim();
+      // alert(occ_astro.length);return false;
+      if(occ_astro=='' || occ_astro==null)
+      {
+        alert("Please Enter Your Occupation !!");
+      }
+      else if(occ_astro.length <= 2)
+      {
+        alert("Occupation must be greater than 3 charcters!!");
+      }
+      else
+      {
+        /* var str_occupation= $("#text_occupation_astro").val();
+        var occ_astro=$("#text_occupation_astro").val(); */
+        $("#list_occupation ").html('');
+        $("#list_occupation ").html(occ_astro);
+        $("#list_occupation").val(occ_astro);
+        $("#occupation").val(occ_astro);
+        // hidePage();
+        // hidePage2();
+        // $("#text_occupation_astro").val()
+        $('.occ_description').css({'display':'none'});
+        $('.text_occup').css({'display':'none'});
+        $('.btn_occ_submit').css({'display':'none'});
+        $('.div_clock').css({'display':'none'});
+        $('.div_helmet').css({'display':'none'});
+        $('.txtarea_occup').css({'display':'block'});
+        //for playing audio
+        var audio = document.getElementById("audio_cuckoo");
+        audio.playbackRate =1;
+        audio.play();
+        $('.div_for_astro').css({'display':'none'});
+        $(".astro_occupation ").addClass("img_astro_down");
+        setTimeout(function(){
+            $('.astro_occupation').css({'display':'none'});
+            $(".astro_occupation ").removeClass("img_astro_down");
+          });
+      }
+      //load_animation_astronut();
+    });
       
       /*$('#list_occupation').click(function(){
           load_animation_astronut();
@@ -343,11 +339,11 @@
         });*/
       
       $('#list_occupation').click(function(){          
-                load_animation_astronut();
+          load_animation_astronut();
         });
       
-      function load_animation_astronut(){
-        
+      function load_animation_astronut()
+      {  
         $('.astro_occupation').css({'display':'block'});
         $('.div_for_astro').css({'display':'block'});
         $('.astro_occupation').css({'display':'block'});
@@ -724,26 +720,32 @@
       //     return true; 
       //   }
       // }
-      function validateEmail() 
-      {
+      $('#Email').change(function(){
+
         var email=$("#Email").val(); 
-        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
         
-        if(!emailReg.test(email) && email == '') {
-            custom_swal("Error!","Please Enter Valid Email Id","Email");
-            $('#Email').tooltip();
-            $('#Email').focus();
-            return false;
-        }
-        else if ( emailReg.test(email) && email !='')
+        const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        console.log(emailReg.test(String(email).toLowerCase()));
+        
+        if(!emailReg.test(String(email).toLowerCase())) 
         {
+          // custom_swal("Error!","Please Enter Valid Email Id","Email");
+          $('#Email').removeClass('success-alter');
+          $('#Email').addClass('danger-alter');
+
+          $('#Email').tooltip();
+          $('#Email').focus();
+          return false;
+        }
+        else
+        {
+          console.log  ('matched');
           $.ajax({
             type: "POST",
-            url: base_url+'/validateemail',
-            data:{email:email},
-            headers: {
-                    'X-CSRF-Token': $('input[name="_token"]').val() 
-               },
+            url: base_url+'/validateemail_reg',
+            data:{
+              _token:$('meta[name="csrf-token"]').attr('content'),
+              email:email},
             success: function(responce) {
               // console.log(responce);
               if (responce.status == 'exist') 
@@ -760,12 +762,14 @@
               {
                 $('#Email').removeClass('danger-alter');
                 $('#Email').addClass('success-alter');
+                valideemail=true;
               }
               // console.log('success :'+ responce);
             }
           });
         }
-      }
+      });
+      
 
       function email_formate(emailIdFeild)
       {
@@ -777,14 +781,14 @@
         if(blnValidate==false)
         {
           custom_swal("Already Exist!","login into to your account","Email");
-          $('#Email').addClass('danger-alter');
-          $('#Email').tooltip();
+          $("#"+emailIdFeild).addClass('danger-alter');
+          $("#"+emailIdFeild).tooltip();
           return false;
 
         }
         else
         {
-          $('#Email').removeClass('danger-alter');
+          $("#"+emailIdFeild).removeClass('danger-alter');
           return true; 
         }
       }
@@ -1005,10 +1009,19 @@
         // LOGIN DETAILS SECTION JS START
         if (current_fs.attr('attr-tab-id') == 1) 
         {
+          $('#Email').removeClass('danger-alter');
+          $('#password').removeClass('danger-alter');
+          $('#c_password').removeClass('danger-alter');
+
           var check1 = email_formate('Email');
           var check2 = validatePassword('password');
           var check3 = validateConfirmpass();
-          
+          if(valideemail== false)
+          {
+            custom_swal("Error!","Enter a Valid Email!","Email");
+            $('#Email').tooltip();
+            return false;
+          }
           if (check1 == false) 
           {
             custom_swal("Error!","Please Enter Valid Email Id","Email");
@@ -1035,6 +1048,11 @@
         // PERSONAL INFORMATION SECTION START
         if (current_fs.attr('attr-tab-id') == 2) 
         {
+          $('#fname').removeClass('danger-alter');
+          $('#lname').removeClass('danger-alter');
+          $('#genders').removeClass('danger-alter');
+          $('#date').removeClass('danger-alter');
+
           if ($('#fname').val() == '')
           {
             custom_swal("Required !","Enter a valid First Name!","fname");
@@ -1060,6 +1078,12 @@
         // CONTACT INFORMATION SECTION START
         if (current_fs.attr('attr-tab-id') == 3) 
         {
+          $('#address').removeClass('danger-alter');
+          $('#countryId').removeClass('danger-alter');
+          $('#stateId').removeClass('danger-alter');
+          $('#cityId').removeClass('danger-alter');
+          $('#mob_no').removeClass('danger-alter');
+
           if ($('#address').val() == '')
           {
             custom_swal("Required !","Enter Your Address!","address");
@@ -1070,16 +1094,17 @@
             custom_swal("Required !","Enter Your Country!","countryId");
             return false; 
           }
-          if ($('#city').val() == '')
+          if ($('#stateId').val() == '')
           {
-            custom_swal("Required !","Enter Your City!","city");
+            custom_swal("Required !","Enter Your State!","stateId");
             return false; 
           }
-          if ($('#state').val() == '')
+          if ($('#cityId').val() == '')
           {
-            custom_swal("Required !","Enter Your State!","state");
+            custom_swal("Required !","Enter Your City!","cityId");
             return false; 
           }
+          
           if ($('#mob_no').val() == '')
           {
             custom_swal("Required !","Enter Your Mobile Number!","mob_no");
@@ -1090,11 +1115,17 @@
         // ORGANIZATION INFORMATION SECTION START
         if (current_fs.attr('attr-tab-id') == 4) 
         {
+          $('#org_types').removeClass('danger-alter');
+          $('#org_name').removeClass('danger-alter');
+          $('#sname').removeClass('danger-alter');
+          $('#sponsor_email').removeClass('danger-alter');
+
           if ($('#org_types').val() == '')
           {
             custom_swal("Required !","Select Organization Type!","org_types");
             return false; 
           }
+          
           if ($('#org_name').val() == '')
           {
             custom_swal("Required !","Enter Organization Name!","org_name");
@@ -1121,13 +1152,8 @@
               return false; 
             }
           }
-          
-          
         }
         // ORGANIZATION INFORMATION SECTION END
-
-        
-
         next_fs = $(this).parent().next();
         //activate next step on progressbar using the index of next_fs
         $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");

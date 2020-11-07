@@ -56,6 +56,9 @@
             height:3.2rem;
             padding-top:22%;
         }
+        
+        
+
     </style>
   
 @endsection

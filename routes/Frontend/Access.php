@@ -38,7 +38,7 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
         if (config('access.users.registration')) {
             Route::get('register', 'RegisterController@showRegistrationForm')->name('register');
             Route::post('register', 'RegisterController@register')->name('register');
-            Route::post('validateemail', 'RegisterController@validateEmail')->name('validateemail');
+            Route::post('validateemail_reg', 'RegisterController@validateEmail')->name('validateemail_reg');
         }
 
         // Confirm Account Routes

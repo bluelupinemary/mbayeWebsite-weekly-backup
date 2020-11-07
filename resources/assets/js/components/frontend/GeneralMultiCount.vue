@@ -397,6 +397,7 @@ export default {
                         that.blogs[i].shared_id = value.id;
                         that.blogs[i].type = value.blog_type;
                         that.blogs[i].publish_datetime = value.publish_datetime;
+                        that.blogs[i].nearexpire = value.nearexpire;
                     } else {
                         that.$set(that.blogs, i, value);
                         that.blogs[i].shared = false;

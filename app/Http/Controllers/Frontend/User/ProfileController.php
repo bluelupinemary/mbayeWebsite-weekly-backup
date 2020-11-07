@@ -42,7 +42,6 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
-        // dd($request->all());
         $output = $this->user->updateProfile(access()->id(), $request->all());
 
         // E-mail address was updated, user has to reconfirm

@@ -1,21 +1,16 @@
 .communicator {
     height: 100vh;
 }
-body{
-    -webkit-overflow: hidden;
-        -moz-overflow: hidden;
-        -o-overflow: hidden;
-        overflow: hidden;
-}
 
 .main-screen {
-    /* border: 1px solid red; */
     position: absolute;
     top: 50%;
     left: 50%;
     right: 0;
     height: 100vh;
     width: 100vw;
+    overflow-x: hidden;
+    overflow-y: hidden;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
@@ -212,25 +207,6 @@ body{
 
 /* to hide scroll bars */
 
-.swal2-title span.success {
-    color: #25d365 !important;
-}
-
-.swal2-html-container{
-    color: #17a2b8 !important;
-    font-size: 1.1vw !important;
-    font-family: 'Nasalization';
-}
-
-.swal2-popup{
-    box-shadow: 0px 0px 20px #17a2b8;
-}
-
-#error{
-font-family: 'Nasalization';
-font-size: 1.5vw !important;
-color: #df1613 !important;
-}
 
 /* homeBtn */
 .home-div {
@@ -421,9 +397,6 @@ color: #df1613 !important;
         color: #0ee3ea;
     }
 
-    .swal2-image {
-        margin: 0;
-    }
     .input-box{
         font-size: 1rem;
         height: 15px !important;
@@ -480,9 +453,7 @@ color: #df1613 !important;
         font-size: 1vw;
     }
 
-    .swal2-image{
-        margin: 0 !important;
-    }
+    
 
     .head_log {
         font-size: 1.5vw !important;
@@ -512,6 +483,17 @@ color: #df1613 !important;
         font-family: space age;
         font-size: 1.5vh;
     }
+    body
+    {
+        max-height: 300px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    } 
+    .main-screen
+    {
+        overflow-y: scroll;
+    }
+      
 }
 
 /*---------------------------------------------------------------------------------*/
@@ -557,6 +539,15 @@ color: #df1613 !important;
     }
     .btn-info {
         font-size: 1.2vw;
+    }
+    body{
+        max-height: 500px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .main-screen
+    {
+        overflow-y: scroll;
     }
 }
 

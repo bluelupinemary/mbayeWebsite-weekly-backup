@@ -10,7 +10,7 @@
         
         <meta name="user_id" content="{{ Auth::check() ? Auth::user()->id : '' }}">
         <title>@yield('title', app_name())</title>
-        {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Meta -->
         <meta name="description" content="@yield('meta_description', 'Laravel AdminPanel')">

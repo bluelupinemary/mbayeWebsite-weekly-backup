@@ -321,7 +321,7 @@
                         imageAlt: 'Mbaye Logo',
                         title: "<span id='error'>Error!</span>",
                         html: "Email Field is Empty",
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
@@ -337,7 +337,7 @@
                         imageAlt: 'Mbaye Logo',
                         title: "<span id='error'>Error!</span>",
                         html: "You have Entered Invalid Email",
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
@@ -353,7 +353,7 @@
                         imageAlt: 'Mbaye Logo',
                         title: "<span id='error'>Error!</span>",
                         html: "Password Field is Empty",
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
@@ -391,7 +391,7 @@
                                 imageAlt: 'Mbaye Logo',
                                 title: "<span id='error'>"+responce.title+"</span>",
                                 html: responce.message,
-                                width: '30%',
+                                // width: '30%',
                                 padding: '1rem',
                                 background: 'rgba(8, 64, 147, 0.62)'
                                 }).then((result) => {
@@ -407,7 +407,7 @@
                                 imageAlt: 'Mbaye Logo',
                                 title: "<span id='error'>"+responce.title+"</span>",
                                 html: responce.message,
-                                width: '30%',
+                                // width: '30%',
                                 padding: '1rem',
                                 background: 'rgba(8, 64, 147, 0.62)'
                                 }).then((result) => {
@@ -425,7 +425,7 @@
                                 imageAlt: 'Mbaye Logo',
                                 title: "<span id='error'>"+ responce.title +"</span>",
                                 html: responce.message,
-                                width: '30%',
+                                // width: '30%',
                                 timer: parseInt(responce.seconds) * 1000,
                                 timerProgressBar: true,
                                 willOpen: () => {
@@ -486,7 +486,7 @@
                         imageAlt: 'Mbaye Logo',
                         title: "<span id='error'>Authentication Failed!</span>",
                         html: 'Did you forget your password? Please click forgot password to recover your account.',
-                        width: '30%',
+                        // width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((result) => {

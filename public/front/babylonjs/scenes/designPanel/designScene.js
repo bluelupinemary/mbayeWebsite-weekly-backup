@@ -73,9 +73,8 @@ let mxframecount = 120; //4 secs at 60 fps
 let flowerSelectionCount=0;                                                           //let for keeping track of the current number of flowers; max is 5
 let selectedFlowersMap = new Map();                                                   //let to keep track of all the selected flowers from the world
 let flowerVarietyArr = [];                                                            //let to keep track of the letieties of the current flower selected from the world
-let theCurrentFlower = {obj:null,hasParent:false,initPos:null};                       //let to keep track of the current flowre selected
+let theCurrentFlower = {obj:null,hasParent:false,initPos:{x:467.9,y:25.15,z:150.25}};                       //let to keep track of the current flowre selected
 //===========================================
-
 let panelsWithFlowersCount = 0;
 let isEarthButtonClicked = false;
 let focusCamera;
@@ -298,50 +297,67 @@ function load_design_meshes(){
           ruruDesign_obj.isPickable = true;
         //   add_action_mgr(result.meshes[0]);
         }),
-      BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", designScene).then(function (result) {
-          mermaidSpeechCloud = result.meshes[0];
-          result.meshes[1].isPickable = false;
-          mermaidSpeechCloud.isPickable = false;
-          mermaidSpeechCloud.position = new BABYLON.Vector3(-4,-9,18);
-          mermaidSpeechCloud.scaling = new BABYLON.Vector3(5,5,-5);
-          mermaidSpeechCloud.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(5),BABYLON.Tools.ToRadians(80),0);
+    //   BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", designScene).then(function (result) {
+    //       mermaidSpeechCloud = result.meshes[0];
+    //       result.meshes[1].isPickable = false;
+    //       mermaidSpeechCloud.isPickable = false;
+    //       mermaidSpeechCloud.position = new BABYLON.Vector3(-4,-9,18);
+    //       mermaidSpeechCloud.scaling = new BABYLON.Vector3(5,5,-5);
+    //       mermaidSpeechCloud.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(5),BABYLON.Tools.ToRadians(80),0);
 
-        //   ruruSpeechCloud = mermaidSpeechCloud.clone("ruruCloud");
-        //   ruruSpeechCloud.position = new BABYLON.Vector3(48.50,19.5,12.15);
-        //   ruruSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.1210,0.6063,-0.08125,0.7816);
-        //   ruruSpeechCloud.isPickable = false;
+    //     //   ruruSpeechCloud = mermaidSpeechCloud.clone("ruruCloud");
+    //     //   ruruSpeechCloud.position = new BABYLON.Vector3(48.50,19.5,12.15);
+    //     //   ruruSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.1210,0.6063,-0.08125,0.7816);
+    //     //   ruruSpeechCloud.isPickable = false;
 
-        //   nuvolaSpeechCloud = mermaidSpeechCloud.clone("nuvolaCloud");
-        //   nuvolaSpeechCloud.position = new BABYLON.Vector3(18,8.5,60);
-        //   nuvolaSpeechCloud.isPickable = false;
+    //     //   nuvolaSpeechCloud = mermaidSpeechCloud.clone("nuvolaCloud");
+    //     //   nuvolaSpeechCloud.position = new BABYLON.Vector3(18,8.5,60);
+    //     //   nuvolaSpeechCloud.isPickable = false;
 
-          mermaidSpeechCloud.isVisible = false;
-          mermaidSpeechCloud.setEnabled(false);
-      }),
+    //       mermaidSpeechCloud.isVisible = false;
+    //       mermaidSpeechCloud.setEnabled(false);
+    //   }),
       
       BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/book/", "bookFlowersDesign.glb", designScene).then(function (result) {
         // for(i=0;i<result.meshes.length;i++){
         //     console.log(i,result.meshes[i].name);
         // }
 
-          result.animationGroups[0].loopAnimation = false;
-          result.meshes[0].position =  new BABYLON.Vector3(461.19,24.22,150.54);
-          result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0987,0.8133,0.2029,-0.5354);
-          result.meshes[0].scaling =  new BABYLON.Vector3(0.012,0.012,-0.012);
-          bookFlowers_object = result.meshes[0];
+            result.meshes.forEach(mesh => {
+                if(mesh.name === "wood001_primitive0" || mesh.name === "wood001_primitive1"){
+                    //screenshot wood
+                    mesh.scaling = new BABYLON.Vector3(2,2,2);
+                    add_action_mgr(mesh);
+                }else if(mesh.name === "wood"){ 
+                    //the book label
+                    mesh.scaling = new BABYLON.Vector3(0.8,0.8,-0.8);
+                    add_action_mgr(mesh);
 
-          bookFlowers_object.isPickable = false;
-          bookFlowers_object.isVisible = false;
-          bookFlowers_object.setEnabled(false);
-          bookLabel = result.meshes[20];                              //the plane for the book's label
-          bookLeftPages = result.meshes[16];                          //bookLeftPages
-          bookRightPages = result.meshes[22];                         //bookRightPages
-          result.meshes[19].scaling = new BABYLON.Vector3(0.8,0.8, -0.8);   //book's log
-          bookTask = result;
-          
-          add_action_mgr(result.meshes[17]);                            //book screenshot wood
-          add_action_mgr(result.meshes[37]);                            //book post top
-          add_action_mgr(result.meshes[39]);                            //book post bottom
+                }else if(mesh.name === "postBottom_primitive0" || mesh.name === "postBottom_primitive1" || mesh.name === "postTop_primitive0" || mesh.name === "postTop_primitive1"){
+                    //the posts
+                    mesh.scaling = new BABYLON.Vector3(1.25,1.25,1.25);
+                    add_action_mgr(mesh);
+                }
+            });
+
+            result.animationGroups[0].loopAnimation = false;
+            result.meshes[0].position =  new BABYLON.Vector3(461.19,24.22,150.54);
+            result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0987,0.8133,0.2029,-0.5354);
+            result.meshes[0].scaling =  new BABYLON.Vector3(0.012,0.012,-0.012);
+            bookFlowers_object = result.meshes[0];
+
+            bookFlowers_object.isPickable = false;
+            bookFlowers_object.isVisible = false;
+            bookFlowers_object.setEnabled(false);
+            bookLabel = result.meshes[20];                              //the plane for the book's label
+            bookLeftPages = result.meshes[16];                          //bookLeftPages
+            bookRightPages = result.meshes[22];                         //bookRightPages
+            // result.meshes[19].scaling = new BABYLON.Vector3(0.8,0.8, -0.8);   //book's log
+            bookTask = result;
+            
+            // add_action_mgr(result.meshes[17]);                            //book screenshot wood
+            // add_action_mgr(result.meshes[37]);                            //book post top
+            // add_action_mgr(result.meshes[39]);                            //book post bottom
 
 
       }),
@@ -624,8 +640,11 @@ function create_black_flower_copy(theFlower){
     //increment the current flower selection count
     flowerSelectionCount++;
     if(theCurrentFlower.obj) theCurrentFlower.obj.showBoundingBox = false;
-    //attach the gizmo to the flower clone
+    
+    //attach the position gizmo to the flower clone
+    designGizmoManager.positionGizmoEnabled = true;
     designGizmoManager.attachToMesh(theFlowerCopy);
+    set_gizmo_style('#positionGizmo');
     //the flower should be draggable on the panel
     
     //set the clone as the current flower and show bounding box
@@ -642,7 +661,7 @@ function create_black_flower(name,matlName,imgPath,size,x,y,z){
     let plane = BABYLON.Mesh.CreatePlane(name, size, designScene);
     plane.isVisible = false;
     plane.position = new BABYLON.Vector3(x,y,z);
-    plane.rotation.y = BABYLON.Tools.ToRadians(-100);
+    plane.rotation.y = BABYLON.Tools.ToRadians(-120);
     
     let planeMatl = new BABYLON.StandardMaterial(matlName, designScene);
     planeMatl.diffuseColor = BABYLON.Color3.Black();
@@ -1326,9 +1345,10 @@ function enable_design_utility(){
                 designGizmoManager.boundingBoxGizmoEnabled = true;
                 designGizmoManager.gizmos.boundingBoxGizmo.setEnabledRotationAxis("xyz");
                 designGizmoManager.gizmos.boundingBoxGizmo.setEnabledScaling(true,true);
-               
-
                 
+                // designGizmoManager.gizmos.boundingBoxGizmo.MakeNotPickableAndWrapInBoundingBox(theCurrentFlower.obj)
+                // console.log(designGizmoManager.gizmos.boundingBoxGizmo);
+               
                 designGizmoManager.gizmos.boundingBoxGizmo.onDragStartObservable.add(function () {
                     isGizmoDragging = true;
                 });
@@ -1338,6 +1358,29 @@ function enable_design_utility(){
                 designGizmoManager.gizmos.boundingBoxGizmo.onRotationSphereDragEndObservable.add(function () {
                     isGizmoDragging = false;
                 });
+
+                // var gizmo = new BABYLON.BoundingBoxGizmo();
+                // gizmo.ignoreChildren = true;
+
+                // var bb = BABYLON.BoundingBoxGizmo.MakeNotPickableAndWrapInBoundingBox(theCurrentFlower.obj)
+
+                // gizmo.attachedMesh = bb;
+
+                // gizmo.onScaleBoxDragObservable.add(()=>{
+                //     isGizmoDragging = true;
+                // });
+                //  gizmo.onScaleBoxDragEndObservable.add(()=>{
+                //     isGizmoDragging = false;
+                // });
+                // gizmo.onRotationSphereDragObservable.add(()=>{
+                //     isGizmoDragging = true;
+                // });
+                //  gizmo.onRotationSphereDragEndObservable.add(()=>{
+                //     isGizmoDragging = false;
+                // });
+            
+
+                
                
             }
         }
@@ -1806,6 +1849,14 @@ function design_handle_tool(theGizmo){
                 homeGizmo.attachedMesh = null;
                 homeGizmo2.attachedMesh = null;
             }
+
+           
+            designGizmoManager.positionGizmoEnabled = true;
+            designGizmoManager.boundingBoxGizmoEnabled = false;
+            designGizmoManager.rotationGizmoEnabled = false;
+            designGizmoManager.scaleGizmoEnabled = false;
+
+
         }else if(theGizmo == 2){
             //2 - change gizmo to rotation
             if(designGizmoManager.positionGizmoEnabled) designGizmoManager.positionGizmoEnabled = false;
@@ -1833,15 +1884,35 @@ function design_handle_tool(theGizmo){
 
         }else if(theGizmo == 3){
              //3 - change gizmo to bounding box
+
             if(designGizmoManager.positionGizmoEnabled) designGizmoManager.positionGizmoEnabled = false;
             if(designGizmoManager.rotationGizmoEnabled) designGizmoManager.rotationGizmoEnabled = false;
-            designGizmoManager.boundingBoxGizmoEnabled = true;  
+
+            designGizmoManager.boundingBoxGizmoEnabled = true;
+            designGizmoManager.gizmos.boundingBoxGizmo.setEnabledRotationAxis("xyz");
+            designGizmoManager.gizmos.boundingBoxGizmo.setEnabledScaling(true,true);
+            
+            
             designGizmoManager.gizmos.boundingBoxGizmo.onDragStartObservable.add(function () {
                 isGizmoDragging = true;
             });
-            designGizmoManager.gizmos.boundingBoxGizmo.onDragEndObservable.add(function () {
+
+            designGizmoManager.gizmos.boundingBoxGizmo.onScaleBoxDragEndObservable.add(function () {
                 isGizmoDragging = false;
             });
+            designGizmoManager.gizmos.boundingBoxGizmo.onRotationSphereDragEndObservable.add(function () {
+                isGizmoDragging = false;
+            });
+
+            // if(designGizmoManager.positionGizmoEnabled) designGizmoManager.positionGizmoEnabled = false;
+            // if(designGizmoManager.rotationGizmoEnabled) designGizmoManager.rotationGizmoEnabled = false;
+            // designGizmoManager.boundingBoxGizmoEnabled = true;  
+            // designGizmoManager.gizmos.boundingBoxGizmo.onDragStartObservable.add(function () {
+            //     isGizmoDragging = true;
+            // });
+            // designGizmoManager.gizmos.boundingBoxGizmo.onDragEndObservable.add(function () {
+            //     isGizmoDragging = false;
+            // });
         }else if(theGizmo == 4){
             //4 - delete the current selected flower
             if(theCurrentFlower.obj){
@@ -1860,6 +1931,8 @@ function design_handle_tool(theGizmo){
 let isCharMovementEnabled;
 let isDraggedPanelInLocation = false;
 let pickedPanelInitSpecs = {'pos':null, 'rot':null};
+let isFlowerDraggable;
+let flowerStartingPoint;
 function add_designScene_mouse_listener(){
       //handle the dragging behavior of the panel selected
       designScene.onPointerObservable.add((pointerInfo) => {          
@@ -1940,6 +2013,7 @@ function add_designScene_mouse_listener(){
                         // else currentPanel.rotationQuaternion = pickedPanelInitSpecs.rot;
                         
                             set_current_panel(theDesignMesh);
+                            
                            
                         }
                       
@@ -1994,24 +2068,64 @@ function add_designScene_mouse_listener(){
                     //disable earthflower object's movement by disabling the scene's camera
                     earthFlowersCamera.detachControl(canvas);
                     earthFlowersCamera.setEnabled(false);
+
+                    // flowerStartingPoint =  pickInfo.pickedPoint;
+
+                    // if(!isFlowerDraggable){
+                    //     //add dragging behavior to the flower
+                    //     var pointerDragBehavior = new BABYLON.PointerDragBehavior();
+        
+                    //     // Use drag plane in world space
+                    //     pointerDragBehavior.useObjectOrientationForDragging = false;
+                    
+                    //     // Listen to drag events
+                    //     pointerDragBehavior.onDragStartObservable.add((event)=>{
+                    //         console.log("dragStart");
+                    //         // console.log(event);
+                    //     })
+                    //     pointerDragBehavior.onDragObservable.add((event)=>{
+                           
+                    //         var current = getGroundPosition();
+                    //         console.log("drag",current);
+                    //         // console.log(event);
+                    //     })
+                    //     pointerDragBehavior.onDragEndObservable.add((event)=>{
+                    //         console.log("dragEnd");
+                    //         // console.log(event);
+                    //     })
+                    
+                    //     // If handling drag events manually is desired, set move attached to false
+                    //     // pointerDragBehavior.moveAttached = false;
+                    
+                    //     theCurrentFlower.obj.addBehavior(pointerDragBehavior);
+                    //     isFlowerDraggable = true;
+                    // }
+                    
+                
+
+
                     //if the clicked mesh is not the current flower active
                     if(theCurrentFlower.obj != theDesignMesh){  //if the current mesh selected is not the current flower active
                         if(theCurrentFlower.obj) theCurrentFlower.obj.showBoundingBox = false;
                         theCurrentFlower.hasParent = false;
                         theCurrentFlower.obj = theDesignMesh;                       //set the flower is the current flower
                         theCurrentFlower.obj.showBoundingBox = true;
+
+                        //set the design gizmo manager to position gizmo
+                        // designGizmoManager.positionGizmoEnabled = true;
                         designGizmoManager.attachToMesh(theDesignMesh);
-                        
-                        
+                        $('#positionGizmo .gizmoLabel').html('Position: OFF');                  //change the span label to OFF
+                        $('#positionGizmo img').css('filter','drop-shadow(2px 1px 5px cyan)');  
                         //enable the movement of this flower on over the current panel selected
                        
                         isStartMovementofFlowerOnPanel = true;
-                        console.log("this is the flower", isStartMovementofFlowerOnPanel);
+                       
+                       // console.log("this is the flower", isStartMovementofFlowerOnPanel);
                     }else{
                         isStartMovementofFlowerOnPanel = false;
                     }
 
-                   
+                  
     
                 }//end of if flower is clicked
                   
@@ -2035,6 +2149,7 @@ function add_designScene_mouse_listener(){
     //on mouse pointer up
     let onPointerUpDesign = function (evt) {
         isPanelMeshClicked = false;
+        // isInitFlowerPosSet = false;
         if(!isStartOfDesignPanel){
             if(isDraggedPanelInLocation){ 
                 set_current_panel_to_location();
@@ -2045,12 +2160,14 @@ function add_designScene_mouse_listener(){
                
             }
         }
-        
+
+      
 
     }//end of on pointer up function
 
     let isCurrentFlowerOnCurrentPanel = false;
     let isStartMovementofFlowerOnPanel = true;
+    let isInitFlowerPosSet = false;
     let onPointerMoveDesign = function (evt) { 
         // console.log("isCurrentPanelInLocation", isCurrentPanelInLocation, "isStartMovementofFlowerOnPanel ",isStartMovementofFlowerOnPanel);
         //if the current panel is to be designed, this runs after clicking the first black flower copy
@@ -2060,14 +2177,23 @@ function add_designScene_mouse_listener(){
             let pickInfo = designScene.pick(designScene.pointerX, designScene.pointerY);
             if (pickInfo.hit) {     
                 if(theCurrentFlower.obj){
-                    isCurrentFlowerOnCurrentPanel = true;
-                    
+                    // isCurrentFlowerOnCurrentPanel = true;
                     if(currentPanel.name === pickInfo.pickedMesh.name){
-                        theCurrentFlower.obj.position = new BABYLON.Vector3(pickInfo.pickedPoint.x, pickInfo.pickedPoint.y, pickInfo.pickedPoint.z + 0.1);
+                        theCurrentFlower.obj.position = new BABYLON.Vector3(pickInfo.pickedPoint.x, pickInfo.pickedPoint.y, pickInfo.pickedPoint.z+0.1);
+                        
+                    }else{
+                        // if(!isInitFlowerPosSet){
+                            console.log("i am outside the current panel");
+                            // theCurrentFlower.obj.position = flowerStartingPoint;
+                            // isInitFlowerPosSet = true;
+                        // }
+                        
                     }
                 }
             }
         }
+      
+        
 
         //on pointer movement, check if there is a current panel set and if the the onpointerdown is triggered
         if(isPanelMeshClicked && currentPanel){
@@ -2129,6 +2255,20 @@ function add_designScene_mouse_listener(){
         framecount = 0;
       }
     };
+
+
+    var getGroundPosition = function () {
+        // Use a predicate to get position on the ground
+        var pickinfo = designScene.pick(designScene.pointerX, designScene.pointerY, function (mesh) { return mesh == theCurrentPanel.obj; });
+        if (pickinfo.hit) {
+            return pickinfo.pickedPoint;
+        }
+
+        return null;
+    }
+
+   
+    
 }//end of mouse listener
 
 
@@ -2415,41 +2555,54 @@ var onOverChar =(meshEvent)=>{
         partTooltip.setAttribute("id", "partTooltip");
         var sty = partTooltip.style;
         sty.position = "absolute";
-        // sty.lineHeight = "1.2em";
         sty.paddingLeft = "0.5%";
         sty.paddingRight = "0.5%";
         sty.color = "#00BFFF";
         sty.fontFamily = "Courgette-Regular";
-        // sty.backgroundColor = "#0b91c3a3";
-        // sty.opacity = "0.7";
         sty.fontSize = "2em";
         sty.top = designScene.pointerY + "px";
         sty.left = (designScene.pointerX+20) + "px";
         sty.cursor = "pointer";
-        // sty.borderRadius = "30px";
         document.body.appendChild(partTooltip);
         partTooltip.textContent = "Save Game";
         meshEvent.source.material.emissiveColor = new BABYLON.Color3(0.4,0.4,0.4);
-        // overHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.4,0.1));
     }
 
-    if(bookFlowersMap.has(meshEvent.source.name)){
-        overHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0,0.3,0));
+    if(bookFlowersMap.has(meshEvent.source.name) && meshEvent.source.name != "wood"){
+        let res = testBrowser();
+        if(res !== 'Safari') overHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0,0.3,0));
+    }
+    
+    if(bookFlowersMap.has(meshEvent.source.name) && meshEvent.source.name === "wood"){
+        let partTooltip = document.createElement("span");
+        partTooltip.setAttribute("id", "partTooltip");
+        var sty = partTooltip.style;
+        sty.position = "absolute";
+        sty.paddingLeft = "0.5%";
+        sty.paddingRight = "0.5%";
+        sty.color = "#00BFFF";
+        sty.textShadow = "2px 2px 5px black";
+        sty.fontFamily = "Courgette-Regular";
+        sty.fontSize = "2em";
+        sty.top = designScene.pointerY + "px";
+        sty.left = (designScene.pointerX+20) + "px";
+        sty.cursor = "pointer";
+        document.body.appendChild(partTooltip);
+        partTooltip.textContent = "Close Book";
     }
 };
 
 //handles the on mouse out event
 var onOutChar =(meshEvent)=>{
     if(designScene.activeCamera === designCamera && isCharMovementEnabled){
-        // overHighlight.removeMesh(meshEvent.source);
         meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,0,0);
         if(meshEvent.source.name === "Mermaid_Body_Rev"){
             meshEvent.source.material.subMaterials[0].emissiveColor = new BABYLON.Color3(0,0,0);
             meshEvent.source.material.subMaterials[1].emissiveColor = new BABYLON.Color3(0,0,0);
         }
     }else{
-        overHighlight.removeMesh(meshEvent.source);
-        meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,0,0);
+        let res = testBrowser();
+        if(res !== 'Safari') overHighlight.removeMesh(meshEvent.source);
     }
 
     while (document.getElementById("partTooltip")) {
@@ -2889,6 +3042,7 @@ let isProgressLoaded = false;
 let isStartRuruSpeech2 = false;
 
 
+
 currentScene.executeWhenReady(function () { 
     //remove loading screen display
     $('#loadingScreenOverlay').show();
@@ -3012,7 +3166,14 @@ currentScene.executeWhenReady(function () {
                         theCurrentFlower.hasParent = false;
                         isFlowerRemoved = true;
                     }
-                    if(isFlowerRemoved) theCurrentFlower.obj.setParent(null);
+                    if(isFlowerRemoved){ 
+                        theCurrentFlower.obj.setParent(null);
+                        if(isGizmoDragging){
+                            //if the user is dragging the flower's gizmo and is not intersecting with the current panel, set the flower to the init position
+                            let pos = theCurrentFlower.initPos;
+                            theCurrentFlower.obj.position = new BABYLON.Vector3(pos.x,pos.y,pos.z);
+                        }
+                    }
                 }
 
                 //if the current flower does not intersect the panel flower box (for bounds checking)
@@ -3058,6 +3219,9 @@ currentScene.executeWhenReady(function () {
                 //     }    
                 //     theCurrentFlower.obj.position = new BABYLON.Vector3(x,y,z);       
                 // }
+
+
+               
                     
                 
             
@@ -3286,18 +3450,39 @@ $(".mainScreenshotIcon").hover(function(){
 });
   
 
-
+let activeGizmo;
 //gizmo tools functions
 $('#positionGizmo').on('click',function(e){
     design_handle_tool(1);
+    set_gizmo_style("#positionGizmo");
+    
+    // if(activeGizmo!="#positionGizmo"){
+    //     //if the current gizmo is not position gizmo
+    //     $(activeGizmo+' img').css('filter','');
+    //     $('#positionGizmo .gizmoLabel').html('Position: OFF');
+    //     $('#positionGizmo img').css('filter','drop-shadow(2px 1px 5px cyan)');
+    //     activeGizmo = "#positionGizmo";
+    // }else{
+        
+    // }
 });
 
 $('#rotationGizmo').on('click',function(e){
     design_handle_tool(2);
+    set_gizmo_style("#rotationGizmo");
+    // if(activeGizmo!="#rotationGizmo"){
+    //     $(activeGizmo+' img').css('filter','');
+    //     $('#rotationGizmo .gizmoLabel').html('Rotation: OFF');
+    //     $('#rotationGizmo img').css('filter','drop-shadow(2px 1px 5px cyan)');
+    //     activeGizmo = "#rotationGizmo";
+    // }else if(activeGizmo=="#rotationGizmo"){
+    //     $('#rotationGizmo .gizmoLabel').html('Rotation: ON');
+    // }
 });
 
 $('#scaleGizmo').on('click',function(e){
     design_handle_tool(3);
+    set_gizmo_style("#scaleGizmo");
 });
 
 $('#offGizmo').on('click',function(e){
@@ -3307,6 +3492,34 @@ $('#offGizmo').on('click',function(e){
 $('deleteGizmo').on('click',function(e){
     design_handle_tool(4);
 });
+
+
+function set_gizmo_style(gizmo){
+    console.log("the gizmo: ", gizmo);
+    let label,activeLabel;
+    if(gizmo === "#positionGizmo") label = "Position: ";
+    else if(gizmo === "#rotationGizmo") label = "Rotation: ";
+    else if(gizmo === "#scaleGizmo") label = "Scaling: ";
+
+    if(activeGizmo === "#positionGizmo") activeLabel = "Position: ";
+    else if(activeGizmo === "#rotationGizmo") activeLabel = "Rotation: ";
+    else if(activeGizmo === "#scaleGizmo") activeLabel = "Scaling: ";
+
+    //if the gizmo clicked is not active
+    if(activeGizmo != gizmo){
+        $(activeGizmo+' img').css('filter','');                         //remove highlight from current active gizmo
+        $(activeGizmo+' .gizmoLabel').html(activeLabel+'ON');         //change the active gizmo's span label to ON
+        $(gizmo+' .gizmoLabel').html(label+'OFF');                  //change the span label to OFF
+        $(gizmo+' img').css('filter','drop-shadow(2px 1px 5px cyan)');  //add background highlight
+        activeGizmo = gizmo;
+    }else{
+        //if the gizmo clicked is the current active gizmo, turn off the current tool
+        design_handle_tool(0);
+        $(activeGizmo+' img').css('filter','');         //remove highlight from current active gizmo
+        $(activeGizmo+' .gizmoLabel').html(activeLabel+'ON');         //change the active gizmo's span label to ON
+    }
+
+}//end of function
 
 
 
