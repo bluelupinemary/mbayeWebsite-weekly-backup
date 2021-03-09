@@ -220,18 +220,32 @@ $.urlParam = function(name){
     return results[1] || 0;
 }
 
-$(window).load(function() {
-    $('.start-div').click();
-        $(".astronautarm-img").show();
-        $('.main-form').hide();
-        $(".astronautarm-img").addClass('animate-arm');
+// $(window).load(function() {
+//     $('.start-div').click();
+//         $(".astronautarm-img").show();
+//         $('.main-form').hide();
+//         $(".astronautarm-img").addClass('animate-arm');
 
-        $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
-            $(".astronautarm-img").removeClass('animate-arm');
+//         $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+//             $(".astronautarm-img").removeClass('animate-arm');
           
-          //  $(".start-div").animate({opacity:2},500);
-        });
+//           //  $(".start-div").animate({opacity:2},500);
+//         });
     
+// });
+
+$(document).ready(function() {
+  $('.start-div').click();
+      $(".astronautarm-img").show();
+      $('.main-form').hide();
+      $(".astronautarm-img").addClass('animate-arm');
+
+      $('.astronautarm-img').on("webkitAnimationEnd oanimationend msAnimationEnd animationend", function(){
+          $(".astronautarm-img").removeClass('animate-arm');
+        
+        //  $(".start-div").animate({opacity:2},500);
+      });
+  
 });
 
 function testOrientation() {

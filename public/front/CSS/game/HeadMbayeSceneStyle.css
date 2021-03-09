@@ -179,6 +179,59 @@
     flex-direction: column;
 }
 
+@media (max-width : 1367px) and (min-width : 1024px) and (orientation : landscape) {
+    #textCurveanticlock2 {
+        top: 31% !important;
+        right: 18% !important;
+    }
+    #textCurveanticlock {
+        top: 28% !important;
+        right: 18% !important;
+    }
+    #textCurve2 {
+        top: 40% !important;
+    }
+    #textCurve {
+        top: 37% !important;
+    }
+    .instr-text-flower{
+        width: 45vw !important;
+    }
+}
+
+@media (max-width : 992px) and (min-width : 768px) and (orientation : landscape) {
+    #textCurveanticlock2 {
+        top: 23% !important;
+        right: 18% !important;
+    }
+    #textCurveanticlock {
+        top: 20% !important;
+        right: 18% !important;
+    }
+    #textCurve2 {
+        top: 37% !important;
+    }
+    #textCurve {
+        top: 33% !important;
+    }
+    
+}
+@media (max-width : 768px) and (min-width : 639px) and (orientation : landscape) {
+    #textCurveanticlock2 {
+        top: 26% !important;
+        right: 18% !important;
+    }
+    #textCurveanticlock {
+        top: 23% !important;
+        right: 18% !important;
+    }
+    #textCurve2 {
+        top: 39% !important;
+    }
+    #textCurve {
+        top: 36% !important;
+    }
+}
 
 
 /*extra small and small screens*/
@@ -190,12 +243,134 @@
     #musicVideoDivHeader{
         height: 10vh;
     }
-
-
     #musicVideoDiv{
         width:30vw;
+    }
+    .instr-text-flower, .instr-text-flower-down  {
+        width: 50vw !important;
+        font-size: 1.4vw !important;
+       
     }
    
 }
 
+/*******************************INSTRUCTION OVERLAY******************************************************/
+.flower-instruction-left-div{
+    position: absolute;
+    border: 3px solid #c69930;
+    background-color: #0f1a6dc7;
+    width: 15vw;
+    border-radius: 14px;
+    bottom: 1%;
+    left: 7%;
+    height: auto;
+    color: #bd961d;
+    
+}
+#flowerInstruction{
+    display: none;
+}
+#MbayeHeadinfoIcon{
+    position: absolute;
+    color: #bd961d;
+    bottom: 2%;
+    left: 1%;
+    font-size: 2rem;
+    cursor: pointer;
+    display: none;
+}
+.instr-text-flower{
+    position: absolute;
+    width: 45vw;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    /* right: 20%; */
+    left: 7%;
+    padding: 1%;
+    text-align: center;
+    top: 1%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#infoIconTextflowers{
+    display: none;
+}
+#MbayeHeadinfoIcon:hover span{
+    display: inline-block;
+}
+.instr-text-flower-down{
+    position: absolute;
+    width: 49vw;
+    right: 2%;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    padding: 1%;
+    text-align: center;
+    bottom: 1%;
+    font-size: 1.4vw;
+    font-family: 'Bookman';
+    /* font-weight: 700; */
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#infoIconTextdownflower{
+    display: none;
+}
 
+
+
+.InfoIconLabel{
+    display:none;
+    /* display: inline-block; */
+    position: absolute;
+    color: white;
+    transform: translate(3%, 0%);
+    font-size: 1.2rem;
+    text-shadow: 0px 0px 3px #000000;
+    background: #0b91c3a3;
+    font-family: 'Bookman';
+    width: auto;
+    /* height: 3.5vh; */
+    text-align: center;
+    border-radius: 12px;
+    padding:15%;
+}
+#textCurve{
+    position: absolute;
+    top: 36%;
+    color: #c69930;
+    font-family: 'Bookman';
+    display: none;
+    right: 18%;
+    font-size: 1.5vw;
+ }
+ #textCurve2{
+    position: absolute;
+    top: 39%;
+    color: #c69930;
+    font-family: 'Bookman';
+    display: none;
+    right: 18%;
+    font-size: 1.5vw;
+ }
+ #textCurveanticlock{
+    position: absolute;
+    top: 24%;
+    color: #c69930;
+    font-family: 'Bookman';
+    display: none;
+    right: 18%;
+    font-size: 1.5vw;
+ }
+ #textCurveanticlock2{
+    position: absolute;
+    top: 27%;
+    color: #c69930;
+    font-family: 'Bookman';
+    right: 18%;
+    font-size: 1.5vw;
+    display: none;
+ }  

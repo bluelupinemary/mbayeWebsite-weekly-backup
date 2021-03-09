@@ -77,11 +77,12 @@
                         {{-- </label> --}}
                     </div>
                     
+
                     @if(Auth::id() != $profile->user_id)
                         
                             <div class="view-profile-button">
                                
-                                <button class="more-icon tooltips-buttons top" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt="">
+                                <button class="more-icon tooltips right" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt="">
                                     <span id="details-text">View Details</span>
                                 </button>
                                 
@@ -92,7 +93,7 @@
                                 <button class="view tooltips top" onclick="goto_dashboard({{$profile->user_id}})"><img src="{{asset('front/icons/view.png')}}" alt="">
                                     <span class="">View Dashboard</span>
                                 </button>
-                                <button class="save tooltips top"><img src="{{asset('front/icons/save.png')}}" alt="">
+                                <button class="save tooltips top"><img class="saveicon" src="{{asset('front/icons/save.png')}}" alt="">
                                     <span class="">Save Profile</span>
                                 </button>
                                 <button class="call tooltips top" onclick="connect_mail({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/call.png')}}" alt="">
@@ -109,7 +110,7 @@
                         </div>
                         <div class="view-profile-button" >
                         
-                            <button class="more-icon tooltips-buttons top" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt="">
+                            <button class="more-icon tooltips right" onclick="view_my_career_posts2({{$profile->id}},{{$profile->user_id}})"><img src="{{asset('front/icons/viewMoreIcon.png')}}" alt="">
                                 <span id="details-text">View Detail</span>
                             </button>
                             
@@ -345,6 +346,7 @@
                 </div>
                 
                 <label class="lbl_title">Skills : </label> <span class="modal_spn_value" >{{ $profile->skills ?? '' }}</span><br/>
+                
                 
                 
             </div>

@@ -1302,7 +1302,7 @@ export default {
     viewBlog(id) { 
       
         // alert("here");
-	 window.location.href = '/my_career_profile/'+id;
+	 window.location.href = '/jobseekers/view-profile/'+id;
     },
     getAudio()
     {

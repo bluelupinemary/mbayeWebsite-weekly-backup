@@ -10,6 +10,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="user_id" content="{{ Auth::check() ? Auth::user()->id : '' }}">
         <meta name="url" content="{{ url('') }}">
+        <link rel="stylesheet" href="{{ asset('front/CSS/navbar.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/CSS/navbar-component.css') }}">
         <title>@yield('title', app_name())</title>
 
         <!-- Meta -->
@@ -20,7 +22,7 @@
 
         <!-- Styles -->
         @yield('before-styles')
-
+        
         <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
         {{-- @langrtl
@@ -30,7 +32,8 @@
             {{ Html::style(mix('css/frontend-custom.css')) }}
        {{--  @endlangrtl --}}
         @yield('after-styles')
-
+        @include('frontend.layouts.includes.navbar')
+      
         <!-- Scripts -->
         <script>
             window.Laravel = <?php echo json_encode([
@@ -55,17 +58,30 @@
         <!-- Scripts -->
         
         @yield('before-scripts')
-        
-        {!! Html::script(mix('js/frontend.js')) !!}
-        <script src="{{asset('front/JS/Draggable.min.js')}}"></script>
-        <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
-        <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
 
+        {!! Html::script(mix('js/frontend.js')) !!}
+        
+        <script src="{{asset('front/JS/Draggable.min.js')}}"></script>
+        
+        
+        <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
+        
+       
         @yield('after-scripts')
+        
+        <script src="{{asset('front/JS/popper.min.js')}}"></script>
+        <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
+        <script src="{{asset('front/JS/portrait-warning.js')}}"></script>
+        <script src="{{asset('front/JS/modernizr.custom.js')}}"></script>
+        <script src="{{asset('front/JS/jquery.dlmenu.js')}}"></script>
+
         {{ Html::script('js/jquerysession.min.js') }}
         {{ Html::script('js/frontend/frontend.min.js') }}
         {!! Html::script('js/select2/select2.min.js') !!}
-        <script src="{{asset('front/JS/portrait-warning.js')}}"></script>
+        
+        
+        
+        
         <script type="text/javascript">
             if("{{Route::currentRouteName()}}" !== "frontend.user.account")
             {
@@ -74,4 +90,9 @@
         </script>
         @include('includes.partials.ga')
     </body>
+    <script>
+	        $(function() {
+		    $( '#navbar-dl-menu' ).dlmenu();
+	        });
+        </script>
 </html>

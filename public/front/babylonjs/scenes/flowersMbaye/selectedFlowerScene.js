@@ -85,6 +85,7 @@ let bookLeftPages,bookRightPages;
 let solar_carpet, nuvola_carpet;
 let mermaidSpeechCloud,nuvolaSpeech1;
 let flower3D_nuvola = [];
+let theMatl;
 //function to load the world of flowers
 function load_earth_with_flowers_mesh(){
     Promise.all([
@@ -106,7 +107,8 @@ function load_earth_with_flowers_mesh(){
             nuvola_carpet_bot = result.meshes[10];
             nuvola_bot_matl = result.meshes[10].material;
             // result.meshes[8].isVisible = false;
-            nuvola_obj.position = new BABYLON.Vector3(-54.38,40.87,-79.02);
+            nuvola_obj.position = new BABYLON.Vector3(-54.38,26.42,-78.922);
+
             nuvola_obj.rotationQuaternion = new BABYLON.Quaternion( -0.0023,0.7212, -0.0022,0.6925);
             light2.includedOnlyMeshes.push(result.meshes[12]);          //middle top 3d flower spot
             light2.includedOnlyMeshes.push(result.meshes[11]);          //bottom right 3d flower spot
@@ -116,6 +118,8 @@ function load_earth_with_flowers_mesh(){
             add_obj_action_mgr(result.meshes[11]);                       //3d flower plane
             add_obj_action_mgr(result.meshes[13]);                       //3d flower plane
             add_obj_action_mgr(result.meshes[10]);                       //bottom pink carpet
+
+            // enable_gizmo2(nuvola_obj);
         }),
       
         BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/flowersMbayeScene/", "solarCarpet.glb", selectedFlowerScene).then(function (result) {
@@ -155,6 +159,7 @@ function load_earth_with_flowers_mesh(){
                 }else if(a.name === "wood001_primitive0" || a.name === "Home" || a.name === "MbayeFeet" || a.name === "MbayeHead" || a.name === "DesignAPanel"){
                     bookPartsMap.set(a.name,null);
                     add_obj_action_mgr(a);
+                    if(a.name === "MbayeHead") a.renderingGroupId = 1;
                 }
 
                
@@ -175,56 +180,62 @@ function load_earth_with_flowers_mesh(){
             result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0421,0.8852,-0.1091, 0.4498);
             // result.meshes[0].isPickable = false;
             book_obj = result.meshes[0];
-
+            // enable_gizmo2(book_obj);
            
             
         }),
-        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", selectedFlowerScene).then(function (result) {
-            mermaidSpeechCloud = result.meshes[0];
-            result.meshes[1].isPickable = false;
-            mermaidSpeechCloud.isPickable = false;
-            // mermaidSpeechCloud.position = new BABYLON.Vector3(-50.11,58.76,-135.46);
-            mermaidSpeechCloud.position = new BABYLON.Vector3( -58.34,51.68,-129.43);
-            mermaidSpeechCloud.scaling = new BABYLON.Vector3(10,10,-10);
-            // mermaidSpeechCloud.rotationQuaternion = new BABYLON.Quaternion( -0.0024,-0.2285,-0.0435,0.9725);
-            mermaidSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0138,-0.2008,-0.0438,0.9783);
-            light2.includedOnlyMeshes.push(result.meshes[1]);
-            result.meshes[0].name = "cloud";
-            // mermaidSpeechCloud.isVisible = false;
-            // mermaidSpeechCloud.setEnabled(false);
-        }),
-        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/flowersMbayeScene/cloud/", "flowersNuvola1.glb", selectedFlowerScene).then(function (result) {
-            result.meshes[0].scaling = new BABYLON.Vector3(22,22,-22);
-            // result.meshes[0].position = new BABYLON.Vector3(-50.35,60.03,-136.66);
-            // result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0850,-0.2042,-0.0225,0.9746);
-            result.meshes[0].position = new BABYLON.Vector3(-59.17,50.25,-130.12);
-            result.meshes[0].rotationQuaternion = new BABYLON.Quaternion( -0.0190,-0.1905,-0.0420, 0.9802);
-            nuvolaSpeech1 = result.meshes[0];
-            light2.includedOnlyMeshes.push(result.meshes[1]);
-            result.meshes[0].name = "speech1";
-        }),
-        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/flowersMbayeScene/cloud/", "flowersNuvola2.glb", selectedFlowerScene).then(function (result) {
-            result.meshes[0].scaling = new BABYLON.Vector3(22,22,-22);
-            // result.meshes[0].position = new BABYLON.Vector3(-50.35,60.03,-136.66);
-            // result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0850,-0.2042,-0.0225,0.9746);
-            result.meshes[0].position = new BABYLON.Vector3(-59.17,50.25,-130.12);
-            result.meshes[0].rotationQuaternion = new BABYLON.Quaternion( -0.0190,-0.1905,-0.0420, 0.9802);
-            nuvolaSpeech2 = result.meshes[0];
-            nuvolaSpeech2.isVisible = false;
-            nuvolaSpeech2.setEnabled(false);
-            light2.includedOnlyMeshes.push(result.meshes[1]);
-            result.meshes[0].name = "speech2";
-        }),
+        // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/designScene/cloud/", "speechCloud.glb", selectedFlowerScene).then(function (result) {
+        //     mermaidSpeechCloud = result.meshes[0];
+        //     result.meshes[1].isPickable = false;
+        //     mermaidSpeechCloud.isPickable = false;
+        //     // mermaidSpeechCloud.position = new BABYLON.Vector3(-50.11,58.76,-135.46);
+        //     mermaidSpeechCloud.position = new BABYLON.Vector3( -58.34,51.68,-129.43);
+        //     mermaidSpeechCloud.scaling = new BABYLON.Vector3(10,10,-10);
+        //     // mermaidSpeechCloud.rotationQuaternion = new BABYLON.Quaternion( -0.0024,-0.2285,-0.0435,0.9725);
+        //     mermaidSpeechCloud.rotationQuaternion = new BABYLON.Quaternion(0.0138,-0.2008,-0.0438,0.9783);
+        //     light2.includedOnlyMeshes.push(result.meshes[1]);
+        //     result.meshes[0].name = "cloud";
+        //     // mermaidSpeechCloud.isVisible = false;
+        //     // mermaidSpeechCloud.setEnabled(false);
+        // }),
+        // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/flowersMbayeScene/cloud/", "flowersNuvola1.glb", selectedFlowerScene).then(function (result) {
+        //     result.meshes[0].scaling = new BABYLON.Vector3(22,22,-22);
+        //     // result.meshes[0].position = new BABYLON.Vector3(-50.35,60.03,-136.66);
+        //     // result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0850,-0.2042,-0.0225,0.9746);
+        //     result.meshes[0].position = new BABYLON.Vector3(-59.17,50.25,-130.12);
+        //     result.meshes[0].rotationQuaternion = new BABYLON.Quaternion( -0.0190,-0.1905,-0.0420, 0.9802);
+        //     nuvolaSpeech1 = result.meshes[0];
+        //     light2.includedOnlyMeshes.push(result.meshes[1]);
+        //     result.meshes[0].name = "speech1";
+        // }),
+        // BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/flowersMbayeScene/cloud/", "flowersNuvola2.glb", selectedFlowerScene).then(function (result) {
+        //     result.meshes[0].scaling = new BABYLON.Vector3(22,22,-22);
+        //     // result.meshes[0].position = new BABYLON.Vector3(-50.35,60.03,-136.66);
+        //     // result.meshes[0].rotationQuaternion = new BABYLON.Quaternion(0.0850,-0.2042,-0.0225,0.9746);
+        //     result.meshes[0].position = new BABYLON.Vector3(-59.17,50.25,-130.12);
+        //     result.meshes[0].rotationQuaternion = new BABYLON.Quaternion( -0.0190,-0.1905,-0.0420, 0.9802);
+        //     nuvolaSpeech2 = result.meshes[0];
+        //     nuvolaSpeech2.isVisible = false;
+        //     nuvolaSpeech2.setEnabled(false);
+        //     light2.includedOnlyMeshes.push(result.meshes[1]);
+        //     result.meshes[0].name = "speech2";
+        // }),
     ]).then(() => {
         selectedFlowerCamera.setTarget(new BABYLON.Vector3(0,0,0));
-        nuvolaSpeech1.setParent(mermaidSpeechCloud);
-        nuvolaSpeech2.setParent(mermaidSpeechCloud);
-        mermaidSpeechCloud.isVisible = false;
-        mermaidSpeechCloud.setEnabled(false);
+        // nuvolaSpeech1.setParent(mermaidSpeechCloud);
+        // nuvolaSpeech2.setParent(mermaidSpeechCloud);
+        // mermaidSpeechCloud.isVisible = false;
+        // mermaidSpeechCloud.setEnabled(false);
 
         set_scene_active_meshes(selectedFlowerScene,false);
+        nuvolaSpeech1 = create_mesh("nuvolaSpeech1","front/images3D/flowersScene/nuvolaFlower1.png",50,70,0.8,{x:-35.98,y:52.42,z:-177.76},{x: -0.0366, y: -0.9784, z: 0.0284, w:-0.1985},selectedFlowerScene);
+        nuvolaSpeech2 = create_mesh("nuvolaSpeech1","front/images3D/flowersScene/nuvolaFlower2.png",50,70,0.8,{x:-35.98,y:52.42,z:-177.76},{x: -0.0366, y: -0.9784, z: 0.0284, w:-0.1985},selectedFlowerScene);
         
-        // enable_gizmo2(book_obj);
+        nuvolaSpeech1.material.emissiveColor = new BABYLON.Color3(1,1,1);
+        nuvolaSpeech2.material.emissiveColor = new BABYLON.Color3(1,1,1);
+        nuvolaSpeech1.isVisible = false;
+        nuvolaSpeech2.isVisible = false;
+        // enable_gizmo2(mermaidSpeechCloud);
         // create_3D_flower("2Sunflower"); 
         // selectedFlowerScene.debugLayer.show();
         // enable_gizmo2(nuvolaSpeech1);
@@ -508,40 +519,45 @@ function create_3D_flower(theFlowerName){
 function set_3D_flower(theFlowerName){
     // selectedFlowerScene.debugLayer.show();
     let val = flowers3DMap.get(theFlowerName);
+    
     if(val){
 
         for(i=0;i<val.length;i++){
+            if(i<3){
+                    let planeMatl = new BABYLON.StandardMaterial(val[i]+"matl", selectedFlowerScene);
+                    planeMatl.diffuseTexture = new BABYLON.Texture("front/images3D/flowers2D/3D/"+val[i]+".png", selectedFlowerScene);
 
-            let planeMatl = new BABYLON.StandardMaterial(val[i]+"matl", selectedFlowerScene);
-            planeMatl.diffuseTexture = new BABYLON.Texture("front/images3D/flowers2D/3D/"+val[i]+".png", selectedFlowerScene);
+                    //1st position of 3d flower
+                    if(i===0){
+                        planeMatl.diffuseTexture.uScale = -6.140;
+                        planeMatl.diffuseTexture.vScale = -8.150;
+                        planeMatl.diffuseTexture.uOffset = 1.740;
+                        planeMatl.diffuseTexture.vOffset = 0.280;
+                    }else if(i===1){
+                        planeMatl.diffuseTexture.uScale = -6.2;
+                        planeMatl.diffuseTexture.vScale = -8;
+                        planeMatl.diffuseTexture.uOffset = -0.42;
+                        planeMatl.diffuseTexture.vOffset = -0.420;
+                    }else if(i===2){
+                        planeMatl.diffuseTexture.uScale = -5.500;
+                        planeMatl.diffuseTexture.vScale = -8.780;
+                        planeMatl.diffuseTexture.uOffset = 0.280;
+                        planeMatl.diffuseTexture.vOffset = -0.070;
+                    }
 
-            //1st position of 3d flower
-            if(i===0){
-                planeMatl.diffuseTexture.uScale = -6.140;
-                planeMatl.diffuseTexture.vScale = -8.150;
-                planeMatl.diffuseTexture.uOffset = 1.740;
-                planeMatl.diffuseTexture.vOffset = 0.280;
-            }else if(i===1){
-                planeMatl.diffuseTexture.uScale = -6.2;
-                planeMatl.diffuseTexture.vScale = -8;
-                planeMatl.diffuseTexture.uOffset = -0.42;
-                planeMatl.diffuseTexture.vOffset = -0.420;
-            }else if(i===2){
-                planeMatl.diffuseTexture.uScale = -5.500;
-                planeMatl.diffuseTexture.vScale = -8.780;
-                planeMatl.diffuseTexture.uOffset = 0.280;
-                planeMatl.diffuseTexture.vOffset = -0.070;
+                    planeMatl.diffuseTexture.hasAlpha = true;
+                    planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
+                    planeMatl.backFaceCulling = false;
+                    flower3D_nuvola[i].material = planeMatl;
+                    flower3D_nuvola[i].name = val[i];
+                    flower3D_nuvola[i].isVisible = true;
+                    // light2.includedOnlyMeshes.push(plane);
+            }else{ // else if more than 3
+                console.log("more than 3 flowers");
             }
-
-            planeMatl.diffuseTexture.hasAlpha = true;
-            planeMatl.specularColor = new BABYLON.Color3(0, 0, 0);
-            planeMatl.backFaceCulling = false;
-            flower3D_nuvola[i].material = planeMatl;
-            flower3D_nuvola[i].name = val[i];
-            flower3D_nuvola[i].isVisible = true;
-            // light2.includedOnlyMeshes.push(plane);
         }//end of for loop
     }//enf of if
+    
 }
 
 function delete_3D_flowers(){
@@ -583,6 +599,10 @@ function animate_3D_flower(theFlower, num){
 function is_3d_flower(the3DFlower){
     if(flowers3DMap.has(chosenFlower.name)){
         let val = flowers3DMap.get(chosenFlower.name);   //chosenFlower       
+        //show arrows if more than 3 flower versions
+        if(val.length > 3) $('.modelArrow').css('display','block');
+        else $('.modelArrow').css('display','none');
+
         for(i=0;i<val.length;i++){
             if(the3DFlower === val[i]) return true;
         }
@@ -605,6 +625,7 @@ function set_flower_field(theFlowerName){
 
 let isVideoEnabled = false;
 let currNuvolaText = 1;
+
 function add_mouse_listener_selected_flower(){
     var onPointerDownFlowers = function (evt) {
         if (evt.button !== 0) {
@@ -630,6 +651,7 @@ function add_mouse_listener_selected_flower(){
                     // hidePage(3); //hide wiki
                     //hide wiki
                     $('#flowersWikipediaDiv').hide();
+                    $('#flowerModelDiv').hide();
                     currScene = "flowersScene";
                     isFlowerClicked = false;
                     flowersCamera.attachControl(canvas,true);
@@ -643,6 +665,7 @@ function add_mouse_listener_selected_flower(){
                     set_scene_active_meshes(flowersScene,true);
                     //hide wiki icon
                     $('#wikipediaIcon').hide();
+                    show_overlay_text(3);
                 }else if(theMeshClicked.name === "wood001_primitive0"){            //show video function enable/disable
                     if(!isVideoEnabled){
                         isVideoEnabled = true;
@@ -728,27 +751,28 @@ function add_obj_action_mgr(thePart){
 var onOverPart =(meshEvent)=>{
     if(showSelectedFlowerScene){
     // console.log(meshEvent.source.name);
+    let partTooltip = document.createElement("span");
+    partTooltip.setAttribute("id", "partTooltip");
+    var sty = partTooltip.style;
+    sty.position = "absolute";
+    sty.color = "#00BFFF";
+    sty.fontFamily = "Courgette-Regular";
+    sty.fontSize = "2rem";
+    sty.textShadow = "1px 1px 3px black";
+    sty.fontSize = "2rem";
+    sty.top = selectedFlowerScene.pointerY + "px";
+    sty.left = (selectedFlowerScene.pointerX+20) + "px";
+    sty.cursor = "pointer";
+    sty.pointerEvents = "none";
         if(meshEvent.source.name === "solarLamp"){
-            let partTooltip = document.createElement("span");
-            partTooltip.setAttribute("id", "partTooltip");
-            var sty = partTooltip.style;
-            sty.position = "absolute";
-            sty.lineHeight = "1.2em";
-            sty.paddingLeft = "0.5%";
-            sty.paddingRight = "0.5%";
-            sty.color = "#ffffff";
-            sty.fontFamily = "Courgette-Regular";
-            sty.backgroundColor = "#0b91c3a3";
-            sty.opacity = "0.7";
-            sty.fontSize = "1vw";
-            sty.top = selectedFlowerScene.pointerY + "px";
-            sty.left = (selectedFlowerScene.pointerX+20) + "px";
-            sty.cursor = "pointer";
+            
 
             document.body.appendChild(partTooltip);
             partTooltip.textContent = "Pick another flower";
-            objHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.5,0));
-        }else if(meshEvent.source.name === "nuvola"){
+
+            meshEvent.source.material.emissiveColor = new BABYLON.Color3(0.07,0.04,0);
+        }
+        else if(meshEvent.source.name === "nuvola"){
             if(currNuvolaText==1){
                 nuvolaSpeech2.isVisible = false;
                 nuvolaSpeech2.setEnabled(false);
@@ -760,22 +784,18 @@ var onOverPart =(meshEvent)=>{
                 nuvolaSpeech2.setEnabled(true);
                 currNuvolaText = 1;
             }
-            mermaidSpeechCloud.isVisible = true;
-            mermaidSpeechCloud.setEnabled(true);
-        }else if(is_3d_flower(meshEvent.source.name)){
-            objHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.5,0));
+        }
+        else if(is_3d_flower(meshEvent.source.name)){
+            // objHighlight.addMesh(meshEvent.source, new BABYLON.Color3(0.7,0.5,0));
+            meshEvent.source.material.specularColor = new BABYLON.Color3(0,0.6,0);
+            document.body.appendChild(partTooltip);
+            partTooltip.textContent = "View Flower";
         }else if(bookPartsMap.has(meshEvent.source.name)){
-            console.log(meshEvent.source);
-            objHighlight.addMesh(meshEvent.source, new BABYLON.Color3.Green());
-            // meshEvent.source.material.emissiveColor = new BABYLON.Color3.Green();
+            meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,0.09,0);
         }else if(meshEvent.source.name === "blueBottom"){
-            // console.log("bottom of solar");
-            //solar_carpet_bot.isVisible = false;
             set_carpet_bot(1);
         }
         else if(meshEvent.source.name === "pinkBottom"){
-            // console.log("bottom of nuvola");
-           // nuvola_carpet_bot.isVisible = false;
            set_carpet_bot(2);
         }
     }
@@ -783,15 +803,15 @@ var onOverPart =(meshEvent)=>{
 
 //handles the on mouse out event
 var onOutPart =(meshEvent)=>{
-    objHighlight.removeMesh(meshEvent.source);
+    if(is_3d_flower(meshEvent.source.name)) meshEvent.source.material.specularColor = new BABYLON.Color3(0,0,0); //objHighlight.removeMesh(meshEvent.source);
+    meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,0,0);
+
     while (document.getElementById("partTooltip")) {
         document.getElementById("partTooltip").parentNode.removeChild(document.getElementById("partTooltip"));
     }
     
     if(showSelectedFlowerScene){
         if(meshEvent.source.name === "nuvola"){
-            mermaidSpeechCloud.isVisible = false;
-            mermaidSpeechCloud.setEnabled(false);
             nuvolaSpeech1.isVisible = false;
             nuvolaSpeech1.setEnabled(false);
             nuvolaSpeech2.isVisible = false;
@@ -817,12 +837,14 @@ function show_alert_box(titleText,path){
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, I\'m sure!',
+        allowOutsideClick: false,
         width: '20%',
         padding: '1rem',
         background: 'rgba(8, 64, 147, 0.62)',
     }).then((result) => {
+        console.log(result);
         if (result.value) {
-            window.open(path,"_self"); 
+            window.location.href = path;
         }
       });
 }

@@ -72,7 +72,7 @@
 
 @section('after-styles')
 
-    {{-- <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script> --}}
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
     {{--<script src="{{asset('front/JS/fabric.min.js')}}"></script> --}}
     <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
     <link rel="stylesheet" href="{{asset('front/CSS/jobseeker-profile.css')}}">

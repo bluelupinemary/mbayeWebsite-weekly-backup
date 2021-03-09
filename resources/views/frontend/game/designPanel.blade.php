@@ -77,6 +77,7 @@
 
     <div id="loadingScreenOverlay" >
         <div id="overlayText">Please click anywhere to play the game</div>
+        <div id="infoIconTextdown" class="instr-text-down">This is the page for Designing a Panel.<br>Please click anywhere to start.</div>
     </div>
     <div id="loadingScreenPercent" style="padding-top: 2%;">
         Loading: 0 %
@@ -92,8 +93,70 @@
         <img id="fullscreenImg" src="{{asset('front/images3D/fullscreen-btn.png')}}" alt="fullscreen-img" >
     </div>
 
-   
+    <i class="fas fa-info-circle" id="infoIcon"><span class="InfoIconLabel">Instructions</span></i>
+    <div id="instruction-left-div" class="instruction-left-div">
+        <div class="instr-text-row">
+            <div class="instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/left.png" alt=""></div>
+            <div class="instr-text">3D ROTATE</div>
+        </div>
+        <div class="instr-text-row">
+            <div class="instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/scroll.png" alt=""></div>
+            <div class="instr-text">ZOOM IN/OUT</div>
+        </div>
+        <div class="instr-text-row">
+            <div class="instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/right.png" alt=""></div>
+            <div class="instr-text">PANNING</div>
+            {{-- <div id="closeInfoBtn" class="col-md-3 info-icon"><i class="fas fa-info-circle"></i></div> --}}
+        </div>
+    </div>
+    
+    <div id="infoIconTextastro" class="instr-text-astro">Instructions from Ruru and<br>Nuvola will appear. Please<br>use the mouse controls to<br>rotate around Mbaye and<br>choose the panel which you<br>want to start designing.</div>
+    
+    <div id="overlayTxtDown" class="instr-text-overlay-down">Click any panel that you like to design<br>and drag it away from the body.<br>It will take the panel into the editing view.</div>
+    
+    <div id="overlayTxtdragTop" class="instr-text-overlay-drag">This is your editing view in Designing a Panel.</div>
+    
+    <div id="instructionDivDragLeft" class="instruction-drag-div-left">
+        <div id="overlayTxtscene2" class="instr-text-overlay-drag-scene">Click on the panel to control it.<br>Use the mouse control to see your best<br>view of the panel.<br>You can rotate and zoom in/out.</div>
+        <div class="row">
+            <div class="instr-text-rotate">
+                <div class="instr-img"><img class="instr-icon-design" src="{{asset('front')}}/images3D/icons/left.png" alt=""></div>
+                <div class="instr-text-design">3D ROTATE</div>
+                
+            </div>
+            <div class="instr-text-zoom">
+                <div class="instr-img"><img class="instr-icon-design" src="{{asset('front')}}/images3D/icons/scroll.png" alt=""></div>
+                <div class="instr-text-design">ZOOM IN/OUT</div>
+            </div>
+        </div>
+    </div>
 
+    <div id="instructionDivDragRight" class="instruction-drag-div-right">
+        <div id="overlayTxtscene2" class="instr-text-overlay-drag-scene">Click on the 3d world of flowers to control it.<br>Use the mouse controls to navigate around it.<br>Click flower to view designs.</div>
+        <div class="row">
+            <div class="instr-text-rotate-right">
+                <div class="instr-img"><img class="instr-icon-design" src="{{asset('front')}}/images3D/icons/left.png" alt=""></div>
+                <div class="instr-text-design">3D ROTATE</div>
+                
+            </div>
+            <div class="instr-text-zoom-right">
+                <div class="instr-img"><img class="instr-icon-design" src="{{asset('front')}}/images3D/icons/scroll.png" alt=""></div>
+                <div class="instr-text-design">ZOOM IN/OUT</div>
+            </div>
+            <div class="instr-text-panning-right">
+                <div class="instr-img"><img class="instr-icon-design" src="{{asset('front')}}/images3D/icons/right.png" alt=""></div>
+                <div class="instr-text-design">PANNING</div>
+                {{-- <div id="closeInfoBtn" class="col-md-3 info-icon"><i class="fas fa-info-circle"></i></div> --}}
+            </div>
+        </div>
+    </div>
+
+    <h2 id="textCurve"> This is your chosen panel<h2>
+    
+    <div id="overlayTxtBook" class="instr-text-overlay-book">You will have<br>multiple options<br>for the 2D designs.<br>Click a flower to place it on the panel.</div>
+    
+    <div id="overlayTxtBookRight" class="instr-text-overlay-book-right">Once you clicked a flower on the 3d world,<br>the book of flowers will appear to show you our<br>2d interpretations of the flower you chose.<br>for the 2D designs.<br>Click a flower to place it on the panel.</div>
+    
     <div id="takeScreenshotMain">
         <div class="tooltips">
             <span>Take Screenshot</span>
@@ -184,7 +247,7 @@
 
 @section('after-scripts')
 
-   
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
      {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> --}}
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -196,3 +259,4 @@
 
 
 @endsection
+

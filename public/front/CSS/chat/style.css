@@ -1432,6 +1432,10 @@ input:checked+.slider:before {
   opacity: 0!important;
 }
 
+.modal-backdrop.show {
+  opacity: 0.7;
+}
+
 .custom-control-input {
   left: 1px;
   -webkit-opacity: 0;

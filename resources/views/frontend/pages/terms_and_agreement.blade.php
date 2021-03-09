@@ -24,7 +24,7 @@
   <br>
 
   <p class="col_white">
-    These Terms of Service Agreement (the "Agreement") governs your use of this website, www.Mbaye.com (the "Website. This Agreement includes,
+    These Terms of Service Agreement (the "Agreement") governs your use of this website, www.Mbaye.com (the "Website". This Agreement includes,
      and incorporates by this reference, the policies and guidelines referenced below. Inox Arabia FZC and associated companies reserve the right
       to change or revise the terms and conditions of this Agreement at any time by posting any changes or a revised Agreement on this Website.
        Inox Arabia FZC and associated companies will alert you that changes or revisions have been made by indicating on the top of this Agreement the date it was last revised.

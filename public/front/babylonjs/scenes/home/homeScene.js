@@ -781,19 +781,11 @@ function create_characters(){
     let manny = init_char_image("Manny","mannyHome.png",566,714,{x: 3181, y: -755, z: 5436},{x: -0.0345, y: -0.0750, z: 0.0148, w: 0.9954});
     init_scrollable_viewer("MannyText","mannyText.png",1500,850,{x: 4143, y: -745, z: 5165},{x:0.0068,  y:-0.1934, z:-0.0030, w:-0.9803});
     add_action_mgr(manny);
-   
 
-    // returnLbl = BABYLON.MeshBuilder.CreatePlane("ReturnLbl", {width:200, height: 100}, homeScene);
-    // returnLbl.position = new BABYLON.Vector3(0,0,0);
-    // var tempMatl = new BABYLON.StandardMaterial("ReturnLblMatl", homeScene);
-    // tempMatl.diffuseTexture = new BABYLON.Texture("front/images3D/homeScene/returnText.png", homeScene);
-    // tempMatl.opacityTexture = new BABYLON.Texture("front/images3D/homeScene/returnText.png", homeScene);
-    // tempMatl.backFaceCulling = false;
-    // returnLbl.material = tempMatl;
-    // enable_home_gizmo(returnLbl);
-    // initLight.includedOnlyMeshes.push(returnLbl);
-
+    init_char_image("tempText1","tempText1.png",1230,616,{x: 311, y: -850, z: 592},{x:0.0552, y: 0.8709, z: -0.1573, w: 0.4596});
+    let tempText1 = init_char_image("tempText2","tempText2.png",1500,750,{x: -3290, y: -692, z: -2806},{x:0.0321, y: 0.9532, z: -0.0584, w: -0.2899});
    
+    // enable_home_gizmo(tempText1);
     
 }
 
@@ -943,7 +935,7 @@ function add_home_mouse_listener(){
             if(pickinfo.hit){
               
                 let theInitMesh = pickinfo.pickedMesh;
-                // console.log("name: ", theInitMesh.name, "pos: ", theInitMesh.position, "rot: ", theInitMesh.rotationQuaternion);
+                console.log("name: ", theInitMesh.name, "pos: ", theInitMesh.position, "rot: ", theInitMesh.rotationQuaternion);
                 
                 if(theInitMesh.name === "homeEarth"){ 
                     //check if small device or mobile; if yes, enable double click
@@ -987,11 +979,13 @@ function add_home_mouse_listener(){
                         val = charImgMap.get(theInitMesh.name);
                         currCamTarget = theInitMesh.name;
                         isCharViewActive = true;
+                        show_overlay_text(3);
                         // show_return_label(theInitMesh.name);
                     }else{ //if it is the same character
                         val = charImgMap.get("InitialView");
                         currCamTarget = null;
                         isCharViewActive = false;
+                        show_overlay_text(4);
                     }
                     let pos = val[0];
                     
@@ -1039,7 +1033,54 @@ function add_home_mouse_listener(){
     
 }//end of listen to mouse function
 
+// click info to show overlay
 
+$("#infoIcon").on('click',function(){
+    //1 - initial view, 2 - focus view
+    if(isCharViewActive) show_overlay_text(2);
+    else show_overlay_text(1);               
+    
+    
+    // console.log('hhh');
+  });
+
+//   $("#closeInfoBtn").on('click',function(){
+//     $('#instruction-left-div').hide();
+//     $('#infoIconText').hide();
+//   });
+  
+  function show_overlay_text(mode){
+      if(mode == 1){    //if #infoIcon is clicked and it is the initial view
+            $('#instruction-left-div').toggle();
+            $('#infoIconText').toggle();
+            console.log("callled");
+      }else if (mode == 2){ //if #infoIcon is clicked and it is the focus view
+            $('#instruction-right-div').toggle();
+            if(currCamTarget == 'Villa'){
+                // console.log('hhh');
+                $("#cloudImgDiv").css({'bottom' : '10%', 'left' : '20%', 'top':'unset' });
+            }else{
+                $('#cloudImgDiv').css({'top':'10%','left':'0'});  
+            }
+            $('#cloudImgDiv').toggle();
+      }else if (mode == 3){ //if character and #infoIcon is clicked and it is the focus view
+            $('#instruction-left-div').hide();
+            $('#infoIconText').hide();
+            
+      }else if (mode == 4){ //if character is clicked  and it is the focus view
+        $('#instruction-right-div').hide();
+        $('#cloudImgDiv').hide();
+        }
+        // $('#cloudImgDiv').hide();
+        
+  }
+    // if(isCharViewActive){
+    //     document.getElementById("instruction-right-div").style.display = "block";
+    // }
+    // else{
+    //     document.getElementById("instruction-left-div").style.display = "block";
+    // }
+  
 
 function checkScreenAndDoubleClick(theLink){
     if(isMobile()){
@@ -1098,9 +1139,10 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
     document.getElementById("loadingScreenDiv").remove(); 
-    document.getElementById("loadingScreenOverlay").style.display = "block";
+    // document.getElementById("loadingScreenOverlay").style.display = "block";
     isHomeReady = true;
-    
+    let browser = testBrowser();
+    if(browser != 'Safari') discvideoTexture.video.play();
     //scene optimizer
     var options = new BABYLON.SceneOptimizerOptions();
     options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
@@ -1115,11 +1157,9 @@ theScene.executeWhenReady(function () {
     }
 
     engine.runRenderLoop(function () {
-        
         if(theScene){
             theScene.render();
             if(discvideoTexture){
-                //change to 250
                 if(discvideoTexture.video.currentTime >= 250 && !isIntroDone){
                     discvideoTexture.video.pause();
                     discvideoTexture.video.currentTime = 0;

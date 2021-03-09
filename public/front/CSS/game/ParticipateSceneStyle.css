@@ -1,0 +1,201 @@
+#close-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-top: 0 !important;
+    padding-right: 1%;
+}
+#fullscreen-btn, #minimize-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-right: 1% !important;
+    padding-top: 0 !important;
+}
+
+#planetWikipediaDiv{
+    background-color: black; 
+    visibility: hidden;
+    /* display: none; */
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 30vw;
+    height:100%;
+    border: 2px solid gray;
+    z-index: 100;
+}
+
+
+#planetWikipediaDiv #close-btn, #planetWikipediaDiv #fullscreen-btn, #planetWikipediaDiv #minimize-btn{
+    height: 100%;
+    width: auto;
+    position: relative;
+    float: right;
+}
+
+
+#planetWikiHeader{
+    position: relative;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    height: 5vh;
+    width: 100%;
+    font-size:1rem;
+}
+
+
+.spanLbl{
+    color:gray !important;
+    font-size: 1rem;
+}
+
+
+.wikiFullscreenLabel,.wikiCloseLabel{
+    display: none;
+    right: 3%;
+    top:100%;
+    position: absolute;
+    color: white;
+    font-size: 1.2rem;
+    text-shadow: 0px 0px 3px #000000;
+    background: #0b91c3a3;
+    font-family: 'Nasalization Rg';
+    width: auto;
+    text-align: center;
+    border-radius: 12px;
+    padding: 0.5%;
+    z-index: 5;
+}
+
+.wikiCloseLabel{
+    right: 0 !important;
+}
+
+#close-btn:hover + span{
+    display: inline-block;
+}
+
+
+#fullscreen-btn:hover + span{
+    display: inline-block;
+}
+
+
+#minimize-btn:hover + span{
+    display: inline-block;
+}
+
+
+
+.astronaut-rotate-controls {
+    position: fixed;
+    bottom: 0;
+    right: 7%;
+    width: 15vw;
+    height: 5vw;
+    display: flex;
+    justify-content: space-between;
+    display: none;
+    margin-bottom: 1%;
+    border:none;
+}
+
+
+.astronaut-rotate-controls button {
+    /* width: 9vw;
+    height: 6vw; */
+    width: 100%;
+    border: none;
+    outline:none;
+    padding: 0;
+    background: #28a74573;
+    color: #fff;
+    font-size: 4vw;
+    border-radius: 10%;
+}
+
+
+.astronaut-rotate-controls .astro-rotate-left {
+    margin-right: 10%;
+}
+
+
+
+.astronaut-scale-controls {
+    position: fixed;
+    bottom: 12%;
+    right:0;
+    right: 1%;
+    width: 6vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    display: none;
+}
+
+.astronaut-scale-controls .astro-scale-up {
+    margin-bottom: 12%;
+}
+
+
+.astronaut-scale-controls button {
+    /* width: 9vw;
+    height: 6vw; */
+    width: 100%;
+    border: none;
+    outline:none;
+    padding: 5%;
+    background: #b9240a73;
+    color: #fff;
+    font-size: 4vw;
+    border-radius: 10%;
+}
+
+.astro-reset{
+    color: #b9240a73 !important;
+    background:none !important;
+    margin-bottom: 12%;
+    font-size: 3vw !important;
+}
+
+.astronaut-scale-controls button:hover, .astronaut-rotation-controls button:hover{
+    filter:drop-shadow(0px 0px 3px rgba(255, 255, 255, 0.555));
+}
+
+
+#astronautToolIcon{
+    position: absolute;
+    display: inline-block;
+    bottom:0;
+    right:0;
+}
+
+#astronautToolIcon img{
+    width:4vw;
+}
+
+#astronautToolIcon img:hover{
+    filter: drop-shadow(0px 0px 3px white);
+}
+
+/*extra small and small screens*/
+@media (min-width : 320px) and (max-width : 1024px) and (orientation : landscape) { 
+
+    #planetWikipediaDiv{
+        width:50vw;
+    }
+
+    #planetWikiHeader{
+        height:10vh;
+    }
+   
+}
+
+
+
+

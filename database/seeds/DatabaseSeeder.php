@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingsTableSeeder::class);
         $this->call(MenuTableSeeder::class);
         $this->call(ModulesTableSeeder::class);
-        $this->call(ModulIesTableSeeder::class);
+        $this->call(ProfessionTableSeeder::class);
+        $this->call(IndustryTableSeeder::class);
+        // $this->call(ModulIesTableSeeder::class);
         Model::reguard();
     }
 }

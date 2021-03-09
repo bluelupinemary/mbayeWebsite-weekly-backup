@@ -324,6 +324,45 @@ export default {
                     console.log(error);
                 });
         },
+        generalcountemotions(index) {
+            // debugger;
+            // console.log(this.blogs[index].id);
+            axios.post('/api/countgeneralemotions', {
+                blog_id: this.blogs[index].id,
+            })
+            .then((response) => {
+                this.blogs[index].hotcount= response.data.hot;
+                this.blogs[index].coolcount= response.data.cool;
+                this.blogs[index].naffcount= response.data.naff;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });  
+        },
+        generalcountcomments(index) {
+            // debugger;
+            axios.post('/api/countgeneralcomments', {
+                blog_id: this.blogs[index].id,
+            })
+            .then((response) => {
+                this.blogs[index].commentcount= response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });  
+        },
+        generalcountshares(index) {
+            // debugger;
+            axios.get("/api/countgeneralblogshare/"+this.blogs[index].id)
+            .then((response) => {
+                // alert(response.data);
+                //   debugger;
+                this.blogs[index].sharecount = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        },
         getblogs() {
             var that = this;
 
@@ -338,7 +377,7 @@ export default {
                 page: 1
             })
             .then((response) => {
-                // console.log(response);
+                console.log(response);
                 if(response.data.data.length == 0) {
                     $('.no-result').text('No results found.');
                 }
@@ -374,19 +413,38 @@ export default {
         changes(index) {
             // console.log(this.blogs[index].id);
             // debugger;
-            Echo.channel('blogsharecount'+this.blogs[index].id)
-            .listen('NewBlogShare',(e) => {
-            this.countshares(index);
-            });
-            Echo.channel('blog'+this.blogs[index].id)
-            .listen('NewComment',(comment) => {
-                this.countcomments(index);
-            });
-            Echo.channel('blogLike'+this.blogs[index].id)
-            .listen('NewEmotion',(like) => {
-                // console.log("listned");
-                this.countemotions(index);
-            });
+            var type = this.blogs[index].type;
+            console.log(this.blogs[index]);
+            if(this.blogs[index].type != '' && type.includes('GeneralBlog')) {
+                Echo.channel('generalblogsharecount'+this.blogs[index].id)
+                .listen('NewGeneralBlogShare',(e) => {
+                    this.generalcountshares(index);
+                });
+                Echo.channel('generalblog'+this.blogs[index].id)
+                .listen('NewGeneralComment',(comment) => {
+                    this.generalcountcomments(index);
+                });
+                Echo.channel('generalblogLike'+this.blogs[index].id)
+                .listen('NewGeneralEmotion',(like) => {
+                    // console.log("listned");
+                    this.generalcountemotions(index);
+                });
+            } else {
+                Echo.channel('blogsharecount'+this.blogs[index].id)
+                .listen('NewBlogShare',(e) => {
+                this.countshares(index);
+                });
+                Echo.channel('blog'+this.blogs[index].id)
+                .listen('NewComment',(comment) => {
+                    this.countcomments(index);
+                });
+                Echo.channel('blogLike'+this.blogs[index].id)
+                .listen('NewEmotion',(like) => {
+                    // console.log("listned");
+                    this.countemotions(index);
+                });
+            }
+            
         },
         getimage(img) {
             return {

@@ -132,12 +132,15 @@
     <div class="instruction-7 instruction"></div>
     <div class="instruction-text instruction-text-7">Lorem Ipsum is simply dummy text of the printing and typesetting
         industry.</div>
+    <div class="instruction-8 instruction"></div>
+    <div class="instruction-text instruction-text-8">Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.</div>    
 </div>
 
 @endsection
 
 @section('after-scripts')
-
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.js"
     integrity="sha256-u/CKfMqwJ0rXjD4EuR5J8VltmQMJ6X/UQYCFA4H9Wpk=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"
@@ -261,13 +264,13 @@ $('.help-button').click(()=>this.showOverlay())
             $('.instructions').fadeOut();
         })
 
-        $('.instruction-1').hover(
+        $('.instruction-1, .instruction-text-1').hover(
             function() {
-                $('.instruction-text-1').fadeIn();
+                $('.instruction-text-1').css("display", "block");
             },
-            function() {
-                $('.instruction-text-1').fadeOut();
-            }
+             function() {
+                 $('.instruction-text-1').css("display", "none");
+             }
         );
 
         $('.instruction-2').hover(
@@ -354,7 +357,7 @@ $('.home-btn,.profile-btn,.communicator-hover,.communicator-span').click (() => 
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Mbaye Logo',
-            html: `<h4 style="font:inherit; color:white !important">You will be redirected to ${id}.</h4><span style="font-size:0.9vw;color:white">[All unsaved changes will be lost]</span>`,
+            html: `<h4 style="font:inherit; color:white !important">You will be redirected to ${id}.</h4><span style="font-size:1.2vw;color:white">[All unsaved changes will be lost]</span>`,
             padding: '30px',
             background: 'rgba(8, 64, 147, 0.62)',
             showCancelButton: true,
@@ -426,7 +429,7 @@ $('.home-btn,.profile-btn,.communicator-hover,.communicator-span').click (() => 
                 $('.save-btn').attr('disabled', false);
                 $('.save-btn').removeClass('disabled-btn');
                 $('.download-btn').attr('disabled', false);
-                $('.download-btn').removeClass('disabled-btn');
+                $('.download-btn').addClass('disabled-btn');
                 $('#imgDiv').css('display', 'flex');
                 $('#myImage').attr('src', response);
                 $('download-cropped').attr('href', response);
@@ -514,7 +517,7 @@ $('.download-btn').click(()=>{
     $(".save-btn").click(() => {
         $('.save-btn').attr('disabled','disabled');
         $('.save-btn').addClass('disabled-btn');
-        $('.download').addClass('disabled-btn');
+        
         Swal.fire({
             imageUrl: '../../front/icons/alert-icon.png',
             imageWidth: 80,
@@ -528,9 +531,18 @@ $('.download-btn').click(()=>{
             confirmButtonColor: 'auto',
             cancelButtonColor: 'red',
             confirmButtonText: 'Yes, save it!'
-        }).then((result) => {
+        }).then((result) => { 
             if (result.value) {
+                $('.download-btn').removeClass('disabled-btn');
+                $('.download-btn').attr('disabled',false);
                 this.save()
+            }
+            else
+            {
+                $('.save-btn').attr('disabled',false);
+                $('.save-btn').removeClass('disabled-btn');
+                $('.download-btn').removeClass('disabled-btn');
+                $('.download-btn').attr('disabled',false);
             }
         });
     });
@@ -585,10 +597,6 @@ $('.download-btn').click(()=>{
     }
 
 
-
-
-
-
 // Disable save and downlaod buttons at start
     $('.save-btn').attr('disabled', 'dsiabled');
     $('.save-btn').addClass('disabled-btn');
@@ -596,12 +604,6 @@ $('.download-btn').click(()=>{
     $('.download-btn').addClass('disabled-btn');
     $('#vanilla-demo').css('visibility', 'visible');
     $('#imgDiv').css('display', 'none');
-
-
-
-
-
-
 
 
     // Cropper Initialization 
@@ -626,16 +628,23 @@ $('.download-btn').click(()=>{
     })
 
 
-
+    screenwidth = $( window ).innerWidth();
+    // alert(innerWidth);
 // cropper hover
- $('.cr-boundary').mouseenter(()=>{
-     $('.cropper-tip span').css('display', 'inline');
-    //  $('.cropper-tip span').css('width', '11vw');
-     $('.cropper-tip span').css('padding', '10px');
- });
- $('.cr-boundary').mouseleave(()=>{
-    $('.cropper-tip span').css('display', 'none')
- })
+    if (screenwidth >= 1024)
+    {
+        $('.cr-boundary').mouseenter(()=>{
+            $('.cropper-tip span').css('display', 'inline');
+            //  $('.cropper-tip span').css('width', '11vw');
+            $('.cropper-tip span').css('padding', '10px');
+        });
+        $('.cr-boundary').mouseleave(()=>{
+            $('.cropper-tip span').css('display', 'none')
+        })
+    }
+    
+
+ 
 
 
 

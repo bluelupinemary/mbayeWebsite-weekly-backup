@@ -49,9 +49,14 @@ class MessagesController extends Controller
     public function fetchprivateMessages(User $user)
     {
         // return $user;
-        $con = Conversation::where(['user1_id' => auth::id(),'user2_id' => $user->id])->orWhere(['user2_id'=>auth::id(),'user1_id'=>$user->id])->first();
+        $con = Conversation::whereIn('user1_id', [auth::id(),$user->id])->WhereIn('user2_id', [auth::id(),$user->id])->first();
+        // return $con;
+        if($con){
         $privateCommunication = Message::with('chatmedia')->where('conversation_id', $con->id)->get();
         return $privateCommunication;
+    }else{
+        return 'not found';
+    }
     }
 
     public function fetchconversations()
@@ -114,7 +119,13 @@ class MessagesController extends Controller
 
     public function sendPrivateMessage(Request $request,$user)
     {
-        $con = Conversation::where(['user1_id' => auth::id(),'user2_id' => $user])->orWhere(['user2_id'=>auth::id(),'user1_id'=>$user])->first();
+        $con = Conversation::whereIn('user1_id', [auth::id(),$user])->WhereIn('user2_id', [auth::id(),$user])->first();
+        if(!$con){
+            $con = new Conversation;
+            $con->user1_id = Auth::id();
+            $con->user2_id = $user;
+            $con->save();
+        }
             $input=request()->all();
             // dd($input);
             if(request()->has('file')){
@@ -138,6 +149,7 @@ class MessagesController extends Controller
                 'message' => $input['message'],
                 'conversation_id' => $con->id,
             ]);
+
         }
         broadcast(new PrivateMessageSent($message->load('user')))->toOthers();
 
@@ -223,10 +235,26 @@ class MessagesController extends Controller
         // dd($request);
         $q = $request['q'];
         // dd($q);
-    $user = User::where('username','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->get();
+    $user = User::where('username','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->orWhere('first_name','LIKE','%'.$q.'%')->orWhere('last_name','LIKE','%'.$q.'%')->get();
     // dd($user);
     if(count($user) > 0)
         return $user;
     else return 'No Details found. Try to search again !';
+    }
+
+    public function getusers(){
+        $users = User::all();
+        return $users;
+    }
+
+    public function activegroup($id){
+        $group = ChatGroup::find($id);
+        return $group;
+        // foreach($request->selected as $selected){
+        //     $group_members = new ChatGroupMembers;
+        //     $group_members->user_id = $selected;
+        //     $group_members->group_id = $group->id;
+        //     $group_members->save();
+        // }
     }
 }

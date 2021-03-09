@@ -12,7 +12,7 @@ use App\Models\GeneralBlogShares\GeneralBlogShare;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 // use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class NewBlogShare implements ShouldBroadcast
+class NewGeneralBlogShare implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

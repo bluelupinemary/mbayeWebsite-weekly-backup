@@ -216,7 +216,7 @@ button.pagination:disabled {
     /* border: 1px solid red; */
     color: #fff;
     width: 32vw;
-    height: 3vw;
+    /* height: 3vw; */
     background: #14284a;
     position: absolute;
     top: 1%;
@@ -224,9 +224,10 @@ button.pagination:disabled {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    font-family: 'Space Age';
-    font-size: 1.5vw;
+    font-family: Nasalization;
+    font-size: 1em;
     z-index: 1;
+    padding: 0.3%;
 }
 
 .group-list-div label {
@@ -245,7 +246,7 @@ button.pagination:disabled {
 
 .group-list-div input::placeholder {
     color: #6c757d;
-    font-size: 1vw;
+    font-size: 1em;
     text-align: center;
 }
 
@@ -265,7 +266,7 @@ button.pagination:disabled {
     padding: 0;
     margin: 0;
     background: transparent;
-    font-size: 1.5vw;
+    font-size: 1em;
     color: #0aa9ae;
 }
 
@@ -274,7 +275,7 @@ ul.group-list {
     left: 35%;
     top: 103%;
     font-family: Nasalization;
-    font-size: 1vw;
+    font-size: 0.7em;
     /* border: 1px solid red; */
     list-style: none;
     padding: 0;
@@ -307,7 +308,20 @@ ul.group-list li.disabled {
     z-index: 1;
 }
 
+.options-div {
+    width: 15vw;
+    /* height: 20.5vw; */
+    background: #14284a;
+    padding: 0.3%;
+    z-index: 1;
+}
 .earthlings-header {
+    /* padding: 3% 0; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.options-header {
     /* padding: 3% 0; */
     display: flex;
     justify-content: space-between;
@@ -318,18 +332,34 @@ ul.group-list li.disabled {
     border: 0;
     margin: 0;
     background: transparent;
-    font-size: 1.5vw;
+    font-size: 1em;
+    color: #0aa9ae;
+}
+
+.options-header button {
+    border: 0;
+    margin: 0;
+    background: transparent;
+    font-size: 1em;
     color: #0aa9ae;
 }
 
 .earthlings-body {
     display: none;
 }
+.options-body {
+    display: none;
+}
 
 .earthlings-div p {
     font-family: Nasalization;
     color: #00e4e7;
-    font-size: 1vw;
+    font-size: 1em;
+}
+.options-div p {
+    font-family: Nasalization;
+    color: #00e4e7;
+    font-size: 1em;
 }
 
 .earthlings-div button.save-group-friends {
@@ -342,13 +372,13 @@ ul.group-list li.disabled {
     color: #fff;
     /* padding: 1% 4%; */
     border-radius: 4px;
-    font-size: 1vw;
+    font-size: 1em;
 }
 
 .earthlings-list {
     list-style: none;
     color: #fff;
-    font-size: 0.8vw;
+    font-size: .8em;
     /* border: 1px solid red; */
     height: 16vw;
     overflow: auto;
@@ -365,6 +395,37 @@ ul.group-list li.disabled {
 }
 
 .earthlings-list li button {
+    border: 0;
+    background: transparent;
+    color: red;
+}
+
+.options-list {
+    list-style: none;
+    color: #fff;
+    font-size: 0.7em;
+    /* border: 1px solid red; */
+    height: 14vw;
+    overflow: auto;
+    margin-top: 1%;
+    padding: 1%;
+}
+
+.options-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding-left: 19%; */
+    /* padding-right: 2%; */
+    padding: 3%;
+}
+.options-list li:hover 
+{
+    background: #04ddf0;
+    color: #14284a;
+}
+
+.options-list li button {
     border: 0;
     background: transparent;
     color: red;
@@ -550,7 +611,7 @@ ul.group-list li.disabled {
 
 .search-form button {
     background: rgba(0,0,0,.5);
-    font-family: Space age;
+    font-family: Nasalization;
     color: #17a2b8;
     font-size: 0.9vw;
 }
@@ -577,7 +638,7 @@ button:focus {
 }
 
 /* Dropdown Options */
-.glow, .scifiUI:hover h1, .scifiUI:hover ul li {
+.glow{
     box-shadow: 0 0 10px #00dcdc, 0 1px 5px #212121;
     border-color: #00dcdc;
     background: #00dcdc;
@@ -591,14 +652,15 @@ button:focus {
     position: absolute;
     top: 2%;
     left: 1%;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: Nasalization;
+    z-index: 999;
 }
 
-.scifiUI:hover h1:after {
+/* .scifiUI:hover h1:after {
     border-top-color: rgba(33, 33, 33, 0.7);
-}
+} */
 
-.scifiUI:hover ul li {
+/* .scifiUI:hover ul li {
     -webkit-transform: skew(0);
     transform: skew(0);
     /* width: 300px;
@@ -611,9 +673,9 @@ button:focus {
 
 .scifiUI:hover ul li:nth-child(2) {
     left: 0;
-}
+} */
 
-.scifiUI:hover ul li:nth-child(3) {
+/* .scifiUI:hover ul li:nth-child(3) {
     left: 0;
 }
 
@@ -627,8 +689,8 @@ button:focus {
 
 .scifiUI:hover ul li:nth-child(6) {
     left: 0;
-}
-
+} */
+/* 
 .scifiUI:hover ul li:nth-child(7) {
     left: 0;
 }
@@ -636,8 +698,8 @@ button:focus {
 .scifiUI * {
     -webkit-transition: all 300ms ease-in-out;
     transition: all 300ms ease-in-out;
-}
-.scifiUI h1 {
+} */
+/* .scifiUI h1 {
     position: relative;
     display: block;
     width: 9.7vw;
@@ -653,10 +715,10 @@ button:focus {
     padding: 0;
     margin: 0;
     /* font-weight: 600; */
-    font-family: 'Space Age';
-}
+    font-family: Nasalization;
+} */
 
-.scifiUI h1:after {
+/* .scifiUI h1:after {
     content: "";
     display: block;
     position: absolute;
@@ -672,9 +734,9 @@ button:focus {
     list-style: none;
     position: relative;
     top: 0;
-}
+} */
 
-.scifiUI ul li {
+/* .scifiUI ul li {
     -webkit-transform: skew(45deg) scaleY(-3);
     transform: skew(45deg) scale(-3);
     box-shadow: 0 3px 0 5px #212121 inset;
@@ -688,8 +750,8 @@ button:focus {
     text-align: center;
     font-size: 1vw;
     cursor: pointer;
-}
-.scifiUI ul li:nth-child(1) {
+} */
+/* .scifiUI ul li:nth-child(1) {
     top: 0;
     left: -500%;
 }
@@ -704,7 +766,7 @@ button:focus {
 .scifiUI ul li:nth-child(4) {
     top: 5.4em;
     left: 500%;
-}
+} */
 /* .scifiUI ul li:nth-child(5) {
   top: 6em;
   left: -500%;
@@ -723,12 +785,17 @@ button:focus {
     margin-top: 3%;
     border-radius: 10px;
     padding: 4% 2% 4% 4%;
+    display: flex;;
 }
 
 .delete-group-fieldset .form-check {
     display: inline-block;
     padding-left: 1.50rem;
     width: 32%;
+}
+fieldset
+{
+    display: flex;
 }
 
 /* Modal */
@@ -786,42 +853,41 @@ button:focus {
 }
 
 /* Sweet alert */
-.swal2-popup {
-    box-shadow: 0px 0px 20px #17a2b8;
-    width: 27vw !important;
-    padding: 1vw !important;
+.swal2-popup 
+{
+  box-shadow: 0px 0px 20px #17a2b8;
 }
 
 .swal2-image {
-    width: 6vw !important;
-    height: 6vw !important;
     margin: 1.25vh auto !important;
 }
 
 .swal2-title {
     font-family: 'Nasalization';
-    font-size: 1.5vw !important;
     color: #df1613 !important;
 }
 
 .swal2-content {
     color: #17a2b8 !important;
-    font-size: 1.1vw !important;
     font-family: 'Nasalization';
 }
 
 .swal2-title span.success {
     color: #25d365 !important;
 }
-
-.swal2-styled {
-    font-size: 1.3vw !important;
-    padding: 0.5vw 2vw !important;
+.swal2-html-container{
+  color: #17a2b8 !important;
+  font-family: 'Nasalization';
 }
-
 .swal2-actions {
     margin: 1.25vw auto 0 !important;
 }
+#error{
+  font-family: 'Nasalization';
+  color: #df1613 !important;
+}
+
+
 
 /* Instructions overlay */
 .instruction-div {
@@ -830,7 +896,7 @@ button:focus {
     top: 0;
     height: 100%;
     background: #000000a3;
-    z-index: 1;
+    z-index: 9999;
     display: none;
     font-family: Nasalization;
 }
@@ -925,4 +991,36 @@ button:focus {
 .instruction.earthlings p {
     margin-top: 2%;
     white-space: pre-wrap;
+}
+
+@media only screen  and (max-width : 660px )
+{
+    .options-div
+    {
+        width: 100%;
+    }
+    .options-div p
+    {
+        font-size: .7em;
+    }
+    .group-list-div
+    {
+        font-size: .7em;
+    }
+    .earthlings-div p
+    {
+        font-size: .6em;
+    }
+    .earthlings-div button.save-group-friends
+    {
+        font-size: .7em;
+    }
+    .earthlings-header button
+    {
+        font-size: .6em;
+    }
+    .search-form button
+    {
+        font-size: .7em;
+    }
 }

@@ -104,7 +104,7 @@ header{
   color: #212529;
   text-align: left;
   list-style: none;
-  background: none ;
+  background: none;
   background-clip: padding-box;
   border: none;
   border-radius: .25rem;
@@ -2045,8 +2045,6 @@ div::-webkit-scrollbar-thumb {
   background: #047999;
 }
 
-/* sweet alert */
-
 .swal2-popup 
 {
   box-shadow: 0px 0px 20px #17a2b8;
@@ -2070,18 +2068,16 @@ div::-webkit-scrollbar-thumb {
     color: #25d365 !important;
 }
 .swal2-html-container{
-    color: #17a2b8 !important;
-    font-family: 'Nasalization';
+  color: #17a2b8 !important;
+  font-family: 'Nasalization';
 }
 .swal2-actions {
     margin: 1.25vw auto 0 !important;
 }
-
-#f-screen {
-    margin: 15px 0px;
-}
-
 #error{
   font-family: 'Nasalization';
   color: #df1613 !important;
+}
+.modal-backdrop.show {
+  opacity: 0.7;
 }

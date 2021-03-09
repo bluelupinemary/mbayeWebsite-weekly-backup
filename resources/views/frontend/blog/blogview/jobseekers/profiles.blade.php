@@ -4,6 +4,35 @@
 <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
 <link rel="stylesheet" href="{{ asset('front/CSS/profile.css') }}">
 @section('after-styles')
+    <style>
+        /*for demo - grace*/   
+        .blog-button-1{ 
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-55%,-1%);
+            width: 100%;
+        }
+        .button-div{
+            border:0px solid green;
+        }
+        .navigator-div-demo{
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            /* -webkit-transform: translate(0, -50%); */
+            /* -moz-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%); */
+            /* transform: translate(0, -50%); */
+            width: 14%;
+            z-index: 1;
+            pointer-events: none;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+        }
+        </style>
 @endsection
 
 @section('content')
@@ -24,6 +53,62 @@
     
 
     <career-profile :user_country="'{{$country}}'"></career-profile>
+
+    <!--TEMPORARILY ADDED HERE FOR DEMO PURPOSES - GRACE-->
+    <div class="astro-div navigator-div-demo">
+        <img src="{{ asset('front/images/astronut/trevor_career.png') }}"  class="img_astro"  alt="" style="width:36vw;">
+        <div class="tos-div thomasina" style="display:none;">
+            <button class="tos-btn tooltips right">
+                <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/tosBtn.png') }}" alt="">
+                <span class="tooltiptext">Terms of Services</span></button>
+        </div>
+       
+        <div style="display:none;" class="user-photo">
+        </div>
+    
+        <div class="navigator-buttons" style="display:none;">
+            <div class="column column-1">
+                <button class="music-btn tooltips left"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/musicBtn.png') }}" alt="">
+                    <span class="tooltiptext">Music on/off</span></button>
+                <button class="home-btn tooltips left"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/homeBtn.png') }}" alt="">
+                    <span class="tooltiptext">Home</span></button>
+            </div>
+            <div class="column column-2">
+                <button class="editphoto-btn tooltips top"><img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/greenButtons.png') }}" alt=""><span class="">Edit Profile Photo</span></button>
+            </div>
+            <div class="column column-3">
+                <button class="tooltips right ">
+                 <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/freeBtn.png') }}" alt=""></button>
+                <button class="profile-btn tooltips right">
+                    <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/profileBtn.png') }}" alt="">
+                    <span class="tooltiptext">User Profile</span></button>
+            </div>
+        </div>
+        <button class="zoom-btn zoom-in " style="display:none;"><i class="fas fa-search-plus"></i></button>
+         <!-- <button class="navigator-zoom navigator-zoomin"></button>-->
+        <div class="instructions-div btn_pointer tooltips right" style="display:none;">
+            <button class="instructions-btn tooltips right">
+                <img class="btn_pointer" src="{{ asset('front/images/astronut/navigator-buttons/instructionsBtn.png') }}" alt="">
+                <span class="tooltiptext">Instructions</span></button>
+        </div>
+        <button style="display:none;" class="communicator-div tooltips top btn_pointer" >
+          
+        </button>
+        <div class="comm-btn  top btn_pointer" style="display:none;">
+        <span class="communicator-span    tooltips_span tooltiptext" >Communicator</span>
+        </div>
+        <button class="music-volume-div tooltips top btn_pointer" style="display:none;">
+            <span>Music Volume Up/Down</span>
+        </button>
+       <button class="navigator-zoomout-btn" style="display:none;">
+            <i class="fas fa-undo-alt"></i>
+        </button>
+    </div>
+
+
+    <!--END OF DEMO DIV-->
+
+
 
     {{-- <div class="astro-div navigator-div @if(Auth::user()->gender == null || Auth::user()->gender == 'male') tom @endif">
         @if(Auth::user()->gender != null && Auth::user()->gender == 'female')

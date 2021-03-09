@@ -1,6 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('after-styles')
+	<meta name="url" content="{{ url('') }}">
 	<link rel="stylesheet" href="{{asset('front/CSS/search-friends.css')}}">
 	<link rel="stylesheet" href="{{asset('front/CSS/blackhole.css')}}">
 	<style>
@@ -45,6 +46,7 @@
 
 @section('before-scripts')
 	<script src="{{asset('front/JS/blackhole.js')}}"></script>
+	<script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script>
     //   blackhole('#blackhole');
     </script>

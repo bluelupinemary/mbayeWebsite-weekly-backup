@@ -75,34 +75,55 @@ class FrontendController extends Controller
     public function blog_tagwise_all(Request $request)
     {
         if($request->has('tag') && $request->tag != '') {
-            $tag = $request['tag'];
+            $checkValidTag = BlogTag::where('code', $request->tag)->first();
+
+            if($checkValidTag) {
+                if($request->tag == 'designs') {
+                    return redirect()->route('frontend.designed_panels_all', []);
+                }
+
+                $tag = $request['tag'];
+            } else {
+                $tag = '';
+            }
         } else {
             $tag = '';
         }
         
-        if(Auth::user()) {
-            return view('frontend.blog.blogview.tagwise.blog_tagwise',compact('tag'));
-        } else {
-            return view('frontend.auth.login');
-        }
+        return view('frontend.blog.blogview.tagwise.blog_tagwise',compact('tag'));
     }
     /**
      * Blogs of  friends tag wise
      */
-    public function blog_tagwise_friend(Request $request){
+    public function blog_tagwise_friend(Request $request) {
 
-        $tag = $request['tag'];
+        if($request->has('tag') && $request->tag != '') {
+            $checkValidTag = BlogTag::where('code', $request->tag)->first();
+
+            if($checkValidTag) {
+                if($request->tag == 'designs') {
+                    return redirect()->route('frontend.designed_panels_friend', []);
+                }
+
+                $tag = $request['tag'];
+            } else {
+                $tag = '';
+            }
+        } else {
+            $tag = '';
+        }
+
         $type = 'friend';
 
+        $friend = '';
         if($request->has('id')) {
+            $friend = User::find($request->id);
             $id = $request->id;
         } else {
             $id = 0;
         }
 
-        $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id','type'));
-        return view('frontend.auth.login');
+        return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id','type','friend'));
     }
     public function blog_tagwise_friend_post(Request $request){
      
@@ -117,19 +138,31 @@ class FrontendController extends Controller
     /**
      * Blogs of logged user tag wise
      */
-    public function blog_tagwise_my(Request $request){
+    public function blog_tagwise_my(Request $request) 
+    {
+        if($request->has('tag') && $request->tag != '') {
+            $checkValidTag = BlogTag::where('code', $request->tag)->first();
 
-        $tag = $request['tag'];
-        $user = Auth::user();
-        $type = '';
+            if($checkValidTag) {
+                if($request->tag == 'designs') {
+                    return redirect()->route('frontend.designed_panels_my', []);
+                }
 
-        if($user) {
-            $id = $user->id;
-            return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id','type'));
+                $tag = $request['tag'];
+            } else {
+                $tag = '';
+            }
         } else {
-            return view('frontend.auth.login');
+            $tag = '';
         }
+
+        $id = Auth::user()->id;
+        $type = '';
+        $friend = '';
+
+        return view('frontend.blog.blogview.tagwise.blog_of_friend_tagwise',compact('tag','id','type','friend'));
     }
+
     public function blog_tagwise_my_post(Request $request){
      
         $id = $request['id'];
@@ -338,9 +371,7 @@ class FrontendController extends Controller
     }
     /* For general blogs ,displays all blogs */
     public function blog_general_all(){
-        $user = Auth::user();
-        if($user)         return view('frontend.blog.blogview.general.blog_general');
-        return view('frontend.auth.login');
+        return view('frontend.blog.blogview.general.blog_general');
     }
     public function blog_general_all_old(){
         $user = Auth::user();
@@ -462,7 +493,7 @@ public function blog_general_friend_post(Request $request){
     
 
      /* For all users jobseeker */
-     public function jobseeker_profiles(Request $request){
+    public function jobseeker_profiles(Request $request){
         $user = Auth::user();
         if($user) {
             $country = $user->country;

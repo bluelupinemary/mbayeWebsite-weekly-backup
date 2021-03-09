@@ -21,6 +21,54 @@
     <div id="fullscreenIcon">
       <img id="fullscreenImg" src="{{asset('front')}}/images3D/fullscreen-btn.png" alt="fullscreen-img" >
     </div>
+
+    <i class="fas fa-info-circle" id="MbayeHeadinfoIcon"><span class="InfoIconLabel">Instructions</span></i>
+
+    <div id="flowerInstruction" class="flower-instruction-left-div">
+      <div class="row instr-text-row">
+          <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/left.png" alt=""></div>
+          <div class="col-md-6 instr-text">3D ROTATE</div>
+      </div>
+      <div class="row instr-text-row">
+          <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/scroll.png" alt=""></div>
+          <div class="col-md-6 instr-text">ZOOM IN/OUT</div>
+      </div>
+      <div class="row instr-text-row">
+          <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/right.png" alt=""></div>
+          <div class="col-md-3 instr-text">PANNING</div>
+          {{-- <div id="closeInfoBtn" class="col-md-3 info-icon"><i class="fas fa-info-circle"></i></div> --}}
+      </div>
+    </div>
+
+  <div id="infoIconTextflowers" class="instr-text-flower">This page contains all of the different wild flowers that you can find<br>on Mbaye's Head. Each flower has an assigned song similar to what<br>you hear on the wolrd of flowers.</div>
+
+  <div id="infoIconTextdownflower" class="instr-text-flower-down">You can click on any flower to play a song and a music video will<br>appear. You can pause or play the song while viewing the page. You<br>can also maximize or minimize the window of the music video.</div>
+
+  
+  <h2 id="textCurve"> Click on flower<h2>
+  <h2 id="textCurve2"> to play a song</h2>
+  <h2 id="textCurveanticlock"> Hover on flower</h2>
+  <h2 id="textCurveanticlock2"> to see the name</h2>
+
+  <div id="footInstruction" class="foot-instruction-left-div">
+    <div class="row instr-text-row">
+        <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/left.png" alt=""></div>
+        <div class="col-md-6 instr-text">3D ROTATE</div>
+    </div>
+    <div class="row instr-text-row">
+        <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/scroll.png" alt=""></div>
+        <div class="col-md-6 instr-text">ZOOM IN/OUT</div>
+    </div>
+    <div class="row instr-text-row">
+        <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/right.png" alt=""></div>
+        <div class="col-md-3 instr-text">PANNING</div>
+        {{-- <div id="closeInfoBtn" class="col-md-3 info-icon"><i class="fas fa-info-circle"></i></div> --}}
+    </div>
+  </div>
+  
+  <div id="footTextMiddle" class="instr-text-foot-middle">When you click on a flower,<br>the same flower will light<br>up on the foot to show you<br>where we have utilized it on the design.</div>
+  <div id="footTextdown" class="instr-text-foot-down">You can also click on the flower on the foot and a window<br>will appear which will show you the 360&deg; model of the 3d flower.<br>up on the foot to show you<br>where we have utilized it on the design.</div>
+
     
     <div id="block_land">
       <div class="content">
@@ -64,7 +112,7 @@
 @endsection
 
 @section('after-scripts')
-
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
   <script src="{{asset('front')}}/babylonjs/model-viewer.js"></script>
   <script src="{{asset('front')}}/babylonjs/model-viewer-legacy.js"></script>
   <script src="{{asset('front')}}/babylonjs/Oimo.js"></script>

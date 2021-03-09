@@ -153,6 +153,19 @@ function load_3D_mesh(){
                     }else if(result.meshes[i].name === "helmet") result.meshes[i].material.backFaceCulling = false;
                     else if(result.meshes[i].name === "Navigator") navigator_obj = result.meshes[i];
                     else if(result.meshes[i].name === "body") astronaut = result.meshes[i];
+                    else if(result.meshes[i].name === "screenBag"){ 
+                        let tempMatl = new BABYLON.StandardMaterial("facePhoto", scene);
+                        tempMatl.diffuseColor = new BABYLON.Color3(0,0,0);
+                        tempMatl.emissiveColor = new BABYLON.Color3(0.5,0.5,0.5);
+                        tempMatl.diffuseTexture = new BABYLON.Texture("front/images3D/flowers2D/field/1Protea.png", scene);
+                        tempMatl.diffuseTexture.hasAlpha = true;
+                        tempMatl.backFaceCulling = false;//Allways show the front and the back of an element
+                        result.meshes[i].material = tempMatl;
+                        // theAstroFace.material.canRescale = true;
+                        // theAstroFace.material.diffuseTexture.level = 2;
+                        // theAstroFace.material.diffuseTexture.uScale = 1;
+                        // theAstroFace.material.diffuseTexture.vScale =  1;
+                    }
                     
                    
                     if(i===result.meshes.length-1) loadedPercent = 100;

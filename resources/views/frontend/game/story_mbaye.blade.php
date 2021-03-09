@@ -77,7 +77,7 @@
 @endsection
 
 @section('after-scripts')
-
+{{-- <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script> --}}
 <script src="https://www.youtube.com/iframe_api"></script> 
 <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
 

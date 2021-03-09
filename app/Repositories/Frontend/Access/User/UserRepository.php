@@ -13,6 +13,8 @@ use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use ImageResize;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -125,6 +127,7 @@ class UserRepository extends BaseRepository
         $image = base64_decode($base64);
        
         $filename =  '-snap'.mt_rand().'.jpg';
+        
         Storage::disk('local')->put('public/profilepicture/'.$filename, $image);
         $user->photo =$filename;
 

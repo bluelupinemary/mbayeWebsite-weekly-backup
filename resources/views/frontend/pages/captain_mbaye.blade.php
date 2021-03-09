@@ -308,8 +308,34 @@
        
     </div>
     
-    
+    <i class="fas fa-info-circle" id="infoIcon"><span class="InfoIconLabel">Instructions</span></i>
 
+    <div id="instructionCaptDiv" class="instruction-right-capt-div">
+      <div class="row instr-text-row">
+          <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/left.png" alt=""></div>
+          <div class="col-md-6 instr-text">3D ROTATE</div>
+      </div>
+      <div class="row instr-text-row">
+          <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/scroll.png" alt=""></div>
+          <div class="col-md-6 instr-text">ZOOM IN/OUT</div>
+      </div>
+      <div class="row instr-text-row">
+          <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/right.png" alt=""></div>
+          <div class="col-md-3 instr-text">PANNING</div>
+          {{-- <div id="closeInfoBtn" class="col-md-3 info-icon"><i class="fas fa-info-circle"></i></div> --}}
+      </div>
+    </div>
+
+  <div id="infoIconTextcapt" class="instr-text-captain">You can click on any of the planets to read or watch about about Captain Mbaye Diagne<br>from different resources.<br>"In Our Eyes" contains the reasoning on why we name the lioness after him.</div>
+  
+  <div id="infoTextcaptbottom" class="instr-text-captain-bottom">This is the article written by Mark Doyle from BBC News.</div>
+  
+  <h2 id="textCurve1"> Click a planet...<h2>
+   
+  <div id="arrowGIF" class="arrow-gif">
+    <img src="{{asset('front')}}/images3D/icons/click.gif" alt="Arrow Gif">
+  </div>  
+  
     <div id="loadingScreenOverlay" >
         <div id="overlayText">Please click anywhere to play the game</div>
     </div>
@@ -333,7 +359,7 @@
 
 @section('after-scripts')
     
-
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front')}}/babylonjs/scenes/captMbaye/captMbayeScene.js"></script>
    

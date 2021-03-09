@@ -1832,6 +1832,49 @@ function create_design_gui(){
     // advancedTexture.addControl(delTool_btn);
 }//end of create gui function
 
+$("#infoIcon").on('click',function(){
+    if(!isStartOfDesignPanel)
+    show_overlay_text(1);
+    else if(isStartOfDesignPanel && !isBookFlowersActive)
+    show_overlay_text(2);
+    else if(isStartOfDesignPanel && isBookFlowersActive)
+    show_overlay_text(3);
+  });
+
+  let isIns2Active = false;
+function set_circle_type(){
+      if(isIns2Active){
+      circleType = new CircleType(document.getElementById('textCurve'));
+     // Set the text radius and direction. Note: setter methods are chainable.
+      circleType.radius(100);
+      }else{
+      //destroy the instructions
+      circleType.destroy();
+     }
+}
+function show_overlay_text(mod){
+    if(mod == 1){    //if #infoIcon is clicked and it is the initial view
+        $('#instruction-left-div').toggle();
+        $('#infoIconTextastro').toggle();
+        $('#overlayTxtDown').toggle();
+        }
+    else if(mod == 2){ //if character and #infoIcon is clicked and it is the focus view
+        $('#instructionDivDragLeft').toggle();
+        $('#instructionDivDragRight').toggle();  
+        $('#overlayTxtdragTop').toggle(); 
+        isIns2Active = !isIns2Active;
+        $('#textCurve').toggle();
+        set_circle_type();
+    }
+    else if(mod == 3){
+        $('#overlayTxtBook').toggle();
+        $('#overlayTxtBookRight').toggle();
+    }    
+  
+    // $('#cloudImgDiv').hide();
+    
+}
+
 
 function design_handle_tool(theGizmo){
     if(designGizmoManager){
@@ -2394,7 +2437,9 @@ function start_design_setup(){
         camera2.position = new BABYLON.Vector3(pos.x+15,pos.y,pos.z+10);
         camera2.setTarget(currentPanel);
         camera2.radius = 20;
-        
+        $('#instruction-left-div').hide();
+         $('#infoIconTextastro').hide();
+        $('#overlayTxtDown').hide();
        
         // panelCamera.attachControl(canvas,true);
         
@@ -3305,6 +3350,7 @@ let userId = document.getElementById('userId').value;
 $('#loadingScreenOverlay').on('click', function(evt){
     $(this).remove();
     $('#loadingScreenDiv').remove();
+    $('#infoIconTextdown').hide();
     document.getElementById("loadingScreenPercent").style.visibility = "hidden"; 
 
     if(has_load_game && isProgressLoaded){

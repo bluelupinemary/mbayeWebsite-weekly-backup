@@ -1,4 +1,5 @@
 /*===============================================START OF MOVE MBAYE SCENE======================================================================*/
+
 //define the earthScene's scene
 var earthScene;  
                                                                     //var to handle the earth scene
@@ -164,15 +165,16 @@ function createEarthScene(){
     initSkybox = create_skybox(earthScene);                                     //create earth scene's skybox
     create_solar_orbit(earthScene);
     load_meshes();
-
-                                                                    
+                                                
     add_hdr_environment(earthScene);
 
     create_planets(earthScene);                                             //create the earth scene's planets
     create_planet_orbit(earthScene);
     create_constellation_planes(earthScene);
     addMouseListener();
-    enable_webcamera(earthScene);
+    
+    enable_init_webcamera(earthScene);
+    create_planet_labels();
 
     earthScene.autoClear = false;
     
@@ -415,14 +417,6 @@ function enable_mbaye_utility(){
 
 
 
-
-
-
-
-
-
-
-
 let earthGizmo;
 //function that creates rotation gizmo for earth
 function enable_earth_utility(){
@@ -437,29 +431,29 @@ function enable_earth_utility(){
 var isInitViewClicked = false;
 
 function earth_rotate_earth_with_mbaye(){
-    var text = astronautPartsMap.get("rotateEarthWithMbaye");
+    // var text = astronautPartsMap.get("rotateEarthWithMbaye");
     
     //if(isFirstClickOfMbaye){
         if(mbayeInit_object.parent!=null){
             mbayeInit_object.setParent(null);
-            text.material.emissiveColor = BABYLON.Color3.White();
+            // text.material.emissiveColor = BABYLON.Color3.White();
         }
         else{
             mbayeInit_object.setParent(earthNormal_object);
-            text.material.emissiveColor = BABYLON.Color3.Red();
+            // text.material.emissiveColor = BABYLON.Color3.Red();
         }
                 
   //  }    
 }
 
 function earth_rotate(){
-    var text = astronautPartsMap.get("rotateEarth");
+    // var text = astronautPartsMap.get("rotateEarth");
     if(isEarthRotating){
         isEarthRotating = false;
-        text.material.emissiveColor = BABYLON.Color3.White();
+        // text.material.emissiveColor = BABYLON.Color3.White();
     }else{
         isEarthRotating = true;
-        text.material.emissiveColor = BABYLON.Color3.Red();
+        // text.material.emissiveColor = BABYLON.Color3.Red();
     }  
 }
 
@@ -587,32 +581,38 @@ function mbaye_scale_down(){
 
 
 function earth_show_countries(){
-    var text = astronautPartsMap.get("showCountries");
+    // var text = astronautPartsMap.get("showCountries");
     if(!isCountryOn){
         earthNames_object.setEnabled(true);
         isCountryOn = true;
-        text.material.emissiveColor = BABYLON.Color3.Red();
+        // text.material.emissiveColor = BABYLON.Color3.Red();
        
     }else{
         earthNames_object.setEnabled(false);
-        text.material.emissiveColor = BABYLON.Color3.White();
+        // text.material.emissiveColor = BABYLON.Color3.White();
         isCountryOn = false;
     }
 }
 
 function earth_show_borders(){
-     var text = astronautPartsMap.get("showBorders");
+    //  var text = astronautPartsMap.get("showBorders");
     if(!isBorderOn){
         earthBorders_object.setEnabled(true);
         isBorderOn = true;
-        text.material.emissiveColor = BABYLON.Color3.Red();
+        // text.material.emissiveColor = BABYLON.Color3.Red();
     }else{
         earthBorders_object.setEnabled(false);
         isBorderOn = false;
-        text.material.emissiveColor = BABYLON.Color3.White();
+        // text.material.emissiveColor = BABYLON.Color3.White();
     }
 }
 
+$("#infoIcon").on('click',function(){
+    $('#instruction-left-div').toggle();
+    $('#infoIconTextdown').toggle();
+    $('#infoIconTextup').toggle();
+    $('#infoIconTextastro').toggle();
+  });
 
 
 
@@ -625,7 +625,7 @@ function addMouseListener(){
             else return;
             if(pickinfo.hit){
                 var theMesh = pickinfo.pickedMesh;
-                console.log("The mesh clicked: ", theMesh.name, theMesh.position, theMesh.rotationQuaternion);
+                // console.log("The mesh clicked: ", theMesh.name, theMesh.position, theMesh.rotationQuaternion);
                 
                 if(theMesh.name ==="MbayeBody"){    
                     if(isPlanetOrbitVisible){
@@ -637,20 +637,14 @@ function addMouseListener(){
                     isEarthRotating = false;
                 }
 
-                if(earthPartsMap.has(theMesh.name) && !isMbayeGizmoDragging){
-                    
-                    if(!isEarthWithGizmo){
-                        set_earth_gizmo_enability();
-                        isEarthWithGizmo = !isEarthWithGizmo;
-                        set_earth_animation(false);
-                        
-                    }
-                    
-                }
-
                 if(earthCountriesMap.has(theMesh.name)){
                     if(theMesh.name === "Sao_Tome_and_Principe") showPage("São_Tomé_and_Príncipe");   
                     else showPage(theMesh.name);
+                }
+
+                if(planetsLinkTextMap.has(theMesh.name)){
+                    let res = planetsLinkTextMap.get(theMesh.name);
+                    checkScreenAndDoubleClick(res);
                 }
                
                 
@@ -669,10 +663,8 @@ function addMouseListener(){
             if (!isEarthClicked) {
                  return;
             }
-             //console.log("currentdragmesh: ",currentDraggableMesh);
             if(currentDraggableMesh == "MBAYE"){
-                     var current = earthScene.pick(earthScene.pointerX, earthScene.pointerY);
-              //       console.log(current);
+                var current = earthScene.pick(earthScene.pointerX, earthScene.pointerY);
             }
                
                 
@@ -694,6 +686,47 @@ function addMouseListener(){
     
 }//end of listen to movement function
 
+
+let isPlanetClicked;
+function checkScreenAndDoubleClick(details){
+    
+    let theTitle = details[0];
+    let theLink = details[1];
+
+
+    if(isMobile()){
+        if(isPlanetClicked){
+            isPlanetClicked = false;
+            window.location.href = theLink; 
+        }else{
+            isPlanetClicked = true;
+            setTimeout(function(){
+                if(isPlanetClicked){
+                    isPlanetClicked = false;
+                        Swal.fire({
+                            width: '10vw',
+                            padding: '3em',
+                            title: 'Double Tap to enter the planet.',
+                            showConfirmButton: false,
+                            position: 'top-end',
+                            showClass:{
+                                backdrop: 'swal2-backdrop-hide',
+                            },
+                            timer: 2000,
+                            width: 100,
+                            customClass: {
+                                popup: 'trevor-popup-class',
+                            }
+                        });
+                    }
+            },500);
+        }
+    }else{
+        show_alert_box(theTitle,theLink);
+    }
+    
+}
+
 var isEarthRotating = true;
 function set_earth_animation(val){
     isEarthRotating = val;
@@ -701,7 +734,7 @@ function set_earth_animation(val){
 
 function show_alert_box(titleText,path){
     Swal.fire({
-        title: titleText,
+        title: "Are you sure you want to view the "+titleText+" page? ",
         imageUrl: '../../front/icons/alert-icon.png',
         imageWidth: '10vw',
         imageHeight: 'auto',
@@ -715,10 +748,75 @@ function show_alert_box(titleText,path){
         background: 'rgba(8, 64, 147, 0.62)',
     }).then((result) => {
         if (result.value) {
-            window.open(path); 
+            window.location.href = path;
         }
       });
 }
+
+
+
+function create_planet_labels(){
+    for(const [name,val] of planet_labels_map.entries()){
+        //val = [width, height, pos, rot]
+        init_planet_label(name,"front/images3D/participateScene/planetTexts/"+name+".png",val[0], val[1],val[2],val[3]);
+    }
+  
+}
+
+function init_planet_label(name,matlPath,w,h,pos, rot){
+    var plane = BABYLON.MeshBuilder.CreatePlane(name, {height:h,width:w}, earthScene);
+    plane.position = new BABYLON.Vector3(pos.x,pos.y,pos.z);
+    plane.rotationQuaternion = new BABYLON.Quaternion(rot.x,rot.y,rot.z,rot.w);
+    
+    let planeMatl = new BABYLON.StandardMaterial(name+"Matl", earthScene);
+
+    planeMatl.diffuseTexture = new BABYLON.Texture(matlPath, earthScene);
+    planeMatl.opacityTexture = new BABYLON.Texture(matlPath, earthScene);
+    planeMatl.hasAlpha = true;
+    plane.isPickable = false;
+  
+    plane.material = planeMatl;
+
+    return plane;
+}
+
+
+
+/* related to the astronaut tools features */
+let isAstroToolsActive = false;
+$('#astronautToolIcon').on('click', function(){
+    if(!isAstroToolsActive){
+        $('.astronaut-rotate-controls').css('display','flex');
+        $('.astronaut-scale-controls').show();
+        show_astro_backpack(true);
+    }else{
+        $('.astronaut-rotate-controls').hide();
+        $('.astronaut-scale-controls').hide();
+        show_astro_backpack(false);
+    }
+    isAstroToolsActive = !isAstroToolsActive;
+});
+
+$('.astro-rotate-left').on('click', function(){
+    astronaut_obj.rotation.y += BABYLON.Tools.ToRadians(10);
+});
+
+$('.astro-rotate-right').on('click', function(){
+    astronaut_obj.rotation.y += BABYLON.Tools.ToRadians(-10);
+});
+
+$('.astro-scale-up').on('click', function(){
+    set_astronaut_scaling("up");
+});
+
+$('.astro-scale-down').on('click', function(){
+    set_astronaut_scaling("down");
+});
+
+$('.astro-reset').on('click', function(){
+    reset_astro();
+});
+
 
 
 //create the game engine
@@ -745,9 +843,24 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
     document.getElementById("loadingScreenDiv").remove();
 
+    //scene optimizer
+    var options = new BABYLON.SceneOptimizerOptions();
+    options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
+    var optimizer = new BABYLON.SceneOptimizer(theScene, options);
+
+
+    if(isSmallDevice() || isMobile()){
+        //if mobile or tablet, always show the photo of user
+        if(sun){
+            sun.material.diffuseTexture = initVideo;
+        }
+
+        //show the buttons if mobile or tablet to control the astronaut scaling and rotation
+        $('.sliding-images-controls').show();
+    }
+
 
     engine.runRenderLoop(function () {
-
         if(theScene){
             //render the scene
             theScene.render();
@@ -757,7 +870,6 @@ theScene.executeWhenReady(function () {
                 earthNormal_object.rotate(planetAxis, grayAngle, BABYLON.Space.LOCAL);
             }
         }    
-
         if(isImgPathSet && theAstroFace){
             isImgPathSet = false;
             create_face_texture(img_path);
@@ -766,14 +878,16 @@ theScene.executeWhenReady(function () {
 }); 
 
 // window resize handler
-window.addEventListener("resize", function () {
+window.addEventListener("resize", function(event) {
     engine.resize();
     testOrientation();
     testFullscreen();
-});
+}, false);
 
 
 //check orientation of screen when page is loaded
 $( document ).ready(function() {
     testOrientation();
 });
+
+

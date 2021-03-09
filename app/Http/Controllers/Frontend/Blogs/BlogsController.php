@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Blogs\Blog;
 use Illuminate\Support\Str;
 use App\Events\NewBlogEvent;
+use App\Events\NewBlogShareEvent;
 use App\Events\NewBlogShare;
 use Illuminate\Http\Request;
 use App\Models\Access\User\User;
@@ -290,7 +291,7 @@ class BlogsController extends Controller
             $saved_blog = $this->blog->update($blog, $request->except('_token'));
         } else {
             $saved_blog = $this->blog->create($request->except('_token'));
-
+            broadcast(new NewBlogEvent($saved_blog))->toOthers();
             // get blog privacy group_id
             $group_ids = $saved_blog->privacy->pluck('group_id')->toArray();
 
@@ -305,7 +306,6 @@ class BlogsController extends Controller
             Notification::send($friends, new BlogActivityNotification($saved_blog));
         }
         // dd(compact('saved_blog'));
-        broadcast(new NewBlogEvent($saved_blog))->toOthers();
         
         $user = User::find($request->user_id);
 
@@ -356,7 +356,7 @@ class BlogsController extends Controller
     {
         $blog = Blog::find($request->blog_id);
         $user = $blog->owner;
-
+// dd($user);
         $blog_share = new BlogShare();
         $blog_share->caption = $request->share_caption;
         $blog_share->blog_id = $request->blog_id;
@@ -366,6 +366,8 @@ class BlogsController extends Controller
         $blog_share->save();
         Notification::send($user, new BlogShareNotification($blog_share));
         broadcast(new NewBlogShare($blog_share))->toOthers();
+        broadcast(new NewBlogShareEvent($blog_share))->toOthers();
+        // dd($blog_share);
         return array('message' => 'Shared blog successfully!', 'blog_share' => $blog_share);
     }
 
@@ -466,46 +468,67 @@ class BlogsController extends Controller
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
         $sort = 'desc_name';
 
-        $friendships = Auth::user()->getAcceptedFriendships();
-        $fsid = $friendships->pluck('id');
-        $groups = FriendFriendshipGroups::whereIn('friendship_id',$fsid)->pluck("group_id");
+        if(Auth::user()) {
+            $friendships = Auth::user()->getAcceptedFriendships();
+            $fsid = $friendships->pluck('id');
+            $groups = FriendFriendshipGroups::whereIn('friendship_id',$fsid)->pluck("group_id");
+        } else {
+            $groups = [];
+        }
 
+        // filter by tag
         if($request->has('tag') && $request->tag != '') {
             $tag = $this->getTag($request->tag);
+
+            // with privacy blogs
             $private_blogs = Blog::where('status', 'Published')
                 ->whereHas('tags', function($q) use($tag) {
                     $q->where('tag_id', $tag);
-                })->whereHas('privacy', function($q) use ($groups) {
+                })
+                ->where('shareable', 0)
+                ->whereHas('privacy', function($q) use ($groups) {
                     $q->whereIn('group_id', $groups);
                 })->get();
+
+            // public blogs
             $public_blogs  = Blog::where('status', 'Published')
                 ->whereHas('tags', function($q) use($tag) {
                     $q->where('tag_id', $tag);
-                })->doesntHave('privacy')->get();
-            // dd($public_blogs);
-        } else {
+                })
+                ->where('shareable', 1)
+                ->doesntHave('privacy')->get();
+
+        } else { // not filtered with tag
+            // with privacy blogs
             $private_blogs = Blog::where('status', 'Published')
                 ->whereHas('tags', function($q) {
-                    $q->whereNotIn('tag_id', [8,9]);
-                })->whereHas('privacy', function($q) use ($groups) {
+                    $q->whereNotIn('tag_id', [8]);
+                })
+                ->where('shareable', 0)
+                ->whereHas('privacy', function($q) use ($groups) {
                     $q->whereIn('group_id', $groups);
                 })->get();
 
+            // public blogs
             $public_blogs = Blog::where('status', 'Published')
                 ->whereHas('tags', function($q) {
-                    $q->whereNotIn('tag_id', [8,9]);
-                })->doesntHave('privacy')->get();
+                    $q->whereNotIn('tag_id', [8]);
+                })
+                ->where('shareable', 1)
+                ->doesntHave('privacy')->get();
         }
 
+        // get shared blogs
         $blog_shares = $this->getSharedBlogs($request->tag);
 
+        // filtered by user
         if($request->has('user_id') && $request->user_id != 0) {
             $public_blogs = $public_blogs->where('created_by', $request->user_id);
             $private_blogs = $private_blogs->where('created_by', $request->user_id);
             $blog_shares = $blog_shares->where('created_by', $request->user_id);
-        } else if($request->has('user_id') && $request->user_id == 0 && $request->type == 'friend') {
+        } else if($request->has('user_id') && $request->user_id == 0 && $request->type == 'friend') { // filter by friends blogs
             $friends_id = Auth::user()->getFriends()->pluck('id')->toArray();
-            
+            // dd($friends_id);
             $public_blogs = $public_blogs->whereIn('created_by', $friends_id);
             $private_blogs = $private_blogs->whereIn('created_by', $friends_id);
             $blog_shares = $blog_shares->whereIn('created_by', $friends_id);
@@ -516,9 +539,17 @@ class BlogsController extends Controller
         if($request->has('page') && $request->page >= 1) {
             $page = $request->page;
         }
+
+        // dd($blog_shares->pluck('id')->toArray());
         
-        $blogs = $private_blogs->merge($public_blogs);
-        $plus_shared_blogs = $blogs->merge($blog_shares)->sortByDesc('publish_datetime');
+        if(Auth::user()) {
+            $blogs = $private_blogs->toBase()->merge($public_blogs);
+        } else {
+            $blogs = $public_blogs;
+        }
+        
+        $plus_shared_blogs = $blogs->toBase()->merge($blog_shares)->sortByDesc('publish_datetime');
+        // dd($plus_shared_blogs);
         $last_page = ceil($plus_shared_blogs->count() / $limit);
         $total = $plus_shared_blogs->count();
         $paginated = $plus_shared_blogs->forPage($page, $limit);
@@ -586,27 +617,39 @@ class BlogsController extends Controller
                 ->whereHas('tags', function($q) use($tag) {
                     $q->where('tag_id', $tag);
                 })
+                ->whereHas('general_blog', function($q) {
+                    $q->where('shareable', 1)
+                    ->whereNull('deleted_at');
+                })
                 ->get();
 
             $from_reg_blog = BlogShare::where('blog_type', 'App\Models\Blogs\Blog')
                 ->whereHas('blog', function($q) use($tag) {
                     $q->whereHas('tags', function($query) use($tag) {
                         $query->where('tag_id', $tag);
-                    });
+                    })
+                    ->where('shareable', 1)
+                    ->whereNull('deleted_at');
                 })
                 ->get();
         } else {
             $from_general_blog = BlogShare::where('blog_type', 'App\Models\GeneralBlogs\GeneralBlog')
                 ->whereHas('tags', function($q) use($tag) {
-                    $q->whereNotIn('tag_id', [8,9]);
+                    $q->whereNotIn('tag_id', [8]);
+                })
+                ->whereHas('general_blog', function($q) {
+                    $q->where('shareable', 1)
+                    ->whereNull('deleted_at');
                 })
                 ->get();
 
             $from_reg_blog = BlogShare::where('blog_type', 'App\Models\Blogs\Blog')
                 ->whereHas('blog', function($q) use($tag) {
                     $q->whereHas('tags', function($query) use($tag) {
-                        $query->whereNotIn('tag_id', [8,9]);
-                    });
+                        $query->whereNotIn('tag_id', [8]);
+                    })
+                    ->where('shareable', 1)
+                    ->whereNull('deleted_at');
                 })
                 ->get();
         }

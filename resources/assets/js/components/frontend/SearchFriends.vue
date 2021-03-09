@@ -2,13 +2,7 @@
   <section class="container-fluid">
     <!-- View 2 starts from here  -->
     <div v-if="searched">
-        <a
-            @click="backSearched()"
-            class="go-back-button"
-        >
-            <i @click="searched()" class="fa fa-arrow-left"></i>
-            {{" "}}Go Back
-        </a>
+        
         <!-- Next and Previous buttons -->
         <div class="arrow-left" @click="previousPage(page)" v-if="page > 1 && page <= last_page">
             <i class="fas fa-chevron-circle-left"></i>
@@ -224,7 +218,6 @@ export default {
 				imageWidth: 80,
 				imageHeight: 80,
 				imageAlt: 'Mbaye Logo',
-				width: '30%',
 				padding: '1rem',
 				background: 'rgb(8 64 147 / 89%)'
 			});

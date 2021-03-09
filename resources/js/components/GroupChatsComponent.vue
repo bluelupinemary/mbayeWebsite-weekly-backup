@@ -61,7 +61,7 @@
                                                 <div class="new bg-yellow">
                                                     <span>5+</span>
                                                 </div>
-                                                <span>Mon</span>
+                                                <button class="btn create" data-toggle="modal" data-target="#modifygroup"><i class="ti-pencil"></i></button>
                                                 <p>Some other Text.</p>
                                             </div>
                                         </a>
@@ -72,7 +72,7 @@
                                                 <div class="new bg-yellow">
                                                     <span>5+</span>
                                                 </div>
-                                                <span>Mon</span>
+                                                <button class="btn create" data-toggle="modal" data-target="#modifygroup"><i class="ti-pencil"></i></button>
                                                 <p>Some other Text.</p>
                                             </div>
                                         </a>
@@ -126,7 +126,7 @@
                             <form @submit.prevent="savegroup">
                                 <div class="form-group">
                                     <label for="participant">Recipient:</label>
-                                    <select class="select2 form-control" multiple data-actions-box="true" v-model="fields.selected">
+                                    <select class="select2 form-control" multiple data-actions-box="true" v-model="createform.selected">
                                         <option v-for="friend in users" :key="friend.id" :value="friend.id">{{friend.first_name}}</option>
                                     </select>
                                     <!-- <div class="user" id="recipient">
@@ -137,7 +137,48 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="topic">Group Name:</label>
-                                    <input type="text" class="form-control" id="topic" v-model="fields.name" placeholder="What's the Group Name?" required>
+                                    <input type="text" class="form-control" id="topic" v-model="createform.name" placeholder="What's the Group Name?" required>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label for="message">Message:</label>
+                                    <textarea class="text-control" id="message" placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
+                                </div> -->
+                                <button type="submit" class="btn button w-100">Start New Chat</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- Create Chat -->
+
+            <div class="modal fade" id="modifygroup" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="requests">
+                        <div class="title">
+                            <h1>Modify Group</h1>
+                            <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="ti-close"></i></button>
+                        </div>
+                        <div class="content">
+                            <form @submit.prevent="savegroup">
+                                <div class="form-group">
+                                    <label for="participant">Recipient:</label>
+                                    <!-- <label class="typo__label">Tagging</label> -->
+                                    <!-- <multiselect v-model="updateform.selectedusers" :options="updateform.options" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some" label="name" track-by="name" :preselect-first="true">
+                                    <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="updateform.selectedusers.length &amp;&amp; !isOpen">{{ updateform.selectedusers.length }} options selected</span></template>
+                                    </multiselect>
+                                    <pre class="language-json"><code>{{ updateform.selectedusers.username }}</code></pre> -->
+                                    <multiselect v-model="updateform.selectedusers" tag-placeholder="Add Users" placeholder="Search or add a User" label="Users" track-by="code" :options="users" :multiple="true" :taggable="true" @tag="addTag">
+                                    <template slot="singleLabel" slot-scope="{ user }"><strong>{{ user.username }}</strong> is written in<strong>  {{ user.username }}</strong></template>
+                                    </multiselect>
+                                    <pre class="language-json"><code>{{updateform.selectedusers.username}}</code></pre>
+                                    <!-- <div class="user" id="recipient">
+                                        <img class="avatar-sm" src="front/images/chat/avatars/avatar-female-5.jpg" alt="avatar">
+                                        <h5>Karen joye</h5>
+                                        <button type="reset" class="btn"><i class="ti-close"></i></button>
+                                    </div> -->
+                                </div>
+                                <div class="form-group">
+                                    <label for="topic">Group Name:</label>
+                                    <input type="text" class="form-control" id="topic" v-model="updateform.groupname" required>
                                 </div>
                                 <!-- <div class="form-group">
                                     <label for="message">Message:</label>
@@ -203,7 +244,7 @@
                                         <hr>
                                     </div>
                                     <div v-for="(message, index) in messages" :key="index">
-                                        <div v-if="user.id===message.sender_id" class="message" >
+                                        <div v-if="user.id==message.sender_id" class="message" >
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
                                             <div v-if="message.message" class="text-main">
                                                 <div class="text-group">
@@ -227,7 +268,7 @@
                                                 <span>09:46 AM</span>
                                             </div>
                                         </div>
-                                        <div v-else-if="user.id!==message.sender_id" class="message me" >
+                                        <div v-else-if="user.id!=message.sender_id" class="message me" >
                                             <img class="avatar-md" src="front/images/chat/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
                                             <div v-if="message.message" class="text-main">
                                                 <div class="text-group me">
@@ -479,8 +520,17 @@
                 users:[],
                 groups:[],
                 activegroup: false,
+                activegroupdata:Object,
                 typingTimer: false,
-                fields: {},
+                createform: {
+                    selected:[],
+                    name:'',
+                },
+                updateform: {
+                    options:[],
+                    selectedusers:[],
+                    groupname:'',
+                },
                 media:[],
                 files:[],
                  token:document.head.querySelector('meta[name="csrf-token"]').content,
@@ -506,6 +556,7 @@
 
         watch:{
             activegroup(val){
+                this.fetchactive(this.activegroup);
                 this.fetchMessages();
                 Echo.private('groupchat.'+this.activegroup)
                 .listen('MessageSent',(event) => {
@@ -517,16 +568,20 @@
             },
 
         methods: {
-             fetchUsers() {
-            axios.get('/users').then(response => {
+            fetchUsers() {
+            axios.get('/getusers').then(response => {
                 this.users = response.data;
+                // this.updateform.options = this.users.map( function (user) {
+                //     return user.username;     
+                // });
+                // this.updateform.options = this.users;
                 // if(this.friends.length>0){
                 //   this.activeFriend=this.friends[0].id;
                 // }
             });
             },
             savegroup(){
-                axios.post('/savechatgroup',this.fields)
+                axios.post('/savechatgroup',this.form)
                 .then(response => {
                 
                 // if(this.friends.length>0){
@@ -567,7 +622,25 @@
             sendTypingEvent() {
                 Echo.join('chat')
                     .whisper('typing', this.user);
-            }
+            },
+
+            fetchactive(group_id){
+                debugger;
+                axios.get('fetchgroupdata/'+group_id).then(response => {
+                    this.activegroupdata = response.data;
+                    this.updateform.groupname = this.activegroupdata.name;
+             
+                })
+            },
+
+            addTag (newTag) {
+                const tag = {
+                    name: newTag,
+                    code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+                }
+                this.users.push(tag)
+                this.updateform.selected.push(tag)
+                }
         }
     }
 </script>

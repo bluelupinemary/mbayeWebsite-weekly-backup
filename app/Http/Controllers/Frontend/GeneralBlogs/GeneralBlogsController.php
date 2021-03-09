@@ -6,6 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Events\GeneralBlogEvent;
+use App\Events\NewBlogShare;
+use App\Events\NewBlogShareEvent;
+use App\Events\NewGeneralBlogShare;
+use App\Events\NewGeneralBlogShareEvent;
 use App\Models\Access\User\User;
 use App\Models\BlogTags\BlogTag;
 use App\Http\Controllers\Controller;
@@ -66,7 +70,7 @@ class GeneralBlogsController extends Controller
         // dd(Carbon::now()->subDay());
 
         $stories = GeneralBlog::where('created_by', Auth::user()->id)
-            // ->where('publish_datetime', '>=', Carbon::now()->subDay())
+            ->where('publish_datetime', '>=', Carbon::now()->subDay())
             ->when($status, function ($query, $status) {
                 return  $query->where('status', $status);
             })
@@ -89,7 +93,7 @@ class GeneralBlogsController extends Controller
 
         
         $shared_stories = GeneralBlogShare::where('created_by', Auth::user()->id)
-            // ->where('publish_datetime', '>=', Carbon::now()->subDay())
+            ->where('publish_datetime', '>=', Carbon::now()->subDay())
             ->whereHas('blog', function($q) use ($search, $sort, $status){
                 $q->when($search, function ($query, $search) {
                     return $query->where(function ($q) use ($search) {
@@ -141,23 +145,38 @@ class GeneralBlogsController extends Controller
      */
     public function fetchgeneralblogs(Request $request)
     {
-        $friends = Auth::user()->getFriends();
-        $friendships = Auth::user()->getAcceptedFriendships();
-        $fsid = $friendships->pluck('id');
-        $fid = $friends->pluck('id');
-        $groups = FriendFriendshipGroups::whereIn('friendship_id',$fsid)->pluck("group_id");
-        // dd($groups);
         $limit = $request->get('paginate') ? $request->get('paginate') : 5;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'DESC';
         $sortBy = $request->get('sortBy') ? $request->get('sortBy') : 'created_at';
         $sort = 'desc_name';
+
+        if(Auth::user()) {
+            $friendships = Auth::user()->getAcceptedFriendships();
+            $fsid = $friendships->pluck('id');
+            $groups = FriendFriendshipGroups::whereIn('friendship_id',$fsid)->pluck("group_id");
+        } else {
+            $groups = [];
+        }
+
+        // general blogs with privacy
         $general_blogs_private = GeneralBlog::whereHas('privacy', function($q) use ($groups) {
-            $q->whereIn('group_id', $groups);
-        })->get();
-        // dd($general_blogs_private);
-        $general_blogs_public = GeneralBlog::doesntHave('privacy')->get();
-        // dd(compact('general_blogs_public'));
-        $general_blog_shares = GeneralBlogShare::with('blog')->get();
+                $q->whereIn('group_id', $groups);
+            })
+            ->where('publish_datetime', '>=', Carbon::now()->subDay())
+            ->where('shareable', 0)->get();
+            
+        // public general blogs
+        $general_blogs_public = GeneralBlog::doesntHave('privacy')
+            ->where('shareable', 1)
+            ->where('publish_datetime', '>=', Carbon::now()->subDay())
+            ->get();
+
+        // shared general blogs
+        $general_blog_shares = GeneralBlogShare::whereHas('blog', function($q) {
+                $q->where('shareable', 1)
+                ->whereNull('deleted_at');
+            })
+            ->where('publish_datetime', '>=', Carbon::now()->subDay())->get();
 
         if($request->has('user_id') && $request->user_id != 0) {
             $general_blogs_private = $general_blogs_private->where('created_by',$request->user_id);
@@ -176,9 +195,14 @@ class GeneralBlogsController extends Controller
         if($request->has('page') && $request->page >= 1) {
             $page = $request->page;
         }
+
+        if(Auth::user()) {
+            $general_blogs = $general_blogs_private->toBase()->merge($general_blogs_public);
+        } else {
+            $general_blogs = $general_blogs_public;
+        }
         
-        $general_blogs = $general_blogs_private->merge($general_blogs_public);
-        $plus_shared_blogs = $general_blogs->merge($general_blog_shares)->sortByDesc('publish_datetime');
+        $plus_shared_blogs = $general_blogs->toBase()->merge($general_blog_shares)->sortByDesc('publish_datetime');
         $last_page = ceil($plus_shared_blogs->count() / $limit);
         $total = $plus_shared_blogs->count();
         $paginated = $plus_shared_blogs->forPage($page, $limit);
@@ -270,9 +294,9 @@ class GeneralBlogsController extends Controller
             }
             
             Notification::send($friends, new GeneralBlogActivityNotification($saved_blog));
+            broadcast(new GeneralBlogEvent($saved_blog))->toOthers();
         }
         
-        broadcast(new GeneralBlogEvent($saved_blog))->toOthers();
         // $friends = Auth::user()->getFriends();
         // Notification::send($friends, new BlogActivityNotification($saved_blog));
         
@@ -355,6 +379,8 @@ class GeneralBlogsController extends Controller
             $request->share_as_permanent = 1;
 
             Notification::send($user, new BlogShareNotification($blog_share));
+            broadcast(new NewBlogShare($blog_share))->toOthers();
+            broadcast(new NewBlogShareEvent($blog_share))->toOthers();
         } else {
             $blog_share = new GeneralBlogShare();
             $blog_share->caption = $request->share_caption;
@@ -366,6 +392,8 @@ class GeneralBlogsController extends Controller
             $request->share_as_permanent = 0;
 
             Notification::send($user, new GeneralBlogShareNotification($blog_share));
+            broadcast(new NewGeneralBlogShare($blog_share))->toOthers();
+            broadcast(new NewGeneralBlogShareEvent($blog_share))->toOthers();
         }
         
         return array('message' => 'Shared blog successfully!', 'blog_share' => $blog_share, 'permanent' => $request->share_as_permanent);

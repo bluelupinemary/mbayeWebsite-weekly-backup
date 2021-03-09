@@ -57,6 +57,7 @@
                       <p style="color:#ffffff"><small>Already have an account?</small><br><a href="{{ url('login') }}">Sign in</a> </p>
                     </div>
                   </fieldset>
+
                   {{-- lOGIN DETAILS ENDS --}}
                   {{-- PERSONAL DETAILS START --}}
                   <fieldset attr-tab-id='2'>
@@ -138,7 +139,8 @@
                     </div>
 
                     <div class="form-group">
-                      <input type="number" data-toggle="tooltip" title="Phone is Required!" data-placement="right" class="form-control @error('mobile_number') danger-alter @enderror" id="mob_no" value="{{ old('mobile_number') }}" required name="mobile_number" placeholder="Mobile Number">
+                      <input type="number" data-toggle="tooltip" title="Phone is Required!" data-placement="right" class="form-control @error('mobile_number') danger-alter @enderror" id="mob_no" value="{{ old('mobile_number') }}" required name="mobile_number" placeholder="Mobile Number" onkeydown="javascript: return event.keyCode === 8 ||
+                      event.keyCode === 46 || event.keyCode === 187 ? true : !isNaN(Number(event.key))">
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
                     <input type="button" name="next" class="next action-button" value="Next" />
@@ -205,7 +207,7 @@
                           <label id="terms_label"  style="color: #ffffff">
                           <a href="javascript:void(0);" id="term">Terms & Conditions</a> <input type="checkbox" id="is_term_accept" name="is_term_accept" onchange="setCheckbox();"> </label>
                         </div>
-                        <p style="text-align: left;"><small class="warning-text">If your snapshot is inappropiate or irrelevent we will block</small></p>
+                        <p style="text-align: left;"><small class="warning-text">If your snapshot is inappropriate or irrelevant we will block</small></p>
                       </div>
 
                       <div class="col-md-6 col-sm-6 text-center">
@@ -252,32 +254,37 @@
   </div>
   <audio id="audio_cuckoo" src="{{ asset('front') }}/images/astronut/Cuckoo.wav"></audio>
   <div class="div_for_astro" style="display:none" >
-    <img id="div" class="" style="display:none" src="{{ asset('front') }}/images/close-btn.png" align="right">
-    <img class="astro_occupation"  style="display:none"  src="{{ asset('front') }}/images/astronut/backpack 2.png">
-    <div id = 'viki' class="div_helmet"  style="display:none" onClick="goto_wiki2()"></div>
-    <div class="occ_description" style="display:none">
-      <p>
-        Hello,<br>I am <span id = 'divv' onClick="openwikipedia()" style="color: chocolate;">General Michael.</span>
-        <br>Your occupation in life will <br> most probably change, <br> as these changes of life go on,
-        <br>you should be able to note <br> here on your site.
-        <br><br>The record of your occupations <br> will stay here forever.
-        <br><br>So if your occupation is, example; <br> shoveling poo from a
-        <span style="color:#c6552b" onClick="show_cuckoo()" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
-        <br><br>And then you become an astronaut.
-        <br><br>It will be always on your profile.
-        <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
-      </p>
-      <br>
-      <center><div class="txtocp"><input type="text" pattern=".{3,}" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation" value="{{ old('occupation') }}"/></div></center>
-      <br class="">
-      <button type="button" class="btn btn-info btn_occ_submit">Submit</button>
+    {{-- DIV TO HOLD ALL THE ANIMATION  --}}
+    <div class="asrtonaut_animation_div img_astro">
+      <img id="div" class="" style="display:block" src="{{ asset('front') }}/images/close-btn.png" align="right">
+      <img class="astro_occupation"  style="display:block"  src="{{ asset('front') }}/images/astronut/backpack 2.png">
+      <div id = 'viki' class="div_helmet"  style="display:block" onClick="goto_wiki2()"></div>
+      <div class="occ_description" style="display:block">
+        <p>
+          Hello,<br>I am <span id = 'divv' onClick="openwikipedia()" style="color: chocolate;">General Michael.</span>
+          <br>Your occupation in life will <br> most probably change, <br> as these changes of life go on,
+          <br>you should be able to note <br> here on your site.
+          <br><br>The record of your occupations <br> will stay here forever.
+          <br><br>So if your occupation is, example; <br> shoveling poo from a
+          <span style="color:#c6552b" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
+          <br><br>And then you become an astronaut.
+          <br><br>It will be always on your profile.
+          <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
+        </p>
+        <br>
+        <center>
+          <div class="txtocp"><input type="text" pattern=".{3,}" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation" value="{{ old('occupation') }}"/></div>
+        </center>
+        <br class="">
+        <button type="button" class="btn btn-info btn_occ_submit">Submit</button>
       </div>
       <div class="div_clock overlay" style="display:none" >
-      <img  class='cuckoo_image'  title="Cuckoo clock" src="{{ asset('front') }}/images/astronut/cuckoo clock.png">
-      <p class="cuckoo_text">A Cuckoo clock as in the picture is a German black forest clock
-        with a little bird that comes out  and goes cuckoo. Actually somebody  really useless in life like villa the crab. We say they are so useless they couldn’t shovel poo out of a cuckoo clock.
-          </p>
+        <img  class='cuckoo_image'  title="Cuckoo clock" src="{{ asset('front') }}/images/astronut/cuckoo clock.png">
+        <p class="cuckoo_text">A Cuckoo clock as in the picture is a German black forest clock
+          with a little bird that comes out  and goes cuckoo. Actually somebody  really useless in life like villa the crab. We say they are so useless they couldn’t shovel poo out of a cuckoo clock.
+        </p>
       </div>
+    </div>  
   </div>
 
 {{-- TERMS AND CONDITIONS MODAL --}}
@@ -605,10 +612,21 @@
   </div>
 </div>
 
+{{-- *****************************************INSTRUCTIONS OVERLAY********************************************* --}}
+<div class="registeration-info" id="registerTextIcon">
+  <i class="fas fa-info-circle"></i><span class="InfoIconLabel">Instructions</span>
+</div>
+
+<div id="registerText" class="register-detail-text">Fill up the deatils required to become a member of Mbaye.com<br>All information you provide are confidential.</div>
+<div id="registerTextNext" class="register-detail-text-next">Click "Next" after you have completed all details.</div>
+{{-- <div id="registerTextDetail" class="register-detail-text">We only ask for your ID Number to make sure that you are a real person.<br>This is to protect the members of our site.</div>
+<div id="registerTextOrganization" class="register-detail-text">You can sign up as a company or an organization.<br>One person is required to be a representative of your group .</div>
+<div id="registerTextSnap" class="register-detail-text">You are required to take a live snapshot of your face.<br>The photo will be used for your Astronaut.</div> --}}
 @endsection
 
 @section('after-scripts')
     <!-----------------------------------   script section ------------------------------------------>
+    <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
@@ -688,4 +706,70 @@
       const orgtypeOldValue = "{{ old('org_type') }}";
  </script>
 
+<script>
+  let text_map = new Map([
+    [0,'Fill up the deatils required to become a member of Mbaye.com<br>All information you provide are confidential.'],
+    [1,'We only ask for your ID Number to make sure that you are a real person.<br>This is to protect the members of our site.'],
+    [2,'Fill up the deatils required to become a member of Mbaye.com<br>All information you provide are confidential.'],
+    [3,'You can sign up as a company or an organization.<br>One person is required to be a representative of your group.'],
+    [4,'You are required to take a live snapshot of your face.<br>The photo will be used for your Astronaut.']
+  ]);
+    
+
+  $("#registerTextIcon").on('click',function(){
+    // //1 - initial view, 2 - focus view
+    // if(isCharViewActive) show_overlay_text(2);
+    // else show_overlay_text(1);               
+    
+    if(!current_fs || current_fs == 'undefined'){
+      $('#registerText').toggle();
+      $('#registerTextNext').toggle();
+    }else{
+      let val = parseInt(current_fs.attr('attr-tab-id'));
+      // console.log(val);
+      if(val-2 == 0){
+        $('#registerTextNext').toggle();
+      // }
+      // else{
+      //   $('#registerTextNext').hide(); 
+      // }
+      
+      $('#registerText').toggle();
+      }
+      else{
+        
+        $('#registerText').toggle();
+      }
+    };
+    //show_overlay(val);
+
+    
+  });
+
+  // function show_overlay(val){
+  //   if(val == 0){
+  //     $('#registerText').toggle();
+  //     $('#registerTextNext').toggle()
+  //   }
+  //   // else if(val == 1){
+  //   //   $('#registerTextDetail').toggle();
+  //   //   $('#registerText').hide();
+  //   //   $('#registerTextNext').hide()
+  //   // }
+  //   // else if(val == 2){
+  //   //   $('#registerText').toggle();
+  //   //   $('#registerTextDetail').hide();
+  //   // }
+  //   // else if(val == 3){
+  //   //   $('#registerTextOrganization').toggle();
+  //   //   $('#registerText').hide();
+  //   // }
+  //   // else if(val == 4){
+  //   //   $('#registerTextSnap').toggle();
+  //   //   $('#registerTextOrganization').hide();
+  //   // }
+   
+    
+  // }
+</script>
 @endsection

@@ -1,22 +1,22 @@
-<meta name="url" content="{{ url('') }}">
 @extends('frontend.layouts.app')
-<link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
-<link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
+<meta name="url" content="{{ url('') }}">
 
-@section('before-styles')
-@endsection
-<style>
-    .blog-button-1{ 
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-55%,-1%);
-    width: 100%;
-    }
-    .button-div{
-        border:0px solid green;
-    }
+@section('after-styles')
+    <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/CSS/blog_style.css') }}">
+    <style>
+        .blog-button-1{ 
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-55%,-1%);
+        width: 100%;
+        }
+        .button-div{
+            border:0px solid green;
+        }
     </style>
+@endsection
 
 @section('content')
 <div class="app">

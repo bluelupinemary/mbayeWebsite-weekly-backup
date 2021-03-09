@@ -3,8 +3,8 @@
 @section('after-styles')
     <link rel="preload" as="font" href="{{asset('fonts/georgia italic.ttf')}}" type="font/woff2" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('front/fontawesome/css/all.css')}}">
-    <link rel="stylesheet" href="{{asset('front/css/view-all-blogs.css')}}">
-    <link rel="stylesheet" href="{{asset('front/css/view-all-blogs-responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/view-all-blogs.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/view-all-blogs-responsive.css')}}">
 @endsection
 
 @section('content')

@@ -33,6 +33,7 @@
  
 
 } */
+
 #close-btn{
     max-width: 100%;
     height: auto;
@@ -115,6 +116,27 @@
 
 
 
+/*=================================End of 3D Flower Viewer=========================*/
+
+@media (max-width : 1367px) and (min-width : 1024px) and (orientation : landscape) {
+    #textCurveanticlock2 {
+        top: 34% !important;
+        right: 18% !important;
+    }
+    #textCurveanticlock {
+        top: 32% !important;
+        right: 18% !important;
+    }
+    #textCurve2 {
+        top: 42% !important;
+        right: 18% !important;
+    }
+    #textCurve {
+        top: 40% !important;
+        right: 18% !important;
+    }
+    
+}
 
 /*extra small and small screens*/
 @media (min-width : 320px) and (max-width : 1024px) and (orientation : landscape) { 
@@ -133,9 +155,188 @@
     #musicVideoDiv{
         width:30vw;
     }
+    .instr-text-flower {
+        width: 35vw !important;
+        font-size: 1.7vw !important;
+        left: 6% !important;
+    }
    
 }
+/*******************************INSTRUCTION OVERLAY******************************************************/
+.flower-instruction-left-div{
+    position: absolute;
+    border: 3px solid #c69930;
+    background-color: #0f1a6dc7;
+    width: 15vw;
+    border-radius: 14px;
+    bottom: 1%;
+    left: 7%;
+    height: auto;
+    color: #bd961d;
+    
+}
+#flowerInstruction{
+    display: none;
+}
+.foot-instruction-left-div{
+    position: absolute;
+    border: 3px solid #c69930;
+    background-color: #0f1a6dc7;
+    width: 15vw;
+    border-radius: 14px;
+    top: 1%;
+    left: 7%;
+    height: auto;
+    color: #bd961d;
+    
+}
+.instr-text-flower-down{
+    position: absolute;
+    width: 43vw;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    /* right: 20%; */
+    right: 2%;
+    padding: 1%;
+    text-align: center;
+    top: 1%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+    
+}
+#infoIconTextdownflower{
+    display: none;
+}
+.instr-text-foot-down{
+    position: absolute;
+    width: 43vw;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    /* right: 20%; */
+    right: 2%;
+    padding: 1%;
+    text-align: center;
+    bottom: 1%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+    
+}
+#footTextdown{
+    display: none;
+}
+#footInstruction{
+    display: none;
+}
+#MbayeHeadinfoIcon{
+    position: absolute;
+    color: #bd961d;
+    bottom: 2%;
+    left: 1%;
+    font-size: 2rem;
+    cursor: pointer;
+    /* display: none; */
+}
+.instr-text-flower{
+    position: absolute;
+    width: 43vw;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    /* right: 20%; */
+    left: 4%;
+    padding: 1%;
+    text-align: center;
+    top: 1%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#infoIconTextflowers{
+    display: none;
+}
+#MbayeHeadinfoIcon:hover span{
+    display: inline-block;
+}
+.instr-text-foot-middle{
+    position: absolute;
+    width: 23vw;
+    right: 17%;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    padding: 1%;
+    text-align: center;
+    top: 35%;
+    font-size: 1.4vw;
+    font-family: 'Bookman';
+    /* font-weight: 700; */
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#footTextMiddle{
+    display: none;
+}
 
+
+
+.InfoIconLabel{
+    display:none;
+    /* display: inline-block; */
+    position: absolute;
+    color: white;
+    transform: translate(3%, 0%);
+    font-size: 1.2rem;
+    text-shadow: 0px 0px 3px #000000;
+    background: #0b91c3a3;
+    font-family: 'Bookman';
+    width: auto;
+    /* height: 3.5vh; */
+    text-align: center;
+    border-radius: 12px;
+    padding:15%;
+}
+#textCurve{
+    position: absolute;
+    top: 38%;
+    color: #c69930;
+    display: none;
+    right: 26%;
+    font-family: 'Bookman';
+    font-size: 1.5vw;
+ }
+ #textCurve2{
+    position: absolute;
+    top: 42%;
+    font-family: 'Bookman';
+    color: #c69930;
+    display: none;
+    right: 26%;
+    font-size: 1.5vw;
+ }
+ #textCurveanticlock{
+    position: absolute;
+    top: 27%;
+    font-family: 'Bookman';
+    color: #c69930;
+    display: none;
+    right: 26%;
+    font-size: 1.5vw;
+ }
+ #textCurveanticlock2{
+    position: absolute;
+    top: 30%;
+    color: #c69930;
+    font-family: 'Bookman';
+    right: 26%;
+    font-size: 1.5vw;
+    display: none;
+ }
 
 
 

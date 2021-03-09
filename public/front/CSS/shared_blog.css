@@ -1,0 +1,48 @@
+.blog-heading, .blog-content, .blog-comments {
+    background: #145e4747;
+}
+
+.blog-status {
+    font-size: 0.8em;
+    padding: 0 0.5em;
+    border-radius: 100px;
+    font-weight: 550;
+    background: #0f9d58;
+    color: #fff;
+    -webkit-align-self: flex-end;
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+    /* position: absolute;
+    right: 1%;
+    top: 3%; */
+}
+
+.owner-names {
+    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;
+}
+
+.blog-owner {
+    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;
+    margin: 1%;
+}
+
+.shared-by {
+    background: #189358;
+    color: #fff;
+}
+
+.blog-content {
+    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;
+    -webkit-flex-flow: column;
+        -ms-flex-flow: column;
+            flex-flow: column;
+}

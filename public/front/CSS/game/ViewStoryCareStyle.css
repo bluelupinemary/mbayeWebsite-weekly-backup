@@ -1,0 +1,151 @@
+
+#musicVideoDiv #player{
+    width:20vw;
+    height: 12vw;
+    right: 0;
+    top:0;
+    position: relative;
+}
+
+#musicVideoDiv #close-btn, #musicVideoDiv #fullscreen-btn, #musicVideoDiv #minimize-btn,
+#flowerModelDiv #close-btn, #flowerModelDiv #fullscreen-btn, #flowerModelDiv #minimize-btn,
+#flowersWikiDivHeader #close-btn, #carpetsWikiDivHeader #close-btn{
+    height: 100%;
+    width: auto;
+    position: relative;
+    float: right;
+}
+
+
+#musicVideoDivHeader, #flowerModelDivHeader,#flowersWikiDivHeader,#carpetsWikiDivHeader{
+    position: relative;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    height: 5vh;
+    width: 100%;
+}
+
+/* #musicVideoDiv{
+  position: absolute;
+  width: 20vw;
+  height: 20vh;
+  visibility:hidden;
+ 
+
+} */
+/* #close-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-top: 0 !important;
+    padding-right: 1%;
+}
+#fullscreen-btn, #minimize-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-right: 3%;
+    padding-top: 0 !important;
+}
+   */
+#close-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-top: 0 !important;
+    padding-right: 1%;
+}
+#fullscreen-btn, #minimize-btn{
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+    width: 2vw;
+    padding-right: 3%;
+    padding-top: 0 !important;
+}
+/* 
+#flowersWikiDivHeader .wikiCloseIcon, #carpetsWikiDivHeader .wikiCloseIcon{
+    height: 100%;
+    clear: both;
+    float: right;
+    padding-right: 1%;
+}
+
+#musicVideoDivHeader .wikiCloseIcon, #flowerModelDivHeader .wikiCloseIcon{
+    height: 100%;
+    clear: both;
+    float: right;
+} */
+
+#close-btn:hover + span{
+    display: inline-block;
+}
+
+
+#fullscreen-btn:hover + span{
+    display: inline-block;
+}
+
+
+#minimize-btn:hover + span{
+    display: inline-block;
+}
+  
+
+
+#musicVideoDiv{
+    position: absolute;
+    width:20vw;
+    height:13vw;
+    right:0;
+    top:0;
+    display:none;
+    background:black;
+    filter: drop-shadow(2px 4px 6px black);
+    flex-direction: column;
+    z-index: 100;
+}
+
+
+
+#viewBookImgDiv{
+    position: absolute;
+    right: 1%;
+    bottom: 0;
+    z-index: 1;
+    width: 3em;
+}
+
+#viewBookImg{
+    max-width: 100%;
+}
+
+#viewBookImg:hover{
+    filter: drop-shadow( 1px 0px 5px rgba(255, 255, 255, 0.5));
+    cursor: pointer;
+}
+
+#viewBookImg:hover + span{
+    display: inline-block;
+}
+
+.viewBookLabel{
+    display: none;
+    right: 107%;
+    top: 0%;
+    position: absolute;
+    color: white;
+    font-size: 1.2rem;
+    text-shadow: 0px 0px 3px #000000;
+    background: #0b91c3a3;
+    font-family: 'Nasalization Rg';
+    width: 200%;
+    text-align: center;
+    border-radius: 12px;
+    padding: 0.5%;
+    z-index: 5;
+}

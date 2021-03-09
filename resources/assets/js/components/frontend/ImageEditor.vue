@@ -6,7 +6,7 @@
             <div class="canvas">
                 <div class="start-message">
                     <p>
-                        <label for="startImageLoader" class="custom-file-upload" id="startImageLoaderLabel">
+                        <label for="startImageLoader" class="editor-custom-file-upload" id="startImageLoaderLabel">
                             <i class="far fa-images"></i> Upload your featured image to start
                         </label>
                     </p>
@@ -28,7 +28,7 @@
                 <button id="free-drawing" class="free-drawing" data-toggle="tooltip" data-placement="top" title="Free Drawing"><i class="fas fa-paint-brush"></i></button>
                 <button id="add_shapes" class="add_shapes" data-toggle="tooltip" data-placement="top" title="Shapes Tool"><i class="fas fa-shapes"></i></button>
                 <button id="add_text" class="add_text" data-toggle="tooltip" data-placement="top" title="Texts Tool"><i class="fas fa-font"></i></button>
-                <button data-toggle="tooltip" data-placement="top" title="Upload image(s)"><label for="imgLoader" class="custom-file-upload">
+                <button data-toggle="tooltip" data-placement="top" title="Upload image(s)"><label for="imgLoader" class="editor-custom-file-upload">
                     <i class="far fa-images"></i></label>
                 </button>
                 <input type="file" name="image" id="imgLoader" accept="image/x-png,image/jpeg" multiple>
@@ -37,7 +37,7 @@
                 <button class="remove_object" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></button>  
                 <!-- <button class="save" id="saveImg" disabled data-toggle="tooltip" data-placement="top" title="Save"><i class="fas fa-save"></i></button> -->
                 <button class="download" disabled data-toggle="tooltip" data-placement="top" title="Download"><i class="fas fa-download"></i></button>
-                <button id="open_tuiEditor" class="open_tuiEditor" data-toggle="tooltip" data-placement="top" title="Open in 2nd Editor"><i class="fas fa-link"></i></button>                       
+                <!-- <button id="open_tuiEditor" class="open_tuiEditor" data-toggle="tooltip" data-placement="top" title="Open in 2nd Editor"><i class="fas fa-link"></i></button>                        -->
                 <button id="image-filter" class="image-filter" data-toggle="tooltip" data-placement="top" title="Image Filter"><i class="fas fa-sliders-h"></i></button>                       
                
             </div>
@@ -373,7 +373,8 @@
 <script>
 export default {
     props: {
-        in_page: String
+        in_page: String,
+        edit_blog: Number
     },
     components: {
     },
@@ -418,6 +419,7 @@ export default {
 
          //load the image when the user selects from the page where the component is used
         var featured_image_src;
+        var currentBlogType;
         if(this.in_page == 'setupCompanyProfile'){
                 document.querySelector("#edit_uploaded_image").onclick = function addInitImage() {
                     if(isNewImg){
@@ -429,7 +431,48 @@ export default {
             document.querySelector("#image-editor-cancel-btn").style.display = 'none';
             document.querySelector("#image-editor-save-btn").style.display = 'block';
             document.querySelector(".start-message").style.display = 'block';
+        }else if(this.in_page == 'communicatorBlog'){
+            console.log("im in communicator page. Type: ");
+            // if(currentBlogType && currentBlogType == "regularBlog"){
+                document.querySelector("#regularBlog_edit_btn").onclick = function addInitImage() {
+                    console.log('regular');
+                    currentBlogType = 'regularBlog';
+                    if(isNewImg){
+                        featured_image_src = document.querySelector(".all-blog #featured-image-previewimg").getAttribute("src");
+                        canvasOperations.loadFromUrl();
+                    }
+                };
+
+                document.querySelector("#generalBlog_edit_btn").onclick = function addInitImage() {
+                    console.log('general');
+                    currentBlogType = 'generalBlog';
+                    if(isNewImg){
+                        featured_image_src = document.querySelector(".general-blog #featured-image-previewimg").getAttribute("src");
+                        canvasOperations.loadFromUrl();
+                    }
+                };
+
+                 document.querySelector("#designBlog_edit_btn").onclick = function addInitImage() {
+                    console.log('designs');
+                    currentBlogType = 'designBlog';
+                    if(isNewImg){
+                        featured_image_src = document.querySelector(".designs-blog #featured-image-previewimg").getAttribute("src");
+                        canvasOperations.loadFromUrl();
+                    }
+                };
+            // }
+
+            
         }
+        // else if(this.in_page == 'generalBlog'){
+        //     console.log("im in general blog page");
+        //     document.querySelector("#generalBlog_edit_btn").onclick = function addInitImage() {
+        //         if(isNewImg){
+        //             featured_image_src = document.querySelector(".general-blog #featured-image-previewimg").getAttribute("src");
+        //             canvasOperations.loadFromUrl();
+        //         }
+        //     };
+        // }
         
         //function to clear the canvas if new image is loaded
         var canvasOperations = {
@@ -437,6 +480,10 @@ export default {
                 if(imagesMap.size > 0){
                      canvas.clear();
                      imagesMap.clear();
+                     shapesMap.clear();
+                     shapesForImageMap.clear();
+                     textMap.clear(); 
+                     theImgUnderShape = null;
                      addFeaturedImage();
                 }else{
                     addFeaturedImage();
@@ -506,9 +553,7 @@ export default {
         });  
 
 
-        
-        let lastShapeSelected;
-        let lastImgIntersected;
+    
 
         //function to check if image intersects with shape and the image is in front of the shape
         function checkIntersectionWithShape(theImg){
@@ -1628,16 +1673,30 @@ export default {
             
         }
 
-      
         // SAVE ICON IS CLICKED
         $("#saveImg, #image-editor-save-btn").click(function(){
             var image = canvas.toDataURL("image/png");
-            document.querySelector("#featured-image-previewimg").src = image;
-            $('#edited_featured_image').val(image);
             document.querySelector('#imageEditorModal').style.display = 'none';
+
             $('#page-content').show();        
 
             isNewImg = false;
+
+            if(currentBlogType === "regularBlog"){
+                 document.querySelector(".all-blog #featured-image-previewimg").src = image;
+                $('.main-form #edited_featured_image').val(image);
+
+            }else if(currentBlogType === "generalBlog"){
+                document.querySelector(".general-blog #featured-image-previewimg").src = image;
+                $('.general-blog-form #edited_featured_image').val(image);
+            }else if(currentBlogType === "designBlog"){
+                document.querySelector(".designs-blog #featured-image-previewimg").src = image;
+                $('.designs-blog-form #edited_featured_image').val(image);
+            }else{
+                document.querySelector("#featured-image-previewimg").src = image;
+                $('#edited_featured_image').val(image);
+            }
+
         }); 
 
         $("#image-editor-cancel-btn").on('click', function() {
@@ -1676,7 +1735,7 @@ export default {
         $('.instruction-close-btn').click(function() {
             $('.instructions').fadeOut();
             $('#main').show();
-            if(this.in_page == "setupJobseekerProfile") $('.start-message').show();
+            if(this.in_page == "setupJobseekerProfile" || this.in_page == "regularBlog") $('.start-message').show();
             
         });
 
@@ -1921,12 +1980,7 @@ export default {
 
 
 
-        //* FUNCTION FOR SAVING THE FEATURED IMAGE IF PAGE IS JOBSEEKER PROFILE PAGE */
-        $('#image-editor-save-btn').on('click',function(){
-            if(this.in_page == 'setupJobseekerProfile'){
-                
-            }
-        });
+       
         
 
 

@@ -1,6 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('after-styles')
+    <meta name="url" content="{{ url('') }}">
     <link rel="stylesheet" href="{{asset('front/css/toastr.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/search-friends.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/friends.css')}}">
@@ -56,6 +57,7 @@
     <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
     <script src="{{asset('front/JS/toastr.min.js')}}"></script>
     <script src="{{asset('front/JS/blackhole.js')}}"></script>
+    <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     
     @if($friend != null)
         <script>

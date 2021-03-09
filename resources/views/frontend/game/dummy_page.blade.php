@@ -35,7 +35,7 @@
 @endsection
 
 @section('after-scripts')
-            
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>          
 
 
 @endsection

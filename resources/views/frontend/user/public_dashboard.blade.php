@@ -1,6 +1,7 @@
 @extends('frontend.layouts.profile_layout')
 <meta name="url" content="{{ url('') }}">
 @section('after-styles')
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
     <link rel="stylesheet" href="{{ asset('front/fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{asset('front/CSS/animate-3.7.2.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
@@ -737,7 +738,7 @@
 <script src="{{asset('front/JS/jquery.mousewheel.min.js')}}"></script>
 <script src="{{asset('front/JS/TweenMax.min.js')}}"></script>
 <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
-<script src="{{asset('front/JS/jquery.ui.touch-punch.min.js')}}"></script>
+<script src="{{asset('front/JS/jquery.ui.touch-punch.js')}}"></script>
 {{-- <script src="{{asset('front/JS/draggabilly.min.js')}}"></script> --}}
 <script src="{{asset('front/JS/cropper.min.js')}}"></script>
 <script src="{{asset('front/JS/circletype.min.js')}}"></script>

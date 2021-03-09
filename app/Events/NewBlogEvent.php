@@ -43,19 +43,19 @@ class NewBlogEvent implements ShouldBroadcast
     public function broadcastWith()
         {
             return [
-                'id'                => $this->saved_blog->id,
-                'name'              => $this->saved_blog->name,
-                'featured_image'    => $this->saved_blog->featured_image,
-                'publish_datetime'  => is_null($this->saved_blog->publish_datetime)?$this->saved_blog->publish_datetime:$this->saved_blog->publish_datetime->format('d/m/Y h:i A'),
-                'status'            => $this->saved_blog->status,
-                'created_at'        => optional($this->saved_blog->created_at)->toDateString(),
-                'created_by'        => (is_null($this->saved_blog->user_name)) ? optional($this->saved_blog->owner)->first_name : $this->saved_blog->user_name,
-                'thumb'             => ($this->saved_blog->featured_image=='') ? '/storage/img/blog/default.png' : '/storage/img/blog/'.$this->saved_blog->featured_image,
-                'hotcount'          => Like::where('blog_id',$this->saved_blog->id)->where('emotion',0)->count(),
-                'coolcount'          => Like::where('blog_id',$this->saved_blog->id)->where('emotion',1)->count(),
-                'naffcount'          => Like::where('blog_id',$this->saved_blog->id)->where('emotion',2)->count(),
-                'commentcount'       => Comment::where('blog_id',$this->saved_blog->id)->count(),
-                'blog_tag'           => $this->saved_blog->btags(),
+                // 'id'                => $this->saved_blog->id,
+                // 'name'              => $this->saved_blog->name,
+                // 'featured_image'    => $this->saved_blog->featured_image,
+                // 'publish_datetime'  => is_null($this->saved_blog->publish_datetime)?$this->saved_blog->publish_datetime:$this->saved_blog->publish_datetime->format('d/m/Y h:i A'),
+                // 'status'            => $this->saved_blog->status,
+                // 'created_at'        => optional($this->saved_blog->created_at)->toDateString(),
+                'created_by'           => $this->saved_blog->created_by,
+                // 'thumb'             => ($this->saved_blog->featured_image=='') ? '/storage/img/blog/default.png' : '/storage/img/blog/'.$this->saved_blog->featured_image,
+                // 'hotcount'          => Like::where('blog_id',$this->saved_blog->id)->where('emotion',0)->count(),
+                // 'coolcount'          => Like::where('blog_id',$this->saved_blog->id)->where('emotion',1)->count(),
+                // 'naffcount'          => Like::where('blog_id',$this->saved_blog->id)->where('emotion',2)->count(),
+                // 'commentcount'       => Comment::where('blog_id',$this->saved_blog->id)->count(),
+                'blog_tags'           => $this->saved_blog->tags_code(),
             ];
         }
 }

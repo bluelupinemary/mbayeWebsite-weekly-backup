@@ -10,6 +10,7 @@
 @section('after-styles')
 <link rel="stylesheet" href="{{asset('front/fontawesome/css/all.css')}}">
 <link rel="stylesheet" href="{{ asset('front/CSS/terms.css') }}">
+    
 @endsection
 
 @section('content')
@@ -65,7 +66,7 @@
                                                 <br>
                                               
                                                 <p class="col_white">
-                                                  These Terms of Service Agreement (the "Agreement") governs your use of this website, www.Mbaye.com (the "Website. This Agreement includes,
+                                                  These Terms of Service Agreement (the "Agreement") governs your use of this website, www.Mbaye.com (the "Website". This Agreement includes,
                                                   and incorporates by this reference, the policies and guidelines referenced below. Inox Arabia FZC and associated companies reserve the right
                                                     to change or revise the terms and conditions of this Agreement at any time by posting any changes or a revised Agreement on this Website.
                                                     Inox Arabia FZC and associated companies will alert you that changes or revisions have been made by indicating on the top of this Agreement the date it was last revised.
@@ -439,7 +440,7 @@
                                     <br>
                               
                                     <li>
-                                      	Your use of an SRA is terminable by us at will for any reason and at our sole discretion, with or without prior notice. Upon termination, we may, but shall not be obligated to: (i) delete or deactivate your Account, and/or (ii) block your e-mail and/or IP addresses or otherwise terminate your use of and ability to use an SRA. You agree not to use or attempt to use an SRA after said termination. Upon termination, the grant of your right to use an SRA shall terminate, but all other portions of these Terms shall survive. You acknowledge that we are not responsible to you or any third party for the termination of your grant of use of an SRA.
+                                    Your use of an SRA is terminable by us at will for any reason and at our sole discretion, with or without prior notice. Upon termination, we may, but shall not be obligated to: (i) delete or deactivate your Account, and/or (ii) block your e-mail and/or IP addresses or otherwise terminate your use of and ability to use an SRA. You agree not to use or attempt to use an SRA after said termination. Upon termination, the grant of your right to use an SRA shall terminate, but all other portions of these Terms shall survive. You acknowledge that we are not responsible to you or any third party for the termination of your grant of use of an SRA.
                                     </li>
                                   </ol>
                                 </li>
@@ -641,7 +642,7 @@
                                   <br>
                                 
                                   <p class="col_white">
-                                    These Terms of Service Agreement (the "Agreement") governs your use of this website, www.Mbaye.com (the "Website. This Agreement includes,
+                                    These Terms of Service Agreement (the "Agreement") governs your use of this website, www.Mbaye.com (the "Website". This Agreement includes,
                                     and incorporates by this reference, the policies and guidelines referenced below. Inox Arabia FZC and associated companies reserve the right
                                       to change or revise the terms and conditions of this Agreement at any time by posting any changes or a revised Agreement on this Website.
                                       Inox Arabia FZC and associated companies will alert you that changes or revisions have been made by indicating on the top of this Agreement the date it was last revised.
@@ -1015,7 +1016,7 @@
                       <br>
                 
                       <li>
-                        	Your use of an SRA is terminable by us at will for any reason and at our sole discretion, with or without prior notice. Upon termination, we may, but shall not be obligated to: (i) delete or deactivate your Account, and/or (ii) block your e-mail and/or IP addresses or otherwise terminate your use of and ability to use an SRA. You agree not to use or attempt to use an SRA after said termination. Upon termination, the grant of your right to use an SRA shall terminate, but all other portions of these Terms shall survive. You acknowledge that we are not responsible to you or any third party for the termination of your grant of use of an SRA.
+                      Your use of an SRA is terminable by us at will for any reason and at our sole discretion, with or without prior notice. Upon termination, we may, but shall not be obligated to: (i) delete or deactivate your Account, and/or (ii) block your e-mail and/or IP addresses or otherwise terminate your use of and ability to use an SRA. You agree not to use or attempt to use an SRA after said termination. Upon termination, the grant of your right to use an SRA shall terminate, but all other portions of these Terms shall survive. You acknowledge that we are not responsible to you or any third party for the termination of your grant of use of an SRA.
                       </li>
                     </ol>
                   </li>
@@ -1193,24 +1194,45 @@
     </div>
     <div id="app"></div>
 </div>
+
+<div class="login-info" id="loginTextIcon">
+  <i class="fas fa-info-circle"></i><span class="InfoIconLabel">Instructions</span>
+</div>
+
+<div id="loginText" class="login-detail-text">You can find the Terms and services on your communicator.</div>
+
+<div class="back-btn" id="backButton">
+  <div class="back-btn-text">BACK</div>
+</div>
+
+<div class="full-screen-btn" id="fullScreenButton">
+  <div class="full-screen-btn-text">FULLSCREEN</div>
+</div>
+
+<div class="next-btn" id="nextButton">
+  <div class="next-btn-text">NEXT</div>
+</div>
+
+@endsection
+@section('before-scripts')
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
+<script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
 @endsection
 
 @section('after-scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
     <script src="{{asset('front/JS/musicplay.js')}}" type="text/jscript"></script>
     <script src="{{asset('front/JS/music-wave.js')}}"></script>
-    {{-- <script src="{{asset('trix/trix.js')}}"></script> --}}
-    <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
     <script src="{{asset('front/slick/slick.min.js')}}"></script>
-    
 
-    <script>
-
-    </script>
- 
-
-   
     <script src="{{asset('front/JS/terms.js')}}"></script>
+    <script>
+      $("#loginTextIcon").on('click',function(){
+          $("#loginText").toggle();
+          $("#backButton").toggle();
+          $("#fullScreenButton").toggle();
+          $("#nextButton").toggle();
+      });
+    </script>
 @endsection

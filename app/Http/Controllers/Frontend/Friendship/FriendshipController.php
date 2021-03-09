@@ -52,13 +52,17 @@ public function fetchrequests(){
     return response()->json($user);
   }
 
-public function sendrequest($user_id){
+public function sendrequest($user_id)
+{
     $user = User::find($user_id);
     $sender = Auth::user();
-    if ($sender->hasSentFriendRequestTo($user)) {
+    if ($sender->hasSentFriendRequestTo($user)) 
+    {
         $sender->unfriend($user);
         return response()->json(['status' => $sender->hasSentFriendRequestTo($user), 'message' => "Request Cancelled!"]);
-    }else{
+    }
+    else
+    {
         // dd($user);
         $friendship = $sender->befriend($user);
         // dd($user);
@@ -173,25 +177,25 @@ public function fetchfriends(Request $request){
 	// }
 
     // dd($friendships);
-    if(count($friendships)>0){
-        // if($sort_field == 'first_name') {
-        //     if($sort_type == 'asc') {
-        //         $friendships = $friendships->sortBy('first_name');
-        //     } else {
-        //         $friendships = $friendships->sortByDesc('first_name');
-        //     }
-        // } else if($sort_field == 'frienship_date') {
-        //     if($sort_type == 'asc') {
-        //         $friendships = $friendships->sortBy('user_friendship');
-        //     } else {
-        //         $friendships = $friendships->sortByDesc('user_friendship');
-        //     }
-        // }
+    // if(count($friendships)>0){
+    //     // if($sort_field == 'first_name') {
+    //     //     if($sort_type == 'asc') {
+    //     //         $friendships = $friendships->sortBy('first_name');
+    //     //     } else {
+    //     //         $friendships = $friendships->sortByDesc('first_name');
+    //     //     }
+    //     // } else if($sort_field == 'frienship_date') {
+    //     //     if($sort_type == 'asc') {
+    //     //         $friendships = $friendships->sortBy('user_friendship');
+    //     //     } else {
+    //     //         $friendships = $friendships->sortByDesc('user_friendship');
+    //     //     }
+    //     // }
         return response()->json(['pagination' => $friendships, 'data' => $friendships->values()->all()]);
-    } else{
-        // dd("no friend");
-        return response()->json("no friends");
-    }
+    // } else{
+    //     // dd("no friend");
+    //     return response()->json("no friends");
+    // }
 }
 
 public function block(User $user){

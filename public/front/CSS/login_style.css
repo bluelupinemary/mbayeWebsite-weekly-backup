@@ -735,3 +735,69 @@
         height: 50px;
     }
 }
+<<<<<<< HEAD
+.danger-alter {
+    border: 1px solid #b82c2c !important;
+    box-shadow: 1px 1px 10px 3px #b81c1c;
+}
+=======
+
+
+
+/********************************************INSTRUCTION TEXT**********************************************/
+.login-info:hover span{
+    display: inline-block;
+}
+.login-info{
+    position: absolute;
+    color: #bd961d;
+    bottom: 2%;
+    left: 1%;
+    font-size: 2rem;
+    z-index: 10000;
+    cursor: pointer;
+}
+.InfoIconLabel{
+    display:none;
+    /* display: inline-block; */
+    position: absolute;
+    color: white;
+    transform: translate(3%, 0%);
+    font-size: 1.2rem;
+    text-shadow: 0px 0px 3px #000000;
+    background: #0b91c3a3;
+    font-family: 'Bookman';
+    width: auto;
+    /* height: 3.5vh; */
+    
+    text-align: center;
+    border-radius: 12px;
+    padding:15%;
+}
+.login-detail-text{
+    position: absolute;
+    width: 35vw;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    /* right: 20%; */
+    right: 1%;
+    padding: 1%;
+    text-align: center;
+    top: 1%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#loginText{
+    display: none;
+}
+
+@media (max-width: 992px) and (min-width:320px){
+    .login-detail-text {
+        width: 79vw;
+        font-size: 1rem;
+    }
+}  
+>>>>>>> f6482ce2243c4ccd48f3fa3c9a1a27dae6a95e5b

@@ -5,21 +5,19 @@ let ASTRO_CAMERA_INIT_BETA = 1.3138466593021418;
 let astronautLight;
 var astronaut_obj;
 var hl;
+let astro_curr_state = {'rot':null, 'pos':null, 'scale':null,'alpha':null, 'beta':null, 'radius':null, 'target':null};
+
 //create the scene
 function createAstronautScene(){
-
     astronautScene = new BABYLON.Scene(engine);
     astronautScene.autoClear = false;
   
     astronautCamera = create_astro_camera();
-
     //create the lights
     astronautLight = create_astro_light();
     load_astro_meshes();
     listen_to_astronaut_rotation();
     listen_to_astronaut_wheelscroll();
-
-    hl = new BABYLON.HighlightLayer("hl1", astronautScene);
 
     return astronautScene;
 }
@@ -33,7 +31,8 @@ function create_astro_camera(){
         camera.wheelPrecision = 30;                              
         camera.panningSensibility = 1000;     
         camera.panningDistanceLimit = 15;                   
-        camera.speed = 0.1;  
+        camera.speed = 0.1; 
+        camera.maxZ = 28000; 
     return camera;
 }
 
@@ -56,11 +55,13 @@ function load_astro_meshes(){
   user_gender = document.getElementById('userGender').value;
   let objPath;
   let model;
-  if(user_gender === 'female'){
+  if(user_gender.toLowerCase() === 'female'){
+    user_gender = 'female';
     objPath = 'front/objects/astronaut/thomasina/';
     model = 'MajorThomasina3.babylon';
   }
   else{
+    user_gender = 'male';
     objPath = 'front/objects/astronaut/tom/'
     model = 'MajorTom2.babylon';
   }
@@ -75,6 +76,7 @@ function load_astro_meshes(){
             mesh.isPickable = true;
             
             astronautPartsMap.set(mesh.name,mesh)
+
             add_action_mgr_astrobody(mesh);
             if(mesh.name === "face"){
                 theAstroFace = mesh;
@@ -94,7 +96,8 @@ function load_astro_meshes(){
                 astronaut = mesh;
                 astronaut_obj = mesh;
                 // mesh.scaling = new BABYLON.Vector3(0.02,0.02,0.02);
-                mesh.position = new BABYLON.Vector3(6,0,0);
+                if(isMobile() && (isSmallDevice()|| isMediumDevice())) mesh.position = new BABYLON.Vector3(4,0,0);
+                else mesh.position = new BABYLON.Vector3(6,0,0);
             }else if(astronautTextsBtnMap.has(mesh.name)){
                 let textMatl = new BABYLON.StandardMaterial("textMatl", astronautScene);
                 textMatl.diffuseColor = new BABYLON.Color3(1,1,1);
@@ -106,14 +109,11 @@ function load_astro_meshes(){
             }else if(mesh.name === "BackPack" || mesh.name === "bagWires")  {
                 astronautRotateMap.set(mesh.name,mesh);
             }
-            
           });
         
           astronaut.rotation = new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(30),BABYLON.Tools.ToRadians(0));
           if(user_gender === 'female') astronaut.rotation.x = BABYLON.Tools.ToRadians(20);
-          else{
-            astronaut.scaling = new BABYLON.Vector3(0.02,0.02,0.02); 
-          }
+          // else astronaut.scaling = new BABYLON.Vector3(0.02,0.02,0.02); 
           
       }),
    
@@ -121,14 +121,11 @@ function load_astro_meshes(){
         astronautCamera.alpha = ASTRO_CAMERA_INIT_ALPHA;
         astronautCamera.beta = ASTRO_CAMERA_INIT_BETA;
         astronautCamera.viewport = new BABYLON.Viewport(0,0,1,1);
-       
   });
 } 
 
 let theAstroFace;
-
 function create_face_texture(thePath){
-  
     let faceMatl = new BABYLON.StandardMaterial("facePhoto", astronautScene);
     faceMatl.diffuseColor = new BABYLON.Color3(0,0,0);
     faceMatl.emissiveColor = new BABYLON.Color3(0.5,0.5,0.5);
@@ -150,7 +147,6 @@ var onOutAstronaut =(meshEvent)=>{
 };
 
 var isAstronautClicked = false;
-
 
 function remove_astro_scene_objects(){
   astronautPartsMap.clear();
@@ -188,10 +184,9 @@ function listen_to_astronaut_rotation(){
         }else if(evt.button == 2){  //if the right click is triggered
             
             var pickInfo = astronautScene.pick(astronautScene.pointerX, astronautScene.pointerY);
-            // console.log("Right click triggered ");
             if (pickInfo.hit) {
                 var theMeshName = pickInfo.pickedMesh.name;
-                console.log("the mesh clicked: ", theMeshName);
+                
                if(astronautPartsMap.has(theMeshName)){
                   if(astronautCamera) astronautCamera.attachControl(canvas,true);
                   if(initCamera) initCamera.detachControl(canvas);
@@ -207,7 +202,6 @@ function listen_to_astronaut_rotation(){
             }
             
         }else{
-            // console.log("left click triggered");
             //get the pick info if mouse is pressed
             var pickInfo = astronautScene.pick(astronautScene.pointerX, astronautScene.pointerY);
             
@@ -215,112 +209,116 @@ function listen_to_astronaut_rotation(){
             //check if the clicked mesh should be draggable/modified
             if (pickInfo.hit){
                 let theMeshName = pickInfo.pickedMesh.name;
-                // console.log("the mesh clicked: ", theMeshName);
-                if(astronautRotateMap.has(theMeshName)){ 
-                  if(!isAstronautFirstClick){
-                      
-                  }
-                  if(initCamera) initCamera.detachControl(canvas);
-                  if(astronautCamera) astronautCamera.detachControl(canvas);
-                    let theAstro =  pickInfo.pickedMesh;
-                        astronautArr.currentPos.x = evt.clientX;
-                        astronautArr.currentPos.y = evt.clientY;
-                        astronautArr.currentRot.x = astronaut_obj.rotation.x;
-                        astronautArr.currentRot.y = astronaut_obj.rotation.y;
-                        isAstronautClicked = true;
-                        isAstronautScalingOn = true;
-              }//end of the mesh name
+                let theMesh = pickInfo.pickedMesh;
 
-
-
-              //if a button is clicked
-              if( theMeshName === "btn1" ){
-                //call function from earth scene
-                 earth_place_mbaye_on_earth();
-                 var text = astronautPartsMap.get("placeMbaye");
-                 text.material.emissiveColor = BABYLON.Color3.Red();
-                 setTimeout(function(){
-                    text.material.emissiveColor = BABYLON.Color3.White();
-                 },1000);
-              }else if( theMeshName === "btn2" ){
-                //call function from earth scene
-                 earth_show_countries();
-              }else if( theMeshName === "btn3" ){
-                //call function from earth scene
-                 earth_show_borders();
-              }else if( theMeshName === "btn4" ){
-                //call function from earth scene
+                console.log(pickInfo.pickedMesh.position, pickInfo.pickedMesh.rotation);
                 
-                isPlanetLabelActive = !isPlanetLabelActive;
-                set_orbit_enability(isPlanetLabelActive);
-                set_constellation_enability(isPlanetLabelActive);
-                var text = astronautPartsMap.get("showLabels");
-                if(isPlanetLabelActive) text.material.emissiveColor = BABYLON.Color3.Red();
-                else text.material.emissiveColor = BABYLON.Color3.White();
+                  if(astronautRotateMap.has(theMeshName)){ 
+                          if(initCamera) initCamera.detachControl(canvas);
+                          if(astronautCamera) astronautCamera.detachControl(canvas);
+                          astronautArr.currentPos.x = evt.clientX;
+                          astronautArr.currentPos.y = evt.clientY;
+                          astronautArr.currentRot.x = astronaut_obj.rotation.x;
+                          astronautArr.currentRot.y = astronaut_obj.rotation.y;
+                          isAstronautClicked = true;
+                          isAstronautScalingOn = true;
+                  }//end of the mesh name
 
-              }else if( theMeshName === "btn5" ){
-                //call function from earth scene
-                earth_rotate_earth_with_mbaye();
-                 
-              }else if( theMeshName === "btn6" ){
-                //call function from earth scene
-                earth_rotate();
-                 
-              }else if( theMeshName === "btn8" ){
-                 var text = astronautPartsMap.get("designPanels");
-                 text.material.emissiveColor = BABYLON.Color3.Red();
-                  setTimeout(function(){
-                     window.open('designPanel');  
-                  },1000);
-              }else if( theMeshName === "btn10" ){
-                  earth_initial_view();
-                  var text = astronautPartsMap.get("initialView");
-                  text.material.emissiveColor = BABYLON.Color3.Red();
-                  setTimeout(function(){
-                      // earth_initial_view();
-                      text.material.emissiveColor = BABYLON.Color3.White();
-                  },1000);
+
+
+                //if a button is clicked
+                if( theMeshName === "btn1" ){
+                  //call function from earth scene
+                  earth_place_mbaye_on_earth();
+                  // var text = astronautPartsMap.get("placeMbaye");
+                  // theMesh.material.emissiveColor = BABYLON.Color3.Red();
+                  // setTimeout(function(){
+                  //     text.material.emissiveColor = BABYLON.Color3.White();
+                  // },1000);
+                }else if( theMeshName === "btn2" ){
+                  //call function from earth scene
+                  earth_show_countries();
+                }else if( theMeshName === "btn3" ){
+                  //call function from earth scene
+                  earth_show_borders();
+                }else if( theMeshName === "btn4" ){
+                  //call function from earth scene
                   
-              }else if( theMeshName === "btn16" ){ //enable position gizmo
-                  earth_handle_gizmo(1);
-                  var text = astronautPartsMap.get("toolPosition");
-                  text.material.emissiveColor = BABYLON.Color3.Red();
-                  setTimeout(function(){
-                      text.material.emissiveColor = BABYLON.Color3.White();
-                  },1000);
+                  isPlanetLabelActive = !isPlanetLabelActive;
+                  set_orbit_enability(isPlanetLabelActive);
+                  set_constellation_enability(isPlanetLabelActive);
+                  // var text = astronautPartsMap.get("showLabels");
+                  // if(isPlanetLabelActive) text.material.emissiveColor = BABYLON.Color3.Red();
+                  // else text.material.emissiveColor = BABYLON.Color3.White();
+
+                }else if( theMeshName === "btn5" ){
+                  //call function from earth scene
+                  earth_rotate_earth_with_mbaye();
                   
-              }else if( theMeshName === "btn17" ){  //enable rotation gizmo
-                  earth_handle_gizmo(2);
-                  var text = astronautPartsMap.get("toolRotation");
-                  text.material.emissiveColor = BABYLON.Color3.Red();
-                  setTimeout(function(){
-                      text.material.emissiveColor = BABYLON.Color3.White();
-                  },1000);
-              }else if( theMeshName === "btn18" ){
-                  earth_handle_gizmo(3);
-                  var text = astronautPartsMap.get("toolScaleUp");
-                  text.material.emissiveColor = BABYLON.Color3.Red();
-                  setTimeout(function(){
-                      text.material.emissiveColor = BABYLON.Color3.White();
-                  },1000);
-              }else if( theMeshName === "btn19" ){
-                  earth_handle_gizmo(4);
-                  var text = astronautPartsMap.get("toolScaleDown");
-                  text.material.emissiveColor = BABYLON.Color3.Red();
-                  setTimeout(function(){
-                      text.material.emissiveColor = BABYLON.Color3.White();
-                  },1000);
-              }else if( theMeshName === "btn20" ){
-                  earth_handle_gizmo(0);
-                  var text = astronautPartsMap.get("toolDisable");
-                  text.material.emissiveColor = BABYLON.Color3.Red();
-                  setTimeout(function(){ 
-                      text.material.emissiveColor = BABYLON.Color3.White();
-                  },1000);
-              }else if(theMeshName === "helmetStars") {
-                  let link = wikiMap.get(theMeshName);
-                  if(link) showPage(link);
-              }
+                }else if( theMeshName === "btn6" ){
+                  //call function from earth scene
+                  earth_rotate();
+                  
+                }else if( theMeshName === "btn8" ){
+                  // var text = astronautPartsMap.get("designPanels");
+                  // text.material.emissiveColor = BABYLON.Color3.Red();
+                    setTimeout(function(){
+                      window.open('designPanel');  
+                    },1000);
+                }else if( theMeshName === "btn10" ){
+                    earth_initial_view();
+                    // var text = astronautPartsMap.get("initialView");
+                    // text.material.emissiveColor = BABYLON.Color3.Red();
+                    // setTimeout(function(){
+                    //     // earth_initial_view();
+                    //     text.material.emissiveColor = BABYLON.Color3.White();
+                    // },1000);
+                    
+                }else if( theMeshName === "btn16" ){ //enable position gizmo
+                    earth_handle_gizmo(1);
+                    // var text = astronautPartsMap.get("toolPosition");
+                    // text.material.emissiveColor = BABYLON.Color3.Red();
+                    // setTimeout(function(){
+                    //     text.material.emissiveColor = BABYLON.Color3.White();
+                    // },1000);
+                    
+                }else if( theMeshName === "btn17" ){  //enable rotation gizmo
+                    earth_handle_gizmo(2);
+                    // var text = astronautPartsMap.get("toolRotation");
+                    // text.material.emissiveColor = BABYLON.Color3.Red();
+                    // setTimeout(function(){
+                    //     text.material.emissiveColor = BABYLON.Color3.White();
+                    // },1000);
+                }else if( theMeshName === "btn18" ){
+                    earth_handle_gizmo(3);
+                    // var text = astronautPartsMap.get("toolScaleUp");
+                    // text.material.emissiveColor = BABYLON.Color3.Red();
+                    // setTimeout(function(){
+                    //     text.material.emissiveColor = BABYLON.Color3.White();
+                    // },1000);
+                }else if( theMeshName === "btn19" ){
+                    earth_handle_gizmo(4);
+                    // var text = astronautPartsMap.get("toolScaleDown");
+                    // text.material.emissiveColor = BABYLON.Color3.Red();
+                    // setTimeout(function(){
+                    //     text.material.emissiveColor = BABYLON.Color3.White();
+                    // },1000);
+                }else if( theMeshName === "btn20" ){
+                    earth_handle_gizmo(0);
+                    // var text = astronautPartsMap.get("toolDisable");
+                    // text.material.emissiveColor = BABYLON.Color3.Red();
+                    // setTimeout(function(){ 
+                    //     text.material.emissiveColor = BABYLON.Color3.White();
+                    // },1000);
+                }else if(theMeshName === "helmetStars") {
+                    let link = wikiMap.get(theMeshName);
+                    if(link) showPage(link);
+                }else if(astronautChestParts.has(theMeshName)){
+                    let val = astronautChestParts.get(theMeshName);
+                    checkScreenAndDoubleClick(val);
+                }
+
+              
                     
               
 
@@ -415,18 +413,6 @@ function listen_to_astronaut_rotation(){
           }
       }
     };
-
-
-
-    // engine.runRenderLoop(function () {
-    //    if(astronautCamera && isAstronautRightClicked){
-    //        // console.log("check screen", astronautCamera.position);
-    //        if(astronautCamera){ 
-    //             // if(astronautCamera.position.x <= -2) astronautCamera.detachControl(canvas);
-    //        }
-    //    }
-
-    // });
 }
 
 
@@ -446,7 +432,6 @@ function add_action_mgr(thePart){
   );
 }
 
-
 function add_action_mgr_astrobody(thePart){
   thePart.actionManager = new BABYLON.ActionManager(astronautScene);
   thePart.actionManager.registerAction(
@@ -464,33 +449,33 @@ function add_action_mgr_astrobody(thePart){
 }
 
 let origScaling, origColor;
-let partTooltip;
+let partTooltip,astroToolsDiv;
 var onOverPart =(meshEvent)=>{
     partTooltip = document.createElement("span");
     partTooltip.setAttribute("id", "partTooltip");
     var sty = partTooltip.style;
     sty.position = "absolute";
-    sty.lineHeight = "1.2em";
+    // sty.lineHeight = "1.2em";
     sty.padding = "0.2%";
-    // sty.color = "#efad0c  ";
-    sty.color = "white";
+    sty.color = "#00BFFF";
+    sty.textShadow = "1px 1px 3px black";
+    // sty.color = "white";
     sty.fontFamily = "Courgette-Regular";
-    sty.fontSize = "1.5em";
-    sty.backgroundColor = "#0b91c3a3";
-    sty.opacity = "0.7";
+    sty.fontSize = "2rem";
     sty.top = astronautScene.pointerY + "px";
     sty.left = (astronautScene.pointerX) + "px";
     sty.cursor = "pointer";
+    sty.pointerEvents = "none";
 
   if(astronautChestParts.has(meshEvent.source.name)){
         let val = astronautChestParts.get(meshEvent.source.name);
-        //val[0] - descriptive text on hover, val[1] - url
-        hl.addMesh(meshEvent.source, new BABYLON.Color3(0,0.8,0.8));
+        meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,1,1);
         document.body.appendChild(partTooltip);
         partTooltip.textContent = val[0];
-        partTooltip.setAttribute("onclick", "window.open('"+val[1]+"')");
+        // partTooltip.setAttribute("onclick", "window.open('"+val[1]+"')");
   }else if(meshEvent.source.name === "helmetStars"){
-        hl.addMesh(meshEvent.source, new BABYLON.Color3(0,0.8,0.8));
+        meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,1,1);
+        // hl.addMesh(meshEvent.source, new BABYLON.Color3(0,0.8,0.8));
   }
 
 
@@ -498,10 +483,15 @@ var onOverPart =(meshEvent)=>{
 
 //handles the on mouse out event
 var onOutPart =(meshEvent)=>{
-    hl.removeMesh(meshEvent.source);
+    // hl.removeMesh(meshEvent.source);
+    meshEvent.source.material.emissiveColor = new BABYLON.Color3(1,1,1);
     while (document.getElementById("partTooltip")) {
       document.getElementById("partTooltip").parentNode.removeChild(document.getElementById("partTooltip"));
     }   
+
+    while (document.getElementById("astroToolsDiv")) {
+      document.getElementById("astroToolsDiv").parentNode.removeChild(document.getElementById("astroToolsDiv"));
+    }  
 };
 
 
@@ -521,50 +511,102 @@ function listen_to_astronaut_wheelscroll(){
               else if (event.detail) {
                   delta = -event.detail;
               }
-
               if (delta) {
-                  let x = astronaut_obj.scaling.x;
-                  let y = astronaut_obj.scaling.y;
-                  let z = astronaut_obj.scaling.z;
+                  //if scrolling to make the obj smaller
                   if(delta < 0){
-                      if(user_gender === 'female'){
-                            if(astronaut_obj.scaling.x <= 0.2 && astronaut_obj.scaling.y <= 0.2 && astronaut_obj.scaling.z <= 0.2){
-                              astronaut_obj.scaling = new BABYLON.Vector3(0.2,0.2,0.2);
-                            }else{
-                              astronaut_obj.scaling = new BABYLON.Vector3(x-0.05,y-0.05,z-0.05);
-                            }
-                      }else{
-                            if(astronaut_obj.scaling.x <= 0.005 && astronaut_obj.scaling.y <= 0.005 && astronaut_obj.scaling.z <= 0.005){
-                                astronaut_obj.scaling = new BABYLON.Vector3(0.005,0.005,0.005);
-                            }else{
-                                astronaut_obj.scaling = new BABYLON.Vector3(x-0.005,y-0.005,z-0.005);
-                            }
-                      }
-                  //if scrolling to make the obj bigger
-                  }else{
-                    if(user_gender === 'female'){
-                            if(astronaut_obj.scaling.x >= 4 && astronaut_obj.scaling.y >= 4 && astronaut_obj.scaling.z >= 4 ){
-                              astronaut_obj.scaling = new BABYLON.Vector3(4,4,4);
-                            }else{
-                              astronaut_obj.scaling = new BABYLON.Vector3(x+0.05,y+0.05,z+0.05);
-                            }
-                    }else{
-                            if(astronaut_obj.scaling.x >= 0.15 && astronaut_obj.scaling.y >= 0.15 && astronaut_obj.scaling.z >= 0.15){
-                              astronaut_obj.scaling = new BABYLON.Vector3(0.15,0.15,0.15);
-                            }else{
-                              astronaut_obj.scaling = new BABYLON.Vector3(x+0.005,y+0.005,z+0.005);
-                            }
-                    }
-                    
-                    // console.log("scroll up => bigger", delta);
-                    
+                     set_astronaut_scaling('down');
+                  }else{ //if scrolling to make the obj bigger
+                    set_astronaut_scaling('up');
                   }
-                  
-                  
               }
           }
          
       }, BABYLON.PointerEventTypes.POINTERWHEEL, false);
   }
 }//end of listen to wheel scroll function
+
+function set_astronaut_scaling(mode){
+    let x = astronaut_obj.scaling.x;
+    let y = astronaut_obj.scaling.y;
+    let z = astronaut_obj.scaling.z;
+    if(mode === "down"){
+        // if(user_gender === 'female'){
+          if(astronaut_obj.scaling.x <= 0.2 && astronaut_obj.scaling.y <= 0.2 && astronaut_obj.scaling.z <= 0.2){
+            astronaut_obj.scaling = new BABYLON.Vector3(0.2,0.2,0.2);
+          }else{
+            astronaut_obj.scaling = new BABYLON.Vector3(x-0.05,y-0.05,z-0.05);
+          }
+        // }else{  //if astronaut is male
+            // if(astronaut_obj.scaling.x <= 0.005 && astronaut_obj.scaling.y <= 0.005 && astronaut_obj.scaling.z <= 0.005){
+            //     astronaut_obj.scaling = new BABYLON.Vector3(0.005,0.005,0.005);
+            // }else{
+            //     astronaut_obj.scaling = new BABYLON.Vector3(x-0.005,y-0.005,z-0.005);
+            // }
+            // if(astronaut_obj.scaling.x <= 0.2 && astronaut_obj.scaling.y <= 0.2 && astronaut_obj.scaling.z <= 0.2){
+        //       astronaut_obj.scaling = new BABYLON.Vector3(0.2,0.2,0.2);
+        //     }else{
+        //       astronaut_obj.scaling = new BABYLON.Vector3(x-0.05,y-0.05,z-0.05);
+        //     }
+        // }
+    }else{  //if scaling is up
+        // if(user_gender === 'female'){
+          if(astronaut_obj.scaling.x >= 4 && astronaut_obj.scaling.y >= 4 && astronaut_obj.scaling.z >= 4 ){
+            astronaut_obj.scaling = new BABYLON.Vector3(4,4,4);
+          }else{
+            astronaut_obj.scaling = new BABYLON.Vector3(x+0.05,y+0.05,z+0.05);
+          }
+        // }else{  //if astronaut is male
+              // if(astronaut_obj.scaling.x >= 0.15 && astronaut_obj.scaling.y >= 0.15 && astronaut_obj.scaling.z >= 0.15){
+              //   astronaut_obj.scaling = new BABYLON.Vector3(0.15,0.15,0.15);
+              // }else{
+              //   astronaut_obj.scaling = new BABYLON.Vector3(x+0.005,y+0.005,z+0.005);
+              // }
+        //       if(astronaut_obj.scaling.x >= 4 && astronaut_obj.scaling.y >= 4 && astronaut_obj.scaling.z >= 4 ){
+        //         astronaut_obj.scaling = new BABYLON.Vector3(4,4,4);
+        //       }else{
+        //         astronaut_obj.scaling = new BABYLON.Vector3(x+0.05,y+0.05,z+0.05);
+        //       }
+        // }
+    }
+}//end of function
+
+function show_astro_backpack(val){
+    if(astronaut_obj && val){
+          if(astro_curr_state.rot === null){    //if first time showing the controls
+              reset_astro();
+          }else{
+              astronaut_obj.rotation =  astro_curr_state.rot;
+              astronaut_obj.scaling = astro_curr_state.scale;
+              astronautCamera.position = astro_curr_state.pos;
+              astronautCamera.alpha = astro_curr_state.alpha;
+              astronautCamera.beta = astro_curr_state.beta;
+              astronautCamera.radius = astro_curr_state.radius;
+              astronautCamera.target = astro_curr_state.target;
+          }
+          
+    }else{
+          astro_curr_state.rot = astronaut_obj.rotation;
+          astro_curr_state.pos = astronautCamera.position;
+          astro_curr_state.scale = astronaut_obj.scaling;
+          astro_curr_state.alpha = astronautCamera.alpha;
+          astro_curr_state.beta = astronautCamera.beta;
+          astro_curr_state.radius = astronautCamera.radius;
+          astro_curr_state.target = astronautCamera.target;
+    }
+}
+
+function reset_astro(){
+    if(user_gender === 'male'){
+        astronaut_obj.scaling = new BABYLON.Vector3(0.08,0.08,0.08);
+        astronaut_obj.rotation =  new BABYLON.Vector3(-0.1454,3.4757,0);
+    }else{
+        astronaut_obj.scaling = new BABYLON.Vector3(3.5,3.5,3.5);
+        astronaut_obj.rotation =  new BABYLON.Vector3(0.2664,3.5101,0);
+    }
+    astronautCamera.position = new BABYLON.Vector3(1.7257, 5.5630,-9.0408);
+    astronautCamera.alpha = -1.64927;
+    astronautCamera.beta = 1.3138
+    astronautCamera.radius = 10;
+    astronautCamera.target = new BABYLON.Vector3(2.0222,2.7470,0.5651);
+}
 

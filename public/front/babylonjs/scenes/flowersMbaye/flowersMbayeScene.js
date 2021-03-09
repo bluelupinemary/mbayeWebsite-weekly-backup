@@ -11,13 +11,14 @@ var skybox;
 
 
 //define constants for zoom in/out limits
-const LOWER_RADIUS_VAL = 1;                                         //zoom in limit                       
+const LOWER_RADIUS_VAL = 150;                                         //zoom in limit                       
 const UPPER_RADIUS_VAL = 2000;                                      //zoom out limit
 let hl;
 let sceneSkybox;
 let isShowFlowerScene = false;
-let focusSpeechSpecs = [{x: 132, y: 1588, z: 15},2.7495,1.5629, 1];
-let initCameraSpecs = [{x: -1187, y: 214, z: 626},2.6563,1.4124, 1360];
+//let focusSpeechSpecs = [{x: 132, y: 1588, z: 15},2.7495,1.5629, 1];
+let focusSpeechSpecs = [{x: 551, y: 1656, z:  -46},2.6827,1.5365, 1, 1];
+let initCameraSpecs = [{x: -1187, y: 214, z: 626},2.6563,1.4124, 1360, 150];
 
 
 function createScene(){
@@ -63,8 +64,8 @@ function create_flowers_camera(){
     camera.upperRadiusLimit = UPPER_RADIUS_VAL;
     camera.lowerRadiusLimit = LOWER_RADIUS_VAL;
     camera.wheelPrecision = 1;
-    camera.angularSensibilityX = 4000;     //rotation speed of camera; lower number, faster rotation
-    camera.angularSensibilityY = 4000;
+    camera.angularSensibilityX = 6000;     //rotation speed of camera; lower number, faster rotation
+    camera.angularSensibilityY = 6000;
     camera.pinchDeltaPercentage = 800; 
     //for the right mouse button panning function; ;0 -no panning, 1 - fastest panning
     camera.panningSensibility = 10; 
@@ -177,59 +178,22 @@ function load_meshes(){
                 }
             });
         }),
-        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/earth/", "earth122319.babylon", flowersScene).then(function (result) {
-                // earthNormalMesh = result.meshes;
-                
-                result.meshes[9].scaling = new BABYLON.Vector3(0.45,0.45,0.45);
-                result.meshes[9].rotationQuaternion = new BABYLON.Quaternion(0, -0.7648,0,0.6442);
-                
-                result.meshes.forEach(function(m) {
-                    m.checkCollisions = true;
-                    m.isPickable = true;
-                    earth_submeshes.set(m.name,null);
-                    add_action_mgr(m);
-                    if(m.name === "Sea"){
-                        water = new BABYLON.WaterMaterial("water", flowersScene, new BABYLON.Vector2(2048, 2048));
-                        water.backFaceCulling = true;
-                        water.bumpTexture = new BABYLON.Texture("front/textures/participate/waterbump.png", flowersScene);
-                        water.windForce = 10;
-                        water.windDirection = new BABYLON.Vector2(-1,0);
-                        water.waveHeight = 0.2;
-                        water.bumpHeight = 0.3;
-                        water.waveLength = 0.1;
-                        water.colorBlendFactor = 0.25714;
-                        water.waterColor = new BABYLON.Color3(0.31428,0.2,0.80357);
-
-                        water.addToRenderList(sceneSkybox);
-                        m.material = water;
-                    }
-                });
-
-                earth_object = result.meshes[9];      
-                
-          }),
+        
           
     ]).then(() => {
-        mbaye_object.setParent(earth_object);
-        setTimeout(function(){
-            // add_video_to_mesh();
-            flowersCamera.target = new BABYLON.Vector3(0,0,0);
-            flowersCamera.radius = 1360;
-        },500);
-
-     
-            
-        setup_music_player();
-        
-        let nuvola = create_mesh("Nuvola","front/images3D/flowersScene/nuvola.png",600,380,1,{x:1314,y:1388,z:-1869},{x: -0.0069650546525626645, y: -0.9541632952945934, z: -0.0009096510902198634, w: -0.299204054887531});
-        init_scrollable_viewer("SolarNuvolaSpeech","front/images3D/flowersScene/solarNuvolaSpeech.png",2000,1000,{x:1763,y:1608,z:-686},{x: -0.00014, y: 0.8504, z:  0.00123, w: 0.5260});
-        let solar = create_mesh("Solar","front/images3D/homeScene/solarSitting2.png",550,454,1,{x:2063,y:1749,z:394},{x: 0.02928221765496565, y: -0.7179153418377492, z: -0.03922121198480947, w: -0.6944075245946241});
-
-        add_action_mgr(nuvola);
+      
+        flowersCamera.target = new BABYLON.Vector3(0,0,0);
+        flowersCamera.radius = 1360;
+       
+        create_mesh("Nuvola","front/images3D/flowersScene/nuvola.png",600,380,0.85,{x:1354,y:1676,z:-972},{x: -0.0114, y: -0.9311, z: 0.0196, w: -0.3637},flowersScene);
+        init_scrollable_viewer("SolarNuvolaSpeech","front/images3D/flowersScene/solarNuvolaSpeech.png",2000,1000,{x:1740,y:1608,z:-675},{x: 0.0110, y: 0.8506, z:-0.0146, w: 0.5250},flowersScene);
+        let solar = create_mesh("Solar","front/images3D/homeScene/solarSitting2.png",550,454,0.8,{x:1830,y:1479,z:-130},{x: 0.0335, y: -0.7914, z: -0.0356, w: -0.6093},flowersScene);
         add_action_mgr(solar);
-        
+
+        setup_music_player();
+        // add_action_mgr(nuvola);
          
-        // enable_gizmo(temp);
+        // enable_gizmo(solar);
         // enable_gizmo(temp);
        
     });
@@ -265,19 +229,20 @@ var onOverFlower =(meshEvent)=>{
     var sty = flowerLbl.style;
     sty.position = "absolute";
     // sty.padding = "0.5%";
-    sty.color = "#00BFFF  ";
+    sty.color = "#00BFFF";
     sty.fontFamily = "Courgette-Regular";
     sty.fontSize = "2rem";
     sty.textShadow = "1px 1px 3px black";
     sty.top = (flowersScene.pointerY-50) + "px";
     sty.left = (flowersScene.pointerX+10) + "px";
     sty.cursor = "pointer";
+    sty.pointerEvents = "none";
     
     let theName =  meshEvent.meshUnderPointer.name;
     if(earth_submeshes.has(meshEvent.source.name)){
         document.body.appendChild(flowerLbl);
         flowerLbl.textContent = "Click for Culture."
-    }else if(meshEvent.source.name === "Nuvola" || meshEvent.source.name === "Solar"){
+    }else if(meshEvent.source.name === "Solar" || meshEvent.source.name === "Nuvola"){
         meshEvent.source.material.emissiveColor = BABYLON.Color3.White();
         nuvolaOrigScaling = meshEvent.source.scaling;
        
@@ -305,8 +270,8 @@ var onOutFlower =(meshEvent)=>{
 
     if(earth_submeshes.has(meshEvent.source.name)){
         // console.log("out of earth earth");
-    }else if(meshEvent.source.name === "Nuvola" || meshEvent.source.name === "Solar"){
-        
+    }else if(meshEvent.source.name === "Solar" || meshEvent.source.name === "Nuvola"){
+        //meshEvent.source.name === "Nuvola" || 
         meshEvent.source.material.emissiveColor = new BABYLON.Color3(0.4,0.4,0.4);
         meshEvent.source.scaling = nuvolaOrigScaling;
         // console.log("hereeee",nuvolaOrigScaling);
@@ -325,15 +290,15 @@ var onOutFlower =(meshEvent)=>{
 
 
 
-function create_mesh(name, matlPath, h, w, scale, pos,rot){
-    var temp= BABYLON.MeshBuilder.CreatePlane(name, {height:h, width: w}, flowersScene);
+function create_mesh(name, matlPath, h, w, scale, pos,rot,scene){
+    var temp= BABYLON.MeshBuilder.CreatePlane(name, {height:h, width: w}, scene);
     temp.scaling = new BABYLON.Vector3(scale, scale, scale);
     temp.position = new BABYLON.Vector3(pos.x,pos.y,pos.z);
     temp.rotationQuaternion = new BABYLON.Quaternion(rot.x, rot.y,rot.z,rot.w);
     
-    var tempMatl = new BABYLON.StandardMaterial(name+"matl", flowersScene);
-    tempMatl.diffuseTexture = new BABYLON.Texture(matlPath, flowersScene);
-    tempMatl.opacityTexture = new BABYLON.Texture(matlPath, flowersScene);
+    var tempMatl = new BABYLON.StandardMaterial(name+"matl", scene);
+    tempMatl.diffuseTexture = new BABYLON.Texture(matlPath, scene);
+    tempMatl.opacityTexture = new BABYLON.Texture(matlPath, scene);
     if(name == "Nuvola") tempMatl.emissiveColor = new BABYLON.Color3(0.4,0.4,0.4);
 
     tempMatl.ambientColor = new BABYLON.Color3(1,1,1);
@@ -423,8 +388,8 @@ function load_orig_flowers(){
         let thePos;
         if(val[0]!==null) thePos = val[0];
         let theSize = set_scale();
-        init_flower(flowerName,flowerName+"Matl", "front/images3D/flowers2D/orig/"+flowerName+".png",theSize,thePos.x,thePos.y,thePos.z);
-        floatingFlowersMap.set(flowerName,null);
+        let obj = init_flower(flowerName,flowerName+"Matl", "front/images3D/flowers2D/orig/"+flowerName+".png",theSize,thePos.x,thePos.y,thePos.z);
+        floatingFlowersMap.set(flowerName,obj);
     }
 }
 
@@ -503,6 +468,7 @@ function set_scene_active_meshes(scene,isActive){
 
 //the function that will listen to mouse events
 let currFlower;
+let isPointerDown = false;
 function add_mouse_listener(){
         var onPointerDownInit = function (evt) {
             // console.log(evt);
@@ -510,8 +476,8 @@ function add_mouse_listener(){
             else return;
             if(pickinfo.hit){
                 var theInitMesh = pickinfo.pickedMesh.name;
-                // console.log("speech",temp.position, temp.rotationQuaternion);
-                // console.log("camera",flowersCamera.position, flowersCamera.alpha, flowersCamera.beta, flowersCamera.radius);
+                // console.log("obj: ",temp.position, temp.rotationQuaternion);
+                console.log("camera",flowersCamera.position, flowersCamera.alpha, flowersCamera.beta, flowersCamera.radius);
                
                 if(flowersMbayeMap.has(theInitMesh) && currScene == "flowersScene"){
                     let hasName = get_has_flower_name(theInitMesh);
@@ -535,8 +501,17 @@ function add_mouse_listener(){
                             set_wiki_values(val[2],videoId);
                             //show wiki icon
                             $('#wikipediaIcon').show();
+                            $('#infoIconTextflowers').hide();
+                            $('#infoIconTextdownflower').hide();
                             //remove all meshes with highlight
                             hl.removeAllMeshes();
+
+                            //show music video
+                            isVideoEnabled = true;
+                            // document.getElementById("player").style.visibility = "visible";
+                            // $("#musicVideoDiv").show();
+                            $('#musicVideoDiv').css('display','flex');
+                           
                             
                         },1000);
                        
@@ -547,7 +522,7 @@ function add_mouse_listener(){
 
                 
         
-                if(theInitMesh === "Solar" || theInitMesh === "Nuvola"){
+                if(theInitMesh === "Solar"){
                     // initCamera.position = new BABYLON.Vector3( -4258, 738, 1708);
                     let pos = focusSpeechSpecs[0];
                     if(!isSpeechViewActive){
@@ -555,32 +530,41 @@ function add_mouse_listener(){
                         flowersCamera.alpha = focusSpeechSpecs[1];
                         flowersCamera.beta = focusSpeechSpecs[2];
                         flowersCamera.radius = focusSpeechSpecs[3];
+                        flowersCamera.lowerRadiusLimit = focusSpeechSpecs[4];
                         isSpeechViewActive = true;
                     }else{
                         flowersCamera.setTarget(new BABYLON.Vector3(0,0,0));
                         flowersCamera.alpha = initCameraSpecs[1];
                         flowersCamera.beta = initCameraSpecs[2];
                         flowersCamera.radius = initCameraSpecs[3];
+                        flowersCamera.lowerRadiusLimit = initCameraSpecs[4];
                         isSpeechViewActive = false;
                     }
                 }
 
-                if(earth_submeshes.has(theInitMesh)){
+                if(earth_submeshes.has(theInitMesh) || theInitMesh === "earth"){
                     randomize_flower();
                 }
 
                
 
-           }
+           }else{
+               //else if nothing is hit
+            if(!isPointerDown){
+                isPointerDown = true;
+            }
+          }//end of else
            
         }//end of on pointer down function
 
         var onPointerUpInit = function () {
-               
+            isPointerDown = false;
         }//end of on pointer up function
 
         var onPointerMoveInit = function (evt) {
-          
+            if(isPointerDown){
+                // set_flower_angle();
+            }
         }//end of on pointer move function
 
         canvas.addEventListener("pointerdown", onPointerDownInit, false);
@@ -616,13 +600,15 @@ function randomize_flower(){
             //if there's a flower previously scaled and highlighted, remove highlight and scaling
             if(tempOrigScaling){
                 randomFlower.scaling = tempOrigScaling;
-                hl.removeAllMeshes();
+                randomFlower.material.emissiveColor = new BABYLON.Color3(1,1,1);
+                // hl.removeAllMeshes();
             }
             
             //find the flower from the floating flowers
             randomFlower = flowerObjMap.get(flower);
             //highlight the flower, change scaling
-            hl.addMesh(randomFlower, new BABYLON.Color3.Green());
+            // hl.addMesh(randomFlower, new BABYLON.Color3.Green());
+            randomFlower.material.emissiveColor = BABYLON.Color3.Green();
             tempOrigScaling = randomFlower.scaling;
             randomFlower.scaling = new BABYLON.Vector3(tempOrigScaling.x * 2, tempOrigScaling.y * 2, tempOrigScaling.z * 2, );
            
@@ -636,6 +622,72 @@ function randomize_flower(){
         i++;
     }
 }
+
+/**function to load the earth depending on the current platform used**/
+function create_lowres_earth(){
+    earth_object = init_planet("earth","earthMatl","front/textures/home/planets/earth.jpg","front/textures/home/planets/earthnormal.png",0,0,0,270);
+    animateObjectRotationNoEase(earth_object, 10, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-360), 0));
+}
+
+var animateObjectRotationNoEase = function(obj, speed, frameCount, newRot) {
+    BABYLON.Animation.CreateAndStartAnimation('objRot'+obj.name, obj, 'rotation', speed, frameCount, obj.rotation, newRot, 1, null);
+}
+
+
+function load_highres_earth(){
+    Promise.all([
+        BABYLON.SceneLoader.ImportMeshAsync(null, "front/objects/participateScene/earth/", "earth122319.babylon", flowersScene).then(function (result) {
+            // earthNormalMesh = result.meshes;
+            
+            result.meshes[9].scaling = new BABYLON.Vector3(0.45,0.45,0.45);
+            result.meshes[9].rotationQuaternion = new BABYLON.Quaternion(0, -0.7648,0,0.6442);
+            
+            result.meshes.forEach(function(m) {
+                m.checkCollisions = true;
+                m.isPickable = true;
+                earth_submeshes.set(m.name,null);
+                add_action_mgr(m);
+                if(m.name === "Sea"){
+                    water = new BABYLON.WaterMaterial("water", flowersScene, new BABYLON.Vector2(2048, 2048));
+                    water.backFaceCulling = true;
+                    water.bumpTexture = new BABYLON.Texture("front/textures/participate/waterbump.png", flowersScene);
+                    water.windForce = 10;
+                    water.windDirection = new BABYLON.Vector2(-1,0);
+                    water.waveHeight = 0.2;
+                    water.bumpHeight = 0.3;
+                    water.waveLength = 0.1;
+                    water.colorBlendFactor = 0.25714;
+                    water.waterColor = new BABYLON.Color3(0.31428,0.2,0.80357);
+
+                    water.addToRenderList(sceneSkybox);
+                    m.material = water;
+                }
+            });
+
+            earth_object = result.meshes[9];      
+            
+      }),
+    ]).then(() => {
+        animateObjectRotationNoEase(earth_object, 10, 200, new BABYLON.Vector3(0,BABYLON.Tools.ToRadians(-360), 0));
+    });
+}
+
+//function that instantiates a planet
+function init_planet(name,material_name,texture_path,normal_texture_path,x_pos,y_pos,z_pos,radius){
+    var temp = BABYLON.Mesh.CreateSphere(name, 0, radius, flowersScene);
+    temp.position = new BABYLON.Vector3(x_pos,y_pos,z_pos);
+    var temp_material = new BABYLON.StandardMaterial(material_name,flowersScene);
+    temp_material.diffuseTexture = new BABYLON.Texture(texture_path, flowersScene);
+    temp_material.bumpTexture = new BABYLON.Texture(normal_texture_path,flowersScene);
+    temp_material.specularColor = new BABYLON.Color3(0,0,0);
+    temp_material.freeze();
+    temp.freezeWorldMatrix();
+    temp.material = temp_material;
+    temp.material.freeze();
+    temp.convertToUnIndexedMesh();
+
+    return temp;
+}//end of init planet function
    
 
 //create the game engine
@@ -653,6 +705,10 @@ theScene.executeWhenReady(function () {
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     document.getElementById("loadingScreenPercent").innerHTML = "Loading: 0 %";
     document.getElementById("loadingScreenDiv").remove();
+    
+    //
+    mbaye_object.setParent(earth_object);
+    // set_circle_type();
     // set_to_fullscreen();
 
     engine.runRenderLoop(function () {
@@ -676,11 +732,13 @@ theScene.executeWhenReady(function () {
                 
             }
 
-            if(flowersScene && earth_object && mbaye_object){
-                earth_object.rotate(new BABYLON.Vector3(0,4,0), -0.01, BABYLON.Space.LOCAL);
-                // if(book_obj) console.log(book_obj.position, book_obj.rotationQuaternion);
-                // if(selectedFlowerCamera) console.log(selectedFlowerCamera.position, selectedFlowerCamera.alpha, selectedFlowerCamera.beta);
-            }
+            
+
+            // if(flowersScene && earth_object && mbaye_object){
+            //     // earth_object.rotate(new BABYLON.Vector3(0,4,0), -0.01, BABYLON.Space.LOCAL);
+            //     // if(book_obj) console.log(book_obj.position, book_obj.rotationQuaternion);
+            //     // if(selectedFlowerCamera) console.log(selectedFlowerCamera.position, selectedFlowerCamera.alpha, selectedFlowerCamera.beta);
+            // }
 
             // if(book_obj) console.log(book_obj.position, book_obj.rotationQuaternion);
             
@@ -714,23 +772,19 @@ $('#carpetsWikiPage').on('load',function(){
     let isCharDivFullscreen = false;
     let isCharDivFullscreen2 = false;
     function showPage(pageName,videoId) {
-        console.log("this is called");
         $('.iframe-loading').show();
         // let loader = document.getElementById("iframe-loading");
-        let x = document.getElementById("flowersWikipediaDiv");
         let page = document.getElementById("wikiPage");
 
         // if(loader.style.visibility != "visible") loader.style.visibility = "visible";
         
 
         page.src = pageName;
-        document.getElementById("page-url").textContent = pageName+"";
+        document.getElementById("page-url").href = pageName+"";
+        document.getElementById("page-url-span").textContent = pageName+"";
         document.getElementById("song-url").href = "https://www.youtube.com/watch?v="+videoId;
         document.getElementById("song-url-span").textContent = "https://www.youtube.com/watch?v="+videoId;
-        // if(x.style.visibility != "visible"){
-        //     x.style.visibility = "visible";  
-        //     isScreenVisible = true;
-        // }else return;
+        
     }
 
     function showPage2(pageName) {
@@ -739,15 +793,18 @@ $('#carpetsWikiPage').on('load',function(){
         let x = document.getElementById("carpetsWikipediaDiv");
         let page = document.getElementById("carpetsWikiPage");
 
-        if(loader.style.visibility != "visible") loader.style.visibility = "visible";
+        // $('#carpetsWikipediaDiv').show();
+        // if(loader.style.visibility != "visible") loader.style.visibility = "visible";
         
 
         page.src = pageName;
-        document.getElementById("carpet-page-url").textContent = pageName+"";
+        document.getElementById("carpet-page-url").href = pageName+"";
+        document.getElementById("carpet-page-url-span").textContent = pageName+"";
         if(x.style.visibility != "visible"){
             x.style.visibility = "visible";  
             isScreenVisible = true;
-        }else return;
+        }
+        // else return;
     }
 
     function hidePage(mode){
@@ -770,7 +827,7 @@ $('#carpetsWikiPage').on('load',function(){
         loader.style.visibility = "hidden";
         isScreenVisible = false;
         document.getElementById("flowerModelDiv").style.visibility = "hidden";
-        // $('#flowerModelDiv').hide();
+       
     }
 
   
@@ -780,46 +837,14 @@ $('#carpetsWikiPage').on('load',function(){
     // });
 
     $('#carpetsWikipediaDiv #close-btn').on("click", function (e) {
-        $('#carpetsWikipediaDiv').hide();
+        // $('#carpetsWikipediaDiv').hide();
+        $('#carpetsWikipediaDiv').css('visibility','hidden');
     });
     $('#flowersWikiDivHeader #close-btn').on("click", function (e) {
-        $('#flowersWikipediaDiv').hide();
+        $('#flowersWikipediaDiv').css('visibility','hidden');
+       
     });
 
-
-    
-
-    // $('#flowersWikipediaDiv #fullscreen-btn').on("click", function (e) {
-    //     if(!isCharDivFullscreen){
-    //         $('#flowersWikipediaDiv').css({ 
-    //             width :'100vw', 
-    //         });
-    //         $("#flowersWikipediaDiv #fullscreen-btn").attr("src", "front/images3D/minimize-btn.png")
-    //         isCharDivFullscreen = true;
-    //     }else{
-    //         $('#flowersWikipediaDiv').css({ 
-    //             width :'25vw', 
-    //         });
-    //         $("#flowersWikipediaDiv #fullscreen-btn").attr("src", "front/images3D/fullscreen-btn.png")
-    //         isCharDivFullscreen = false;
-    //     }
-    // });
-
-    $('#carpetsWikipediaDiv #fullscreen-btn').on("click", function (e) {
-        if(!isCharDivFullscreen2){
-            $('#carpetsWikipediaDiv').css({ 
-                width :'100vw', 
-            });
-            $("#carpetsWikipediaDiv #fullscreen-btn").attr("src", "front/images3D/minimize-btn.png")
-            isCharDivFullscreen2 = true;
-        }else{
-            $('#carpetsWikipediaDiv').css({ 
-                width :'25vw', 
-            });
-            $("#carpetsWikipediaDiv #fullscreen-btn").attr("src", "front/images3D/fullscreen-btn.png")
-            isCharDivFullscreen2 = false;
-        }
-    });
 
         
     /*################################################### 3D FLOWERS SECTION FUNCTIONS ############################################## */
@@ -837,51 +862,18 @@ $('#carpetsWikiPage').on('load',function(){
             else $("#flowerModelDivHeader").css('height','6%');
             $("#flowerModelDivHeader #fullscreen-btn").hide();
             $("#flowerModelDivHeader #minimize-btn").show();
+            $('.modelFullscreenLabel').html('Minimize');
             
         }else{
             resize_window('window', '3dflower');
             $("#flowerModelDivHeader").css('height','25%');
             $("#flowerModelDivHeader #fullscreen-btn").show();
             $("#flowerModelDivHeader #minimize-btn").hide();
+            $('.modelFullscreenLabel').html('Fullscreen');
         }
         isFlowerFullscreen = !isFlowerFullscreen;
     });
 
-   
-
-    // //enable fullscreen, minimization and close options for the 3d viewer section
-    // $('#flowerModelDiv #close-btn').on("click", function (e) {
-    //    // $('#flowerModelDiv').hide();
-    //    document.getElementById("flowerModelDiv").style.visibility = "hidden";
-    // });
-
-    // let isFlowerFullscreen = false;
-    // $('#flowerModelDiv #fullscreen-btn').on("click", function (e) {
-    //     if(!isFlowerFullscreen){
-    //         $('#flowerModelDiv').css({ 
-    //             width :'100vw',
-    //             height: "100vh",
-    //             left: '0' 
-    //         });
-    //         $("#flowerModelDiv #fullscreen-btn").attr("src", "front/images3D/minimize-btn.png")
-    //         isFlowerFullscreen = true;
-    //     }else{
-    //         $('#flowerModelDiv').css({ 
-    //             width:'20vw',
-    //             height:'20vh',
-    //             bottom:'0vw',
-    //             left:'26vw'
-    //         });
-    //         $("#flowerModelDiv #fullscreen-btn").attr("src", "front/images3D/fullscreen-btn.png")
-    //         isFlowerFullscreen = false;
-    //     }
-    // });
-
-
-    // $('.music-close-btn').on("click", function (e) {
-    //     $('.music-player-parent-div').hide();
-    //     isVideoEnabled = false;
-    //  });
 
 
     document.onkeydown = (evt)=>{
@@ -950,6 +942,7 @@ $('#carpetsWikiPage').on('load',function(){
     /*################################################### MUSIC VIDEO SECTION FUNCTIONS ############################################## */
 $('#musicVideoDivHeader #close-btn').on("click", function (e) {
     $('#musicVideoDiv').hide();
+    isVideoEnabled = false;
     //show fullscreenIcon
 });
 
@@ -960,15 +953,13 @@ $('#musicVideoDivHeader #fullscreen-btn, #musicVideoDivHeader #minimize-btn').on
         resize_window('full', 'youtube');
         $("#musicVideoDivHeader #fullscreen-btn").hide();
         $("#musicVideoDivHeader #minimize-btn").show();
-        //hide the flower div and wiki icon
-
-        // $('#flowerModelDiv').hide();
+        //change the fullscreen label
+        $('.wikiFullscreenLabel').html('Minimize');
     }else{
         resize_window('window', 'youtube');
         $("#musicVideoDivHeader #fullscreen-btn").show();
         $("#musicVideoDivHeader #minimize-btn").hide();
-        //show back the flower div
-        // $('#flowerModelDiv').show();
+        $('.wikiFullscreenLabel').html('Fullscreen');
     }
     isMusicFullscreen = !isMusicFullscreen;
 });
@@ -986,10 +977,12 @@ function resize_window(size, section){
           height: '95vh'
         });
         if(section === 'youtube') $('#musicVideoDiv').css({width:'100vw', height:'auto'});
-        if(section === '3dflower') theSection.css('height','100vh');
+        else if(section === '3dflower') theSection.css({left:'0', height:'100%'});
         $('#minimize-btn').css('padding-right','1%');
         $('#flowerModelDiv #minimize-btn').css('padding-right','1%');
+       
     }else{ //if windowed size
+        
         if(isMobile() || isSmallDevice()){
           theSection.css({ 
             width: '30vw',
@@ -997,7 +990,7 @@ function resize_window(size, section){
           });
           if(section === 'youtube'){  
             $('#musicVideoDiv').css('width','30vw');
-          }
+          }else if(section === '3dflower') theSection.css('left','4%');
         }else{
           theSection.css({ 
               width: '20vw',
@@ -1005,8 +998,9 @@ function resize_window(size, section){
           });
           if(section === 'youtube'){
             $('#musicVideoDiv').css('width','20vw');
-          }
+          }else if(section === '3dflower') theSection.css('left','4%');
         }
+        
     }
 }
 
@@ -1015,62 +1009,18 @@ function resize_window(size, section){
 function showFlowerModelDiv(theFlowerName){
     document.getElementById("flowerViewer").src = "front/objects/flowersMbayeScene/flowers3D/"+theFlowerName+".glb";
     document.getElementById("flowerModelDiv").style.visibility = "visible";
-    // $('#flowerViewer').attr('src',"front/objects/flowersMbayeScene/flowers3D/"+theFlowerName+".glb");
-    // $('#flowerModelDiv').show();
+    $('#flowerModelDiv').show();
 }//end of showCharDescDiv function
 
 
 
-    
-
-
-
-
-
-    // function set_to_fullscreen(){
-    //     //function to lock the screen. in this case the screen will be locked in portrait-primary mode.
-    //     var elem = document.documentElement;
-    //     function openFullscreen() {
-    //         if (elem.mozRequestFullScreen) { /* Firefox */
-    //         elem.mozRequestFullScreen();
-            
-    //         } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-    //             elem.webkitRequestFullscreen();
-            
-    //         } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    //             elem.msRequestFullscreen();
-            
-    //         }
-    //         else if (elem.requestFullscreen) {
-    //             elem.requestFullscreen();
-            
-    //         } 
-    //     }
-
-    //     if(window.innerWidth <= 991 ){
-    //             Swal.fire({
-    //                 imageUrl: '../../front/icons/alert-icon.png',
-    //                 imageWidth: 80,
-    //                 imageHeight: 80,
-    //                 html: "<h5 id='f-screen'>Initializing fullscreen mode . . .</h5>",
-    //                 padding: '15px',
-    //                 background: 'rgba(8, 64, 147, 0.62)',
-    //                 allowOutsideClick: false
-    //             }).then((result) => {
-    //                 // if (result.value) {
-    //                     openFullscreen()
-    //                 // }
-    //             });
-
-    //     }//end of if small screen size
-    // }
 
     let tempOrigScaling;
     $('#searchFlowerBtn').on('click',function(){
         let flower = $('#searchFlowerField').val();
         flower = flower.toLowerCase();
         flower = flower.replace(/\s/g, '');
-        console.log("the flower: ", flower);
+        // console.log("the flower: ", flower);
 
         for (const [name,val] of tempFlowersMap.entries()) {
            if(name.includes(flower)){
@@ -1088,26 +1038,142 @@ function showFlowerModelDiv(theFlowerName){
     });
 
     $('#wikipediaIcon').on('click',function(){
+        console.log("wiki icon clicked");
          let loader = document.getElementById("iframe-loading");
-        //  let x = document.getElementById("flowersWikipediaDiv");
+         let x = document.getElementById("flowersWikipediaDiv");
          if(loader.style.visibility != "visible") loader.style.visibility = "visible";
 
-         $('#flowersWikipediaDiv').toggle();
+         $('#flowersWikipediaDiv').css('visibility','visible');
         //  isScreenVisible = !isScreenVisible;
         //  if(x.style.visibility != "visible") x.style.visibility = "visible";  
         //  else x.style.visibility = "hidden";  
-
-         
-         
-         isScreenVisible = !isScreenVisible;
+        //  isScreenVisible = true;
     });
 
     function set_wiki_values(wikiId, videoId){
         showPage(wikiId,videoId);                       //show wikipedia page
     }
 
+    // $("#infoIcon").on('click',function(){
+    //     $('#infoIconTextflowers').toggle();
+    //     $('#infoIconTextdownflower').toggle();
+    //     $('#searchDiv').toggle();
+    //   });
+
+    //   $("#textCurve").lettering();
+    // $('#textCurve').circleType({radius:135});
+    // var test = new CircleType(document.getElementById('textCurve'));
+    
+    let modelCount = 0;
+    $('#flowerModelDiv #rightArrow').on("click", function(e){
+    
+        let val = flowers3DMap.get(chosenFlower.name);
+        let len = val.length;
+
+        
+        if(modelCount < len-1){
+            modelCount++;
+            showFlowerModelDiv(val[modelCount]);
+        }else{
+            modelCount = 0;
+            showFlowerModelDiv(val[modelCount]);
+        }
+    });
+
+    $('#flowerModelDiv #leftArrow').on("click", function(e){
+        modelCount--;
+        let val = flowers3DMap.get(chosenFlower.name);
+        let len = val.length;
+        
+        if(modelCount < 0){
+            modelCount = len-1;
+            showFlowerModelDiv(val[modelCount]);
+        }else{
+            showFlowerModelDiv(val[modelCount]);
+        }
+
+        // console.log(modelCount);
+
+    });
+
 
     
     $( document ).ready(function() {
         testOrientation();
-    });       
+        if(isSmallDevice() || isMobile()) create_lowres_earth();
+        else load_highres_earth();  
+       
+    });      
+    
+    
+
+/**functions related to instructions**/
+let isIns2Active = false;
+function set_circle_type(){
+    if(isIns2Active){
+        circleType = new CircleType(document.getElementById('textCurve1'));
+        circleType3 = new CircleType(document.getElementById('textCurve2'));
+        circleType1 = new CircleType(document.getElementById('textCurveanticlock'));
+        circleType2 = new CircleType(document.getElementById('textCurveanticlock2'));
+
+        // Set the text radius and direction. Note: setter methods are chainable.
+        circleType.radius(150);
+        circleType3.radius(150);
+        // Set the text radius and direction. Note: setter methods are chainable.
+        circleType1.radius(200).dir(-1);
+        // Set the text radius and direction. Note: setter methods are chainable.
+        circleType2.radius(200).dir(-1);
+    }else{
+        //destroy the instructions
+        circleType.destroy();
+        circleType3.destroy();
+        circleType1.destroy();
+        circleType2.destroy();
+
+    }
+}
+
+
+$("#infoIcon").on('click',function(){
+    //1 - initial view, 2 - focus view
+    if(!isShowFlowerScene) show_overlay_text(2);
+    else show_overlay_text(1);               
+    
+  });
+
+  
+  function show_overlay_text(mode){
+      if(mode == 1){    //if #infoIcon is clicked and it is the initial view
+            $('#infoIconTextflowers').toggle();
+            $('#infoIconTextdownflower').toggle();
+      }else if (mode == 2){ //if #infoIcon is clicked and it is the focus view
+            // set_circle_type();
+            isIns2Active = !isIns2Active;
+            $('#flowerInstruction').toggle();
+            $('#infoIconTextUpRight').toggle();
+            $('#instrFlowerLeftUp').toggle();
+            $('#textCurve1').toggle();
+            $('#textCurve2').toggle();
+            $('#textCurveanticlock').toggle();
+            $('#textCurveanticlock2').toggle();
+
+            
+            set_circle_type();
+            
+           
+            
+      }else if (mode == 3){ //if character and #infoIcon is clicked and it is the focus view
+            $('#flowerInstruction').hide();
+            $('#infoIconTextUpRight').hide();
+            $('#instrFlowerLeftUp').hide();
+      }  
+    //   }else if (mode == 4){ //if character is clicked  and it is the focus view
+    //     $('#instruction-right-div').hide();
+    //     $('#cloudImgDiv').hide();
+    //     }
+    
+        
+  }
+
+
+

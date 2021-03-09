@@ -98750,9 +98750,9 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\inox arabia\Documents\mbayeWebsiteV2\mbayeWebsite\resources\assets\js\backend\app.js */"./resources/assets/js/backend/app.js");
-__webpack_require__(/*! C:\Users\inox arabia\Documents\mbayeWebsiteV2\mbayeWebsite\resources\assets\js\plugin\sweetalert\sweetalert.min.js */"./resources/assets/js/plugin/sweetalert/sweetalert.min.js");
-module.exports = __webpack_require__(/*! C:\Users\inox arabia\Documents\mbayeWebsiteV2\mbayeWebsite\resources\assets\js\plugins.js */"./resources/assets/js/plugins.js");
+__webpack_require__(/*! C:\xampp\htdocs\mbayeNomi\resources\assets\js\backend\app.js */"./resources/assets/js/backend/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\mbayeNomi\resources\assets\js\plugin\sweetalert\sweetalert.min.js */"./resources/assets/js/plugin/sweetalert/sweetalert.min.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\mbayeNomi\resources\assets\js\plugins.js */"./resources/assets/js/plugins.js");
 
 
 /***/ })

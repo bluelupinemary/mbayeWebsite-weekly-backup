@@ -1,0 +1,34 @@
+#search-friends 
+{
+    z-index: 1;
+}
+
+.friends.zoom-in 
+{
+    width: 29vw !important;
+    height: 29vw !important;
+}
+
+.add-friend-icon 
+{
+    background: #3cb878;
+    right: 0;
+    top: 1%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.arrow-left 
+{
+    /* transform: scaleX(1); */
+}
+
+.no_of_earthlings 
+{
+    margin-bottom: 3%;
+}
+
+.textCenter
+{
+    text-align:center;
+}

@@ -1,8 +1,17 @@
 @extends('frontend.layouts.registeration_layout')
+@section('before-styles')
+    <link rel="stylesheet" href="{{ asset('front/CSS/cropper.css') }}">	
+    <script src="{{asset('front/JS/popper.min.js')}}"></script>	
+    {{-- <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>	 --}}
+    <script src="{{asset('front/JS/cropper.js')}}"></script>
+@endsection
 @section('after-styles')
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="{{ asset('front/CSS/profile_edit_style.css') }}">
+  
+  <link rel="stylesheet" href="{{asset('front/CSS/image-editor.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/jquery.fontselect.css')}}"/>
   <style>
     
     .danger-alter 
@@ -22,6 +31,321 @@
     {
       white-space: inherit !important;
     }
+
+
+    
+
+        /*!
+ * Cropper.js v1.5.9
+ * https://fengyuanchen.github.io/cropperjs
+ *
+ * Copyright 2015-present Chen Fengyuan
+ * Released under the MIT license
+ *
+ * Date: 2020-09-10T13:16:21.689Z
+ */
+
+.cropper-container {
+  direction: ltr;
+  font-size: 0;
+  line-height: 0;
+  position: relative;
+  -ms-touch-action: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.cropper-container img {
+  display: block;
+  height: 100%;
+  image-orientation: 0deg;
+  max-height: none !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  width: 100%;
+}
+
+/*set the size of the canvas*/
+/* .cropper-container.cropper-bg{
+  width: 100% !important;
+  height: 50vh !important;
+} */
+
+
+.cropper-wrap-box,
+.cropper-canvas,
+.cropper-drag-box,
+.cropper-crop-box,
+.cropper-modal {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.cropper-wrap-box,
+.cropper-canvas {
+  overflow: hidden;
+}
+
+.cropper-drag-box {
+  background-color: #fff !important;
+  opacity: 0;
+}
+
+.cropper-modal {
+  background-color: #000 !important;
+  opacity: 0.5;
+}
+
+.cropper-view-box {
+  display: block;
+  height: 100%;
+  outline: 1px solid #39f;
+  outline-color: rgba(51, 153, 255, 0.75);
+  overflow: hidden;
+  width: 100%;
+}
+
+.cropper-dashed {
+  border: 0 dashed #eee;
+  display: block;
+  opacity: 0.5;
+  position: absolute;
+}
+
+.cropper-dashed.dashed-h {
+  border-bottom-width: 1px;
+  border-top-width: 1px;
+  height: calc(100% / 3);
+  left: 0;
+  top: calc(100% / 3);
+  width: 100%;
+}
+
+.cropper-dashed.dashed-v {
+  border-left-width: 1px;
+  border-right-width: 1px;
+  height: 100%;
+  left: calc(100% / 3);
+  top: 0;
+  width: calc(100% / 3);
+}
+
+.cropper-center {
+  display: block;
+  height: 0;
+  left: 50%;
+  opacity: 0.75;
+  position: absolute;
+  top: 50%;
+  width: 0;
+}
+
+.cropper-center::before,
+.cropper-center::after {
+  background-color: #eee !important;
+  content: ' ';
+  display: block;
+  position: absolute;
+}
+
+.cropper-center::before {
+  height: 1px;
+  left: -3px;
+  top: 0;
+  width: 7px;
+}
+
+.cropper-center::after {
+  height: 7px;
+  left: 0;
+  top: -3px;
+  width: 1px;
+}
+
+.cropper-face,
+.cropper-line,
+.cropper-point {
+  display: block;
+  height: 100%;
+  opacity: 0.1;
+  position: absolute;
+  width: 100%;
+}
+
+.cropper-face {
+  background-color: #fff !important;
+  left: 0;
+  top: 0;
+}
+
+.cropper-line {
+  background-color: #39f !important;
+}
+
+.cropper-line.line-e {
+  cursor: ew-resize;
+  right: -3px;
+  top: 0;
+  width: 5px;
+}
+
+.cropper-line.line-n {
+  cursor: ns-resize;
+  height: 5px;
+  left: 0;
+  top: -3px;
+}
+
+.cropper-line.line-w {
+  cursor: ew-resize;
+  left: -3px;
+  top: 0;
+  width: 5px;
+}
+
+.cropper-line.line-s {
+  bottom: -3px;
+  cursor: ns-resize;
+  height: 5px;
+  left: 0;
+}
+
+.cropper-point {
+  background-color: #39f;
+  height: 5px;
+  opacity: 0.75;
+  width: 5px;
+}
+
+.cropper-point.point-e {
+  cursor: ew-resize;
+  margin-top: -3px;
+  right: -3px;
+  top: 50%;
+}
+
+.cropper-point.point-n {
+  cursor: ns-resize;
+  left: 50%;
+  margin-left: -3px;
+  top: -3px;
+}
+
+.cropper-point.point-w {
+  cursor: ew-resize;
+  left: -3px;
+  margin-top: -3px;
+  top: 50%;
+}
+
+.cropper-point.point-s {
+  bottom: -3px;
+  cursor: s-resize;
+  left: 50%;
+  margin-left: -3px;
+}
+
+.cropper-point.point-ne {
+  cursor: nesw-resize;
+  right: -3px;
+  top: -3px;
+}
+
+.cropper-point.point-nw {
+  cursor: nwse-resize;
+  left: -3px;
+  top: -3px;
+}
+
+.cropper-point.point-sw {
+  bottom: -3px;
+  cursor: nesw-resize;
+  left: -3px;
+}
+
+.cropper-point.point-se {
+  bottom: -3px;
+  cursor: nwse-resize;
+  height: 20px;
+  opacity: 1;
+  right: -3px;
+  width: 20px;
+}
+
+@media (min-width: 768px) {
+  .cropper-point.point-se {
+    height: 15px;
+    width: 15px;
+  }
+}
+
+@media (min-width: 992px) {
+  .cropper-point.point-se {
+    height: 10px;
+    width: 10px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .cropper-point.point-se {
+    height: 5px;
+    opacity: 0.75;
+    width: 5px;
+  }
+}
+
+.cropper-point.point-se::before {
+  background-color: #39f;
+  bottom: -50%;
+  content: ' ';
+  display: block;
+  height: 200%;
+  opacity: 0;
+  position: absolute;
+  right: -50%;
+  width: 200%;
+}
+
+.cropper-invisible {
+  opacity: 0;
+}
+
+.cropper-bg {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');
+}
+
+.cropper-hide {
+  display: block;
+  height: 0;
+  position: absolute;
+  width: 0;
+}
+
+.cropper-hidden {
+  display: none !important;
+}
+
+.cropper-move {
+  cursor: move;
+}
+
+.cropper-crop {
+  cursor: crosshair;
+}
+
+.cropper-disabled .cropper-drag-box,
+.cropper-disabled .cropper-face,
+.cropper-disabled .cropper-line,
+.cropper-disabled .cropper-point {
+  cursor: not-allowed;
+}
 
   </style>
   @endsection
@@ -97,6 +421,7 @@
                   <a class="nav-link" id="v-pills-snapshot-tab" data-toggle="pill" href="#v-pills-snapshot" role="tab" aria-controls="v-pills-snapshot" aria-selected="false">Snapshot @if(count( $snapshot ) > 0)<span class="badge badge-danger">{{ count($snapshot) }}</span> @endif</a>
                   <a class="nav-link" id="v-pills-payment-tab" data-toggle="pill" href="#v-pills-payment" role="tab" aria-controls="v-pills-payment" aria-selected="false">Payment Details </a>
                   <a class="nav-link" id="v-pills-other-settings-tab" data-toggle="pill" href="#v-pills-other-settings" role="tab" aria-controls="v-pills-other-settings" aria-selected="false">Other Settings </a>
+                 
                 </div>
               </div>
             </div>
@@ -219,7 +544,7 @@
                     </div>
                     <div class="form-group">
                       <input type="number" class="form-control lbl_text" type="number" id="mob_no" value="{{ $user->mobile_number }}" placeholder="Phone Number" name="mobile_number" data-toggle="tooltip" data-placement="right" data-original-title="Phone is Required!" onkeydown="javascript: return event.keyCode === 8 ||
-                      event.keyCode === 46 ? true : !isNaN(Number(event.key))"/>
+                      event.keyCode === 46 || event.keyCode === 187 ? true : !isNaN(Number(event.key))"/>
                     </div>
                   </div> 
                 </div>
@@ -268,15 +593,26 @@
                         </div>
                       </div>
                       <div class="col-md-6 col-sm-6 text-center">
-                        <div id="my_camera" class="camera_alignment">
-                          <img id="img_photo" class="camera_style" style="object-fit: cover;" src="{{url('storage/profilepicture/'.($user->getProfilePicture()!=''?$user->getProfilePicture():'dummy-person.jpg'))}}">
+                        <div id="cam_parent">
+                          <div id="my_camera" class="camera_alignment">
+                            <img id="img_photo" class="camera_style" style="object-fit: cover;" src="{{url('storage/profilepicture/'.($user->getProfilePicture()!=''?$user->getProfilePicture():'dummy-person.jpg'))}}">
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 overlap-image">
+                              <button type="button"  class="btn_reg_snap_shot border1"  accept="image/*" capture ="camera" value="" style="display: none" onClick="take_snapshot()">
+                                <i class="fas fa-camera"></i>
+                              </button>
+                              <button type="button"  class="btn_reg_cam_reset border1"  accept="image/*" capture ="camera" value="Reset" onClick="reset_snapshot()"><i class="fas fa-retweet"></i></button>
+                              @if($user->photo != null)
+                                <button type="button" class="btn_reg_rotate border1" >
+                                  <i class="fas fa-sync-alt" id="cropImage" class="cropImage" data-target="#cropperModal" data-toggle="modal">
+                                  </i>
+                                </button>
+                              @endif
+                            </div>  
+                          </div> 
                         </div>
-                        <div class="row">
-                          <div class="col-md-12 overlap-image">
-                            <button type="button"  class="btn_reg_snap_shot border1"  accept="image/*" capture ="camera" value="" style="display: none" onClick="take_snapshot()"><i class="fas fa-camera"></i></button>
-                            <button type="button"  class="btn_reg_cam_reset border1"  accept="image/*" capture ="camera" value="Reset" onClick="reset_snapshot()"><i class="fas fa-retweet"></i></button>
-                          </div>  
-                        </div>  
+                    
                         <input type="hidden" class="form-control"  id="img_photo_register" name="photo"  value="" />
                         <input type="hidden" class="form-control"  id="id" name="img_id"/>
                         <input type="hidden" name="occupation" id="occupation" value="{{ $user->occupation }}">
@@ -395,32 +731,34 @@
   {{-- div for astronaut to add the accupation  --}}
   <audio id="audio_cuckoo" src="{{ asset('front') }}/images/astronut/Cuckoo.wav"></audio>
   <div class="div_for_astro" style="display:none" >
-    <img id="div" class="" style="display:none" src="{{ asset('front') }}/images/close-btn.png" align="right">
-    <img class="astro_occupation"  style="display:none"  src="{{ asset('front') }}/images/astronut/backpack 2.png">
-    <div id = 'viki' class="div_helmet"  style="display:none" onClick="goto_wiki2()"></div>
-    <div class="occ_description" style="display:none">
-      <p>
-        Hello,<br>I am <span id = 'divv' onClick="openwikipedia()" style="color: chocolate;">General Michael.</span>
-        <br>Your occupation in life will <br> most probably change, <br> as these changes of life go on,
-        <br>you should be able to note <br> here on your site.
-        <br><br>The record of your occupations <br> will stay here forever.
-        <br><br>So if your occupation is, example; <br> shoveling poo from a
-        <span style="color:#c6552b" onClick="show_cuckoo00000()" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
-        <br><br>And then you become an astronaut.
-        <br><br>It will be always on your profile.
-        <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
-      </p>
+    <div class="asrtonaut_animation_div">
+      <img id="div" class="" style="display:block" src="{{ asset('front') }}/images/close-btn.png" align="right">
+      <img class="astro_occupation"  style="display:block"  src="{{ asset('front') }}/images/astronut/backpack 2.png">
+      <div id = 'viki' class="div_helmet"  style="display:block" onClick="goto_wiki2()">
+      </div>
+      <div class="occ_description" style="display:block">
+        <p>
+          Hello,<br>I am <span id = 'divv' onClick="openwikipedia()" style="color: chocolate;">General Michael.</span><br>Your occupation in life will <br> most probably change, <br> as these changes of life go on,<br>you should be able to note <br> here on your site.<br><br>The record of your occupations <br> will stay here forever.<br><br>So if your occupation is, example; <br> shoveling poo from a
+          <span style="color:#c6552b" onClick="show_cuckoo00000()" title="Click here to know about  cuckoo clock">cuckoo clock</span>.
+          <br><br>And then you become an astronaut.
+          <br><br>It will be always on your profile.
+          <br><br>So have fun, but remember everything <br> you say in life can have a consequence.
+        </p>
       <br>
-      <center><div class="txtocp"><input type="text" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation" value="{{ old('occupation') }}"/></div></center>
+      <center>
+        <div class="txtocp"><input type="text" class="text_occup"  id="text_occupation_astro" placeholder="Your occupation" value="{{ old('occupation') }}"/>
+        </div>
+      </center>
       <br class="">
       <button type="button" class="btn btn-info btn_occ_submit">Submit</button>
       </div>
       <div class="div_clock overlay" style="display:none" >
-      <img  class='cuckoo_image'  title="Cuckoo clock" src="{{ asset('front') }}/images/astronut/cuckoo clock.png">
-      <p class="cuckoo_text">A Cuckoo clock as in the picture is a German black forest clock
-        with a little bird that comes out  and goes cuckoo. Actually somebody  really useless in life like villa the crab. We say they are so useless they couldn’t shovel poo out of a cuckoo clock.
-          </p>
+        <img  class='cuckoo_image'  title="Cuckoo clock" src="{{ asset('front') }}/images/astronut/cuckoo clock.png">
+        <p class="cuckoo_text">
+          A Cuckoo clock as in the picture is a German black forest clock with a little bird that comes out  and goes cuckoo. Actually somebody  really useless in life like villa the crab. We say they are so useless they couldn’t shovel poo out of a cuckoo clock.
+        </p>
       </div>
+    </div>
   </div>
   {{-- div for astronaut to add the accupation --}}
   <!-- The Modal for terms and condition -->
@@ -618,10 +956,39 @@
 
   </div>
 <!---model ends -->
+
+ <!--Start of image cropper modal-->
+                 <!-- Modal -->
+                 <div class="modal" id="cropperModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" style="font-family:arial;">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                      <div class="modal-header" style="background-color:#eee !important; color:#000;">
+                          <h5 class="modal-title" id="modalLabel">Edit Image</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body" style="background-color:#eee !important;">
+                          <div class="img-container">
+                            <img id="cropperImage" src="{{url('storage/profilepicture/'.($user->getProfilePicture()!=''?$user->getProfilePicture():'dummy-person.jpg'))}}" alt="Profile Picture">
+                          </div>
+                      </div>
+                      <div class="modal-footer" style="background-color:#eee !important;">
+                          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                          <button type="button" id="rotateRight" class="btn btn-warning">Right</button>
+                          <button type="button" id="rotateLeft" class="btn btn-warning">Left</button>
+                          <button type="button" id="saveCroppedImg" data-dismiss="modal" class="btn btn-success">Crop</button>
+                      </div>
+                      </div>
+                  </div>
+              </div>
+              <!--end of cropper-->
+
 @endsection
 
 @section('after-scripts')
   <!-------------   script section -------------------->
+  <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -792,16 +1159,17 @@
 
  // A button for taking snaps
 
-  function take_snapshot() 
-  {
-    // take snapshot and get image data
-    Webcam.snap( function(data_uri) {
-    // display results in page
-    document.getElementById('results').innerHTML =
-    '<img id="imageprev" src="'+data_uri+'"/>';
-    });
-    Webcam.reset();
-  }
+  // function take_snapshot() 
+  // {
+  //   // take snapshot and get image data
+  //   Webcam.snap( function(data_uri) {
+  //   // display results in page
+  //   document.getElementById('results').innerHTML =
+  //   '<img id="imageprev" src="'+data_uri+'"/>';
+  //   });
+  //   $('.btn_reg_rotate').show();
+  //   Webcam.reset();
+  // }
 
   //Adds New Occupation
   function add_occ()
@@ -1038,18 +1406,14 @@
                 alert("Error while Registering!!");
               }
           });
-
-
-                  });
-                   $('#div').click(function(){
-                   $('.div_for_astro').css('display','none');})
-                   $('#div').click(function(){
-                   $('.div_for_astro').css('display','none');
-                   $('#Div_for_wiki').css('display','none');
-                   $('#Div_for_wiki2').css('display','none');
-                   $('.div_clock').css('display','none');
-                   $('.occ_description').css('display','none');
-                 })
+        });
+         
+          $('#div').click(function(){
+          $('.div_for_astro').css('display','none');
+          $('#Div_for_wiki').css('display','none');
+          $('#Div_for_wiki2').css('display','none');
+          $('.div_clock').css('display','none');
+        })
             /*
             * Click function  for cloud to view the astronut with description
             */
@@ -1117,18 +1481,15 @@
               }); */
 
             function load_animation_astronut(){
-
-              $('.astro_occupation').css({'display':'block'});
               $('.div_for_astro').css({'display':'block'});
-              $('.astro_occupation').css({'display':'block'});
-              $(".astro_occupation ").addClass("img_astro");
+              $(".asrtonaut_animation_div ").addClass("img_astro");
               $('#div').css({'display':'block'});
               $("#div").addClass("close-as-img");
               $('.text_occup').css({'display':'block'});
               $('.btn_occ_submit').css({'display':'block'});
 
               setTimeout(function(){
-                $('.occ_description').css({'display':'block'});
+                
                 $('.div_helmet').css({'display':'block'});
                  }, 3000);
             }
@@ -1148,14 +1509,17 @@
             Function to take snapshot
             */
             function take_snapshot() {
-            $('#my_camera').css({'border':'0px'});
-            // take snapshot and get image data
-            Webcam.snap( function(data_uri) {
-            // display results in page
-            document.getElementById('my_camera').innerHTML =
-            '<img  name="photo" id="img_photo"class="camera" style="object-fit: cover;" src="'+data_uri+'"/>';
-            $("#img_photo_register").val(data_uri);
-            } );
+              $('#my_camera').css({'border':'0px'});
+              // take snapshot and get image data
+              Webcam.snap( function(data_uri) {
+              // display results in page
+              document.getElementById('my_camera').innerHTML =
+              '<img  name="photo" id="img_photo"class="camera" style="object-fit: cover;" src="'+data_uri+'"/>';
+              $('.btn_reg_rotate').show();
+              $("#img_photo_register").val(data_uri);
+              $('.btn_reg_rotate').show();
+              document.getElementById("cropperImage").src = data_uri;
+              } );
             }
 
             // Update photo and enables webcam
@@ -1569,62 +1933,32 @@
             }
 
 
-    /* Reset camera option */
-    function reset_snapshot()
-    {
-      Webcam.reset();
-      var screen_width = window.innerWidth;
-      var screen_height = window.innerHeight;
-      // alert('Width of th device : '+screen_width+" , height of the view Port: "+screen_height);
-      if ( screen_height <= 500  && screen_height > 360) 
-      {
-        Webcam.set({
-          width: 120,
-          height: 120,
-          image_format: 'jpeg',
-          jpeg_quality: 90
-        });
-        Webcam.attach( '#my_camera' );
-      }
-      else if(screen_height <= 360 )
-      {
-        Webcam.set({
-          width: 90,
-          height: 90,
-          image_format: 'jpeg',
-          jpeg_quality: 90
-        });
-        Webcam.attach( '#my_camera' );
-      }
-      else if((screen_height == 768 || screen_height < 768) && screen_height > 500 )
-      {
-        Webcam.set({
-          width: 200,
-          height: 200,
-          image_format: 'jpeg',
-          jpeg_quality: 90
-        });
-        Webcam.attach( '#my_camera' );
-      }
-      else
-      {
-        Webcam.set({
-          width: 305,
-          height: 230,
-          image_format: 'jpeg',
-          jpeg_quality: 90
-        });
-        Webcam.attach( '#my_camera' ); 
-      }
+  /* Reset camera option */
+  function reset_snapshot()
+  {
+    Webcam.reset();
+    $('.btn_reg_rotate').hide();
+    var screen_width = window.innerWidth;
+    var screen_height = window.innerHeight;
+    // alert('Width of th device : '+screen_width+" , height of the view Port: "+screen_height);
+      
+    div_wid = $('#cam_parent').width();
+    div_height = $('#cam_parent').height();
+    // alert(div_wid);return false;
+    Webcam.set({
+        width: div_wid,
+        height: div_height,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+      });
+    Webcam.attach('#my_camera');  
     $('.btn_reg_snap_shot').show();
   }
-            /*function reset(){
-              Webcam.reset();
-              Webcam.off();
-            }*/
-            //
-            //-----------
-
+  function reset()
+  {
+    Webcam.reset();
+    Webcam.off();
+  }
             function logout_account(){
 
              $.ajax({
@@ -1718,11 +2052,6 @@
                  $("#viki").on('click',function(){
                     $("#Div_for_wiki2").show();
                   });
-            
-
-
-                
-            
 
                 /*
                 Function to redirect to home page after registration  save sucess
@@ -1900,6 +2229,60 @@
         $("#myModal").modal('toggle');
     });
 
+    var cropBoxData;
+    var canvasData;
+    var cropper;
+    var imageCropper;
+    var canvas = document.getElementById("c");
+    var screenWidth = window.innerWidth;
+    var screenHeight = window.innerHeight;
+    console.log(screenWidth, screenHeight);
+
+    $('#cropperModal').on('shown.bs.modal', function () {
+      
+      var theImage = document.getElementById('cropperImage');
+      if(cropper) cropper.destroy(); 
+            cropper = new Cropper(theImage, {
+                autoCropArea: 1,
+                viewMode:1,
+                responsive:true,
+                minContainerHeight: screenHeight*0.50,
+                minCanvasHeight:screenHeight*0.50,
+                restore:true,
+                rotatable:true,
+                ready: function () {
+                    //Should set crop box data first here
+                    cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);   
+                }
+            }); 
+      imageCropper = $('#cropperImage');           
+    });
+
+    //$imageCropper.cropper('rotateTo',uivalue)
+    $('#cropperModal #rotateRight').on('click', function(){
+        cropper.rotate(90);
+    });
+
+    $('#cropperModal #rotateLeft').on('click', function(){
+        cropper.rotate(-90);
+    });
+    // SAVE ICON IS CLICKED
+    $("#saveCroppedImg").click(function(){
+
+          // var croppedimage = document.getElementById('cropperImage');
+          var croppedimage = cropper.getCroppedCanvas().toDataURL("image/jpeg");
+          document.querySelector("#img_photo").src = croppedimage;
+          $('#img_photo_register').val(croppedimage);
+          // document.querySelector('#imageEditorModal').style.display = 'none';
+          // $('#page-content').show();        
+          isNewImg = false;
+        }); 
+
+        $("#image-editor-cancel-btn").on('click', function() {
+            document.querySelector('#imageEditorModal').style.display = 'none';
+            $('#page-content').show();           
+        });
+        
     // var occlistdb = $('').val();
     // $occ_details = explode(',', $occ_results['occlistdb']);
     // $occ_details[0] = "<b>{$occ_details[0]}</b>";

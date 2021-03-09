@@ -60,7 +60,8 @@ var planetsMap = new Map([                                                      
 
 
 
-var planetsLinkTextMap = new Map([                                                            //var to keep track of the variety of flowers
+var planetsLinkTextMap = new Map([   
+    //var to keep track of the variety of flowers
     //key, val ; val => [texture name, normal map name, position,radius]
     ["mercury",["Careers","blogview/tagwise/all?tag=careers"]],
     ["venus",["Films","blogview/tagwise/all?tag=films"]],
@@ -71,7 +72,7 @@ var planetsLinkTextMap = new Map([                                              
     ["uranus",["Politics","blogview/tagwise/all?tag=politics"]],
     ["neptune",["Designs","blogview/designed-panel/all"]],
     ["pluto",["Travel","blogview/tagwise/all?tag=travel"]],
-    ["sun",["You, Your Family and Friends","dashboard"]],
+    ["sun",["You, Your Family and Friends","blogview/tagwise/all?tag=family_and_friends"]],
 ]);
 
 var planetOrbitsMap = new Map([                                                            //var to keep track of the variety of flowers
@@ -86,6 +87,7 @@ var planetOrbitsMap = new Map([                                                 
     ["Neptune",['planetorbit6.png',{x:2833.940,y:-1.771,z:-79.771},{x:110,y:0,z:0},0.9,200]],
     ["Pluto",['planetorbit6.png',{x:2299.891,y:400.604,z:500.918},{x:110,y:0,z:0},0.4,200]],
     ["Moon",['',{x:329.613,y:157.802,z:-263.126},{x:110,y:0,z:0},0.25,200]],
+    ["Sun",['planetorbit6.png',{x:-80.91,y:308.13,z:-2082.51},{x:110,y:0,z:0},0.8,200]],
     
 ]);
 
@@ -110,6 +112,7 @@ var wikiMap = new Map([                                                         
     ["Neptune",null],
     ["Pluto",null],
     ["Moon",null],
+    ["Sun",null],
 
     //wiki links for each constellation
     ["Leo","Leo_(constellation)"],
@@ -199,10 +202,26 @@ var astronautBtnsMap = new Map([                                                
 
 
 var astronautChestParts = new Map([
-    ["chest_yellowBtn",["",null]],
+    // ["chest_yellowBtn",["",null]],
     ["chest_blueBtn",["User Profile","dashboard"]],
     ["chest_orangeBtn",["Home","/"]],
     ["chest_purpleBtn",["Instructions","instructions"]],
-    ["chest_redBtn",["",null]],
+    // ["chest_redBtn",["",null]],
     ["Navigator",["Communicator","communicator"]]
+]);
+
+
+/** initialize planet labels **/
+let planet_labels_map = new Map([
+    ["travel",[250, 120,{x:2195, y:415,z:527},{x:-0.0443,y:0.8338,z:0.0517,w:0.5475}]],
+    ["postDesigns",[400, 250,{x:2707, y:-3,z:-42},{x:0.0195,y:0.8354,z:-0.0450,w:0.5469}]],
+    ["sports",[160, 80,{x:303, y:173,z:-240},{x:0.0368,y:0.9078,z:-0.0534,w:0.4134}]],
+    ["storyCare",[400, 200,{x:-156, y:30,z:129},{x:0.0096,y:0.9093,z:0.0060,w:0.4149}]],
+    ["general",[170, 85,{x:143, y:-111,z:748},{x:0.0056,y:0.8513,z:-0.0723,w:0.5187}]],
+    ["music",[470, 275,{x:2410, y:462,z:-2245},{x:0.2091,y:0.8090,z:0.0806,w:0.5427}]],
+    ["films",[250, 100,{x:-338, y:120,z:-617},{x:0.0697,y:0.9644,z:0.0235,w:0.2519}]],
+    ["careers",[180, 130,{x:-451, y:244,z:-1381},{x:0.0697,y:0.9644,z:0.0235,w:0.2519}]],
+    ["mountainsSeas",[150, 75,{x:-766, y:-20,z:120},{x:0.0707,y:0.9515,z:0.0202,w:0.2968}]],
+    ["yourStory",[400, 200,{x:-133, y:301,z:-1896},{x:0.0373,y:0.9829,z:0.0198,w:0.1759}]],
+    ["politics",[300, 150,{x:-2022, y:-81,z:331},{x:0.0115,y:0.6707,z:0.0726,w:-0.7372}]],
 ]);

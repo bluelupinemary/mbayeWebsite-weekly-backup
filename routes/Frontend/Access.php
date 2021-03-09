@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Intervention\Image\Facades\Image;
 /**
  * Frontend Access Controllers
  * All route names are prefixed with 'frontend.auth'.
@@ -39,7 +40,10 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
             Route::get('register', 'RegisterController@showRegistrationForm')->name('register');
             Route::post('register', 'RegisterController@register')->name('register');
             Route::post('validateemail_reg', 'RegisterController@validateEmail')->name('validateemail_reg');
-        }
+            // usage inside a laravel route
+        
+            
+            }
 
         // Confirm Account Routes
         Route::get('account/confirm/{token}', 'ConfirmAccountController@confirm')->name('account.confirm');

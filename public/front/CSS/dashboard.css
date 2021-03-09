@@ -6,6 +6,7 @@ body {
 	-ms-user-select:none;
 	user-select:none;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	height: 100% !important;
 }
 
 .bell-img{
@@ -3029,7 +3030,7 @@ a.judy_collins_2 {
 	/* -moz-transform: translate(-50%, -164%); */
 	/* transform: translate(-50%, -164%); */
 	width: 40vw;
-	height: 100vh;
+	height: 100%;
 	display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
     display: -ms-flexbox;  /* TWEENER - IE 10 */
     display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
@@ -3932,7 +3933,7 @@ button:focus, button:active {
 }
 
 .notification-table-div {
-	height: 85vh;
+	height: 85%;
 	overflow: auto;
 }
 

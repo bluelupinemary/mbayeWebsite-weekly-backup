@@ -131,7 +131,7 @@ export default {
                 } else if(notification.type.includes('GeneralBlogShareNotification')) {
                     window.open('/shared_story/'+notification.data.blog.id, "_blank") || window.location.replace('/shared_story/'+notification.data.blog.id);
                 } else if(notification.type.includes('BlogShareNotification')) {
-                    window.open('/shared_blog/'+notification.data.blog.id, "_blank") || window.location.replace('/shared_blog/'+notification.data.blog.id);
+                    window.open('/shared_blog/'+notification.data.blog_id, "_blank") || window.location.replace('/shared_blog/'+notification.data.blog_id);
                     // if(notification.data.blog.blog_type.includes('GeneralBlog')) {
                     //     window.open('/shared_blog/'+notification.data.blog.id, "_blank") || window.location.replace('/shared_blog/'+notification.data.blog.id);
                     // } else if(notification.data.blog.blog_type.includes('Blog')) {

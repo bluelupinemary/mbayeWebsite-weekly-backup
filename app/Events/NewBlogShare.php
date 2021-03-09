@@ -41,7 +41,7 @@ class NewBlogShare implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'sharecount' => BlogShare::where('blog_id',$this->blog_share->blog_id),
+            'sharecount' => BlogShare::where('blog_id',$this->blog_share->blog_id)->count(),
         ];
     }
 }

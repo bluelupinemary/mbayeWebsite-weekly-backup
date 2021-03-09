@@ -735,8 +735,6 @@ let isRotateSkybox = true;
 let isEarthRotating = true;
 function rotate_sky(){
    
-    
-    
     engine.runRenderLoop(function(){
         if(isEarthRotating && earth_obj){
             earth_obj.rotate(new BABYLON.Vector3(0,4,0), -0.005, BABYLON.Space.LOCAL);

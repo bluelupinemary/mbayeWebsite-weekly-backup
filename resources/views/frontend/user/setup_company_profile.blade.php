@@ -718,11 +718,8 @@
             }
 
             astronaut_zoom = !astronaut_zoom;
-        });
-    
+        });    
     /*-----------------------PART OF THE IMAGE EDITOR-------------------------*/
-
-
     let oldFeaturedImg;
     let isNewImg = true;
     var loadFile = function(event) {

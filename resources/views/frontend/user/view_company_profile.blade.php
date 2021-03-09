@@ -111,10 +111,11 @@
 
 
 
+
     <div id="page-content">
         <div id="container">
             <div class="screen"><br/><br/>
-                
+                   
                     <div class="row">
                             <div class="feature-image-column">
                                 
@@ -146,15 +147,18 @@
 
                             <!-- ---------------------Form code start-------------------------------------------- -->
 
-                            
+                             
                             <div class="column2">
-                                <div class="edit-buttons">
-                                    <button class="edit tooltips top" onclick="edit_profile();">
-                                        <i class="fas fa-edit"></i>
-                                        <span>Edit Profile</span>
-                                    </button>
-                                </div>
-                              
+                                @if(Auth::id() == $company->owner_id){
+                                    <div class="edit-buttons">
+                                        <button class="edit tooltips top" onclick="edit_profile();">
+                                            <i class="fas fa-edit"></i>
+                                            <span>Edit Profile</span>
+                                        </button>
+                                    </div>
+                                }
+                                @endif
+
                                 <div class="company-details-parent-div">
                                     <div class="company-detail">
                                         <div class="company-title">Company Name :</div>
@@ -174,18 +178,19 @@
                                         </div>
                                         <div class="company-detail">
                                             <div class="company-title">Industry :</div>
-                                            <div class="spn_value">{{ Auth::user()->company->industry->industry_name ?? '' }}</div>
+                                            <div class="spn_value">{{ $company->industry->industry_name ?? '' }}</div>
                                         </div>
                                         <div class="company-detail">
                                             <div class="company-title">Created By :</div>
-                                            <div class="spn_value" id="userDashboard">{{ Auth::user()->first_name .' '.Auth::user()->last_name ?? '' }}</div>
+                                            <div class="spn_value" id="userDashboard">{{ $company->user->first_name .' '.$company->user->last_name ?? '' }}</div>
                                         </div>
                                 </div><!--end of company details div-->
                                     
                             </div>
                     </div>   
                                 
-                               
+                             
+                    
 
                             
                        
@@ -237,6 +242,7 @@
                                     {{-- <span>Zoom In</span> --}}
                                 
                             </button>
+
                                  <!-- <button class="navigator-zoom navigator-zoomin"></button>-->
                                 <div class="instructions-div">
                                     <button class="instructions-btn tooltips right">

@@ -45,12 +45,31 @@
     <div id="fullscreenIcon">
         <img id="fullscreenImg" src="{{asset('front')}}/images3D/fullscreen-btn.png" alt="fullscreen-img" >
     </div>
+
+    <i class="fas fa-info-circle" id="infoIcon"><span class="InfoIconLabel">Instructions</span></i>
+    <div id="instruction-left-div" class="instruction-left-div">
+        <div class="row instr-text-row">
+            <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/left.png" alt=""></div>
+            <div class="col-md-6 instr-text">3D ROTATE</div>
+        </div>
+        <div class="row instr-text-row">
+            <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/scroll.png" alt=""></div>
+            <div class="col-md-6 instr-text">ZOOM IN/OUT</div>
+        </div>
+        <div class="row instr-text-row">
+            <div class="col-md-6 instr-img"><img class="instr-icon" src="{{asset('front')}}/images3D/icons/right.png" alt=""></div>
+            <div class="col-md-3 instr-text">PANNING</div>
+            {{-- <div id="closeInfoBtn" class="col-md-3 info-icon"><i class="fas fa-info-circle"></i></div> --}}
+        </div>
+    </div>
+
+    <div id="infoIconTextup" class="col-md-9 instr-text-up-nonParticipate">This is your view of the participate page when you are<br>not a member or if you are not logged in.</div>
    
 @endsection
 
 @section('after-scripts')
     
-
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/babylonjs/scenes/commonScenes.js')}}"></script>
     <script src="{{asset('front/babylonjs/scenes/welcome/welcomeScene.js')}}"></script>

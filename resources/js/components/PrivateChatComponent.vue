@@ -350,6 +350,7 @@ height: 50px;
         created() {
             // this.fetchMessages();
             this.fetchconversations();
+            // console.log(this.users);
             Echo.join('pchat')
               .here((users) => {
                    console.log('online',users);
@@ -363,9 +364,11 @@ height: 50px;
                   this.onlineFriends.splice(this.onlineFriends.indexOf(user),1);
                   console.log('leaving',user.name);
               });
-
+            //   debugger;
+            // console.log(this.user.id);
               Echo.private('privatechat.'+this.user.id)
                 .listen('PrivateMessageSent',(e)=>{
+                    debugger;
                   console.log('pmessage sent')
                   this.activeFriend=e.message.user_id;
                   this.allMessages.push(e.message)
@@ -394,7 +397,8 @@ height: 50px;
         methods: {
             search(){
                axios.post('/searchuser',{q: this.q,}).then(response => {
-                   console.log(response);
+                //    console.log(response);
+                this.users = response.data;
             });
             },
             live_friend(id){

@@ -219,7 +219,7 @@
     /* top: 0; */
     bottom: 0;
     left: 50%;
-    transform: translate(-50%, 0%);
+    transform: translate(-50%, -5%);
     width: 29%;
     height: 13.2vw;
 }
@@ -554,44 +554,40 @@
     margin-bottom: 2%;
 }
 
-/* sweetalert */
-.swal2-popup {
-    box-shadow: 0px 0px 20px #17a2b8;
-    width: 27vw !important;
-    padding: 1vw !important;
+/* Sweet alert */
+.swal2-popup 
+{
+  box-shadow: 0px 0px 20px #17a2b8;
 }
 
 .swal2-image {
-    width: 6vw !important;
-    height: 6vw !important;
     margin: 1.25vh auto !important;
 }
 
 .swal2-title {
     font-family: 'Nasalization';
-    font-size: 1.5vw !important;
     color: #df1613 !important;
 }
 
 .swal2-content {
     color: #17a2b8 !important;
-    font-size: 1.1vw !important;
     font-family: 'Nasalization';
 }
 
 .swal2-title span.success {
     color: #25d365 !important;
 }
-
-.swal2-styled {
-    font-size: 1.3vw !important;
-    padding: 0.5vw 2vw !important;
+.swal2-html-container{
+  color: #17a2b8 !important;
+  font-family: 'Nasalization';
 }
-
 .swal2-actions {
     margin: 1.25vw auto 0 !important;
 }
-
+#error{
+  font-family: 'Nasalization';
+  color: #df1613 !important;
+}
 /* end sweetalert */
 
 button.close-view {

@@ -5,10 +5,10 @@
     <link rel="preload" as="font" href="{{asset('fonts/nasalization-rg.ttf')}}" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" as="font" href="{{asset('fonts/space age.ttf')}}" type="font/woff2" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('front/fontawesome/css/all.css')}}">
-    <link rel="stylesheet" href="{{asset('front/css/toastr.min.css')}}">
-    <link rel="stylesheet" href="{{asset('front/css/view-all-blogs.css')}}">
-    <link rel="stylesheet" href="{{asset('front/css/view-all-stories.css')}}">
-    <link rel="stylesheet" href="{{asset('front/css/view-all-blogs-responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/toastr.min.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/view-all-blogs.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/view-all-stories.css')}}">
+    <link rel="stylesheet" href="{{asset('front/CSS/view-all-blogs-responsive.css')}}">
 @endsection
 
 @section('content')

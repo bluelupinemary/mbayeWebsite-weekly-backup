@@ -177,7 +177,7 @@ var flowersMbayeMap = new Map([
     
     ["146Scabiosa",[{x: 879.28, y: 50, z: 756.64}  ,null, "https://en.wikipedia.org/wiki/Scabiosa",{id:"7RujKG9hmCY",start:9} ]],
     ["147Padauk",[{x: 877, y: 407, z: -421} ,null, "https://en.wikipedia.org/wiki/Pterocarpus_macrocarpus",{id:"9jMC6vmZo2w",start:0} ]],
-    ["148Kowhai",[{x: 661.15, y: 562.10, z: -303.84},null, "https://en.wikipedia.org/wiki/K%C5%8Dwhai",{id:"J9gKyRmic20",start:0} ]],
+    ["148Kowhai",[{x: 661.15, y: 562.10, z: -303.84},null, "https://en.wikipedia.org/wiki/K%C5%8Dwhai",{id:"J9gKyRmic20",start:10} ]],
     ["149SilverFern",[{x: 149.24, y: -58.59, z: 797.50},null, "https://en.wikipedia.org/wiki/Alsophila_dealbata",{id:"ZRuYQ9KRJms",start:0} ]],
     ["150YellowTrumpet",[{x: 1104.1706191790988, y: -74.6933975448444, z: 803.5114933725326} ,null, "https://en.wikipedia.org/wiki/Tecoma_stans",{id:"CTW0ifgY9zc",start:10} ]],
     
@@ -219,7 +219,7 @@ var flowersMbayeMap = new Map([
    
     ["181VictoriaAmazonica",[{x: 853, y: 481, z: 627}  ,null, "https://en.wikipedia.org/wiki/Victoria_amazonica",{id:"d0v2jgCDA1g",start:2} ]],
     ["182Commelina",[{x: 64, y: -340, z: -538}  ,null, "https://en.wikipedia.org/wiki/Commelina",{id:"6XP-f7wPM0A",start:0} ]],
-    ["183Hyacinth",[ {x: -86, y: -229.41, z: -634} ,null, "https://en.wikipedia.org/wiki/Hyacinth_(plant)",{id:"mOiOG-Ss17Y",start:0} ]],
+    ["183Hyacinth",[ {x: -86, y: -229.41, z: -634} ,null, "https://en.wikipedia.org/wiki/Hyacinth_(plant)",{id:"mOiOG-Ss17Y",start:30} ]],
     ["184ColchicumCupanii",[{x: -1150.3620642027329, y: -10.535053505429119, z: -248.70697526944917},null, "https://en.wikipedia.org/wiki/Colchicum_cupanii",{id:"_HsBjJ58RWA",start:0} ]],
     ["185BrimeuraAmethystina",[{x: 428.30, y: -45.58, z: 444.45},null, "https://en.wikipedia.org/wiki/Brimeura_amethystina",{id:"L9NCvSakgR8",start:1} ]],
    
@@ -235,10 +235,10 @@ var flowersMbayeMap = new Map([
     ["194YellowCrownImperial",[ {x: -582, y: -250, z: -406}  ,null, "https://en.wikipedia.org/wiki/Fritillaria_imperialis",{id:"O192eo9zbT4",start:15} ]],
     ["195PeganumHarmala",[{x: 493.48, y: 84.18, z: 202.14} ,null, "https://en.wikipedia.org/wiki/Peganum_harmala",{id:"23GwYVIOLqk",start:0} ]],
    
-    ["196Lycoris",[{x: 218, y: -205, z: -753} ,null, "https://en.wikipedia.org/wiki/Lycoris_(plant)",{id:"Sv2je9arNz4",start:1.5} ]],
+    ["196Lycoris",[{x: 218, y: -205, z: -753} ,null, "https://en.wikipedia.org/wiki/Lycoris_(plant)",{id:"Sv2je9arNz4",start:15} ]],
     ["197PurpleBall",[{x: 649.41, y: -170.11, z: 646.54} ,null, "https://en.wikipedia.org/wiki/Allium_giganteum",{id:"d2SNX3bfYKw",start:0} ]],
     ["198TrochetiopsisEbenus",[{x: -841.88, y: -190.54, z: 288.78}  ,null, "https://en.wikipedia.org/wiki/Trochetiopsis_ebenus",{id:"c41IFA3N7UE",start:0} ]],
-    ["199CaribWood",[{x: 318.73, y: 344.88, z: 875.71}   ,null, "https://en.wikipedia.org/wiki/Poitea_carinalis",{id:"9w1atvkVQnE",start:0} ]],
+    ["199CaribWood",[{x: 318.73, y: 344.88, z: 875.71}   ,null, "https://en.wikipedia.org/wiki/Poitea_carinalis",{id:"9w1atvkVQnE",start:7} ]],
     ["200RosaLaevigata",[{x: -42.38, y: 50.77, z: -1486.61} ,null, "https://en.wikipedia.org/wiki/Rosa_laevigata",{id:"BNg7fNiBmjI",start:25} ]],
 
     ["201PaleMaiden",[{x: -152.74417415265043, y: -457.51923012460156, z: -419.6611560603373} ,null, "https://en.wikipedia.org/wiki/Olsynium_filifolium",{id:"FOt3oQ_k008",start:0} ]],
@@ -253,9 +253,9 @@ var flowersMbayeMap = new Map([
 
 
 var flowers3DMap = new Map([                                                       
-    ["1Protea",['1A','1B','1C']],
+    ["1Protea",['1A','1B','1C','1D','1E']],
     ["2Sunflower",['2A','2B']],
-    ["3ArumLily",['3A','3B']],
+    ["3ArumLily",['3A','3B','3C','3D']],
     ["4ColoradoBlueColumbine",['4A','4B']],
     ["5AlpineColumbine",['5A','5B']],
     
@@ -268,18 +268,18 @@ var flowers3DMap = new Map([
     ["11ArnicaMontana",['11A']],
     ["12Buttercup",['12A']],
     ["13PinkCampion",['13A']],
-    ["14IxiaVersicolor",['14A']],
-    ["15Iris",['15A','15B','15C']],
+    ["14IxiaVersicolor",['14A','14B']],
+    ["15Iris",['15A','15B','15C','15D']],
     
     ["16Pasque",['16A']],
     ["17AfricanDaisy",['17A']],
     ["18QueenElizabethRose",['18A']],
     ["19MorningGlory",['19A']],
-    ["20Primrose",['20A']],
+    ["20Primrose",['20A','20B']],
     
-    ["21Malva",['21A','21B']],
+    ["21Malva",['21A','21B','21C']],
     ["22Cuckoo",['22A']],
-    ["23WesternColumbine",['23A']],
+    ["23WesternColumbine",['23A','23B']],
     ["24Harebell",['24A']],
     ["25PilosellaAurantiaca",['25A','25B']],
     
@@ -315,14 +315,14 @@ var flowers3DMap = new Map([
     
     ["51CypressVine",['51A']],
     ["52Hollyhocks",['52A']],
-    ["53Rose",['53A','53B','53C']],
+    ["53Rose",['53A','53B','53C','53D','53E','53F']],
     ["54GardeniaThunbergia",['54A','54B']],
     ["55BlueEyedGrass",['55A']],
     
     ["56Trillium",['56A']],
     ["57TigerLily",['57A']],
     ["58Spathodea",['58A']],
-    ["59WhiteLotus",['59A','59B','59C']],
+    ["59WhiteLotus",['59A','59B','59C','59D','59E','59F']],
     ["60VeronicaChamaedrys",['60A']],
     
     ["61WildBluePhlox",['61A']],
@@ -331,13 +331,13 @@ var flowers3DMap = new Map([
     ["64Laelia",['64A']],
     ["65MicheliaFigo",['65A']],
     
-    ["66Fritillaries",['66A']],
+    ["66Fritillaries",['66A','66B']],
     ["67PeruvianLily",['67A']],
     ["68MexicanMarigold",['68A']],
     ["69GeraniumCalifornicum",['69A']],
-    ["70NarcissusPoeticus",['70A']],
+    ["70NarcissusPoeticus",['70A','70B']],
     
-    ["71NarcissusLongispathus",['71A']],
+    ["71NarcissusLongispathus",['71A','71B']],
     ["72Aster",['72A']],
     ["73Strelitzia",['73A']],
     ["74Poinsettia",['74A']],
@@ -345,8 +345,8 @@ var flowers3DMap = new Map([
     
     ["76Wallflower",['76A']],
     ["77SweetPea",['77A']],
-    ["78Camellia",['78A']],
-    ["79Freesia",['79A']],
+    ["78Camellia",['78A','78B']],
+    ["79Freesia",['79A','79B']],
     ["80ThymeBroomrape",['80A']],
 
     ["81LeopardFlower",['81A']],
@@ -399,7 +399,7 @@ var flowers3DMap = new Map([
 
     ["121SolanumIncanum",['121A']],
     ["122BayahibeRose",['122A']],
-    ["123Hibiscus",['123A','123B']],
+    ["123Hibiscus",['123A','123B','123C']],
     ["124FlorDeIzote",['124A']],
     ["125VernoniaDjalonensis",['125A']],
 
@@ -415,7 +415,7 @@ var flowers3DMap = new Map([
     ["134Shamrock",['134A']],
     ["135LignumVitae",['135A']],
 
-    ["136Chrysanthemum",['136A','136B']],
+    ["136Chrysanthemum",['136A','136B','136C']],
     ["137MagnoliaSieboldii",['137A']],
     ["138Paeony",['138A','138B']],
     ["139RhanteriumEpapposum",['139A']],

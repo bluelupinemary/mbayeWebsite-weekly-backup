@@ -159,15 +159,40 @@ trait GeneralBlogAttribute
         $naffness = $this->likes->where('emotion', 2)->count();
        
         if($hotness || $coolness || $naffness) {
-            if($hotness > $coolness && $hotness > $naffness){
-                $most = 'hotness';
-            }
-            else{
-                if($coolness > $hotness && $coolness > $naffness){
+            if(($hotness == $coolness) && ( $coolness == $naffness)) {
+                $most = '';
+            } else {
+                if($hotness > $coolness && $hotness > $naffness){
+                    $most = 'hotness';
+                } else if($coolness > $hotness && $coolness > $naffness){
                     $most = 'coolness';
-                }
-                else
+                } else if($naffness > $hotness && $naffness > $coolness){
                     $most = 'naffness';
+                } else if($hotness == $coolness) {
+                    $latest_reaction = $this->likes->whereIn('emotion', [0,1])->sortByDesc('created_at')->first();
+
+                    if($latest_reaction->emotion == 0) {
+                        $most = 'hotness';
+                    } else if($latest_reaction->emotion == 1) {
+                        $most = 'coolness';
+                    }
+                } else if($hotness == $naffness) {
+                    $latest_reaction = $this->likes->whereIn('emotion', [0,2])->sortByDesc('created_at')->first();
+
+                    if($latest_reaction->emotion == 0) {
+                        $most = 'hotness';
+                    } else if($latest_reaction->emotion == 2) {
+                        $most = 'naffness';
+                    }
+                } else if($coolness == $naffness) {
+                    $latest_reaction = $this->likes->whereIn('emotion', [1,2])->sortByDesc('created_at')->first();
+
+                    if($latest_reaction->emotion == 1) {
+                        $most = 'coolness';
+                    } else if($latest_reaction->emotion == 2) {
+                        $most = 'naffness';
+                    }
+                }
             }
         } else {
             $most = '';

@@ -57,12 +57,14 @@ class BlogShareNotification extends Notification implements ShouldQueue
         $data = [];
         if($this->blog_share->blog_type == 'App\Models\Blogs\Blog') {
             $data = [
-                'blog' => $this->blog_share,
+                // 'blog' => $this->blog_share,
+                'blog_id' => $this->blog_share->id,
                 'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->blog->name.'" blog',
             ];
         } else if($this->blog_share->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
             $data = [
-                'blog' => $this->blog_share,
+                // 'blog' => $this->blog_share,
+                'blog_id' => $this->blog_share->id,
                 'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->general_blog->name.'" blog',
             ];
         }
@@ -73,12 +75,14 @@ class BlogShareNotification extends Notification implements ShouldQueue
     {
         if($this->blog_share->blog_type == 'App\Models\Blogs\Blog') {
             return new BroadcastMessage([
-                'blog' => $this->blog_share,
+                // 'blog' => $this->blog_share,
+                'blog_id' => $this->blog_share->id,
                 'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->blog->name.'" blog',
             ]);
         } else if($this->blog_share->blog_type == 'App\Models\GeneralBlogs\GeneralBlog') {
             return new BroadcastMessage([
-                'blog' => $this->blog_share,
+                // 'blog' => $this->blog_share,
+                'blog_id' => $this->blog_share->id,
                 'message' => $this->blog_share->owner->first_name.' '.$this->blog_share->owner->last_name.' shared your "'.$this->blog_share->general_blog->name.'" blog',
             ]);
         }

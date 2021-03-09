@@ -1,0 +1,65 @@
+div.origin {
+    left: 60%;
+}
+
+.tag {
+    font-size: 0.8em;
+}
+
+.navigator-div {
+    -webkit-transform: translate(-16%,20%) scale(0.7);
+    -moz-transform: translate(-16%,20%) scale(0.7);
+    transform: translate(-16%,20%) scale(0.7);
+}
+
+@-webkit-keyframes navigatorAnimateZoomOut {
+    100% {
+        -webkit-transform: translate(-16%,20%) scale(0.7);
+        -moz-transform: translate(-16%,20%) scale(0.7);
+        transform: translate(-16%,20%) scale(0.7);
+    }
+}
+
+@-moz-keyframes navigatorAnimateZoomOut {
+    100% {
+        -webkit-transform: translate(-16%,20%) scale(0.7);
+        -moz-transform: translate(-16%,20%) scale(0.7);
+        transform: translate(-16%,20%) scale(0.7);
+    }
+}
+
+@-o-keyframes navigatorAnimateZoomOut {
+    100% {
+        -webkit-transform: translate(-16%,20%) scale(0.7);
+        -moz-transform: translate(-16%,20%) scale(0.7);
+        transform: translate(-16%,20%) scale(0.7);
+    }
+}
+
+@keyframes navigatorAnimateZoomOut {
+    100% {
+        -webkit-transform: translate(-16%,20%) scale(0.7);
+        -moz-transform: translate(-16%,20%) scale(0.7);
+        transform: translate(-16%,20%) scale(0.7);
+    }
+}
+
+.swal2-popup 
+{
+    width: 51em !important;
+    padding: 2rem !important;
+}
+
+.swal2-content h5 {
+    font-size: 2rem;
+}
+
+.swal2-styled.swal2-confirm {
+    font-size: 1.7em !important;
+}
+
+@media only screen and (max-width: 991px) {
+    .p_title, .tag, .p_button {
+        font-size: 0.9rem;
+    }
+}

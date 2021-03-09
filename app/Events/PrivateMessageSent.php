@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Models\Messages\Conversation;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Messages\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -34,6 +36,11 @@ class PrivateMessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('privatechat.'.$this->message->receiver_id);
+        $conversation = Conversation::find($this->message->conversation_id);
+        if(Auth::id() == $conversation->user1_id)
+        return new PrivateChannel('privatechat.'.$conversation->user2_id);
+        else
+        return new PrivateChannel('privatechat.'.$conversation->user1_id);
+
     }
 }

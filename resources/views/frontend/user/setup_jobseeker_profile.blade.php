@@ -130,37 +130,38 @@
                         <div class="aboutme-body">
                             <fieldset>
                                 
+
                                
                                 <div class="form-row">
                                     
                                         <div class="form-group col-md-12 input-group-sm">
                                             <label for="fName"> First Name</label>
-                                            <input type="text"  class="form-control disabled_field" id="fName" disabled value="{{ $user->first_name }}">
+                                            <input type="text"  class="form-control disabled_field" id="fName" disabled value="{{ $user->first_name ?? '' }}">
                                         </div>
                                       <div class="form-group col-md-12 input-group-sm">
                                         <label for="lName">Last Name</label>
-                                        <input type="text" class="form-control disabled_field" id="lName" disabled value="{{ $user->last_name }}">
+                                        <input type="text" class="form-control disabled_field" id="lName" disabled value="{{ $user->last_name ?? '' }}">
                                       </div>
                                       
                                       <div class="form-group col-md-12 input-group-sm">
                                         <label for="dob">Date Of Birth</label>
-                                        <input type="text" class="form-control disabled_field" id="dob" disabled value="{{ $user->dob }}">
+                                        <input type="text" class="form-control disabled_field" id="dob" disabled value="{{ $user->dob ?? '' }}">
                                       </div>
                                       <div class="form-group col-md-12 input-group-sm">
                                         <label for="age">Age</label>
-                                        <input type="text" class="form-control disabled_field" id="age" disabled value="{{ $user->age }}">
+                                        <input type="text" class="form-control disabled_field" id="age" disabled value="{{ $user->age ?? '' }}">
                                       </div>
                                       <div class="form-group col-md-12 input-group-sm">
                                         <label for="gender">Gender</label>
-                                        <input type="text" class="form-control disabled_field" id="gender" disabled value="{{ $user->gender }}">
+                                        <input type="text" class="form-control disabled_field" id="gender" disabled value="{{ $user->gender ?? '' }}">
                                       </div>
                                       <div class="form-group col-md-12 input-group-sm">
                                         <label for="Address"> Registered Address</label>
-                                        <input type="text" class="form-control disabled_field" id="my_Address" disabled value="{{ $user->address }}">
+                                        <input type="text" class="form-control disabled_field" id="my_Address" disabled value="{{ $user->address ?? '' }}">
                                       </div>
                                        <div class="form-group col-md-12 input-group-sm">
                                         <label for="Country">Country</label>
-                                        <input type="text" class="form-control disabled_field" id="Country" disabled value="{{ $user->country }}">
+                                        <input type="text" class="form-control disabled_field" id="Country" disabled value="{{ $user->country ?? '' }}">
                                       </div>
                                       <div class="form-group col-md-12 input-group-sm">
                                         <label for="objective">Objective</label>
@@ -612,7 +613,7 @@
     <!------------------------DIV FOR THE IMAGE EDITOR 1----------------------->
     <div class="image-editor-modal" id="imageEditorModal">
         <imageeditor-component :in_page="'setupCompanyProfile'"></imageeditor-component>
-     </div>
+    </div>
      <!--------------------END OF DIV FOR THE IMAGE EDITOR 1---------------------->
      <!-------------------------DIV FOR THE TUI IMAGE EDITOR 2------------------------>
      <div class="tui-editor-modal" id="tuiEditorModal">
@@ -623,10 +624,9 @@
 
 @endsection
 @section('after-scripts')
-
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
 <script src="{{asset('front/JS/jquery.fontselect.js')}}"></script>
-{{-- <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script> --}}
 <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
 <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
 {{-- <script src="{{asset('front/JS/popper.min.js')}}"></script> --}}
@@ -671,6 +671,7 @@ document.getElementById("Profession").selectedIndex = "52";
         // let shapesMap = new Map();              //data structure for the shapes added
         // let textMap = new Map();                //data structure for the texts added
  
+        
         
         
 

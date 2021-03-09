@@ -49,6 +49,7 @@
 .modal-content{
     width: 62vw;
     position: center;
+    height: 50vh;
 }
 
 .modal-backdrop{
@@ -82,9 +83,10 @@ ul{
 
 
 #my_camera{
-    left: 25%;
+    /* left: 25%; */
     position: relative;
-    width: 12vw;
+    /* width: 12vw; */
+    margin: 0 auto;
     box-shadow: 1px 1px 8px 5px #1a1919a8;
 }
 
@@ -315,6 +317,16 @@ video {
     /* font-size: 24px; */
     /*background-color: #ffffff ;*/
 }
+.camera_alignment
+{
+    width: 100%;
+    height: 100%;
+}
+#cam_parent
+{
+    width: 300px;
+    height: 250px;
+}
 .logo_mbaye
 {
     /*padding: 30px;
@@ -363,6 +375,17 @@ border:0px ;
             border-radius: 2px;
             font-weight: 600;
     }
+    .btn_reg_rotate {
+        font-size: 1.5vw;
+        margin: 2%;
+        background-color: #138496;
+        border: 0;
+        color: #ffffff;
+        border-radius: 2px;
+        font-weight: 600;
+        /* display: none; */
+    }
+
 
     .btn_reg_snap_shot {
         font-size: 1.5vw;
@@ -939,11 +962,8 @@ border:0px ;
     } */
 
     .camera_style {
-        /* position: absolute; */
-        /* top: 0 ; */
-        /* left: 0; */
-        height:auto;
-        width: 200px;
+        height:100%;
+        width: 100%;
     }
 
     .div_for_astro {
@@ -960,12 +980,9 @@ border:0px ;
     }
     /* occupation photo*/
     .astro_occupation {
-        position: fixed;
-        right:0;
-        bottom: 0%;
-        width: 40vw;
-        height: auto;
+        width: 100%;
         z-index: 10000;
+        align-self: self-start;
     }
     .occ_descriptionbox {
         position: absolute;
@@ -983,22 +1000,32 @@ border:0px ;
     }
     .occ_description {
         position: absolute;
-        height: 14vh;
-        width: 18vw;
-        bottom: 22vh;
+        height: 30%;
+        width: 46%;
+        bottom: 34%;
         overflow-y: auto;
         overflow-x: hidden;
-        right: 11%;
+        right: 25%;
         z-index: 10000;
         font-family: georgia;
         color: #121884;
         font-size: 1vw;
         font-weight: bold;
     }
+    .asrtonaut_animation_div
+    {
+        width: 50%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: auto;
+        display: flex;
+        justify-content: center;
+    }
     .img_astro {
         position: fixed;
         animation-name: rollout_astronut;
-        animation-duration: 4s;
+        animation-duration: 3s;
         
 
 
@@ -1006,20 +1033,11 @@ border:0px ;
 
     @keyframes rollout_astronut {
         from {
-            position: fixed;
-            right: 0%;
-            top: 100%;
-            width: 0%;
-            height: 0%;
-            transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+            transform: scale(0,0);
+            transform-origin: 100% 100%;
         }
         to {
-            position: fixed;
-            right: 0;
-            bottom: 0%;
-            width: 40vw;
-            height: auto;
-            transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+            transform: scale(1,1);
         }
     }
     
@@ -1059,11 +1077,7 @@ border:0px ;
         height: auto ;
     }
     .btn_occ_submit {
-        position: absolute;
-        left: 25%;
-        width: 8vw;
-        height: 3vw;
-        font-size: 0.5vw;
+        margin:0 auto;
     }
 
     .div_clock {
@@ -1325,37 +1339,17 @@ border:0px ;
     .overlap-image
     {
         margin-top: -17%;
-        left: 15%;       
+        /* left: 15%;        */
     }
     .close-as-img
     {
         z-index: 10001;
-        width: 3%;
-        bottom: 34%;
-        right: 4%;
-        position: fixed; 
-        animation-name: cross_img_appear;
-        animation-duration: 3s;  
+        width: 5%;
+        bottom: 64%;
+        right: 10%;
+        position: absolute; 
     }
-    @keyframes cross_img_appear 
-    {
-        from 
-        {
-            height: auto;
-            opacity: 0;
-            bottom: 0%;
-            right: 0%;
-            width: 0%;
-        }
-        to
-        {
-            height: auto;
-            opacity: 1;
-            bottom: 34%;
-            right: 4%;
-            width: 3%;
-        }
-    }
+    
     .content-row
     {
         height: 60vh;
@@ -1369,13 +1363,13 @@ and (-webkit-min-device-pixel-ratio: 1.5)
 {
     .overlap-image
     {
-        left: 40%;
+<<<<<<< HEAD
+        /* left: 40%; */
+=======
+        left: 20%;
+>>>>>>> 1f9bef1074b4781043b13579fae539705a497ffe
     }
-    .camera_style
-    {
-        width: 300px;
-        height: 200px;
-    }
+    
 }
 /* IPAD Landscape */
 @media only screen 
@@ -1392,6 +1386,11 @@ and (-webkit-min-device-pixel-ratio: 1)
     {
         font-size: 12px !important;
         padding: .3rem !important;
+    }
+    #cam_parent
+    {
+        width: 250px;
+        height: 230px;
     }
     .custom-button {
         padding: .575rem .55rem !important;
@@ -1425,32 +1424,18 @@ and (-webkit-min-device-pixel-ratio: 1)
     {
         width: 90%;
     }
-    .camera_alignment
-    {
-        min-height: 150px !important;
-        min-width: 150px;   
-    }
-    .camera_style
-    {
-        width: 150px;
-        height: 150px;
-    }
+    
     .overlap-image
     {
         margin-top: -13%;
-        left: 10%;
+        /* left: 10%; */
         
     }
     .warning-text
     {
         font-size: 1.2vw;
     }
-    .btn_occ_submit
-    {
-        padding: .375rem .55rem !important;
-        font-size: 0.6rem !important;
-        line-height: 1 !important;
-    }
+    
     .form-group
     {
         margin-bottom: 0.5rem!important;
@@ -1459,60 +1444,17 @@ and (-webkit-min-device-pixel-ratio: 1)
     {
         margin-bottom: 0.5rem!important;
     }   
-    .astro_occupation
+
+}
+@media only screen 
+and (min-device-width: 818px) 
+and (max-device-width: 873px) 
+and (orientation: landscape) 
+{
+    #cam_parent
     {
-        width: 55vw;
-    }
-    .occ_description
-    {
-        height: 15vh;
-        width: 18vw;
-        bottom: 16vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-        right: 18%;
-    }
-    @keyframes rollout_astronut {
-        from {
-            position: fixed;
-            right: 0%;
-            top: 100%;
-            width: 0%;
-            height: 0%;
-            transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-        }
-        to {
-            position: fixed;
-            right: 0;
-            bottom: 0%;
-            width: 55vw;
-            height: auto;
-            transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-        }
-    }
-    .close-as-img
-    {
-        bottom: 30%;
-        right: 5%;
-    }
-    @keyframes cross_img_appear 
-    {
-        from 
-        {
-            height: auto;
-            opacity: 0;
-            bottom: 0%;
-            right: 0%;
-            width: 0%;
-        }
-        to
-        {
-            height: auto;
-            opacity: 1;
-            bottom: 30%;
-            right: 5%;
-            width: 3%;
-        }
+        width: 200px;
+        height: 170px;
     }
 }
 /* iPhone X ----------- */
@@ -1526,6 +1468,11 @@ and (-webkit-min-device-pixel-ratio: 1)
     {
         font-size: 12px !important;
         padding: .3rem !important;
+    }
+    #cam_parent
+    {
+        width: 200px;
+        height: 200px;
     }
     .custom-button {
         padding: .575rem .55rem !important;
@@ -1571,16 +1518,8 @@ and (-webkit-min-device-pixel-ratio: 1)
     {
         width: 90%;
     }
-    .camera_alignment
-    {
-        min-height: 100px !important;
-        min-width: 100px;   
-    }
-    .camera_style
-    {
-        width: 150px;
-        height: 150px;
-    }
+    
+    
     .overlap-image
     {
         /* margin-top: 10%; */
@@ -1589,30 +1528,7 @@ and (-webkit-min-device-pixel-ratio: 1)
     {
         font-size: 1.2vw;
     }
-    .btn_occ_submit
-    {
-        padding: .375rem .55rem !important;
-        font-size: 0.6rem !important;
-        line-height: 1 !important;
-    }
-    .occ_description
-    {
-        height: 15vh;
-        width: 17vw;
-        bottom: 20vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-        right: 10%;
-    }
-    .astro_occupation
-    {
-        width: 40vw;
-    }
-    .close-as-img 
-    {
-        bottom: 34%;
-        right: 4%;
-    }
+    
     
 }
 /* MOBILE DEVICES MEDIA QUERIES */
@@ -1621,32 +1537,7 @@ and (-webkit-min-device-pixel-ratio: 1)
     body{
         font-size:12px !important;
     }
-    .astro_occupation
-    {
-        width: 47vw;
-    }
-    .occ_description
-    {
-        right: 13%;
-    }
-    @keyframes rollout_astronut {
-        from {
-            position: fixed;
-            right: 0%;
-            top: 100%;
-            width: 0%;
-            height: 0%;
-            transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-        }
-        to {
-            position: fixed;
-            right: 0;
-            bottom: 0%;
-            width: 47vw;
-            height: auto;
-            transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-        }
-    }
+    
     .nav-link
     {
         font-size: 12px !important;
@@ -1700,31 +1591,33 @@ and (-webkit-min-device-pixel-ratio: 1)
         width: 80%;
         margin:0% auto;
     }
-    .camera_alignment
-    {
-        min-height: 100px !important;
-        min-width: 100px;
-        
-    }
-    .btn_occ_submit
-    {
-        padding: .375rem .55rem !important;
-        font-size: 0.6rem !important;
-        line-height: 1 !important;
-    }
-    .camera_style
-    {
-        width: 120px;
-        height: 120px;
-    }
+    
     .overlap-image
     {
         margin-top: -15%;
-        left: 20%;
+        /* left: 20%; */
     }
     .warning-text
     {
         font-size: 1.2vw;
+    }
+    #cam_parent
+    {
+        width: 144px;
+        height: 130px;
+    }
+}
+/* IPHONE 6+ 7+ 8+  Landscape */
+/* Landscape */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) { 
+    #cam_parent
+    {
+        width: 150px;
+        height: 140px;
     }
 }
 /* small devices vich are smaller than 600px and greater than 375 */
@@ -1733,10 +1626,7 @@ and (-webkit-min-device-pixel-ratio: 1)
     body{
         font-size:12px;
     }
-    .astro_occupation
-    {
-        width: 47vw !important;
-    }
+    
     .nav-link
     {
         font-size: 12px !important;
@@ -1776,25 +1666,13 @@ and (-webkit-min-device-pixel-ratio: 1)
     }
     .form-feilds
     {
-        width: 80%;
+        width: 100%;
     }
-    .camera_alignment
-    {
-        min-height: 90px !important;
-        min-width: 90px;
-        
+    #cam_parent {
+        width: 90px;
+        height: 90px;
     }
-    .btn_occ_submit
-    {
-        padding: .375rem .55rem !important;
-        font-size: 0.6rem !important;
-        line-height: 1 !important;
-    }
-    .camera_style
-    {
-        width: 120px;
-        height: 120px;
-    }
+    
     .overlap-image
     {
         margin-top: 10%;
@@ -1803,13 +1681,9 @@ and (-webkit-min-device-pixel-ratio: 1)
     {
         font-size: 1.2vw;
     }
-    .occ_description
-    {
-        right: 13%;
-    }
+    
     
 }
-
 @media only screen 
   and (min-device-width: 320px) 
   and (max-device-width: 568px)
@@ -1859,33 +1733,9 @@ and (-webkit-min-device-pixel-ratio: 1)
     {
         height:26px;
     }
-    .camera_style 
-    {
-        width: 90px;
-        height: 90px;
-    }
+    
     .overlap-image 
     {
         margin-top: -17%;
     }
 }
-
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 480px)
-  and (orientation: landscape) 
-  {
-    .occ_description
-    {
-        width: 18vw;
-        bottom: 16vh;
-    }
-    .btn_occ_submit
-    {
-        font-size: 0.5rem !important;
-    }
-    .close-as-img
-    {
-        bottom: 29%;
-    }
-  }

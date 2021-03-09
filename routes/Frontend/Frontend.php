@@ -140,13 +140,17 @@ Route::group(['namespace' => 'Message'], function () {
     Route::get('/privatechat', 'MessagesController@private');
     Route::get('/fetchconversations', 'MessagesController@fetchconversations');
     Route::get('/chatgroups', 'MessagesController@fetchgroups');
+    Route::get('/getusers', 'MessagesController@getusers');
     Route::post('/savechatgroup', 'MessagesController@savegroup');
+    Route::post('/addmembers', 'MessagesController@addmember');
     Route::get('/getmessages/{id}', 'MessagesController@fetchMessages');
     Route::get('/getprivate_messages/{user}', 'MessagesController@fetchprivateMessages');
     Route::post('/sendmessages/{id}', 'MessagesController@sendMessage');
     Route::post('/sendprivate-messages/{user}', 'MessagesController@sendprivateMessage');
     Route::get('live-status/{id}', 'MessagesController@liveStatus');
     Route::post('/searchuser','MessagesController@searchusers');
+    Route::get('/fetchgroupdata/{id}','MessagesController@activegroup');
+
 });
 //End chat
     Route::group(['namespace' => 'Blogs'], function () {
@@ -205,8 +209,24 @@ Route::group(['namespace' => 'Message'], function () {
     Route::resource('company_profile', 'Company\CompanyProfileController');
     Route::get('/company/setup-profile', 'Company\CompanyProfileController@index');
     Route::get('/company/setup-profile/{id}', 'Company\CompanyProfileController@edit');
-    Route::get('/company/view-company-profile', 'Company\CompanyProfileController@show');
+    Route::get('/company/view-company-profile/{id}', 'Company\CompanyProfileController@show');
     Route::post('validateemail', 'Company\CompanyProfileController@validateEmail')->name('validateemail');
+
+    // Sliding images blogviews
+    Route::get('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my');
+    Route::post('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my_post')->name('blog_tagwise_my');
+    Route::get('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend');
+    Route::post('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend_post')->name('blog_tagwise_friend');
+    
+    Route::get('/blogview/general/my', 'FrontendController@blog_general_my');
+    Route::post('/blogview/general/my', 'FrontendController@blog_general_my_post')->name('blog_general_my');
+    Route::get('/blogview/general/friend', 'FrontendController@blog_general_friend');
+    Route::post('/blogview/general/friend', 'FrontendController@blog_general_friend_post')->name('blog_general_friend');
+    
+    Route::get('/blogview/designed-panel/my', 'FrontendController@designed_panels_my')->name('designed_panels_my');
+    Route::post('/blogview/designed-panel/my', 'FrontendController@designed_panels_my_post')->name('designed_panels_my_post');
+    Route::get('/blogview/designed-panel/friend', 'FrontendController@designed_panels_friend')->name('designed_panels_friend');
+    Route::get('/blogview/designed-panel/home', 'FrontendController@designed_panels_all')->name('blog_general_home');
 });
 
 /*
@@ -251,27 +271,16 @@ Route::get('/search/friends', 'FrontendController@search_friends')->name('search
 Route::get('/blogview/tagwise/all', 'FrontendController@blog_tagwise_all')->name('blog_tagwise_all');
 // sliding images with dummy naff count to test out fart naff animation
 Route::get('/blogview/tagwise/all_old', 'FrontendController@all_blogs_tagwise');
-Route::get('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my');
-Route::post('/blogview/tagwise/my', 'FrontendController@blog_tagwise_my_post')->name('blog_tagwise_my');
-Route::get('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend');
-Route::post('/blogview/tagwise/friend', 'FrontendController@blog_tagwise_friend_post')->name('blog_tagwise_friend');
 
 
 /* blogs for the general blogs */
 Route::get('/blogview/general/all', 'FrontendController@blog_general_all')->name('blog_general');
 // Route::get('/blogview/general/all_old', 'FrontendController@blog_general_all_old');
-Route::get('/blogview/general/my', 'FrontendController@blog_general_my');
-Route::post('/blogview/general/my', 'FrontendController@blog_general_my_post')->name('blog_general_my');
-Route::get('/blogview/general/friend', 'FrontendController@blog_general_friend');
-Route::post('/blogview/general/friend', 'FrontendController@blog_general_friend_post')->name('blog_general_friend');
 
 
 /* blogs for the designed panels */
 Route::get('/blogview/designed-panel/all', 'FrontendController@designed_panels_all')->name('designed_panels_all');
-Route::get('/blogview/designed-panel/my', 'FrontendController@designed_panels_my')->name('designed_panels_my');
-Route::post('/blogview/designed-panel/my', 'FrontendController@designed_panels_my_post')->name('designed_panels_my_post');
-Route::get('/blogview/designed-panel/friend', 'FrontendController@designed_panels_friend')->name('designed_panels_friend');
-Route::get('/blogview/designed-panel/home', 'FrontendController@designed_panels_all')->name('blog_general_home');
+
 // Route::get('/single_panel_design/{id}', 'BlogPanelDesign\BlogPanelDesignController@show');
 
 
@@ -294,6 +303,11 @@ Route::get('/jobseekers/profileview-test','JobSeekerProfile\JobSeekerProfilesCon
 
 Route::group(['namespace' => 'Blogs'], function () {
     Route::get('/fetchAllBlogs', 'BlogsController@fetchBlogs');
+});
+
+Route::group(['namespace' => 'GeneralBlogs'], function () {
+    Route::get('/fetchgeneralblogs','GeneralBlogsController@fetchgeneralblogs');
+    Route::get('/fetchmostnaff','GeneralBlogsController@mostNaffed');
 });
 
 Route::post('save_work_experience', 'JobSeekerProfile\JobSeekerProfilesController@save_work_experience');

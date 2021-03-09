@@ -1,6 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('after-styles')
+    <meta name="url" content="{{ url('') }}">
     <link rel="stylesheet" href="{{asset('front/CSS/search-friends.css')}}">
 @endsection
 
@@ -41,7 +42,12 @@
             @endforeach
         </tbody>
     </table> --}}
-</div>
+{{-- </div> --}}
 </div>
 @endsection
 
+@section('after-scripts')
+    <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
+    <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
+    <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
+@endsection

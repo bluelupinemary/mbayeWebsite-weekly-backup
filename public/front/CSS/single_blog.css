@@ -108,9 +108,9 @@ body::after {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    /* box-shadow: 12px 3px 20px 7px rgba(0, 0, 0, 0.36); */
-    -webkit-filter: drop-shadow(12px 16px 7px rgba(0, 0, 0, 0.36));
-    filter: drop-shadow(12px 16px 7px rgba(0, 0, 0, 0.36));
+    box-shadow: 12px 3px 20px 7px rgba(0, 0, 0, 0.36);
+    /* -webkit-filter: drop-shadow(12px 16px 7px rgba(0, 0, 0, 0.36));
+    filter: drop-shadow(12px 16px 7px rgba(0, 0, 0, 0.36)); */
     position: relative;
     top: -7%;
     /* left: 3%; */

@@ -831,4 +831,43 @@ $('#loadingScreenOverlay').on('click', function(evt){
     document.getElementById("loadingScreenPercent").style.visibility = "hidden";
     openFullscreen();
     $('#fullscreenIcon').hide();
+    $('#MbayeHeadinfoIcon').show();
 });
+
+ $("#MbayeHeadinfoIcon").on('click',function(){
+         $('#flowerInstruction').toggle();
+         $('#infoIconTextflowers').toggle();
+         $('#infoIconTextdownflower').toggle();
+         isIns2Active = !isIns2Active;
+         
+         $('#textCurve').toggle();
+         $('#textCurve2').toggle();
+         $('#textCurveanticlock').toggle();
+         $('#textCurveanticlock2').toggle();
+         set_circle_type();
+  });
+
+let isIns2Active = false;
+function set_circle_type(){
+    if(isIns2Active){
+        circleType = new CircleType(document.getElementById('textCurve'));
+        circleType3 = new CircleType(document.getElementById('textCurve2'));
+        circleType1 = new CircleType(document.getElementById('textCurveanticlock'));
+        circleType2 = new CircleType(document.getElementById('textCurveanticlock2'));
+
+        // Set the text radius and direction. Note: setter methods are chainable.
+        circleType.radius(150).dir(-1);
+        circleType3.radius(150).dir(-1);
+        // Set the text radius and direction. Note: setter methods are chainable.
+        circleType1.radius(200);
+        // Set the text radius and direction. Note: setter methods are chainable.
+        circleType2.radius(200);
+    }else{
+        //destroy the instructions
+        circleType.destroy();
+        circleType1.destroy();
+        circleType2.destroy();
+        circleType3.destroy();
+
+    }
+}

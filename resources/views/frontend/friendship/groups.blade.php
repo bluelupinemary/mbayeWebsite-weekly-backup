@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{asset('front/CSS/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/groups.css')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rajdhani:300">
+    {{-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> --}}
 @endsection
 
 @section('content')
@@ -14,72 +15,21 @@
         <div class="section left-section">
             <div id="origin" class="fbox">
                 <div class="scifiUI">
-                    <h1>Options</h1>
-                    <ul>
-                      <li data-toggle="modal" data-target="#createGroupModal">Create Group</li>
-                      <li class="edit-group">Edit Group Name</li>
-                      <li data-toggle="modal" data-target="#deleteGroupModal">Delete Group</li>
-                    </ul>
+                    <div class="options-div">
+                        <div class="options-header">
+                            <p>Options</p>
+                            <button><i class="fas fa-chevron-circle-down"></i></button>
+                        </div>
+                        <div class="options-body">
+                            <ul class="options-list">
+                                <li data-toggle="modal" data-target="#createGroupModal">Create Group</li>
+                                <li class="edit-group">Edit Group Name</li>
+                                <li data-toggle="modal" data-target="#deleteGroupModal">Delete Group</li>
+                            </ul>
+                        </div>
+                    </div>
                   </div>
-                {{-- <div id="one" title="Friend 1" class="draggable friend friend-1" data-top="39" data-left="47">
-                    <img src="{{asset('front/images/user-image/image-1.jpg')}}"/>
-                </div>
 
-                <div id="two" title="Friend 2" class="draggable friend friend-2" data-top="69" data-left="7.5">
-                    <img src="{{asset('front/images/user-image/image-2.jpg')}}"/>
-                </div>
-
-                <div id="three" title="Friend 3" class="draggable friend friend-3" data-top="8" data-left="82">
-                    <img src="{{asset('front/images/user-image/image-3.jpg')}}"/>
-                </div>
-
-                <div id="four" title="Friend 4" class="draggable friend friend-4" data-top="6.5" data-left="31.3">
-                    <img src="{{asset('front/images/user-image/image-4.jfif')}}"/>
-                </div>
-
-                <div id="five" title="Friend 5" class="draggable friend friend-5" data-top="52" data-left="69.5">
-                    <img src="{{asset('front/images/user-image/image-5.png')}}"/>
-                </div> --}}
-
-                {{-- <div id="six" title="Friend 6" class="draggable friend friend-6" data-top="70" data-left="35.5">
-                    <img src="{{asset('front/images/user-image/image-6.jpg')}}"/>
-                </div> --}}
-
-                {{-- <div id="seven" title="Friend 7" class="draggable friend friend-7" data-top="34" data-left="83">
-                    <img src="{{asset('front/images/user-image/image-7.jpg')}}"/>
-                </div>
-
-                <div id="eight" title="Friend 8" class="draggable friend friend-8" data-top="23" data-left="3.5">
-                    <img src="{{asset('front/images/user-image/image-8.jpg')}}"/>
-                </div>
-
-                <div id="nine" title="Friend 9" class="draggable friend friend-9" data-top="74" data-left="79">
-                    <img src="{{asset('front/images/user-image/image-9.jfif')}}"/>
-                </div>
-
-                <div id="ten" title="Friend 10" class="draggable friend friend-10" data-top="20" data-left="53.5">
-                    <img src="{{asset('front/images/user-image/image-10.jpg')}}"/>
-                </div>
-
-                <div id="eleven" title="Friend 11" class="draggable friend friend-11" data-top="31" data-left="23">
-                    <img src="{{asset('front/images/user-image/image-11.jpg')}}"/>
-                </div>
-
-                <div id="twelve" title="Friend 12" class="draggable friend friend-12" data-top="53" data-left="26.5">
-                    <img src="{{asset('front/images/user-image/image-12.jpg')}}"/>
-                </div>
-
-                <div id="thirteen" title="Friend 13" class="draggable friend friend-13" data-top="45.5" data-left="5">
-                    <img src="{{asset('front/images/user-image/image-13.jpg')}}"/>
-                </div>
-
-                <div id="fourteen" title="Friend 14" class="draggable friend friend-14" data-top="2" data-left="56.5">
-                    <img src="{{asset('front/images/user-image/image-14.jpg')}}"/>
-                </div>
-
-                <div id="fifteen" title="Friend 15" class="draggable friend friend-15" data-top="80" data-left="60.5">
-                    <img src="{{asset('front/images/user-image/image-15.jpg')}}"/>
-                </div> --}}
                 <button class="pagination previous-page">
                     <i class="fas fa-chevron-circle-left"></i>
                 </button>
@@ -233,11 +183,15 @@
 @endsection
 
 @section('after-scripts')
-    <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
-    <script src="{{asset('front/JS/jquery.ui.touch-punch.min.js')}}"></script>
-    <script src="{{asset('front/JS/popper.min.js')}}"></script>
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
+    <script src="{{asset('front/JS/jquery-1.12.4.js')}}"></script>
     <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
+    <script src="{{asset('front/JS/jquery.ui.touch-punch.js')}}"></script>
+    <script src="{{asset('front/JS/popper.min.js')}}"></script>
+    
+    
+    
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script>
         var url = $('meta[name="url"]').attr('content');
@@ -540,7 +494,23 @@
 
             var name = $form.find("input#group_name").val();
             var slug = name.replace(/\s+/g, '-').toLowerCase();
-
+            // alert(name);return false;
+            if(name =='')
+            {
+                Swal.fire({
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        title: 'Group Name is Empty!',
+                        html: 'Enter a Valid Group Name!',
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    }).then((res) => {
+                        // $('#createGroupModal').modal('show');
+                    });
+                    return false;
+            }  
             var post_data = new FormData($form[0]);
             post_data.append('group_name_slug', slug);
             post_data.append('user_id', '{{Auth::user()->id}}');
@@ -563,7 +533,6 @@
                         imageWidth: 80,
                         imageHeight: 80,
                         imageAlt: 'Mbaye Logo',
-                        width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     });
@@ -581,7 +550,7 @@
                     var title = 'Error!';
 
                     if(response.errors) {
-                        title = 'Error in processing request...';
+                        title = 'Enter A Unique Group Name!';
                         $.each( response.errors, function( key, value) {
                             errorString += '<p>' + value + '</p>';
                         });
@@ -594,7 +563,6 @@
                         imageAlt: 'Mbaye Logo',
                         title: title,
                         html: errorString,
-                        width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
@@ -681,9 +649,25 @@
             var $form = $('form#delete-group-form');
 
             var form_url = url+'/delete_groups';
-
+            
+            if (!$('#delete-group-form :checkbox:checked').length > 0)
+            {
+                Swal.fire({
+                        imageUrl: '../../front/icons/alert-icon.png',
+                        imageWidth: 80,
+                        imageHeight: 80,
+                        imageAlt: 'Mbaye Logo',
+                        title: "Group Not Selected!",
+                        html: "Please select the group that you want to delete.",
+                        padding: '1rem',
+                        background: 'rgba(8, 64, 147, 0.62)'
+                    }).then((res) => {
+                        $('#deleteGroupModal').modal('show');
+                    });
+                return false; 
+            }
             var post_data = new FormData($form[0]);
-
+            
             $('#deleteGroupModal').modal('hide');
             Swal.fire({
                 text: "Are you sure you want to delete this group(s)?",
@@ -691,7 +675,6 @@
                 imageWidth: 80,
                 imageHeight: 80,
                 imageAlt: 'Mbaye Logo',
-                width: '30%',
                 padding: '1rem',
                 background: 'rgba(8, 64, 147, 0.62)',
                 showCancelButton: true,
@@ -718,7 +701,6 @@
                                 imageWidth: 80,
                                 imageHeight: 80,
                                 imageAlt: 'Mbaye Logo',
-                                width: '30%',
                                 padding: '1rem',
                                 background: 'rgba(8, 64, 147, 0.62)'
                             });
@@ -746,7 +728,6 @@
                                 imageAlt: 'Mbaye Logo',
                                 title: title,
                                 html: errorString,
-                                width: '30%',
                                 padding: '1rem',
                                 background: 'rgba(8, 64, 147, 0.62)'
                             }).then((res) => {
@@ -764,6 +745,7 @@
         $('.save-group-friends').click(function() {
             var form_url = url+'/store_group_friends';
             var post_data = new FormData();
+            
             post_data.append('group_id', $('input#selected_group_id').val());
             post_data.append('friends', selected_friends);
 
@@ -776,30 +758,46 @@
                 cache: false,
                 processData: false,
                 success: function(data) {
-                    console.log(data);
-                    // $('#createGroupModal').modal('hide');
-                    Swal.fire({
-                        title: '<span class="success">Success!</span>',
-                        text: data.message,
-                        imageUrl: '../../front/icons/alert-icon.png',
-                        imageWidth: 80,
-                        imageHeight: 80,
-                        imageAlt: 'Mbaye Logo',
-                        width: '30%',
-                        padding: '1rem',
-                        background: 'rgba(8, 64, 147, 0.62)'
-                    }).then((res) => {
-                        // window.location.href = 
-                    });
-                    // fetchGroups();
-                    // $('#selected_group_name').val(data.name);
-                    // $('#selected_group_id').val(data.id);
+                    if(data.status =='success')
+                    {
+                        Swal.fire({
+                            title: '<span class="success">'+data.title+'!</span>',
+                            text: data.message,
+                            imageUrl: '../../front/icons/alert-icon.png',
+                            imageWidth: 80,
+                            imageHeight: 80,
+                            imageAlt: 'Mbaye Logo',
+                            padding: '1rem',
+                            background: 'rgba(8, 64, 147, 0.62)'
+                        }).then((res) => {
+                            // window.location.href = 
+                        });
+                    }
+                    else
+                    {
+                        if(data.status =='error')
+                        {
+                            Swal.fire({
+                                imageUrl: '../../front/icons/alert-icon.png',
+                                imageWidth: 80,
+                                imageHeight: 80,
+                                imageAlt: 'Mbaye Logo',
+                                title: data.title,
+                                html: data.message,
+                                padding: '1rem',
+                                background: 'rgba(8, 64, 147, 0.62)'
+                            }).then((res) => {
+                                // $('#createGroupModal').modal('show');
+                            }); 
+                        }
+                            
+                    } 
                 },
                 error: function (request, status, error) {
                     // $('#createGroupModal').modal('hide');
                     var response = JSON.parse(request.responseText);
                     var errorString = '';
-                    var title = 'Error!';
+                    var title = 'Something Went Wrong!';
 
                     if(response.errors) {
                         title = 'Error in processing request...';
@@ -815,7 +813,6 @@
                         imageAlt: 'Mbaye Logo',
                         title: title,
                         html: errorString,
-                        width: '30%',
                         padding: '1rem',
                         background: 'rgba(8, 64, 147, 0.62)'
                     }).then((res) => {
@@ -964,6 +961,11 @@
         $('.earthlings-header').click(function() {
             $('.earthlings-body').toggle('slow');
         });
+        
+        $('.options-header').click(function() {
+            $('.options-body').toggle();
+        });
+        
 
         $('.edit-group').click(function() {
             var group_name = $('#selected_group_name').val();
@@ -975,9 +977,8 @@
                     imageWidth: 80,
                     imageHeight: 80,
                     imageAlt: 'Mbaye Logo',
-                    title: 'Error',
+                    title: 'No Group Selected',
                     html: 'Select group first.',
-                    width: '30%',
                     padding: '1rem',
                     background: 'rgba(8, 64, 147, 0.62)'
                 });

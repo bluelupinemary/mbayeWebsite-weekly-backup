@@ -3,6 +3,8 @@
 @section('before-styles')
     <style>
     </style>
+    <link rel="stylesheet" href="{{ asset('front/CSS/cropper.css') }}">
+    <script src="{{asset('front/JS/cropper.js')}}"></script>
 @endsection
 
 @section('after-styles')
@@ -12,6 +14,9 @@
     <link rel="stylesheet" href="{{asset('front/system-google-font-picker/jquery.fontselect.css')}}"/>
     <link rel="stylesheet" href="{{asset('front/CSS/communicator.css')}}">
     <link rel="stylesheet" href="{{asset('front/CSS/communicator-responsive.css')}}">
+    <!--related to the image editor-->
+    <link rel="stylesheet" href="{{asset('front/CSS/image-editor.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('front/CSS/jquery.fontselect.css')}}"/> --}}
 @endsection
 
 @section('content')
@@ -85,7 +90,7 @@
                             </div>
                         </div>
                         <input type="file" name="featured_image" accept=".jpg,.jpeg,.png" id="featured_image">
-                        <input type="hidden" name="edited_featured_image">
+                        <input type="hidden" name="edited_featured_image" id="edited_featured_image">
                         <input type="checkbox" name="films_tag" id="films_tag" value="0" data-id="1">
                         <input type="checkbox" name="sports_tag" id="sports_tag" value="0" data-id="2">
                         <input type="checkbox" name="mountains_tag" id="mountains_tag" value="0" data-id="3">
@@ -153,7 +158,7 @@
                             </div>
                         </div>
                         <input type="file" name="featured_image" accept=".jpg,.jpeg,.png" id="general_blog_featured_image">
-                        <input type="hidden" name="edited_featured_image">
+                        <input type="hidden" name="edited_featured_image" id="edited_featured_image">
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <input type="hidden" name="blog_id">
                         {{-- <input type="hidden" name="save_status" value="Draft"> --}}
@@ -184,7 +189,7 @@
                         </select>
                         {{-- <input type="file" name="featured_image" accept="image/x-png,image/jpeg" id="designs_blog_featured_image"> --}}
                         <input type="hidden" name="featured_image" id="designs_blog_featured_image">
-                        <input type="hidden" name="edited_featured_image">
+                        <input type="hidden" name="edited_featured_image" id="edited_featured_image">
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <input type="hidden" name="blog_id">
                         <input type="hidden" name="save_status" value="Draft">
@@ -221,9 +226,9 @@
                         <div class="jobseeker-account">
                             <img src="{{asset('front/icons/jobseeker-icon.png')}}" alt="">
                             @if(Auth::user()->JobSeekerprofile)
-                                <a href="{{url('/my_career_profile/'.Auth::user()->id)}}"><p class="view-profile view-jobseeker-profile">View my Job-Seeker Profile</p></a>
+                                <a href="{{url('/jobseekers/view-profile/'.Auth::user()->id)}}"><p class="view-profile view-jobseeker-profile">View my Job-Seeker Profile</p></a>
                             @else
-                                <a href="{{url('/jobseekers/setup-profile')}}"><p>I'm an job-seeker</p></a>
+                                <a href="{{url('/jobseekers/setup-profile')}}"><p>I'm a job-seeker</p></a>
                             @endif
                         </div>
                     
@@ -282,7 +287,8 @@
                     <label for="featured_image" class="custom-file-upload">
                         Upload
                     </label>
-                    <button class="edit_image" data-toggle="modal" data-target="#photoEditorModal" disabled="">
+
+                    <button class="edit_image" id="regularBlog_edit_btn" disabled="">
                         Edit
                     </button>
                 </div>
@@ -295,7 +301,9 @@
                     <label for="general_blog_featured_image" class="custom-file-upload">
                         Upload
                     </label>
-                    <button class="edit_image" data-toggle="modal" data-target="#generalBlogPhotoEditorModal" disabled="">
+                    
+
+                    <button class="edit_image" id="generalBlog_edit_btn" disabled="">
                         Edit
                     </button>
                 </div>
@@ -308,7 +316,8 @@
                     {{-- <label for="designs_blog_featured_image" class="custom-file-upload">
                         Upload
                     </label> --}}
-                    <button class="edit_image" data-toggle="modal" data-target="#designsBlogPhotoEditorModal" disabled="">
+                  
+                    <button class="edit_image" id="designBlog_edit_btn" disabled="">
                         Edit
                     </button>
                 </div>
@@ -642,37 +651,19 @@
         <!-- Modal -->
     
     </div>
-    <div id="app"></div>
-</div>
+    <div id="app">
 
-<div class="modal photo-editor-modal" id="photoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-        <div class="modal-body">
-            <photoeditor-component :edit_blog="{{($blog != '' ? 1 : 0)}}"></photoeditor-component>
-        </div>
-        </div>
     </div>
-</div>
-<div class="modal photo-editor-modal" id="generalBlogPhotoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-        <div class="modal-body">
-            <general-photoeditor-component></general-photoeditor-component>
-        </div>
-        </div>
+</div><!--end of page content-->
+
+    <!-- div for the image editor -->
+    <div class="image-editor-modal" id="imageEditorModal" style="display:none;">
+        <imageeditor-component :in_page="'communicatorBlog'" :edit_blog="{{($blog != '' ? 1 : 0)}}"></imageeditor-component>
     </div>
-</div>
-<div class="modal photo-editor-modal" id="designsBlogPhotoEditorModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-        <div class="modal-body">
-            <designsphotoeditor-component></designsphotoeditor-component>
-        </div>
-        </div>
-    </div>
-</div>
-</div>
+
+</div><!--end of app-->
+
+ 
 <div class="modal" id="customPrivacyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -740,8 +731,10 @@
   </div>
 @endsection
 
+
 @section('after-scripts')
     <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
+    <script src="{{asset('front/JS/popper.min.js')}}"></script>	
     <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
     <script src="{{asset('front/JS/musicplay.js')}}" type="text/jscript"></script>
     <script src="{{asset('front/JS/music-wave.js')}}"></script>

@@ -37,6 +37,7 @@ class GeneralLikeController extends Controller
           if ($like) {
               $already_like = $like->emotion;
               if ($already_like == $emotion) {
+                broadcast(new NewGeneralEmotion($like))->toOthers();
                   $like->delete();
                   return array('status'=>'unlike', 'data'=>null);
               } else {
@@ -84,6 +85,10 @@ class GeneralLikeController extends Controller
         $hot = GeneralLike::where('blog_id',$blog_id)->where('emotion',0)->count();
         $cool = GeneralLike::where('blog_id',$blog_id)->where('emotion',1)->count();
         $naff = GeneralLike::where('blog_id',$blog_id)->where('emotion',2)->count();
-        return array('hot'=> $hot, 'cool'=>$cool, 'naff'=>$naff);
+
+        $blog = GeneralBlog::find($blog_id);
+        $most_reaction = $blog->mostReaction();
+
+        return array('hot'=> $hot, 'cool'=>$cool, 'naff'=>$naff, 'most_reaction' => $most_reaction);
     }
 }

@@ -1,0 +1,81 @@
+@font-face {
+    font-family: 'Courgette-Regular';
+    src: url('../../../fonts/Courgette-Regular.woff2') format('woff2'),
+        url('../../../fonts/Courgette-Regular.woff') format('woff'),
+        url('../../../fonts/Courgette.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.visitFullScreen{
+    z-index: 100;
+}
+#div-click{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.instruction-mouse-div{
+    position: absolute;
+    border: 3px solid #c69930;
+    width: 15vw;
+    border-radius: 14px;
+    font-family: 'Bookman';
+    bottom: 1%;
+    right: 7%;
+    height: auto;
+    color: #bd961d;
+    pointer-events: none;
+    background-color: #0f1a6dc7;
+    
+}
+#instructionMousediv{
+    display: block;
+}
+.instruction-top-left{
+    position: absolute;
+    border: 3px solid #c69930;
+    width: 20vw;
+    border-radius: 14px;
+    font-family: 'Bookman';
+    top: 1%;
+    left: 7%;
+    text-align: center;
+    height: auto;
+    color: #bd961d;
+    font-size: 1.2vw;
+    pointer-events: none;
+    background-color: #0f1a6dc7;
+    
+}
+#instructionTopLeft{
+    display: block;
+}
+.visit-Mbaye-instruction-div{
+    position: absolute;
+    border: 3px solid #c69930;
+    border-radius: 14px;
+    color: #c69930;
+    pointer-events: none;
+    background-color: #0f1a6dc7;
+    text-align: center;
+    font-family: 'Bookman';
+    padding: .7%;
+}
+#visitMbayeInstruction {
+    bottom: 1%;
+    left: 6%;
+    font-size: 1.2vw;
+    display: block;
+}
+@media (min-width: 533px) and (max-width: 992px) {
+    .instr-text {
+        transform: translate(4%, 28%);
+    }
+    .instruction-top-left {
+        left: 8%;
+    }
+    #visitMbayeInstruction {
+        left: 8%;
+    }
+}

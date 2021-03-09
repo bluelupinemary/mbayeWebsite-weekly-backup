@@ -53,4 +53,33 @@ class GeneralBlogShare extends Model
             return true;
         }
     }
+
+    // override the toArray function (called by toJson)
+    public function toArray() {
+        // get the original array to be displayed
+        $data = parent::toArray();
+
+        if($this->publish_datetime) {
+            $data['formatted_date'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y h:i A');
+            $data['formatted_time'] = \Carbon\Carbon::parse($this->publish_datetime)->format('F d, Y');
+        }
+
+        $data['blog'] = $this->blog;
+        if($this->blog->featured_image == null) {
+            $data['blog']['thumb'] = 'general_blogs/blog-default-featured-image.png';
+        } else {
+            $data['blog']['thumb'] = 'general_blogs/'.$this->blog->featured_image;
+        }
+
+        $data['name'] = $this->blog->name;
+        $data['blog']['hotcount']      = $this->blog->likes->where('emotion',0)->count();
+        $data['blog']['coolcount']     = $this->blog->likes->where('emotion',1)->count();
+        $data['blog']['naffcount']     = $this->blog->likes->where('emotion',2)->count();
+        $data['blog']['commentcount']  = $this->blog->comments->count();
+        $data['blog']['most_reaction'] = $this->blog->mostReaction();
+        
+        $data['owner'] = $this->owner;
+        
+        return $data;
+    }
 }

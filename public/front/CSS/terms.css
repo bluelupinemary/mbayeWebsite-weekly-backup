@@ -201,7 +201,7 @@
 }
 .form-control
 {
-  border1:0px solid white;
+  border: 0px solid white;
 }
 
 .txt_email{
@@ -709,13 +709,37 @@ trix-toolbar .trix-button-group:not(:first-child) {
   padding: 2%;
  
 }
-ul li{
+.full_form ul li{
   color:white ;
   font-family: 'Nasalization';
   font-size:0.8vw;
   padding: 2%;
 }
-ol li{
+.full_form ol li{
+  color:white ;
+  font-family: 'Nasalization';
+  font-size: 0.8vw;
+  padding: 2%;
+}
+.sra ul li{
+  color:white ;
+  font-family: 'Nasalization';
+  font-size:0.8vw;
+  padding: 2%;
+}
+.sra ol li{
+  color:white ;
+  font-family: 'Nasalization';
+  font-size: 0.8vw;
+  padding: 2%;
+}
+.terms_form_full ul li{
+  color:white ;
+  font-family: 'Nasalization';
+  font-size:0.8vw;
+  padding: 2%;
+}
+.terms_form_full ol li{
   color:white ;
   font-family: 'Nasalization';
   font-size: 0.8vw;
@@ -1006,31 +1030,31 @@ ol li{
 
 .form-fullview {
   position: absolute;
-  width: 77vw;
-  left: 50%;
-  top: 50%;
+  width: 100vw;
+  left: 62%;
+  top: 45%;
   background: url(../images/skybox_bg1-1.jpg);
   /* background: linear-gradient(180deg, rgba(77,92,129,1) 0%, rgba(123,139,179,1) 50%, rgba(77,92,129,1) 100%); */
-  height: 94vh;
+  height: 100vh;
   padding: 2%;
   display: none;
   z-index: 1000;
   transform: translate(-62%,-45%);
 }
+
 .full_form_full{
   display:none;
 }
-
-.terms_form_full{
+.terms_form_full {
   width: 99%;
-  height: 30vw;
+  height: 39vw;
   border: 1px solid grey;
   overflow-y: scroll;
   position: absolute;
-  top: 50%;
+  top: 57%;
   left: 50%;
   transform: translate(-50%,-59%);
-  padding: 4%;
+  padding: 1% 2%;
 }
 .head-div_full {
   position: absolute;
@@ -1041,7 +1065,7 @@ ol li{
   transform: translate(-53%, -807%);
   /* border: 1px solid red; */
   width: 46.8vw;
-  height: 2.5vw;
+  height: 2.9vw;
   opacity: 2;
 }
 
@@ -1059,7 +1083,7 @@ ol li{
   left: 50%;
   transform: translate(-50%, 812%);
   width: 74vw;
-  height: 1.5vw;
+  height: 2.4vw;
   border: 0px solid white;
   z-index: 10000000;
 }
@@ -1069,13 +1093,13 @@ ol li{
   left: 50%;
   transform: translate(-50%, 823%);
   width: 99vw;
-  height: 1.5vw;
+  height: 2.4vw;
   border: 0px solid blue;
 }
 .slide-div_full .next_full {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 71%;
   font-family: 'Space Age';
   color: #28e9e2 !important;
   /* transform: translate(1601%, -49%); */
@@ -1091,7 +1115,7 @@ ol li{
 .slide-div_full .prev_full {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 29%;
   font-family: 'Space Age';
   color: #28e9e2 !important;
   /* transform: translate(1601%, -49%); */
@@ -1109,12 +1133,11 @@ ol li{
   color: white;
   font-size: 1.5vw;
   border: 0px solid white;
-  width: 30vw;
+  width: 48vw;
   position: absolute;
-  top: 50%;
+  top: 43%;
   left: 50%;
   transform: translate(-8%,-13%);
- 
 }
 .label-div_full .prev_label_full {
   font-family: 'Space Age';
@@ -1123,11 +1146,10 @@ ol li{
   border: 0px solid white;
   width: 30vw;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 42%;
+  left: 33%;
   transform: translate(-93%,-12%);
   text-align: left;
-
 }
 
 .tos-div {
@@ -1162,23 +1184,59 @@ ol li{
 /*---------------------------------------------------------------------------------*/
 /*// Small devices (landscape phones, 576px and up)*/
 /*---------------------------------------------------------------------------------*/
-@media (min-width: 576px) and (max-width: 767.98px) {
-  .terms_and_conditions_full .col_white,.privacy_policy_full .col_white,.copy_right_claims_full .col_white,.sra_full .col_white.head_div title,.label-div_full .next_label_full  {
+@media (min-width: 731px) and (max-width: 735.98px) {
+  .head-div_full {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-53%, -807%);
+    -moz-transform: translate(-53%, -807%);
+    transform: translate(-53%, -807%);
+    /* border: 1px solid red; */
+    width: 46.8vw;
+    height: 3.1vw;
+    opacity: 2;
+}
+  .label-div_full {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 823%);
+    width: 99vw;
+    height: 2.5vw;
+    border: 0px solid blue;
+}
+  .label-div_full .prev_label_full {
+    font-family: 'Space Age';
+    color: white;
     font-size: 2vw;
+    border: 0px solid white;
+    width: 30vw;
+    position: absolute;
+    top: 42%;
+    left: 34%;
+    transform: translate(-93%,-12%);
+    text-align: left;
   }
-  .terms_and_conditions_full ul li ,.privacy_policy_full ul li,.copy_right_claims_full ul li,.sra_full ul li{
+  .label-div_full .next_label_full {
+    text-align: right;
+    font-family: 'Space Age';
+    color: white;
     font-size: 2vw;
-  }
-  .terms_and_conditions_full ol li,.privacy_policy_full ol li,.copy_right_claims_full ol li,.sra_full ol li{
-    font-size: 2vw;
+    border: 0px solid white;
+    width: 48vw;
+    position: absolute;
+    top: 41%;
+    left: 49%;
+    transform: translate(-8%,-13%);
   }
 }
 
 /*---------------------------------------------------------------------------------*/
-/*// Medium devices (tablets, 768px and up)*/
+/*// Small devices (landscape phones, 576px and up)*/
 /*---------------------------------------------------------------------------------*/
-@media (min-width: 768px) and (max-width: 991.98px) { 
-  .terms_and_conditions_full .col_white,.privacy_policy_full .col_white,.copy_right_claims_full .col_white,.sra_full .col_white.head_div title,.label-div_full .next_label_full  {
+@media (min-width: 736px) and (max-width: 739.98px) {
+  .terms_and_conditions_full .col_white,.privacy_policy_full .col_white,.copy_right_claims_full .col_white,.sra_full .col_white.head_div title,.label-div_full .next_label_full,.label-div_full .prev_label_full  {
     font-size: 2vw;
   }
   .terms_and_conditions_full ul li ,.privacy_policy_full ul li,.copy_right_claims_full ul li,.sra_full ul li{
@@ -1187,36 +1245,46 @@ ol li{
   .terms_and_conditions_full ol li,.privacy_policy_full ol li,.copy_right_claims_full ol li,.sra_full ol li{
     font-size: 2vw;
   }
-  /*.form-fullview {
+  .head-div_full {
     position: absolute;
-    width: 100vw;
-    left: 62%;
-    top: 45%;
-    background: url(../images/skybox_bg1-1.jpg);
-    
-    height: 100vh;
-    padding: 1% 2%;
-    display: none;
-    z-index: 1000;
-    transform: translate(-62%,-45%);
-  }
-  .head-div_full p {
-    text-align: center;
-    font-family: 'Space Age';
-    color: #28e9e2 !important;
-    font-size: 3vw;
-    vertical-align: middle;
-    line-height: 0.5vw;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-53%, -807%);
+    -moz-transform: translate(-53%, -807%);
+    transform: translate(-53%, -807%);
+    /* border: 1px solid red; */
+    width: 46.8vw;
+    height: 3.1vw;
+    opacity: 2;
+}
+.slide-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 812%);
+  width: 74vw;
+  height: 2.6vw;
+  border: 0px solid white;
+  z-index: 10000000;
+}
+.label-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 823%);
+  width: 99vw;
+  height: 2.68vw;
+  border: 0px solid blue;
 }
 .label-div_full .prev_label_full {
   font-family: 'Space Age';
   color: white;
-  font-size: 2.5vw;
+  font-size: 2vw;
   border: 0px solid white;
   width: 30vw;
   position: absolute;
-  top: 50%;
-  left: 32%;
+  top: 42%;
+  left: 34%;
   transform: translate(-93%,-12%);
   text-align: left;
 }
@@ -1224,138 +1292,77 @@ ol li{
   text-align: right;
   font-family: 'Space Age';
   color: white;
-  font-size: 2.5vw;
+  font-size: 2vw;
   border: 0px solid white;
-  width: 38vw;
+  width: 48vw;
   position: absolute;
-  top: 50%;
-  left: 60%;
+  top: 41%;
+  left: 49%;
   transform: translate(-8%,-13%);
 }
-.head-div_full {
-  position: absolute;
-  top: 39%;
-  left: 50%;
-  -webkit-transform: translate(-53%, -807%);
-  -moz-transform: translate(-53%, -807%);
-  transform: translate(-53%, -807%);
-  width: 46.8vw;
-  height: 2.5vw;
-  opacity: 2;
-}
-.slide-div_full {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 812%);
-  width: 74vw;
-  height: 2.8vw;
-  border: 0px solid white;
-  z-index: 10000000;
-}
-.slide-div_full .prev_full {
-  position: absolute;
-  top: 50%;
-  left: 27%;
-  font-family: 'Space Age';
-  color: #28e9e2 !important;
-  transform: translate(-1584%, -21%);
-  width: 2vw;
-  text-align: center;
-  font-size: 2em;
-  z-index: 10000;
-}
-.slide-div_full .next_full {
-  position: absolute;
-  top: 50%;
-  left: 73%;
-  font-family: 'Space Age';
-  color: #28e9e2 !important;
-  transform: translate(1453%, -26%);
-  width: 2vw;
-  text-align: center;
-  font-size: 2em;
-  z-index: 10000;
-}
-.label-div_full {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 823%);
-  width: 99vw;
-  height: 2.77vw;
-  border: 0px solid blue;
-}
-.terms_form_full {
-  width: 99%;
-  height: 47vw;
-  border: 1px solid grey;
-  overflow-y: scroll;
-  position: absolute;
-  top: 57%;
-  left: 50%;
-  transform: translate(-50%,-59%);
-  padding: 1.6% 3%;
-}*/
 }
 /*---------------------------------------------------------------------------------*/
-/*// Medium devices (Mobiles, 360px and up)*/
+/*// Medium devices (tablets, 740px and up)*/
 /*---------------------------------------------------------------------------------*/
-@media (min-width: 360px) and (max-width: 767.98px) { 
-  .form-fullview {
+@media (min-width: 740px) and (max-width: 767.98px) {
+  .terms_form_full {
+    width: 99%;
+    height: 35vw;
+    border: 1px solid grey;
+    overflow-y: scroll;
     position: absolute;
-    width: 100vw;
-    left: 62%;
-    top: 45%;
-    background: url(../images/skybox_bg1-1.jpg);
-    height: 100vh;
-    padding: 2%;
-    display: none;
-    z-index: 1000;
-    transform: translate(-62%,-45%);
-  }
-  .label-div_full .next_label_full {
-    text-align: right;
-    font-family: 'Space Age';
-    color: white;
-    font-size: 2.5vw;
-    border: 0px solid white;
-    width: 38vw;
-    position: absolute;
-    top: 50%;
-    left: 42%;
-    transform: translate(-8%,-13%);
-  }
-  .label-div_full .prev_label_full {
-    font-family: 'Space Age';
-    color: white;
-    font-size: 2.5vw;
-    border: 0px solid white;
-    width: 30vw;
-    position: absolute;
-    top: 50%;
+    top: 57%;
     left: 50%;
-    transform: translate(-93%,-12%);
-    text-align: left;
-  }
-  .head-div_full p {
-    text-align: center;
-    font-family: 'Space Age';
-    color: #28e9e2 !important;
-    font-size: 3vw;
-    vertical-align: middle;
-    line-height: 0.5vw;
+    transform: translate(-50%,-59%);
+    padding: 1% 2%;
 }
 .head-div_full {
   position: absolute;
-  top: 48%;
+  top: 50%;
   left: 50%;
   -webkit-transform: translate(-53%, -807%);
   -moz-transform: translate(-53%, -807%);
   transform: translate(-53%, -807%);
   /* border: 1px solid red; */
   width: 46.8vw;
-  height: 2.5vw;
+  height: 2.75vw;
+  opacity: 2;
+}
+}
+/*---------------------------------------------------------------------------------*/
+/*// Medium devices (tablets, 768px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 768px) and (max-width: 811.98px) { 
+  .terms_and_conditions_full .col_white,.privacy_policy_full .col_white,.copy_right_claims_full .col_white,.sra_full .col_white.head_div title,.label-div_full .next_label_full,.label-div_full .prev_label_full  {
+    font-size: 2vw;
+  }
+  .terms_and_conditions_full ul li ,.privacy_policy_full ul li,.copy_right_claims_full ul li,.sra_full ul li{
+    font-size: 2vw;
+  }
+  .terms_and_conditions_full ol li,.privacy_policy_full ol li,.copy_right_claims_full ol li,.sra_full ol li{
+    font-size: 2vw;
+  }
+  .terms_form_full {
+    width: 99%;
+    height: 33vw;
+    border: 1px solid grey;
+    overflow-y: scroll;
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%,-59%);
+    padding: 1% 2%;
+}
+.head-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-53%, -807%);
+  -moz-transform: translate(-53%, -807%);
+  transform: translate(-53%, -807%);
+  /* border: 1px solid red; */
+  width: 46.8vw;
+  height: 2.6vw;
   opacity: 2;
 }
 .slide-div_full {
@@ -1364,7 +1371,7 @@ ol li{
   left: 50%;
   transform: translate(-50%, 812%);
   width: 74vw;
-  height: 2.2vw;
+  height: 2.15vw;
   border: 0px solid white;
   z-index: 10000000;
 }
@@ -1377,37 +1384,437 @@ ol li{
   height: 2.2vw;
   border: 0px solid blue;
 }
+.label-div_full .prev_label_full {
+  font-family: 'Space Age';
+  color: white;
+  font-size: 2vw;
+  border: 0px solid white;
+  width: 30vw;
+  position: absolute;
+  top: 50%;
+  left: 34%;
+  transform: translate(-93%,-12%);
+  text-align: left;
+}
+.label-div_full .next_label_full {
+  text-align: right;
+  font-family: 'Space Age';
+  color: white;
+  font-size: 2vw;
+  border: 0px solid white;
+  width: 48vw;
+  position: absolute;
+  top: 43%;
+  left: 49%;
+  transform: translate(-8%,-13%);
+}
+}
+/*---------------------------------------------------------------------------------*/
+/*// Large devices (desktops, 812px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 812px) and (max-width: 895.98px) {
+  .terms_form_full {
+    width: 99%;
+    height: 35vw;
+    border: 1px solid grey;
+    overflow-y: scroll;
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    transform: translate(-50%,-59%);
+    padding: 1% 2%;
+}
+.head-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-53%, -807%);
+  -moz-transform: translate(-53%, -807%);
+  transform: translate(-53%, -807%);
+  width: 46.8vw;
+  height: 2.7vw;
+  opacity: 2;
+}
+.slide-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 812%);
+  width: 74vw;
+  height: 2.1vw;
+  border: 0px solid white;
+  z-index: 10000000;
+}
+.label-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 823%);
+  width: 99vw;
+  height: 2.15vw;
+  border: 0px solid blue;
+}
+.label-div_full .prev_label_full {
+  font-family: 'Space Age';
+  color: white;
+  font-size: 1.5vw;
+  border: 0px solid white;
+  width: 30vw;
+  position: absolute;
+  top: 41%;
+  left: 34%;
+  transform: translate(-93%,-12%);
+  text-align: left;
+  font-size: 2.4vw !important;
+}
+.label-div_full .next_label_full {
+  text-align: right;
+  font-family: 'Space Age';
+  color: white;
+  font-size: 1.5vw;
+  border: 0px solid white;
+  width: 48vw;
+  position: absolute;
+  top: 40%;
+  left: 49%;
+  transform: translate(-8%,-13%);
+  font-size: 2.4vw !important;
+}
+}
+/*---------------------------------------------------------------------------------*/
+/*// Large devices (desktops, 896px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 896px) and (max-width: 990.98px) {
+  .head-div_full {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-53%, -807%);
+    -moz-transform: translate(-53%, -807%);
+    transform: translate(-53%, -807%);
+    width: 46.8vw;
+    height: 2.5vw;
+    opacity: 2;
+}
 .terms_form_full {
   width: 99%;
-  height: 37vw;
+  height: 32vw;
   border: 1px solid grey;
   overflow-y: scroll;
   position: absolute;
   top: 57%;
   left: 50%;
   transform: translate(-50%,-59%);
-  padding: 4%;
+  padding: 1% 2%;
+}
+.label-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 823%);
+  width: 99vw;
+  height: 2.24vw;
+  border: 0px solid blue;
+}
+.slide-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 812%);
+  width: 74vw;
+  height: 2.2vw;
+  border: 0px solid white;
+  z-index: 10000000;
 }
 }
 /*---------------------------------------------------------------------------------*/
-/*// Large devices (desktops, 992px and up)*/
+/*// Large devices (desktops, 991 and 1024px up)*/
 /*---------------------------------------------------------------------------------*/
-@media (min-width: 992px) and (max-width: 1198px) {
-     
+@media (min-width: 991px) and (max-width: 1023.98px) {
+  .head-div_full {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-53%, -807%);
+    -moz-transform: translate(-53%, -807%);
+    transform: translate(-53%, -807%);
+    width: 46.8vw;
+    height: 3.25vw;
+    opacity: 2;
+}
+.slide-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 812%);
+  width: 74vw;
+  height: 2.7vw;
+  border: 0px solid white;
+  z-index: 10000000;
+}
+.label-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 823%);
+  width: 99vw;
+  height: 2.71vw;
+  border: 0px solid blue;
+}
+.terms_form_full {
+  width: 99%;
+  height: 40vw;
+  border: 1px solid grey;
+  overflow-y: scroll;
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%,-59%);
+  padding: 1% 2%;
+}
+}
+/*---------------------------------------------------------------------------------*/
+/*// Large devices (desktops, 1024px and 768px up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 1024px) and (max-width: 1365.98px) {
+.head-div_full {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-53%, -807%);
+    -moz-transform: translate(-53%, -807%);
+    transform: translate(-53%, -807%);
+    width: 46.8vw;
+    height: 4.4vw;
+    opacity: 2;
+}
+.slide-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 812%);
+  width: 74vw;
+  height: 3.7vw;
+  border: 0px solid white;
+  z-index: 10000000;
+}
+.label-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 823%);
+  width: 99vw;
+  height: 3.7vw;
+  border: 0px solid blue;
+}
+.label-div_full .prev_label_full {
+  font-family: 'Space Age';
+  color: white;
+  font-size: 2vw;
+  border: 0px solid white;
+  width: 30vw;
+  position: absolute;
+  top: 46%;
+  left: 33.5%;
+  transform: translate(-93%,-12%);
+  text-align: left;
+}
+.label-div_full .next_label_full {
+  text-align: right;
+  font-family: 'Space Age';
+  color: white;
+  font-size: 2vw;
+  border: 0px solid white;
+  width: 48vw;
+  position: absolute;
+  top: 43%;
+  left: 49%;
+  transform: translate(-8%,-13%);
+}
+.terms_form_full {
+  width: 99%;
+  height: 60vw;
+  border: 1px solid grey;
+  overflow-y: scroll;
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%,-59%);
+  padding: 1% 2%;
+}
+}
+/*---------------------------------------------------------------------------------*/
+/*// Large devices (desktops, 1366px and up)*/
+/*---------------------------------------------------------------------------------*/
+@media (min-width: 1366px) and (max-width: 1439.98px) {
+  .head-div_full {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-53%, -807%);
+    -moz-transform: translate(-53%, -807%);
+    transform: translate(-53%, -807%);
+    width: 46.8vw;
+    height: 4.4vw;
+    opacity: 2;
+}
+.slide-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 812%);
+  width: 74vw;
+  height: 3.8vw;
+  border: 0px solid white;
+  z-index: 10000000;
+}
+.label-div_full {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 823%);
+  width: 99vw;
+  height: 3.8vw;
+  border: 0px solid blue;
+}
+.terms_form_full {
+  width: 99%;
+  height: 61vw;
+  border: 1px solid grey;
+  overflow-y: scroll;
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%,-59%);
+  padding: 0% 2%;
+}
+}
+/*************************************INSTRUCTIONS OVERLAY*********************************************************/
+.login-info:hover span{
+  display: inline-block;
+}
+.login-info{
+  position: absolute;
+  color: #bd961d;
+  bottom: 2%;
+  left: 1%;
+  font-size: 2rem;
+  z-index: 10000;
+  cursor: pointer;
+}
+.InfoIconLabel{
+  display:none;
+  /* display: inline-block; */
+  position: absolute;
+  color: white;
+  transform: translate(3%, 0%);
+  font-size: 1.2rem;
+  text-shadow: 0px 0px 3px #000000;
+  background: #0b91c3a3;
+  font-family: 'Bookman';
+  width: auto;
+  /* height: 3.5vh; */
+  
+  text-align: center;
+  border-radius: 12px;
+  padding:15%;
+}
+.login-detail-text{
+  position: absolute;
+  width: 35vw;
+  color: #c69930;
+  background-color: #0f1a6dc7;
+  /* right: 20%; */
+  right: 1%;
+  padding: 1%;
+  text-align: center;
+  top: 1%;
+  font-size: 1.2vw;
+  /* font-weight: 700; */
+  font-family: 'Bookman';
+  border: 3px solid #c69930;
+  border-radius: 14px;
+}
+#loginText{
+  display: none;
+}
+.back-btn{
+  position: absolute;
+  bottom: 38%;
+  width: 4vw;
+  border: 3px dashed #c69930;
+  color: #c69930;
+  left: 13%;
+  height: 5vh;
+  /* border-style: dotted; */
+  border-radius: 7px;
+}
+.back-btn-text{
+  position: relative;
+  font-family: 'Bookman';
+  top: 35%;
+  text-align: center;
+  font-size: 1vw;
+}
+.full-screen-btn{
+  position: absolute;
+  bottom: 37%;
+  width: 7vw;
+  border: 3px dashed #c69930;
+  color: #c69930;
+  left: 25%;
+  height: 5vh;
+  /* border-style: dashed; */
+  border-radius: 7px;
+}
+.full-screen-btn-text{
+  position: relative;
+  font-family: 'Bookman';
+  top: 35%;
+  text-align: center;
+  font-size: 1vw;
 }
 
-/*---------------------------------------------------------------------------------*/
-@media (min-width: 1200px) {
-    
+.next-btn{
+  position: absolute;
+  bottom: 38%;
+  width: 4vw;
+  border: 3px dashed #c69930;
+  color: #c69930;
+  left: 38%;
+  height: 5vh;
+  /* border-style: dashed; */
+  border-radius: 7px;
 }
-
-
-/*---------------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------------*/
-@media (min-width: 1920px) {
-     
+.next-btn-text{
+  position: relative;
+  font-family: 'Bookman';
+  top: 35%;
+  text-align: center;
+  font-size: 1vw;
 }
-/*---------------------------------------------------------------------------------*/
-@media (min-width: 2500px) {
-    
+#backButton{
+  display: none;
+}
+#fullScreenButton{
+  display: none;
+}
+#nextButton{
+  display: none;
+}
+@media (max-width: 1367px) and (min-width:1024px){
+  .back-btn, .full-screen-btn, .next-btn{
+    bottom: 40%;
+
+  }
+}
+@media (max-width: 992px) and (min-width:320px){
+  .login-detail-text {
+      width: 79vw;
+      font-size: 1rem;
+  }
+  .back-btn, .full-screen-btn, .next-btn{
+    bottom: 37%;
+    height: 6vh;
+  }
 }

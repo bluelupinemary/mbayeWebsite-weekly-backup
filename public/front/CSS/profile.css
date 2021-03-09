@@ -1752,6 +1752,8 @@ ul{
 }
 
 .details {
+    /*added temporarily*/
+    display:none;
     position: absolute;
     left: 0;
     right: 0;

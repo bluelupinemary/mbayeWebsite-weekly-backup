@@ -1,8 +1,8 @@
-@extends('frontend.layouts.app')
+@extends('frontend.layouts.login_layout')
 
 @section('before-styles')
 <link rel="stylesheet" href="{{ asset('front/CSS/login_style.css') }}">
-
+<link href="//db.onlinewebfonts.com/c/ee837e8aeaf5d681604ab401337b9046?family=Space+Age" rel="stylesheet" type="text/css" />
 <style>   
     .header
     {
@@ -79,35 +79,7 @@
                 </script>
     {{-- <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p> --}}
     {{-- @endif --}} 
-    <div class="header" style="display:none;">
-    	<ul>
-            <li>
-                <a href="#">Home</a>
-            </li>
-            <li>
-                <a href="#">My profile</a>
-            </li>
-            <li>
-                <a href="#">participate</a>
-            </li>
-            <li>
-                <a href="#">blogs</a>
-            </li>
-            <li>
-                <a href="#">guide</a>
-            </li>
-            <li>
-                <a href="#">about us</a>
-            </li>
-            <li>
-                <a href="#">terms</a>
-            </li>
-            <li>
-                <a href="#">Logout</a>
-            </li>
-          </ul>           
-    </div>
-
+    
     <div class="communicator">
         <div class="main-screen">
             {{-- <button type="button" class="start-btn">Click here to start</button> --}}
@@ -186,16 +158,22 @@
                 </div>
             </div>
         </div>
-    </vdiv>
+    </div>
+    
+    <div class="login-info" id="loginTextIcon">
+        <i class="fas fa-info-circle"></i><span class="InfoIconLabel">Instructions</span>
+    </div>
+      
+    <div id="loginText" class="login-detail-text">Once you registered, you can login using your email and password.</div>
+      
 
 @endsection
 
 @section('after-scripts')
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
 {{-- <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script> --}}
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="{{asset('front/sweetalert/sweetalert2-10.js')}}"></script>
 <script>
-
-    
 
     $(document).ready(function() {
 
@@ -395,7 +373,7 @@
                                 padding: '1rem',
                                 background: 'rgba(8, 64, 147, 0.62)'
                                 }).then((result) => {
-                                        window.location.href = responce.redirectPath;
+                                        // window.location.href = responce.redirectPath;
                                     }); 
                         }
                         if ( responce.status=='failed') 
@@ -559,4 +537,9 @@
         }
     }
 </script>
+<script>
+    $("#loginTextIcon").on('click',function(){
+        $("#loginText").toggle();
+    });
+  </script>
 @endsection

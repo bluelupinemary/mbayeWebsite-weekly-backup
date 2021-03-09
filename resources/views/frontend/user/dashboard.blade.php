@@ -719,6 +719,7 @@
 
 @section('before-scripts')
     <script src="{{asset('front/JS/jquery-1.11.1.min.js')}}"></script>
+    {{-- <script src="http://code.jquery.com/jquery.min.js"></script> --}}
     <script>
         var url_view_general_blog = '{{ route('frontend.blog_general_my') }}';
         var url_view_tag_wise_blog = '{{ route('frontend.blog_tagwise_my') }}';
@@ -732,16 +733,19 @@
 @endsection
 
 @section('after-scripts')
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
+
     <script src="{{asset('front/JS/jquery.mousewheel.min.js')}}"></script>
     <script src="{{asset('front/JS/TweenMax.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
-    <script src="{{asset('front/JS/jquery.ui.touch-punch.min.js')}}"></script>
+    {{-- <script src="http://code.jquery.com/ui/1.8.17/jquery-ui.min.js"></script> --}}
+    <script src="{{asset('front/JS/jquery.ui.touch-punch.js')}}"></script>
     {{-- <script src="{{asset('front/JS/draggabilly.min.js')}}"></script> --}}
     <script src="{{asset('front/JS/cropper.min.js')}}"></script>
     <script src="{{asset('front/JS/circletype.min.js')}}"></script>
     <script src="{{asset('front/JS/jquery-migrate-1.2.1.min.js')}}"></script>
     
-    <script src="{{asset('front/JS/jquery.mobile-1.4.5.min.js')}}"></script>
+    {{-- <script src="{{asset('front/JS/jquery.mobile-1.4.5.min.js')}}"></script> --}}
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front/JS/dashboard.js')}}"></script>
 @endsection

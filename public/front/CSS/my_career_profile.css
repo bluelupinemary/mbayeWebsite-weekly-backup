@@ -2,7 +2,8 @@
     -webkit-transform: translate(-49%, -243%);
     -moz-transform: translate(-49%, -243%);
     -ms-transform: translate(-49%, -243%);
-    transform: translate(0%, -73%);
+    /* transform: translate(0%, -73%); */
+    transform: translate(56%, -278%);
     white-space: nowrap;
     width: auto;
 }
@@ -42,6 +43,9 @@
     display: block;
 }
 .planet-buttons .tooltips:hover span {
+    display: inline;
+}
+.view-profile-button .tooltips:hover span {
     display: inline;
 }
 .tooltips-buttons span:after {
@@ -214,33 +218,42 @@
     display: flex;
     justify-content: space-evenly;
     width: 100%;
-    height: 14%;
+    /* height: 14%; */
     /* top: -10%; */
     position: absolute;
     bottom: 0;
 }
 .view-profile-button button{
-   display: -webkit-box;
+/* display: -webkit-box;
 display: -ms-flexbox;
-display: -webkit-flex;
+display: -webkit-flex; */
 display: flex;
 outline: none !important;
-/* flex-direction: column; */
+flex-direction: column;
 justify-content: space-between;
 width: 10%;
 /* line-height: 1; */
 /* border: 1px solid red; */
 border-radius: 50%;
+/* height: 10vh; */
 border:none;
 }
 .view-profile-button button img{
 width:100%;
-/* padding: 5%; */
-height: -webkit-fill-available;
+padding-top: 5%;
+/* border: 1px solid green; */
+/* height: auto; */
+position: relative;
+/* z-index: 1; */
+/* background-size: cover;
+background-repeat: no-repeat; */
+
 }
+
 .view-profile-button button.more-icon{
 background-color: #e09135;
 box-shadow: 1px 1px 11px #0000005e;
+/* border: 1px solid red; */
 }
 /*.planet-buttons button {
     border: 0;
@@ -1786,4 +1799,9 @@ img {
     .about-Me-Objective-title{
         padding: 1%;
         width: 18vw;
+    }
+    .saveicon{
+        position: relative;
+        top: 10%;
+        height: 68px;
     }

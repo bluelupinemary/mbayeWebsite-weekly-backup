@@ -950,12 +950,9 @@ border:0px ;
     }
     /* occupation photo*/
     .astro_occupation {
-        position: fixed;
-        right:0;
-        bottom: 0%;
-        width: 40vw;
-        height: auto;
+        width: 100%;
         z-index: 10000;
+        align-self: self-start;
     }
     .occ_descriptionbox {
         position: absolute;
@@ -973,12 +970,12 @@ border:0px ;
     }
     .occ_description {
         position: absolute;
-        height: 14vh;
-        width: 18vw;
-        bottom: 22vh;
+        height: 30%;
+        width: 46%;
+        bottom: 34%;
         overflow-y: auto;
         overflow-x: hidden;
-        right: 11%;
+        right: 25%;
         z-index: 10000;
         font-family: georgia;
         color: #121884;
@@ -989,26 +986,25 @@ border:0px ;
         position: fixed;
         animation-name: rollout_astronut;
         animation-duration: 3s;
-
-
+    }
+    .asrtonaut_animation_div
+    {
+        width: 50%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: auto;
+        display: flex;
+        justify-content: center;
     }
 
     @keyframes rollout_astronut {
         from {
-            position: fixed;
-            right: 0%;
-            top: 100%;
-            width: 2%;
-            height: 2%;
-            transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+            transform: scale(0,0);
+            transform-origin: 100% 100%;
         }
         to {
-            position: fixed;
-            right: 0;
-            bottom: 0%;
-            width: 40vw;
-            height: auto;
-            transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+            transform: scale(1,1);
         }
     }
     
@@ -1050,8 +1046,6 @@ border:0px ;
     .btn_occ_submit {
         position: absolute;
         left: 25%;
-        width: 8vw;
-        height: 3vw;
         font-size: 0.5vw;
     }
 
@@ -1125,8 +1119,6 @@ border:0px ;
         border-radius: 66%;
         display:none;
     }
-
-    
 
     .animate-zoomIn-arm {
         -webkit-animation: zoomInArm 1s linear; /* Safari 4+ */
@@ -1416,12 +1408,10 @@ border:0px ;
     .close-as-img
     {
         z-index: 10001;
-        width: 3%;
-        bottom: 34%;
-        right: 4%;
-        position: fixed; 
-        animation-name: cross_img_appear;
-        animation-duration: 3s;  
+        width: 5%;
+        bottom: 64%;
+        right: 10%;
+        position: absolute; 
     }
     .overlap-image
     {
@@ -1429,24 +1419,6 @@ border:0px ;
         left: 15%;        
     }
 
-    @keyframes cross_img_appear {
-        from 
-        {
-            height: auto;
-            opacity: 0;
-            bottom: 0%;
-            right: 0%;
-            width: 0%;
-        }
-        to
-        {
-            height: auto;
-            opacity: 1;
-            bottom: 34%;
-            right: 4%;
-            width: 3%;
-        }
-}
 .input-group
 {
     margin-bottom: 1rem !important;
@@ -1481,22 +1453,7 @@ border:0px ;
         {
             font-size: 1.8vw;
         }
-        .astro_occupation
-        {
-            width: 55vw;
-        }
-        .occ_description
-        {
-            height: 13vh;
-            width: 25vw;
-            bottom: 18vh;
-            right: 15%;
-        }
-        .close-as-img
-        {
-            bottom: 30%;
-            right: 5%;
-        }
+        
         #terms_label 
         {
             font-size: 1.5vw;
@@ -1516,20 +1473,11 @@ border:0px ;
         }
         @keyframes rollout_astronut {
             from {
-                position: fixed;
-                right: 0%;
-                top: 100%;
-                width: 2%;
-                height: 2%;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+                transform: scale(0,0);
+                transform-origin: 100% 100%;
             }
             to {
-                position: fixed;
-                right: 0;
-                bottom: 0%;
-                width: 55vw;
-                height: auto;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
+                transform: scale(1,1);
             }
         }
     }
@@ -1559,40 +1507,6 @@ border:0px ;
         {
                 font-size: 1.2vw;
         }
-        .astro_occupation
-        {
-            width: 50vw;
-        }
-        .occ_description 
-        {
-            height: 18vh;
-            width: 22vw;
-            bottom: 21vh;
-            right: 13vw;
-        }
-        .close-as-img
-        {
-            bottom: 15%;
-            right: 5%;
-        }
-        @keyframes rollout_astronut {
-            from {
-                position: fixed;
-                right: 0%;
-                top: 100%;
-                width: 2%;
-                height: 2%;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
-            to {
-                position: fixed;
-                right: 0;
-                bottom: 0%;
-                width: 50vw;
-                height: auto;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
-        }
 
     }
     /* Landscape */ 
@@ -1618,22 +1532,7 @@ border:0px ;
         {
                 font-size: 1.2vw;
         }
-        .astro_occupation
-        {
-            width: 60vw;
-        }
-        .occ_description 
-        {
-            height: 16vh;
-            width: 22vw;
-            bottom: 18vh;
-            right: 19vw;
-        }
-        .close-as-img
-        {
-            bottom: 34%;
-            right: 5%;
-        }
+        
         #my_camera
         {
             left: 14%;
@@ -1643,24 +1542,11 @@ border:0px ;
             margin-top: -11%;
             left: 6%;
         }
-        @keyframes rollout_astronut {
-            from {
-                position: fixed;
-                right: 0%;
-                top: 100%;
-                width: 2%;
-                height: 2%;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
-            to {
-                position: fixed;
-                right: 0;
-                bottom: 0%;
-                width: 50vw;
-                height: auto;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
+        .asrtonaut_animation_div
+        {
+            width: 55%;
         }
+        
     }
     @media only screen 
     and (min-device-width: 375px) 
@@ -1674,28 +1560,13 @@ border:0px ;
         } 
         .warning-text
         {
-            font-size: 1.5vw;
+            font-size: 1.6vw;
         }
         #terms_label
         {
                 font-size: 1.2vw;
         }
-        .astro_occupation
-        {
-            width: 50vw;
-        }
-        .occ_description 
-        {
-           height: 16vh;
-            width: 22vw;
-            bottom: 22vh;
-            right: 13vw;
-        }
-        .close-as-img
-        {
-            bottom: 34%;
-            right: 5%;
-        }
+        
         #my_camera
         {
             left: 10%;
@@ -1721,24 +1592,11 @@ border:0px ;
         {
             height: 75vh;
         }
-        @keyframes rollout_astronut {
-            from {
-                position: fixed;
-                right: 0%;
-                top: 100%;
-                width: 2%;
-                height: 2%;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
-            to {
-                position: fixed;
-                right: 0;
-                bottom: 0%;
-                width: 50vw;
-                height: auto;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
+        .asrtonaut_animation_div
+        {
+            width: 65%;
         }
+        
     }
     @media only screen 
     and (min-device-width: 414px) 
@@ -1761,22 +1619,7 @@ border:0px ;
         {
                 font-size: 1.2vw;
         }
-        .astro_occupation
-        {
-            width: 50vw;
-        }
-        .occ_description 
-        {
-            height: 16vh;
-            width: 22vw;
-            bottom: 22vh;
-            right: 13vw;
-        }
-        .close-as-img
-        {
-            bottom:  34%;
-            right: 5%;
-        }
+        
         #my_camera
         {
             left: 10%;
@@ -1798,24 +1641,11 @@ border:0px ;
         {
             font-size: 1.5vw !important;
         }
-        @keyframes rollout_astronut {
-            from {
-                position: fixed;
-                right: 0%;
-                top: 100%;
-                width: 2%;
-                height: 2%;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
-            to {
-                position: fixed;
-                right: 0;
-                bottom: 0%;
-                width: 50vw;
-                height: auto;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
+        .asrtonaut_animation_div
+        {
+            width: 65%;
         }
+        
     }
     /* Mobile phones */
     @media only screen 
@@ -1852,10 +1682,7 @@ border:0px ;
         {
             font-size: 1.2vw !important;
         }
-        .close-as-img
-        {
-            bottom:  30%;
-        }
+        
         #MyForm .action-button
         {
             margin: 0% 3%;
@@ -1879,42 +1706,12 @@ border:0px ;
         {
             margin: 1% auto;
         }
-        .astro_occupation
+        .asrtonaut_animation_div
         {
-            width: 50vw;
+            width: 60%;
         }
-        .occ_description 
-        {
-            height: 18vh;
-            width: 22vw;
-            bottom: 21vh;
-            right: 13vw;
-        }
-        .occ_description 
-        {
-            height: 22vh;
-            width: 22vw;
-            bottom: 25vh;
-            right: 13vw;
-        }
-        @keyframes rollout_astronut {
-            from {
-                position: fixed;
-                right: 0%;
-                top: 100%;
-                width: 2%;
-                height: 2%;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
-            to {
-                position: fixed;
-                right: 0;
-                bottom: 0%;
-                width: 50vw;
-                height: auto;
-                transform: translate3d(0, 0, 0) rotate3d(1, 0, 1, 0deg);
-            }
-        }
+        
+        
     }
 
     /* Smaller devices */
@@ -1931,21 +1728,10 @@ border:0px ;
             padding: 1% 12%;
             height: 72vh;
         }
-        .close-as-img
-        {
-            bottom: 33%;
-            right: 5%;
-        } 
-        .occ_description
-        {
-            height: 18vh;
-            width: 22vw;
-            bottom: 20vh;
-            right: 13vw;
-        }
+         
         .btn-info
         {
-            font-size: 1.5vw !important;
+            font-size: 1.2vw !important;
         }
         #MyForm .action-button
         {
@@ -1987,6 +1773,102 @@ border:0px ;
         {
             width:50%;
         }
+        .asrtonaut_animation_div
+        {
+            width: 65%;
+        }
     }
+
+.astro_animation 
+{ 
+    width: 50vw;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    right: 0%;
+    display: flex;
+    justify-content: center;
+    /* -ms-transform: scale(0.7,0.7); IE 9 */
+    /* transform: scale(0.7,0.7); Standard syntax */
+}
+
+/**********************************************INSTRUCTION OVERLAY CSS***********************************************/
+
+.registeration-info:hover span{
+    display: inline-block;
+}
+.registeration-info{
+    position: absolute;
+    color: #bd961d;
+    bottom: 2%;
+    left: 1%;
+    font-size: 2rem;
+    z-index: 10000;
+    cursor: pointer;
+}
+.InfoIconLabel{
+    display:none;
+    /* display: inline-block; */
+    position: absolute;
+    color: white;
+    transform: translate(3%, 0%);
+    font-size: 1.2rem;
+    text-shadow: 0px 0px 3px #000000;
+    background: #0b91c3a3;
+    font-family: 'Bookman';
+    width: auto;
+    /* height: 3.5vh; */
+    
+    text-align: center;
+    border-radius: 12px;
+    padding:15%;
+}
+.register-detail-text{
+    position: absolute;
+    width: 38vw;
+    color: #c69930;
+    background-color: #051143c7;
+    /* right: 20%; */
+    right: 5%;
+    padding: 1%;
+    text-align: center;
+    top: 1%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#registerText{
+    display: none;
+}
+#registerTextNext{
+    display: none;
+}
+#registerTextOrganization{
+    display: none;
+}
+#registerTextSnap{
+    display: none;
+}
+.register-detail-text-next{
+    position: absolute;
+    width: 27vw;
+    color: #c69930;
+    background-color: #051143c7;
+    /* right: 20%; */
+    right: 17%;
+    padding: 1%;
+    text-align: center;
+    bottom: 42%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#registerTextDetail{
+    display: none;
+}
 
     

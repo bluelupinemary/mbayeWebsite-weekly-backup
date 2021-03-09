@@ -1,7 +1,8 @@
 //function that creates the scene's cameras
 function create_camera(scene){
     var camera = new BABYLON.ArcRotateCamera("Earth Camera",BABYLON.Tools.ToRadians(0),BABYLON.Tools.ToRadians(0),30.0, new BABYLON.Vector3(-1135,486,1000),scene);
-    
+    camera.fovMode = BABYLON.Camera.FOVMODE_HORIZONTAL_FIXED;
+    camera.fov = 1.4;
     //set zoom in and zoom out capability
     camera.upperRadiusLimit = UPPER_RADIUS_VAL;
     camera.attachControl(canvas, true);
@@ -12,10 +13,11 @@ function create_camera(scene){
     camera.panningSensibility = 10; 
     camera.upperBetaLimit = 10; 
     camera.panningDistanceLimit = 1500;
+    camera.pinchPrecision = 1;
     scene.activeCamera = camera;
-
+    camera.maxZ = 28000;
     camera.viewport = new BABYLON.Viewport(0, 0, 1, 1);
- 
+
     return camera;
 }//end of create camera function
 
@@ -37,7 +39,7 @@ function create_light(scene){
 
 //function that will create the skybox for the second scene
 function create_skybox(scene){ 
-    var skybox = BABYLON.MeshBuilder.CreateBox("earthSkybox", {size:9000.0}, scene);
+    var skybox = BABYLON.MeshBuilder.CreateBox("earthSkybox", {size:25000.0}, scene);
     //console.log(skybox);
     //skybox position: negative value - move the skybox towards the bottom; positive value - move the skybox towards the top
     skybox.position.y = 100;
@@ -98,49 +100,100 @@ function add_hdr_environment(scene){
 
 
 
-var webcamScreen;
-var myVideo;    
-function enable_webcamera(scene){
-    // Our Webcam stream (a DOM <video>)
+let initVideo;  
+let initWebCamScreen,initWebCamScreen22;  
+function enable_init_webcamera(scene){
+    // console.log("this is called");
     var isAssigned = false; // Is the Webcam stream assigned to material?
 
-    webcamScreen = BABYLON.MeshBuilder.CreateDisc("webcamScreen2", {radius:110, tessellation: 0}, scene);
-    webcamScreen.position = new BABYLON.Vector3(-122,321,-1961);
-    webcamScreen.rotationQuaternion = new BABYLON.Quaternion(0.023,0.990,-0.002,0.009);
-    webcamScreen.setEnabled(false);
-    webcamScreen.isVisible = false;
+    initWebCamScreen = BABYLON.MeshBuilder.CreateDisc("initWebCamScreen", {radius:110, tessellation: 0}, scene);
+    initWebCamScreen.position = new BABYLON.Vector3(3536,461,-648);
+    initWebCamScreen.isPickable = false;
+    initWebCamScreen22 = BABYLON.MeshBuilder.CreateDisc("initWebCamScreen22", {radius:110, tessellation: 0}, scene);
+    initWebCamScreen22.position = new BABYLON.Vector3(3536,461,-648);
+    if(sun) initWebCamScreen.setParent(sun);
 
-    var videoMaterial = new BABYLON.StandardMaterial("webcamScreenTexture", scene);
+    initWebCamScreen.rotationQuaternion = new BABYLON.Quaternion(0,-0.6424,0,0.7663);
+    initWebCamScreen22.rotationQuaternion = new BABYLON.Quaternion(0,-0.6424,0,0.7663);
+    initWebCamScreen.setEnabled(false);
+    initWebCamScreen.isVisible = false;
+    initWebCamScreen22.setEnabled(false);
+    initWebCamScreen22.isVisible = false;
+  
+    var videoMaterial2 = new BABYLON.StandardMaterial("initWebCamScreenTexture", scene);
+    videoMaterial2.specularColor = new BABYLON.Color3(0,0,0);
+    videoMaterial2.backFaceCulling = false;  
 
-    videoMaterial.specularColor = new BABYLON.Color3(0,0,0);
+
+    var videoMaterial3 = new BABYLON.StandardMaterial("initWebCamScreenTexture", scene);
+    videoMaterial3.specularColor = new BABYLON.Color3(0,0,0);
+    videoMaterial3.backFaceCulling = false;  
+
+    initWebCamScreen22.material = videoMaterial3;
 
     // Create our video texture
-    BABYLON.VideoTexture.CreateFromWebCam(scene, function (videoTexture) {
-        myVideo = videoTexture;
-        videoMaterial.diffuseTexture = myVideo;
+    BABYLON.VideoTexture.CreateFromWebCam(scene, function (videoTexture2) {
+        initVideo = videoTexture2;
+        videoMaterial2.diffuseTexture = initVideo;
     }, { maxWidth: 256, maxHeight: 256 });
-
+  
     scene.onBeforeRenderObservable.add(function () {
-        if(myVideo !== undefined && isAssigned == false) {
-            if(myVideo.video.readyState == 4) {
-                webcamScreen.material = videoMaterial;
+        if (initVideo !== undefined && isAssigned == false) {
+            if (initVideo.video.readyState == 4) {
+                initWebCamScreen.material = videoMaterial2;
+                
                 isAssigned = true;
             }
         }
     });
-}//end of enable webcam function
+
+}//end of function
 
 
-function add_glow(mesh,scene){
-    var gl = new BABYLON.GlowLayer("glow", scene);
-    gl.customEmissiveColorSelector = function(mesh, subMesh, material, result) {
-        if (mesh.name === "sun") {
-            result.set(235, 192, 52, 0.2);
-        }else {
-            result.set(0, 0, 0, 0);
-        }
-    }
-}
+
+// var webcamScreen;
+// var myVideo;    
+// function enable_webcamera(scene){
+//     // Our Webcam stream (a DOM <video>)
+//     var isAssigned = false; // Is the Webcam stream assigned to material?
+
+//     webcamScreen = BABYLON.MeshBuilder.CreateDisc("webcamScreen2", {radius:110, tessellation: 0}, scene);
+//     webcamScreen.position = new BABYLON.Vector3(-122,321,-1961);
+//     webcamScreen.rotationQuaternion = new BABYLON.Quaternion(0.023,0.990,-0.002,0.009);
+//     webcamScreen.setEnabled(false);
+//     webcamScreen.isVisible = false;
+
+//     var videoMaterial = new BABYLON.StandardMaterial("webcamScreenTexture", scene);
+
+//     videoMaterial.specularColor = new BABYLON.Color3(0,0,0);
+
+//     // Create our video texture
+//     BABYLON.VideoTexture.CreateFromWebCam(scene, function (videoTexture) {
+//         myVideo = videoTexture;
+//         videoMaterial.diffuseTexture = myVideo;
+//     }, { maxWidth: 256, maxHeight: 256 });
+
+//     scene.onBeforeRenderObservable.add(function () {
+//         if(myVideo !== undefined && isAssigned == false) {
+//             if(myVideo.video.readyState == 4) {
+//                 webcamScreen.material = videoMaterial;
+//                 isAssigned = true;
+//             }
+//         }
+//     });
+// }//end of enable webcam function
+
+
+// function add_glow(mesh,scene){
+//     var gl = new BABYLON.GlowLayer("glow", scene);
+//     gl.customEmissiveColorSelector = function(mesh, subMesh, material, result) {
+//         if (mesh.name === "sun") {
+//             result.set(235, 192, 52, 0.2);
+//         }else {
+//             result.set(0, 0, 0, 0);
+//         }
+//     }
+// }
 
 
 var sun;
@@ -150,7 +203,7 @@ var redAngle = 0.01;
 var yellowAngle = 0.02;
 var grayAngle = -0.01;
 let TEXTURE_PATH = "front/textures/home/planets/";
-
+let sunOrigTexture;
 
 
 function create_planets(scene){
@@ -161,8 +214,9 @@ function create_planets(scene){
             //val 0 - texture name, 1 - normal texture name, 2 - position, 3- radius
             if(planet === "sun"){
                 let temp = init_planet(planet, planet+"matl",TEXTURE_PATH+val[0], TEXTURE_PATH+val[1], val[2], val[3], scene);
-                add_glow(temp, scene);
+                // add_glow(temp, scene);
                 sun = temp;
+                sunOrigTexture = temp.material.diffuseTexture;
                
             }else if(planet === "saturn"){
                 let temp = init_planet(planet, planet+"matl",TEXTURE_PATH+val[0], TEXTURE_PATH+val[1], val[2], val[3], scene);
@@ -191,16 +245,13 @@ var onOverPlanetOrbit =(meshEvent)=>{
     wikiBtn.setAttribute("id", "planetOrbitLbl");
     var sty = wikiBtn.style;
     sty.position = "absolute";
-    sty.lineHeight = "1.5em";
-    sty.padding = "0.2%";
     sty.color = "#00BFFF  ";
     sty.fontFamily = "Courgette-Regular";
-    sty.fontSize = "2.5em";
+    sty.fontSize = "2rem";
     sty.top = meshEvent.pointerY + "px";
     sty.left = meshEvent.pointerX + "px";
     sty.cursor = "pointer";
-    sty.border = "0.5px solid #333333";
-    sty.borderRadius = "5px";
+    sty.textShadow = "1px 1px 3px black";
     
     let theMesh = meshEvent.meshUnderPointer.name;
     if(wikiMap.has(theMesh)){
@@ -208,12 +259,8 @@ var onOverPlanetOrbit =(meshEvent)=>{
         if(link) wikiBtn.setAttribute("onclick", "showPage('"+link+"')");
         else wikiBtn.setAttribute("onclick", "showPage('"+theMesh+"')");
     }
-   
-
-   
     document.body.appendChild(wikiBtn);
     wikiBtn.textContent = meshEvent.meshUnderPointer.name;
-
 };
 
 //handles the on mouse out event
@@ -222,18 +269,16 @@ var onOutPlanetOrbit =(meshEvent)=>{
     while (document.getElementById("planetOrbitLbl")) {
             document.getElementById("planetOrbitLbl").parentNode.removeChild(document.getElementById("planetOrbitLbl"));
     }   
-
-   
 };
 
 
 let planetOrigScaling;
 var onOverPlanet=(meshEvent)=>{
-
+    var theMeshID = meshEvent.source.name;
      //create planet label
-     let wikiBtn = document.createElement("span");
-     wikiBtn.setAttribute("id", "planetLbl");
-     var sty = wikiBtn.style;
+     let lbl = document.createElement("span");
+     lbl.setAttribute("id", "planetLbl");
+     var sty = lbl.style;
      sty.position = "absolute";
      sty.lineHeight = "1.5em";
      sty.padding = "0.2%";
@@ -244,76 +289,69 @@ var onOverPlanet=(meshEvent)=>{
      sty.left = meshEvent.pointerX + "px";
      sty.cursor = "pointer";
 
-    if(meshEvent.meshUnderPointer.name === "sun"){
-        if(webcamScreen){
-            webcamScreen.setEnabled(true);
-            webcamScreen.isVisible = true;  
-            let camX = initCamera.position.x;
-            let camY = initCamera.position.y;
-            let x = -122;
-            let y = 323;
-            let z = -1960;
-            if( camX<-700 && camX>=-900) x = -110;
-            else if( camX<-500 && camX>=-700) x = -105;
-            else if( camX<-300 && camX>=-500) x = -90;
-            else if(camX<100 && camX>=-300) x = -80;
-            else if(camX<300 && camX>=100) x = -70;
-            else if(camX<700 && camX>=300) x = -55;
-            else if(camX<900 && camX>=700) x = -40;
-            else if(camX<1000 && camX>=900) x = -30;
-            else if(camX>=1000) x = -25;
-            //else webcamScreen.position = new BABYLON.Vector3(-122,320,-1960);   //the initial position
+     if(initWebCamScreen){
+        if(theMeshID == "sun") sun.material.diffuseTexture = initVideo;
+    } 
 
-            if(camY>700 && camY <= 1000) y = 335;
-            else if(camY>500 && camY <= 700) y = 330;
-            else if(camY>300 && camY <= 500) y = 323;
-            else if(camY>0 && camY <= 300) y = 310;
-            else if(camY>-200 && camY <= 0) y = 300;
-            else if(camY>-500 && camY <= -200) y = 290;
-            else if(camY>-700 && camY <= -500) y = 280;
-            else if(camY>-900 && camY <= -700) y = 270;
-            else if(camY>-1100 && camY <= -900) y = 260; 
-            else if(camY>-1300 && camY <= -1100) y = 250;   
-            webcamScreen.position = new BABYLON.Vector3(x,y,z);
+    // if(meshEvent.meshUnderPointer.name === "sun"){
+    //     if(webcamScreen){
+    //         webcamScreen.setEnabled(true);
+    //         webcamScreen.isVisible = true;  
+    //         let camX = initCamera.position.x;
+    //         let camY = initCamera.position.y;
+    //         let x = -122;
+    //         let y = 323;
+    //         let z = -1960;
+    //         if( camX<-700 && camX>=-900) x = -110;
+    //         else if( camX<-500 && camX>=-700) x = -105;
+    //         else if( camX<-300 && camX>=-500) x = -90;
+    //         else if(camX<100 && camX>=-300) x = -80;
+    //         else if(camX<300 && camX>=100) x = -70;
+    //         else if(camX<700 && camX>=300) x = -55;
+    //         else if(camX<900 && camX>=700) x = -40;
+    //         else if(camX<1000 && camX>=900) x = -30;
+    //         else if(camX>=1000) x = -25;
+    //         //else webcamScreen.position = new BABYLON.Vector3(-122,320,-1960);   //the initial position
 
-            let theMesh = meshEvent.meshUnderPointer.name;
-            let val = planetsLinkTextMap.get(theMesh);
+    //         if(camY>700 && camY <= 1000) y = 335;
+    //         else if(camY>500 && camY <= 700) y = 330;
+    //         else if(camY>300 && camY <= 500) y = 323;
+    //         else if(camY>0 && camY <= 300) y = 310;
+    //         else if(camY>-200 && camY <= 0) y = 300;
+    //         else if(camY>-500 && camY <= -200) y = 290;
+    //         else if(camY>-700 && camY <= -500) y = 280;
+    //         else if(camY>-900 && camY <= -700) y = 270;
+    //         else if(camY>-1100 && camY <= -900) y = 260; 
+    //         else if(camY>-1300 && camY <= -1100) y = 250;   
+    //         webcamScreen.position = new BABYLON.Vector3(x,y,z);
 
-            if(val) wikiBtn.setAttribute("onclick", "window.open('"+val[1]+"')");
+    //         let theMesh = meshEvent.meshUnderPointer.name;
+    //         let val = planetsLinkTextMap.get(theMesh);
+
+    //         if(val) wikiBtn.setAttribute("onclick", "window.open('"+val[1]+"')");
     
-            document.body.appendChild(wikiBtn);
-            wikiBtn.textContent = val[0];
-        } 
-    }else if(planetsMap.has(meshEvent.meshUnderPointer.name)){
+    //         document.body.appendChild(wikiBtn);
+    //         wikiBtn.textContent = val[0];
+    //     } 
+    // }=
+    if(planetsMap.has(theMeshID)){
         planetOrigScaling = meshEvent.meshUnderPointer.scaling;
         let scale = meshEvent.meshUnderPointer.scaling;
         meshEvent.meshUnderPointer.scaling = new BABYLON.Vector3(scale.x*1.1, scale.y*1.1, scale.z*1.1);
 
-       
-
-        
-        let theMesh = meshEvent.meshUnderPointer.name;
-        let val = planetsLinkTextMap.get(theMesh);
-
-    
-        if(val) wikiBtn.setAttribute("onclick", "window.open('"+val[1]+"')");
-      
-
-        document.body.appendChild(wikiBtn);
-        wikiBtn.textContent = val[0];
     }
 };
 
 //handles the on mouse out event
 var onOutPlanet=(meshEvent)=>{
-    if(webcamScreen){
-        webcamScreen.setEnabled(false);
-        webcamScreen.isVisible = false; 
-    }
+    // if(initWebCamScreen){
+    //     webcamScreen.setEnabled(false);
+    //     webcamScreen.isVisible = false; 
+    // }
 
-    if(meshEvent.meshUnderPointer.name === "sun"){
-
-    }else if(planetsMap.has(meshEvent.meshUnderPointer.name)){
+    if(!isMobile()) sun.material.diffuseTexture = sunOrigTexture;
+    
+    if(planetsMap.has(meshEvent.meshUnderPointer.name)){
         meshEvent.meshUnderPointer.scaling = planetOrigScaling;
     }
 
@@ -329,33 +367,32 @@ var animatePlanetRotation = function(obj, speed, frameCount, newRot) {
     let anim = BABYLON.Animation.CreateAndStartAnimation('objRot', obj, 'rotation', speed, frameCount, obj.rotation, newRot, 1, null);
     if(obj === earthNormal_object) earthAnimation = anim;
 
-    
 }
 
 
 
 //show_alert_box("Are you sure you want to go to the HOME page?","/");
 
-function show_alert_box(titleText,path){
-    Swal.fire({
-        title: titleText,
-        imageUrl: '../../front/icons/alert-icon.png',
-        imageWidth: '10vw',
-        imageHeight: 'auto',
-        imageAlt: 'Warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, I\'m sure!',
-        width: '20%',
-        padding: '1rem',
-        background: 'rgba(8, 64, 147, 0.62)',
-    }).then((result) => {
-        if (result.value) {
-            window.open(path,"_self"); 
-        }
-      });
-}
+// function show_alert_box(titleText,path){
+//     Swal.fire({
+//         title: titleText,
+//         imageUrl: '../../front/icons/alert-icon.png',
+//         imageWidth: '10vw',
+//         imageHeight: 'auto',
+//         imageAlt: 'Warning',
+//         showCancelButton: true,
+//         confirmButtonColor: '#3085d6',
+//         cancelButtonColor: '#d33',
+//         confirmButtonText: 'Yes, I\'m sure!',
+//         width: '20%',
+//         padding: '1rem',
+//         background: 'rgba(8, 64, 147, 0.62)',
+//     }).then((result) => {
+//         if (result.value) {
+//             window.open(path,"_self"); 
+//         }
+//       });
+// }
 
 function create_saturn_ring(saturn,scene){
     var saturnRing = BABYLON.Mesh.CreateGround("rings", 490, 490, 1, scene);
@@ -372,7 +409,7 @@ function create_saturn_ring(saturn,scene){
 
 //function that instantiates a planet
 function init_planet(name,material_name,texture_path,normal_texture_path,pos,radius,scene){
-    var temp = BABYLON.Mesh.CreateSphere(name, 10, radius, scene);
+    var temp = BABYLON.Mesh.CreateSphere(name, 0, radius, scene);
     temp.position = new BABYLON.Vector3(pos.x,pos.y,pos.z);
     var temp_material = new BABYLON.StandardMaterial(material_name,scene);
     temp_material.diffuseTexture = new BABYLON.Texture(texture_path, scene);
@@ -444,6 +481,8 @@ function init_planet_orbit(name,imgName,pos,rot,scale,r,scene){
         temp = mercuryOrbit.createInstance(name);
     }else if(name === "Moon"){
         temp = neptuneOrbit.createInstance(name);
+    }else if(name === "Sun"){
+        temp = BABYLON.MeshBuilder.CreateDisc(name, {radius:r, tessellation:0},scene);
     }else{
         temp = marsOrbit.createInstance(name);
     }
@@ -459,6 +498,7 @@ function init_planet_orbit(name,imgName,pos,rot,scale,r,scene){
     orbitMatl.diffuseTexture.hasAlpha = true;
     temp.material = orbitMatl;
     temp.material.backFaceCulling = false;
+    
     return temp;
 }
 
@@ -638,47 +678,117 @@ $('#wikiPage').on('load',function(){
     $('.iframe-loading').hide();
 });
 
+// let isScreenVisible = false;
+// let isCharDivFullscreen = false;
+// function showPage(pageName) {
+//     $('.iframe-loading').show();
+//     let loader = document.getElementById("iframe-loading");
+//     let x = document.getElementById("wikipediaDiv");
+//     let page = document.getElementById("wikiPage");
+
+//     if(loader.style.visibility != "visible") loader.style.visibility = "visible";
+    
+
+    
+//     document.getElementById("page-url").textContent = "https://en.wikipedia.org/wiki/"+pageName+"";
+//     page.src  = "https://en.wikipedia.org/wiki/"+pageName;
+//     if(x.style.visibility != "visible"){
+//         x.style.visibility = "visible";  
+//         isScreenVisible = true;
+//     }else return;
+// }
+
+// let isScreenVisible = false;
+// let isCharDivFullscreen = false;
+// function showPage(pageName) {
+//     $('.iframe-loading').show();
+//     let loader = document.getElementById("iframe-loading");
+//     let x = document.getElementById("wikipediaDiv");
+//     let page = document.getElementById("wikiPage");
+
+//     if(loader.style.visibility != "visible") loader.style.visibility = "visible";
+//     $('#fullscreenIcon').hide();
+
+    
+//     document.getElementById("page-url").textContent = "https://en.wikipedia.org/wiki/"+pageName+"";
+//     page.src  = "https://en.wikipedia.org/wiki/"+pageName;
+
+//     if(x.style.visibility != "visible"){
+//         x.style.visibility = "visible";  
+//         isScreenVisible = true;
+//     }else return;
+// }
+
 let isScreenVisible = false;
-let isCharDivFullscreen = false;
+// let isCharDivFullscreen = false;
+// let isCharDivFullscreen2 = false;
 function showPage(pageName) {
     $('.iframe-loading').show();
-    let loader = document.getElementById("iframe-loading");
-    let x = document.getElementById("wikipediaDiv");
+    // let loader = document.getElementById("iframe-loading");
     let page = document.getElementById("wikiPage");
+    let x = document.getElementById("planetWikipediaDiv");
 
-    if(loader.style.visibility != "visible") loader.style.visibility = "visible";
-    
+    // if(loader.style.visibility != "visible") loader.style.visibility = "visible";
 
-    
-    document.getElementById("page-url").textContent = "https://en.wikipedia.org/wiki/"+pageName+"";
-    page.src  = "https://en.wikipedia.org/wiki/"+pageName;
+    page.src = "https://en.wikipedia.org/wiki/"+pageName;
+    document.getElementById("page-url").href = "https://en.wikipedia.org/wiki/"+pageName+"";
+    document.getElementById("page-url-span").textContent = "https://en.wikipedia.org/wiki/"+pageName+"";
     if(x.style.visibility != "visible"){
         x.style.visibility = "visible";  
         isScreenVisible = true;
-    }else return;
+    }
 }
 
-function hidePage(){
-    let loader = document.getElementById("iframe-loading");
-    var x = document.getElementById("wikipediaDiv");
-    var page = document.getElementById("wikiPage");
-    page.src = "";
 
-    x.style.visibility = "hidden";
+// function hidePage(){
+//     let loader = document.getElementById("iframe-loading");
+//     var x = document.getElementById("wikipediaDiv");
+//     var page = document.getElementById("wikiPage");
+//     page.src = "";
+
+//     x.style.visibility = "hidden";
+//     loader.style.visibility = "hidden";
+//     isScreenVisible = false;
+//     $('#fullscreenIcon').show();
+// }
+
+function hidePage(mode){
+
+        document.getElementById("planetWikipediaDiv").style.visibility = "hidden";
+        document.getElementById("wikiPage").src = "";
+
+    let loader = document.getElementById("iframe-loading");
+    
+  
     loader.style.visibility = "hidden";
     isScreenVisible = false;
+    // document.getElementById("flowerModelDiv").style.visibility = "hidden";
+   
 }
 
-function fullscreenDescDiv(){
-    if(!isCharDivFullscreen){
-        document.getElementById("fullscreen-btn").src= "front/images3D/minimize-btn.png";
-        document.getElementById("fullscreen-btn").title= "Windowed";
-        document.getElementById("wikipediaDiv").style.width = "100%";
-        isCharDivFullscreen = true;
+
+let isWikiFullscreen = false;
+$('#planetWikiHeader #fullscreen-btn, #planetWikiHeader #minimize-btn').on("click", function (e) {
+    if(!isWikiFullscreen){
+       
+        $("#planetWikipediaDiv").css({width:'100vw', height:'100%'});
+        if(isSmallDevice() || isMobile()) $("#planetWikiHeader").css('height','10%');
+        else $("#planetWikiHeader").css('height','6%');
+        $("#planetWikiHeader #fullscreen-btn").hide();
+        $("#planetWikiHeader #minimize-btn").show();
+        // $('.modelFullscreenLabel').html('Minimize');
+        
     }else{
-        document.getElementById("fullscreen-btn").title= "Fullscreen"; 
-        document.getElementById("fullscreen-btn").src= "front/images3D/fullscreen-btn.png";
-        document.getElementById("wikipediaDiv").style.width = "30%";
-        isCharDivFullscreen = false;
+        if(isMobile() || isSmallDevice()) $("#planetWikipediaDiv").css('width','50vw');
+        else $("#planetWikipediaDiv").css('width','30vw');
+
+        $("#planetWikiHeader #fullscreen-btn").show();
+        $("#planetWikiHeader #minimize-btn").hide();
+        // $('.modelFullscreenLabel').html('Fullscreen');
     }
-}//end of fullscreenDescDiv
+    isWikiFullscreen = !isWikiFullscreen;
+});
+
+$('#planetWikiHeader #close-btn').on("click", function (e) {
+    document.getElementById("planetWikipediaDiv").style.visibility = "hidden";
+});

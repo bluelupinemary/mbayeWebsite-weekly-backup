@@ -61,6 +61,16 @@ function isSmallDevice() {
 	}
 }
 
+//ipad pro, big tablets
+function isMediumDevice() {
+	if(window.innerWidth <= 1366) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 
 //show alert to fullscreen function
 function alert_fullscreen(){

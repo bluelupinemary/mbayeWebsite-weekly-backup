@@ -1,3 +1,4 @@
+
 @php
     use Illuminate\Support\Facades\Route;
 @endphp
@@ -8,6 +9,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=yes">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="stylesheet" href="{{ asset('front/CSS/navbar.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/CSS/navbar-component.css') }}">
         <title>@yield('title', app_name())</title>
 
         <!-- Meta -->
@@ -24,7 +27,13 @@
                 font-weight: normal;
                 font-style: normal;
             }
-
+            @font-face {
+                font-family: 'Bookman';
+                src: url('fonts/BookmanOldStyle.woff2') format('woff2'),
+                    url('fonts/BookmanOldStyle.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
             @font-face {
                 font-family: 'Courgette-Regular';
                 src: url('fonts/Courgette-Regular.woff2') format('woff2'),
@@ -64,7 +73,9 @@
             {{-- {{ Html::style(mix('css/frontend-custom.css')) }} --}}
        {{--  @endlangrtl --}}
         @yield('after-styles')
-
+        @include('frontend.layouts.includes.navbar')
+        
+     
         <!-- Scripts -->
         <script>
             window.Laravel = <?php echo json_encode([
@@ -91,19 +102,20 @@
         <script src="{{asset('front')}}/babylonjs/babylonjs.proceduralTextures.min.js"></script>
         <script src="{{asset('front')}}/babylonjs/babylonjs.serializers.min.js"></script>
         <script src="{{asset('front')}}/babylonjs/Oimo.js"></script>
-        <script src="{{asset('front')}}/babylonjs/babylon.gui.min.js"></script> 
         <script src="{{asset('front')}}/babylonjs/jquery.min.js"></script>
+        <script src="{{asset('front')}}/babylonjs/babylon.gui.min.js"></script> 
         <script src="{{asset('front')}}/babylonjs/scenes/generalJS.js"></script>
         <script src="https://www.youtube.com/iframe_api"></script>
+        <script src="{{asset('front/JS/circletype.min.js')}}"></script>
         
-      
-
         @yield('after-scripts')
-        
         
         {{ Html::script('js/jquerysession.min.js') }}
         {{ Html::script('js/frontend/frontend.min.js') }}
         {!! Html::script('js/select2/select2.min.js') !!}
+        <script src="{{asset('front/JS/modernizr.custom.js')}}"></script>
+        <script src="{{asset('front/JS/jquery.dlmenu.js')}}"></script>
+        
 
         <script type="text/javascript">
             if("{{Route::currentRouteName()}}" !== "frontend.user.account")
@@ -116,6 +128,11 @@
         
         @include('includes.partials.ga')
     </body>
+    <script>
+	        $(function() {
+                $( '#navbar-dl-menu' ).dlmenu();
+	        });
+        </script>
 </html>
 
 

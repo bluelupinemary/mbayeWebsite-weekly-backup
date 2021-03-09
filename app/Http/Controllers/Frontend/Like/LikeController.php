@@ -40,6 +40,7 @@ class LikeController extends Controller
           if ($like) {
               $already_like = $like->emotion;
               if ($already_like == $emotion) {
+                    broadcast(new NewEmotion($like));
                   $like->delete();
                   return array('status'=>'unlike', 'data'=>null);
               } else {
@@ -87,7 +88,11 @@ class LikeController extends Controller
         $hot = Like::where('blog_id',$blog_id)->where('emotion',0)->count();
         $cool = Like::where('blog_id',$blog_id)->where('emotion',1)->count();
         $naff = Like::where('blog_id',$blog_id)->where('emotion',2)->count();
-        return array('hot'=> $hot, 'cool'=>$cool, 'naff'=>$naff);
+        
+        $blog = Blog::find($blog_id);
+        $most_reaction = $blog->mostReaction();
+
+        return array('hot'=> $hot, 'cool'=>$cool, 'naff'=>$naff, 'most_reaction' => $most_reaction);
     }
 
     public function countblogshare($id){

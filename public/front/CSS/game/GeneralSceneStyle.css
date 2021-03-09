@@ -13,6 +13,15 @@ html, body {
     touch-action: none;
 }
 
+/*************RELATED TO THE CLOSE BUTTON******************/
+#closeButton{
+    display: none;
+    float: right;
+    transform: translate(-15%, 17%);
+    width: 3vw;
+    cursor: pointer;
+    /* bottom: 46%; */
+}
 
 /***********RELATED TO THE LOADING SCREEN DIV****************/
 #loadingScreenDiv{
@@ -139,14 +148,24 @@ html, body {
          
     }
     
-   
+    #flowersWikipediaDiv, #carpetsWikipediaDiv{
+        background-color: black; 
+        visibility: hidden;
+         position: absolute;
+          top:0;
+          left: 0;
+          width: 25vw;
+          height:100vh;
+          border: 2px solid gray;
+         
+    }
 
     .spanLbl{
         font-size:1vw;
         max-width: 100%;
     }
 
-    #page-url, #song-url{
+    #page-url, #song-url, #carpet-page-url{
         color:gray;
         width:50%;
         word-wrap: break-word;
@@ -397,6 +416,8 @@ html, body {
  }
  
 
+
+ 
 #inOurEyesDiv::-webkit-scrollbar{
     width: 0.6em;
     background: #c1d7e491;
@@ -551,13 +572,333 @@ html, body {
     }
 
     #fullscreenImg{
-        width:10vh;
+        width:8vh;
     }
 }
 
 
 
+/* /***********************************INSTRUCTION TEXT OVERLAY*************************************** */
+#arrowGIF{
+    position: absolute;
+    bottom: 0;
+    width: 1vw;
+    left: 40%;
+    display: none;
+}
+#arrowGIF img{
+    width: 4vw;
+    transform: rotate(-10deg);
+}
+
+#textCurve1{
+    position: absolute;
+    bottom: 5%;
+    color: #c69930;
+    text-shadow: 1px 1px 5px black;
+    font-family: 'Bookman';
+    display: none;
+    left: 38%;
+    font-size: 1.5rem;
+ }
+.instruction-right-capt-div{
+    position: absolute;
+    border: 3px solid #c69930;
+    width: 15vw;
+    border-radius: 14px;
+    font-family: 'Bookman';
+    background-color: #0f1a6dc7;
+    /* top: 1%; */
+    top: 1%;
+    right:7%;
+    height: auto;
+    color: #bd961d;
+    
+}
+#instructionCaptDiv{
+    display: none;
+}
+.instr-text-captain{
+    position: absolute;
+    width: 55vw;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    /* right: 20%; */
+    left: 7%;
+    padding: 1%;
+    text-align: center;
+    top: 1%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#infoIconTextcapt{
+    display: none;
+}
+.instr-text-captain-bottom{
+    position: absolute;
+    width: 35vw;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    /* right: 20%; */
+    right: 2%;
+    padding: 1%;
+    text-align: center;
+    bottom: 1%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#infoTextcaptbottom{
+    display: none;
+}
+
+.instruction-left-div{
+    position: absolute;
+    border: 3px solid #c69930;
+    width: 15vw;
+    border-radius: 14px;
+    background-color: #0f1a6dc7;
+    font-family: 'Bookman';
+    /* top: 1%; */
+    bottom: 1%;
+    left: 6%;
+    height: auto;
+    color: #bd961d;
+    
+}
+#instruction-left-div{
+    display: none;
+}
+.instr-icon{
+    width: 1.4vw;
+}
+.instr-text{
+    position: relative;
+    left: 10%;
+    font-size: 1.3vw; 
+    font-weight:700;
+}
+.instr-text-row{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding-top: 4%;
+}
+.instr-img{
+    left: 6%;
+    position: relative;
+}
+.info-icon{
+    position: relative;
+    left: 18%;
+    font-size: 1.6vw;
+    cursor: pointer;
+}
+.instruction-right-div{
+    position: absolute;
+    border: 3px solid #c69930;
+    background-color: #0f1a6dc7;
+    font-family: 'Bookman';
+    width: 18vw;
+    border-radius: 9px;
+    float: right;
+    top: 1%;
+    left:1%;
+    height: 5vh;
+    color: #bd961d;
+    
+}
+#instruction-right-div{
+    display: none;
+}
+.instr-text-right{
+    position: relative;
+    left: 4%;
+    font-size: 1.6vw; 
+    /* font-weight:700; */
+    font-family: 'Bookman';
+}
+.info-icon-right{
+    position: relative;
+    left: 9%;
+    font-size: 1.6vw;
+    cursor: pointer;
+}
+.instr-text-row-right{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    /* left: 4%; */
+    padding-top: 2%;
+}
+.info-icon-div{
+    position: absolute;
+    font-size: 1.6vw;
+    left: 1%;
+    font-size: 2vw;
+    bottom: 2%;
+    color: #bd961d;
+    cursor: pointer;
+}
+#infoIconTextup{
+    display: none;
+}
+#infoIconTextdown{
+    display: none;
+}
+#infoIconTextastro{
+    display: none;
+}
+#infoIcon{
+    position: absolute;
+    color: #bd961d;
+    bottom: 2%;
+    left: 1%;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.instr-text-row-down{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    /* left: 4%; */
+    padding-top: 2%;
+}
+.instr-text-down{
+    position: absolute;
+    width: 49vw;
+    right: 2%;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    padding: 1%;
+    text-align: center;
+    bottom: 1%;
+    font-size: 1.2vw;
+    font-family: 'Bookman';
+    /* font-weight: 700; */
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+.instr-text-up{
+    position: absolute;
+    width: 33vw;
+    left: 4%;
+    color: #c69930;
+    padding: 1%;
+    text-align: center;
+    top: 1%;
+    font-size: 1.2vw;
+    font-family: 'Bookman';
+    background-color: #0f1a6dc7;
+    /* font-weight: 700; */
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+.instr-text-astro{
+    position: absolute;
+    width: 23vw;
+    color: #c69930;
+    right: 20%;
+    padding: 1%;
+    text-align: center;
+    background-color: #0f1a6dc7;
+    top: 22%;
+    font-size: 1.2vw;
+    /* font-weight: 700; */
+    font-family: 'Bookman';
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}
+#infoIcon:hover span{
+    display: inline-block;
+}
 
 
 
+.InfoIconLabel{
+    display:none;
+    /* display: inline-block; */
+    position: absolute;
+    color: white;
+    z-index: 10;
+    transform: translate(3%, 0%);
+    font-size: 1.2rem;
+    text-shadow: 0px 0px 3px #000000;
+    background: #0b91c3a3;
+    font-family: 'Bookman';
+    width: auto;
+    /* height: 3.5vh; */
+    text-align: center;
+    border-radius: 12px;
+    padding:15%;
+}
+@media (max-width : 1367px) and (min-width : 1024px) and (orientation : landscape) {
+    #textCurve1 {
+        bottom: 17% !important;
+    }
+    #arrowGIF {
+        bottom: 13% !important;
+    }
+    .instr-text-captain {
+        font-size: 1.5rem !important;
+    }
+   
+}
 
+@media (max-width:991px) and (min-width:768px){
+    .instr-text-up {
+       width: 47vw;
+       left: 7%;
+       font-size: 1rem;
+        
+    }
+    .instr-text-down , .instr-text-astro{
+        font-size: 1rem !important;
+    }
+    .instr-text-captain {
+        width: 64vw;
+        font-size: 1.4vw;
+    }
+    #textCurve1{
+        bottom: 0 !important;
+    }
+    #arrowGIF{
+        left: 46% !important;
+    }
+}
+@media (max-width:737px) and (min-width:320px){
+    .instr-text-up {
+      left: 8%;
+    }
+    .instruction-left-div {
+        left: 8%;
+        width: 16vw;
+    }
+    .instr-text-captain {
+        width: 64vw;
+        font-size: 1.4vw !important;
+    }
+    
+}
+/***************************************PARTICIPATE NON MEMBER********************************************************/
+
+.instr-text-up-nonParticipate{
+    position: absolute;
+    width: 40vw;
+    left: 7%;
+    color: #c69930;
+    background-color: #0f1a6dc7;
+    padding: 5px;
+    text-align: center;
+    top: 1%;
+    font-size: 1.4vw;
+    font-family: 'Bookman';
+    /* font-weight: 700; */
+    border: 3px solid #c69930;
+    border-radius: 14px;
+}

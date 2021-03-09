@@ -103,8 +103,8 @@
 </div>
 @endsection
 @section('after-scripts')
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
-{{-- <script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script> --}}
 <script src="{{asset('front/JS/bootstrap.min.js')}}"></script>
 <script src="{{asset('front/JS/jquery-ui.js')}}"></script>
 <script src="{{asset('front/JS/popper.min.js')}}"></script>

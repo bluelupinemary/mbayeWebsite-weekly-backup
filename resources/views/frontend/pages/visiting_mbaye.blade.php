@@ -24,7 +24,7 @@
 
 @section('after-scripts')
 
-
+<script src="{{asset('front/JS/jquery-1.9.1.js')}}"></script>
     <script src="{{asset('front/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('front')}}/babylonjs/scenes/designPanel/mbayeMaps.js"></script>
     <script src="{{asset('front')}}/babylonjs/scenes/visit/visitScene.js"></script>

@@ -70,25 +70,33 @@ function create_init_camera(){
     //for the right mouse button panning function; ;0 -no panning, 1 - fastest panning
     camera.panningSensibility = 10; 
     camera.upperBetaLimit = 10;
-    //camera.panningDistanceLimit = 1500;
+    camera.panningDistanceLimit = 1500;
     camera.pinchPrecision = 1;
     camera.attachControl(canvas,true);
-    camera.maxZ = 280000;
+    camera.maxZ = 28000;
     initScene.activeCamera = camera;
 
     return camera;
 }//end of create camera function
                    
 //function that creates scene's hemispheric light
+var light2;
 function create_init_light(){
-    var light = new BABYLON.HemisphericLight("hemiLight",  new BABYLON.Vector3(-10,10,10), initScene);
-    light.radius = 300;
+    var light = new BABYLON.HemisphericLight("hemiLight",  new BABYLON.Vector3(1,3,100), initScene);
+    light.radius = 500;
     light.specular = new BABYLON.Color3(0,0,0);
     light.diffuse = new BABYLON.Color3(1,1,1);
-    light.groundColor = new BABYLON.Color3(0.3,0.3,0.3);
+    light.groundColor = new BABYLON.Color3(0.5,0.5,0.5);
     light.intensity = 1;
 
+    light2 = new BABYLON.HemisphericLight("hemiLight",  new BABYLON.Vector3(1,3,100), initScene);
+    light2.radius = 500;
+    light2.specular = new BABYLON.Color3(0,0,0);
+    light2.diffuse = new BABYLON.Color3(1,1,1);
+    light2.intensity = 4;
+
     return light;
+
 }//end of create earth light function
 
 function create_init_skybox(){ 
@@ -586,6 +594,10 @@ function enable_init_webcamera(){
 
 }//end of function
 
+$("#infoIcon").on('click',function(){
+    $('#instruction-left-div').toggle();
+    $('#infoIconTextup').toggle();
+});
 
 let initPointer = {x:null,y:null,z:null};
 let deltaPointer = {x:0,y:0,z:0};
@@ -990,6 +1002,7 @@ function create_constellation_planes(){
             onOutPlanetOrbitInit
         )
     );
+    
     //params of clones: name, temp, matlPath,scale, x, y, z
     geminiStars = leoStars.clone();
     init_clone_constellation("Gemini",geminiStars,"front/textures/participate/constellations/gemini.png",14,4227,2823,806);
@@ -1024,6 +1037,17 @@ function create_constellation_planes(){
     aquariusStars = leoStars.clone();
     init_clone_constellation("Aquarius",aquariusStars,"front/textures/participate/constellations/aquarius.png",14,-4223, -2058,773);
     
+    //make the stars shine brighter, add to 2nd light
+    light2.includedOnlyMeshes.push(leoStars);
+    light2.includedOnlyMeshes.push(geminiStars);
+    light2.includedOnlyMeshes.push(virgoStars);
+    light2.includedOnlyMeshes.push(sagittariusStars);
+    light2.includedOnlyMeshes.push(capricornStars);
+    light2.includedOnlyMeshes.push(ariesStars);
+    light2.includedOnlyMeshes.push(cancerStars);
+    light2.includedOnlyMeshes.push(scorpioStars);
+    light2.includedOnlyMeshes.push(taurusStars);
+    light2.includedOnlyMeshes.push(aquariusStars);
 
 //     var gl = new BABYLON.GlowLayer("glow", earthScene);
 // gl.addIncludedOnlyMesh(starsForm)
@@ -1052,6 +1076,8 @@ function create_constellation_planes(){
         starsLight.blurHorizontalSize = 0.5 + Math.cos(alpha) * 0.4 + 0.4;     
         starsLight.blurVerticalSize = 0.5 + Math.sin(alpha / 3) * 0.4 + 0.4;
     });
+
+    
    
 }
 

@@ -70,6 +70,12 @@ class BlogShare extends Model
         return $remaining_tag_count;
     }
 
+    public function tags_code()
+    {
+        $tags = $this->tags->pluck('code');
+        return $tags;
+    }
+
     // override the toArray function (called by toJson)
     public function toArray() {
         // get the original array to be displayed

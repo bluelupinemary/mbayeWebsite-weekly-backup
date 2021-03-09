@@ -849,3 +849,33 @@ function isSmallDevice() {
 		return false;
 	}
 }
+
+$("#infoIcon").on('click',function(){
+    $('#instructionCaptDiv').toggle();
+    $('#infoIconTextcapt').toggle();
+    $('#arrowGIF').toggle();
+    isIns2Active = !isIns2Active;
+    
+    $('#textCurve1').toggle();
+    // $('#textCurve2').toggle();
+    // $('#textCurveanticlock').toggle();
+    // $('#textCurveanticlock2').toggle();
+    set_circle_type();
+});
+
+let isIns2Active = false;
+function set_circle_type(){
+if(isIns2Active){
+ circleType = new CircleType(document.getElementById('textCurve1'));
+ 
+
+ // Set the text radius and direction. Note: setter methods are chainable.
+ circleType.radius(150).dir(-1);
+ 
+}else{
+ //destroy the instructions
+ circleType.destroy();
+ 
+
+}
+}

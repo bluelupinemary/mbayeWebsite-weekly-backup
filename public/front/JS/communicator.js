@@ -180,6 +180,7 @@ $.urlParam = function(name){
     }
 }
 
+
 function removeURLParameter(parameter) {
     //prefer to use l.search if you have a location/link object
     var url = window.location.href;
@@ -1656,6 +1657,9 @@ $('.groups-btn').click(function() {
 $('.general-button').click(function() {
     $('.submenu').not('.general-submenu').hide();
     $('.general-submenu').fadeToggle();
+
+    
+
 });
 
 $('.blogtags-button').click(function() {
@@ -1979,6 +1983,7 @@ $('.create-general-blog').click( function(e) {
         hideCurrentSection();
         setSectionParam('general_blog');
         showGeneralBlogSection();
+        //related to the image editor
     } else {
         Swal.fire({
             title: 'Discard Changes',
@@ -2881,6 +2886,11 @@ function getTagIDs() {
 }
 
 // show featured image preview
+//vars for the image editor
+var isNewImg = true;
+var oldFeaturedImg;
+
+
 function filePreview(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -2889,9 +2899,16 @@ function filePreview(input) {
             $('.all-blog .featured-image-text').css('opacity', '0');
             $('.all-blog #featured-image-previewimg').attr('src', e.target.result);
             $('.all-blog #featured-image-previewimg').show();
+            
+            //related to the image editor; check wheter a new image is uploaded
+            if(oldFeaturedImg != e.target.result){
+                oldFeaturedImg = e.target.result;
+                isNewImg = true;
+            }
         };
         reader.readAsDataURL(input.files[0]);
         $('.all-blog .edit_image').removeAttr('disabled');
+
     }
 }
 
@@ -2903,6 +2920,12 @@ function generalBlogfilePreview(input) {
             $('.general-blog .featured-image-text').css('opacity', '0');
             $('.general-blog #featured-image-previewimg').attr('src', e.target.result);
             $('.general-blog #featured-image-previewimg').show();
+
+            //related to the image editor; check wheter a new image is uploaded
+            if(oldFeaturedImg != e.target.result){
+                oldFeaturedImg = e.target.result;
+                isNewImg = true;
+            }
         };
         reader.readAsDataURL(input.files[0]);
         $('.general-blog .edit_image').removeAttr('disabled');
@@ -3301,3 +3324,17 @@ function isSmallDevice() {
 		return false;
 	}
 }
+
+
+
+/**************** related to the image editor ****************/
+$('.edit_image').on('click',function(){
+      $('#page-content').hide();
+      $("#imageEditorModal").show();
+
+      setTimeout(function(){
+            $('.modal-backdrop').css('display','none !important');
+            $('.modal-backdrop').hide();
+      },200);
+     
+});   

@@ -1,0 +1,14 @@
+.tag-title {
+    width: 4.3vw;
+    height: 4vw;
+    -webkit-transform: translate(-8%, -2%);
+    -moz-transform: translate(-8%, -2%);
+    transform: translate(-8%, -2%);
+}
+.tag-title.male {
+    width: 4.3vw;
+    height: 4vw;
+    -webkit-transform: translate(40%, 34%);
+    -moz-transform: translate(40%, 34%);
+    transform: translate(40%, 34%);
+}

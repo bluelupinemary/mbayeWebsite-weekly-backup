@@ -1,0 +1,23 @@
+@media only screen and (max-width: 991px) {
+    .button-div-l {
+        min-width: 0;
+    }
+
+    .button-div-l.hot, .button-div-l.cool, .button-div-l.comment {
+        order: 0;
+    }
+
+    .button-div-l, .button-div-l.button-div-l.cool {
+        width: 30%;
+        -webkit-box-direction: reverse;
+        -webkit-box-orient: vertical;
+        -moz-box-direction: reverse;
+        -moz-box-orient: vertical;
+        -webkit-flex-direction: column-reverse;
+        -ms-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+}

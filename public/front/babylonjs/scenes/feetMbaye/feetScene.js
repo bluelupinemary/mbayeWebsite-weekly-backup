@@ -135,8 +135,7 @@ function load_3D_mesh(){
                   }
                   document.getElementById("loadingScreenPercent").innerHTML = "Loading: "+loadedPercent+" %";
             }).then(function (result) {
-            
-
+          
                 result.meshes[0].scaling = new BABYLON.Vector3(12,12,12);
                 result.meshes[0].isPickable = true;
                 rfoot_obj = result.meshes[0];
@@ -204,6 +203,7 @@ function enable_gizmo(themesh){
 
 
 
+
 //############################################# HANDLE USER'S INTERACTION #############################################//
 let isPlane2Selected = false;
 let isLaunchEnabled = false;
@@ -218,9 +218,9 @@ function add_mouse_listener(){
           let theMesh = pickinfo.pickedMesh;
           let mesh_arr = [];
       
-          if(theMesh.name === "footHeartLbl") enable_gizmo(theMesh);
+          // if(theMesh.name === "footHeartLbl") enable_gizmo(theMesh);
          
-          console.log("the mesh clicked: ", theMesh,theMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
+          // console.log("the mesh clicked: ", theMesh,theMesh.name, pickinfo.pickedMesh.position, pickinfo.pickedMesh.rotationQuaternion);
           // console.log("camera: ", footCamera.position, footCamera.alpha, footCamera.beta, footCamera.radius);
           // console.log("parent of mesh: ", theMesh.parent);
         
@@ -273,12 +273,19 @@ function add_mouse_listener(){
                 isGalleryVisible = false;
               }
           }
+          $('#flowerInstruction').hide();
+          $('#infoIconTextflowers').hide();
+          $('#infoIconTextdownflower').hide();
+          $('#textCurve').hide();
+          $('#textCurve2').hide();
+          $('#textCurveanticlock').hide();
+          $('#textCurveanticlock2').hide();
 
     }else{
       if(!isPointerDown){
           isPointerDown = true;
       }
-  }//end of else
+    }//end of else
     
   }//end of on pointer down function
 
@@ -599,7 +606,7 @@ var onOutFlower =(meshEvent)=>{
       }else{
         //floating flowers
         let res = testBrowser();
-        if(res === 'Safari') meshEvent.source.material.emissiveColor = new BABYLON.Color3(0,0,0);
+        if(res === 'Safari') meshEvent.source.material.emissiveColor = new BABYLON.Color3(1,1,1);
         else hl.removeMesh(meshEvent.source);
 
         meshEvent.source.scaling = origScaling;
@@ -809,7 +816,7 @@ function resize_window(size, section){
           height: '95vh'
         });
         if(section === 'youtube') $('#musicVideoDiv').css({width:'100vw', height:'auto'});
-        if(section === '3dflower') theSection.css('height','100vh');
+        if(section === '3dflower') theSection.css('height','100%');
         $('#minimize-btn').css('padding-right','1%');
         $('#flowerModelDiv #minimize-btn').css('padding-right','1%');
     }else{ //if windowed size
@@ -845,7 +852,8 @@ let isFlowerFullscreen = false;
 $('#flowerModelDivHeader #fullscreen-btn, #flowerModelDivHeader #minimize-btn').on("click", function (e) {
     if(!isFlowerFullscreen){
         resize_window('full', '3dflower');
-        $("#flowerModelDivHeader").css('height','6%');
+        if(isSmallDevice()) $("#flowerModelDivHeader").css('height','10%');
+        else $("#flowerModelDivHeader").css('height','8%');
         $("#flowerModelDivHeader #fullscreen-btn").hide();
         $("#flowerModelDivHeader #minimize-btn").show();
         
@@ -918,3 +926,63 @@ $('#flowerModelDiv #leftArrow').on("click", function(e){
   document.getElementById("flowerModelDiv").style.visibility = "visible";
 }//end of showCharDescDiv function
 
+$("#MbayeHeadinfoIcon").on('click',function(){
+  show_overlay_text();
+  // $('#flowerInstruction').toggle();
+  // $('#infoIconTextflowers').toggle();
+  // $('#infoIconTextdownflower').toggle();
+  // isIns2Active = !isIns2Active;
+  
+  // $('#textCurve').toggle();
+  // $('#textCurve2').toggle();
+  // $('#textCurveanticlock').toggle();
+  // $('#textCurveanticlock2').toggle();
+  // set_circle_type();
+});
+
+let isIns2Active = false;
+function set_circle_type(){
+      if(isIns2Active){
+      circleType = new CircleType(document.getElementById('textCurve'));
+      circleType3 = new CircleType(document.getElementById('textCurve2'));
+      circleType1 = new CircleType(document.getElementById('textCurveanticlock'));
+      circleType2 = new CircleType(document.getElementById('textCurveanticlock2'));
+
+      // Set the text radius and direction. Note: setter methods are chainable.
+      circleType.radius(150).dir(-1);
+      circleType3.radius(150).dir(-1);
+      // Set the text radius and direction. Note: setter methods are chainable.
+      circleType1.radius(200);
+      // Set the text radius and direction. Note: setter methods are chainable.
+      circleType2.radius(200);
+      }else{
+      //destroy the instructions
+      circleType.destroy();
+      circleType1.destroy();
+      circleType2.destroy();
+      circleType3.destroy();
+
+      }
+}
+function show_overlay_text(){
+  if(!currFlower){    //if #infoIcon is clicked and it is the initial view
+    $('#flowerInstruction').toggle();
+    $('#infoIconTextflowers').toggle();
+    $('#infoIconTextdownflower').toggle();
+    isIns2Active = !isIns2Active;
+    
+    $('#textCurve').toggle();
+    $('#textCurve2').toggle();
+    $('#textCurveanticlock').toggle();
+    $('#textCurveanticlock2').toggle();
+    set_circle_type();
+  }
+   else{ //if character and #infoIcon is clicked and it is the focus view
+       $('#footInstruction').toggle();
+        $('#footTextMiddle').toggle();
+        $('#footTextdown').toggle();
+   }    
+  
+    // $('#cloudImgDiv').hide();
+    
+}

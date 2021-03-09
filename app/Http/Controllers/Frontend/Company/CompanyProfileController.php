@@ -80,7 +80,7 @@ class CompanyProfileController extends Controller
         
 
         $user = User::find($request->owner_id);
-        return redirect('company/view-company-profile')->with('status', 'Profile updated!');
+        return redirect('company/view-company-profile/'.Auth::user()->id)->with('status', 'Profile updated!');
         // if($user->roles[0]->name == 'User') {
         //     dd('PPPP');
         //     return redirect('communicator')->with('status', 'Profile updated!');
@@ -93,16 +93,20 @@ class CompanyProfileController extends Controller
     /**
      * Display the specified resource.
      *
+     * 
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        // $user = Auth::user()->id;
+        $user = Auth::user()->id;
         $industry = Industry::all();
-        $company = CompanyProfile::where('owner_id',Auth::id())->first();
+        $company = CompanyProfile::where('owner_id',$id)->first();
+      
+            return  view('frontend.user.view_company_profile',compact('industry','company','user'));
+      
         // dd($company);
-        return  view('frontend.user.view_company_profile',compact('industry','company'));
+        
         // $company_profile = CompanyProfile::find($id);
 
         // return $company_profile;
@@ -124,8 +128,6 @@ class CompanyProfileController extends Controller
         return view('frontend.user.setup_company_profile',compact('company_profile','industry'));
     }
 
-
-    
     /**
      * Update the specified resource in storage.
      *
@@ -150,7 +152,7 @@ class CompanyProfileController extends Controller
         // $user = User::find($request->owner_id);
 
         // if($user->roles[0]->name == 'User') {
-            return redirect('company/view-company-profile')->with('status', 'Profile updated!');
+            return redirect('company/view-company-profile/'.Auth::user()->id)->with('status', 'Profile updated!');
         // } else {
         //     // return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
         // }

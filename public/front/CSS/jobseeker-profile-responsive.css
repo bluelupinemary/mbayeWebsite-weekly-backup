@@ -66,7 +66,6 @@
 and (min-width : 1024px) 
 and (max-width : 1366px) 
 and (orientation : landscape){
-    
     .sidenav {
         display: flex;
         flex-direction: column;
@@ -203,7 +202,7 @@ and (orientation : landscape){
 /* @media only screen  and (min-height:1024px){
     
 } */
-@media (min-width: 767px) and (max-width: 991.98px) {
+@media (min-width: 768px) and (max-width: 991.98px) {
     .work-experience-body fieldset, .education-body fieldset, .reference-body fieldset, .aboutme-body fieldset, .contact-body fieldset, .profession-body fieldset {
         border: 1px solid #fff;
         
@@ -211,18 +210,18 @@ and (orientation : landscape){
         padding: 4% 4% 4% 4%;
         width: 49vw;
         /* display: flex; */
-        /* overflow-y: scroll; */
+        overflow-y: scroll;
     }
     .education-modal-body{
         height: 19vw;
         overflow-y:auto;
     }
     .contact-body{
-        height: 20vw;
+        height: 15vw;
         overflow-y:auto;
     }
     .profession-body{
-        height: 20vw;
+        height: 15vw;
         overflow-y:auto;
     }
     .aboutme-body{
@@ -256,18 +255,6 @@ and (orientation : landscape){
     .input-group-sm>.input-group-append>select.btn:not([size]):not([multiple]), .input-group-sm>.input-group-append>select.input-group-text:not([size]):not([multiple]), .input-group-sm>.input-group-prepend>select.btn:not([size]):not([multiple]), .input-group-sm>.input-group-prepend>select.input-group-text:not([size]):not([multiple]), .input-group-sm>select.form-control:not([size]):not([multiple]), select.form-control-sm:not([size]):not([multiple]) {
         height: calc(1.8125rem + 2px);
         font-size: 0.875rem !important;
-    }
-    #edit_uploaded_image {
-        display: none;
-        right: 14px;
-        top: -1vh;
-        position: absolute;
-        font-size: 2em;
-        border: none;
-        color: white;
-        padding: 12px 16px;
-        width: 5vw;
-        cursor: pointer;
     }
     .slider {
         height: 20vw;
@@ -306,10 +293,9 @@ and (orientation : landscape){
     .sidenav a {
         padding: 5px 8px 6px 8px;
         text-decoration: none;
-        font-size: 10px;
+        font-size: 1 rem;
         color: white;
         display: block;
-        height: 13vh;
         transition: 0.3s;
         font-family: Arial;
     }
@@ -360,25 +346,7 @@ and (orientation : landscape){
         height: 20vw;
         overflow-y: auto;
     }
-    .clone-btn-education, .clone-btn-workexperience {
-     
-        transform: translate(-2px, 13px);
-       
-    }
-    .fa-edit-span {
-        display: none;
-        font-size: 1rem;
-        width: 10vw;
-        padding: 10%;
-        text-align: center;
-        border-radius: 7%;
-        font-family: arial;
-        transform: translate(-17%, -332%);
-        background-color: rgb(23, 162, 184);
-        color: white;
-    }
 }
-
 @media only screen and (min-width:414px) and (max-width:736px) and (orientation : landscape){
     .work-experience-body fieldset, .education-body fieldset, .reference-body fieldset, .aboutme-body fieldset, .contact-body fieldset, .profession-body fieldset {
         border: 1px solid #fff;
@@ -387,20 +355,20 @@ and (orientation : landscape){
         padding: 4% 4% 4% 4%;
         width: 50vw;
         /* display: flex; */
-        /* overflow-y: scroll; */
+        overflow-y: scroll;
     }
     .education-modal-body{
         height: 19vw;
-        /* overflow-y:auto; */
+        overflow-y:auto;
     }
     .contact-body{
         height: 15vw;
-        /* overflow-y:auto; */
+        overflow-y:auto;
     }
-    /* .profession-body{
+    .profession-body{
         height: 15vw;
         overflow-y:auto;
-    } */
+    }
     .aboutme-body{
         height: 17vw;
         /* overflow-y: auto; */
@@ -467,15 +435,15 @@ and (orientation : landscape){
         overflow-x: hidden !important;
         transition: 0.5s;
     }
-    .sidenav a {
-        /* padding: 5px 8px 6px 8px; */
+    /* .sidenav a {
+        padding: 5px 8px 6px 8px;
         text-decoration: none;
         font-size: 8px;
         color: white;
         display: block;
         transition: 0.3s;
         font-family: Arial;
-    }
+    } */
     /* .sidenav .closebtn {
         position: absolute;
         top: 57%;
@@ -508,18 +476,6 @@ and (orientation : landscape){
         width: 5vw;
         cursor: pointer;
     }
-    .fa-edit-span {
-        display: block;
-        font-size: 1rem;
-        width: 14vw;
-        padding: 10%;
-        text-align: center;
-        border-radius: 7%;
-        font-family: Arial;
-        transform: translate(-17%, -374%);
-        background-color: rgb(23, 162, 184);
-        color: white;
-    }
     .form-row{
         display: flex;
         max-height: 100%;
@@ -533,17 +489,8 @@ and (orientation : landscape){
     
     .reference-modal-body{
         height: 20vw;
-        /* overflow-y: auto; */
+        overflow-y: auto;
     }
-    .clone-btn-education, .clone-btn-workexperience {
-       
-        transform: translate(-2px, 5px);
-        
-    }
-    /* .modal-body{
-        height: 33vh;
-        overflow-y: scroll;
-    } */
 }
 
 
@@ -693,7 +640,7 @@ and (orientation : landscape){
         /* transform: translate(1640%,-1282%); */
     }
 }
-/*  */
+
 
 
 

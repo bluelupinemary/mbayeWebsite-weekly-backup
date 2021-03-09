@@ -23,6 +23,7 @@
 @endsection
 
 @section('after-scripts')
+<script src="{{asset('front/JS/jquery-1.9.1.js'}}"></script>
 <script src="{{asset('front/babylonjs/scenes/commonScenes.js')}}"></script>
 <script src="{{asset('front')}}/babylonjs/scenes/storyCare/createStoryCareScene.js"></script>
   <script>
