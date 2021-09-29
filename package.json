@@ -30,7 +30,7 @@
     "@toast-ui/vue-image-editor": "^1.2.0",
     "bootstrap": "^4.5.3",
     "bootstrap-datetimepicker-npm": "^4.17.37-npm",
-    "datatables.net": "^1.10.22",
+    "datatables.net": "^1.11.3",
     "datatables.net-buttons": "^1.6.4",
     "laravel-echo": "^1.9.0",
     "mo-js": "^0.288.2",
